@@ -39,7 +39,7 @@
                     <div class="row">
                         <div class="col-md-6">
 
-                          <video class="mejs-player" style="max-width:100%;" preload="none" poster="http://www.mediaelementjs.com/images/big_buck_bunny.jpg">
+                          <video data-plugin="mediaelement" style="max-width:100%;" preload="none" poster="http://www.mediaelementjs.com/images/big_buck_bunny.jpg">
                               <source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">
                           </video>
                           <hr>

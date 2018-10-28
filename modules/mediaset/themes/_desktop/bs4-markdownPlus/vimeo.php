@@ -62,7 +62,7 @@
                     <!-- data-role="img-preview" src="_s 이미지" data-origin="원본 이미지" 넣는다. -->
                     <div class="col-md-7">
 
-                        <video class="mejs-player img-responsive"  style="max-width:100%;"  preload="none">
+                        <video data-plugin="mediaelement" class="img-responsive"  style="max-width:100%;"  preload="none">
                             <source src="https://player.vimeo.com/video/185717440?title=0&amp;byline=0&amp;portrait=0&amp;badge=0" type="video/vimeo">
                         </video>
 
@@ -117,13 +117,13 @@ function getVimeoPreview() {
  		 return false;
   }
 
-  var gx3 = '<video class="mejs-player"  style="max-width:100%;" preload="none"><source src="https://player.vimeo.com/video/'+gx2+'?title=0&amp;byline=0&amp;portrait=0&amp;badge=0" type="video/vimeo"></video>'
+  var gx3 = '<video data-plugin="mediaelement"  style="max-width:100%;" preload="none"><source src="https://player.vimeo.com/video/'+gx2+'?title=0&amp;byline=0&amp;portrait=0&amp;badge=0" type="video/vimeo"></video>'
   $('#_vimeo_play_layer_').html(gx3);
   $('[data-attach-act="saveVimeo"]').removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
   isGetVod = true;
 
   // http://www.mediaelementjs.com/
-  $('.mejs-player').mediaelementplayer();
+  $('[data-plugin="mediaelement"]').mediaelementplayer();
 
 }
 

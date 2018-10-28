@@ -91,7 +91,7 @@
                             var new_videoTime=result.videoTime;
                             var insertTexts;
                             if(new_videoType=='photo') insertTexts='!['+new_filecaption+']('+rooturl+new_filesrc+')';
-                            else insertTexts='<video class="mejs-player"  style="max-width:100%;" preload="none"><source src="' +new_videoSrc + '" type="video/youtube"></video>';
+                            else insertTexts='<video data-plugin="mediaelement" style="max-width:100%;" preload="none"><source src="' +new_videoSrc + '" type="video/youtube"></video>';
 
                             // 리스트 값 수정
                             $('[data-role="attachList-menu-edit-'+uid+'"]').attr('data-caption',new_videoCaption); // 'edit' 메뉴 캡션 업데이트

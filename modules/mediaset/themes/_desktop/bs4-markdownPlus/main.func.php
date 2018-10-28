@@ -270,7 +270,7 @@ function getAttachPlatform($R) {
       global $g,$r;
 
       $md_title=str_replace('|','-',$R['title']);
-      $insert_text='<video class=mejs-player img-responsive img-fluid  style=max-width:100% preload=none><source src=https://www.youtube.com/embed/'.$R['src'].' type=video/youtube></video>';
+      $insert_text='<video data-plugin=mediaelement class=img-responsive img-fluid  style=max-width:100% preload=none><source src=https://www.youtube.com/embed/'.$R['src'].' type=video/youtube></video>';
       $html='';
       $html.='
       <li class="list-group-item" data-id="'.$R['uid'].'">

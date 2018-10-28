@@ -1,5 +1,5 @@
 <style media="screen">
-  .mejs-player  iframe {
+  [data-plugin="mediaelement"]  iframe {
     max-width: 100% !important
   }
 </style>
@@ -57,7 +57,7 @@
                 <div class="row">
                     <!-- data-role="img-preview" src="_s 이미지" data-origin="원본 이미지" 넣는다. -->
                     <div class="col-md-7 video-col">
-                      <video class="mejs-player img-fluid"  style="max-width:100%;" preload="none">
+                      <video data-plugin="mediaelement" class="img-fluid"  style="max-width:100%;" preload="none">
                           <source data-role="src" type="video/youtube">
                       </video>
                     </div>
@@ -121,9 +121,9 @@
        $('.rb-preview').attr('disabled','disabled').removeClass('btn-primary').addClass('btn-light');
    		 return false;
   }
-    var gx3 = '<video class="mejs-player" style="max-width:100%;" preload="none"><source src="https://www.youtube.com/embed/'+gx2+'" type="video/youtube"></video>'
+    var gx3 = '<video data-plugin="mediaelement" style="max-width:100%;" preload="none"><source src="https://www.youtube.com/embed/'+gx2+'" type="video/youtube"></video>'
   	$('#_youtube_play_layer_').html(gx3);
-    $('#_youtube_play_layer_ .mejs-player').mediaelementplayer();
+    $('#_youtube_play_layer_').find('[data-plugin="mediaelement"]').mediaelementplayer();
     $('[data-attach-act="saveYoutube"]').removeAttr('disabled').removeClass('btn-light').addClass('btn-primary')
   	isGetVod = true;
 
@@ -185,14 +185,14 @@
     modal.find('[data-role="eventHandler"]').attr('data-type',type); // save, cancel 엘리먼트 data-type="" 값에 type 값 적용
     modal.find('[data-role="src"]').attr('src',youtube_embed + filename)
 
-    $('.modal .mejs-player').mediaelementplayer();
+    $('.modal').find('[data-plugin="mediaelement"]').mediaelementplayer();
 
   })
 
   $('#modal-attach-youtube-meta').on('hidden.bs.modal', function () {
     $(this).find('[data-role="caption"]').val(''); // 입력된 캡션명 초기화
     $(this).find('[data-role="description"]').val(''); // 입력된 description 초기화
-    $(this).find('.video-col').html('<video class="mejs-player img-fluid" style="max-width:100%;" preload="none"><source data-role="src" type="video/youtube"></video>');
+    $(this).find('.video-col').html('<video data-plugin="mediaelement" class="img-fluid" style="max-width:100%;" preload="none"><source data-role="src" type="video/youtube"></video>');
   })
 
   $('#_youtube_url_').on('keyup', function() {

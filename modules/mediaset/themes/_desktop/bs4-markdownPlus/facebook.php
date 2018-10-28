@@ -60,7 +60,7 @@
                 <div class="row">
                     <!-- data-role="img-preview" src="_s 이미지" data-origin="원본 이미지" 넣는다. -->
                     <div class="col-md-7">
-                      <video class="mejs-player img-responsive"  style="max-width:100%;" preload="none">
+                      <video data-plugin="mediaelement" class="img-responsive"  style="max-width:100%;" preload="none">
                           <source src="https://www.facebook.com/ABCNews/videos/10155345236708812/" type="video/facebook">
                       </video>
                     </div>
@@ -113,13 +113,13 @@ function getFacebookPreview() {
      $('.rb-preview').attr('disabled','disabled').removeClass('btn-primary').addClass('btn-default');
  		 return false;
 }
-  var gx3 = '<video class="mejs-player" preload="none"><source src="https://www.facebook.com/ABCNews/videos/10155345236708812/" type="video/facebook"></video>'
+  var gx3 = '<video data-plugin="mediaelement" preload="none"><source src="https://www.facebook.com/ABCNews/videos/10155345236708812/" type="video/facebook"></video>'
 	$('#_facebook_play_layer_').html(gx3);
   $('[data-attach-act="savefacebook"]').removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
 	isGetVod = true;
 
   // http://www.mediaelementjs.com/
-  $('.mejs-player').mediaelementplayer();
+  $('[data-plugin="mediaelement"]').mediaelementplayer();
 
 }
 
