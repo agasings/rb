@@ -45,14 +45,15 @@ function ResizeWidth($picture,$smallfile,$rewidth)
 		elseif($picsize[2]==3)
 		{
 			//@header("Content-Type: images/png");
-			$srcimg=ImageCreateFromPNG($picture);
-			$dstimg=imagecreate($rewidth,$reheight);
-			$black = imagecolorallocate($dstimg, 0x00, 0x00, 0x00);
-			$white = imagecolorallocate($dstimg, 0xFF, 0xFF, 0xFF);
-			$magenta = imagecolorallocate($dstimg, 0xFF, 0x00, 0xFF);
-			imagecolortransparent($dstimg,$black);
-			imagecopyresampled($dstimg, $srcimg,0,0,0,0,$rewidth,$reheight,ImageSX($srcimg),ImageSY($srcimg));
-			Imagepng($dstimg,$smallfile,0);
+      $srcimg=ImageCreateFromPNG($picture);
+      $dstimg = imagecreatetruecolor($rewidth, $reheight);
+      imagealphablending($dstimg, false);
+      imagesavealpha($dstimg,true);
+      $transparent = imagecolorallocatealpha($dstimg, 255, 255, 255, 127);
+      imagefilledrectangle($dstimg, 0, 0, $rewidth, $reheight, $transparent);
+      imagecopyresampled($dstimg, $srcimg, 0, 0, 0, 0, $rewidth, $reheight, ImageSX($srcimg),ImageSY($srcimg));
+      Imagepng($dstimg,$smallfile,0);
+
 		}
 		@ImageDestroy($dstimg);
 		@ImageDestroy($srcimg);
