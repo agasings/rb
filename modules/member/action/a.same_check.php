@@ -20,7 +20,7 @@ else {
 		{
 			$resultnum = 0;
 			$resultmsg = '사용할 수 없는 아이디입니다';
-			$resultclass = 'form-control is-invalid';
+			$resultclass = 'is-invalid';
 		}
 		else
 		{
@@ -33,24 +33,24 @@ else {
 					{
 						$resultnum = 0;
 						$resultmsg = '사용할 수 없는 아이디입니다';
-					  $resultclass = 'form-control is-invalid';
+					  $resultclass = 'is-invalid';
 					}
 					else {
 						$resultnum = 1;
 						$resultmsg = '';
-						$resultclass = 'form-control is-valid';
+						$resultclass = 'is-valid';
 					}
 				}
 				else {
 					$resultnum = 1;
 					$resultmsg = '';
-					$resultclass = 'form-control is-valid';
+					$resultclass = 'is-valid';
 				}
 			}
 			else {
 				$resultnum = 0;
 				$resultmsg = '사용할 수 없는 아이디입니다';
-				$resultclass = 'form-control is-invalid';
+				$resultclass = 'is-invalid';
 			}
 		}
 	}

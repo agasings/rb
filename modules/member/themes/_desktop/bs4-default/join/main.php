@@ -478,7 +478,10 @@ $(function () {
 
 	$('#memberForm').submit( function(event){
 
-
+		//에러흔적 초기화
+		f.id.classList.remove('is-invalid')
+		f.name.classList.remove('is-invalid')
+		f.email.classList.remove('is-invalid')
 
 		if (f.check_id.value == '0')
 		{
