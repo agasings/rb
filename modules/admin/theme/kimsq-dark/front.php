@@ -24,7 +24,7 @@
 			<?php else:?>
 			<ul class="navbar-nav mr-auto" id="rb-admin-ul-tabs">
 				<?php $_front =explode('_' , $front); ?>
-				<?php $_menuCount=count($d['amenu']);if(!$nosite&&$_menuCount):?>
+				<?php $_menuCount=$d['amenu']?count($d['amenu']):0;if(!$nosite&&$_menuCount):?>
 
 				<?php if($_i<=10):?>
 				<?php $_i=1;foreach($d['amenu'] as $_k => $_v):?>
