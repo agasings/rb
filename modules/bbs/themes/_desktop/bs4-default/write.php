@@ -223,7 +223,6 @@ function writeCheck(f) {
     $('input[name="upfiles"]').val(new_upfiles);
   }
 
-//
   getIframeForAction(f);
 
   submitFlag = true;
