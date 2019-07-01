@@ -132,12 +132,12 @@ require $g['path_core'].'function/sys.func.php';
 					<input type="hidden" name="install" value="a.install">
 					<input type="hidden" name="sitelang" value="<?php echo $sitelang?>">
 					<input type="hidden" name="dbkind" value="MySQL">
-					<input type="hidden" name="dbname" value="<?php echo $_SESSION['_live_dbname']?>">
-					<input type="hidden" name="dbuser" value="<?php echo $_SESSION['_live_dbuser']?>">
-					<input type="hidden" name="dbpass" value="<?php echo $_SESSION['_live_dbpass']?>">
-					<input type="hidden" name="dbhost" value="<?php echo $_SESSION['_live_dbhost']?>">
-					<input type="hidden" name="dbport" value="<?php echo $_SESSION['_live_dbport']?>">
-					<input type="hidden" name="key" value="<?php echo $_SESSION['_live_key']?>">
+					<input type="hidden" name="dbname" value="<?php echo $_POST['_live_dbname']?>">
+					<input type="hidden" name="dbuser" value="<?php echo $_POST['_live_dbuser']?>">
+					<input type="hidden" name="dbpass" value="<?php echo $_POST['_live_dbpass']?>">
+					<input type="hidden" name="dbhost" value="<?php echo $_POST['_live_dbhost']?>">
+					<input type="hidden" name="dbport" value="<?php echo $_POST['_live_dbport']?>">
+					<input type="hidden" name="key" value="<?php echo $_POST['_live_key']?>">
 					<input type="hidden" name="dbtype" value="MyISAM">
 
 					<div class="panel-body">
