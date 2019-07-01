@@ -3,21 +3,6 @@ header("Content-type:text/html;charset=utf-8");
 define('__KIMS__',true);
 session_start();
 
-if ($_POST['_live_dbhost'])
-{
-	$_SESSION['_live_dbhost'] = $_POST['_live_dbhost'];
-	$_SESSION['_live_dbname'] = $_POST['_live_dbname'];
-	$_SESSION['_live_dbuser'] = $_POST['_live_dbuser'];
-	$_SESSION['_live_dbpass'] = $_POST['_live_dbpass'];
-	$_SESSION['_live_dbport'] = $_POST['_live_dbport'];
-	$_SESSION['_live_dbhead'] = $_POST['_live_dbhead'];
-	$_SESSION['_live_name'] = $_POST['_live_name'];
-	$_SESSION['_live_id'] = $_POST['_live_id'];
-	$_SESSION['_live_pw'] = $_POST['_live_pw'];
-	$_SESSION['_live_email'] = $_POST['_live_email'];
-	$_SESSION['_live_sitename'] = $_POST['_live_sitename'];
-}
-
 if(!get_magic_quotes_gpc())
 {
 	if (is_array($_GET))
