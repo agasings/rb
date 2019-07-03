@@ -7,6 +7,25 @@ $R = getUidData($table[$m.'list'],$uid);
 if (!$R['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 
 include_once $g['path_module'].'mediaset/var/var.php';
+include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
+include_once $g['path_module'].'mediaset/var/var.php';
+include_once $g['path_core'].'opensrc/aws-sdk-php/v3/aws-autoloader.php';
+
+use Aws\S3\S3Client;
+
+define('S3_KEY', $d['mediaset']['S3_KEY']); //발급받은 키.
+define('S3_SEC', $d['mediaset']['S3_SEC'] ); //발급받은 비밀번호.
+define('S3_REGION', $d['mediaset']['S3_REGION']);  //S3 버킷의 리전.
+define('S3_BUCKET', $d['mediaset']['S3_BUCKET']); //버킷의 이름.
+
+$s3 = new S3Client([
+  'version'     => 'latest',
+  'region'      => S3_REGION,
+  'credentials' => [
+      'key'    => S3_KEY,
+      'secret' => S3_SEC,
+  ],
+]);
 
 $RCD = getDbArray($table[$m.'data'],'bbs='.$R['uid'],'*','gid','asc',0,0);
 while($_R=db_fetch_array($RCD))
@@ -40,8 +59,15 @@ while($_R=db_fetch_array($RCD))
 							ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
 							if($U['type']==2) ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
 							ftp_close($FTP_CONNECT);
-						}
-						else {
+
+						} elseif ($U['fserver']==2) {
+
+			        $s3->deleteObject([
+			          'Bucket' => S3_BUCKET,
+			          'Key'    => $U['folder'].'/'.$U['tmpname']
+			        ]);
+
+						} else {
 							unlink($g['path_file'].$U['folder'].'/'.$U['tmpname']);
 							if($U['type']==2) unlink($g['path_file'].$U['folder'].'/'.$U['thumbname']);
 						}
@@ -95,8 +121,15 @@ while($_R=db_fetch_array($RCD))
 					ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
 					if($U['type']==2) ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
 					ftp_close($FTP_CONNECT);
-				}
-				else {
+
+				} elseif ($U['fserver']==2) {
+
+					$s3->deleteObject([
+						'Bucket' => S3_BUCKET,
+						'Key'    => $U['folder'].'/'.$U['tmpname']
+					]);
+
+				} else {
 					unlink($g['path_file'].$m.'/'.$U['folder'].'/'.$U['tmpname']);
 				}
 			}

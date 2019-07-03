@@ -54,28 +54,28 @@
 				</small>
 			</div>
 		</div>
+
 		<div class="form-group row">
-			<label class="col-sm-2 col-form-label text-sm-right">업로드할 서버</label>
+			<label class="col-sm-2 col-form-label text-sm-right">파일 저장소</label>
 			<div class="col-sm-10">
 				<div class="row">
 					<div class="col-sm-3">
 						<select name="use_fileserver" class="form-control custom-select" onchange="serverChange(this);">
 							<option value=""<?php if(!$d['mediaset']['use_fileserver']):?> selected<?php endif?>>현재서버</option>
-							<option value="1"<?php if($d['mediaset']['use_fileserver']):?> selected<?php endif?>>원격서버</option>
+							<option value="2"<?php if($d['mediaset']['use_fileserver']==2):?> selected<?php endif?>>AWS S3</option>
+							<option value="1"<?php if($d['mediaset']['use_fileserver']==1):?> selected<?php endif?>>FTP 서버</option>
 						</select>
 					</div>
 				</div>
 				<small class="form-text text-muted">
-					원격서버로 지정하면 파일 전용서버로 업로드할 수 있습니다.
+					첨부물(사진 또는 파일)이 많은 경우, <a href="https://aws.amazon.com/ko/s3/?nc2=h_m1" target="_blank">AWS S3</a> 사용을 권장합니다.
 				</small>
 			</div>
 		</div>
 
-		<button type="submit" class="btn btn-outline-primary btn-block btn-lg my-4">저장하기</button>
-
-		<div id="use_fileserver"<?php if(!$d['mediaset']['use_fileserver']):?> class="d-none"<?php endif?>>
+		<div id="use_ftpserver"<?php if($d['mediaset']['use_fileserver']!=1):?> class="d-none"<?php endif?>>
 			<div class="page-header">
-				<h4>파일서버 설정</h4>
+				<h4>FTP 서버 설정</h4>
 			</div>
 
 
@@ -152,13 +152,67 @@
 			</div>
 
 			<div class="form-group">
-				<div class="offset-sm-2 col-sm-10">
-					<button type="button" class="btn btn-light" id="ftpbtn" onclick="sendCheck(this.id);"><?php if($d['mediaset']['ftp']):?><i class="fa fa-info-circle fa-lg fa-fw"></i>정상<?php else:?>FTP 연결확인<?php endif?></button>
-					<button type="submit" class="btn btn-outline-primary btn-block btn-lg my-4">저장하기</button>
-				</div>
+				<button type="button" class="btn btn-light" id="ftpbtn" onclick="sendCheck(this.id);"><?php if($d['mediaset']['ftp']):?><i class="fa fa-info-circle fa-lg fa-fw"></i>정상<?php else:?>FTP 연결확인<?php endif?></button>
 			</div>
 		</div>
 
+		<div id="use_awss3"<?php if($d['mediaset']['use_fileserver']!=2):?> class="d-none"<?php endif?>>
+
+			<div class="page-header">
+				<h4>AWS S3 설정  <small class="text-muted ml-2">Amazon Simple Storage Service</small>	</h4>
+			</div>
+
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label text-sm-right">액세스 키 ID</label>
+				<div class="col-sm-8">
+						<input type="text" name="s3_key" value="<?php echo $d['mediaset']['S3_KEY']?>" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label text-sm-right">비밀 액세스 키</label>
+				<div class="col-sm-8">
+						<input type="text" name="s3_sec" value="<?php echo $d['mediaset']['S3_SEC']?>" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label text-sm-right">리전</label>
+				<div class="col-sm-8">
+						<input type="text" name="s3_region" value="<?php echo $d['mediaset']['S3_REGION']?>" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label text-sm-right">버킷</label>
+				<div class="col-sm-8">
+						<input type="text" name="s3_bucket" value="<?php echo $d['mediaset']['S3_BUCKET']?>" class="form-control">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<div class="card f12 text-muted">
+						<div class="card-body">
+							<p>Amazon Simple Storage Service(Amazon S3)는 업계 최고의 확장성과 데이터 가용성 및 보안과 성능을 제공하는 객체 스토리지 서비스입니다. 즉, 어떤 규모 어떤 산업의 고객이든 이 서비스를 사용하여 웹 사이트, 모바일 애플리케이션, 백업 및 복원, 아카이브, 엔터프라이즈 애플리케이션, IoT 디바이스, 빅 데이터 분석 등과 같은 다양한 사용 사례에서 원하는 만큼의 데이터를 저장하고 보호할 수 있습니다. Amazon S3는 사용하기 쉬운 관리 기능을 제공하므로 특정 비즈니스, 조직 및 규정 준수 요구 사항에 따라 데이터를 조직화하고 세부적인 액세스 제어를 구성할 수 있습니다. Amazon S3는 99.999999999%의 내구성을 제공하도록 설계되었으며, 전 세계 기업의 수백만 애플리케이션을 위한 데이터를 저장합니다.</p>
+
+							<a href="https://s3.console.aws.amazon.com" target="_blank" class="btn btn-light">S3 콘솔접속</a>
+							<a href="https://aws.amazon.com/ko/s3/?nc2=h_m1" target="_blank" class="btn btn-light">자세히 보기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+		</div>
+
+		<button type="submit" class="btn btn-outline-primary btn-block btn-lg my-4">저장하기</button>
 
 	</form>
 </div>
@@ -176,12 +230,15 @@ function byteConverter(){
 
 function serverChange(obj)
 {
-	if (obj.value == '1')
-	{
-		getId('use_fileserver').className = '';
-	}
-	else {
-		getId('use_fileserver').className = 'hidden';
+	if (obj.value == '1') {
+		$('#use_ftpserver').removeClass('d-none')
+		$('#use_awss3').addClass('d-none')
+	} else if (obj.value == '2') {
+		$('#use_ftpserver').addClass('d-none')
+		$('#use_awss3').removeClass('d-none')
+	} else {
+		$('#use_ftpserver').addClass('d-none')
+		$('#use_awss3').addClass('d-none')
 	}
 }
 var submitFlag = false;

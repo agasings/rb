@@ -9,6 +9,23 @@ if (!$B['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 include_once $g['dir_module'].'var/var.php';
 include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
 include_once $g['path_module'].'mediaset/var/var.php';
+include_once $g['path_core'].'opensrc/aws-sdk-php/v3/aws-autoloader.php';
+
+use Aws\S3\S3Client;
+
+define('S3_KEY', $d['mediaset']['S3_KEY']); //발급받은 키.
+define('S3_SEC', $d['mediaset']['S3_SEC'] ); //발급받은 비밀번호.
+define('S3_REGION', $d['mediaset']['S3_REGION']);  //S3 버킷의 리전.
+define('S3_BUCKET', $d['mediaset']['S3_BUCKET']); //버킷의 이름.
+
+$s3 = new S3Client([
+  'version'     => 'latest',
+  'region'      => S3_REGION,
+  'credentials' => [
+      'key'    => S3_KEY,
+      'secret' => S3_SEC,
+  ],
+]);
 
 $backUrl = getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').($c?'c='.$c:'m='.$m),array('bid','skin','iframe','cat','p','sort','orderby','recnum','type','where','keyword'));
 
@@ -71,8 +88,15 @@ if ($R['comment'])
 						ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
 						if($U['type']==2) ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
 						ftp_close($FTP_CONNECT);
-					}
-					else {
+
+					} elseif ($U['fserver']==2) {
+
+		        $s3->deleteObject([
+		          'Bucket' => S3_BUCKET,
+		          'Key'    => $U['folder'].'/'.$U['tmpname']
+		        ]);
+
+					} else {
 						unlink($g['path_file'].$U['folder'].'/'.$U['tmpname']);
 						if($U['type']==2) unlink($g['path_file'].$U['folder'].'/'.$U['thumbname']);
 					}
@@ -115,6 +139,7 @@ if ($R['upload'])
 		{
 			getDbUpdate($table['s_numinfo'],'upload=upload-1',"date='".substr($U['d_regis'],0,8)."' and site=".$U['site']);
 			getDbDelete($table['s_upload'],'uid='.$U['uid']);
+
 			if ($U['url']==$d['upload']['ftp_urlpath'])
 			{
 				$FTP_CONNECT = ftp_connect($d['upload']['ftp_host'],$d['upload']['ftp_port']);
@@ -126,10 +151,19 @@ if ($R['upload'])
 				ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
 				if($U['type']==2) ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
 				ftp_close($FTP_CONNECT);
-			}
-			else {
+
+			} elseif ($U['fserver']==2) {
+
+				$s3->deleteObject([
+					'Bucket' => S3_BUCKET,
+					'Key'    => $U['folder'].'/'.$U['tmpname']
+				]);
+
+			} else {
 				unlink($g['path_file'].$m.'/'.$U['folder'].'/'.$U['tmpname']);
 			}
+
+
 		}
 	}
 }

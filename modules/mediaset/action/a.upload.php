@@ -19,7 +19,7 @@ include $g['path_core'].'function/thumb.func.php';
 $sessArr  = explode('_',$sess_Code);
 $tmpcode  = $sessArr[0];
 $mbruid   = $sessArr[1];
-$fserver  = $d['mediaset']['up_use_fileserver'];
+$fserver  = $d['mediaset']['use_fileserver'];
 $url    = $fserver ? $d['mediaset']['ftp_urlpath'] : str_replace('.','',$saveDir);
 $name   = strtolower($_FILES['files']['name']);
 $size   = $_FILES['files']['size'];
@@ -34,11 +34,28 @@ $fileExt  = $fileExt == 'jpeg' ? 'jpg' : $fileExt;
 $type   = getFileType($fileExt);
 $tmpname  = md5($name).substr($date['totime'],8,14);
 
+include_once $g['path_core'].'opensrc/aws-sdk-php/v3/aws-autoloader.php';
+
+use Aws\S3\S3Client;
+
+define('S3_KEY', $d['mediaset']['S3_KEY']); //발급받은 키.
+define('S3_SEC', $d['mediaset']['S3_SEC'] ); //발급받은 비밀번호.
+define('S3_REGION', $d['mediaset']['S3_REGION']);  //S3 버킷의 리전.
+define('S3_BUCKET', $d['mediaset']['S3_BUCKET']); //버킷의 이름.
+
+$s3 = new S3Client([
+  'version'     => 'latest',
+  'region'      => S3_REGION,
+  'credentials' => [
+      'key'    => S3_KEY,
+      'secret' => S3_SEC,
+  ],
+]);
+
 if ($type == 2 || $type == 4 || $type == 5 ) {
   $tmpname = $tmpname.'.'.$fileExt;
 }
 
-$hidden   = 0;
 if ($d['theme']['hidden_photo'] == 1 && $type == 2) {
   $hidden  = 1;
 }
@@ -57,10 +74,9 @@ $savePath1  = $saveDir.substr($date['today'],0,4);
 $savePath2  = $savePath1.'/'.substr($date['today'],4,2);
 $savePath3  = $savePath2.'/'.substr($date['today'],6,2);
 $folder   = substr($date['today'],0,4).'/'.substr($date['today'],4,2).'/'.substr($date['today'],6,2);
-if(isset($_FILES["files"]))
-{
-       if ($fserver)
-      {
+if(isset($_FILES["files"])) {
+
+       if ($fserver==1) {
             $FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
             $FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);
             if ($d['mediaset']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
@@ -87,8 +103,34 @@ if(isset($_FILES["files"]))
             }
             ftp_put($FTP_CONNECT,$d['mediaset']['ftp_folder'].$folder.'/'.$tmpname,$_FILES['files']['tmp_name'],FTP_BINARY);
             ftp_close($FTP_CONNECT);
-      }
-      else{
+
+      } elseif ($fserver==2) {
+
+        // 파일 업로드
+        $url= 'https://'.S3_BUCKET.'.s3.'.S3_REGION.'.amazonaws.com/';
+        if ($type == 2) {
+             ResizeWidth($_FILES['files']['tmp_name'],$_FILES['files']['tmp_name'],$d['mediaset']['thumbsize']);
+             @chmod($_FILES['files']['tmp_name'],0707);
+             $IM = getimagesize($_FILES['files']['tmp_name']);
+             $width = $IM[0];
+             $height= $IM[1];
+        }
+
+        try {
+          $s3->putObject(Array(
+              'ACL'=>'public-read',
+              'SourceFile'=>$_FILES['files']['tmp_name'],
+              'Bucket'=>S3_BUCKET,
+              'Key'=>$folder.'/'.$tmpname,
+              'ContentType'=>$_FILES['files']['type']
+          ));
+          unlink($_FILES['files']['tmp_name']);
+
+        } catch (Aws\S3\Exception\S3Exception $e) {
+          $result['error'] = 'AwS S3에 파일을 업로드하는 중 오류가 발생했습니다.';
+        }
+
+      } else {
 
             for ($i = 1; $i < 4; $i++)
             {
@@ -106,7 +148,7 @@ if(isset($_FILES["files"]))
                 move_uploaded_file($_FILES['files']['tmp_name'], $saveFile);
                 if ($type == 2)
                 {
-                  exifRotate($saveFile); //가로세로 교정
+                  //exifRotate($saveFile); //가로세로 교정
 
                   $IM = getimagesize($saveFile);
 
@@ -163,6 +205,8 @@ if(isset($_FILES["files"]))
     } else {
       $result['type']='file';
     }
+
+    $result['url']= $url.$folder.'/'.$tmpname;  //ckeditor5 전달용
 
     echo json_encode($result,true);
 }
