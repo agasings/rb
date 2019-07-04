@@ -7325,9 +7325,9 @@ input[type="button"].btn-block {
 }
 
 .page.transition {
-  -webkit-transition-duration: .4s;
-  -o-transition-duration: .4s;
-     transition-duration: .4s;
+  -webkit-transition-duration: .3s;
+  -o-transition-duration: .3s;
+     transition-duration: .3s;
 }
 
 .switch {

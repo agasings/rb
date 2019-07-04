@@ -2515,13 +2515,18 @@ if (typeof jQuery === 'undefined') {
        });
 
 
-      // Scroll Top
-	$(document).on('tap click', '[data-scroll="top"]', function(e) {
-	       var target=e.currentTarget;
-	       var speed=$(target).data('speed')?$(target).data('speed'):'fast';
-	      $('.content').animate({scrollTop: 0},speed);
-	      return false;
-	});
+   // Scroll Top
+ 	$(document).on('tap click', '[data-scroll="top"]', function(e) {
+     var button=e.currentTarget;
+     var target=$(button).data('target')?$(button).data('target'):'';
+     var speed=$(button).data('speed')?$(button).data('speed'):'fast';
+     if (target) {
+       $(target).find('.content').animate({scrollTop: 0},speed);
+     } else {
+       $('.content').animate({scrollTop: 0},speed);
+     }
+     return false;
+ 	});
 
 	// Document Reload
 	$(document).on('tap click', '[data-location="reload"]', function() {
@@ -3127,7 +3132,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (content) {
 				end.append(content);
 			} else {
-				end.append('---------');
+				end.append('');
 			}
 
 			this.$element.append(end);
@@ -3177,7 +3182,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			this.fetchingData = true;
 			this.$element.append(load);
 			if (this.options.hybrid && force !== true) {
-				moreBtn = $('<button type="button" class="btn btn-secondary btn-block">more</button>');
+				moreBtn = $('<button type="button" class="btn btn-secondary btn-block"><span data-role="moreNUM"></span></button>');
 				if (typeof this.options.hybrid === 'object') {
 					moreBtn.append(this.options.hybrid.label);
 				} else {
@@ -4411,7 +4416,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                this.$backdrop = $(document.createElement('div'))
                   .addClass('backdrop')
                   .appendTo(this.$body)
-               this.$backdrop.on('tap.dismiss.rc.popup', $.proxy(function (e) {
+               this.$backdrop.on('click.dismiss.rc.popup', $.proxy(function (e) {
                     if (this.ignoreBackdropClick) {
                       this.ignoreBackdropClick = false
                       return
@@ -4776,7 +4781,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                this.$backdrop = $(document.createElement('div'))
                   .addClass('backdrop')
                   .appendTo(this.$body)
-               this.$backdrop.on('tap.dismiss.rc.sheet', $.proxy(function (e) {
+               this.$backdrop.on('click.dismiss.rc.sheet', $.proxy(function (e) {
                     if (this.ignoreBackdropClick) {
                       this.ignoreBackdropClick = false
                       return
@@ -5148,7 +5153,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                this.$backdrop = $(document.createElement('div'))
                   .addClass('backdrop')
                   .appendTo(this.$body)
-                   this.$backdrop.on('tap.dismiss.rc.fbutton', $.proxy(function (e) {
+                   this.$backdrop.on('click.dismiss.rc.fbutton', $.proxy(function (e) {
                     if (this.ignoreBackdropClick) {
                       this.ignoreBackdropClick = false
                       return
