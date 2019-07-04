@@ -18,7 +18,7 @@ if(!defined('__KIMS__')) exit;
 
 <?php
 getImport('ckeditor5','classic/ckeditor','12.2.0','js');
-getImport('ckeditor5','translations/ko','12.2.0','js');
+getImport('ckeditor5','classic/translations/ko','12.2.0','js');
 ?>
 
 <script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>
