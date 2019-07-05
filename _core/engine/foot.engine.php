@@ -17,10 +17,6 @@
 <div id="_hidden_layer_"></div>
 <div id="_overLayer_"></div>
 
-<?php if (!$g['mobile']): ?>
-<div id="rb-context-menu" class="dropdown"><a data-toggle="dropdown" href="#."></a><div class="dropdown-menu" role="menu"></div></div>
-<?php endif; ?>
-
 <iframe hidden name="_action_frame_<?php echo $m?>" width="0" height="0" frameborder="0" scrolling="no" title="iframe"></iframe>
 
 <?php
@@ -92,25 +88,10 @@ $(function() {
 	ga('send', 'pageview');
 	<?php endif?>
 
-	<?php if($my['uid']):?>
-	<?php if($my['admin'] && $d['admin']['dblclick'] && $panel!='N'):?>
-	document.ondblclick = function(event)
-	{
-		<?php if($_HM['uid']):?>
-		getContext('<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=menu&cat=<?php echo $_HM['uid']?>">메뉴 등록정보</a><?php if($_HM['menutype']>1):?><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=menu&cat=<?php echo $_HM['uid']?>&uid=<?php echo $_HM['uid']?>&type=<?php echo $_HM['menutype']==2?'source':'widget'?>"><?php echo $_HM['menutype']==2?'소스코드 편집모드':''?></a><?php if($_HM['menutype']==2):?><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=menu&cat=<?php echo $_HM['uid']?>&uid=<?php echo $_HM['uid']?>&type=source&markdown=Y">마크다운 편집모드</a><?php endif?><?php endif?><div class="dropdown-divider"></div><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=menu">새 메뉴 만들기</a>',event);
-		<?php elseif($_HP['uid']):?>
-		getContext('<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=page&uid=<?php echo $_HP['uid']?>">페이지 등록정보</a><?php if($_HP['pagetype']>1):?><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=page&uid=<?php echo $_HP['uid']?>&type=<?php echo $_HP['pagetype']==2?'source':'widget'?>"><?php echo $_HP['pagetype']==2?'소스코드 편집모드':''?></a><?php if($_HP['pagetype']==2):?><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=page&uid=<?php echo $_HP['uid']?>&type=source&markdown=Y">마크다운 편집모드</a><?php endif?><?php endif?><div class="dropdown-divider"></div><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=page">새 페이지 만들기</a>',event);
-		<?php else:?>
-		getContext('<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=<?php echo $m?>">관리자모드 보기</a><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=module&front=main&id=<?php echo $m?>">모듈 등록정보</a>',event);
-		<?php endif?>
-	}
-	<?php endif?>
-
-	<?php else:?>
+	<?php if(!$my['uid']):?>
 	$('.rb-modal-login').on('click',function() {
 		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.login')?>');
 	});
 	<?php endif?>
-
 
 </script>
