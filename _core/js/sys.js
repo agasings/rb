@@ -435,3 +435,14 @@ function siteLogin(form) {
 		f.submit();
 	}, 300);
 }
+
+function isInstallToDevice() {
+  return window.localStorage.getItem('installToDevice') == 1;
+}
+
+// oembed 미디어 변환 -ckeditor5 media-embed  : https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html
+function Iframely(ele) {
+  document.querySelectorAll(ele).forEach( element => {
+    iframely.load( element, element.attributes.url.value );
+  } );
+}
