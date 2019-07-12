@@ -1,4 +1,10 @@
 <?php
+// 소요시간 얻기
+function getNowTimes() {
+	$MicroTsmp = explode(' ',microtime());
+	return $MicroTsmp[0]+$MicroTsmp[1];
+}
+
 //TIME얻기
 function getCurrentDate()
 {
@@ -22,15 +28,15 @@ function getSearchSql($w,$k,$ik,$h)
 	return LIB_getSearchSql($w,$k,$ik,$h);
 }
 //페이징
-function getPageLink($lnum,$p,$tpage,$img)
+function getPageLink($lnum,$p,$tpage,$link)
 {
 	include_once $GLOBALS['g']['path_core'].'function/lib/page.lib.php';
-	return LIB_getPageLink($lnum,$p,$tpage,$img);
+	return LIB_getPageLink($lnum,$p,$tpage,$link);
 }
-function getPageLink_RC($lnum,$p,$tpage,$push)
+function getPageLink_RC($lnum,$p,$tpage,$push,$link)
 {
 	include_once $GLOBALS['g']['path_core'].'function/lib/page.lib.php';
-	return LIB_getPageLink_RC($lnum,$p,$tpage,$push);
+	return LIB_getPageLink_RC($lnum,$p,$tpage,$push,$link);
 }
 //문자열끊기
 function getStrCut($long_str,$cutting_len,$cutting_str)
@@ -134,7 +140,7 @@ function strCopy($str1,$str2)
 function getContents($str,$html)
 {
 	include_once $GLOBALS['g']['path_core'].'function/lib/getContent.lib.php';
-	return LIB_getContents($str,$html);
+	return LIB_getContents($str,$html,$filter);
 }
 //쿠키배열
 function getArrayCookie($ck,$split,$n)
@@ -215,6 +221,7 @@ function getUploadImage($upfiles,$d,$content,$ext)
 	include_once $GLOBALS['g']['path_core'].'function/lib/getUploadImage.lib.php';
 	return LIB_getUploadImage($upfiles,$d,$content,$ext);
 }
+
 //도메인
 function getDomain($url)
 {
@@ -241,8 +248,11 @@ function getSearchEngine($url)
 //브라우져
 function getBrowzer($agent)
 {
-	if(isMobileConnect($agent)) return 'Mobile';
-	$set = array('rv:12','rv:11','MSIE 10','MSIE 9','MSIE 8','MSIE 7','MSIE 6','Firefox','Opera','Chrome','Safari');
+	if(isMobileConnect($agent)) {
+		$set = array('Android','iPhone');
+	} else {
+		$set = array('rv:12','rv:11','MSIE 10','MSIE 9','MSIE 8','MSIE 7','MSIE 6','Firefox','Opera','Chrome','Safari');
+	}
 	foreach($set as $val) if (strpos('_'.$agent,$val)) return str_replace('rv:','MSIE ',$val);
 	return '';
 }
@@ -342,7 +352,7 @@ function getSwitchInc($pos)
 	return $incs;
 }
 //알림기록(@ 2.0.0)
-function putNotice($rcvmember,$sendmodule,$sendmember,$message,$referer,$target)
+function putNotice($rcvmember,$sendmodule,$sendmember,$title,$message,$referer,$button,$tag,$skip_email,$skip_push)
 {
 	global $g,$d,$s,$table,$date,$my,$_HS;
 	include $g['path_module'].'notification/var/var.php';
@@ -350,19 +360,59 @@ function putNotice($rcvmember,$sendmodule,$sendmember,$message,$referer,$target)
 	{
 		$R=getDbData($table['s_mbrdata'],'memberuid='.$rcvmember,'noticeconf');
 		$N = explode('|',$R['noticeconf']);
+		$send_email = $N[1]?1:0;
+		$send_push = $N[2]?1:0;
+
+		$title = $title?$title:'새 알림이 도착했습니다.';
 		if (!$N[0] && !strstr($N[3],'['.$sendmodule.']') && !strstr($N[4],'['.$sendmember.']'))
 		{
 			$message = $my['admin'] ? $message : strip_tags($message);
-			$QKEY = 'uid,mbruid,site,frommodule,frommbr,message,referer,target,d_regis,d_read';
-			$QVAL = "'".$g['time_srnad']."','".$rcvmember."','".$s."','".$sendmodule."','".$sendmember."','".$message."','".$referer."','".$target."','".$date['totime']."',''";
+			$QKEY = 'uid,mbruid,site,frommodule,frommbr,title,message,referer,button,tag,d_regis,d_read,email,push';
+			$QVAL = "'".$g['time_srnad']."','".$rcvmember."','".$s."','".$sendmodule."','".$sendmember."','".$title."','".$message."','".$referer."','".$button."','".$tag."','".$date['totime']."','',$send_email,$send_push";
 			getDbInsert($table['s_notice'],$QKEY,$QVAL);
 			getDbUpdate($table['s_mbrdata'],'num_notice='.getDbRows($table['s_notice'],'mbruid='.$rcvmember." and d_read=''"),'memberuid='.$rcvmember);
-			if ($N[5])
-			{
-				include_once $g['path_core'].'function/email.func.php';
-				$M = getDbData($table['s_mbrdata'],'memberuid='.$rcvmember,'name,email');
-				getSendMail($M['email'].'|'.$M['name'],$my['email'].'|'.$my['nic'],'['.$_HS['name'].'] 새 알림이 도착했습니다.',$message,'HTML');
+
+			if ($send_email && !$skip_email) {  //이메일 알림
+			  include_once $g['path_core'].'function/email.func.php';
+			  $M = getDbData($table['s_mbrdata'],'memberuid='.$rcvmember,'name,email');
+			  $join_email = $d['member']['join_email']?$d['member']['join_email']:$d['admin']['sysmail'];
+			  $join_tel = $d['member']['join_tel']?$d['member']['join_tel']:$d['admin']['sms_tel'];
+
+			  $email_title = '['.$_HS['name'].' 알림] '.$title;
+
+			  $email_body = implode('',file($g['path_module'].'/admin/var/email.header.txt'));  //이메일 헤더 양식
+			  $email_body .= '<p>'.$message.'</p>';
+			  $email_body.= '<p><a href="'.$referer.'" style="display:block;font-size:15px;color:#fff;text-decoration:none;padding: 15px;background:#007bff;width: 200px;text-align: center;margin: 38px auto;" target="_blank">'.$button.'</a></p>';
+			  $email_body.= implode('',file($g['path_module'].'/admin/var/email.footer.txt')); // //이메일 풋터 양식
+			  $email_body = str_replace('{EMAIL_MAIN}',$join_email,$email_body); //대표 이메일
+			  $email_body = str_replace('{TEL_MAIN}',$join_tel,$email_body); // 대표 전화
+			  $email_body = str_replace('{SITE}',$_HS['name'],$email_body); //사이트명
+
+			  getSendMail($M['email'].'|'.$M['name'],$my['email'].'|'.$my['nic'],$email_title,$email_body,'HTML');
 			}
+
+
+			if ($send_push && !$skip_push) { //푸시 알림
+				include_once $g['path_core'].'function/fcm.func.php';
+				$TKD = getDbArray($table['s_iidtoken'],'mbruid='.$rcvmember,'token','uid','asc',0,1);
+				$tokenArray = array();
+
+				if ($sendmember==0) {
+					$avatar = $g['url_http'].'/_core/images/touch/homescreen-192x192.png';
+				} else {
+					$M = getDbData($table['s_mbrdata'],'memberuid='.$sendmember,'photo');
+					$avatar = $g['s'].'/_var/avatar/'.$M['photo'];
+					$avatar_data=array('src'=>$avatar,'width'=>'192','height'=>'192','sharpen'=>1);
+					if ($M['photo']) $avatar=getTimThumb($avatar_data);
+					else $avatar=$g['s'].'/_var/avatar/0.jpg';
+				}
+
+			  while ($row = db_fetch_array($TKD)) {
+			    array_push($tokenArray,$row['token']);
+			  }
+				getSendFCM($tokenArray,$title,$message,$avatar,$referer,$tag);
+			}
+
 		}
 	}
 }
@@ -608,7 +658,7 @@ function getTimThumb($data=array())
 }
 
 // 아바타 이미지 추출함수
-function getAavatarSrc($mbruid,$size){
+function getAvatarSrc($mbruid,$size){
 	global $g,$table;
 	$M = getDbData($table['s_mbrdata'],'memberuid='.$mbruid,'photo');
   $avatar = $g['s'].'/_var/avatar/'.$M['photo'];
@@ -619,10 +669,10 @@ function getAavatarSrc($mbruid,$size){
 }
 
 // 프로필 페이지 링크
-function getProfileLink($mbruid){
+function getProfileLink($mbruid) {
 	global $g,$table;
-	$M = getDbData($table['s_mbrid'],'uid='.$mbruid,'id');
-	$result=$g['s'].'/@'.$M['id'];
+	$M = getUidData($table['s_mbrid'],$mbruid);
+	$result = $g['s'].'/@'.$M['id'];
 	return $result;
 }
 
@@ -641,12 +691,54 @@ function getUpImageSrc($R){
 }
 
 // 미리보기용 이미지 resize 함수 .htaccess 연계됨
-function getPreviewResize($image,$size){
+function getPreviewResize($image,$size,$host,$folder){
 	if ($image) {
 		$_array=explode('.',$image);
 	  $name=$_array[0];
 	  $ext=$_array[1];
-		$result=$name.'_'.$size.'.'.$ext;
+
+		switch ($size) {
+		  case 's':
+		    $w=75;$h=75;
+		    break;
+		  case 'q':
+		    $w=150;$h=150;
+		    break;
+			case 't':
+		    $w=100;$h=67;
+		    break;
+			case 'm':
+		    $w=240;$h=160;
+		    break;
+			case 'n':
+		    $w=320;$h=213;
+		    break;
+			case 'z':
+		    $w=640;$h=427;
+		    break;
+			case 'c':
+		    $w=800;$h=534;
+		    break;
+			case 'b':
+		    $w=1024;$h=683;
+		    break;
+			case 'h':
+		    $w=1600;$h=1068;
+		    break;
+			case 'k':
+		    $w=2048;$h=1367;
+		    break;
+		  default:
+				$_sizeArray=explode('x',$size);
+		    $w=$_sizeArray[0];$h=$_sizeArray[1];
+		}
+
+		if ($host) {
+			$result='/_core/opensrc/timthumb/thumb.php?src='.$host.'/'.$folder.'/'.$image.'&w='.$w.'&h='.$h.'&s=1';
+		} else {
+			$result=$url.$folder.'/'.$name.'_'.$size.'.'.$ext;
+		}
+
 	} else {
 		$result='';
 	}
@@ -678,36 +770,6 @@ function getFeaturedimgMeta($R,$meta){
 	$F=getUidData($table['s_upload'],trim($R['featured_img']));
 	$meta=$F[$meta];
   return $meta;
-}
-
-// html to markdown class 호출 함수
-function getHtmlToMarkdownClass($className)
-{
-  global $g;
-
-  $path=$g['path_core'].'opensrc/html-to-markdown/src/';
-
-  $className = ltrim($className, '\\');
-  $fileName  = '';
-  $namespace = '';
-  if ($lastNsPos = strrpos($className, '\\')) {
-      $namespace = substr($className, 0, $lastNsPos);
-      $className = substr($className, $lastNsPos + 1);
-      $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-  }
-  $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-
-  require_once $path.$fileName;
-}
-
-// html to markdown
-spl_autoload_register('getHtmlToMarkdownClass');
-use League\HTMLToMarkdown\HtmlConverter;
-
-function getMarkdownContents($str){
-	$converter = new HtmlConverter(array('header_style'=>'atx'));
-	$mdContent=$converter->convert(getContents($str,'HTML'));
-	return $mdContent;
 }
 
 //게시물 링크
@@ -768,4 +830,5 @@ function getConnectUrl($s,$id,$secret,$callBack,$type){
 	}
 	return $g['connect'];
 }
+
 ?>
