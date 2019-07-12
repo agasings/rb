@@ -32,5 +32,5 @@
 
 		</ul>
 	</div>
-
+	<p><!-- 출력을 원치 않으실 경우 지우세요 -->Powered by kimsQ rb (Runtime <?php echo round(getNowTimes()-$g['time_start'],3)?>)</p>
 </footer>
