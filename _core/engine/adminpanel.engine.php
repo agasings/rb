@@ -199,7 +199,7 @@ $mf_json = json_decode($mf_str , true);
 							<?php foreach($_SITES['list'] as $S):?>
 							<li id="sidebar-sites-<?php echo $S['id']?>" class="list-group-item<?php if($r==$S['id']):?> active<?php endif?>">
 								<span class="pull-right rb-blank"><a href="<?php echo $g['s']?>/?r=<?php echo $S['id']?>&amp;panel=N" target="_blank" class="btn btn-link btn-sm js-tooltip"><i class="fa fa-share" title="새창"></i></a></span>
-								<a href="<?php echo $g['s']?>/?r=<?php echo $S['id']?>&amp;panel=Y" class="rb-inframe">
+								<a href="<?php echo $g['s']?>/?r=<?php echo $S['id']?>&amp;panel=Y&amp;important=panel" class="rb-inframe">
 									<i class="<?php echo $S['icon']?$S['icon']:'fa fa-home'?>"></i>
 									<span class="menu-item-parent"><?php echo $S['label']?></span>
 									<?php if($S['s004']==2):?><span class="badge pull-right inbox-badge"><i class="fa fa-lock"></i></span><?php endif?>

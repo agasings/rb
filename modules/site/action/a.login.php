@@ -42,6 +42,8 @@ if ($M['pw'] != getCrypt($pw,$M1['d_regis']) && $M1['tmpcode'] != getCrypt($pw,$
 	exit();
 }
 
+
+
 if ($usertype == 'admin')
 if (!$M1['admin']) getLink('reload','parent.','회원님은 관리자가 아닙니다.',$history);
 
@@ -120,13 +122,26 @@ if ($usertype == 'admin' || $M1['admin']) {
 	$r = $SD['id'];
 }
 
-if ($usertype == 'admin') getLink($g['s'].'/?r='.$r.'&panel=Y&pickmodule=site','parent.parent.','','');
+if ($usertype == 'admin' && $M1['admin']) {
+	getLink($g['s'].'/?r='.$r.'&panel=Y&pickmodule=site&amp;important=panel','parent.parent.','','');
+}
 
 if ($M1['admin']) {
 	setrawcookie('site_login_result', rawurlencode('관리자 로그인 되었습니다.|default'));  // 알림처리를 위한 로그인 상태 cookie 저장
-	if ($g['mobile']&&$_SESSION['pcmode']!='Y') getLink($referer?$referer:$g['s'].'/?r='.$r,'parent.','','');
-	getLink($g['s'].'/?r='.$r.'&panel=Y&_admpnl_='.urlencode($referer),'parent.','','');
+
+	$site	= getUidData($table['s_site'],$s);
+	$site_array = explode('/',$site['layout']);
+	$nopanel_file = $g['path_layout'].$site_array[0].'/_var/nopanel.txt';
+
+	if (is_file($nopanel_file) || ($g['mobile']&&$_SESSION['pcmode']!='Y')) {
+		getLink($referer?$referer:$g['s'].'/?r='.$r,'parent.','','');
+	} else {
+		getLink($g['s'].'/?r='.$r.'&_admpnl_='.urlencode($referer).'&panel=Y','parent.','','');
+	}
+
+} else {
+	setrawcookie('site_login_result', rawurlencode($M1['name'].'님 로그인 되었습니다.'));  // 알림처리를 위한 로그인 상태 cookie 저장
+	getLink($referer?$referer:$g['s'].'/?r='.$r,'parent.','','');
 }
-setrawcookie('site_login_result', rawurlencode($M1['name'].'님 로그인 되었습니다.'));  // 알림처리를 위한 로그인 상태 cookie 저장
-getLink($referer?$referer:$g['s'].'/?r='.$r,'parent.','','');
+
 ?>
