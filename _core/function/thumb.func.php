@@ -214,17 +214,17 @@ function exifRotate($picture)
 		$degree = 180;
 	}
 	if($degree) {
-		if($exifData[FileType] == 1) {
+		if($exifData['FileType'] == 1) {
 			$source = imagecreatefromgif($picture);
 			$source = imagerotate ($source , $degree, 0);
 			imagegif($source, $picture);
 		}
-		else if($exifData[FileType] == 2) {
+		else if($exifData['FileType'] == 2) {
 			$source = imagecreatefromjpeg($picture);
 			$source = imagerotate ($source , $degree, 0);
 			imagejpeg($source, $picture);
 		}
-		else if($exifData[FileType] == 3) {
+		else if($exifData['FileType'] == 3) {
 			$source = imagecreatefrompng($picture);
 			$source = imagerotate ($source , $degree, 0);
 			imagepng($source, $picture);
