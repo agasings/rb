@@ -11,14 +11,15 @@ if(!defined('__KIMS__')) exit;
 	<div data-role="editor" class="d-none">
 		<input type="hidden" name="content" value="">
 		<div id="ckeditor_textarea" class="border">
-			<?php echo getContents($R['content'],$R['html'])?>
+			<?php echo getContents($R['content'],$R['html'],'')?>
 		</div>
 	</div>
 </div>
 
+
 <?php
-getImport('ckeditor5','balloon-block/ckeditor','12.2.0','js');
-getImport('ckeditor5','balloon-block/translations/ko','12.2.0','js');
+getImport('ckeditor5','balloon-block/build/ckeditor','12.2.0','js');
+getImport('ckeditor5','balloon-block/build/translations/ko','12.2.0','js');
 ?>
 
 <script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>
@@ -30,7 +31,28 @@ let editor;
 BalloonEditor
 .create( document.querySelector( '#ckeditor_textarea' ),{
 	language: 'ko',
-	extraPlugins: [rbUploadAdapterPlugin]
+	extraPlugins: [rbUploadAdapterPlugin],
+	typing: {
+			transformations: {
+					include: [
+							// Use only the 'quotes' and 'typography' groups.
+							'quotes',
+							'typography',
+							'arrowLeft',
+							'arrowRight',
+
+							// Plus, some custom transformation.
+							{ from: 'CKE', to: 'CKEditor' }
+					],
+
+					extra: [
+							// Add some custom transformations – e.g. for emojis.
+							{ from: ':)', to: '🙂' },
+							{ from: ':+1:', to: '👍' },
+							{ from: ':tada:', to: '🎉' }
+					],
+			}
+	},
 } )
 .then( newEditor => {
 	editor = newEditor;

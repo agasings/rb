@@ -79,7 +79,7 @@ function rbUploadAdapterPlugin( editor ) {
 	};
 }
 
-function InserHTMLtoEditor( type,html,src,caption ) {
+function InserHTMLtoEditor( html ) {
 	const content = html;
 	const viewFragment = editor.data.processor.toView( content );
 	const modelFragment = editor.data.toModel( viewFragment );

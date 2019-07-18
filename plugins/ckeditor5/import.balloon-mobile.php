@@ -11,14 +11,14 @@ if(!defined('__KIMS__')) exit;
 	<div data-role="editor" class="d-none">
 		<input type="hidden" name="content" value="">
 		<div id="ckeditor_textarea">
-			<?php echo getContents($R['content'],$R['html'])?>
+			<?php echo getContents($R['content'],$R['html'],'')?>
 		</div>
 	</div>
 </div>
 
 <?php
-getImport('ckeditor5','balloon/ckeditor','12.2.0','js');
-getImport('ckeditor5','balloon/translations/ko','12.2.0','js');
+getImport('ckeditor5','balloon/build/ckeditor','12.2.0','js');
+getImport('ckeditor5','balloon/build/translations/ko','12.2.0','js');
 ?>
 
 <script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>

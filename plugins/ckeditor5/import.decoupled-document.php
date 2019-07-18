@@ -14,7 +14,7 @@ if(!defined('__KIMS__')) exit;
     border-radius: var(--ck-border-radius);
 
     /* Set vertical boundaries for the document editor. */
-    max-height: 500px;
+    /* max-height: 500px; */
 
     /* This element is a flex container for easier rendering. */
     display: flex;
@@ -167,8 +167,8 @@ Preserve the relative scale, though. */
 </div>
 
 <?php
-getImport('ckeditor5','decoupled-document/ckeditor','12.2.0','js');
-getImport('ckeditor5','decoupled-document/translations/ko','12.2.0','js');
+getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');
+getImport('ckeditor5','decoupled-document/build/translations/ko','12.2.0','js');
 ?>
 
 
