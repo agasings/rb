@@ -15,3 +15,4 @@ modules/bbs/var/
 modules/post/
 pages/*
 _tmp/widget/*
+plugins/highlight.js/

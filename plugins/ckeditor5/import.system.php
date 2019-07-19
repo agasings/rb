@@ -12,7 +12,7 @@ if(!defined('__KIMS__')) exit;
 
 	<div data-role="editor" class="d-none">
 		<div class="document-editor__toolbar border"></div>
-		<div class="document-editor">
+		<div class="document-editor border-top-0">
 		    <div class="document-editor__toolbar"></div>
 		    <div class="document-editor__editable-container">
 		        <div class="document-editor__editable">
@@ -98,7 +98,7 @@ DecoupledEditor
 		const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
 		toolbarContainer.appendChild( editor.ui.view.toolbar.element );
 
-    $(".document-editor").on('scroll', function(){
+    $('.document-editor__editable-container').on('scroll', function(){
       var height = $(this).scrollTop();
       if(height > 50) {
         $('.document-editor__toolbar').addClass('shadow-sm')
