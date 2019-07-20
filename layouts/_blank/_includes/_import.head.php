@@ -34,7 +34,7 @@
 <!-- bootstrap-notify : https://github.com/mouse0270/bootstrap-notify  -->
 <?php getImport('bootstrap-notify','bootstrap-notify.min','3.1.3','js')?>
 
-<?php getImport('clipboard','clipboard.min','1.5.5','js') ?>
+<?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 
 <!-- global css -->
 <link href="<?php echo $g['url_layout']?>/_css/style.css" rel="stylesheet">

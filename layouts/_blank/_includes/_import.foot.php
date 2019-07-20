@@ -14,7 +14,7 @@
 
   $(function () {
 
-    var clipboard = new Clipboard('.js-clipboard');
+    var clipboard = new ClipboardJS('.js-clipboard');
 
     clipboard.on('success', function (e) {
       $(e.trigger)
