@@ -1,3 +1,5 @@
+
+
 html,
 #rb-body,
 #content-main,
@@ -8,10 +10,114 @@ html,
 }
 
 #rb-page-source {
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	padding-top:53px;
+	background-color:#fafafa
+}
+
+#rb-page-source nav {
+	position: fixed;
+	left:0;
+	right:0;
+	height:64px;
+	z-index:99
+}
+
+
+.document-editor__toolbar {
+	position: fixed;
+	top: 117px;
+	right: 0;
+	left: 0;
+}
+.document-editor {
+	position: absolute;
+	top: 157px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+	-webkit-transition-property: left,right,top,bottom,width,margin;
+	transition-property: left,right,top,bottom,width,margin;
+	-webkit-transition-duration: .2s;
+	transition-duration: .2s;
+}
+
+.rb-fixed-sidebar .document-editor {
+	right: 350px;
+}
+
+.rb-fixed-sidebar{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.rb-attach-sidebar {
+	position: fixed;
+	top: 118px;
+	bottom:0;
+	right: -350px;
+	left:auto;
+	width: 350px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	box-shadow: -1px 0 3px rgba(0, 0, 0, 0.5);
+	-webkit-transition: 250ms cubic-bezier(0.1,.57,.1,1);
+	transition: 250ms cubic-bezier(0.1,.57,.1,1);
+	-webkit-transform: translate(0px,0) translateZ(0px);
+	-ms-transform: translate(0px,0) translateZ(0px);
+	transform: translate(0px,0) translateZ(0px);
+}
+
+.rb-fixed-sidebar .rb-attach-sidebar {
+	right: 0;
+}
+
+.rb-docs .rb-attach-sidebar {
+	top: 157px;
+}
+
+.opener {
+	position: fixed;
+	right: 40px;
+	bottom: 15px;
+}
+
+.opener .btn {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%
+}
+
+.rb-fixed-sidebar .opener {
+	display: none
+}
+
+#rb-page-source {
 	color: #333;
 	font-family: 'Apple SD Gothic Neo',Dotum,'돋움',sans-serif;
 	font-size: 14px;
 	line-height: 1.5;
+}
+
+#rb-page-source .nav-link {
+  padding: .5rem .7rem;
+	color: #444
+}
+#rb-page-source .dropdown-toggle::after {
+	display: inline-block;
+	content: "";
+	border: none
+}
+#rb-page-source .dropdown-menu {
+	margin-top: -3px;
+  border-radius: 0;
 }
 #rb-page-source .btn.btn-light {
   background-color: #fff;
@@ -208,10 +314,6 @@ html,
   border-bottom: 1px solid #ddd !important;
 }
 
-
-
-
-
 #rb-page-widget {
 
 }
@@ -309,11 +411,15 @@ html,
 	font-size: 12px;
 }
 
-.rb-top-btnbox {
-	position: relative;
-	top:-10px;
+#tab-edit-area {
+	position: absolute;
+	top : 117px;
+  left: 0;
+  right: 350px;
+	bottom: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
-
 
 #tab-edit-area .card-header {
 	background-color: rgba(0,0,0,.7);

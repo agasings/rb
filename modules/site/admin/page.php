@@ -9,7 +9,7 @@ if ($keyw)
 {
 	$sendsql .= " and (id like '%".$keyw."%' or name like '%".$keyw."%' or category like '%".$keyw."%')";
 }
-$PAGES = getDbArray($table['s_page'],$sendsql,'*','d_update','desc',$recnum,$p);
+$PAGES = getDbArray($table['s_page'],$sendsql,'*','d_last','desc',$recnum,$p);
 $NUM = getDbRows($table['s_page'],$sendsql);
 $TPG = getTotalPage($NUM,$recnum);
 
@@ -84,7 +84,7 @@ $pageType = array('','모듈연결','코드편집','문서편집');
 						</tr>
 					</thead>
 					<tbody>
-						<?php $pageTypeIcon=array('','fa-link','fa-puzzle-piece','fa-pencil')?>
+						<?php $pageTypeIcon=array('','fa-link','fa-puzzle-piece','fa-file-text-o')?>
 						<?php while($PR = db_fetch_array($PAGES)):?>
 						<tr<?php if($uid==$PR['uid']):?> class="table-active"<?php endif?> data-tooltip="tooltip" title="">
 							<td onclick="goHref('<?php echo $g['adm_href']?>&amp;uid=<?php echo $PR['uid']?>&amp;recnum=<?php echo $recnum?>&amp;p=<?php echo $p?>&amp;cat=<?php echo urlencode($cat)?>&amp;keyw=<?php echo urlencode($keyw)?>#site-page-info');">
@@ -156,7 +156,7 @@ $pageType = array('','모듈연결','코드편집','문서편집');
 
 			<div class="card-body">
 				<div class="form-group row rb-outside">
-					<label class="col-lg-2 col-form-label text-lg-right">페이지명</label>
+					<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">페이지명</label>
 					<div class="col-lg-10 col-xl-9">
 						<div class="input-group input-group-lg">
 							<?php if($R['uid']):?>
@@ -165,7 +165,7 @@ $pageType = array('','모듈연결','코드편집','문서편집');
 									<span id="rb-document-type"><?php echo $pageType[$R['pagetype']]?></span> <span class="caret"></span>
 								</button>
 								<div class="dropdown-menu" role="menu">
-									<a class="dropdown-item" href="#" onclick="docType(3,'<?php echo $pageType[3]?>');"><i class="fa fa-hashtag"></i> <?php echo $pageType[3]?></a>
+									<a class="dropdown-item" href="#" onclick="docType(3,'<?php echo $pageType[3]?>');"><i class="fa fa-file-text-o"></i> <?php echo $pageType[3]?></a>
 									<a class="dropdown-item" href="#" onclick="docType(2,'<?php echo $pageType[2]?>');"><i class="fa fa-code"></i> <?php echo $pageType[2]?></a>
 									<a class="dropdown-item" href="#" onclick="docType(1,'<?php echo $pageType[1]?>');"><i class="kf kf-module"></i> <?php echo $pageType[1]?></a>
 								</div>
@@ -260,8 +260,8 @@ $pageType = array('','모듈연결','코드편집','문서편집');
 						<div class="col-lg-10 col-xl-9 offset-lg-2">
 
 							<div class="btn-group">
-								<button type="button" class="btn btn-light rb-modal-markdown"><i class="fa fa-hashtag"></i> 기본</button>
-								<button type="button" class="btn btn-light rb-modal-markdown-mobile"><i class="fa fa-hashtag"></i> 모바일 전용</button>
+								<button type="button" class="btn btn-light rb-modal-wysiwyg">기본</button>
+								<button type="button" class="btn btn-light rb-modal-wysiwyg-mobile">모바일 전용</button>
 							</div>
 							<div class="form-text mt-2">
 								<small>
@@ -684,11 +684,11 @@ $(document).ready(function() {
 	$('.rb-modal-code-mobile').on('click',function() {
 		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=page&uid=<?php echo $R['uid']?>&type=source&cat=<?php echo urlencode($cat)?>&p=<?php echo $p?>&recnum=<?php echo $recnum?>&keyw=<?php echo urlencode($keyw)?>&mobileOnly=Y');
 	});
-	$('.rb-modal-markdown').on('click',function() {
-		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=page&uid=<?php echo $R['uid']?>&type=source&markdown=Y&cat=<?php echo urlencode($cat)?>&p=<?php echo $p?>&recnum=<?php echo $recnum?>&keyw=<?php echo urlencode($keyw)?>');
+	$('.rb-modal-wysiwyg').on('click',function() {
+		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=page&uid=<?php echo $R['uid']?>&type=source&wysiwyg=Y&cat=<?php echo urlencode($cat)?>&p=<?php echo $p?>&recnum=<?php echo $recnum?>&keyw=<?php echo urlencode($keyw)?>');
 	});
-	$('.rb-modal-markdown-mobile').on('click',function() {
-		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=page&uid=<?php echo $R['uid']?>&type=source&markdown=Y&cat=<?php echo urlencode($cat)?>&p=<?php echo $p?>&recnum=<?php echo $recnum?>&keyw=<?php echo urlencode($keyw)?>&mobileOnly=Y');
+	$('.rb-modal-wysiwyg-mobile').on('click',function() {
+		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=page&uid=<?php echo $R['uid']?>&type=source&wysiwyg=Y&cat=<?php echo urlencode($cat)?>&p=<?php echo $p?>&recnum=<?php echo $recnum?>&keyw=<?php echo urlencode($keyw)?>&mobileOnly=Y');
 	});
 	$('.rb-modal-module').on('click',function() {
 		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.joint&amp;dropfield=jointf&amp;cmodule=[site]')?>');
@@ -834,10 +834,4 @@ function docType(n,str)
 	document.procForm.pagetype.value = n;
 	document.procForm.submit();
 }
-<?php if($d['admin']['dblclick']):?>
-document.ondblclick = function(event)
-{
-	getContext('<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?><?php if($R['id']):?>&mod=<?php echo $R['id']?><?php endif?>">사용자모드 보기</a><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=<?php echo $m?>&module=<?php echo $module?>&front=page">새 페이지 만들기</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#." onclick="getId(\'rb-submit-button\').click();">실행하기</a>',event);
-}
-<?php endif?>
 </script>

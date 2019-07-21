@@ -5,6 +5,7 @@ if ($_mtype == 'page')
 	$_filekind = $r.'-pages/'.$_HP['id'];
 	$_filetype= '페이지';
 	$_filesbj = $_HP['name'];
+	$_infopage = $g['s'].'/?r='. $r.'&amp;m='.$m.'&amp;module='.$module.'&amp;front='.$_mtype.'&amp;uid='.$uid.'&amp;cat='.urlencode($cat).'&amp;p='.$p.'&amp;recnum='.$recnum.'&amp;keyw='.urlencode($keyw);
 }
 if ($_mtype == 'menu')
 {
@@ -12,13 +13,15 @@ if ($_mtype == 'menu')
 	$_filekind = $r.'-menus/'.$_HM['id'];
 	$_filetype = '메뉴';
 	$_filesbj = $_HM['name'];
-
+	$_infopage = $g['s'].'/?r='. $r.'&amp;m='.$m.'&amp;module='.$module.'&amp;front='.$_mtype.'&amp;cat='.$uid.'&amp;code='.$code;
 	include $g['path_core'].'function/menu.func.php';
 	$ctarr = getMenuCodeToPath($table['s_menu'],$_HM['uid'],0);
 	$ctnum = count($ctarr);
 	$_HM['code'] = '';
 	for ($i = 0; $i < $ctnum; $i++) $_HM['code'] .= $ctarr[$i]['id'].($i < $ctnum-1 ? '/' : '');
 }
+
+$filekind_array = explode('/', $_filekind);
 
 if($type == 'source'):
 $_editArray = array(
@@ -27,298 +30,307 @@ $_editArray = array(
 	'css' => array('css','CSS','.css'),
 	'js' => array('js','Javascript','.js'),
 );
+
+$source = is_file($g['path_page'].$_filekind.'.php') ? implode('',file($g['path_page'].$_filekind.'.php')) : '' ;
+$mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g['path_page'].$_filekind.'.mobile.php')) : '';
 ?>
 
 <!-- timeago -->
 <?php getImport('jquery-timeago','jquery.timeago',false,'js')?>
 <?php getImport('jquery-timeago','locales/jquery.timeago.ko',false,'js')?>
 
-<!-- 직접 꾸미기 -->
-<div id="rb-page-source" class="p-4">
+<!-- toc : https://github.com/ndabas/toc -->
+<?php getImport('jquery.toc','jquery.toc.min','0.4.0','js')?>
 
-	<div class="d-flex justify-content-between">
-		<h4>
-			<?php echo $_filetype?>
-			<span class="badge badge-primary badge-pill d-inline-block align-top"><?php echo $_filesbj?></span>
-		</h4>
-		<div class="rb-top-btnbox">
-				<?php if($markdown=='Y'):?>
-				<div class="btn-group">
-					<a class="btn btn-light rb-modal-photoset" href="#." data-toggle="modal" data-target="#modal_window"><i class="fa fa-photo"></i> 포토셋</a>
-					<button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a href="#." data-toggle="modal" data-target="#modal_window" class="dropdown-item rb-modal-videoset"><i class="fa fa-video-camera"></i> 비디오셋</a>
-						<a href="#." data-toggle="modal" data-target="#modal_window" class="dropdown-item rb-modal-widgetedit"><i class="fa fa-puzzle-piece"></i> 위젯</a>
+<!-- smooth-scroll : https://github.com/cferdinandi/smooth-scroll -->
+<?php getImport('smooth-scroll','smooth-scroll.polyfills.min','16.1.0','js') ?>
+
+<!-- 직접 꾸미기 -->
+<div id="rb-page-source" class="<?php echo $wysiwyg=='Y'?'rb-docs':'' ?><?php if($_SESSION['editor_sidebar']=='right'):?> rb-fixed-sidebar<?php endif?>">
+
+	<nav class="d-flex align-items-center py-2 pl-4 pr-5 bg-white">
+
+		<a href="<?php echo $_infopage?>" class="text-center">
+			<i class="fa fa-file-text fa-2x" data-toggle="tooltip" title="등록정보"></i>
+		</a>
+
+		<div class="ml-1">
+			<h4 class="h5 mt-2 mb-0 ml-3">
+				<?php echo $_filesbj?> <span class="badge badge-primary"><?php echo $mobileOnly?'모바일 전용':'' ?></span>
+			</h4>
+
+			<div class="d-flex">
+				<ul class="nav ml-2">
+					<li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle pb-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          파일
+		        </a>
+
+		        <div class="dropdown-menu">
+							<?php if ($wysiwyg=='Y'): ?>
+							<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>">소스코드 편집</a>
+							<?php else: ?>
+							<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;wysiwyg=Y&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>">에디터 편집</a>
+							<?php endif; ?>
+
+		          <div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;a=deletemenu&amp;cat=<?php echo $cat?>&amp;back=Y" onclick="return hrefCheck(this,true,'정말로 삭제하시겠습니까?');"><?php echo $_mtype=='menu'?'메뉴':'페이지' ?> 삭제</a>
+		        </div>
+
+		      </li>
+					<li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle pb-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          삽입
+		        </a>
+		        <div class="dropdown-menu">
+							<?php if($wysiwyg=='Y'):?>
+							<a class="dropdown-item rb-modal-photoset" href="#." data-toggle="modal" data-target="#modal_window">포토셋</a>
+							<a class="dropdown-item rb-modal-videoset" href="#." data-toggle="modal" data-target="#modal_window">비디오셋</a>
+							<div class="dropdown-divider"></div>
+		          <a class="dropdown-item rb-modal-widgetedit" href="#." data-toggle="modal" data-target="#modal_window">위젯</a>
+							<?php else:?>
+							<a class="dropdown-item rb-modal-widgetcode" href="#." data-toggle="modal" data-target="#modal_window">위젯</a>
+							<?php endif?>
+		        </div>
+		      </li>
+				</ul>
+
+				<?php if ($_HM['d_last'] || $_HP['d_last']): ?>
+				<div class="navbar-text text-muted ml-3">
+					<time class="timeago" datetime="<?php echo getDateFormat($_HM['d_last'],'c')?>">
+						<?php echo getDateFormat(($_mtype == 'menu')?$_HM['d_last']:$_HP['d_last'],'Y.m.d')?>
+					</time>
+					에 마지막으로 수정했습니다.
+				</div>
+				<?php endif; ?>
+			</div>
+
+		</div>
+
+		<div class="d-none">
+
+			<?php if ($wysiwyg=='Y'): ?>
+
+				<?php if ($mobileOnly): ?>
+					<div class="p-3 mb-3 alert-danger" role="alert" style="z-index:900">
+						<i class="fa fa-mobile fa-3x fa-pull-left" aria-hidden="true"></i>
+						본 파일은 <strong>모바일 전용</strong> 파일으로 모바일 기기에서만 출력됩니다. 내용이 없으면 자동삭제 됩니다.
+						PHP 또는 Javascript 가 포함된 경우에는 <a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>" class="alert-link"><i class="fa fa-code" aria-hidden="true"></i> 소스코드 편집모드</a> 를 이용해 주세요.
+					</div>
+					<?php  $_filekind= $_filekind.'.mobile'; ?>
+				<?php else: ?>
+					<div class="p-3 mb-3 alert-danger mx-3 d-none" role="alert" style="z-index:900">
+
+						<?php if (is_file($g['path_page'].$_filekind.'.mobile.php')): ?>
+						<i class="fa fa-desktop fa-3x fa-pull-left" aria-hidden="true"></i>
+						본 파일은 데스크탑에서만 출력됩니다.
+						<?php else: ?>
+						<i class="fa fa-desktop fa-3x fa-pull-left" aria-hidden="true"></i>
+						<i class="fa fa-mobile fa-3x fa-pull-left" aria-hidden="true"></i>
+						본 파일은 모든 기기에서 출력됩니다.  모바일 전용 컨텐츠를 구분하려면 <a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;markdown=Y&amp;mobileOnly=Y&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>" class="alert-link">모바일 전용파일</a>을 생성해 주세요.<br>
+						<?php endif; ?>
+
+					 PHP 또는 Javascript 가 포함된 경우에는 <a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>" class="alert-link"><i class="fa fa-code" aria-hidden="true"></i> 소스코드 편집모드</a> 를 이용해 주세요.
+					</div>
+				<?php endif; ?>
+
+				<div class="mx-3">
+					<ol class="breadcrumb bg-white text-dark mb-0">
+						<li class="breadcrumb-item"><i class="fa fa-folder text-muted fa-fw" aria-hidden="true"></i> root</li>
+						<li class="breadcrumb-item">pages</li>
+						<?php if($_mtype=='menu'):?>
+						<li class="breadcrumb-item">menu</li>
+						<?php endif?>
+						<li class="breadcrumb-item"><?php echo $filekind_array[0]?></li>
+						<li class="breadcrumb-item active"><?php echo $filekind_array[1]?>.php</li>
+					</ol>
+					<div class="pr-3">
 					</div>
 				</div>
-				<?php else:?>
-				<a href="#." class="btn btn-light rb-modal-widgetcode" data-toggle="modal" data-target="#modal_window"><i class="fa fa-puzzle-piece fa-lg"></i> 위젯</a>
-				<?php endif?>
+			<?php endif; ?>
+
+
+
+		</div>
+
+
+		<div class="ml-auto rb-top-btnbox">
 
 				<?php if ($_mtype == 'page'):$_viewpage=RW('mod='.$_HP['id'])?>
 				<!-- 페이지 -->
-				<div class="btn-group rb-btn-view">
-					<a href="<?php echo $_viewpage?>" class="btn btn-light">접속하기</a>
-					<button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a class="dropdown-item" href="<?php echo $_viewpage?>" target="_blank"><i class="fa fa-window-restore"></i> 새창으로 보기</a>
-					</div>
-				</div>
-				<div class="btn-group">
-					<a id="rb-list-back" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=<?php echo $_mtype?>&amp;uid=<?php echo $uid?>&amp;cat=<?php echo urlencode($cat)?>&amp;p=<?php echo $p?>&amp;recnum=<?php echo $recnum?>&amp;keyw=<?php echo urlencode($keyw)?>" class="btn btn-light"><i class="fa fa-file-text-o fa-fw"></i> 페이지 등록정보</a>
-					<button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right">
-						<?php if($markdown=='Y'):?>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo urlencode($cat)?>&amp;p=<?php echo $p?>&amp;recnum=<?php echo $recnum?>&amp;keyw=<?php echo urlencode($keyw)?>"><i class="fa fa-code"></i> 소스코드 편집모드</a>
-						<?php else:?>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo urlencode($cat)?>&amp;p=<?php echo $p?>&amp;recnum=<?php echo $recnum?>&amp;keyw=<?php echo urlencode($keyw)?>&amp;markdown=Y"><i class="fa fa-edit"></i> 마크다운 편집모드</a>
-						<?php endif?>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=<?php echo $_mtype?>"><i class="fa fa-plus"></i> 새 페이지</a>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;a=deletepage&amp;uid=<?php echo $uid?>&back=Y" onclick="return hrefCheck(this,true,'정말로 삭제하시겠습니까?');"><i class="fa fa-trash-o"></i> 페이지 삭제</a>
-					</div>
-				</div>
+				<a  href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=<?php echo $_mtype?>&amp;uid=<?php echo $uid?>&amp;cat=<?php echo urlencode($cat)?>&amp;p=<?php echo $p?>&amp;recnum=<?php echo $recnum?>&amp;keyw=<?php echo urlencode($keyw)?>" class="btn btn-light border-0">
+					페이지 등록정보
+				</a>
+				<a href="<?php echo $_viewpage?>" class="btn btn-light border-0" target="_blank" data-toggle="tooltip" title="미리보기(새창)">
+					<i class="fa fa-share fa-lg" aria-hidden="true"></i>
+				</a>
+				<button type="button" class="btn btn-primary js-submit">
+					<span class="not-loading">
+						저장하기
+					</span>
+					<span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i></span>
+				</button>
+
 				<?php else:$_viewpage=RW('c='.$_HM['code'])?>
 				<!-- 메뉴 -->
-				<div class="btn-group">
-					<a href="<?php echo $_viewpage?>" class="btn btn-light">접속하기</a>
-					<button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a class="dropdown-item" href="<?php echo $_viewpage?>" target="_blank"><i class="fa fa-window-restore"></i> 새창으로 보기</a>
-					</div>
-				</div>
-				<div class="btn-group">
-					<a id="rb-list-back" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=<?php echo $_mtype?>&amp;cat=<?php echo $uid?>&amp;code=<?php echo $code?>" class="btn btn-light">
-						<i class="fa fa-sitemap fa-fw"></i> 메뉴 등록정보
-					</a>
-					<button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right">
-						<?php if($markdown=='Y'):?>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>"><i class="fa fa-code"></i> 소스코드 편집모드</a>
-						<?php else:?>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>&amp;markdown=Y"><i class="fa fa-edit"></i> 마크다운 편집모드</a>
-						<?php endif?>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=<?php echo $_mtype?>"><i class="fa fa-plus"></i> 새 메뉴</a>
-						<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;a=deletemenu&amp;cat=<?php echo $cat?>&amp;back=Y" onclick="return hrefCheck(this,true,'정말로 삭제하시겠습니까?');"><i class="fa fa-trash-o"></i> 메뉴삭제</a>
-					</div>
-				</div>
+				<a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=<?php echo $_mtype?>&amp;cat=<?php echo $uid?>&amp;code=<?php echo $code?>" class="btn btn-light border-0">
+					등록정보
+				</a>
+				<a href="<?php echo $_viewpage?>" class="btn btn-light border-0" target="_blank" data-toggle="tooltip" title="미리보기(새창)">
+					<i class="fa fa-share fa-lg" aria-hidden="true"></i>
+				</a>
+				<button type="button" class="btn btn-primary js-submit">
+					<span class="not-loading">
+						저장하기
+					</span>
+					<span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i></span>
+				</button>
 				<?php endif?>
 			</div>
-	</div>
+	</nav>
 
-	<div class="row">
-		<div class="<?php echo $markdown=='Y'?'col-sm-8 col-lg-9':'col-12' ?>">
+	<form name="procForm" action="<?php echo $g['s']?>/" method="post" onsubmit="return sourcecheck(this);">
+		<input type="hidden" name="r" value="<?php echo $r?>">
+		<input type="hidden" name="m" value="<?php echo $module?>">
+		<input type="hidden" name="a" value="sourcewrite">
+		<input type="hidden" name="type" value="<?php echo $_mtype?>">
 
-			<form name="procForm" action="<?php echo $g['s']?>/" method="post" onsubmit="return sourcecheck(this);">
-				<input type="hidden" name="r" value="<?php echo $r?>">
-				<input type="hidden" name="m" value="<?php echo $module?>">
-				<input type="hidden" name="a" value="sourcewrite">
-				<input type="hidden" name="type" value="<?php echo $_mtype?>">
-				<?php if($_mtype=='menu'):?>
-				<input type="hidden" name="uid" value="<?php echo $_HM['uid']?>">
-				<input type="hidden" name="id" value="<?php echo $_HM['id']?>">
-				<input type="hidden" name="upload" id="upfilesValue" value="<?php echo $_HM['upload']?>">
-				<input type="hidden" name="featured_img" value="<?php echo $_HM['featured_img']?>">
-				<?php else:?>
-				<input type="hidden" name="id" value="<?php echo $_HP['id']?>">
-				<input type="hidden" name="upload" id="upfilesValue" value="<?php echo $_HP['upload']?>">
-				<input type="hidden" name="featured_img" value="<?php echo $_HP['featured_img']?>">
-				<?php endif?>
-				<input type="hidden" name="markdown" value="<?php echo $markdown?>">
-				<input type="hidden" name="editFilter" value="<?php echo $d['admin']['editor']?>">
+		<?php if ($wysiwyg=='Y'): ?>
+		<textarea name="source" hidden><?php echo $source ?></textarea>
+		<textarea name="mobile" hidden><?php echo $mobile ?></textarea>
+		<?php endif; ?>
 
-				<?php if ($markdown=='Y'): ?>
+		<?php if($_mtype=='menu'):?>
+		<input type="hidden" name="uid" value="<?php echo $_HM['uid']?>">
+		<input type="hidden" name="id" value="<?php echo $_HM['id']?>">
+		<input type="hidden" name="upload" id="upfilesValue" value="<?php echo $_HM['upload']?>">
+		<input type="hidden" name="featured_img" value="<?php echo $_HM['featured_img']?>">
+		<?php else:?>
+		<input type="hidden" name="uid" value="<?php echo $_HP['uid']?>">
+		<input type="hidden" name="id" value="<?php echo $_HP['id']?>">
+		<input type="hidden" name="upload" id="upfilesValue" value="<?php echo $_HP['upload']?>">
+		<input type="hidden" name="featured_img" value="<?php echo $_HP['featured_img']?>">
+		<?php endif?>
+		<input type="hidden" name="wysiwyg" value="<?php echo $wysiwyg?>">
+		<input type="hidden" name="editFilter" value="<?php echo $d['admin']['editor']?>">
 
-					<?php if ($mobileOnly): ?>
-						<div class="p-3 mb-3 alert-danger" role="alert" style="z-index:900">
-							<i class="fa fa-mobile fa-3x fa-pull-left" aria-hidden="true"></i>
-							본 파일은 <strong>모바일 전용</strong> 파일으로 모바일 기기에서만 출력됩니다. 내용이 없으면 자동삭제 됩니다.<br>
-							PHP 또는 Javascript 가 포함된 경우에는 <a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>" class="alert-link"><i class="fa fa-code" aria-hidden="true"></i> 소스코드 편집모드</a> 를 이용해 주세요.
+		<?php
+
+		if($wysiwyg=='Y'):
+		$__SRC__ = is_file($g['path_page'].$_filekind.'.php') ? implode('',file($g['path_page'].$_filekind.'.php')) : '';
+		include $g['path_plugin'].$d['admin']['editor'].'/import.system.php';
+		?>
+
+		<?php else:?>
+		<div id="tab-edit-area">
+			<div class="form-group mb-0">
+				<div class="panel-group" id="accordion">
+					<?php $_i=1;foreach($_editArray as $_key => $_val):?>
+					<div class="card mb-0 rounded-0">
+						<div class="card-header p-0 rounded-0">
+							<a class="d-block collapsed muted-link" data-toggle="collapse" href="#site-code-<?php echo $_key?>" onclick="sessionSetting('sh_sys_page_edit','<?php echo $_key?>','','');">
+								<?php echo $_val[1]?>
+								<?php if(is_file($g['path_page'].$_filekind.$_val[2])):?><i class="fa fa-check-circle" title="내용있음" data-tooltip="tooltip"></i><?php endif?>
+							</a>
 						</div>
-						<?php $source = is_file($g['path_page'].$_filekind.'.php') ? implode('',file($g['path_page'].$_filekind.'.php')) : ''  ?>
-						<textarea name="source" hidden><?php echo $source ?></textarea>
-						<?php  $_filekind= $_filekind.'.mobile'; ?>
-					<?php else: ?>
-						<div class="p-3 mb-3 alert-danger" role="alert" style="z-index:900">
+						<div id="site-code-<?php echo $_key?>" class="panel-collapse collapse<?php if(($_key==$_SESSION['sh_sys_page_edit']) || (!$_SESSION['sh_sys_page_edit']&&$_i==1)):?> show<?php endif?>" data-parent="#accordion" >
 
-							<?php if (is_file($g['path_page'].$_filekind.'.mobile.php')): ?>
-							<i class="fa fa-desktop fa-3x fa-pull-left" aria-hidden="true"></i>
-							본 파일은 데스크탑에서만 출력됩니다.<br>
-							<?php else: ?>
-							<i class="fa fa-desktop fa-3x fa-pull-left" aria-hidden="true"></i>
-							<i class="fa fa-mobile fa-3x fa-pull-left" aria-hidden="true"></i>
-							본 파일은 모든 기기에서 출력됩니다.  모바일 전용 컨텐츠를 구분하려면 <a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;markdown=Y&amp;mobileOnly=Y&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>" class="alert-link">모바일 전용파일</a>을 생성해 주세요.<br>
-							<?php endif; ?>
-
-						 PHP 또는 Javascript 가 포함된 경우에는 <a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;module=<?php echo $module?>&amp;front=_edit&amp;_mtype=<?php echo $_mtype?>&amp;type=source&amp;uid=<?php echo $uid?>&amp;cat=<?php echo $cat?>&amp;code=<?php echo $code?>" class="alert-link"><i class="fa fa-code" aria-hidden="true"></i> 소스코드 편집모드</a> 를 이용해 주세요.
-						</div>
-
-						<?php $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g['path_page'].$_filekind.'.mobile.php')) : ''  ?>
-						<textarea name="mobile" hidden><?php echo $mobile ?></textarea>
-					<?php endif; ?>
-
-					<div class="border rounded mb-2  d-flex justify-content-between align-items-center">
-						<ol class="breadcrumb bg-white text-dark mb-0">
-							<li class="breadcrumb-item"><span class="badge badge-pill badge-light align-middle">파일경로</span> :</li>
-							<li class="breadcrumb-item">root</li>
-							<li class="breadcrumb-item">pages</li>
-							<?php if($_mtype=='menu'):?>
-							<li class="breadcrumb-item">menu</li>
-							<?php endif?>
-							<li class="breadcrumb-item active"><code><?php echo $_filekind?>.php</code></li>
-						</ol>
-						<div class="pr-3">
-						</div>
-					</div>
-
-
-				<?php endif; ?>
-
-				<?php
-				if($markdown=='Y'):
-				$__SRC__ = is_file($g['path_page'].$_filekind.'.php') ? implode('',file($g['path_page'].$_filekind.'.php')) : '';
-				include $g['path_plugin'].$d['admin']['editor'].'/import.system.php';
-				?>
-
-				<?php else:?>
-				<div id="tab-edit-area">
-					<div class="form-group">
-						<div class="panel-group" id="accordion">
-							<?php $_i=1;foreach($_editArray as $_key => $_val):?>
-							<div class="card mb-0">
-								<div class="card-header p-0">
-									<a class="d-block collapsed muted-link" data-toggle="collapse" href="#site-code-<?php echo $_key?>" onclick="sessionSetting('sh_sys_page_edit','<?php echo $_key?>','','');">
-										<?php echo $_val[1]?>
-										<?php if(is_file($g['path_page'].$_filekind.$_val[2])):?><i class="fa fa-check-circle" title="내용있음" data-tooltip="tooltip"></i><?php endif?>
-									</a>
+							<div class="rb-codeview">
+								<div class="rb-codeview-header d-flex justify-content-between align-items-center">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><i class="fa fa-folder" aria-hidden="true"></i></li>
+										<li class="breadcrumb-item">root</li>
+										<li class="breadcrumb-item">pages</li>
+										<?php if($_mtype=='menu'):?>
+										<li class="breadcrumb-item">menu</li>
+										<?php endif?>
+										<li class="breadcrumb-item active"><?php echo str_replace('menu/','',$_filekind).$_val[2]?></li>
+									</ol>
 								</div>
-								<div id="site-code-<?php echo $_key?>" class="panel-collapse collapse<?php if(($_key==$_SESSION['sh_sys_page_edit']) || (!$_SESSION['sh_sys_page_edit']&&$_i==1)):?> show<?php endif?>" data-parent="#accordion" >
-
-									<div class="rb-codeview">
-										<div class="rb-codeview-header d-flex justify-content-between align-items-center">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item">파일경로 :</li>
-												<li class="breadcrumb-item">root</li>
-												<li class="breadcrumb-item">pages</li>
-												<?php if($_mtype=='menu'):?>
-												<li class="breadcrumb-item">menu</li>
-												<?php endif?>
-												<li class="breadcrumb-item active"><?php echo str_replace('menu/','',$_filekind).$_val[2]?></li>
-											</ol>
-											<button class="btn btn-light btn-sm js-submit" type="button" name="button">
-								        <span class="not-loading">
-													저장하기
-												</span>
-								        <span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i></span>
-								      </button>
-
-										</div>
-										<div class="rb-codeview-body">
-											<textarea name="<?php echo $_key?>" id="code_<?php echo $_key?>" class="form-control f13 d-none" rows="35"><?php if(is_file($g['path_page'].$_filekind.$_val[2])) echo htmlspecialchars(implode('',file($g['path_page'].$_filekind.$_val[2])))?></textarea>
-										</div>
-										<div class="rb-codeview-footer">
-											<ul class="list-inline">
-												<li><code><?php echo is_file($g['path_page'].$_filekind.$_val[2])?count(file($g['path_page'].$_filekind.$_val[2])):'0'?> lines</code></li>
-												<li><code><?php echo is_file($g['path_page'].$_filekind.$_val[2])?getSizeFormat(@filesize($g['path_page'].$_filekind.$_val[2]),2):'0B'?></code></li>
-												<li class="pull-right">파일을 편집한 후 저장 버튼을 클릭하면 실시간으로 사용자 페이지에 적용됩니다.</li>
-											</ul>
-										</div>
-									</div>
-
+								<div class="rb-codeview-body">
+									<textarea name="<?php echo $_key?>" id="code_<?php echo $_key?>" class="form-control f13 d-none" rows="35"><?php if(is_file($g['path_page'].$_filekind.$_val[2])) echo htmlspecialchars(implode('',file($g['path_page'].$_filekind.$_val[2])))?></textarea>
+								</div>
+								<div class="rb-codeview-footer">
+									<ul class="list-inline">
+										<li><code><?php echo is_file($g['path_page'].$_filekind.$_val[2])?count(file($g['path_page'].$_filekind.$_val[2])):'0'?> lines</code></li>
+										<li><code><?php echo is_file($g['path_page'].$_filekind.$_val[2])?getSizeFormat(@filesize($g['path_page'].$_filekind.$_val[2]),2):'0B'?></code></li>
+										<li class="pull-right">파일을 편집한 후 저장 버튼을 클릭하면 실시간으로 사용자 페이지에 적용됩니다.</li>
+									</ul>
 								</div>
 							</div>
-							<?php $_i++;endforeach?>
+
 						</div>
 					</div>
-
+					<?php $_i++;endforeach?>
 				</div>
-				<?php endif?>
-			</form>
+			</div>
 
-			<?php if ($markdown=='Y'): ?>
-			<a href="https://simplemde.com/markdown-guide" target="_blank">
-				본문작성 마크다운 문법안내
-			</a>
-			<?php endif; ?>
+		</div>
+		<?php endif?>
 
-		</div><!-- /.col-sm-8 -->
+		<div class="rb-attach-sidebar bg-white">
 
-		<?php if ($markdown=='Y'): ?>
-		<div class="col-sm-4 col-lg-3">
+      <div class="sidebar-header d-flex justify-content-between align-items-center pt-1 px-2 position-absolute" style="top:1px;right:1px;">
+        <div class=""></div>
+        <button type="button" class="close js-closeSidebar btn" aria-label="Close" data-toggle="tooltip" title="첨부패널 닫기">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-			<div class="card">
+      <ul class="nav nav-tabs nav-fill" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link rounded-0 border-top-0 border-left-0<?php if(!$_SESSION['editor_sidebar_tab']):?> active<?php endif?>" id="tab-file" data-toggle="tab" href="#pane-file" role="tab" aria-controls="file" aria-selected="true" onclick="sessionSetting('editor_sidebar_tab','','','');">
+            첨부파일
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link rounded-0 border-top-0 <?php if($_SESSION['editor_sidebar_tab']=='link'):?> active<?php endif?>" id="tab-link" data-toggle="tab" href="#pane-link" role="tab" aria-controls="media" aria-selected="false" onclick="sessionSetting('editor_sidebar_tab','link','','');">
+            외부링크
+          </a>
+        </li>
+				<li class="nav-item">
+					<a class="nav-link rounded-0 border-top-0 border-right-0<?php if($_SESSION['editor_sidebar_tab']=='toc'):?> active<?php endif?>" id="tab-toc" data-toggle="tab" href="#pane-toc" role="tab" aria-controls="media" aria-selected="false" onclick="sessionSetting('editor_sidebar_tab','toc','','');">
+						목차
+					</a>
+				</li>
+      </ul>
+      <div class="tab-content mt-3">
+        <div class="tab-pane px-2<?php if(!$_SESSION['editor_sidebar_tab']):?> show active <?php endif?>" id="pane-file" role="tabpanel">
+          <?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-system-attach','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>($_mtype=='page'?$_HP:$_HM),'attach_object_type'=>'file','wysiwyg'=>$wysiwyg));?>
 
-				<?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-markdownPlus','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$_HM,'attach_object_type'=>'file'));?>
+  				<p>
+  					<small class="text-muted">
+  						사진,파일,비디오,오디오를 한번에 최대 최대 <?php echo str_replace('M','',ini_get('upload_max_filesize'))?>MB 까지 업로드 할수 있습니다.<br>
 
-				<?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-markdownPlus','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$_HM,'attach_object_type'=>'audio'));?>
+  					</small>
+  				</p>
+        </div>
+        <div class="tab-pane px-2<?php if($_SESSION['editor_sidebar_tab']=='link'):?> show active <?php endif?>" id="pane-link" role="tabpanel">
 
-				<!-- module : 첨부파일 사용 모듈 , theme : 첨부파일 테마 , attach_handler_file : 파일첨부 실행 엘리먼트 , attach_handler_photo : 사진첨부 실행 엘리먼트 ,parent_data : 수정시 필요한 해당 포스트 데이타 배열 변수, attach_handler_getModalList : 업로드 리스트 모달로 호출용 엘리먼트 (class 인 경우 . 까지 넘긴다.)  -->
-				<?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-markdownPlus','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$_HM,'attach_object_type'=>'photo'));?>
+          <?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-system-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>($_mtype=='page'?$_HP:$_HM),'wysiwyg'=>$wysiwyg));?>
 
-				<div class="card-body">
-					<small class="text-muted">
-						사진,파일,비디오,오디오를 업로드 할수 있습니다.<br>
-						최대 <?php echo str_replace('M','',ini_get('upload_max_filesize'))?>MB 까지 업로드 할수 있습니다.
-					</small>
-				</div><!-- /.card-body -->
+        </div><!-- /.tab-pane -->
+				<div class="tab-pane px-4<?php if($_SESSION['editor_sidebar_tab']=='toc'):?> show active <?php endif?>" id="pane-toc" role="tabpanel">
 
-				<div class="card-footer">
-					<!-- data-label="업로드" 값으 button 텍스트  값과 똑같이 해준다.  : 버튼 state 변경시 사용 -->
-					<button type="button" class="btn btn-light btn-block" data-role="attach-handler-photo" data-type="photo" data-label="업로드" data-loading-text="업로드 중...">
-						<i class="fa fa-upload fa-fw"></i> 파일 업로드
-					</button>
-				</div>
-			</div><!-- /.card -->
+					<?php if ($wysiwyg): ?>
+					<ul id="toc" class=" ck-toc list-unstyled"></ul>
+					<?php else: ?>
+					<div class="text-center py-5 text-muted">
+						에디터 편집 화면에서 표시됩니다.
+					</div>
+					<?php endif; ?>
 
-			<div class="card">
-				<!-- module : 첨부파일 사용 모듈 , theme : 첨부파일 테마 , attach_handler_file : 파일첨부 실행 엘리먼트 , attach_handler_photo : 사진첨부 실행 엘리먼트 ,parent_data : 수정시 필요한 해당 포스트 데이타 배열 변수, attach_handler_getModalList : 업로드 리스트 모달로 호출용 엘리먼트 (class 인 경우 . 까지 넘긴다.)  -->
-				<?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-markdownPlus','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$_HM,'attach_object_type'=>'youtube'));?>
 
-				<div class="card-body">
-					<small class="text-muted">
-						Yutube 공유링크로 비디오를 본문에 삽입 또는 첨부할수 있습니다.
-					</small>
-				</div><!-- /.card-body -->
+				</div><!-- /.tab-pane -->
+      </div><!-- /.tab-content -->
 
-				<div class="card-footer">
-					<!-- data-label="업로드" 값으 button 텍스트  값과 똑같이 해준다.  : 버튼 state 변경시 사용 -->
-					<button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#modal-attach-youtube">
-						<i class="fa fa-youtube fa-fw"></i>
-						유튜브 추가하기
-					</button>
-				</div>
-			</div><!-- /.card -->
-
-			<button class="btn btn-primary btn-block btn-lg js-submit" type="button" name="button">
-        <span class="not-loading">
-					저장하기
-				</span>
-        <span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i>저장 중 ...</span>
-      </button>
-
-			<button type="button" class="btn btn-block btn btn-light" onclick="history.back();">
-				취소
-			</button>
-
-		</div><!-- /.col-sm-4 -->
-		<?php endif; ?>
-	</div><!-- /.row -->
+  	</div><!-- .rb-attach-sidebar -->
+	</form>
 
 </div>
 
 
-<?php if($markdown!='Y' && $d['admin']['codeeidt']):?>
+<?php if($wysiwyg!='Y' && $d['admin']['codeeidt']):?>
 <!-- codemirror -->
 <style>
 .CodeMirror {
@@ -341,7 +353,6 @@ $_editArray = array(
 
 
 <script>
-
 
 $(function () {
 
@@ -409,10 +420,10 @@ $(function () {
 			}
 		}
 	});
-	editor_php1.setSize('100%','550px');
-	editor_php2.setSize('100%','550px');
-	editor_css.setSize('100%','550px');
-	editor_js.setSize('100%','550px');
+	editor_php1.setSize('100%','450px');
+	editor_php2.setSize('100%','450px');
+	editor_css.setSize('100%','450px');
+	editor_js.setSize('100%','450px');
 
 
 	$('#site-code-source').on('shown.bs.collapse', function () {
@@ -434,8 +445,6 @@ $(function () {
 
 })
 
-
-
 _isCodeEdit = true;
 function _codefullscreen()
 {
@@ -449,16 +458,39 @@ function _codefullscreen()
 <?php endif?>
 
 <script>
+
 _nowArea = '';
 
 
 $(".timeago").timeago();
 
+$(".js-openSidebar").click(function(){
+	$('#rb-page-source').addClass('rb-fixed-sidebar');
+	sessionSetting('editor_sidebar','right','','');
+});
+
+$(".js-closeSidebar").click(function(){
+	$('#rb-page-source').removeClass('rb-fixed-sidebar');
+	sessionSetting('editor_sidebar','','','');
+	$('[data-toggle="tooltip"]').tooltip('hide')
+});
+
 $(".js-submit").click(function() {
+
+	$(this).attr("disabled",true);
 
 	var f = document.procForm;
 
-	$(this).attr("disabled",true);
+	<?php if ($wysiwyg=='Y'): ?>
+	var editorData = editor.getData();
+
+	<?php if ($mobileOnly=='Y'): ?>
+	$('[name="mobile"]').val(editorData);
+	<?php else: ?>
+	$('[name="source"]').val(editorData);
+	<?php endif; ?>
+
+	<?php endif; ?>
 
 	// 첨부파일 uid 를 upfiles 값에 추가하기
 	var attachfiles=$('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
@@ -469,6 +501,8 @@ $(".js-submit").click(function() {
 		}
 		$('input[name="upload"]').val(new_upfiles);
 	}
+
+	$("#toc").empty().toc({content: ".ck-content", headings: "h2,h3,h4"}); // TOC 갱신
 
 	setTimeout(function(){
 		getIframeForAction(f);
@@ -481,32 +515,35 @@ getId('rb-more-tab-<?php echo $_mtype=='page'?'3':'2'?>').className = 'active';
 <?php endif?>
 
 <script>
-$('.rb-modal-widgetcode').on('click',function() {
-	modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget&amp;isWcode=Y')?>');
-});
-$('.rb-modal-widgetedit').on('click',function() {
-	modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget&amp;isWcode=Y&amp;isEdit=Y')?>');
-});
-$('.rb-modal-photoset').on('click',function() {
-	modalSetting('modal_window','<?php echo getModalLink('&amp;m=mediaset&amp;mdfile=modal.photo.media&amp;dropfield=editor')?>');
-});
-$('.rb-modal-videoset').on('click',function() {
-	modalSetting('modal_window','<?php echo getModalLink('&amp;m=mediaset&amp;mdfile=modal.video.media&amp;dropfield=editor')?>');
-});
-$('.rb-modal-widgetcall').on('click',function() {
-	modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget')?>&amp;dropfield=-1');
-});
-$('.rb-modal-widgetcall-modify').on('click',function() {
-	modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget')?>&amp;dropfield='+_Wdropfield+'&amp;option='+_Woption);
-});
-
-<?php if($d['admin']['dblclick']):?>
-document.ondblclick = function(event)
-{
-	getContext('<a class="dropdown-item" href="<?php echo $_viewpage?>">사용자모드 보기</a><a class="dropdown-item" href="#." onclick="goHref(getId(\'rb-list-back\').href);">등록정보 보기</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#." onclick="getId(\'rb-submit-button\').click();">실행하기</a>',event);
-}
-<?php endif?>
 
 
-putCookieAlert('site_edit_result') // 실행결과 알림 메시지 출력
+$(document).ready(function() {
+
+	$("#toc").toc({content: ".ck-content", headings: "h2,h3,h4"});
+
+	var scroll = new SmoothScroll('a[href*="#"]');
+
+	$('.rb-modal-widgetcode').on('click',function() {
+		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget&amp;isWcode=Y')?>');
+	});
+	$('.rb-modal-widgetedit').on('click',function() {
+		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget&amp;isWcode=Y&amp;isEdit=Y')?>');
+	});
+	$('.rb-modal-photoset').on('click',function() {
+		modalSetting('modal_window','<?php echo getModalLink('&amp;m=mediaset&amp;mdfile=modal.photo.media&amp;dropfield=editor')?>');
+	});
+	$('.rb-modal-videoset').on('click',function() {
+		modalSetting('modal_window','<?php echo getModalLink('&amp;m=mediaset&amp;mdfile=modal.video.media&amp;dropfield=editor')?>');
+	});
+	$('.rb-modal-widgetcall').on('click',function() {
+		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget')?>&amp;dropfield=-1');
+	});
+	$('.rb-modal-widgetcall-modify').on('click',function() {
+		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget')?>&amp;dropfield='+_Wdropfield+'&amp;option='+_Woption);
+	});
+
+	putCookieAlert('site_edit_result') // 실행결과 알림 메시지 출력
+
+});
+
 </script>

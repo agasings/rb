@@ -1,36 +1,36 @@
-<?php
-$SITES = getDbArray($table['s_site'],'','*','gid','asc',0,$p);
+<?php
+$SITES = getDbArray($table['s_site'],'','*','gid','asc',0,$p);
 $SITEN = db_num_rows($SITES);
 include $g['path_core'].'function/menu.func.php';
-$ISCAT = getDbRows($table['s_menu'],'site='.$_HS['uid']);
-if($cat){
-	$CINFO = getUidData($table['s_menu'],$cat);
-	$_SEO = getDbData($table['s_seo'],'rel=1 and parent='.$CINFO['uid'],'*');
-	$ctarr = getMenuCodeToPath($table['s_menu'],$cat,0);	$ctnum = count($ctarr);
-	$CINFO['code'] = '';
+$ISCAT = getDbRows($table['s_menu'],'site='.$_HS['uid']);
+if($cat){
+	$CINFO = getUidData($table['s_menu'],$cat);
+	$_SEO = getDbData($table['s_seo'],'rel=1 and parent='.$CINFO['uid'],'*');
+	$ctarr = getMenuCodeToPath($table['s_menu'],$cat,0);	$ctnum = count($ctarr);
+	$CINFO['code'] = '';
 	for ($i = 0; $i < $ctnum; $i++) {
 		$CXA[] = $ctarr[$i]['uid'];
 		$CINFO['code'] .= $ctarr[$i]['id'].($i < $ctnum-1 ? '/' : '');
 		$_code .= $ctarr[$i]['uid'].($i < $ctnum-1 ? '/' : '');
 	}
 	$code = $code ? $code : $_code;
-}
-$catcode = '';
-$is_fcategory =  $CINFO['uid'] && $vtype != 'sub';
-$is_regismode = !$CINFO['uid'] || $vtype == 'sub';
+}
+$catcode = '';
+$is_fcategory =  $CINFO['uid'] && $vtype != 'sub';
+$is_regismode = !$CINFO['uid'] || $vtype == 'sub';
 
-if ($is_regismode){
-	$CINFO['menutype'] = '4';
-	$CINFO['name']	   = '';
-	$CINFO['joint']	   = '';
-	$CINFO['redirect'] = '';
-	$CINFO['hidden']   = '';
-	$CINFO['target']   = '';
-	$CINFO['imghead']  = '';
+if ($is_regismode){
+	$CINFO['menutype'] = '4';
+	$CINFO['name']	   = '';
+	$CINFO['joint']	   = '';
+	$CINFO['redirect'] = '';
+	$CINFO['hidden']   = '';
+	$CINFO['target']   = '';
+	$CINFO['imghead']  = '';
 	$CINFO['imgfoot']  = '';
-}
+}
 $menuType = array('','모듈연결','코드편집','메뉴연결','문서편집');
-?>
+?>
 
 <div id="catebody" class="row no-gutters">
 	<nav id="category" class="col-sm-4 col-md-4 col-xl-3 d-none d-sm-block sidebar">
@@ -187,7 +187,7 @@ $menuType = array('','모듈연결','코드편집','메뉴연결','문서편집'
 
 				<?php if($cat):?>
 					<div class="form-group row">
-					<label class="col-lg-2 col-form-label text-lg-right">상위메뉴</label>
+					<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">상위메뉴</label>
 					<div class="col-lg-10 col-xl-9">
 						<ol class="breadcrumb">
 							<?php for ($i = 0; $i < $ctnum-1; $i++):$subcode=$subcode.($i?'/'.$ctarr[$i]['uid']:$ctarr[$i]['uid'])?>
@@ -205,7 +205,7 @@ $menuType = array('','모듈연결','코드편집','메뉴연결','문서편집'
 				<?php endif?>
 
 					<div class="form-group row rb-outside">
-					<label class="col-lg-2 col-form-label text-lg-right">메뉴명</label>
+					<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">메뉴명</label>
 					<div class="col-lg-10 col-xl-9">
 						<?php if($is_fcategory):?>
 						<div class="input-group input-group-lg">
@@ -215,7 +215,7 @@ $menuType = array('','모듈연결','코드편집','메뉴연결','문서편집'
 										<span id="rb-document-type"><?php echo $menuType[$CINFO['menutype']]?></span>
 									</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#" onclick="docType(4,'<?php echo $menuType[4]?>');"><i class="fa fa-hashtag"></i> <?php echo $menuType[4]?></a>
+										<a class="dropdown-item" href="#" onclick="docType(4,'<?php echo $menuType[4]?>');"><i class="fa fa-file-text-o"></i> <?php echo $menuType[4]?></a>
 										<a class="dropdown-item" href="#" onclick="docType(2,'<?php echo $menuType[2]?>');"><i class="fa fa-code"></i> <?php echo $menuType[2]?></a>
 										<a class="dropdown-item" href="#" onclick="docType(1,'<?php echo $menuType[1]?>');"><i class="kf kf-module"></i> <?php echo $menuType[1]?></a>
 										<a class="dropdown-item" href="#" onclick="docType(3,'<?php echo $menuType[3]?>');"><i class="fa fa-sitemap"></i> <?php echo $menuType[3]?></a>
@@ -345,8 +345,8 @@ $menuType = array('','모듈연결','코드편집','메뉴연결','문서편집'
 							<div class="col-lg-10 col-xl-9 offset-lg-2">
 								<fieldset<?php if($CINFO['menutype']!=4):?> disabled<?php endif?>>
 									<div class="btn-group btn-group-justified" data-toggle="buttons">
-										<button type="button" class="btn btn-light rb-modal-markdown"><i class="fa fa-hashtag"></i> 기본</button>
-										<button type="button" class="btn btn-light rb-modal-markdown-mobile"><i class="fa fa-hashtag"></i> 모바일 전용</button>
+										<button type="button" class="btn btn-light rb-modal-wysiwyg">기본</button>
+										<button type="button" class="btn btn-light rb-modal-wysiwyg-mobile">모바일 전용</button>
 
 									</div>
 								</fieldset>
@@ -904,8 +904,8 @@ $menuType = array('','모듈연결','코드편집','메뉴연결','문서편집'
 </div>
 
 
-<!-- bootstrap-maxlength -->
-<?php getImport('bootstrap-maxlength','bootstrap-maxlength.min',false,'js')?>
+<!-- bootstrap-maxlength -->
+<?php getImport('bootstrap-maxlength','bootstrap-maxlength.min',false,'js')?>
 
 
 
@@ -938,11 +938,11 @@ $(document).ready(function() {
 	$('.rb-modal-code-mobile').on('click',function() {
 		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=menu&uid=<?php echo $CINFO['uid']?>&type=source&cat=<?php echo $cat?>&code=<?php echo $code?>&mobileOnly=Y');
 	});
-	$('.rb-modal-markdown').on('click',function() {
-		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=menu&uid=<?php echo $CINFO['uid']?>&type=source&markdown=Y&cat=<?php echo $cat?>&code=<?php echo $code?>');
+	$('.rb-modal-wysiwyg').on('click',function() {
+		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=menu&uid=<?php echo $CINFO['uid']?>&type=source&wysiwyg=Y&cat=<?php echo $cat?>&code=<?php echo $code?>');
 	});
-	$('.rb-modal-markdown-mobile').on('click',function() {
-		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=menu&uid=<?php echo $CINFO['uid']?>&type=source&markdown=Y&cat=<?php echo $cat?>&code=<?php echo $code?>&mobileOnly=Y');
+	$('.rb-modal-wysiwyg-mobile').on('click',function() {
+		goHref('<?php echo $g['s']?>/?r=<?php echo $r?>&m=admin&module=site&front=_edit&_mtype=menu&uid=<?php echo $CINFO['uid']?>&type=source&wysiwyg=Y&cat=<?php echo $cat?>&code=<?php echo $code?>&mobileOnly=Y');
 	});
 	$('.rb-modal-module').on('click',function() {
 		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.joint&amp;dropfield=jointf')?>');
@@ -1049,7 +1049,7 @@ function boxDeco(layer1,layer2)
 	if(getId(layer1).className.indexOf('default') == -1) $("#"+layer1).addClass("border-light").removeClass("border-primary");
 	else $("#"+layer1).addClass("border-primary").removeClass("border-light");
 	$("#"+layer2).addClass("border-light").removeClass("border-primary");
-}
+}
 function docType(n,str)
 {
 	$('#rb-document-type').html(str);
@@ -1071,11 +1071,5 @@ function docType(n,str)
 	document.procForm.redirect.value = '';
 	document.procForm.submit();
 }
-<?php if($d['admin']['dblclick']):?>
-document.ondblclick = function(event)
-{
-	getContext('<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?><?php if($CINFO['code']):?>&c=<?php echo $CINFO['code']?><?php endif?>">사용자모드 보기</a><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=<?php echo $m?>&module=<?php echo $module?>&front=menu">새 메뉴 만들기</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#." onclick="getId(\'rb-submit-button\').click();">실행하기</a>',event);
-}
-<?php endif?>
 
 </script>
