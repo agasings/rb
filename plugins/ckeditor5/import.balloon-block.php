@@ -32,19 +32,20 @@ BalloonEditor
 .create( document.querySelector( '#ckeditor_textarea' ),{
 	language: 'ko',
 	extraPlugins: [rbUploadAdapterPlugin],
+	mediaEmbed: {
+			extraProviders: [
+					{
+							name: 'other',
+							url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+					}
+			]
+	},
 	typing: {
 			transformations: {
 					include: [
-							// Use only the 'quotes' and 'typography' groups.
-							'quotes',
-							'typography',
-							'arrowLeft',
-							'arrowRight',
-
-							// Plus, some custom transformation.
-							{ from: 'CKE', to: 'CKEditor' }
+						'quotes',
+						'typography',
 					],
-
 					extra: [
 							// Add some custom transformations – e.g. for emojis.
 							{ from: ':)', to: '🙂' },

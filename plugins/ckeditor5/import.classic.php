@@ -32,10 +32,15 @@ let editor;
 ClassicEditor
 	.create( document.querySelector( '#ckeditor_textarea' ),{
 		language: 'ko',
-		mediaEmbed: {
-				// configuration...
-		},
     extraPlugins: [rbUploadAdapterPlugin],
+		mediaEmbed: {
+				extraProviders: [
+						{
+								name: 'other',
+								url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+						}
+				]
+		},
 		typing: {
 				transformations: {
 						include: [
