@@ -7,8 +7,8 @@ $sess_Code =$sescode.'_'.$my['uid']; // 코드- 회원 uid
 
 // 업로드 디렉토리 없는 경우 추가
 if(!is_dir($saveDir)){
-   mkdir($saveDir,0707);
- @chmod($saveDir,0707);
+  mkdir($saveDir,0707);
+  @chmod($saveDir,0707);
 }
 
 include $g['path_module'].'mediaset/themes/'.$theme.'/main.func.php';
@@ -20,7 +20,6 @@ $sessArr  = explode('_',$sess_Code);
 $tmpcode  = $sessArr[0];
 $mbruid   = $sessArr[1];
 $fserver  = $d['mediaset']['use_fileserver'];
-$url    = $fserver ? $d['mediaset']['ftp_urlpath'] : str_replace('.','',$saveDir);
 $name   = strtolower($_FILES['files']['name']);
 $size   = $_FILES['files']['size'];
 $width    = 0;
@@ -60,7 +59,6 @@ if ($d['theme']['hidden_photo'] == 1 && $type == 2) {
   $hidden  = 1;
 }
 
-
 if ($d['mediaset']['up_ext_cut'] && strstr($d['mediaset']['up_ext_cut'],$fileExt))
 {
  $code='200';
@@ -74,20 +72,27 @@ $savePath1  = $saveDir.substr($date['today'],0,4);
 $savePath2  = $savePath1.'/'.substr($date['today'],4,2);
 $savePath3  = $savePath2.'/'.substr($date['today'],6,2);
 $folder   = substr($date['today'],0,4).'/'.substr($date['today'],4,2).'/'.substr($date['today'],6,2);
+
 if(isset($_FILES["files"])) {
 
        if ($fserver==1) {
+
+            $host = $d['mediaset']['ftp_urlpath'];
+
             $FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
             $FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);
             if ($d['mediaset']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
             if (!$FTP_CONNECT) exit;
             if (!$FTP_CRESULT) exit;
 
+            // getLink('','',$FTP_CONNECT.' 여기까지','');
+
             ftp_chdir($FTP_CONNECT,$d['mediaset']['ftp_folder']);
 
             for ($i = 1; $i < 4; $i++)
             {
-                  ftp_mkdir($FTP_CONNECT,$d['mediaset']['ftp_folder'].str_replace('./files/','',${'savePath'.$i}));
+              // getLink('','',$d['mediaset']['ftp_folder'].str_replace('./files/','',${'savePath'.$i}).'여기까지','');
+              ftp_mkdir($FTP_CONNECT,$d['mediaset']['ftp_folder'].str_replace('./files/','',${'savePath'.$i}));
             }
 
             if ($Overwrite == 'true' || !is_file($saveFile))
@@ -107,8 +112,12 @@ if(isset($_FILES["files"])) {
       } elseif ($fserver==2) {
 
         // 파일 업로드
-        $url= 'https://'.S3_BUCKET.'.s3.'.S3_REGION.'.amazonaws.com/';
+        $host= 'https://'.S3_BUCKET.'.s3.'.S3_REGION.'.amazonaws.com';
+        $folder = str_replace('./files/','',$saveDir).$folder;
+        $src = $host.'/'.$folder.'/'.$tmpname;
+
         if ($type == 2) {
+             if ($fileExt == 'jpg') exifRotate($_FILES['files']['tmp_name']); //가로세로 교정
              ResizeWidth($_FILES['files']['tmp_name'],$_FILES['files']['tmp_name'],$d['mediaset']['thumbsize']);
              @chmod($_FILES['files']['tmp_name'],0707);
              $IM = getimagesize($_FILES['files']['tmp_name']);
@@ -131,6 +140,9 @@ if(isset($_FILES["files"])) {
         }
 
       } else {
+            $host = '';
+            $folder = str_replace('.','',$saveDir).$folder;
+            $src = $folder.'/'.$tmpname;
 
             for ($i = 1; $i < 4; $i++)
             {
@@ -141,6 +153,7 @@ if(isset($_FILES["files"])) {
                  }
             }
 
+            $folder = substr($folder,1);
             $saveFile = $savePath3.'/'.$tmpname;
 
             if ($Overwrite == 'true' || !is_file($saveFile))
@@ -148,8 +161,7 @@ if(isset($_FILES["files"])) {
                 move_uploaded_file($_FILES['files']['tmp_name'], $saveFile);
                 if ($type == 2)
                 {
-                  //exifRotate($saveFile); //가로세로 교정
-
+                  if ($fileExt == 'jpg') exifRotate($saveFile); //가로세로 교정
                   $IM = getimagesize($saveFile);
 
                   if ($IM[0] >= $IM[1]) {
@@ -170,8 +182,8 @@ if(isset($_FILES["files"])) {
     $mingid = getDbCnt($table['s_upload'],'min(gid)','');
     $gid = $mingid ? $mingid - 1 : 100000000;
 
-    $QKEY = "gid,pid,parent,hidden,tmpcode,mbruid,fileonly,type,ext,fserver,url,folder,name,tmpname,thumbname,size,width,height,caption,down,d_regis,d_update";
-    $QVAL = "'$gid','$gid','$parent','$hidden','$tmpcode','$mbruid','1','$type','$fileExt','$fserver','$url','$folder','$name','$tmpname','$thumbname','$size','$width','$height','$caption','$down','$d_regis','$d_update'";
+    $QKEY = "gid,pid,parent,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,host,folder,name,tmpname,size,width,height,caption,src,down,d_regis,d_update";
+    $QVAL = "'$gid','$gid','$parent','$hidden','$tmpcode','$s','$mbruid','1','$type','$fileExt','$fserver','$host','$folder','$name','$tmpname','$size','$width','$height','$caption','$src','$down','$d_regis','$d_update'";
     getDbInsert($table['s_upload'],$QKEY,$QVAL);
 
     if ($gid == 100000000) db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT);
@@ -183,13 +195,13 @@ if(isset($_FILES["files"])) {
     // main.func.php 파일 getAttachFile 함수 참조
 
     if ($type==4) {
-      $preview_default=getAttachFile($R,'upload','',$editor); // 빈값은 대표이미지 uid 이다. (최초 등록시에는 없다.)
+      $preview_default=getAttachFile($R,'upload','',$wysiwyg); // 빈값은 대표이미지 uid 이다. (최초 등록시에는 없다.)
       $preview_modal=getAttachFile($R,'modal','');
     } elseif($type==5) {
-      $preview_default=getAttachVideo($R,'upload','',$editor); // 빈값은 대표이미지 uid 이다. (최초 등록시에는 없다.)
+      $preview_default=getAttachVideo($R,'upload','',$wysiwyg); // 빈값은 대표이미지 uid 이다. (최초 등록시에는 없다.)
       $preview_modal=getAttachVideo($R,'modal','');
     } else {
-      $preview_default=getAttachFile($R,'upload','',$editor); // 빈값은 대표이미지 uid 이다. (최초 등록시에는 없다.)
+      $preview_default=getAttachFile($R,'upload','',$wysiwyg); // 빈값은 대표이미지 uid 이다. (최초 등록시에는 없다.)
       // $preview_modal=getAttachFile($R,'modal','');
     }
 
@@ -206,7 +218,7 @@ if(isset($_FILES["files"])) {
       $result['type']='file';
     }
 
-    $result['url']= $url.$folder.'/'.$tmpname;  //ckeditor5 전달용
+    $result['url']= $src;  //ckeditor5 전달용
 
     echo json_encode($result,true);
 }
