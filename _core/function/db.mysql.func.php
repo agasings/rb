@@ -5,7 +5,7 @@ function isConnectedToDB($db)
 }
 function db_query($sql,$con)
 {
-	mysqli_query($con,'set names utf8');
+	mysqli_query($con,'set names utf8mb4');
 	mysqli_query($con,'set sql_mode=\'\'');
 	return mysqli_query($con,$sql);
 }

@@ -22,7 +22,7 @@ KEY gid(gid),
 KEY system(system),
 KEY hidden(hidden),
 KEY mobile(mobile),
-KEY id(id)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY id(id)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_module'],$DB_CONNECT);
 }
@@ -39,7 +39,7 @@ gid			INT				DEFAULT '0'		NOT NULL,
 name		VARCHAR(200)	DEFAULT ''		NOT NULL,
 url			VARCHAR(200)	DEFAULT ''		NOT NULL,
 KEY memberuid(memberuid),
-KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_admpage'],$DB_CONNECT);
 }
@@ -53,7 +53,7 @@ CREATE TABLE ".$table['s_mobile']." (
 usemobile	TINYINT			DEFAULT '0'		NOT NULL,
 startsite	INT				DEFAULT '0'		NOT NULL,
 startdomain	VARCHAR(50)		DEFAULT ''		NOT NULL
-) ENGINE=".$DB['type']." CHARSET=UTF8");
+) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mobile'],$DB_CONNECT);
 }
@@ -75,7 +75,7 @@ KEY gid(gid),
 KEY parent(parent),
 KEY depth(depth),
 KEY name(name),
-KEY site(site)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY site(site)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_domain'],$DB_CONNECT);
 }
@@ -110,7 +110,7 @@ headercode	TEXT			NOT NULL,
 footercode	TEXT			NOT NULL,
 KEY gid(gid),
 KEY id(id),
-KEY open(open)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY open(open)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_site'],$DB_CONNECT);
 }
@@ -154,7 +154,7 @@ KEY parent(parent),
 KEY depth(depth),
 KEY id(id),
 KEY mobile(mobile),
-KEY hidden(hidden)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY hidden(hidden)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_menu'],$DB_CONNECT);
 }
@@ -194,7 +194,7 @@ KEY category(category),
 KEY linkedmenu(linkedmenu),
 KEY d_regis(d_regis),
 KEY d_update(d_update),
-KEY member(member)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY member(member)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_page'],$DB_CONNECT);
 }
@@ -231,7 +231,7 @@ dispage		TEXT			DEFAULT ''		NOT NULL,
 skin		VARCHAR(50)		DEFAULT ''		NOT NULL,
 m_skin		VARCHAR(50)		DEFAULT ''		NOT NULL,
 bgcolor		VARCHAR(10)		DEFAULT ''		NOT NULL,
-KEY hidden(hidden)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY hidden(hidden)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_popup'],$DB_CONNECT);
 }
@@ -248,7 +248,7 @@ id			VARCHAR(50)		DEFAULT ''		NOT NULL,
 pw			VARCHAR(250)	DEFAULT ''		NOT NULL,
 org		  TINYINT			DEFAULT '0'		NOT NULL,
 KEY site(site),
-KEY id(id)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY id(id)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrid'],$DB_CONNECT);
 }
@@ -336,7 +336,7 @@ KEY smail(smail),
 KEY point(point),
 KEY usepoint(usepoint),
 KEY now_log(now_log),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrdata'],$DB_CONNECT);
 }
@@ -353,7 +353,7 @@ date		CHAR(8)			DEFAULT ''		NOT NULL,
 hit			INT				DEFAULT '0'		NOT NULL,
 page		INT				DEFAULT '0'		NOT NULL,
 KEY site(site),
-KEY date(date)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY date(date)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_counter'],$DB_CONNECT);
 }
@@ -373,7 +373,7 @@ agent		VARCHAR(200)	DEFAULT ''		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY site(site),
 KEY mbruid(mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_referer'],$DB_CONNECT);
 }
@@ -391,7 +391,7 @@ browser		VARCHAR(10)		DEFAULT ''		NOT NULL,
 hit			INT				DEFAULT '0'		NOT NULL,
 KEY site(site),
 KEY date(date),
-KEY browser(browser)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY browser(browser)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_browser'],$DB_CONNECT);
 }
@@ -409,7 +409,7 @@ keyword		VARCHAR(50)		DEFAULT ''		NOT NULL,
 hit			INT				DEFAULT '0'		NOT NULL,
 KEY site(site),
 KEY date(date),
-KEY keyword(keyword)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY keyword(keyword)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_inkey'],$DB_CONNECT);
 }
@@ -433,7 +433,7 @@ etc			INT				DEFAULT '0'		NOT NULL,
 total		INT				DEFAULT '0'		NOT NULL,
 KEY site(site),
 KEY date(date),
-KEY keyword(keyword)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY keyword(keyword)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_outkey'],$DB_CONNECT);
 }
@@ -487,7 +487,7 @@ KEY fileonly(fileonly),
 KEY type(type),
 KEY ext(ext),
 KEY name(name),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT);
 }
@@ -513,7 +513,7 @@ KEY gid(gid),
 KEY site(site),
 KEY mbruid(mbruid),
 KEY type(type),
-KEY hidden(hidden)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY hidden(hidden)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_uploadcat'],$DB_CONNECT);
 }
@@ -563,7 +563,7 @@ KEY hidden(hidden),
 KEY notice(notice),
 KEY mbruid(mbruid),
 KEY subject(subject),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_comment'],$DB_CONNECT);
 }
@@ -599,7 +599,7 @@ KEY parent(parent),
 KEY parentmbr(parentmbr),
 KEY hidden(hidden),
 KEY mbruid(mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_oneline'],$DB_CONNECT);
 }
@@ -618,7 +618,7 @@ opinion	VARCHAR(20)		DEFAULT ''		NOT NULL,
 d_regis	VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY mbruid(mbruid),
 KEY entry(entry),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_opinion'],$DB_CONNECT);
 }
@@ -642,7 +642,7 @@ download	INT				DEFAULT '0'		NOT NULL,
 mbrjoin		INT				DEFAULT '0'		NOT NULL,
 mbrout		INT				DEFAULT '0'		NOT NULL,
 KEY date(date),
-KEY site(site)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY site(site)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_numinfo'],$DB_CONNECT);
 }
@@ -660,7 +660,7 @@ keyword		VARCHAR(50)		DEFAULT ''		NOT NULL,
 hit			INT				DEFAULT '0'		NOT NULL,
 KEY site(site),
 KEY date(date),
-KEY keyword(keyword)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY keyword(keyword)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_tag'],$DB_CONNECT);
 }
@@ -678,7 +678,7 @@ num			INT				DEFAULT '0'		NOT NULL,
 login		INT				DEFAULT '0'		NOT NULL,
 post		INT				DEFAULT '0'		NOT NULL,
 comment		INT				DEFAULT '0'		NOT NULL,
-KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrlevel'],$DB_CONNECT);
 }
@@ -692,7 +692,7 @@ uid			INT				PRIMARY KEY		NOT NULL AUTO_INCREMENT,
 name		VARCHAR(30)		DEFAULT ''		NOT NULL,
 gid			TINYINT			DEFAULT '0'		NOT NULL,
 num			INT				DEFAULT	'0'		NOT NULL,
-KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrgroup'],$DB_CONNECT);
 }
@@ -710,7 +710,7 @@ content		TEXT			NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY my_mbruid(my_mbruid),
 KEY by_mbruid(by_mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_point'],$DB_CONNECT);
 }
@@ -728,7 +728,7 @@ content		TEXT			NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY my_mbruid(my_mbruid),
 KEY by_mbruid(by_mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_cash'],$DB_CONNECT);
 }
@@ -746,7 +746,7 @@ content		TEXT			NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY my_mbruid(my_mbruid),
 KEY by_mbruid(by_mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_money'],$DB_CONNECT);
 }
@@ -771,7 +771,7 @@ KEY my_mbruid(my_mbruid),
 KEY by_mbruid(by_mbruid),
 KEY inbox(inbox),
 KEY d_regis(d_regis),
-KEY d_read(d_read)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_read(d_read)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_paper'],$DB_CONNECT);
 }
@@ -800,7 +800,7 @@ KEY to_phone(to_phone),
 KEY from_mbruid(from_mbruid),
 KEY from_tel(from_tel),
 KEY type(type),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_sms'],$DB_CONNECT);
 }
@@ -819,7 +819,7 @@ d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY rel(rel),
 KEY my_mbruid(my_mbruid),
 KEY by_mbruid(by_mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_friend'],$DB_CONNECT);
 }
@@ -838,7 +838,7 @@ subject		VARCHAR(200)	DEFAULT ''		NOT NULL,
 url			VARCHAR(250)	DEFAULT ''		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY mbruid(mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_saved'],$DB_CONNECT);
 }
@@ -855,7 +855,7 @@ gid			INT				DEFAULT '0'		NOT NULL,
 photo		VARCHAR(100)	DEFAULT ''		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY mbruid(mbruid),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_userpic'],$DB_CONNECT);
 }
@@ -877,7 +877,7 @@ d_regis		      VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY mbruid(mbruid),
 KEY sns(sns),
 KEY expires_in(expires_in),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrsns'],$DB_CONNECT);
 }
@@ -892,7 +892,7 @@ uid   INT    PRIMARY KEY  NOT NULL AUTO_INCREMENT,
 memberuid	INT				DEFAULT '0'		NOT NULL,
 access_token		VARCHAR(100)	DEFAULT ''		NOT NULL,
 expire		INT				DEFAULT '0'		NOT NULL,
-KEY memberuid(memberuid)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY memberuid(memberuid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrtoken'],$DB_CONNECT);
 }
@@ -910,7 +910,7 @@ token		        VARCHAR(100)	DEFAULT ''		NOT NULL,
 code		        VARCHAR(30)	  DEFAULT ''		NOT NULL,
 d_regis	        VARCHAR(14)		DEFAULT ''		NOT NULL,
 ip		          VARCHAR(15)   DEFAULT ''    NOT NULL,
-KEY auth(auth)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY auth(auth)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_guestauth'],$DB_CONNECT);
 }
@@ -933,7 +933,7 @@ KEY base(base),
 KEY backup(backup),
 KEY d_code(d_code),
 KEY d_verified(d_verified),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbremail'],$DB_CONNECT);
 }
@@ -956,7 +956,7 @@ KEY base(base),
 KEY backup(backup),
 KEY d_verified(d_verified),
 KEY d_code(d_code),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrphone'],$DB_CONNECT);
 }
@@ -982,7 +982,7 @@ KEY mbruid(mbruid),
 KEY label(label),
 KEY name(name),
 KEY base(base),
-KEY last_log(last_log)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY last_log(last_log)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrshipping'],$DB_CONNECT);
 }
@@ -1005,7 +1005,7 @@ KEY name(name),
 KEY entry(entry),
 KEY email(email),
 KEY sms(sms),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_code'],$DB_CONNECT);
 }
@@ -1029,7 +1029,7 @@ replyto		VARCHAR(50)		DEFAULT ''		NOT NULL,
 language	CHAR(2)			DEFAULT ''		NOT NULL,
 build		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY rel(rel),
-KEY parent(parent)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY parent(parent)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_seo'],$DB_CONNECT);
 }
@@ -1037,7 +1037,6 @@ db_query("OPTIMIZE TABLE ".$table['s_seo'],$DB_CONNECT);
 $_tmp = db_query( "select count(*) from ".$table['s_xtralog'], $DB_CONNECT );
 if ( !$_tmp ) {
 $_tmp = ("
-
 CREATE TABLE ".$table['s_xtralog']." (
 module		VARCHAR(30)		DEFAULT ''		NOT NULL,
 parent		INT				DEFAULT '0'		NOT NULL,
@@ -1046,7 +1045,7 @@ score1		TEXT			NOT NULL,
 score2		TEXT			NOT NULL,
 report		TEXT			NOT NULL,
 KEY module(module),
-KEY parent(parent)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY parent(parent)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_xtralog'],$DB_CONNECT);
 }
@@ -1069,7 +1068,7 @@ KEY uid(uid),
 KEY mbruid(mbruid),
 KEY site(site),
 KEY frommbr(frommbr),
-KEY d_read(d_read)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_read(d_read)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_notice'],$DB_CONNECT);
 }

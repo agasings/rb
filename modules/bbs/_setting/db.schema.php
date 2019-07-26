@@ -24,7 +24,7 @@ putfoot		VARCHAR(20)		DEFAULT ''		NOT NULL,
 addinfo		TEXT			NOT NULL,
 writecode	TEXT			NOT NULL,
 KEY gid(gid),
-KEY id(id)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY id(id)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'list'],$DB_CONNECT);
 }
@@ -42,7 +42,7 @@ gid			double(11,2)	DEFAULT '0.00'	NOT NULL,
 KEY site(site),
 KEY notice(notice),
 KEY bbs(bbs,gid),
-KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'idx'],$DB_CONNECT);
 }
@@ -108,7 +108,7 @@ KEY mbruid(mbruid),
 KEY category(category),
 KEY subject(subject),
 KEY tag(tag),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'data'],$DB_CONNECT);
 }
@@ -124,7 +124,7 @@ bbs			INT				DEFAULT '0'		NOT NULL,
 num			INT				DEFAULT '0'		NOT NULL,
 KEY date(date),
 KEY site(site),
-KEY bbs(bbs)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY bbs(bbs)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'month'],$DB_CONNECT);
 }
@@ -140,7 +140,7 @@ bbs			INT				DEFAULT '0'		NOT NULL,
 num			INT				DEFAULT '0'		NOT NULL,
 KEY date(date),
 KEY site(site),
-KEY bbs(bbs)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY bbs(bbs)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'day'],$DB_CONNECT);
 }
@@ -159,7 +159,7 @@ dislikes		TEXT			NOT NULL,
 report		TEXT			NOT NULL,
 KEY parent(parent),
 KEY site(site),
-KEY bbs(bbs)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY bbs(bbs)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'xtra'],$DB_CONNECT);
 }
@@ -199,7 +199,7 @@ KEY mbruid(mbruid),
 KEY type(type),
 KEY ext(ext),
 KEY name(name),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8");
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'upload'],$DB_CONNECT);
 }
