@@ -69,7 +69,7 @@
 				<?php if($_iscallpage):?>
 					<?php if($swhere==$_key):?>
 				<div class="card-footer">
-					<ul class="pagination">
+					<ul class="pagination  justify-content-center mb-0">
 						<script>getPageLink(5,<?php echo $p?>,<?php echo getTotalPage($_ResultArray['num'][$_key],$d['search']['num2'])?>,'');</script>
 					</ul>
 				</div>
@@ -94,6 +94,7 @@
 				<h3>검색 페이지가 설정되어 있지 않습니다.</h3>
 			</div>
 		</div>
+
 	</div>
 </div>
 

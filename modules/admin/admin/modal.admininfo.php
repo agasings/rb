@@ -180,7 +180,7 @@ if (!$_M['uid']) exit;
 		<div class="row">
 			<div class="col-sm-3 col-lg-3 text-center">
 				<br><br>
-				<img alt="User Pic" src="<?php echo getAavatarSrc($_M['uid'],'120') ?>" width="120" height="120" class="rounded-circle">
+				<img alt="User Pic" src="<?php echo getAvatarSrc($_M['uid'],'120') ?>" width="120" height="120" class="rounded-circle">
 			</div>
 			<div class="col-sm-9 col-lg-9">
 				<table class="table rb-table-user mb-0">
@@ -273,7 +273,7 @@ if (!$_M['uid']) exit;
 				<label for="inputEmail3" class="col-sm-2 col-form-label">아바타</label>
 				<div class="col-sm-9">
 					<div class="media">
-						<img class="mr-3 rounded-circle" src="<?php echo getAavatarSrc($_M['uid'],'45') ?>" alt="" style="width:45px">
+						<img class="mr-3 rounded-circle" src="<?php echo getAvatarSrc($_M['uid'],'45') ?>" alt="" style="width:45px">
 						<div class="media-body">
 							<input type="file" name="upfile" class="hidden" id="rb-upfile-avatar" accept="image/jpg" onchange="getId('rb-photo-btn').innerHTML='이미지 파일 선택됨';">
 							<button type="button" class="btn btn-light" onclick="$('#rb-upfile-avatar').click();" id="rb-photo-btn">찾아보기</button>

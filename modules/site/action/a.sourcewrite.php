@@ -84,7 +84,9 @@ if(file_exists($cachefile_pc)) unlink($cachefile_pc);
 
 echo '<script type="text/javascript">';
 echo 'parent.$.notify({message: "저장 되었습니다."},{type: "success"});';
+echo 'parent.$("[data-role=d_last]").text("'.getDateFormat($date['totime'],'Y.m.d H:i').'");';
 echo 'parent.$(".js-submit").prop("disabled",false);';
 echo '</script>';
+
 exit;
 ?>

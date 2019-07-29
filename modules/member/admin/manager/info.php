@@ -16,7 +16,7 @@
 			<div class="col">
 
 				<div class="media">
-					<img alt="avatar" src="<?php echo getAavatarSrc($_M['uid'],'64') ?>" width="64" height="64" class="rounded-circle mr-3">
+					<img alt="avatar" src="<?php echo getAvatarSrc($_M['uid'],'64') ?>" width="64" height="64" class="rounded-circle mr-3">
 					<div class="media-body">
 						<p class="mb-1">
 							<input type="file" name="upfile" class="hidden" id="rb-upfile-avatar" accept="image/jpg" onchange="getId('rb-photo-btn').innerHTML='이미지 파일 선택됨';">

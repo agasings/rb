@@ -111,8 +111,11 @@ $TPG = getTotalPage($NUM,$recnum);
           <th>번호</th>
           <th>보낸사람</th>
           <th>내용</th>
-          <th>알림일시</th>
+          <th>전송일시</th>
           <th>확인일시</th>
+          <th>이메일</th>
+          <th>푸시</th>
+          <th>참조링크</th>
         </tr>
       </thead>
       <tbody>
@@ -122,10 +125,18 @@ $TPG = getTotalPage($NUM,$recnum);
         <tr>
           <td><input type="checkbox" name="noti_members[]"  onclick="checkboxCheck();" class="mbr-act-list" value="<?php echo $R['uid']?>"></td>
           <td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
-          <td><span class="badge badge-pill badge-dark"><?php echo $SM2['name']?$SM2['name']:'시스템'?></span></td>
+          <td>
+            <span class="badge badge-pill badge-dark"><?php echo $SM2['name']?$SM2['name']:'시스템'?></span><br>
+            <span class="badge badge-pill badge-dark mt-1"><?php echo $R['frommodule'] ?></span>
+          </td>
           <td class="text-left">
-            <a tabindex="0" class="muted-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-content="<?php echo $R['message'] ?>" data-placement="top">
-              <?php echo getStrCut($R['message'],'80','..')?>
+            <a tabindex="0"
+              <?php if ($R['referer']): ?>
+              href="<?php echo $R['referer'] ?>" target="_blank"
+              <?php endif; ?>
+              class="muted-link" role="button" data-toggle="popover" data-trigger="hover" data-html="true" data-content="<?php echo $R['message'] ?>" data-placement="top">
+              <?php echo getStrCut($R['title'],'80','..')?><br>
+              <small class="text-muted"><?php echo getStrCut($R['message'],'50','..')?><small>
             </a>
           </td>
           <td class="rb-update">
@@ -133,6 +144,16 @@ $TPG = getTotalPage($NUM,$recnum);
           </td>
           <td class="rb-update">
             <time class="timeago small text-muted" data-toggle="tooltip" datetime="<?php echo getDateFormat($R['d_read'],'c')?>" data-tooltip="tooltip" title="<?php echo getDateFormat($R['d_read'],'Y.m.d H:i')?>"></time>
+          </td>
+          <td><span class="badge badge-pill badge-dark"><?php echo $R['email']?'발송':'' ?></span></td>
+          <td><span class="badge badge-pill badge-dark"><?php echo $R['push']?'발송':'' ?></span></td>
+          <td>
+            <?php if ($R['referer']): ?>
+              <a href="<?php echo $R['referer'] ?>" class="badge badge-pill badge-dark" target="_blank">
+                <?php echo $R['button'] ?>
+              </span>
+            <?php endif; ?>
+
           </td>
         </tr>
         <?php endwhile?>

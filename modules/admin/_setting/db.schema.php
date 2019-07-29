@@ -458,16 +458,17 @@ type		TINYINT			DEFAULT '0'		NOT NULL,
 ext			VARCHAR(4)		DEFAULT '0'		NOT NULL,
 fserver		TINYINT			DEFAULT '0'		NOT NULL,
 url			VARCHAR(150)	DEFAULT ''		NOT NULL,
-folder		VARCHAR(30)		DEFAULT ''		NOT NULL,
+folder		VARCHAR(250)		DEFAULT ''		NOT NULL,
 name		VARCHAR(250)	DEFAULT ''		NOT NULL,
 tmpname		VARCHAR(100)	DEFAULT ''		NOT NULL,
-thumbname	VARCHAR(100)	DEFAULT ''		NOT NULL,
 size		INT				DEFAULT '0'		NOT NULL,
 width		INT				DEFAULT '0'		NOT NULL,
 height		INT				DEFAULT '0'		NOT NULL,
 alt			VARCHAR(50)		DEFAULT ''		NOT NULL,
 caption		TEXT			NOT NULL,
 description	TEXT			NOT NULL,
+provider	VARCHAR(100)	DEFAULT ''		NOT NULL,
+author	VARCHAR(100)	DEFAULT ''		NOT NULL,
 src			TEXT			NOT NULL,
 linkto		TINYINT			DEFAULT '0'		NOT NULL,
 license		TINYINT			DEFAULT '0'		NOT NULL,
@@ -477,6 +478,8 @@ d_update	VARCHAR(14)		DEFAULT ''		NOT NULL,
 sync		VARCHAR(250)	DEFAULT ''		NOT NULL,
 linkurl		VARCHAR(250)	DEFAULT ''		NOT NULL,
 time		VARCHAR(20)		DEFAULT ''		NOT NULL,
+duration		INT				DEFAULT '0'		NOT NULL,
+embed	  TEXT			NOT NULL,
 KEY gid(gid),
 KEY parent(parent),
 KEY category(category),
@@ -487,6 +490,9 @@ KEY fileonly(fileonly),
 KEY type(type),
 KEY ext(ext),
 KEY name(name),
+KEY provider(provider),
+KEY author(author),
+KEY duration(duration),
 KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT);
@@ -897,6 +903,27 @@ db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrtoken'],$DB_CONNECT);
 }
 
+//회원별 instance-id 토큰
+$_tmp = db_query( "select count(*) from ".$table['s_iidtoken'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+CREATE TABLE ".$table['s_iidtoken']." (
+uid       INT    PRIMARY KEY  NOT NULL AUTO_INCREMENT,
+mbruid	  INT				DEFAULT '0'		NOT NULL,
+token		  VARCHAR(255)	DEFAULT ''		NOT NULL,
+device	  VARCHAR(10)	DEFAULT ''		NOT NULL,
+browser	  VARCHAR(10)	DEFAULT ''		NOT NULL,
+version	  VARCHAR(10)	DEFAULT ''		NOT NULL,
+d_regis	  VARCHAR(14)		DEFAULT ''		NOT NULL,
+d_update  VARCHAR(14)		DEFAULT ''		NOT NULL,
+KEY device(device),
+KEY browser(browser),
+KEY version(version),
+KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table['s_iidtoken'],$DB_CONNECT);
+}
+
 //비회원 본인인증 정보
 $_tmp = db_query( "select count(*) from ".$table['s_guestauth'], $DB_CONNECT );
 if ( !$_tmp ) {
@@ -1049,27 +1076,60 @@ KEY parent(parent)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_xtralog'],$DB_CONNECT);
 }
+
+//메시지 템플릿
+$_tmp = db_query( "select count(*) from ".$table['s_msgdoc'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+CREATE TABLE ".$table['s_msgdoc']." (
+uid			  INT				PRIMARY KEY		NOT NULL AUTO_INCREMENT,
+msgtype	  TINYINT			DEFAULT '0'		NOT NULL,
+module	  VARCHAR(30)		DEFAULT ''		NOT NULL,
+name		  VARCHAR(50)		DEFAULT ''		NOT NULL,
+title 	  VARCHAR(100)		DEFAULT ''		NOT NULL,
+message		TEXT			NOT NULL,
+referer		VARCHAR(250)	DEFAULT ''		NOT NULL,
+button	  VARCHAR(50)		DEFAULT ''		NOT NULL,
+html		VARCHAR(4)		DEFAULT ''		NOT NULL,
+email		  INT				DEFAULT '0'		NOT NULL,
+push		  INT				DEFAULT '0'		NOT NULL,
+KEY uid(uid),
+KEY msgtype(msgtype),
+KEY module(module),
+
+KEY d_read(d_read)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table['s_msgdoc'],$DB_CONNECT);
+}
+
 //알림데이터
 $_tmp = db_query( "select count(*) from ".$table['s_notice'], $DB_CONNECT );
 if ( !$_tmp ) {
 $_tmp = ("
 CREATE TABLE ".$table['s_notice']." (
-uid			CHAR(16)		DEFAULT ''		NOT NULL,
+uid			  CHAR(16)		DEFAULT ''		NOT NULL,
 mbruid		INT				DEFAULT '0'		NOT NULL,
-site		INT				DEFAULT '0'		NOT NULL,
-frommodule	VARCHAR(50)		DEFAULT ''		NOT NULL,
+site		  INT				DEFAULT '0'		NOT NULL,
+frommodule	VARCHAR(30)		DEFAULT ''		NOT NULL,
 frommbr		INT				DEFAULT '0'		NOT NULL,
+title 	  VARCHAR(100)		DEFAULT ''		NOT NULL,
 message		TEXT			NOT NULL,
 referer		VARCHAR(250)	DEFAULT ''		NOT NULL,
-target		VARCHAR(20)		DEFAULT ''		NOT NULL,
+button	  VARCHAR(50)		DEFAULT ''		NOT NULL,
+tag		    VARCHAR(20)		DEFAULT ''		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 d_read		VARCHAR(14)		DEFAULT ''		NOT NULL,
+email		  INT				DEFAULT '0'		NOT NULL,
+push		  INT				DEFAULT '0'		NOT NULL,
 KEY uid(uid),
 KEY mbruid(mbruid),
 KEY site(site),
 KEY frommbr(frommbr),
+KEY email(email),
+KEY push(push),
 KEY d_read(d_read)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_notice'],$DB_CONNECT);
 }
+
 ?>

@@ -364,6 +364,113 @@ include_once $_tmpvfile;
 							 </div>
 						 </div><!-- /.row -->
 
+						 <div class="row">
+							 <div class="col-sm-6">
+								 <div class="form-group">
+									 <label class="d-block">저장함<code class="pull-right">saved</code></label>
+									 <select name="layout_saved" class="form-control custom-select" id="" tabindex="-1">
+										 <?php $_layoutHexp=explode('/',$_HS['layout'])?>
+										 <option value="">사이트 대표 레이아웃 (<?php echo $_layoutHexp[0]?>)</option>
+										 <option disabled>--------------------</option>
+										 <?php $dirs = opendir($g['path_layout'])?>
+										 <?php while(false !== ($tpl = readdir($dirs))):?>
+										 <?php if($tpl=='.' || $tpl == '..' || $tpl == '_blank' || is_file($g['path_layout'].$tpl))continue?>
+										 <?php $dirs1 = opendir($g['path_layout'].$tpl)?>
+											 <optgroup label="<?php echo getFolderName($g['path_layout'].$tpl)?>">
+												 <?php while(false !== ($tpl1 = readdir($dirs1))):?>
+												 <?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
+													<option value="<?php echo $tpl?>/<?php echo $tpl1?>"<?php if($d['member']['layout_saved']==$tpl.'/'.$tpl1):?> selected="selected"<?php endif?>><?php echo $tpl?> &gt; <?php echo str_replace('.php','',$tpl1)?></option>
+												 <?php endwhile?>
+											</optgroup>
+										 <?php closedir($dirs1)?>
+										 <?php endwhile?>
+										 <?php closedir($dirs)?>
+									 </select>
+								 </div>
+							 </div>
+							 <div class="col-sm-6">
+								 <div class="form-group">
+									 <label class="d-block">저장함 <span class="badge badge-dark">모바일 전용</span> <code class="pull-right">settings</code></label>
+									 <select name="layout_saved_mobile" class="form-control custom-select" id="" tabindex="-1">
+										 <?php if ($_HS['m_layout']): ?>
+										 <?php $_layoutHexp=explode('/',$_HS['m_layout'])?>
+										 <option value="0">사이트 레이아웃 (<?php echo $_layoutHexp[0]?>)</option>
+										 <?php else: ?>
+										 <option value="0">&nbsp;사용안함 (기본 레이아웃 적용)</option>
+										 <?php endif; ?>
+										 <option disabled>--------------------</option>
+										 <?php $dirs = opendir($g['path_layout'])?>
+										 <?php while(false !== ($tpl = readdir($dirs))):?>
+										 <?php if($tpl=='.' || $tpl == '..' || $tpl == '_blank' || is_file($g['path_layout'].$tpl))continue?>
+										 <?php $dirs1 = opendir($g['path_layout'].$tpl)?>
+											 <optgroup label="<?php echo getFolderName($g['path_layout'].$tpl)?>">
+												 <?php while(false !== ($tpl1 = readdir($dirs1))):?>
+												 <?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
+													<option value="<?php echo $tpl?>/<?php echo $tpl1?>"<?php if($d['member']['layout_saved_mobile']==$tpl.'/'.$tpl1):?> selected="selected"<?php endif?>><?php echo $tpl?> &gt; <?php echo str_replace('.php','',$tpl1)?></option>
+												 <?php endwhile?>
+											</optgroup>
+										 <?php closedir($dirs1)?>
+										 <?php endwhile?>
+										 <?php closedir($dirs)?>
+									 </select>
+								 </div>
+							 </div>
+						 </div><!-- /.row -->
+
+						 <div class="row">
+							 <div class="col-sm-6">
+								 <div class="form-group">
+									 <label class="d-block">알림함<code class="pull-right">noti</code></label>
+									 <select name="layout_noti" class="form-control custom-select" id="" tabindex="-1">
+										 <?php $_layoutHexp=explode('/',$_HS['layout'])?>
+										 <option value="">사이트 대표 레이아웃 (<?php echo $_layoutHexp[0]?>)</option>
+										 <option disabled>--------------------</option>
+										 <?php $dirs = opendir($g['path_layout'])?>
+										 <?php while(false !== ($tpl = readdir($dirs))):?>
+										 <?php if($tpl=='.' || $tpl == '..' || $tpl == '_blank' || is_file($g['path_layout'].$tpl))continue?>
+										 <?php $dirs1 = opendir($g['path_layout'].$tpl)?>
+											 <optgroup label="<?php echo getFolderName($g['path_layout'].$tpl)?>">
+												 <?php while(false !== ($tpl1 = readdir($dirs1))):?>
+												 <?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
+													<option value="<?php echo $tpl?>/<?php echo $tpl1?>"<?php if($d['member']['layout_noti']==$tpl.'/'.$tpl1):?> selected="selected"<?php endif?>><?php echo $tpl?> &gt; <?php echo str_replace('.php','',$tpl1)?></option>
+												 <?php endwhile?>
+											</optgroup>
+										 <?php closedir($dirs1)?>
+										 <?php endwhile?>
+										 <?php closedir($dirs)?>
+									 </select>
+								 </div>
+							 </div>
+							 <div class="col-sm-6">
+								 <div class="form-group">
+									 <label class="d-block">알림함 <span class="badge badge-dark">모바일 전용</span> <code class="pull-right">settings</code></label>
+									 <select name="layout_noti_mobile" class="form-control custom-select" id="" tabindex="-1">
+										 <?php if ($_HS['m_layout']): ?>
+										 <?php $_layoutHexp=explode('/',$_HS['m_layout'])?>
+										 <option value="0">사이트 레이아웃 (<?php echo $_layoutHexp[0]?>)</option>
+										 <?php else: ?>
+										 <option value="0">&nbsp;사용안함 (기본 레이아웃 적용)</option>
+										 <?php endif; ?>
+										 <option disabled>--------------------</option>
+										 <?php $dirs = opendir($g['path_layout'])?>
+										 <?php while(false !== ($tpl = readdir($dirs))):?>
+										 <?php if($tpl=='.' || $tpl == '..' || $tpl == '_blank' || is_file($g['path_layout'].$tpl))continue?>
+										 <?php $dirs1 = opendir($g['path_layout'].$tpl)?>
+											 <optgroup label="<?php echo getFolderName($g['path_layout'].$tpl)?>">
+												 <?php while(false !== ($tpl1 = readdir($dirs1))):?>
+												 <?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
+													<option value="<?php echo $tpl?>/<?php echo $tpl1?>"<?php if($d['member']['layout_noti_mobile']==$tpl.'/'.$tpl1):?> selected="selected"<?php endif?>><?php echo $tpl?> &gt; <?php echo str_replace('.php','',$tpl1)?></option>
+												 <?php endwhile?>
+											</optgroup>
+										 <?php closedir($dirs1)?>
+										 <?php endwhile?>
+										 <?php closedir($dirs)?>
+									 </select>
+								 </div>
+							 </div>
+						 </div><!-- /.row -->
+
+
 						 <small class="text-muted">모바일 전용 레이아웃을 선택하지 않으면 데스크탑 대표 레이아웃으로 설정됩니다.</small>
 
 					 </div><!-- /.card-body -->
@@ -419,6 +526,31 @@ include_once $_tmpvfile;
 										 <option value="">사용안함</option>
 										 <option disabled>--------------------</option>
 										 <?php $cat=$d['member']['sosokmenu_settings']?>
+										 <?php getMenuShowSelect($s,$table['s_menu'],0,0,0,0,0,'')?>
+									 </select>
+								 </div>
+							 </div>
+						 </div>
+
+						 <div class="row">
+							 <div class="col-sm-6">
+								 <div class="form-group">
+									 <label>저장함</label>
+									 <select name="sosokmenu_saved" class="form-control custom-select">
+										 <option value="">사용안함</option>
+										 <option disabled>--------------------</option>
+										 <?php $cat=$d['member']['sosokmenu_saved']?>
+										 <?php getMenuShowSelect($s,$table['s_menu'],0,0,0,0,0,'')?>
+									 </select>
+								 </div>
+							 </div>
+							 <div class="col-sm-6">
+								 <div class="form-group">
+									 <label>알림함</label>
+									 <select name="sosokmenu_noti" class="form-control custom-select">
+										 <option value="">사용안함</option>
+										 <option disabled>--------------------</option>
+										 <?php $cat=$d['member']['sosokmenu_noti']?>
 										 <?php getMenuShowSelect($s,$table['s_menu'],0,0,0,0,0,'')?>
 									 </select>
 								 </div>
@@ -560,10 +692,7 @@ include_once $_tmpvfile;
 									</div>
 								</div>
 								<div class="col-sm-6">
-									<div class="form-group error">
-										<label>가입시 지급포인트</label>
-										<input type="number" name="join_point" value="<?php echo $d['member']['join_point']?>" class="form-control" placeholder="">
-									</div>
+
 								</div>
 							</div>
 
@@ -607,25 +736,7 @@ include_once $_tmpvfile;
 									</div>
 								</div>
 								<div class="col-sm-6">
-									<div class="form-group">
-										<label>가입완료 안내</label>
-										<div class="pt-2">
 
-											<div class="custom-control custom-checkbox custom-control-inline">
-											  <input type="checkbox" class="custom-control-input" id="join_email_send" name="join_email_send" value="1"<?php if($d['member']['join_email_send']):?> checked="checked"<?php endif?>>
-											  <label class="custom-control-label" for="join_email_send">가입완료 이메일 발송</label>
-											</div>
-											<small class="form-text text-muted">
-												이메일 <a href="<?php echo $g['s']?>/?r=<?php echo $r ?>&m=admin&module=admin&front=main">발송점검</a>이 필요합니다.
-											</small>
-
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-sm-6">
 									<div class="form-group">
 										<label>대표 전화</label>
 										<input type="tel" name="join_tel" value="<?php echo $d['member']['join_tel']?>" class="form-control">
@@ -634,70 +745,96 @@ include_once $_tmpvfile;
 										</small>
 									</div>
 								</div>
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label>가입완료 안내</label>
-										<div class="pt-2">
-
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="join_sms_send" name="join_sms_send" value="1"<?php if($d['member']['join_sms_send']):?> checked="checked"<?php endif?>>
-												<label class="custom-control-label" for="join_sms_send">가입완료 SMS 발송</label>
-											</div>
-											<small class="form-text text-muted">
-												유료충전, SMS 발신번호 등록 및
-												<a href="<?php echo $g['s']?>/?r=<?php echo $r ?>&m=admin&module=admin&front=main">발송설정과 점검</a>이 필요합니다
-											</small>
-
-										</div>
-									</div>
-								</div>
 							</div>
 
 							<hr>
 
-							<div class="row">
 
-								<div class="col-sm-12">
-									<div class="form-group error">
+							<div class="card">
+								<div class="card-header">
+									<i class="fa fa-paper-plane-o mr-1" aria-hidden="true"></i> 가입완료 메시지 발송
+								</div>
+								<div class="card-body">
+
+									<div class="row">
+										<div class="col">
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input" id="join_noti_send" name="join_noti_send" value="1"<?php if($d['member']['join_noti_send']):?> checked="checked"<?php endif?>>
+												<label class="custom-control-label" for="join_noti_send">웹알림 발송</label>
+											</div>
+											<small class="form-text text-muted">
+												웹알림 메시지 구성이 필요합니다.
+											</small>
+										</div><!-- /.col -->
+
+										<div class="col">
+											<div class="custom-control custom-checkbox custom-control-inline">
+												<input type="checkbox" class="custom-control-input" id="join_email_send" name="join_email_send" value="1"<?php if($d['member']['join_email_send']):?> checked="checked"<?php endif?>>
+												<label class="custom-control-label" for="join_email_send">이메일 발송</label>
+											</div>
+											<small class="form-text text-muted">
+												이메일 <a href="<?php echo $g['s']?>/?r=<?php echo $r ?>&m=admin&module=admin&front=main">발송점검</a>이 필요합니다.
+											</small>
+										</div>
+									</div><!-- /.row -->
+
+								</div><!-- /.card-body -->
+							</div><!-- /.card -->
+
+							<div class="card">
+								<div class="card-header">
+									<i class="fa fa-product-hunt mr-1" aria-hidden="true"></i> 가입시 포인트 지급
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<div class="form-group mb-0">
+												<label>지급 포인트</label>
+												<input type="number" name="join_point" value="<?php echo $d['member']['join_point']?>" class="form-control" placeholder="">
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group mb-0">
+												<label>지급 메세지</label>
+												<input type="text" name="join_pointmsg" value="<?php echo $d['member']['join_pointmsg']?>" class="form-control">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div><!-- /.card -->
+
+							<div class="card">
+								<div class="card-header">
+									<i class="fa fa-ban mr-1" aria-hidden="true"></i> 가입시 제한
+								</div>
+								<div class="card-body">
+
+									<div class="form-group">
 										<label>가입제한 이메일</label>
 										<textarea class="form-control" name="join_cutemail" rows="4"><?php echo $d['member']['join_cutemail']?></textarea>
 										<small class="form-text text-muted">사용을 제한하려는 이메일을 콤마(,)로 구분해서 입력해 주세요.(예: test@email.com,@myhome.com)</small>
 									</div>
-								</div>
 
-								<div class="col-sm-12">
-									<div class="form-group error">
+									<div class="form-group">
 										<label>가입제한 휴대폰</label>
 										<textarea class="form-control" name="join_cutphone" rows="4"><?php echo $d['member']['join_cutphone']?></textarea>
 										<small class="form-text text-muted">사용을 제한하려는 휴대폰을 콤마(,)로 구분해서 입력해 주세요.(예: 01012345678,0102345678)</small>
 									</div>
-								</div>
 
-								<div class="col-sm-12">
 									<div class="form-group">
 										<label>사용제한 닉네임</label>
 										<textarea class="form-control" name="join_cutnic" rows="3"><?php echo $d['member']['join_cutnic']?></textarea>
 										<small class="form-text text-muted">사용을 제한하려는 닉네임을 콤마(,)로 구분해서 입력해 주세요.</small>
 									</div>
-								</div>
 
-								<div class="col-sm-12">
-									<div class="form-group error">
+									<div class="form-group">
 										<label>사용제한 아이디</label>
 										<textarea class="form-control" name="join_cutid" rows="4"><?php echo $d['member']['join_cutid']?></textarea>
 										<small class="form-text text-muted">사용을 제한하려는 아이디를 콤마(,)로 구분해서 입력해 주세요.</small>
 									</div>
-								</div>
 
-							</div>
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-group">
-										<label>포인트지급 메세지</label>
-										<input type="text" name="join_pointmsg" value="<?php echo $d['member']['join_pointmsg']?>" class="form-control">
-									</div>
-								</div>
-							</div>
+								</div><!-- /.card-body -->
+							</div><!-- /.card -->
 
 							<hr>
 
@@ -944,17 +1081,15 @@ include_once $_tmpvfile;
 		 								<td><input type="text" name="add_value_<?php echo $_val[0]?>" size="30" value="<?php echo $_val[3]?>" class="form-control"/></td>
 		 							<!-- 	<td><input type="text" name="add_size_<?php echo $_val[0]?>" size="4" value="<?php echo $_val[4]?>" class="form-control" /></td>
 		 							 필요할 경우 주석제거-->
-									 <td>
-		 								 <label class="custom-control custom-checkbox mb-0">
-		 									 <input type="checkbox" class="custom-control-input" name="add_pilsu_<?php echo $_val[0]?>" value="1"<?php if($_val[5]):?> checked="checked"<?php endif?>  id="add_pilsu_<?php echo $_val[0]?>">
-		 									 <span class="custom-control-label" for="add_pilsu_<?php echo $_val[0]?>"></span>
-		 								 </label>
+									 <td class="text-center align-middle">
+										 <div class="form-check">
+											 <input type="checkbox" class="form-check-input position-static" name="add_pilsu_<?php echo $_val[0]?>" value="1"<?php if($_val[5]):?> checked="checked"<?php endif?>  id="add_pilsu_<?php echo $_val[0]?>">
+										 </div>
 									 </td>
-	 								 <td>
-											<div class="custom-control custom-checkbox mb-0">
-	 									   <input type="checkbox" class="custom-control-input" name="add_hidden_<?php echo $_val[0]?>" value="1"<?php if($_val[6]):?> checked="checked"<?php endif?> id="add_hidden_<?php echo $_val[0]?>">
-	 									   <label class="custom-control-label" for="add_hidden_<?php echo $_val[0]?>"></label>
-	 									 </div>
+	 								 <td class="text-center align-middle">
+										 <div class="form-check">
+											 <input type="checkbox" class="form-check-input position-static" name="add_hidden_<?php echo $_val[0]?>" value="1"<?php if($_val[6]):?> checked="checked"<?php endif?> id="add_hidden_<?php echo $_val[0]?>">
+										 </div>
 								 		</td>
 	 								</tr>
 	 								<?php endforeach?>
@@ -974,21 +1109,14 @@ include_once $_tmpvfile;
 	 									<td><input type="text" name="add_value" class="form-control" placeholder=""></td>
 	 									<!-- <td><input type="text" name="add_size" class="form-control" placeholder=""></td>  필요할 경우 주석제거-->
 	 									<td class="text-center align-middle">
-
-	 										<div class="custom-control custom-checkbox">
-	 										  <input type="checkbox" class="custom-control-input" id="add_pilsu" name="add_pilsu">
-	 										  <label class="custom-control-label" for="add_pilsu"></label>
-	 										</div>
-
+											<div class="form-check">
+ 											 <input type="checkbox" class="form-check-input position-static" id="add_pilsu" name="add_pilsu">
+ 										 </div>
 	 									</td>
 	 									<td class="text-center align-middle">
-
-	 										<div class="custom-control custom-checkbox">
-	 										  <input type="checkbox" class="custom-control-input" id="add_hidden" name="add_hidden">
-	 										  <label class="custom-control-label" for="add_hidden"></label>
-	 										</div>
-
-
+											<div class="form-check">
+ 											 <input type="checkbox" class="form-check-input position-static" id="add_hidden" name="add_hidden">
+ 										 </div>
 	 									</td>
 	 								</tr>
 	 							</tbody>

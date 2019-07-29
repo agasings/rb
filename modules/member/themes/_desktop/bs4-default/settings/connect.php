@@ -3,7 +3,7 @@
 
 <div class="page-wrapper row">
 	<nav class="col-3 page-nav">
-    <?php include_once $g['dir_module_skin'].'_menu.php'?>
+    <?php include_once $g['dir_module_skin'].'_nav.php'?>
   </nav>
 
 	<div class="col-9 page-main">
@@ -101,7 +101,7 @@
 						</a>
 					</div>
 					<div class="">
-						<?php if ($isSNSlogin['facebook']): ?>
+						<?php if ($my_facebook['uid']): ?>
 						<small class="mr-3 text-muted">
 							<?php echo getDateFormat($my_facebook['d_regis'],'Y.m.d H:i') ?> 연결
 						</small>

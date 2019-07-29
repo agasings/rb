@@ -99,7 +99,7 @@ if ($R['uid'])
 			</div>
 
 			<div class="form-group row rb-outside">
-				<label class="col-lg-2 col-form-label text-lg-right">라벨</label>
+				<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">라벨</label>
 				<div class="col-lg-10 col-xl-9">
 					<div class="input-group input-group-lg">
 						<input type="text" name="label" value="<?php echo $R['label']?>" class="form-control"<?php if(!$R['uid'] && !$g['device']):?> autofocus<?php endif?> autocomplete="off">
@@ -118,14 +118,14 @@ if ($R['uid'])
 
 			<div class="collapse" id="site-info">
 				<div class="form-group row rb-outside">
-					<label class="col-lg-2 col-form-label text-lg-right">사이트명</label>
+					<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">사이트명</label>
 					<div class="col-lg-10 col-xl-9">
 						<input class="form-control form-control-lg" placeholder="" type="text" name="name" value="<?php echo $R['name']?>">
 						<small class="form-text text-muted"><code>&lt;title&gt; &lt;/title&gt;</code>내부의 <code>{site}</code> 변수에 적용됩니다.</small>
 					</div>
 				</div>
 				<div class="form-group row rb-outside">
-					<label class="col-lg-2 col-form-label text-lg-right">코드</label>
+					<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">코드</label>
 					<div class="col-lg-10 col-xl-9">
 						<div class="input-group input-group-lg">
 							<input class="form-control" placeholder="미입력 시 자동으로 부여됩니다." type="text" name="id" value="<?php echo $R['id']?>" id="site-code">
@@ -155,11 +155,11 @@ if ($R['uid'])
 			</div>
 
 			<div class="form-group row">
-				<label class="col-lg-2 col-form-label text-lg-right">기본</label>
+				<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">기본</label>
 				<div class="col-lg-10 col-xl-9">
 					<div class="form-row">
 						<div class="col-sm-6" id="rb-layout-select">
-							<select class="form-control custom-select form-control-lg" name="layout_1" required onchange="getSubLayout(this,'rb-layout-select2','layout_1_sub','custom-select form-control-lg');">
+							<select class="form-control custom-select custom-select-lg" name="layout_1" required onchange="getSubLayout(this,'rb-layout-select2','layout_1_sub','custom-select custom-select-lg');">
 								<?php $_layoutExp1=explode('/',$R['layout'])?>
 								<?php $dirs = opendir($g['path_layout'])?>
 								<?php $_i=0;while(false !== ($tpl = readdir($dirs))):?>
@@ -171,7 +171,7 @@ if ($R['uid'])
 							</select>
 						</div>
 						<div class="col-sm-6" id="rb-layout-select2">
-							<select class="form-control custom-select form-control-lg" name="layout_1_sub"<?php if(!$_layoutExp1[0]):?> disabled<?php endif?>>
+							<select class="form-control custom-select custom-select-lg" name="layout_1_sub"<?php if(!$_layoutExp1[0]):?> disabled<?php endif?>>
 								<?php $dirs1 = opendir($g['path_layout'].$_layoutExp1[0])?>
 									<?php while(false !== ($tpl1 = readdir($dirs1))):?>
 									<?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
@@ -187,11 +187,11 @@ if ($R['uid'])
 			<div class="collapse<?php if($R['m_layout']):?> show<?php endif?>" id="layout-mobile">
 
 				<div class="form-group row">
-					<label class="col-lg-2 col-form-label text-lg-right">모바일 전용</label>
+					<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">모바일 전용</label>
 					<div class="col-lg-10 col-xl-9">
 						<div class="form-row">
 							<div class="col-sm-6" id="rb-mlayout-select">
-								<select class="form-control custom-select form-control-lg" name="m_layout_1" required onchange="getSubLayout(this,'rb-mlayout-select2','m_layout_1_sub','custom-select form-control-lg');">
+								<select class="form-control custom-select custom-select-lg" name="m_layout_1" required onchange="getSubLayout(this,'rb-mlayout-select2','m_layout_1_sub','custom-select custom-select-lg');">
 									<option value="0">사용안함 (기본 레이아웃 적용)</option>
 									<option disabled>--------------------</option>
 									<?php $_layoutExp2=explode('/',$R['m_layout'])?>
@@ -205,7 +205,7 @@ if ($R['uid'])
 							</div>
 
 								<div class="col-sm-6" id="rb-mlayout-select2">
-									<select class="form-control custom-select form-control-lg" name="m_layout_1_sub"<?php if(!$R['m_layout']):?> disabled<?php endif?>>
+									<select class="form-control custom-select custom-select-lg" name="m_layout_1_sub"<?php if(!$R['m_layout']):?> disabled<?php endif?>>
 										<?php if(!$R['m_layout']):?><option>서브 레이아웃</option><?php endif?>
 										<?php $dirs1 = opendir($g['path_layout'].$_layoutExp2[0])?>
 										<?php while(false !== ($tpl1 = readdir($dirs1))):?>
@@ -246,9 +246,9 @@ if ($R['uid'])
 
 
 				<div class="form-group row">
-					<label class="col-lg-2 col-form-label text-lg-right">기본</label>
+					<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">기본</label>
 					<div class="col-lg-10 col-xl-9">
-						<select class="form-control custom-select form-control-lg" name="startpage" required>
+						<select class="form-control custom-select custom-select-lg" name="startpage" required>
 							<option>레이아웃에 포함된 메인페이지</option>
 							<option disabled><i class="fa fa-edit"></i>페이지 리스트 ↓</option>
 							<?php while($S = db_fetch_array($PAGES1)):?>
@@ -269,9 +269,9 @@ if ($R['uid'])
 
 				<div class="collapse<?php if($R['m_startpage']):?> show<?php endif?>" id="index-mobile">
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label text-lg-right">모바일 전용</label>
+						<label class="col-lg-2 col-form-label col-form-label-lg text-lg-right">모바일 전용</label>
 						<div class="col-lg-10 col-xl-9">
-							<select class="form-control custom-select form-control-lg" name="m_startpage" required>
+							<select class="form-control custom-select custom-select-lg" name="m_startpage" required>
 								<option>레이아웃에 포함된 메인페이지</option>
 								<option disabled><i class="fa fa-edit"></i>페이지 리스트 ↓</option>
 								<?php while($S = db_fetch_array($PAGES2)):?>
@@ -773,12 +773,6 @@ function iconDropAply()
 	$('#_site_icon_<?php echo $R['id']?>').addClass(f.icon.value);
 	$('#modal_window').modal('hide');
 }
-<?php if($d['admin']['dblclick']):?>
-document.ondblclick = function(event)
-{
-	getContext('<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>">사용자모드 보기</a><a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=<?php echo $m?>&module=<?php echo $module?>&type=makesite">새 사이트 만들기</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#." onclick="getId(\'rb-submit-button\').click();">실행하기</a>',event);
-}
-<?php endif?>
 
 // 고급 설정
 $('#site-code-head').on('shown.bs.collapse', function () {

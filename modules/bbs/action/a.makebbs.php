@@ -135,7 +135,10 @@ else {
 }
 
 
-$fdset = array('layout','m_layout','skin','m_skin','editor','m_editor','a_skin','a_mskin','c_skin','c_mskin','c_hidden','perm_g_list','perm_g_view','perm_g_write','perm_g_down','perm_l_list','perm_l_view','perm_l_write','perm_l_down','admin','hitcount','recnum','sbjcut','newtime','rss','sosokmenu','point1','point2','point3','display','hidelist','snsconnect');
+$fdset = array('layout','m_layout','skin','m_skin','editor','m_editor','a_skin','a_mskin','c_skin','c_mskin','c_hidden',
+	'perm_g_list','perm_g_view','perm_g_write','perm_g_down','perm_l_list','perm_l_view','perm_l_write','perm_l_down',
+	'admin','hitcount','recnum','sbjcut','newtime','rss','sosokmenu','point1','point2','point3','display','hidelist','snsconnect',
+	'noti_notice','noti_newpost','noti_opinion','noti_mention','noti_report');
 
 $gfile= $g['dir_module'].'var/var.'.$id.'.php';
 $fp = fopen($gfile,'w');

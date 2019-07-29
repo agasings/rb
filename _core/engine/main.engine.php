@@ -7,6 +7,8 @@ if($_SERVER['HTTPS'] != 'on') getLink($g['ssl_root'].'/?'.$_SERVER['QUERY_STRING
 $DB_CONNECT = isConnectedToDB($DB);
 $g['mobile']= isMobileConnect($_SERVER['HTTP_USER_AGENT']);
 $g['device']= $g['mobile'] && $_SESSION['pcmode'] != 'Y';
+$g['broswer'] = getBrowzer($_SERVER['HTTP_USER_AGENT']);
+$g['deviceType']=getDeviceKind($_SERVER['HTTP_USER_AGENT'],$g['mobile']);
 $my = array();
 $my['level'] = 0;
 
@@ -196,6 +198,21 @@ if (isset($_SESSION['JOIN']['email']) || isset($_SESSION['JOIN']['phone'])) {
 //사이트별 외부연결 설정
 if (file_exists($g['path_var'].'site/'.$r.'/connect.var.php')) {
 	include $g['path_var'].'site/'.$r.'/connect.var.php';
+}
+
+// 푸시알림 지원여부
+if ( $g['mobile']!='ipad' && $g['mobile']!='iphone') {
+	if ($g['broswer']!='MSIE 11' && $g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 9' && $g['broswer']!='Safari') {
+
+		$g['pwa_supported']=1;
+
+		if (file_exists($g['path_var'].'fcm.info.js')) {
+			$g['push_active']=1;
+		} else {
+			$g['push_active']=2;
+		}
+
+	}
 }
 
 //소셜로그인 세션 존재유무

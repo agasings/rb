@@ -3,11 +3,13 @@
 
 1. 일반모달 : 회원가입
 2. 일반모달 : 로그인
-3. 팝업   : 로그아웃
-4. 일반모달 : 통합검색
-5. 일반모달 : 게시물 보기
-6. 포토모달 : 갤러리형
-7. 팝업 : 링크공유
+3. 시트 : 알림
+4. 팝업   : 로그아웃
+5. 일반모달 : 통합검색
+6. 일반모달 : 게시물 보기
+7. 포토모달 : 갤러리형
+8. 팝업 : 링크공유
+9. 시트 : 푸시알림 권한요청
 
 -->
 
@@ -17,7 +19,10 @@
 <!-- 2. 일반모달 : 로그인 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/login/component.php';  ?>
 
-<!-- 3. 팝업 : 로그아웃-->
+<!-- 3. 시트 : 알림 -->
+<?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/noti/component.php';  ?>
+
+<!-- 4. 팝업 : 로그아웃-->
 <div id="popup-logout" class="popup zoom">
   <div class="popup-content">
     <header class="bar bar-nav">
@@ -41,7 +46,7 @@
   </div>
 </div>
 
-<!-- 4. 일반모달 : 통합검색 -->
+<!-- 5. 일반모달 : 통합검색 -->
 <div id="modal-search" class="modal zoom">
 	<header class="bar bar-nav bg-white p-2">
 	  <form class="input-group input-group-lg border border-primary" action="<?php echo $g['s']?>/" id="modal-search-form">
@@ -73,7 +78,7 @@
 	</main>
 </div><!-- /.modal -->
 
-<!-- 5. 일반모달 : 게시물 보기 -->
+<!-- 6. 일반모달 : 게시물 보기 -->
 <div id="modal-bbs-view" class="modal zoom">
 
 	<section id="page-bbs-view" class="rb-bbs-list page center" data-role="bbs-list">
@@ -128,7 +133,7 @@
 
 </div><!-- /.modal -->
 
-<!-- 6. 포토모달 : 갤러리형 -->
+<!-- 7. 포토모달 : 갤러리형 -->
 <div class="pswp pswp-gallery" tabindex="-1" role="dialog" aria-hidden="true">
 	<input type="hidden" name="uid" value="">
   <input type="hidden" name="bid" value="">
@@ -207,7 +212,7 @@
 
 </div>
 
-<!-- 7. 팝업 : 링크공유 -->
+<!-- 8. 팝업 : 링크공유 -->
 <div id="popup-link-share" class="popup zoom">
   <div class="popup-content">
     <header class="bar bar-nav">
@@ -263,3 +268,32 @@
     </div><!-- /.content -->
   </div><!-- /.popup-content -->
 </div><!-- /.popup -->
+
+
+<!-- 9. 시트 : 푸시알림 권한요청 -->
+<div id="permission_alert" class="sheet">
+
+  <div class="card card-full">
+
+    <div class="card-header bg-primary">
+      <i class="fa fa-bell-o fa-fw" aria-hidden="true"></i> 푸시알림 수신을 위한 권한요청
+    </div>
+    <div class="card-body">
+      <div class="content-padded text-muted">
+        <p>푸시알림을 허용하면 공지사항은 물론 게시글에 대한 피드백 또는 내가 언급된 글에 대한 정보들을 실시간으로 받아보실 수 있습니다.</p>
+        <p>나중에 하기를 선택하실 경우, 설정 페이지에서 재설정 할 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="card-footer bg-white">
+      <div class="row">
+        <div class="col-xs-6">
+          <button type="button" class="btn btn-secondary btn-block" data-history="back">나중에 하기</button>
+        </div>
+        <div class="col-xs-6 p-l-0">
+          <button class="btn btn-outline-primary btn-block" onclick="requestPermission()">지금 설정하기</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /.card -->
+
+</div>

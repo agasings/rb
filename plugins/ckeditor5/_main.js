@@ -68,6 +68,7 @@ class rbUploadAdapter {
 		data.append( 'files', file );
 		data.append( 'saveDir', attach_file_saveDir );
 		data.append( 'theme', attach_module_theme );
+		data.append( 'wysiwyg', 'Y' );
 		data.append( 'hidden', 1 );  // 본문삽입의 경우 첨부목록에서 숨김
 		this.xhr.send( data );
 	}

@@ -560,7 +560,7 @@ function getMetaImage($str)
 	if (strstr($str,'://'))	return $str;
 	$imgs = getArrayString($str);
 	$R = getUidData($GLOBALS['table']['s_upload'],$imgs['data'][0]);
-	if ($R['type'] == 2 || $R['type'] == 5) return getPreviewResize($R['url'].$R['folder'].'/'.$R['tmpname'],'z');
+	if ($R['type'] == 2 || $R['type'] == 5) return getPreviewResize($R['host'],$R['folder'],$R['tmpname'],'z');
 	if ($R['type'] == -1) return $R['src'];
 	return '';
 }
@@ -682,63 +682,59 @@ function getUpImageSrc($R){
 
    if($R['featured_img']){
 		$F=getUidData($table['s_upload'],trim($R['featured_img']));
-		$src=$F['url'].$F['folder'].'/'.$F['tmpname'];
+		$src=$F['src'];
    }else{
     $img_arr=getImgs($R['content'],'jpg|jpge|gif|png');
-    $src=$img_arr[0]?$img_arr[0]:'';
+    $src=$img_arr[0]?$img_arr[0]:'/files/noimage.png';
    }
   return $src;
 }
 
 // 미리보기용 이미지 resize 함수 .htaccess 연계됨
-function getPreviewResize($image,$size,$host,$folder){
-	if ($image) {
-		$_array=explode('.',$image);
-	  $name=$_array[0];
-	  $ext=$_array[1];
-
-		switch ($size) {
-		  case 's':
-		    $w=75;$h=75;
-		    break;
-		  case 'q':
-		    $w=150;$h=150;
-		    break;
-			case 't':
-		    $w=100;$h=67;
-		    break;
-			case 'm':
-		    $w=240;$h=160;
-		    break;
-			case 'n':
-		    $w=320;$h=213;
-		    break;
-			case 'z':
-		    $w=640;$h=427;
-		    break;
-			case 'c':
-		    $w=800;$h=534;
-		    break;
-			case 'b':
-		    $w=1024;$h=683;
-		    break;
-			case 'h':
-		    $w=1600;$h=1068;
-		    break;
-			case 'k':
-		    $w=2048;$h=1367;
-		    break;
-		  default:
-				$_sizeArray=explode('x',$size);
-		    $w=$_sizeArray[0];$h=$_sizeArray[1];
-		}
-
-		if ($host) {
-			$result='/_core/opensrc/timthumb/thumb.php?src='.$host.'/'.$folder.'/'.$image.'&w='.$w.'&h='.$h.'&s=1';
+function getPreviewResize($src,$size){
+	if ($src) {
+		$thumbnail_url_parse = parse_url($src);
+		$thumbnail_url_arr = explode('//',$src);
+		if ($thumbnail_url_parse['scheme']) {
+			switch ($size) {
+				case 's':
+					$size='75x75';
+					break;
+				case 'q':
+					$size='150x150';
+					break;
+				case 't':
+					$size='100x67';
+					break;
+				case 'm':
+					$size='240x160';
+					break;
+				case 'n':
+					$size='320x213';
+					break;
+				case 'z':
+					$size='640x427';
+					break;
+				case 'c':
+					$size='800x534';
+					break;
+				case 'b':
+					$size='1024x683';
+					break;
+				case 'h':
+					$size='1600x1068';
+					break;
+				case 'k':
+					$size='2048x1367';
+					break;
+			}
+			$result = '/thumb'.($thumbnail_url_parse['scheme']=='https'?'-ssl':'').'/'.$size.'/u/'.$thumbnail_url_arr[1];
 		} else {
-			$result=$url.$folder.'/'.$name.'_'.$size.'.'.$ext;
+			$_array=explode('.',$src);
+		  $name=$_array[0];
+		  $ext=$_array[1];
+			$result=$name.'_'.$size.'.'.$ext;
 		}
-
 	} else {
 		$result='';
 	}
@@ -752,16 +748,6 @@ function getPageSelect($site,$main,$mobile,$pid) {
 	while($P=db_fetch_array($PCD)) {
 		echo '<option value="'.$P['id'].'"'.($P['id']==$pid?' selected':'').'>'.$P['name'].' - '.$P['id'].'</option>';
 	}
-}
-
-// 유트브 대표 이미지 src 추출함수
-function getYoutubeImageSrc($R,$width,$height)
-{
-	global $table;
-
-	$F=getUidData($table['s_upload'],trim($R['featured_img']));
-	$src='/files/youtube/'.$F['thumbname'].'/thumb_'.$width.'x'.$height.'.jpg';
-	return $src;
 }
 
 // 대표이미지 메타정보 추출

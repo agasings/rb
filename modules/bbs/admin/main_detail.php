@@ -587,15 +587,32 @@ if ($uid)
 
 					<!-- 추가설정 시작 : panel-group 으로 각각의 panel 을 묶는다.-->
 			     <div id="bbs-settings" class="panel-group">
+
+						<div id="bbs-settings-noti" class="card">
+							<div class="card-header p-0">
+								<a onclick="boxDeco('noti');sessionSetting('bbs_settings_collapse','noti','','');"
+									href="#bbs-settings-noti-body"
+									data-toggle="collapse"
+									class="d-block collapsed muted-link pl-2<?php if($_SESSION['bbs_settings_collapse']!='noti'):?> collapsed<?php endif?>">
+									알림설정
+								</a>
+						 </div> <!-- .card-header -->
+						 <div class="collapse<?php if($_SESSION['bbs_settings_collapse']=='noti'):?> show<?php endif?>" id="bbs-settings-noti-body" data-parent="#bbs-settings">
+							 <div class="card-body">
+								 <?php include $g['path_module'].$module.'/admin/_noti_fgroup.php';?>
+							 </div>
+						 </div>
+						</div><!-- /.알림설정 -->
+
 						 <div id="bbs-settings-add" class="card"> <!-- 추가설정-->
 						    <div class="card-header p-0">
 									<a onclick="boxDeco('add');sessionSetting('bbs_settings_collapse','add','','');"
 										href="#bbs-settings-add-body"
 										data-toggle="collapse"
 										class="d-block collapsed muted-link pl-2<?php if($_SESSION['bbs_settings_collapse']!='add'):?> collapsed<?php endif?>">
-										<i class="fa fa-caret-right fa-fw"></i>추가설정
+										추가설정
 									</a>
-							 </div> <!-- .panel-heading -->
+							 </div> <!-- .card-header -->
 							<div class="collapse<?php if($_SESSION['bbs_settings_collapse']=='add'):?> show<?php endif?>" id="bbs-settings-add-body" data-parent="#bbs-settings" >
 								<div class="card-body">
 
@@ -615,7 +632,7 @@ if ($uid)
 								 	href="#bbs-settings-right-body"
 									data-toggle="collapse"
 									class="collapsed d-block collapsed muted-link pl-2<?php if($_SESSION['bbs_settings_collapse']!='right'):?> collapsed<?php endif?>">
-									 <i class="fa fa-caret-right fa-fw"></i>권한설정
+									 권한설정
 								 </a>
 							 </div>
 							 <div class="collapse<?php if($_SESSION['bbs_settings_collapse']=='right'):?> show<?php endif?>" id="bbs-settings-right-body" data-parent="#bbs-settings" >
@@ -630,13 +647,15 @@ if ($uid)
 								</div>
 				          </div> <!-- .panel-body & .panel-footer : 숨겼다 보였다 하는 내용  -->
 			          </div>  <!-- .panel 전체 -->
-			          <div id="bbs-settings-hcode" class="card"><!--헤더삽입-->
+
+
+	          <div id="bbs-settings-hcode" class="card"><!--헤더삽입-->
 							 <div class="card-header p-0">
 								 <a onclick="boxDeco('hcode');sessionSetting('bbs_settings_collapse','hcode','','');"
 								 	href="#bbs-settings-hcode-body"
 									data-toggle="collapse"
 									class="collapsed d-block collapsed muted-link pl-2<?php if($_SESSION['bbs_settings_collapse']!='hcode'):?> collapsed<?php endif?>">
-									 <i class="fa fa-caret-right fa-fw"></i>헤더삽입
+									 헤더삽입
 								 </a>
 							 </div>
 							 <div class="collapse<?php if($_SESSION['bbs_settings_collapse']=='hcode'):?> show<?php endif?>" id="bbs-settings-hcode-body" data-parent="#bbs-settings" >
@@ -651,13 +670,14 @@ if ($uid)
 								</div>
 				          </div> <!-- .panel-body & .panel-footer : 숨겼다 보였다 하는 내용  -->
 			          </div>  <!-- .panel 전체 -->
-			          <div id="bbs-settings-fcode" class="card"><!--풋터삽입-->
+
+          	 <div id="bbs-settings-fcode" class="card"><!--풋터삽입-->
 							 <div class="card-header p-0">
 								 <a onclick="boxDeco('fcode');sessionSetting('bbs_settings_collapse','fcode','','');"
 								 	href="#bbs-settings-fcode-body"
 									data-toggle="collapse"
 									class="collapsed d-block collapsed muted-link pl-2<?php if($_SESSION['bbs_settings_collapse']!='fcode'):?> collapsed<?php endif?>">
-									 <i class="fa fa-caret-right fa-fw"></i>풋터삽입
+									 풋터삽입
 								 </a>
 							 </div>
 							 <div class="collapse<?php if($_SESSION['bbs_settings_collapse']=='fcode'):?> show<?php endif?>" id="bbs-settings-fcode-body" data-parent="#bbs-settings" >
@@ -704,7 +724,7 @@ putCookieAlert('result_bbs_main') // 실행결과 알림 메시지 출력
 // 추가설정 패널 디자인 조정
 function boxDeco(val)
 {
-	var layer_arr=["add","right","hcode","fcode"]; // 레이어 배열
+	var layer_arr=["noti","add","right","hcode","fcode"]; // 레이어 배열
    var parent='bbs-settings-';
    var this_layer='bbs-settings-'+val;
    for(var i=0;i<layer_arr.length;i++)

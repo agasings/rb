@@ -273,8 +273,8 @@
 <?php include $g['dir_module_skin'].'_footer.php'?>
 
 <!-- 모달 댓글 출력관련  -->
-<link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_skin_modal']?>/css/style.css" rel="stylesheet">
-<script src="<?php echo $g['url_module_skin'] ?>/js/getPostData.js" ></script>
+<link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_skin_modal']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
+<script src="<?php echo $g['url_module_skin'] ?>/js/getPostData.js<?php echo $g['wcache']?>" ></script>
 
 <script>
 $(function () {

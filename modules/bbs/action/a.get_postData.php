@@ -41,7 +41,7 @@ $TMPL['uid']=$uid;
 $TMPL['subject'] = $R['subject'];
 $TMPL['article'] = getContents($R['content'],$R['html']);
 $TMPL['date'] = getDateFormat($R['d_regis'],$d['theme']['date_viewf']);
-$TMPL['avatar'] = getAavatarSrc($R['mbruid'],'84');
+$TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
 $TMPL['name'] = $R[$_HS['nametype']];
 
 if ($R['featured_img']) {

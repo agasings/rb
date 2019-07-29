@@ -5,7 +5,7 @@
 	<header>
 
 		<div class="media">
-			<img class="mr-3 border rounded" src="<?php echo getAavatarSrc($R['mbruid'],'55') ?>" width="55" height="55" alt="">
+			<img class="mr-3 border rounded" src="<?php echo getAvatarSrc($R['mbruid'],'55') ?>" width="55" height="55" alt="">
 		  <div class="media-body">
 				<h1 class="h4 mt-0">
 					<?php if($R['category']):?>

@@ -14,6 +14,7 @@ $table['s_mbrlevel']	= $DB['head'].'_s_mbrlevel';
 $table['s_mbrgroup']	= $DB['head'].'_s_mbrgroup';
 $table['s_mbrsns']	= $DB['head'].'_s_mbrsns';
 $table['s_mbrtoken']	= $DB['head'].'_s_mbrtoken';
+$table['s_iidtoken']	= $DB['head'].'_s_iidtoken';
 $table['s_mbremail']	= $DB['head'].'_s_mbremail';
 $table['s_mbrphone']	= $DB['head'].'_s_mbrphone';
 $table['s_mbrshipping']	= $DB['head'].'_s_mbrshipping';

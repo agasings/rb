@@ -5,7 +5,7 @@ checkAdmin(0);
 
 
 $g['layoutVarForSite'] = $g['path_layout'].$layout.'/_var/_var.'.$r.'.php';
-$_tmpdfile = $g['layoutVarForSite'] ? $g['layoutVarForSite'] : $g['path_layout'].$layout.'/_var/_var.php';
+$_tmpdfile = is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['path_layout'].$layout.'/_var/_var.php';
 include $themelang2 ? $themelang2 : $themelang1;
 include $_tmpdfile;
 

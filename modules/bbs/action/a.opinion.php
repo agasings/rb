@@ -3,7 +3,11 @@ if(!defined('__KIMS__')) exit;
 
 $R = getUidData($table[$m.'data'],$uid);
 
+if (!$bid) getLink('','','게시판 아이디가 지정되지 않았습니다.','');
+$B = getDbData($table[$m.'list'],"id='".$bid."'",'*');
+if (!$B['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 include_once $g['dir_module'].'var/var.php';
+include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
 
 if ($send=='ajax') {
 
@@ -47,10 +51,13 @@ $is_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
 
 // 로그인한 사용자가 좋아요를 했는지 여부 체크하여 처리
 if ($opinion=='like') {
+	$opinion_type = '좋아요';
 	if($is_liked){ // 좋아요를 했던 경우
+		$opinion_act = '취소';
 		getDbDelete($table['s_opinion'],$check_like_qry);
 		getDbUpdate($table[$m.'data'],'likes=likes-1','uid='.$uid);
 	}else{ // 좋아요 안한 경우 추가
+		$opinion_act = '추가';
 		$QKEY = "mbruid,module,entry,opinion,d_regis";
 		$QVAL = "'$mbruid','$m','$uid','like','".$date['totime']."'";
 		getDbInsert($table['s_opinion'],$QKEY,$QVAL);
@@ -64,10 +71,13 @@ if ($opinion=='like') {
 
 // 로그인한 사용자가 싫어요를 했는지 여부 체크하여 처리
 if ($opinion=='dislike') {
+	$opinion_type = '싫어요';
 	if($is_disliked){ // 싫어요를 했던 경우
+		$opinion_act = '취소';
 		getDbDelete($table['s_opinion'],$check_dislike_qry);
 		getDbUpdate($table[$m.'data'],'dislikes=dislikes-1','uid='.$uid);
 	}else{ // 싫어요를 안한 경우 추가
+		$opinion_act = '추가';
 		$QKEY = "mbruid,module,entry,opinion,d_regis";
 		$QVAL = "'$mbruid','$m','$uid','dislike','".$date['totime']."'";
 		getDbInsert($table['s_opinion'],$QKEY,$QVAL);
@@ -77,6 +87,30 @@ if ($opinion=='dislike') {
 			getDbUpdate($table[$m.'data'],'likes=likes-1','uid='.$uid);
 		}
 	}
+}
+
+// 게시물 등록자에게 알림전송
+if ($d['bbs']['noti_opinion']) {
+	$B = getDbData($table['bbslist'],'id="'.$R['bbsid'].'"','name');
+	$referer = $g['url_http'].'/'.$r.'/b/'.$bid.'/'.$uid;
+
+	include $g['dir_module'].'var/noti/_'.$a.'.php';  // 알림메시지 양식
+	$noti_title = $d['bbs']['noti_title'];
+	$noti_title = str_replace('{BBS}',$name,$noti_title);
+	$noti_title = str_replace('{OPINION_TYPE}',$opinion_type,$noti_title);
+	$noti_title = str_replace('{OPINION_ACT}',$opinion_act,$noti_title);
+	$noti_title = str_replace('{MEMBER}',$my[$_HS['nametype']],$noti_title);
+
+	$noti_body = $d['bbs']['noti_body'];
+	$noti_body = str_replace('{MEMBER}',$my[$_HS['nametype']],$noti_body);
+	$noti_body = str_replace('{SUBJECT}',$R['subject'],$noti_body);
+	$noti_referer = $g['url_http'].'/?r='.$r.'&mod=settings&page=noti';
+	$noti_button = '게시물 확인';
+	$noti_tag = '';
+	$noti_skipEmail = 0;
+	$noti_skipPush = 0;
+
+	putNotice($R['mbruid'],$m,$my['uid'],$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag,$noti_skipEmail,$noti_skipPush);
 }
 
 $R = getUidData($table[$m.'data'],$uid);

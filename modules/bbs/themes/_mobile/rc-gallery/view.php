@@ -28,7 +28,7 @@
 					<div class="pull-xs-left">
 
 						<div class="media">
-							<img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAavatarSrc($R['mbruid'],'84','') ?>"  width="42">
+							<img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84','') ?>"  width="42">
 							<div class="media-body m-l-1">
 								<span class="badge badge-default badge-inverted" data-role="regis_name"><?php echo $R[$_HS['nametype']]?></span> <br>
 								<span class="badge badge-default badge-inverted" data-role="regis_time"><?php echo getDateFormat($R['d_regis'],$d['theme']['date_viewf'])?></span>

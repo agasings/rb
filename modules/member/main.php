@@ -104,6 +104,25 @@ switch ($front) {
 
 		if ($d['member']['layout_saved_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
 			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_saved_mobile'];
+		} else {
+			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_saved'];
+		}
+
+	break;
+
+	case 'noti' :
+		$d['member']['sosokmenu'] = $d['member']['sosokmenu_noti'];
+
+		if (!$my['uid']){
+			getLink($g['s'].'/?r='.$r.'&mod=login&referer='.urlencode(RW('mod=noti')),'','','');
+		}
+
+		if ($d['member']['layout_noti_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
+			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_noti_mobile'];
+		} else {
+			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_noti'];
+		}
+
 	break;
 
 }

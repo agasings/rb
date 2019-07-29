@@ -32,7 +32,7 @@
 
 		<main role="main" class="content" data-snap-ignore="true">
 
-			<article class="content-padded animated fadeIn delay-1 markdown-body" style="min-height:250px" role="article">
+			<article class="content-padded animated fadeIn delay-1 ck-content" style="min-height:250px" role="article">
 				<?php include __KIMS_CONTENT__ ?>
 			</article>
 			<?php include $g['dir_layout'].'/_includes/footer.php' ?>

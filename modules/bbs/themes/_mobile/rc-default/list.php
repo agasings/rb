@@ -33,21 +33,13 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
   </div>
   <?php endif; ?>
 
-  <?php if ($TPG > 1 && !$type): ?>
-  <footer class="bar bar-standard bar-footer bar-light bg-white p-x-0">
-    <div class="">
-      <?php echo getPageLink_RC($d['theme']['pagenum'],$p,$TPG,'1')?>
-    </div>
-  </footer>
-  <?php endif; ?>
-
   <main class="content rb-bbs-list" id="page-bbs-list" data-role="bbs-list">
 
     <div class="swiper-container">
       <div class="swiper-wrapper">
 
         <!-- 전체글 -->
-        <div class="swiper-slide">
+        <div class="swiper-slide" id="swiper-allpost">
           <ul class="table-view my-0 border-top-0">
             <?php if ($cat || $keyword): ?>
             <li class="table-view-cell table-view-active text-muted">
@@ -73,7 +65,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
                 <?php if (!$R['depth']): ?>
                   <?php if ($d['theme']['media_object']=='1'): ?>
-                  <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAavatarSrc($R['mbruid'],'84') ?>" width="42">
+                  <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84') ?>" width="42">
                   <?php elseif ($d['theme']['media_object']=='2'): ?>
                     <?php if (getUpImageSrc($R)): ?>
                       <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'q') ?>" width="60">
@@ -124,7 +116,6 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
         </div><!-- /.swiper-slide -->
 
         <!-- 공지 -->
-
         <?php if ($NUM_NOTICE): ?>
         <div class="swiper-slide">
           <ul class="table-view border-top-0 mt-0">
@@ -142,7 +133,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                  data-uid="<?php echo $R['uid'] ?>" role="button">
                 <?php if (!$R['depth']): ?>
                   <?php if ($d['theme']['media_object']=='1'): ?>
-                  <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAavatarSrc($R['mbruid'],'84') ?>" width="42">
+                  <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84') ?>" width="42">
                   <?php elseif ($d['theme']['media_object']=='2'): ?>
                     <?php if (getUpImageSrc($R)): ?>
                       <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'q') ?>" width="60">
@@ -179,7 +170,6 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
         </div><!-- /.swiper-slide -->
         <?php endif; ?>
-
 
         <!-- 분류 -->
         <?php if($B['category']):$_catexp = explode(',',$B['category']);$_catnum=count($_catexp)?>
@@ -300,8 +290,8 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
 <?php $d['bbs']['c_mskin_modal'] = '_mobile/rc-modal'; ?>
 
-<link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin_modal']?>/css/style.css" rel="stylesheet">
-<script src="<?php echo $g['url_module_skin'] ?>/js/getPostData.js" ></script>
+<link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin_modal']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
+<script src="<?php echo $g['url_module_skin'] ?>/js/getPostData.js<?php echo $g['wcache']?>" ></script>
 
 <script>
 
@@ -359,17 +349,70 @@ $(function () {
         <?php endif; ?>
         return '<a class=" ' + className + '">'+title+'</a>';
       }
+    },
+    on: {
+      init: function () {
+        console.log('swiper가 초기화 되었습니다.');
+      },
     }
   });
 
   bar_nav.on('slideChange', function () {
     if (bar_nav.activeIndex == 0) {
-        $('.bar-footer').removeClass("d-none");
+      $('.infinitescroll-end').removeClass("d-none");
+      $('.infinitescroll-load').removeClass("d-none");
     } else {
-        $('.bar-footer').addClass("d-none");
+      $('.infinitescroll-end').addClass("d-none");
+      $('.infinitescroll-load').addClass("d-none");
     }
   });
   <?php endif; ?>
+
+  // 더보기(무한스크롤)
+  var currentPage =1; // 처음엔 무조건 1, 아래 더보기 진행되면서 +1 증가
+  var totalPage = '<?php echo $TPG?>';
+  var totalNUM = '<?php echo $NUM?>';
+  var bbs = '<?php echo $B['uid']?>';
+  var sort = '<?php echo $sort?>';
+  var orderby = '<?php echo $orderby?>';
+  var recnum = '<?php echo $recnum?>';
+  var bbs_view =  '<?php echo $g['bbs_view'] ?>';
+  var prevNUM = currentPage * recnum;
+  var moreNUM = totalNUM - prevNUM ;
+
+  $('#page-bbs-list .content').infinitescroll({
+    dataSource: function(helpers, callback){
+      var nextPage = parseInt(currentPage)+1;
+      if (totalPage>currentPage) {
+        $.get(rooturl+'/?r='+raccount+'&m=bbs&a=get_moreList',{
+            page : nextPage,
+            bbs: bbs,
+            sort: sort,
+            orderby: orderby,
+            recnum: recnum,
+            bbs_view: bbs_view
+        },function(response) {
+            var result = $.parseJSON(response);
+            var error = result.error;
+            var content = result.content;
+            if(error) alert(result.error_comment);
+            callback({ content: content });
+            var height = $('#swiper-allpost').height()
+            $('.swiper-wrapper').height(height) //swiper 높이 재조정
+            currentPage++; // 현재 페이지 +1
+            console.log(currentPage+'페이지 불러옴')
+            $('[data-plugin="timeago"]').timeago();
+        });
+      } else {
+        callback({ end: true });
+        console.log('더이상 불러올 페이지가 없습니다.')
+      }
+    },
+    appendToEle : $('#swiper-allpost .table-view'),
+    percentage : 95,  // 95% 아래로 스크롤할때 다움페이지 호출
+    hybrid : false  // true: 버튼형, false: 자동
+  });
+
 
 })
 

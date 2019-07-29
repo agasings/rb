@@ -27,6 +27,8 @@
     }
 }(function($) {
 
+    var editor;
+
     var Comments = {
 
         // Instance variables
@@ -172,6 +174,66 @@
            this.initDataNone(); // 자료없은 표시 세팅
            var e = $.Event('shown.rb.comment', { relatedTarget: this.$el_id });
            this.$el.trigger(e);
+
+           BalloonEditor
+           .create( document.querySelector( '[data-role="comment-input"]' ),{
+             placeholder: this.options.commentPlaceHolder,
+             language: 'ko',
+             extraPlugins: [rbUploadAdapterPlugin],
+             mediaEmbed: {
+                 extraProviders: [
+                     {
+                         name: 'other',
+                         url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                     }
+                 ]
+             },
+             blockToolbar: [
+                'paragraph', 'heading1', 'heading2', 'heading3',
+                '|',
+                'bulletedList', 'numberedList',
+                '|',
+                'blockQuote', 'imageUpload'
+             ],
+             typing: {
+                 transformations: {
+                     include: [
+                         // Use only the 'quotes' and 'typography' groups.
+                         'quotes',
+                         'typography',
+
+                         // Plus, some custom transformation.
+                         { from: '->', to: '→' },
+                         { from: ':)', to: '🙂' },
+                         { from: ':+1:', to: '👍' },
+                         { from: ':tada:', to: '🎉' },
+                     ],
+                 }
+             },
+             image: {
+                 toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+                 styles: [
+                     'full',
+                     'alignLeft',
+                     'alignRight'
+                 ]
+             }
+           } )
+           .then( newEditor => {
+             editor = newEditor;
+
+             editor.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+               //console.log( 'editable isFocused =', value );
+               if (memberid) $('[data-role="comment-input-wrapper"]').addClass('active')
+             } );
+
+           })
+           .catch( error => {
+               console.error( error );
+           } );
+
+
+
         },
 
 
@@ -287,26 +349,91 @@
 
         // 수정시 입력창 및 버튼 세팅 함수
         setEditModBtn: function(data,mod){
+
             if(mod=='active'){
                 // 입력창 active
-                $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]')
-                .prop("contenteditable",true)
-                .focus()
-                .removeClass('markdown-body')
-                .css({"border":"solid 1px #ccc","padding":"5px","margin-bottom":"3px","background":"#fff","min-height":"33px"});
-                placeCaretAtEnd(document.querySelector('[data-role="'+data.type+'-content-editable-'+data.uid+'"]'));
+
+                $('[data-role^="'+data.type+'-content-editable-"]').css('display','none').html('')
+                $('[data-role^="'+data.type+'-origin-content-"]').css('display','block');
+                $('[data-role^="'+data.type+'-modify-btn-wrapper-"]').hide();
+
+
+                const content = $(document).find('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').html()
+                $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','block').html('')
+                $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','none')
+
+                $('[data-role="showHide-menu"]').css('display','none')
+
+                BalloonEditor
+                .create( document.querySelector( '[data-role="'+data.type+'-content-editable-'+data.uid+'"]' ),{
+                  placeholder: this.options.commentPlaceHolder,
+                  language: 'ko',
+                  extraPlugins: [rbUploadAdapterPlugin],
+                  mediaEmbed: {
+                      extraProviders: [
+                          {
+                              name: 'other',
+                              url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                          }
+                      ]
+                  },
+                  blockToolbar: [
+                     'paragraph', 'heading1', 'heading2', 'heading3',
+                     '|',
+                     'bulletedList', 'numberedList',
+                     '|',
+                     'blockQuote', 'imageUpload'
+                  ],
+                  typing: {
+                      transformations: {
+                          include: [
+                              // Use only the 'quotes' and 'typography' groups.
+                              'quotes',
+                              'typography',
+
+                              // Plus, some custom transformation.
+                              { from: '->', to: '→' },
+                              { from: ':)', to: '🙂' },
+                              { from: ':+1:', to: '👍' },
+                              { from: ':tada:', to: '🎉' },
+                          ],
+                      }
+                  },
+                  image: {
+                      toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+                      styles: [
+                          'full',
+                          'alignLeft',
+                          'alignRight'
+                      ]
+                  }
+                } )
+                .then( newEditor => {
+                  editor_edit = newEditor;
+
+                  const viewFragment = editor_edit.data.processor.toView( content );
+                  const modelFragment = editor_edit.data.toModel( viewFragment );
+                  editor_edit.model.insertContent( modelFragment );
+                  editor_edit.editing.view.focus();
+
+                })
+                .catch( error => {
+                    console.error( error );
+                } );
+
 
                 // 수정/취소 버튼 노출
                 $('[data-role="'+data.type+'-modify-btn-wrapper-'+data.uid+'"]').show();
             }else if(mod=='deactive'){
                 // 입력창 deactive
-                $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]')
-                .prop("contenteditable",false)
-                .addClass('markdown-body')
-                .css({"border":"none","padding":"0px","margin-bottom":"0px","background":"none","min-height":"0"});
+                editor_edit.destroy()
+                $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','none')
+                $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','block');
 
                 // 수정/취소 버튼 숨김
                 $('[data-role="'+data.type+'-modify-btn-wrapper-'+data.uid+'"]').hide();
+
+                $('[data-role="showHide-menu"]').css('display','block')
             }
         },
 
@@ -320,6 +447,67 @@
             var parent = $(target).data('parent');// 댓글 PK
             var oneline_input_wrapper = $('[data-role="oneline-input-wrapper-'+parent+'"]');
             $(oneline_input_wrapper).toggle();
+
+            BalloonEditor
+            .create( document.querySelector( '[data-role="oneline-input-'+parent+'"]' ),{
+              placeholder: '답글입력',
+              language: 'ko',
+              extraPlugins: [rbUploadAdapterPlugin],
+              mediaEmbed: {
+                  extraProviders: [
+                      {
+                          name: 'other',
+                          url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                      }
+                  ]
+              },
+              blockToolbar: [
+                 'paragraph', 'heading1', 'heading2', 'heading3',
+                 '|',
+                 'bulletedList', 'numberedList',
+                 '|',
+                 'blockQuote', 'imageUpload'
+              ],
+              typing: {
+                  transformations: {
+                      include: [
+                          // Use only the 'quotes' and 'typography' groups.
+                          'quotes',
+                          'typography',
+
+                          // Plus, some custom transformation.
+                          { from: '->', to: '→' },
+                          { from: ':)', to: '🙂' },
+                          { from: ':+1:', to: '👍' },
+                          { from: ':tada:', to: '🎉' },
+                      ],
+                  }
+              },
+              image: {
+                  toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+                  styles: [
+                      'full',
+                      'alignLeft',
+                      'alignRight'
+                  ]
+              }
+            } )
+            .then( newEditor => {
+              editor_oneline = newEditor;
+              editor_oneline.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+                //console.log( 'editable isFocused =', value );
+                oneline_input_wrapper.addClass('active')
+
+              } );
+
+
+            })
+            .catch( error => {
+                console.error( error );
+            } );
+
+
+
         },
 
         // 글자 수 체크
@@ -435,9 +623,6 @@
                 });
                 // 댓글 입력창
                 $(this.options.emoticonBox).remove();
-            }else{
-                // 옵션에서 정한 placeholder
-                $(role_commentInput).attr("placeholder",this.options.commentPlaceHolder);
             }
             // 입력수 제한값 세팅
             if(this.options.commentLength){
@@ -563,24 +748,33 @@
                     msg_container = $('[data-role="oneline-input-wrapper-'+parent+'"]');
                 }
                 // 입력내용
-                if(act=='regis') content = target_input.val();
+                if(act=='regis' && type=='comment') content = editor.getData();
+                if(act=='regis' && type=='oneline') content = editor_oneline.getData();
+
                 else if(act=='edit') {
                   var content_editable = $('[data-role="'+type+'-content-editable-'+uid+'"]')
                   var tag = content_editable.prop('tagName');
                   if (tag=='DIV' || tag=='ARTICLE' || tag=='SECTION') {
-                    content = content_editable.html();
+                    content = editor_edit.getData();
                   } else {
                     content = content_editable.val();
                   }
-                  html = 'HTML'
                 }
-                // console.log(tag)
+                html = 'HTML';
+
 
                 if(content==''){
                     self.showNotify(msg_container,'내용을 입력해주세요.',null);
                     return false;
                 }else{
-                    $(target_input).val(''); // 입력내용 초기화
+                    if(type=='comment') editor.setData( '' ); // 입력내용 초기화
+
+                    if(type=='oneline'){
+                      if (act=='edit') editor_edit.setData( '' ); // 입력내용 초기화
+                      else editor_oneline.setData( '' ); // 입력내용 초기화
+                    }
+
+                    msg_container.removeClass('active')
                     if(this.options.commentLength) $(this.options.role_showInputLength).text(0); // 입력 글자수 초기화
                 }
 
@@ -606,8 +800,11 @@
                             var last_row = result.last_row;
                             var last_uid = result.lastuid;
                             $(result_container).prepend(last_row); // 등록된 댓글 출력
-                            $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').addClass(effect);
+                            $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').addClass(effect).css('z-index',1);
                             if(type=='comment') self.updateTotal(1,'add');
+
+                            Iframely('[data-role="'+type+'-item"][data-uid="'+last_uid+'"] [data-role="'+type+'-origin-content-'+last_uid+'"] oembed[url]') // oembed 미디어 변환
+
                             // 콜백 이벤트
                             var e = $.Event('saved.rb.'+type, { relatedTarget: self.$el_id });
                             self.$el.trigger(e);
@@ -620,6 +817,7 @@
                             var e = $.Event('edited.rb.'+type, { relatedTarget: self.$el_id });
                             self.$el.trigger(e);
                             self.updateEdit(edit_data); // 수정 적용 함수로 넘김
+                            Iframely('[data-role="'+type+'-item"][data-uid="'+edit_uid+'"]  oembed[url]') // oembed 미디어 변환
                         }
                     }
 
@@ -699,12 +897,10 @@
         // 수정사항 업데이트 함수 d : edit_data
         updateEdit: function(d){
 
-          // 수정내용 적용
-          var content_wrapper = $('[data-role="'+d.type+'-content-wrapper-'+d.uid+'"]');
-          $(content_wrapper).html(d.content);
+          content = d.content.replace(/\\/ig,"");
 
-          // 원본저장 input 에도 적용
-          $('[data-role="'+d.type+'-origin-content-'+d.uid+'"]').val(d.content);
+          // 원본저장 에도 적용
+          $('[data-role="'+d.type+'-origin-content-'+d.uid+'"]').html(content);
 
            // 수정시간 업데이트
           $('[data-role="'+d.type+'-time-wrapper-'+d.uid+'"]').text(d.time);

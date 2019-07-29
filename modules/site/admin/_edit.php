@@ -39,12 +39,6 @@ $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g
 <?php getImport('jquery-timeago','jquery.timeago',false,'js')?>
 <?php getImport('jquery-timeago','locales/jquery.timeago.ko',false,'js')?>
 
-<!-- toc : https://github.com/ndabas/toc -->
-<?php getImport('jquery.toc','jquery.toc.min','0.4.0','js')?>
-
-<!-- smooth-scroll : https://github.com/cferdinandi/smooth-scroll -->
-<?php getImport('smooth-scroll','smooth-scroll.polyfills.min','16.1.0','js') ?>
-
 <!-- 직접 꾸미기 -->
 <div id="rb-page-source" class="<?php echo $wysiwyg=='Y'?'rb-docs':'' ?><?php if($_SESSION['editor_sidebar']=='right'):?> rb-fixed-sidebar<?php endif?>">
 
@@ -87,17 +81,21 @@ $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g
 							<a class="dropdown-item rb-modal-photoset" href="#." data-toggle="modal" data-target="#modal_window">포토셋</a>
 							<a class="dropdown-item rb-modal-videoset" href="#." data-toggle="modal" data-target="#modal_window">비디오셋</a>
 							<div class="dropdown-divider"></div>
+							<a class="dropdown-item rb-modal-widgetcode" href="#." onclick="InserHTMLtoEditor('<hr>')">가로줄</a>
 		          <a class="dropdown-item rb-modal-widgetedit" href="#." data-toggle="modal" data-target="#modal_window">위젯</a>
 							<?php else:?>
 							<a class="dropdown-item rb-modal-widgetcode" href="#." data-toggle="modal" data-target="#modal_window">위젯</a>
 							<?php endif?>
+
+
+
 		        </div>
 		      </li>
 				</ul>
 
 				<?php if ($_HM['d_last'] || $_HP['d_last']): ?>
 				<div class="navbar-text text-muted ml-3">
-					<time class="timeago" datetime="<?php echo getDateFormat($_HM['d_last'],'c')?>">
+					<time class="timeago" datetime="<?php echo getDateFormat($_HM['d_last'],'c')?>" data-role="d_last">
 						<?php echo getDateFormat(($_mtype == 'menu')?$_HM['d_last']:$_HP['d_last'],'Y.m.d')?>
 					</time>
 					에 마지막으로 수정했습니다.
@@ -215,7 +213,6 @@ $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g
 		<input type="hidden" name="editFilter" value="<?php echo $d['admin']['editor']?>">
 
 		<?php
-
 		if($wysiwyg=='Y'):
 		$__SRC__ = is_file($g['path_page'].$_filekind.'.php') ? implode('',file($g['path_page'].$_filekind.'.php')) : '';
 		include $g['path_plugin'].$d['admin']['editor'].'/import.system.php';
@@ -279,25 +276,24 @@ $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g
 
       <ul class="nav nav-tabs nav-fill" role="tablist">
         <li class="nav-item">
-          <a class="nav-link rounded-0 border-top-0 border-left-0<?php if(!$_SESSION['editor_sidebar_tab']):?> active<?php endif?>" id="tab-file" data-toggle="tab" href="#pane-file" role="tab" aria-controls="file" aria-selected="true" onclick="sessionSetting('editor_sidebar_tab','','','');">
+          <a class="nav-link rounded-0 border-top-0 border-left-0<?php if(!$_COOKIE['editor_sidebar_tab']):?> active<?php endif?>" id="tab-file" data-toggle="tab" href="#pane-file" role="tab" aria-controls="file" aria-selected="true" onclick="setCookie('editor_sidebar_tab','',1);">
             첨부파일
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link rounded-0 border-top-0 <?php if($_SESSION['editor_sidebar_tab']=='link'):?> active<?php endif?>" id="tab-link" data-toggle="tab" href="#pane-link" role="tab" aria-controls="media" aria-selected="false" onclick="sessionSetting('editor_sidebar_tab','link','','');">
+          <a class="nav-link rounded-0 border-top-0 <?php if($_COOKIE['editor_sidebar_tab']=='link'):?> active<?php endif?>" id="tab-link" data-toggle="tab" href="#pane-link" role="tab" aria-controls="media" aria-selected="false" onclick="setCookie('editor_sidebar_tab','link',1);">
             외부링크
           </a>
         </li>
 				<li class="nav-item">
-					<a class="nav-link rounded-0 border-top-0 border-right-0<?php if($_SESSION['editor_sidebar_tab']=='toc'):?> active<?php endif?>" id="tab-toc" data-toggle="tab" href="#pane-toc" role="tab" aria-controls="media" aria-selected="false" onclick="sessionSetting('editor_sidebar_tab','toc','','');">
+					<a class="nav-link rounded-0 border-top-0 border-right-0<?php if($_COOKIE['editor_sidebar_tab']=='toc'):?> active<?php endif?>" id="tab-toc" data-toggle="tab" href="#pane-toc" role="tab" aria-controls="media" aria-selected="false" onclick="setCookie('editor_sidebar_tab','toc',1);">
 						목차
 					</a>
 				</li>
       </ul>
       <div class="tab-content mt-3">
-        <div class="tab-pane px-2<?php if(!$_SESSION['editor_sidebar_tab']):?> show active <?php endif?>" id="pane-file" role="tabpanel">
+        <div class="tab-pane px-2<?php if(!$_COOKIE['editor_sidebar_tab']):?> show active <?php endif?>" id="pane-file" role="tabpanel">
           <?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-system-attach','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>($_mtype=='page'?$_HP:$_HM),'attach_object_type'=>'file','wysiwyg'=>$wysiwyg));?>
-
   				<p>
   					<small class="text-muted">
   						사진,파일,비디오,오디오를 한번에 최대 최대 <?php echo str_replace('M','',ini_get('upload_max_filesize'))?>MB 까지 업로드 할수 있습니다.<br>
@@ -305,15 +301,15 @@ $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g
   					</small>
   				</p>
         </div>
-        <div class="tab-pane px-2<?php if($_SESSION['editor_sidebar_tab']=='link'):?> show active <?php endif?>" id="pane-link" role="tabpanel">
+        <div class="tab-pane px-2<?php if($_COOKIE['editor_sidebar_tab']=='link'):?> show active <?php endif?>" id="pane-link" role="tabpanel">
 
           <?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-system-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>($_mtype=='page'?$_HP:$_HM),'wysiwyg'=>$wysiwyg));?>
 
         </div><!-- /.tab-pane -->
-				<div class="tab-pane px-4<?php if($_SESSION['editor_sidebar_tab']=='toc'):?> show active <?php endif?>" id="pane-toc" role="tabpanel">
+				<div class="tab-pane px-4<?php if($_COOKIE['editor_sidebar_tab']=='toc'):?> show active <?php endif?>" id="pane-toc" role="tabpanel">
 
 					<?php if ($wysiwyg): ?>
-					<ul id="toc" class=" ck-toc list-unstyled"></ul>
+					<nav id="toc" class="ml-3"></nav>
 					<?php else: ?>
 					<div class="text-center py-5 text-muted">
 						에디터 편집 화면에서 표시됩니다.
@@ -502,7 +498,8 @@ $(".js-submit").click(function() {
 		$('input[name="upload"]').val(new_upfiles);
 	}
 
-	$("#toc").empty().toc({content: ".ck-content", headings: "h2,h3,h4"}); // TOC 갱신
+	$("#toc").empty();
+	doToc();
 
 	setTimeout(function(){
 		getIframeForAction(f);
@@ -516,12 +513,29 @@ getId('rb-more-tab-<?php echo $_mtype=='page'?'3':'2'?>').className = 'active';
 
 <script>
 
+function doToc() {
+	Toc.init({
+		$nav: $("#toc"),
+		$scope: $(".document-editor__editable-container h2,.document-editor__editable-container h3,.document-editor__editable-container h4")
+	});
+}
+
+// smoothScroll : https://github.com/cferdinandi/smooth-scroll
+var scroll_content = new SmoothScroll('[data-toggle="toc"] a[href*="#"]',{
+	ignore: '[data-scroll-ignore]'
+});
+
 
 $(document).ready(function() {
 
-	$("#toc").toc({content: ".ck-content", headings: "h2,h3,h4"});
+	Toc.init({
+		$nav: $("#toc"),
+		$scope: $(".document-editor__editable-container h2, .document-editor__editable-container h3")
+	});
 
-	var scroll = new SmoothScroll('a[href*="#"]');
+	$('.document-editor__editable-container').scrollspy({
+		target: '#toc'
+	});
 
 	$('.rb-modal-widgetcode').on('click',function() {
 		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.widget&amp;isWcode=Y')?>');

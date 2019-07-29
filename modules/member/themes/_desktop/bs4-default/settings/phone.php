@@ -18,7 +18,7 @@ $NUM_VCD = getDbRows($table['s_mbrphone'],$sqlque3);
 
 <div class="page-wrapper row">
   <nav class="col-3 page-nav">
-    <?php include_once $g['dir_module_skin'].'_menu.php'?>
+    <?php include_once $g['dir_module_skin'].'_nav.php'?>
   </nav>
   <div class="col-9 page-main">
 

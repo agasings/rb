@@ -26,6 +26,30 @@
   z-index: 1060
 }
 
+.alert-media {
+  background-color: rgb(241, 242, 240);
+  border-color: rgba(149, 149, 149, 0.3);
+  border-radius: 3px;
+  color: rgb(149, 149, 149);
+  padding: 10px;
+}
+
+.alert-media > [data-notify="icon"] {
+  height: 50px;
+  margin-right: 12px;
+}
+
+.alert-media > [data-notify="title"] {
+  color: rgb(51, 51, 51);
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.alert-media > [data-notify="message"] {
+  font-size: 80%;
+}
+
 .bg-white {
   background-color: #fff !important
 }
@@ -219,6 +243,25 @@ anger {
   opacity: 1 !important;
 }
 
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 /* loader 패치 */
 .modal .loader-overlay .loader-wrapper {
   top: 50% !important;
@@ -372,8 +415,8 @@ anger {
 }
 
 /*Paging*/
-.bar-footer ~ .content {
-  padding-bottom: 3rem;
+.bar-footer ~ .content.rb-bbs-list {
+  padding-bottom: 2.95rem;
 }
 .bar-standard.bar-footer {
   height: 3rem
@@ -438,8 +481,33 @@ anger {
 }
 
 /*loader*/
-.isloading-wrapper.isloading-right{margin-left:10px;}
-.isloading-overlay{position:relative;text-align:center;}.isloading-overlay .isloading-wrapper{background:#FFFFFF;-webkit-border-radius:7px;-webkit-background-clip:padding-box;-moz-border-radius:7px;-moz-background-clip:padding;border-radius:7px;background-clip:padding-box;display:inline-block;margin:0 auto;padding:10px 20px;top:10%;z-index:9000;}
+.isloading-wrapper.isloading-right{
+  margin-left:10px
+}
+.isloading-wrapper.isloading-inside {
+  padding: 2rem;
+  text-align: center;
+  font-size: 12px;
+  color: #999
+}
+.isloading-overlay{
+  position:relative;
+  text-align:center
+}
+.isloading-overlay .isloading-wrapper{
+  background:#FFFFFF;
+  -webkit-border-radius:7px;
+  -webkit-background-clip:
+  padding-box;
+  -moz-border-radius:7px;
+  -moz-background-clip:padding;
+  border-radius:7px;
+  background-clip:padding-box;
+  display:inline-block;
+  margin:0 auto;padding:10px 20px;
+  top:10%;
+  z-index:9000
+}
 
 
 /*avatar*/
@@ -1816,4 +1884,93 @@ fieldset[disabled] .btn-instagram.focus {
 .btn-instagram .badge {
   color: #3f729b;
   background-color: #fff
+}
+
+/* 무한스크롤 */
+.infinitescroll-end {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  font-size: .8rem;
+  color: #999
+}
+
+.infinitescroll-end::before {
+  content: '더 이상 없습니다.'
+}
+.infinitescroll-load .btn::before {
+  content: '더보기'
+}
+
+/* form */
+.form-text {
+  margin-top: .5rem;
+}
+
+/* figure */
+figure.media {
+  display: block
+}
+.media:not(figure) {
+  display: flex !important
+}
+figure.media oembed:empty {
+  display: block;
+  padding: 4rem 3rem;
+  text-align: center;
+}
+figure.media oembed:empty::before {
+  content: "";
+  font-size: .9rem;
+  color: #ccc;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: .25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border .75s linear infinite;
+  animation: spinner-border .75s linear infinite;
+
+}
+figure.image {
+  text-align: center;
+}
+figure.image img {
+  max-width: 100%
+}
+
+/* ckeditor5  */
+.ck-content.ck-editor__editable pre {
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #eee;
+}
+
+/* ck-toc */
+.rb-attach-sidebar [data-toggle="toc"]:empty {
+  padding: 2rem;
+  text-align: center;
+}
+.rb-attach-sidebar [data-toggle="toc"]:empty::before {
+  content: '문서에 추가한 제목이 여기 표시됩니다.';
+  color: #999
+}
+.rb-attach-sidebar [data-toggle="toc"] .navbar-nav > li a.nav-link.active::before,
+.rb-attach-sidebar [data-toggle="toc"] .navbar-nav > li a.nav-link.active:focus::before,
+.rb-attach-sidebar [data-toggle="toc"] .navbar-nav > li a.nav-link.active:hover::before {
+  position: relative;
+  content: none;
+  background-color: none;
+}
+.rb-attach-sidebar [data-toggle="toc"] .nav-link + ul {
+  display: block;
+}
+nav[data-toggle="toc"] .nav .nav > li > a {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  padding-left: 30px !important;
+  font-size: 13px !important;
+  font-weight: normal;
 }

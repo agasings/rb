@@ -1,5 +1,4 @@
 <li class="media border-bottom mb-3" data-role="comment-item" data-uid="{$comment_uid}" data-page="{$comment_page}" data-totalPage="{$total_page}" data-type="comment">
-  <input type="hidden" data-role="comment-origin-content-{$comment_uid}" value="{$comment_content}" />
   <img class="mr-3 border rounded-circle" src="{$comment_user_pic}" alt="아바타" width="50">
   <div class="media-body">
     <div class="d-flex w-100 justify-content-between align-items-center">
@@ -13,8 +12,9 @@
         {$btn_showHideMenu} <!-- 메뉴 출력/숨기 버튼 btn_showHideMenu.html : 권한이 있는 경우(로그인,작성자,관리자) 에만 노출됨 -->
       </span>
     </div><!-- /.d-flex -->
-    <div class="markdown-body">
-      <article class="mb-0" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
+    <div class="ck-content rb-article">
+      <article data-role="comment-origin-content-{$comment_uid}">{$comment_content}</article>
+      <article style="display:none" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
     </div>
     {$btn_editMod} <!-- 수정 모드시 취소/완료 버튼 btn_ediMod.html -->
 
@@ -42,22 +42,41 @@
       </a>
     </div>
 
-    <section>
-      <div class="my-2" data-role="oneline-input-wrapper-{$comment_uid}"> <!-- 한줄의견 등록폼 -->
-        <form class="input-group">
-          <input type="text" class="form-control" data-role="oneline-input-{$comment_uid}"><!-- 주의 : comment_uid 가 들어가야 함 -->
-          <div class="input-group-append">
-            <button class="btn btn-light" type="submit"
-              title="의견추가"
-              data-kcact="regis"
-              data-type="oneline"
-              data-parent="{$comment_uid}"
-              data-effect="animated fadeInUp"
-              data-grant="{$grant_uid}">
-              <i class="fa fa-paper-plane fa-lg" aria-hidden="true"></i>
-            </button>
+    <section class="pl-5">
+      <div class="rb-oneline-write"> <!-- 한줄의견 등록폼 -->
+
+        <div class="card my-3" data-role="oneline-input-wrapper-{$comment_uid}">
+
+          <div class="card-header bg-white">
+            <span class="text-muted">{$login_user_nic}</span>
           </div>
-        </form><!-- /.input-group -->
+
+          <section>
+            <div data-role="editor">
+          		<div data-role="oneline-input-{$comment_uid}" class="border-0"></div>
+          	</div>
+          </section>
+
+          <div class="card-footer bg-white p-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class=""></div>
+              <button type="button" class="btn btn-light" data-role="open-emoticon" hidden>
+                <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-light" type="submit"
+                title="의견추가"
+                data-kcact="regis"
+                data-type="oneline"
+                data-parent="{$comment_uid}"
+                data-effect="animated fadeInUp"
+                data-grant="{$grant_uid}">
+                등록
+              </button>
+            </div><!-- /.d-flex -->
+          </div>
+        </div>
+
+
       </div>
 
       <ul class="list-group my-2" data-role="oneline-container-{$comment_uid}">

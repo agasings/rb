@@ -23,7 +23,7 @@ $sqlque = 'mbruid='.$_M['uid'];
 		<div class="col-sm-3 col-lg-3 text-center">
 			<br><br>
 			<p>
-				<img alt="avatar" src="<?php echo getAavatarSrc($_M['uid'],'120') ?>" width="120" height="120" class="rounded-circle">
+				<img alt="avatar" src="<?php echo getAvatarSrc($_M['uid'],'120') ?>" width="120" height="120" class="rounded-circle">
 			</p>
 
 			<a class="btn btn-light btn-sm" href="/@<?php echo $_M['id']?>" target="_blank">프로필 페이지</a>

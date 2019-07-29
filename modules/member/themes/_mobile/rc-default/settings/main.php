@@ -1,10 +1,15 @@
-<?php $_add = file($g['path_var'].'site/'.$_HS['id'].'/member.add_field.txt')?>
+<?php
+$NT_DATA = explode('|',$my['noticeconf']);
+$nt_web = $NT_DATA[0];
+$_add = file($g['path_var'].'site/'.$_HS['id'].'/member.add_field.txt');
+$my_shipping_num = getDbRows($table['s_mbrshipping'],'mbruid='.$my['uid']);
+?>
 
 <!-- Start Page -->
 <div id="page-main" class="page center">
 	<header class="bar bar-nav bar-dark bg-primary px-0">
 		<a class="icon icon-home pull-left p-x-1" role="button" href="<?php  echo RW(0) ?>"></a>
-		<h1 class="title">설정</h1>
+		<h1 class="title" data-location="reload">설정</h1>
 	</header>
 	<main class="content bg-faded">
 
@@ -13,7 +18,7 @@
 		    <a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-profile">
 
 					<?php if($d['member']['form_settings_avatar']):?>
-					<img class="media-object pull-left img-circle bg-faded" data-role="avatar" src="<?php echo getAavatarSrc($my['uid'],'100') ?>" width="49">
+					<img class="media-object pull-left img-circle bg-faded" data-role="avatar" src="<?php echo getAvatarSrc($my['uid'],'100') ?>" width="49">
 					<?php endif; ?>
 
 		      <div class="media-body">
@@ -29,115 +34,80 @@
 		    </a>
 		  </li>
 			<li class="table-view-cell">
-				<?php echo $my['id'] ?>
-				<a class="btn btn-secondary js-btn-action-iframe" href="#popup-logout" data-toggle="popup">로그아웃</a>
-			</li>
-			<li class="table-view-cell">
-		    <a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-name">
-		      <span class="badge badge-primary badge-inverted" data-role="name"><?php echo $my['name'] ?></span>
-		      이름
-		    </a>
-		  </li>
-
-			<li class="table-view-cell">
-				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-email">
-					<span class="badge badge-primary badge-inverted"><?php echo $my['email'] ?></span>
-					이메일
+				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=account">
+					<span class="badge badge-default badge-inverted"><?php echo $my['id'] ?></span>
+					<i class="fa fa-user fa-fw text-muted mr-1" aria-hidden="true"></i> 회원계정
 				</a>
 			</li>
 			<li class="table-view-cell">
-				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-email">
-					<span class="badge badge-primary badge-inverted"><?php echo $my['phone'] ?></span>
-					휴대폰
+				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=email">
+					<span class="badge badge-default badge-inverted"><?php echo $my['email']?$my['email']:'미등록' ?></span>
+					<i class="fa fa-envelope fa-fw mr-1 text-muted" aria-hidden="true"></i> 이메일
 				</a>
 			</li>
 			<li class="table-view-cell">
-				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-pw">
-					<span class="badge badge-primary badge-inverted"><?php echo number_format($my['point'])?> P</span>
-					포인트 내역
+				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=phone">
+					<span class="badge badge-default badge-inverted"><?php echo $my['phone']?$my['phone']:'미등록' ?></span>
+					<i class="fa fa-mobile fa-lg fa-fw text-muted" aria-hidden="true"></i> 휴대폰
 				</a>
 			</li>
-
-			<!-- 소셜미디어 연결 -->
-			<?php $isSNSlogin = getDbData($table['s_mbrsns'],'memberuid='.$my['uid'],'*'); ?>
-			<li class="table-view-divider">연결계정 관리</li>
-
-			<?php if ($d['connect']['use_n']): ?>
-			<li class="table-view-cell" style="padding-right: 6rem ">
-				<div class="media-body">
-		    	네이버
-				</div>
-				<div data-toggle="switch" class="switch<?php echo $my_naver['uid']?' active':'' ?>" id="reception_sms">
-					<div class="switch-handle"></div>
-				</div>
-		  </li>
-			<?php endif; ?>
-
-			<?php if ($d['connect']['use_k']): ?>
-			<li class="table-view-cell" style="padding-right: 6rem ">
-				<div class="media-body">
-		    	카카오
-				</div>
-				<div data-toggle="switch" class="switch<?php echo $my_kakao['uid']?' active':'' ?>" id="reception_sms">
-					<div class="switch-handle"></div>
-				</div>
-		  </li>
-			<?php endif; ?>
-
-			<?php if ($d['connect']['use_g']): ?>
-			<li class="table-view-cell" style="padding-right: 6rem ">
-				<div class="media-body">
-		    	구글
-				</div>
-				<div data-toggle="switch" class="switch<?php echo $my_google['uid']?' active':'' ?>" id="reception_sms">
-					<div class="switch-handle"></div>
-				</div>
-		  </li>
-			<?php endif; ?>
-
-			<?php if ($d['connect']['use_f']): ?>
-			<li class="table-view-cell" style="padding-right: 6rem ">
-				<div class="media-body">
-		    	페이스북
-				</div>
-				<div data-toggle="switch" class="switch<?php echo $my_facebook['uid']?' active':'' ?>" id="reception_sms">
-					<div class="switch-handle"></div>
-				</div>
-		  </li>
-			<?php endif; ?>
-
-			<?php if ($d['connect']['use_i']): ?>
-			<li class="table-view-cell" style="padding-right: 6rem ">
-				<div class="media-body">
-		    	인스타그램
-				</div>
-				<div data-toggle="switch" class="switch<?php echo $my_instagram['uid']?' active':'' ?>" id="reception_sms">
-					<div class="switch-handle"></div>
-				</div>
-		  </li>
-			<?php endif; ?>
-
-			<li class="table-view-divider">회원계정 관리</li>
 			<li class="table-view-cell">
-				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-pw">
-					<?php if (!$my['only_sns']): ?>
-					<span class="badge badge-default badge-inverted"><?php echo -getRemainDate($my['last_pw'])?>일전 변경</span>
+				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=noti">
+					<?php if ($nt_web==''): ?>
+					<span class="badge badge-primary badge-pill">ON</span>
+					<?php else: ?>
+					<span class="badge badge-default badge-outline">OFF</span>
 					<?php endif; ?>
-					비밀번호 <?php echo $my['only_sns']?'등록':'변경' ?>
+					<i class="fa fa-bell fa-fw mr-1 text-muted" aria-hidden="true"></i> 알림설정
 				</a>
 			</li>
+			<!-- 소셜미디어 연결 -->
+			<?php if ($d['member']['login_social']): ?>
+			<?php $isSNSlogin = getDbData($table['s_mbrsns'],'memberuid='.$my['uid'],'*'); ?>
 			<li class="table-view-cell">
-				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-pw">
-					아이디 변경
+				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=connect">
+					<span class="badge badge-inverted">
+						<?php if ($my_naver['uid']): ?><img class="rounded-circle" src="/_core/images/sns/naver.png" alt="네이버" width="22"><?php endif; ?>
+						<?php if ($my_kakao['uid']): ?><img class="rounded-circle" src="/_core/images/sns/kakao.png" alt="카카오" width="22"><?php endif; ?>
+						<?php if ($my_google['uid']): ?><img class="rounded-circle" src="/_core/images/sns/google.png" alt="구글" width="22"><?php endif; ?>
+						<?php if ($my_facebook['uid']): ?><img class="rounded-circle" src="/_core/images/sns/facebook.png" alt="페이스북" width="22"><?php endif; ?>
+						<?php if ($my_instagram['uid']): ?><img class="rounded-circle" src="/_core/images/sns/instagram.png" alt="인스타그램" width="22"><?php endif; ?>
+					</span>
+					<i class="fa fa-user-plus fa-fw mr-1 text-muted" aria-hidden="true"></i> 연결계정
 				</a>
 			</li>
+			<?php endif; ?>
 			<li class="table-view-cell">
-				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-leave">
-					탈퇴
+				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=shipping">
+					<span class="badge badge-default badge-inverted">
+						<?php echo $my_shipping_num?number_format($my_shipping_num).' 곳':'미등록'?>
+					</span>
+					<i class="fa fa-truck fa-fw text-muted mr-1" aria-hidden="true"></i> 배송지 관리
 				</a>
 			</li>
 
-			<li class="table-view-divider">개인정보</li>
+			<li class="table-view-cell">
+				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=point">
+					<span class="badge badge-default badge-inverted"><?php echo number_format($my['point'])?> P</span>
+					<i class="fa fa-product-hunt mr-1 fa-fw text-muted" aria-hidden="true"></i> 포인트 내역
+				</a>
+			</li>
+
+			<li class="table-view-cell">
+				<a class="navigate-right" href="#popup-logout" data-toggle="popup">
+					<i class="fa fa-sign-out fa-fw mr-1 text-muted" aria-hidden="true"></i> 로그아웃
+				</a>
+			</li>
+			<li class="table-view-divider">
+				<i class="fa fa-address-card-o fa-fw mr-1" aria-hidden="true"></i> 개인정보
+			</li>
+			<li class="table-view-cell">
+				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-name">
+					<span class="badge badge-default badge-inverted" data-role="name"><?php echo $my['name'] ?></span>
+					이름
+				</a>
+			</li>
+
 			<?php if($d['member']['form_settings_tel1']):?>
 			<li class="table-view-cell">
 				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-tel1">
@@ -147,19 +117,6 @@
 					<span class="badge badge-default badge-inverted" data-role="tel1">미등록</span>
 					<?php endif; ?>
 					유선전화
-				</a>
-			</li>
-			<?php endif?>
-
-			<?php if($d['member']['form_settings_tel2']):?>
-			<li class="table-view-cell">
-				<a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-tel2">
-					<?php if ($my['tel2']): ?>
-					<span class="badge badge-default badge-inverted" data-role="tel2"><?php echo $my['tel2'] ?></span>
-					<?php else: ?>
-					<span class="badge badge-default badge-inverted" data-role="tel2">미등록</span>
-					<?php endif; ?>
-					휴대전화
 				</a>
 			</li>
 			<?php endif?>
@@ -188,21 +145,6 @@
 					성별
 				</a>
 			</li>
-			<?php endif?>
-
-
-		  <?php if($d['member']['form_settings_addr']):?>
-			<li class="table-view-cell">
-		    <a class="navigate-right" data-toggle="page" data-start="#page-main" href="#page-addr">
-		      <div class="media-body">
-		        주소
-		        <p data-role="addr1"><?php echo $my['addr1']?></p>
-		      </div>
-					<?php if (!$my['addr1']): ?>
-					<span class="badge badge-default badge-inverted" data-role="addr">미등록</span>
-					<?php endif; ?>
-		    </a>
-		  </li>
 			<?php endif?>
 
 			<?php if($d['member']['form_settings_bio']):?>
@@ -265,7 +207,6 @@
 				</a>
 			</li>
 			<?php endif?>
-
 		</ul>
 
 
@@ -375,7 +316,7 @@
 
 				<div class="avatar-photo">
 					<span class="avatar-photo">
-						<img class="img-circle m-x-auto" data-role="avatar" src="<?php echo getAavatarSrc($my['uid'],'320') ?>" alt="<?php echo $my[$_HS['nametype']]?>" width="160">
+						<img class="img-circle m-x-auto" data-role="avatar" src="<?php echo getAvatarSrc($my['uid'],'320') ?>" alt="<?php echo $my[$_HS['nametype']]?>" width="160">
 					</span>
 					<div class="m-t-1">
 						<a class="btn btn-secondary" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;a=member_photo_delete" onclick="return hrefCheck(this,true,'정말로 삭제 하시겠습니까?');">
@@ -431,31 +372,6 @@
 	</div>
 </div>
 
-<!-- Target Page : 이메일 설정 -->
-<div id="page-email" class="page right">
-	<header class="bar bar-nav bar-dark bg-primary px-0">
-		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-		<h1 class="title">이메일 설정</h1>
-	</header>
-	<div class="bar bar-standard bar-footer bar-light bg-faded">
-		<button type="button" class="btn btn-outline-primary btn-block">변경하기</button>
-	</div>
-	<div class="content">
-		<div class="content-padded">
-
-			<div class="form-group">
-				<label>이메일 <span class="text-danger">*</span></label>
-				<input type="email" class="form-control form-control-lg" name="email" value="<?php echo $my['email']?>" required onblur="sameCheck(this,'hLayeremail');">
-	      <div class="valid-feedback" id="hLayeremail"></div>
-				<div class="invalid-feedback">
-	        이메일을 확인해 주세요.
-	      </div>
-			</div>
-
-		</div>
-	</div>
-</div>
-
 <?php if($d['member']['form_settings_tel1']):?>
 <!-- Target Page : 전화번호 설정 -->
 <div id="page-tel1" class="page right">
@@ -493,51 +409,6 @@
 				  </div>
 				</div>
 			</div>
-
-		</div>
-	</div>
-</div>
-<?php endif?>
-
-<?php if($d['member']['form_settings_tel2']):?>
-<!-- Target Page : 휴대폰번호 설정 -->
-<div id="page-tel2" class="page right">
-	<header class="bar bar-nav bar-dark bg-primary px-0">
-		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-		<h1 class="title">휴대전화 설정</h1>
-	</header>
-	<div class="bar bar-standard bar-footer bar-light bg-faded">
-		<button type="button" class="btn btn-outline-primary btn-block js-save">변경하기</button>
-	</div>
-	<div class="content">
-		<div class="content-padded">
-
-
-			<div class="form-group">
-				<label>휴대전화 <?php if($d['member']['form_settings_tel2_required']):?><span class="text-danger">*</span><?php endif?></label>
-				<?php $tel2=explode('-',$my['tel2'])?>
-				<div class="form-row m-b-1">
-					<div class="col-xs-4">
-						<input type="text" name="tel2_1" value="<?php echo $tel2[0]?>" maxlength="3" size="4" class="form-control form-control-lg" autocomplete="off">
-						<div class="invalid-feedback">
-							입력필요
-						</div>
-					</div>
-					<div class="col-xs-4">
-						<input type="text" name="tel2_2" value="<?php echo $tel2[1]?>" maxlength="4" size="4" class="form-control form-control-lg" autocomplete="off">
-						<div class="invalid-feedback">
-							입력필요
-						</div>
-					</div>
-					<div class="col-xs-4">
-						<input type="text" name="tel2_3" value="<?php echo $tel2[2]?>" maxlength="4" size="4" class="form-control form-control-lg" autocomplete="off">
-						<div class="invalid-feedback">
-							입력필요
-						</div>
-					</div>
-				</div>
-			</div>
-
 
 		</div>
 	</div>
@@ -642,75 +513,6 @@
 		</div>
 	</div>
 </div>
-<?php endif?>
-
-<?php if($d['member']['form_settings_addr']):?>
-<!-- Target Page : 주소 설정 -->
-<div id="page-addr" class="page right">
-	<header class="bar bar-nav bar-dark bg-primary px-0">
-		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-		<h1 class="title">주소 설정</h1>
-	</header>
-	<div class="bar bar-standard bar-footer bar-light bg-faded">
-		<button type="button" class="btn btn-outline-primary btn-block js-save">변경하기</button>
-	</div>
-	<div class="content">
-		<div class="content-padded">
-
-			<div class="form-group">
-				<label>주소 <?php if($d['member']['form_settings_addr_required']):?><span class="text-danger">*</span><?php endif?></label>
-				<div id="addrbox"<?php if($my['addr0']=='해외'):?> class="hidden"<?php endif?>>
-					<div class="input-group" style="margin-bottom: 5px">
-						<input type="number" class="form-control" name="zip" value="<?php echo substr($my['zip'],0,5)?>" id="zip1" placeholder="" readonly>
-						<span class="input-group-btn">
-							<button class="btn btn-secondary" type="button" id="execDaumPostcode">
-								<i class="fa fa-search"></i>우편번호
-							</button>
-						</span>
-					</div>
-					<input class="form-control" type="text" value="<?php echo $my['addr1']?>" name="addr1" id="addr1" readonly placeholder="우편번호를 선택" style="margin-bottom: 5px">
-					<input class="form-control" type="text" value="<?php echo $my['addr2']?>" name="addr2" id="addr2" style="margin-bottom: 5px" placeholder="상세 주소를 입력">
-					<div class="invalid-feedback">
-						주소를 입력해주세요.
-					</div>
-				</div>
-
-				<?php if($d['member']['form_settings_overseas']):?>
-	      <div class="m-t-1">
-	        <?php if($my['addr0']=='해외'):?>
-					<label class="custom-control custom-checkbox">
-					  <input type="checkbox" class="custom-control-input" name="overseas" value="1" checked="checked" onclick="overseasChk(this);">
-					  <span class="custom-control-indicator"></span>
-					  <span class="custom-control-description" id="overseas_ment">해외거주자 입니다.</span>
-					</label>
-	        <?php else:?>
-					<label class="custom-control custom-checkbox">
-					  <input type="checkbox" class="custom-control-input" name="overseas" value="1" onclick="overseasChk(this);">
-					  <span class="custom-control-indicator"></span>
-					  <span class="custom-control-description" id="overseas_ment">해외거주자일 경우 체크해 주세요.</span>
-					</label>
-	        <?php endif?>
-	      </div>
-	      <?php endif?>
-
-			</div><!-- /.form-group -->
-
-			<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
-		</div>
-	</div>
-</div>
-
-<!-- Modal -->
-<div id="modal-DaumPostcode" class="modal">
-  <header class="bar bar-nav bar-light bg-faded px-0">
-    <a class="icon icon-close pull-right p-x-1" data-history="back" role="button"></a>
-    <h1 class="title">우편번호 검색</h1>
-  </header>
-  <div class="content" id="postLayer">
-  </div>
-</div>
-
 <?php endif?>
 
 <?php if($d['member']['form_settings_bio']):?>
@@ -863,7 +665,6 @@
 </div>
 <?php endif?>
 
-
 <!-- Target Page : 추가 가입항목 -->
 <div id="page-addfield" class="page right">
 	<header class="bar bar-nav bar-dark bg-primary px-0">
@@ -989,65 +790,3 @@ page_addfield.find('.js-save').tap(function() {
 });
 
 </script>
-
-
-<!-- Target Page : 회원탈퇴 -->
-<div id="page-leave" class="page right">
-	<header class="bar bar-nav bar-dark bg-primary px-0">
-		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-		<h1 class="title">회원탈퇴</h1>
-	</header>
-	<div class="bar bar-standard bar-footer bar-light bg-faded">
-		<button type="button" class="btn btn-outline-danger btn-block">탈퇴</button>
-	</div>
-	<div class="content">
-		<div class="content-padded">
-
-			회원님은 <span class="badge badge-default badge-inverted"><?php echo -getRemainDate($my['d_regis'])?>일전 가입</span>에 가입
-
-		</div>
-	</div>
-</div>
-
-<!-- Target Page : 비밀번호 변경 -->
-<div id="page-pw" class="page right">
-	<header class="bar bar-nav bar-dark bg-primary px-0">
-		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-		<h1 class="title">비밀번호 <?php echo $my['only_sns']?'등록':'변경' ?></h1>
-	</header>
-	<div class="bar bar-standard bar-footer bar-light bg-faded">
-		<button type="button" class="btn btn-outline-primary btn-block">변경하기</button>
-	</div>
-	<div class="content bg-faded">
-
-		<form name="procForm" class="content-padded" role="form" action="<?php echo $g['s']?>/" method="post" autocomplete="off">
-				<input type="hidden" name="r" value="<?php echo $r?>">
-				<input type="hidden" name="m" value="<?php echo $m?>">
-				<input type="hidden" name="front" value="<?php echo $front?>">
-				<input type="hidden" name="a" value="pw_update">
-
-				<div class="form-group">
-					<label>새 비밀번호</label>
-					<input type="password" class="form-control" name="pw1" id="pw1" placeholder="8자이상 영문과 숫자만 사용할 수 있습니다.">
-					<small class="form-text text-muted"></small>
-				</div>
-
-				<div class="form-group">
-					<label>새 비밀번호 확인</label>
-					<input type="password" class="form-control" name="pw2" id="pw2" placeholder="변경할 비밀번호를 한번 더 입력하세요">
-					<small class="form-text text-muted"></small>
-				</div>
-		 </form>
-
-		 <div class="content-padded">
-			<?php if ($my['only_sns']): ?>
-				<p class="text-muted">비밀번호를 등록하면 비밀번호를 통한 로그인이 가능합니다.</p>
-			<?php else: ?>
-			<p class="text-muted">현재 비밀번호는 <code><?php echo getDateFormat($my['last_pw'],'Y.m.d')?></code> 에 변경(등록)되었으며 <code>
-			<?php echo -getRemainDate($my['last_pw'])?>일</code>이 경과되었습니다.
-			비밀번호는 가급적 주기적으로 변경해 주세요.</p>
-			<?php endif; ?>
- 		</div>
-
-	</div>
-</div>

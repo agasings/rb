@@ -118,6 +118,33 @@ else {
 	fclose($fp);
 	@chmod($pfile.'.js',0707);
 
+	//매니페스트 파일생성
+	$manifestfile = $g['path_var'].'site/'.$id.'/manifest.json';
+	$fp = fopen($manifestfile,'w');
+	$iconsURL = $g['s'].'/_core/images/touch/';
+	$icons =  array(
+						array('src'=>$iconsURL.'homescreen-128x128.png','sizes'=>'128x128','type'=>'image/png'),
+						array('src'=>$iconsURL.'homescreen-144x144.png','sizes'=>'144x144','type'=>'image/png'),
+						array('src'=>$iconsURL.'homescreen-168x168.png','sizes'=>'168x168','type'=>'image/png'),
+						array('src'=>$iconsURL.'homescreen-192x192.png','sizes'=>'192x192','type'=>'image/png'),
+						array('src'=>$iconsURL.'homescreen-512x512.png','sizes'=>'512x512','type'=>'image/png')
+					);
+
+	$mnObj->name = $name;
+	$mnObj->short_name = $name;
+	$mnObj->icons = $icons;
+	$mnObj->start_url = '/';
+	$mnObj->display = 'standalone';
+	$mnObj->background_color = '#333';
+	$mnObj->theme_color = '#333';
+	$mnObj->gcm_sender_id = '103953800507';  //FCM 자바스크립트 클라이언트에 공통되는 고정된 값입니다.
+
+	$manifestJSON = json_encode($mnObj,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+	$_manifestJSON = str_replace("\/", "/", $manifestJSON);
+	fwrite($fp, $_manifestJSON);
+	fclose($fp);
+	@chmod($manifestfile,0707);
+
 	setrawcookie('result_site', rawurlencode('사이트가 등록 되었습니다.|success'));  // 처리여부 cookie 저장
 	if ($nosite=='Y')
 	{

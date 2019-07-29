@@ -24,7 +24,7 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 
 <div class="page-wrapper row">
 	<div class="col-3 page-nav">
-		<?php include_once $g['dir_module_skin'].'_menu.php'?>
+		<?php include_once $g['dir_module_skin'].'_nav.php'?>
 	</div>
 
 	<div class="col-9 page-main">

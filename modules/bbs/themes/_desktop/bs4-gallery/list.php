@@ -155,7 +155,7 @@ $col_xs = $d['theme']['xs_item']?' col-xs-'.$col_xs_num:'';
             data-bid="<?php echo $B['id']?>"
             data-uid="<?php echo $R['uid'] ?>" role="button">
 
-            <img src="<?php echo getPreviewResize(getUpImageSrc($R),'z') ?>" alt="" class="card-img-top">
+            <img src="<?php echo getPreviewResize(getUpImageSrc($R),'640x360') ?>" alt="" class="card-img-top">
             <div class="card-img-overlay opacity-0">
               <div class="d-flex flex-column w-100 h-100">
                 <?php if ($R['hidden']): ?>
@@ -257,10 +257,10 @@ $col_xs = $d['theme']['xs_item']?' col-xs-'.$col_xs_num:'';
 <?php include $g['dir_module_skin'].'_footer.php'?>
 
 <!-- 댓글 출력관련  -->
-<link href="<?php echo $g['url_root']?>/modules/comment/themes/_desktop/bs4-modal/css/style.css" rel="stylesheet">
+<link href="<?php echo $g['url_root']?>/modules/comment/themes/_desktop/bs4-modal/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
 
 <!-- 포토모달(댓글포함) 오픈 -->
-<script src="<?php echo $g['url_module_skin'] ?>/js/openGallery.js" ></script>
+<script src="<?php echo $g['url_module_skin'] ?>/js/openGallery.js<?php echo $g['wcache']?>" ></script>
 
 <script>
 $(function () {

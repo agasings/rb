@@ -44,9 +44,8 @@
 	<?php foreach($img_files as $_u):?>
 
 	<?php
-		$img_origin=$_u['url'].$_u['folder'].'/'.$_u['tmpname'];
-		$thumb_list=getPreviewResize($img_origin,$d['theme']['view_thumb']); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-		$thumb_modal=getPreviewResize($img_origin,$_u['width'].'x'.$_u['height']); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+		$thumb_list=getPreviewResize($_u['src'],$d['theme']['view_thumb']); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+		$thumb_modal=getPreviewResize($_u['src'],$_u['width'].'x'.$_u['height']); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
 	?>
 		<figure class="list-inline-item">
 			<a href="<?php echo $thumb_modal ?>"

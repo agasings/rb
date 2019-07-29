@@ -1,8 +1,9 @@
 <!--
 컴포넌트 모음
 
-1. 일반모달 : 로그인
-2. 일반모달 : 로그인(기존계정에 연결하기)
+1. 일반모달 : 회원가입
+2. 일반모달 : 로그인
+3. 일반모달 : 알림
 4. 일반모달 : 게시물 보기
 5. 포토모달 : 댓글형
 6. 포토모달 : 갤러리형
@@ -13,8 +14,11 @@
 <!-- 1. 일반모달 : 회원가입 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_main'].'/join/component.php'; ?>
 
-<!-- 1. 일반모달 : 로그인 -->
+<!-- 2. 일반모달 : 로그인 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_main'].'/login/component.php';  ?>
+
+<!-- 3. 일반모달 : 알림 -->
+<?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_main'].'/noti/component.php';  ?>
 
 <!-- 4. 일반모달 : 게시물 보기-->
 <div class="modal fade" id="modal-bbs-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

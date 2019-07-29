@@ -119,6 +119,7 @@ foreach ($MEMBERS as $M)
 
 		getDbDelete($table['s_code'],'mbruid='.$M['memberuid']);
 		getDbDelete($table['s_guestauth'],'email="'.$M['email'].'" or phone="'.$M['phone'].'"');
+		getDbDelete($table['s_iidtoken'],'mbruid='.$M['memberuid']);
 
 		if (is_file($g['path_var'].'avatar/'.$M['photo']))
 		{
@@ -167,8 +168,9 @@ foreach ($MEMBERS as $M)
 		$target		: 연결할 URL의 링크 TARGET (새창으로 연결하려면 _blank)
 
 		********************************************************************************/
-
-      putNotice($M['memberuid'],$m,$my['uid'],$notice,'','');
+		$notice_title = $notice_title?$notice_title:'관리자 알림';
+		$notice_button = $notice_button?$notice_button:'내용확인';
+    putNotice($M['memberuid'],$m,$my['uid'],$notice_title,$notice,$notice_referer,$notice_button,'');
 	}
 
 	//메일전송

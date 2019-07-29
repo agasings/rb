@@ -109,9 +109,18 @@ else {
         </div>
 
         <div class="mb-3">
+          <script>
+          var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드 폴더
+          var attach_module_theme = '_desktop/bs4-default-attach';// attach 모듈 테마
+          </script>
           <?php
             $__SRC__ = htmlspecialchars($R['content']);
-            include $g['path_plugin'].($d['bbs']['editor']?$d['bbs']['editor']: ($d['theme']['editor']?$d['theme']['editor']:$d['bbs']['editor_main'])).'/import.desktop.php';
+
+            if ($g['broswer']!='MSIE 11' && $g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 9') {
+              include $g['path_plugin'].'ckeditor5/import.classic.php';
+            } else {
+              include $g['path_plugin'].'ckeditor/import.desktop.php';
+            }
           ?>
         </div>
 
@@ -163,6 +172,7 @@ else {
 
 <script type="text/javascript">
 
+
 // 글 등록 함수
 var submitFlag = false;
 
@@ -203,6 +213,9 @@ function writeCheck(f) {
 			return false;
 		}
 	}
+
+  var editorData = editor.getData();
+  $('[name="content"]').val(editorData)
 
   // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
   var featured_img_input = $('input[name="featured_img"]'); // 대표이미지 input

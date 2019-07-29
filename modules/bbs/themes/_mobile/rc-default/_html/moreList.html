@@ -1,0 +1,37 @@
+<li class="table-view-cell{$check_depth}{$check_secret}" id="item-{$uid}">
+  <a data-title="{$bname}"
+     data-toggle="page"
+     data-target="#page-bbs-view"
+     data-start="#page-bbs-list"
+     data-subject="{$subject}"
+     data-cat="{$category}"
+     data-url="{$bbs_view_url}"
+     data-bid="{$bid}"
+     data-uid="{$uid}" role="button">
+
+    <img class="media-object pull-left rb-avatar img-circle bg-faded {$check_avatar}" src="{$avatar}" width="42">
+    <img class="media-object pull-left bg-faded border {$check_preview}" src="{$preview}" width="60">
+    <span class="media-object pull-left {$check_replay}"><span class="rb-icon fa fa-level-up fa-rotate-90"></span></span>
+
+    <span class="badge badge-default badge-outline text-xs-center rounded">
+      <strong data-role="total_comment">{$comment}{$oneline}</strong><br>
+      <small>댓글</small>
+    </span>
+    <div class="media-body">
+      <span class="rb-new mr-1 {$check_new}"></span>
+      {$subject}
+      <span class="badge badge-default badge-inverted {$check_hidden}"><i class="fa fa-lock fa-lg"></i></span>
+      <p>
+        <span class="badge badge-primary badge-outline {$check_notice}">공지</span>
+        <span class="badge badge-default badge-inverted">{$name}</span>
+        <span class="badge badge-default badge-inverted {$check_category}"><i class="fa fa-folder-o fa-fw"></i> {$category}</span>
+        <time class="badge badge-default badge-inverted" {$check_timeago} datetime="{$datetime}">
+          {$d_regis}
+        </time>
+        <span class="badge badge-default badge-inverted">조회 {$hit}</span>
+        <span class="badge badge-default badge-inverted">좋아요 {$likes}</span>
+        <span class="badge badge-default badge-inverted {$check_upload}"><i class="fa fa-floppy-o"></i></span>
+      </p>
+    </div>
+  </a>
+</li>

@@ -3,15 +3,18 @@ if(!defined('__KIMS__')) exit;
 require_once $g['dir_module'].'includes/base.class.php';
 require_once $g['dir_module'].'includes/module.class.php';
 include $g['dir_module'].'var/var.php';
+include $g['dir_module'].'var/noti/_'.$a.'.php';  // 알림메시지 양식
+
+function getPostLink($arr)
+{
+	$sync_arr=explode('|',$arr['sync']);
+	$B = getUidData($sync_arr[0],$sync_arr[2]);
+	return RW('m='.$sync_arr[1].'&bid='.$B['bbsid'].'&uid='.$sync_arr[2].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''.'#CMT-'.$arr['uid']));
+}
 
 $comment = new Comment();
 $comment->theme_name = $_POST['theme_name'];
 $comment->recnum = $_POST['recnum'];
-
-//마크다운 필터링 클래스 세팅
-include_once $g['path_core'].'opensrc/markdown-to-html/Michelf/MarkdownExtra.inc.php';
-use \Michelf\Markdown;
-use \Michelf\MarkdownExtra;
 
 $result = array();
 $result['error'] = false;
@@ -28,17 +31,7 @@ if (!$sess_code){
 	$nic		= $my['uid'] ? $my['nic'] : $name;
 	$pw			= $pw ? md5($pw) : '';
 	$subject	= $my['admin'] ? trim($subject) : htmlspecialchars(trim($subject));
-
-	if ($html=='HTML') {
-		if ($markdown=='Y') {
-			$content= MarkdownExtra::defaultTransform($content); //Markdown parser 로 본문내용 구조화 적용
-		} else {
-			$content	= trim($content);
-		}
-	} else {
-	  $content	= trim($content);
-	}
-
+	$content	= trim($content);
 	$subject	= $subject ? $subject : getStrCut(str_replace('&amp;',' ',strip_tags($content)),35,'..');
 	$html		= $html ? $html : 'TEXT';
 	$d_regis	= $date['totime'];
@@ -132,9 +125,9 @@ if (!$sess_code){
 		$QVAL = "display='$display',hidden='$hidden',notice='$notice',subject='$subject',content='$content',html='$html',";
 		$QVAL .="d_modify='$d_regis',upload='$upload',adddata='$adddata'";
 		getDbUpdate($comment->commentTable,$QVAL,'uid='.$R['uid']);
-	    $result['edit_content'] = $content;
-      $result['edit_uid'] = $uid;
-      $result['edit_time'] = $comment->getJNTime($d_regis);
+    $result['edit_content'] = $content;
+    $result['edit_uid'] = $uid;
+    $result['edit_time'] = $comment->getJNTime($d_regis);
 		echo json_encode($result);
     exit;
 
@@ -170,6 +163,29 @@ if (!$sess_code){
 
     $LASTUID = getDbCnt($comment->commentTable,'min(uid)','');
     $row = getUidData($comment->commentTable,$LASTUID);
+
+		// 댓글의 부모글 등록자에게 알림전송
+		if ($row['parentmbr'] != $my['uid'] ) {
+
+			$B = getDbData($table['bbslist'],'id="'.$R['bbsid'].'"','name');
+
+			//알림내용에 양식 적용(/modules/comment/var/noti/regis_comment.php)
+			$noti_title = $d['comment']['noti_title'];
+			$noti_body = $d['comment']['noti_body'];
+			$noti_referer = getPostLink($row);
+			$noti_button = $d['comment']['noti_button'];
+			$noti_tag = '';
+
+			// 내용 치환
+			$noti_title = str_replace('{NAME}',$my['name'],$noti_title); //댓글등록자 이름
+			$noti_title = str_replace('{NIC}',$my['nic'],$noti_title); //댓글등록자 닉네임
+			$noti_body = str_replace('{NAME}',$my['name'],$noti_body); //댓글등록자 이름
+			$noti_body = str_replace('{NIC}',$my['nic'],$noti_body); //댓글등록자 닉네임
+			$noti_body = str_replace('{BBS}',$B['name'],$noti_body); //게시판명
+			$noti_body = str_replace('{SUBJECT}',$subject,$noti_body); //댓글내용
+
+			putNotice($row['parentmbr'],$m,$my['uid'],$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag);
+		}
 
     $result['last_row'] = $comment->getCommentRow($row,$p);
     $result['lastuid'] = $LASTUID;

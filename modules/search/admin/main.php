@@ -485,10 +485,4 @@ function saveCheck(f)
 setTimeout("orderUpdate();",100);
 <?php endif?>
 
-<?php if($d['admin']['dblclick']):?>
-document.ondblclick = function(event)
-{
-	getContext('<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&m=<?php echo $module?>">사용자모드 보기</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#." onclick="getId(\'rb-submit-button\').click();">실행하기</a>',event);
-}
-<?php endif?>
 </script>

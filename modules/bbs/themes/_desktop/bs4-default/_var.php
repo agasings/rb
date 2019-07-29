@@ -26,7 +26,7 @@ $d['theme']['comment_theme'] = "_desktop/bs4-default"; //댓글 테마 (/modules
 $d['theme']['edit_height'] = "350"; //글쓰기폼높이(픽셀)
 $d['theme']['show_edittoolbar'] = "1"; //에디터 툴바출력(출력=1/감춤=0)
 $d['theme']['show_upload'] = "1"; //파일 업로더 출력 여부 (출력=1/감춤=0)
-$d['theme']['upload_theme'] = "_desktop/bs4-simple"; //파일 업로드 테마 (/modules/mediaset/themes/ 참고)
+$d['theme']['upload_theme'] = "_desktop/bs4-default-attach"; //파일 업로드 테마 (/modules/mediaset/themes/ 참고)
 $d['theme']['perm_upload'] = "1"; //파일첨부권한(등급이상)
 $d['theme']['show_wtag'] = "1"; //태그필드출력(출력=1/감춤=0)
 $d['theme']['use_hidden'] = "1"; //비밀글(사용안함=0/유저선택사용=1/무조건비밀글=2)

@@ -20,7 +20,7 @@
 <?php echo $_HS['headercode']?>
 
 <!-- bootstrap css -->
-<?php getImport('bootstrap','css/bootstrap.min','4.1.3','css')?>
+<?php getImport('bootstrap','css/bootstrap.min','4.3.1','css')?>
 
 <!-- jQuery -->
 <?php getImport('jquery','jquery.min','3.3.1','js')?>
@@ -28,10 +28,11 @@
 <?php getImport('popper.js','umd/popper.min','1.14.0','js')?>
 
 <!-- bootstrap js -->
-<?php getImport('bootstrap','js/bootstrap.min','4.1.3','js')?>
+<?php getImport('bootstrap','js/bootstrap.min','4.3.1','js')?>
 
 <!-- 시스템 폰트 -->
 <?php getImport('font-awesome','css/font-awesome','4.7.0','css')?>
+<?php getImport('font-kimsq','css/font-kimsq',false,'css')?>
 
 <!-- 엔진코드:삭제하지마세요 -->
 <?php include $g['path_core'].'engine/cssjs.engine.php' ?>
@@ -40,4 +41,4 @@
 <link href="<?php echo $g['url_layout']?>/_css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
 
 <!-- 레이아웃 본문 컨텐츠 스타일(선택) -->
-<link href="<?php echo $g['url_layout']?>/_css/article.css<?php echo $g['wcache']?>" rel="stylesheet">
+<link href="<?php echo $g['url_layout']?>/_css/article.css" rel="stylesheet">

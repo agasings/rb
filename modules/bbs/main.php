@@ -114,7 +114,6 @@ if ($mod == 'list')
 else if ($mod == 'write')
 {
 
-
 	if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].','))
 	{
 		if ($d['bbs']['perm_l_write'] > $my['level'] || strpos('_'.$d['bbs']['perm_g_write'],'['.$my['mygroup'].']'))

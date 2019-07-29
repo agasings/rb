@@ -1,3 +1,16 @@
+<!-- 알림수신을 위한 권한요청 (권한이 설정되지 않은 경우만 표시) -->
+<div class="alert alert-light mb-0 rounded-0" role="alert" id="permission_alert" style="display: none">
+	<div class="d-flex justify-content-between">
+		<p class="f13 mb-0">
+			<i class="fa fa-bell fa-fw text-primary" aria-hidden="true"></i> 데스크탑 푸시알림을 수신하면 공지사항은 물론 회원님이 게시글에 대한 피드백 또는 내가 언급된 글에 대한 정보들을 실시간으로 받아보실 수 있습니다.
+			<a href="#" class="alert-link" onclick="requestPermission()"><u>권한 설정</u></a>
+		</p>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close" title="나중에 하기">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</div>
+
 <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
 	<div class="container">
 		<a class="navbar-brand" href="<?php  echo RW(0) ?>">
@@ -14,7 +27,7 @@
 			</ul>
 
 			<?php if($d['layout']['header_search']=='true'):?>
-			<form class="form-inline my-2 my-lg-0" action="<?php echo $g['s']?>/" role="search">
+			<form class="form-inline my-2 my-lg-0 mr-3" action="<?php echo $g['s']?>/" role="search">
 				<input type="hidden" name="r" value="<?php echo $r ?>">
 				<input type="hidden" name="m" value="search">
 	      <input class="form-control mr-sm-2" type="search" placeholder="통합검색" aria-label="Search" name="keyword" value="<?php echo $_keyword ?>" >
@@ -23,24 +36,60 @@
 
 			<?php if($d['layout']['header_login']=='true'):?>
 			<ul class="navbar-nav">
-				<?php if ($my['uid']): ?>
+			<?php if ($my['uid']): ?>
+				<li class="nav-item dropdown js-tooltip mr-2" title="알림" id="navbarPopoverNoti">
+				  <a class="nav-link notification-indicator" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="badge badge-danger noti-status" data-role="noti-status"><?php echo $my['num_notice']==0?'':$my['num_notice']?></span>
+				    <i class="fa fa-bell" aria-hidden="true"></i>
+				  </a>
+					<div class="dropdown-menu dropdown-menu-right py-0" >
+
+						<h6 class="dropdown-header d-flex justify-content-between align-items-center py-2 f13">
+							<strong>새 알림</strong>
+							<ul class="list-inline small">
+								<li class="list-inline-item">
+									<span role="presentation" aria-hidden="true"> · </span>
+									<a href="/?r=<?php echo $r ?>&mod=settings&page=noti" class="muted-link">설정</a>
+								</li>
+							</ul>
+						</h6>
+
+						<div class="list-group list-group-flush" data-role="noti-list" style="max-height: 435px;overflow: auto;">
+							<!-- 드롭다운이 열릴때, 여기에 알림정보를 받아옴 -->
+						</div><!-- /.list-group -->
+
+						<a class="btn btn-block btn-link muted-link f13 py-2" href="<?php echo RW('mod=noti')?>">모두보기</a>
+
+				  </div><!-- /.dropdown-menu -->
+				</li>
 				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-role="tooltip" title="프로필보기 및 회원계정관리">
-				    <img src="<?php echo getAavatarSrc($my['uid'],'20') ?>" width="20" height="20" alt="" class="rounded d-inline-block align-top">
+				  <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-role="tooltip" title="프로필보기 및 회원계정관리">
+				    <img src="<?php echo getAvatarSrc($my['uid'],'20') ?>" width="20" height="20" alt="" class="rounded d-inline-block align-top">
 						<?php echo $my['nic'] ?>
 				  </a>
-				  <div class="dropdown-menu dropdown-menu-right dropdown-menu-sw" aria-labelledby="navbarDropdownMenuLink2">
+				  <div class="dropdown-menu dropdown-menu-right">
 				    <h6 class="dropdown-header"><?php echo $my['nic'] ?> 님</h6>
 				    <div class="dropdown-divider"></div>
 				    <a class="dropdown-item" href="/@<?php echo $my['id'] ?>">
-							<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i> 내 프로필
+							<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i> 프로필
 						</a>
-				    <a class="dropdown-item" href="<?php echo RW('mod=saved')?>">
-							<i class="fa fa-bookmark-o fa-fw" aria-hidden="true"></i> 내 저장함
+				    <a class="dropdown-item" href="<?php echo RW('mod=noti')?>">
+							<i class="fa fa-bell-o fa-fw" aria-hidden="true"></i> 알림함
+						</a>
+						<a class="dropdown-item" href="<?php echo RW('mod=saved')?>">
+							<i class="fa fa-bookmark-o fa-fw" aria-hidden="true"></i> 저장함
 						</a>
 				    <div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="<?php echo RW('mod=settings')?>">개인정보 관리</a>
-				    <a class="dropdown-item" href="<?php echo $g['s']?>/logout">로그아웃</a>
+						<a class="dropdown-item" href="<?php echo RW('mod=settings')?>">
+							<i class="fa fa-cog fa-fw" aria-hidden="true"></i> 설정
+						</a>
+				    <a class="dropdown-item" href="<?php echo $g['s']?>/logout">
+							<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> 로그아웃
+						</a>
+						<?php if ($my['admin']): ?>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item text-danger" href="/?m=admin&pickmodule=site&panel=Y" target="_top">관리자모드</a>
+						<?php endif; ?>
 				  </div>
 				</li>
 				<?php else: ?>

@@ -1,41 +1,93 @@
 <?php
-function LIB_getContents($str,$html)
-{
-	global $d;
-	if ($html == 'HTML')
-	{
-		$pattern = explode(',',$d['admin']['secu_tags']);
-		$patterns= array();
-		foreach ($pattern as $val) if ($val) $patterns[] = "'<".$val."[^>]*?>'si";
 
-		$iframes = getIframes($str);
-		$secuDomain = explode(',',$d['admin']['secu_domain']);
-		foreach ($iframes as $im)
-		{
-			foreach ($secuDomain as $dm)
-			{
-				if(stripos($im,$dm))
-				{
-					$str = str_replace($im,str_ireplace('iframe','@IFRAME@',$im),$str);
-					break;
-				}
-			}
-		}
+// php-htmlpurfier-html5 :  https://github.com/kennberg/php-htmlpurfier-html5
+function load_htmlpurifier($allowed) {
+	global $g;
+  $config = HTMLPurifier_Config::createDefault();
+  $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
+  $config->set('CSS.AllowTricky', true);
+  $config->set('Cache.SerializerPath', $g['path_tmp'].'cache/HTMLPurifier');
+  // Allow iframes from:
+  // o YouTube.com
+  // o Vimeo.com
+  $config->set('HTML.SafeIframe', true);
+  $config->set('URI.SafeIframeRegexp', '%^(http:|https:)?//(www.youtube(?:-nocookie)?.com/embed/|player.vimeo.com/video/)%');
+  $config->set('HTML.Allowed', implode(',', $allowed));
+  // Set some HTML5 properties
+  $config->set('HTML.DefinitionID', 'html5-definitions'); // unqiue id
+  $config->set('HTML.DefinitionRev', 1);
+  if ($def = $config->maybeGetRawHTMLDefinition()) {
+    // http://developers.whatwg.org/sections.html
+    $def->addElement('section', 'Block', 'Flow', 'Common');
+    $def->addElement('nav',     'Block', 'Flow', 'Common');
+    $def->addElement('article', 'Block', 'Flow', 'Common');
+    $def->addElement('aside',   'Block', 'Flow', 'Common');
+    $def->addElement('header',  'Block', 'Flow', 'Common');
+    $def->addElement('footer',  'Block', 'Flow', 'Common');
+		$def->addElement('blockquote',  'Block', 'Flow', 'Common');
 
-		$str = preg_replace($patterns,' ',$str);
-		$str = str_replace("\t",'&nbsp;&nbsp;&nbsp;&nbsp;',$str);
-		$str = str_replace('@IFRAME@','iframe',$str);
+    // Content model actually excludes several tags, not modelled here
+    $def->addElement('address', 'Block', 'Flow', 'Common');
+    $def->addElement('hgroup', 'Block', 'Required: h1 | h2 | h3 | h4 | h5 | h6', 'Common');
+    // http://developers.whatwg.org/grouping-content.html
+    $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
+    $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
 
-		$onAttributes = array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavaible', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragdrop', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onerrorupdate', 'onfilterupdate', 'onfinish', 'onfocus', 'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmoveout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload');
-		//$str = preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(" . implode('|', $onAttributes) . ")[ \\t\\n]*=/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", $str);
-		if ($GLOBALS['my']['admin']&&!$d['admin']['secu_flash'])
-		{
-			$mat = '<div class="alert alert-danger">여기에 삽입된 요소는 보안이슈로 인해 출력이 제한되었습니다.</div>';
-			$str = preg_replace("#(\<(embed|object)[^\>]*)\>(\<\/(embed|object)\>)?#i",$mat,$str);
-		}
+    // http://developers.whatwg.org/the-video-element.html#the-video-element
+    $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+      'src' => 'URI',
+      'type' => 'Text',
+      'width' => 'Length',
+      'height' => 'Length',
+      'poster' => 'URI',
+      'preload' => 'Enum#auto,metadata,none',
+      'controls' => 'Bool',
+    ));
+		$def->addElement('oembed', 'Block', 'Flow', 'Common', array(
+			'url' => 'URI'
+		));
+    $def->addElement('source', 'Block', 'Flow', 'Common', array(
+      'src' => 'URI',
+      'type' => 'Text',
+    ));
+    // http://developers.whatwg.org/text-level-semantics.html
+    $def->addElement('s',    'Inline', 'Inline', 'Common');
+    $def->addElement('var',  'Inline', 'Inline', 'Common');
+    $def->addElement('sub',  'Inline', 'Inline', 'Common');
+    $def->addElement('sup',  'Inline', 'Inline', 'Common');
+    $def->addElement('mark', 'Inline', 'Inline', 'Common');
+    $def->addElement('wbr',  'Inline', 'Empty', 'Core');
+    // http://developers.whatwg.org/edits.html
+    $def->addElement('ins', 'Block', 'Flow', 'Common', array('cite' => 'URI', 'datetime' => 'CDATA'));
+    $def->addElement('del', 'Block', 'Flow', 'Common', array('cite' => 'URI', 'datetime' => 'CDATA'));
+    // TinyMCE
+    $def->addAttribute('img', 'data-mce-src', 'Text');
+    $def->addAttribute('img', 'data-mce-json', 'Text');
+    // Others
+    $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
+    $def->addAttribute('table', 'height', 'Text');
+    $def->addAttribute('td', 'border', 'Text');
+    $def->addAttribute('th', 'border', 'Text');
+    $def->addAttribute('tr', 'width', 'Text');
+    $def->addAttribute('tr', 'height', 'Text');
+    $def->addAttribute('tr', 'border', 'Text');
+  }
+  return new HTMLPurifier($config);
+}
+
+function LIB_getContents($str,$html) {
+	global $d,$g;
+	if ($html == 'HTML') {
 
 		$_atkParam = $pattern = explode(',',$d['admin']['secu_param']);
 		foreach($_atkParam as $_prm) $str = str_replace($_prm,'',$str);
+
+		// HTMLPurifier
+		require_once $g['path_core'].'opensrc/HTMLPurifier/4.10.0/HTMLPurifier.safe-includes.php';
+		$allowed = explode(',',$d['admin']['secu_tags']);
+		$purifier = load_htmlpurifier($allowed);
+		$str = $purifier->purify($str);
+
 	}
 	else {
 		$str = str_replace('<','&lt;',$str);
@@ -46,8 +98,8 @@ function LIB_getContents($str,$html)
 	}
 	return $str;
 }
-function getIframes($str)
-{
+
+function getIframes($str) {
 	preg_match_all("/<iframe[^>]*?>/si", $str, $mat);
 	return $mat[0];
 }

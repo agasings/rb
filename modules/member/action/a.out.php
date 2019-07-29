@@ -27,6 +27,10 @@ if($d['member']['join_out']==1)
 	getDbDelete($table['s_friend'],'my_mbruid='.$my['uid'].' or by_mbruid='.$my['uid']);
 	getDbUpdate($table['s_mbrlevel'],'num=num-1','uid='.$my['level']);
 	getDbUpdate($table['s_mbrgroup'],'num=num-1','uid='.$my['mygroup']);
+	getDbDelete($table['s_code'],'mbruid='.$my['uid']);
+	getDbDelete($table['s_guestauth'],'email="'.$my['email'].'" or phone="'.$my['phone'].'"');
+	getDbDelete($table['s_iidtoken'],'mbruid='.$my['uid']);
+
 	if (is_file($g['path_var'].'avatar/'.$my['photo']))
 	{
 		unlink($g['path_var'].'avatar/'.$my['photo']);

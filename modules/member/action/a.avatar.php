@@ -42,6 +42,7 @@ if (is_uploaded_file($tmpname))
 	}
 
 	getDbUpdate($table['s_mbrdata'],"photo='".$photo."'",'memberuid='.$my['uid']);
+
 }
 setrawcookie('member_settings_result', rawurlencode('이미지가 수정되었습니다.|success'));  // 처리여부 cookie 저장
 getLink('reload','parent.','','');

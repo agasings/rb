@@ -172,8 +172,20 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
+					<label class="sr-only">타이틀</label>
+					<input type="url" class="form-control" name="notice_title" value="" placeholder="알림 제목을 입력해 주세요.">
+				</div>
+				<div class="form-group">
 					<label class="sr-only">메세지 입력</label>
-					<textarea name="notice" class="form-control" placeholder="메시지를 입력해 주세요." rows="5"></textarea>
+					<textarea name="notice" class="form-control" placeholder="알림내용을 입력해 주세요." rows="5"></textarea>
+				</div>
+				<div class="form-group">
+					<label>연결링크</label>
+					<input type="url" class="form-control f12" name="notice_referer" value="" placeholder="URL을 입력해 주세요.">
+				</div>
+				<div class="form-group">
+					<label>연결링크 버튼명</label>
+					<input type="text" class="form-control f12" name="notice_button" value="" placeholder="버튼명을 입력해 주세요.">
 				</div>
 			</div>
 		   <div class="modal-footer justify-content-between">

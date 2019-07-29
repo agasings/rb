@@ -53,7 +53,7 @@ $(document).ready(function() {
   클립보드 기능 초기화 : clipboard.js 플러그인 참조
    data-clipboard-text="" 값이 복사된다.  data-feedback-msg="" 값이 메세지로 출력
 */
-var clipboard = new Clipboard('[data-attach-act="clipboard"]');
+var clipboard = new ClipboardJS('[data-attach-act="clipboard"]');
 
 $('[data-attach-act="insert"]').tooltip({
   trigger: 'hover',

@@ -19,10 +19,16 @@ fwrite($fp, "\$d['member']['layout_profile'] = \"".$layout_profile."\";\n");
 fwrite($fp, "\$d['member']['layout_profile_mobile'] = \"".$layout_profile_mobile."\";\n");
 fwrite($fp, "\$d['member']['layout_settings'] = \"".$layout_settings."\";\n");
 fwrite($fp, "\$d['member']['layout_settings_mobile'] = \"".$layout_settings_mobile."\";\n");
+fwrite($fp, "\$d['member']['layout_saved'] = \"".$layout_saved."\";\n");
+fwrite($fp, "\$d['member']['layout_saved_mobile'] = \"".$layout_saved_mobile."\";\n");
+fwrite($fp, "\$d['member']['layout_noti'] = \"".$layout_noti."\";\n");
+fwrite($fp, "\$d['member']['layout_noti_mobile'] = \"".$layout_noti_mobile."\";\n");
 fwrite($fp, "\$d['member']['sosokmenu_join'] = \"".$sosokmenu_join."\";\n");
 fwrite($fp, "\$d['member']['sosokmenu_login'] = \"".$sosokmenu_login."\";\n");
 fwrite($fp, "\$d['member']['sosokmenu_profile'] = \"".$sosokmenu_profile."\";\n");
 fwrite($fp, "\$d['member']['sosokmenu_settings'] = \"".$sosokmenu_settings."\";\n");
+fwrite($fp, "\$d['member']['sosokmenu_saved'] = \"".$sosokmenu_saved."\";\n");
+fwrite($fp, "\$d['member']['sosokmenu_noti'] = \"".$sosokmenu_noti."\";\n");
 
 //로그인
 fwrite($fp, "\$d['member']['login_emailid'] = \"".$login_emailid."\";\n");
@@ -52,7 +58,7 @@ fwrite($fp, "\$d['member']['join_cutphone'] = \"".$join_cutphone."\";\n");
 fwrite($fp, "\$d['member']['join_email'] = \"".$join_email."\";\n");
 fwrite($fp, "\$d['member']['join_tel'] = \"".$join_tel."\";\n");
 fwrite($fp, "\$d['member']['join_email_send'] = \"".$join_email_send."\";\n");
-fwrite($fp, "\$d['member']['join_sms_send'] = \"".$join_sms_send."\";\n");
+fwrite($fp, "\$d['member']['join_noti_send'] = \"".$join_noti_send."\";\n");
 fwrite($fp, "\$d['member']['join_keyexpire'] = \"".$join_keyexpire."\";\n");
 fwrite($fp, "\$d['member']['join_daysms'] = \"".$join_daysms."\";\n");
 fwrite($fp, "\$d['member']['join_joint_privacy'] = \"".$join_joint_privacy."\";\n");

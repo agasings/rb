@@ -45,7 +45,7 @@ function moreNOTI(container,totalPage){
       });
     },
     appendToEle : container.find('.table-view'),
-    percentage : 95,  // 95% 아래로 스크롤할때 다움페이지 호출
+    percentage : 95,  // 95% 아래로 스크롤할때 다음 페이지 호출
     hybrid : false  // true: 버튼형, false: 자동
   });
 
@@ -96,32 +96,36 @@ $(function() {
 
   //내알림 드로어(사이드메뉴영역)가 열렸을때
   drawer_right.on('show.rc.drawer', function () {
-    var drawer_right_content = drawer_right.find('.content')
-    $.get(rooturl+'/?r='+raccount+'&m=notification&a=get_notiList',{
-        sort: noti_sort,
-        orderby: noti_orderby,
-        recnum: noti_recnum,
-        callMod: 'unread'
-      },function(response){
-       var result = $.parseJSON(response);
-       var num=result.num;
-       var tpg=result.tpg;
-       var content=result.content;
+    if (memberid) {
+      var drawer_right_content = drawer_right.find('.content')
+      $.get(rooturl+'/?r='+raccount+'&m=notification&a=get_notiList',{
+          sort: noti_sort,
+          orderby: noti_orderby,
+          recnum: noti_recnum,
+          callMod: 'unread'
+        },function(response){
+         var result = $.parseJSON(response);
+         var num=result.num;
+         var tpg=result.tpg;
+         var content=result.content;
 
-       drawer_right.find('[data-role="noti-list"]').html(content);
-       drawer_right.find('[data-plugin="timeago"]').timeago();
-			 bar.find('[data-role="noti-status"]').text(num);
-       drawer_right.find('[data-role="noti-status"]').text(num);
-       drawer_right.find('[data-role="noti-list"]').attr('data-totalPage',tpg);
-       moreNOTI(drawer_right_content,tpg)
-    });
+         drawer_right.find('[data-role="noti-list"]').html(content);
+         drawer_right.find('[data-plugin="timeago"]').timeago();
+  			 bar.find('[data-role="noti-status"]').text(num);
+         drawer_right.find('[data-role="noti-status"]').text(num);
+         drawer_right.find('[data-role="noti-list"]').attr('data-totalPage',tpg);
+         moreNOTI(drawer_right_content,tpg)
+      });
+    }
+
   })
 
   //내알림 드로어(사이드메뉴영역)가 닫혔을때
   drawer_right.on('hidden.rc.drawer', function () {
-    //무한스크롤 리셋
-    drawer_right.find('.content').infinitescroll('destroy')
-    drawer_right.append('<div class="content bg-faded"><ul class="table-view table-view-full my-0 bg-white" data-role="noti-list"></ul></div>');
+    if (memberid) {
+      drawer_right.find('.content').infinitescroll('destroy') //무한스크롤 리셋
+      drawer_right.append('<div class="content bg-faded"><ul class="table-view table-view-full my-0 bg-white" data-role="noti-list"></ul></div>');
+    }
   })
 
 	//검색 모달이 열렸을때
@@ -215,5 +219,21 @@ $(function() {
         }
     });
 	});
+
+
+  // ckeditor5 media-embed  : https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html
+  document.querySelectorAll( 'oembed[url]' ).forEach( element => {
+    iframely.load( element, element.attributes.url.value );
+  } );
+
+  document.querySelectorAll( 'div[data-oembed-url]' ).forEach( element => {
+      // Discard the static media preview from the database (empty the <div data-oembed-url="...">).
+      while ( element.firstChild ) {
+          element.removeChild( element.firstChild );
+      }
+
+      // Generate the media preview using Iframely.
+      iframely.load( element, element.dataset.oembedUrl ) ;
+  } );
 
 });

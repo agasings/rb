@@ -28,7 +28,7 @@
 					<div class="pull-xs-left">
 
 						<div class="media">
-							<img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAavatarSrc($R['mbruid'],'84','') ?>"  width="42" height="42">
+							<img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84','') ?>"  width="42" height="42">
 							<div class="media-body m-l-1 rb-meta">
 								<span class="badge badge-default badge-inverted" data-role="regis_name"><?php echo $R[$_HS['nametype']]?></span> <br>
 								<span class="badge badge-default badge-inverted" data-role="regis_time"><?php echo getDateFormat($R['d_regis'],$d['theme']['date_viewf'])?></span>
@@ -48,16 +48,13 @@
 						</button>
 						<?php endif?>
 						<?php if($d['theme']['show_share']):?>
-						<button type="button" class="btn btn-outline-secondary"
-				      data-toggle="popup"
-				      data-target="#popup-link-share"
+						<button type="button" class="btn btn-outline-secondary" id="btn-linkShare"
 				      data-role="linkShare"
 				      data-subject="<?php echo $R['subject']?>"
 							data-url="<?php echo $g['bbs_view'] ?><?php echo $R['uid']?>"
 							data-likes="<?php echo $R['likes']?>"
 							data-image="<?php echo getPreviewResize(getUpImageSrc($R),'c') ?>"
-							data-desc="<?php echo $g['browtitle']?>"
-				      data-title="게시물 공유">
+							data-desc="<?php echo $g['browtitle']?>">
 				      <i class="fa fa-share-alt" aria-hidden="true"></i>
 				    </button>
 						<?php endif?>
@@ -68,7 +65,7 @@
 
 			<hr>
 
-			<article class="rb-article content-padded">
+			<article class="rb-article ck-content">
 				<?php echo getContents($R['content'],$R['html'])?>
 			</article>
 
@@ -132,11 +129,6 @@
 
 		<!-- 댓글 인클루드 -->
 
-		<?php if(!$d['bbs']['c_hidden']):?>
-		<aside class="mt-2 content-padded" id="anchor-comments">
-			<?php include $g['dir_module_skin'].'_comment.php'?>
-		</aside>
-		<?php endif?>
 
 
 	</main>
@@ -177,11 +169,33 @@ $(function() {
 	});
 
 
+	$("#btn-linkShare").tap(function(){
+		if (navigator.share === undefined) {  //webshare.api가 지원되지 않는 환경
+			popup_linkshare.popup('show')
+		} else {
+			var ele = $(this)
+		  var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
+		  var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
+			var host = $(location).attr('origin');
+			var path = ele.attr('data-url')?ele.attr('data-url'):''
+			var link = host+path // 게시물 보기 URL
+			navigator.share({
+	        title: sbj,
+	        text: desc,
+	        url: link,
+	    })
+      .then(() => console.log('성공적으로 공유되었습니다.'))
+      .catch((error) => console.log('공유에러', error));
+		}
+	});
+
+
 	//링크 공유 팝업이 열릴때
 	popup_linkshare.on('shown.rc.popup', function (event) {
 	  var ele = $(event.relatedTarget)
 	  var path = ele.attr('data-url')?ele.attr('data-url'):''
 	  var host = $(location).attr('origin');
+		var title = '링크공유' // 버튼에서 제목 추출
 	  var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
 	  var email = ele.attr('data-email')?ele.attr('data-email'):'' // 버튼에서 이메일 추출
 	  var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
@@ -199,7 +213,7 @@ $(function() {
 	  var naver = 'http://share.naver.com/web/shareView.nhn?url=' + enc_link + '&title=' + sbj;
 	  var kakaostory = 'https://story.kakao.com/share?url=' + enc_link + '&title=' + enc_sbj;
 	  var email = 'mailto:' + email + '?subject=링크공유-' + enc_sbj+'&body='+ enc_link;
-
+		popup.find('[data-role="title"]').text(title)
 	  popup.find('[data-role="share"]').val(host+path)
 	  popup.find('[data-role="share"]').focus(function(){
 	    $(this).on("mouseup.a keyup.a", function(e){
@@ -245,6 +259,10 @@ $(function() {
 
 	})
 
+
+
+	//이미지 캡션에 적용된 줄바꿈 태그 제거
+	$('.ck-content figcaption br').remove()
 
 });
 </script>

@@ -16,7 +16,7 @@ function getAttachPlatformList($parent_data,$mod,$wysiwyg) {
 
      $uid_q=substr($uid_q,0,-4).')';
        $sql=$sql.' and '.$uid_q;
-       $RCD=getDbArray($table['s_upload'],$sql,'*','gid','asc','',1);
+       $RCD=getDbArray($table['s_upload'],$sql,'*','gid','desc','',1);
        $html='';
        while($R=db_fetch_array($RCD)){
          $U=getUidData($table['s_upload'],$R['uid']);

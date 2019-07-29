@@ -21,6 +21,11 @@
   border-left: 0.25em solid #dfe2e5;
 }
 
+[data-role="comment-item"] figure.image img {
+  max-width: 100%;
+  height: auto;
+}
+
 .js-like.active {
   color: #007bff !important
 }
@@ -51,12 +56,22 @@
   background-color: #fff;
 }
 
-.rb-comments-write .card .card-footer {
+.rb-comments-write .card .card-header,
+.rb-comments-write .card .card-footer,
+.rb-oneline-write .card .card-header,
+.rb-oneline-write .card .card-footer {
   display: none
 }
 
-.rb-comments-write .card.active .card-footer {
+.rb-comments-write .card.active .card-header,
+.rb-comments-write .card.active .card-footer,
+.rb-oneline-write .card.active .card-header,
+.rb-oneline-write .card.active .card-footer {
   display: block
+}
+
+.rb-comments-write .active .ck-editor__editable_inline {
+  min-height: 120px;
 }
 
 .media[data-role="comment-item"].border-bottom {
@@ -232,4 +247,19 @@
 
 .comment-bottom5p {
   bottom: 5%;
+}
+
+.ck-editor__editable.ck-blurred {
+  border : 1px solid #ccc
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  outline: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+figure.ck.ck-placeholder:before,
+.ck figure.ck-placeholder:before {
+  content: none;
 }

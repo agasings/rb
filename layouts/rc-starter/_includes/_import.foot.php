@@ -19,9 +19,22 @@
 <?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>
 
 <!-- 댓글출력시 필요 -->
-<script src="<?php echo $g['url_root']?>/modules/comment/lib/Rb.comment.js"></script>
+<script src="<?php echo $g['s']?>/modules/comment/lib/Rb.comment.js"></script>
 
 <script src="<?php echo $g['s']?>/_core/js/jquery.autolink.js"></script>
 
 <!-- 레이아웃 공용 스크립트 -->
-<script src="<?php echo $g['url_layout']?>/_js/script.js<?php echo $g['wcache']?>"></script>
+<script src="<?php echo $g['url_layout']?>/_js/main.js<?php echo $g['wcache']?>"></script>
+
+<?php if($_SERVER['HTTPS'] == 'on' && ($g['mobile']!='ipad' || $g['mobile']!='iphone') ):?>
+<script>
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  console.log('서비스워커와 푸시가 지원되는 브라우저 입니다.');
+  window.addEventListener('load', () => {
+   navigator.serviceWorker.register('<?php echo $g['s']?>/sw.js');
+ });
+} else {
+  console.warn('푸시 메시징이 지원되지 않는 브라우저 입니다.');
+}
+</script>
+<?php endif?>

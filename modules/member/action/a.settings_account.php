@@ -26,6 +26,18 @@ if ($act == 'pw')  // 비밀번호 변경
 
 	$_SESSION['mbr_pw']  = getCrypt($pw1,$my['d_regis']);
 
+
+	// 알림전송
+	include $g['dir_module'].'var/noti/_settings_account_pw.php';  // 알림메시지 양식
+	$noti_title = $d['member']['noti_title'];
+	$noti_body = $d['member']['noti_body'];
+	$noti_referer = '';
+	$noti_button = $d['member']['noti_button'];
+	$noti_tag = '';
+	$noti_skipEmail = 0;
+	$noti_skipPush = 0;
+	putNotice($my['uid'],$m,0,$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag,$noti_skipEmail,$noti_skipPush);
+
 	setrawcookie('member_settings_result', rawurlencode('비밀번호가 변경되었습니다.|success'));  // 처리여부 cookie 저장
 	getLink('reload','parent.','','');
 
@@ -58,6 +70,17 @@ if ($act == 'id')
 	}
 
 	getDbUpdate($table['s_mbrid'],"id='".$id."'",'uid='.$my['uid']);
+
+	// 알림전송
+	include $g['dir_module'].'var/noti/_settings_account_id.php';  // 알림메시지 양식
+	$noti_title = $d['member']['noti_title'];
+	$noti_body = $d['member']['noti_body'];
+	$noti_referer = '';
+	$noti_button = $d['member']['noti_button'];
+	$noti_tag = '';
+	$noti_skipEmail = 0;
+	$noti_skipPush = 0;
+	putNotice($my['uid'],$m,0,$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag,$noti_skipEmail,$noti_skipPush);
 
 	setrawcookie('member_settings_result', rawurlencode('아이디가 변경되었습니다.|success'));  // 처리여부 cookie 저장
 	getLink('reload','parent.','','');

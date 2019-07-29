@@ -31,10 +31,10 @@ else {
 		$fileExt	= strtolower(getExt($realname));
 		$fileExt	= $fileExt == 'jpeg' ? 'jpg' : $fileExt;
 
-		if (strstr('[jpg]',$fileExt))
+		if (strstr('[jpg,png,gif]',$fileExt))
 		{
 			$wh = getimagesize($tmpname);
-			if ($wh[0] > 180 && $wh[1] > 180)
+			if ($wh[0] > 250 && $wh[1] > 250)
 			{
 				$photo		= $id.'.'.$fileExt;
 				$saveFile1	= $g['path_var'].'avatar/'.$photo;

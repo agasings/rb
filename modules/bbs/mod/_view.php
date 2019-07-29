@@ -65,7 +65,7 @@ if ($d['bbs']['isperm'] && $R['upload'])
 // 메타 이미지 세팅 = 해당 포스트의 대표 이미지를 메타 이미지로 적용한다.
 if($R['featured_img']){
    $FI=getUidData($table['s_upload'],$R['featured_img']);
-   $featured_img=getPreviewResize($FI['tmpname'],'q'); // 동적 사이즈 조정
+   $featured_img=getPreviewResize($FI['tmpname'],'q',$FI['url'],$FI['folder']); // 동적 사이즈 조정
    $g['meta_img']=$g['url_root'].$FI['url'].$FI['folder'].'/'.$featured_img;
 }
 $mod = $mod ? $mod : 'view';

@@ -49,7 +49,7 @@ $type = $type ? $type : '_join.complete';
 						<?php while(false !== ($skin = readdir($dirs))):?>
 						<?php if($skin=='.' || $skin == '..')continue?>
 						<?php $_type = str_replace('.txt','',$skin)?>
-							<a href="<?php echo $g['adm_href']?>&amp;doc=email&amp;type=<?php echo $_type?>" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action <?php if($_type==$type):?>active<?php endif?> doc-style">
+							<a href="<?php echo $g['adm_href']?>&amp;doc=email&amp;type=<?php echo $_type?>" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action <?php if($doc=='email' && $_type==$type):?>active<?php endif?> doc-style">
 								<?php echo getMDname($_type)?>
 								 <span class="badge badge-dark"><?php echo $_type?></span>
 							</a>
@@ -76,7 +76,7 @@ $type = $type ? $type : '_join.complete';
 						<?php while(false !== ($skin = readdir($dirs))):?>
 						<?php if($skin=='.' || $skin == '..')continue?>
 						<?php $_type = str_replace('.txt','',$skin)?>
-							<a href="<?php echo $g['adm_href']?>&amp;doc=sms&amp;type=<?php echo $_type?>" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action <?php if($_type==$type):?>active<?php endif?> doc-style">
+							<a href="<?php echo $g['adm_href']?>&amp;doc=sms&amp;type=<?php echo $_type?>" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action <?php if($doc=='sms' && $_type==$type):?>active<?php endif?> doc-style">
 								<?php echo getMDname($_type)?>
 								 <span class="badge badge-dark"><?php echo $_type?></span>
 							</a>
@@ -86,13 +86,7 @@ $type = $type ? $type : '_join.complete';
 				</div><!-- /.collapse -->
 			</div><!-- /.card -->
 
-
-
 		</div><!-- /#accordion -->
-
-
-
-
 
 	</div>
 	<div class="col-sm-8 col-md-9 ml-sm-auto col-xl-9" id="tab-content-view">

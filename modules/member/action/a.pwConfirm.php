@@ -39,6 +39,6 @@ if ($M['pw'] != getCrypt($pw,$M1['d_regis']) && $M1['tmpcode'] != $pw) {
 
 getDbUpdate($table['s_mbrdata'],"tmpcode='',now_log=1,last_log='".$date['totime']."'",'memberuid='.$M['uid']);
 
-setrawcookie('member_settings_result', rawurlencode('본인확인 되었습니다.|default'));  // 알림처리를 위한 로그인 상태 cookie 저장
+setrawcookie('member_settings_result', rawurlencode('본인확인 되었습니다.'));  // 알림처리를 위한 로그인 상태 cookie 저장
 getLink('reload','parent.','','');
 ?>

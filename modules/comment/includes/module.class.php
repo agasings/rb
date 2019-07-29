@@ -110,8 +110,7 @@ class Comment extends Comment_base{
 
         $sync_arr = explode('|',$row['sync']); // parent_table|parent|parentmbr
         $TMPL['grant_uid'] = $sync_arr[2]; // 댓글 부모 PK
-        $TMPL['comment_content'] = $this->getPrintContent($row);// getContents($row['content'],'HTML');
-        $TMPL['comment_content_markdown'] = getMarkdownContents($row['content']);
+        $TMPL['comment_content'] = getContents($row['content'],'HTML');
         $TMPL['comment_user_name'] = $row[$_HS['nametype']]?$row[$_HS['nametype']]:'손님';
         $TMPL['comment_user_pic'] = $this->getUserAvatar($row['mbruid'],'src');
         $TMPL['comment_like_total'] = $row['likes'];

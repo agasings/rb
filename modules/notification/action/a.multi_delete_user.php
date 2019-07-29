@@ -41,6 +41,7 @@ else if ($deltype == 'cut_member')
 }
 else if ($deltype == 'cut_module')
 {
+
 	$NT_DATA = explode('|',$my['noticeconf']);
 	$nt_modules = $NT_DATA[3];
 	foreach($noti_members as $val)
@@ -56,11 +57,34 @@ else if ($deltype == 'cut_module')
 	$NT_STRING = $NT_DATA[0].'|'.$NT_DATA[1].'|'.$NT_DATA[2].'|'.$nt_modules.'|'.$NT_DATA[4].'|'.$NT_DATA[5].'|';
 	getDbUpdate($table['s_mbrdata'],"noticeconf='".$NT_STRING."'",'memberuid='.$my['uid']);
 }
+else if ($deltype == 'off_module')
+{
+	$NT_DATA = explode('|',$my['noticeconf']);
+	$nt_modules = $NT_DATA[3];
+	if (!strstr($nt_modules,'['.$module_id.']')) $nt_modules = '['.$module_id.']' . $nt_modules;
+	$NT_STRING = $NT_DATA[0].'|'.$NT_DATA[1].'|'.$NT_DATA[2].'|'.$nt_modules.'|'.$NT_DATA[4].'|'.$NT_DATA[5].'|';
+	getDbUpdate($table['s_mbrdata'],"noticeconf='".$NT_STRING."'",'memberuid='.$my['uid']);
+
+	if ($mobile) {
+		echo '<script type="text/javascript">';
+		echo 'parent.$.notify({message: "알림이 해제되었습니다."},{type: "default"});';
+		echo '</script>';
+		exit();
+	} else {
+		setrawcookie('member_settings_result', rawurlencode('알림이 해제되었습니다.'));
+	}
+
+}
 if ($deltype=='cut_member'||$deltype=='cut_module')
 {
-	getLink('','',($isMe ? '자기 자신은 차단할 수 없습니다.' : '차단 되었습니다.'),'');
+	if ($isMe) {
+		setrawcookie('member_noti_result', rawurlencode('자기 자신은 차단할 수 없습니다.|danger'));
+	} else {
+		setrawcookie('member_noti_result', rawurlencode('차단 되었습니다.'));
+	}
 }
 else {
-	getLink('reload','parent.','','');
+	setrawcookie('member_noti_result', rawurlencode('처리 되었습니다.'));  // 처리여부 cookie 저장
 }
+	getLink('reload','parent.','','');
 ?>

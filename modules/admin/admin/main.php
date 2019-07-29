@@ -121,6 +121,52 @@
 
 		<div class="card">
 			<div class="card-header">
+				FCM <span class="badge badge-dark ml-1">무료</span>
+			</div>
+			<div class="card-body">
+					<input class="form-control" type="hidden" name="fcm_app_js_src" value="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js">
+					<input class="form-control" type="hidden" name="fcm_messaging_js_src" value="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js">
+					<input class="form-control" type="hidden" name="fcm_icon" value="/_core/images/touch/homescreen-192x192.png">
+
+				<div class="form-group row">
+					<label class="col-lg-2 col-form-label">콘솔</label>
+					<div class="col-lg-10 col-xl-9 pt-2">
+						<a href="https://console.firebase.google.com" target="_blank">https://console.firebase.google.com</a>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-lg-2 col-form-label pt-3">서버 키</label>
+					<div class="col-lg-10 col-xl-9">
+						<textarea class="form-control f13	" name="fcm_key" rows="2"><?php echo $d['admin']['fcm_key'] ?></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-2 col-form-label pt-3">발신자 ID</label>
+					<div class="col-lg-10 col-xl-9">
+						<input class="form-control" type="text" name="fcm_SenderId" value="<?php echo $d['admin']['fcm_SenderId'] ?>">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-2 col-form-label pt-3">웹 푸시 인증서</label>
+					<div class="col-lg-10 col-xl-9">
+						<input class="form-control" type="text" name="fcm_VAPID" value="<?php echo $d['admin']['fcm_VAPID'] ?>">
+						<small class="form-text text-muted">키 쌍을 입력하세요.</small>
+					</div>
+				</div>
+			</div><!-- /.card-body -->
+			<div class="card-footer">
+				<small class="form-text text-muted">
+					FCM (Firebase Cloud Messaging)은 클라우드에서 기기로 푸시하는 메시징 서비스로 Google 클라우드 메시징 서비스 입니다.<br>
+					사용제한 없이 무료로 이용할 수 있습니다.
+					자세한 내용은 <a href="https://firebase.google.com/docs/cloud-messaging/?hl=ko" target="_blank">여기</a>를 참조해주세요.
+				</small>
+			</div>
+		</div><!-- /.card -->
+
+
+		<div class="card">
+			<div class="card-header">
 				SMS  <span class="badge badge-light ml-1">유료</span>
 			</div>
 			<div class="card-body">
@@ -170,61 +216,6 @@
 		</div><!-- /.card -->
 
 
-		<div class="card d-none">
-			<div class="card-header">
-				FCM <span class="badge badge-light ml-1">무료</span>
-			</div>
-			<div class="card-body">
-
-				<div class="form-group row">
-					<label class="col-lg-2 col-form-label">콘솔</label>
-					<div class="col-lg-10 col-xl-9 pt-2">
-						<a href="https://console.firebase.google.com" target="_blank">https://console.firebase.google.com</a>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-lg-2 col-form-label pt-3">서버 키</label>
-					<div class="col-lg-10 col-xl-9">
-						<textarea class="form-control f13	" name="fcm_key" rows="2"><?php echo $d['admin']['fcm_key'] ?></textarea>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-lg-2 col-form-label pt-3">발신자 ID</label>
-					<div class="col-lg-10 col-xl-9">
-						<input class="form-control" type="text" name="fcm_id" value="<?php echo $d['admin']['fcm_id'] ?>">
-					</div>
-				</div>
-
-				<hr>
-
-				<div class="form-group row">
-					<label class="col-lg-2 col-form-label pt-3">발송 테스트</label>
-					<div class="col-lg-10 col-xl-9">
-
-						<div class="input-group">
-							<input type="tel" name="" value="<?php echo $my['phone']?>" class="form-control">
-							<span class="input-group-append">
-								<button class="btn btn-light" type="button" id="sendfcmbtn" onclick="sendCheck(this.id);">
-									<?php if($d['admin']['fcm']):?>발송하기<?php else:?>FCM 전송확인<?php endif?>
-								</button>
-							</span>
-						</div>
-						<small class="form-text text-muted">입력한 디바이스 토큰으로 테스트 메시지가 수신되는지 확인해 보세요.</small>
-
-					</div>
-				</div>
-
-			</div><!-- /.card-body -->
-			<div class="card-footer">
-				<small class="form-text text-muted">
-					FCM (Firebase 클라우드 메시징)은 클라우드에서 기기로 푸시하는 메시징 서비스로 Google 클라우드 메시징 서비스 입니다.<br>
-					사용제한 없이 무료로 이용할 수 있으며 Android, iOS, 웹 플랫폼을 지원하며, 높은 신뢰성을 갖고, 배터리를 최소한으로 사용하도록 최적화 되었습니다.<br>
-					자세한 내용은 <a href="https://firebase.google.com/docs/cloud-messaging/?hl=ko" target="_blank">여기</a>를 참조해주세요.
-				</small>
-			</div>
-		</div><!-- /.card -->
-
-
 		<div class="card mb-3">
 			<div class="card-header">
 				시스템 테마 및 고급기능
@@ -260,7 +251,7 @@
 						<div class="form-group">
 							<label>CSS/JS 캐시</label>
 							<select name="cache_flag" class="form-control custom-select">
-								<option value=""<?php if($d['admin']['cache_flag']==''):?> selected<?php endif?>>브라우져 설정을 따름</option>
+								<option value=""<?php if($d['admin']['cache_flag']==''):?> selected<?php endif?>>브라우저 설정을 따름</option>
 								<option value="totime"<?php if($d['admin']['cache_flag']=='totime'):?> selected<?php endif?>>접속시마다 갱신</option>
 								<option value="nhour"<?php if($d['admin']['cache_flag']=='nhour'):?> selected<?php endif?>>한시간 단위로 갱신</option>
 								<option value="today"<?php if($d['admin']['cache_flag']=='today'):?> selected<?php endif?>>하루 단위로 갱신</option>
@@ -438,7 +429,7 @@
 		</div><!-- /.card -->
 
 
-		<button class="mt-3 btn btn-outline-primary btn-block btn-lg" type="submit">저장하기</button>
+		<button class="mt-3 btn btn-primary btn-block btn-lg" type="submit">설정 저장하기</button>
 
 	</form>
 

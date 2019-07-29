@@ -3,10 +3,20 @@
    2. data-*="*" 필수
 -->
 <div class="card mb-4" data-role="comment-input-wrapper">
-  <textarea class="form-control border-0" name="content" rows="1" id="meta-description-content" data-role="comment-input"></textarea>
-  <div class="card-footer p-2">
+
+  <div class="card-header bg-white">
+    <span class="text-muted">{$login_user_nic}</span>
+  </div>
+
+  <section>
+    <div data-role="editor">
+  		<div data-role="comment-input" class="border-0"></div>
+  	</div>
+  </section>
+
+  <div class="card-footer bg-white p-2">
     <div class="d-flex justify-content-between align-items-center">
-      <small>글자수  <strong class="text-danger" data-role="show-inputLength">0</strong> / <span data-role="show-textLimit"><!-- 옵션에서 정한 값--></span></small>
+      <div class=""></div>
       <button type="button" class="btn btn-light" data-role="open-emoticon" hidden>
         <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
       </button>
@@ -18,29 +28,3 @@
     </div><!-- /.d-flex -->
   </div>
 </div>
-
-<script>
-
-// 입력창 자동 리사이즈
-autosize($('#commentting-container textarea'));
-
-var textarea_container = $('[data-role="comment-input-wrapper"]')
-var textarea = $('#meta-description-content');
-
-textarea.focus(function(){
-  textarea_container.addClass('active')
-});
-textarea.blur(function(){
-  setTimeout(function(){
-    textarea_container.removeClass('active')
-  }, 200);
-});
-
-// 댓글이 등록된 후에
-$('#commentting-container').on('saved.rb.comment',function(){
-  textarea.removeAttr("style");
-})
-
-
-
-</script>

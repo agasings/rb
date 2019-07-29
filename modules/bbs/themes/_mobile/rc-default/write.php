@@ -83,9 +83,16 @@
 
 
 
-		 <div class="m-t-0">
-			 <textarea class="form-control border-0" rows="5" name="content" placeholder="내용을 입력해주세요.."><?php echo $reply=='Y'?'':strip_tags($R['content'])?></textarea>
-		 </div>
+			 <div class="mt-0">
+				 <script>
+				 var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드 폴더
+				 var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
+				 </script>
+				 <?php
+					 $__SRC__ = htmlspecialchars($R['content']);
+					 include $g['path_plugin'].($d['bbs']['editor']?$d['bbs']['editor']: ($d['theme']['editor']?$d['theme']['editor']:$d['bbs']['editor_main'])).'/import.inline-mobile.php';
+				 ?>
+			 </div>
 
 		</form>
 

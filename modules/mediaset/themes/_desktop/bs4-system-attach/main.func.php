@@ -93,8 +93,8 @@ function getAttachFile($R,$mod,$featured_img_uid,$wysiwyg)
       if($type=='photo'){
             $caption=$R['caption']?$R['caption']:$file_name;
             $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
-            $thumb_list=getPreviewResize($R['host'],$R['folder'],$R['tmpname'],'s'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-            $thumb_modal=getPreviewResize($R['host'],$R['folder'],$R['tmpname'],'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+            $thumb_list=getPreviewResize($R['src'],'s'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+            $thumb_modal=getPreviewResize($R['src'],'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
             $insert_text='<figure class="media"><img src="'.$R['src'].'"><figcaption>'.$caption.'</figcaption></figure>';
 			}else if($type=='file'){
 						$caption=$R['caption']?$R['caption']:$R['name'];
@@ -152,7 +152,6 @@ function getAttachFile($R,$mod,$featured_img_uid,$wysiwyg)
 						 </div>';
 						}
 						$html.='</div></div></div>';
-						if (!$wysiwyg) $html.='<div class="input-group ml-3 mt-2"><textarea class="form-control f13" id="clipboard-'.$R['uid'].'">'.$insert_text.'</textarea><div class="input-group-append"><button class="btn btn-light" data-attach-act="clipboard" data-clipboard-target="#clipboard-'.$R['uid'].'" type="button">복사</button></div></div>';
       $html.='</li>';
 
 	return $html;

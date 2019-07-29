@@ -5,6 +5,8 @@ $g['memberVarForSite'] = $g['path_var'].'site/'.$r.'/member.var.php';
 $_tmpvfile = file_exists($g['memberVarForSite']) ? $g['memberVarForSite'] : $g['path_module'].$m.'/var/var.php';
 include_once $_tmpvfile;
 
+include $g['dir_module'].'var/noti/_'.$a.'.php';  // 알림메시지 양식
+
 $id			= $id?$id:substr($g['time_split'][1],1,9);
 $name		= trim($name);
 $nic		= trim($nic);
@@ -181,9 +183,19 @@ if ($auth == 1)
 		getSendSMS($phone,$sms_tel,'',$content,'sms');
 	}
 
+	// 가입자에게 알림전송
+	$noti_title = $d['member']['noti_title'];
+	$noti_body = $d['member']['noti_body'];
+	$noti_referer = $g['url_http'].'/?r='.$r.'&mod=settings&page=noti';
+	$noti_button = $d['member']['noti_button'];
+	$noti_tag = '';
+	$noti_skipEmail = 1;
+	$noti_skipPush = 1;
+	putNotice($memberuid,$m,0,$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag,$noti_skipEmail,$noti_skipPush);
+
 	$_SESSION['mbr_uid'] = $memberuid;
   $_SESSION['mbr_pw']  = getCrypt($pw1,$d_regis);
-	setrawcookie('site_login_result', rawurlencode($name.'님 로그인 되셨습니다.|default'));  // 알림처리를 위한 로그인 상태 cookie 저장
+	setrawcookie('site_login_result', rawurlencode($name.'님 로그인 되셨습니다.|default'));
 	getLink($modal?'reload':RW(0),'parent.','축하합니다. 회원가입 승인되었습니다.','');
 }
 if ($auth == 2)

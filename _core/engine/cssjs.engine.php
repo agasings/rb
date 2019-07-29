@@ -10,6 +10,11 @@ $g['cssset'] = array
 	$g['dir_module_mode']=>$g['url_module_mode'],
 	$g['dir_module_admin']=>$g['url_module_admin'],
 );
+
+$NT_DATA = explode('|',$my['noticeconf']);
+$nt_web = $NT_DATA[0];
+$nt_email = $NT_DATA[1];
+$nt_fcm = $NT_DATA[2];
 ?>
 
 <script>
@@ -19,11 +24,14 @@ var raccount= '<?php echo $r?>';
 var moduleid= '<?php echo $m?>';
 var memberid= '<?php echo $my['id']?>';
 var is_admin= '<?php echo $my['admin']?>';
-var connect_naver= '<?php echo getConnectUrl('naver',$d['connect']['key_n'],$d['connect']['secret_n'],$g['url_root'].'/'.$r.'/oauth/naver',false)?>';
-var connect_kakao= '<?php echo getConnectUrl('kakao',$d['connect']['key_k'],$d['connect']['secret_k'],$g['url_root'].'/'.$r.'/oauth/kakao',false)?>';
-var connect_google= '<?php echo getConnectUrl('google',$d['connect']['key_g'],$d['connect']['secret_g'],$g['url_root'].'/'.$r.'/oauth/google',false)?>';
-var connect_facebook= '<?php echo getConnectUrl('facebook',$d['connect']['key_f'],$d['connect']['secret_f'],$g['url_root'].'/'.$r.'/oauth/facebook',false)?>';
-var connect_instagram= '<?php echo getConnectUrl('instagram',$d['connect']['key_i'],$d['connect']['secret_i'],$g['url_root'].'/'.$r.'/oauth/instagram',false)?>';
+
+var nt_web = '<?php echo $nt_web ?>';
+var nt_email = '<?php echo $nt_email ?>';
+var nt_fcm = '<?php echo $nt_fcm ?>';
+var broswer = '<?php echo $g['broswer'] ?>';
+var deviceKind = '<?php echo $g['mobile'] ?>';
+var deviceType = '<?php echo $g['deviceType'] ?>';
+var kakao_jskey = '<?php echo $d['connect']['jskey_k'] ?>';
 </script>
 
 <!-- is-loading : https://github.com/hekigan/is-loading-->

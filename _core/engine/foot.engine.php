@@ -19,6 +19,9 @@
 
 <iframe hidden name="_action_frame_<?php echo $m?>" width="0" height="0" frameborder="0" scrolling="no" title="iframe"></iframe>
 
+<!-- 알림처리 -->
+<iframe hidden name="pushframe" src="" title="iframe"></iframe>
+
 <?php
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 	$g['wdgcod'] = $g['path_tmp'].'widget/c'.$_HM['uid'].'.p'.$_HP['uid'].'.mobile.cache';
@@ -33,6 +36,8 @@ if($my['uid']) include $g['path_core'].'engine/notification.engine.php';
 <script>
 
 $(function() {
+
+	Iframely('oembed[url]') // oembed 미디어 변환
 
 	// 회원가입 작동중단 처리
 	<?php if (!$d['member']['join_enable']): ?>

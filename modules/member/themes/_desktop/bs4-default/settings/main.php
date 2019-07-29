@@ -9,7 +9,7 @@ $PCD = getDbArray($table['s_mbrphone'],$sqlque,'*','uid','asc',0,1);
 
 <div class="page-wrapper row">
   <nav class="col-3 page-nav">
-    <?php include_once $g['dir_module_skin'].'_menu.php'?>
+    <?php include_once $g['dir_module_skin'].'_nav.php'?>
   </nav>
   <div class="col-9 page-main">
 
@@ -306,8 +306,8 @@ $PCD = getDbArray($table['s_mbrphone'],$sqlque,'*','uid','asc',0,1);
           <dl class="form-group">
             <dt class="mb-2">프로필 사진</dt>
             <dd>
-              <div data-toggle="avatar"role="button" class="position-relative rounded border">
-                <img src="<?php echo getAavatarSrc($my['uid'],'200') ?>" width="200" height="200" alt="" class="">
+              <div data-toggle="avatar" role="button" class="position-relative rounded border">
+                <img src="<?php echo getAvatarSrc($my['uid'],'200') ?>" width="200" height="200" alt="" class="">
                 <i class="position-absolute fa fa-upload fa-3x" aria-hidden="true" data-toggle="tooltip" title="사진을 변경합니다." data-placement="right"></i>
               </div>
               <div class="mt-2">
@@ -327,7 +327,7 @@ $PCD = getDbArray($table['s_mbrphone'],$sqlque,'*','uid','asc',0,1);
                 <input type="hidden" name="r" value="<?php echo $r?>">
                 <input type="hidden" name="m" value="<?php echo $m?>">
                 <input type="hidden" name="a" value="avatar">
-                <input type="file" name="upfile" id="rb-upfile-avatar" accept="image/jpg" class="d-none">
+                <input type="file" name="upfile" id="rb-upfile-avatar" accept="image/*" class="d-none">
               </form>
             </dd>
           </dl>

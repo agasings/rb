@@ -44,7 +44,7 @@ else $del_file=$tab.'_multi_delete';
     <a class="nav-link<?php if($tab=='log'):?> active<?php endif?>" href="<?php echo $g['adm_href']?>&amp;iframe=Y&amp;tab=log&amp;uid=<?php echo $_M['uid']?>">접속기록</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link<?php if($tab=='order'):?> active<?php endif?>" href="<?php echo $g['adm_href']?>&amp;iframe=Y&amp;tab=order&amp;uid=<?php echo $_M['uid']?>">주문내역</a>
+    <a class="nav-link<?php if($tab=='pwa'):?> active<?php endif?>" href="<?php echo $g['adm_href']?>&amp;iframe=Y&amp;tab=pwa&amp;uid=<?php echo $_M['uid']?>">웹앱</a>
   </li>
 </ul>
 <!-- tab 내용 -->

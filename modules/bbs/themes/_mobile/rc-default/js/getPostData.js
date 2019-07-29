@@ -177,12 +177,32 @@ function getPostData(settings){
     var ele = $(event.relatedTarget) // element that triggered the modal
     var uid = ele.data('uid') // 게시물 고유번호 추출
     var modal = $(this);
+   });
 
-
+   //링크공유 버튼을 터치 할때
+   $(mid).on('tap','#btn-linkShare',function(){
+     if (navigator.share === undefined) {  //webshare.api가 지원되지 않는 환경
+  			popup_linkshare.popup('show')
+  		} else {
+  			var ele = $(this)
+  		  var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
+  		  var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
+  			var host = $(location).attr('origin');
+  			var path = ele.attr('data-url')?ele.attr('data-url'):''
+  			var link = host+path // 게시물 보기 URL
+  			navigator.share({
+  	        title: sbj,
+  	        text: desc,
+  	        url: link,
+  	    })
+        .then(() => console.log('성공적으로 공유되었습니다.'))
+        .catch((error) => console.log('공유에러', error));
+  		}
    });
 
    //좋아요,싫어요
-   $(mid).on('click','[data-act="opinion"]',function(){
+   $(mid).on('tap','[data-act="opinion"]',function(){
+     console.log('dd')
      var send = $(this).data('send')
      var uid = $(this).data('uid')
      var opinion = $(this).data('opinion')
@@ -337,12 +357,12 @@ function getPostData(settings){
      }, 300);
    })
 
-
    //링크 공유 팝업이 열릴때
    popup_linkshare.on('shown.rc.popup', function (event) {
      var ele = $(event.relatedTarget)
      var path = ele.attr('data-url')?ele.attr('data-url'):''
      var host = $(location).attr('origin');
+     var title= "게시물 공유"
      var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
      var email = ele.attr('data-email')?ele.attr('data-email'):'' // 버튼에서 이메일 추출
      var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
@@ -359,6 +379,7 @@ function getPostData(settings){
      var kakaostory = 'https://story.kakao.com/share?url=' + enc_link + '&title=' + enc_sbj;
      var email = 'mailto:' + email + '?subject=링크공유-' + enc_sbj+'&body='+ enc_link;
 
+     popup.find('[data-role="title"]').text(title)
      popup.find('[data-role="share"]').val(host+path)
      popup.find('[data-role="share"]').focus(function(){
        $(this).on("mouseup.a keyup.a", function(e){

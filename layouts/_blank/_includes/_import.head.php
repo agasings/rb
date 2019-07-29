@@ -11,7 +11,7 @@
 <link rel="shortcut icon" href="<?php echo $g['s']?>/_core/images/ico/favicon.ico">
 
 <!-- bootstrap css -->
-<?php getImport('bootstrap','css/bootstrap.min','4.1.3','css')?>
+<?php getImport('bootstrap','css/bootstrap.min','4.3.1','css')?>
 
 <!-- jQuery -->
 <?php getImport('jquery','jquery.min','3.3.1','js')?>
@@ -19,7 +19,7 @@
 <?php getImport('popper.js','umd/popper.min','1.14.0','js')?>
 
 <!-- bootstrap js -->
-<?php getImport('bootstrap','js/bootstrap.min','4.1.3','js')?>
+<?php getImport('bootstrap','js/bootstrap.min','4.3.1','js')?>
 
 <!-- 시스템 폰트 -->
 <?php getImport('font-awesome','css/font-awesome','4.7.0','css')?>
@@ -35,6 +35,12 @@
 <?php getImport('bootstrap-notify','bootstrap-notify.min','3.1.3','js')?>
 
 <?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
+
+<!-- bootstrap-toc : https://github.com/afeld/bootstrap-toc -->
+<?php getImport('bootstrap-toc','bootstrap-toc','1.0.1','css')?>
+<?php getImport('bootstrap-toc','bootstrap-toc.min','1.0.1','js')?>
+
+<?php getImport('smooth-scroll','smooth-scroll.min','12.1.5','js') ?>
 
 <!-- global css -->
 <link href="<?php echo $g['url_layout']?>/_css/style.css" rel="stylesheet">

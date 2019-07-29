@@ -4,7 +4,8 @@ if(!defined('__KIMS__')) exit;
 checkAdmin(0);
 $fdset = array();
 $fdset['config'] = array('version','themepc','pannellink','cache_flag','smtp_use','smtp_host','smtp_port','smtp_auth','smtp_ssl','smtp_user','smtp_pass',
-						 'ftp_use','ftp_type','ftp_host','ftp_port','ftp_pasv','ftp_user','ftp_pass','ftp_rb','email','smtp','ftp','uninstall','dblclick','codeeidt','editor','syslang','sysmail','sysmodule','sms_tel','sms_id','sms_key','fcm_key','fcm_id');
+						 'ftp_use','ftp_type','ftp_host','ftp_port','ftp_pasv','ftp_user','ftp_pass','ftp_rb','email','smtp','ftp','uninstall','dblclick','codeeidt',
+						 'editor','syslang','sysmail','sysmodule','sms_tel','sms_id','sms_key','fcm_key','fcm_SenderId','fcm_VAPID');
 $fdset['ssl'] = array('http_port','ssl_type','ssl_port','ssl_module','ssl_menu','ssl_page');
 $fdset['security'] = array('secu_tags','secu_domain','secu_param');
 
@@ -32,7 +33,7 @@ if ($act == 'config')
 }
 foreach ($fdset[$act] as $val)
 {
-	$d['admin'][$val] = str_replace("\n",'<br>',trim(${$val}));
+	$d['admin'][$val] = str_replace("\n",'',trim(${$val}));
 }
 
 $_tmpdfile = $g['dir_module'].'var/var.system.php';
@@ -45,6 +46,21 @@ foreach ($d['admin'] as $key => $val)
 fwrite($fp, "?>");
 fclose($fp);
 @chmod($_tmpdfile,0707);
+
+//FCM 연결정보
+$_tmpjfile = $g['path_var'].'fcm.info.js';
+if ($fcm_SenderId) {
+	$fp = fopen($_tmpjfile,'w');
+	fwrite($fp, "var firebase_app_js_src = '".$fcm_app_js_src."'\n");
+	fwrite($fp, "var firebase_messaging_js_src = '".$fcm_messaging_js_src."'\n");
+	fwrite($fp, "var fcmSenderId = '".$fcm_SenderId."'\n");
+	fwrite($fp, "var fcmVAPID = '".$fcm_VAPID."'\n");
+	fwrite($fp, "var icon = '".$fcm_icon."'\n");
+	fclose($fp);
+	@chmod($_tmpjfile,0707);
+} else {
+	unlink($_tmpjfile);
+}
 
 if($autosave):
 ?>

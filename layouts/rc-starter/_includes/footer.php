@@ -18,7 +18,6 @@
     <a class="nav-link" href="<?php echo RW('mod=privacy') ?>">개인정보취급방침</a>
   </nav>
 
-
   <p>© Company <?php echo $date['year']?></p>
 
 </footer>

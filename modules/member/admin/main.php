@@ -1116,17 +1116,10 @@ function actQue(flag)
 
 	}
 
-	if (confirm('정말로 실행하시겠습니까?        '))
-	{
-		submitFlag = true;
-		f.a.value = 'admin_action';
-		f.act.value = flag;
-		f.submit();
-	}
-	else
-	{
-		return false;
-	}
+	submitFlag = true;
+	f.a.value = 'admin_action';
+	f.act.value = flag;
+	f.submit();
 }
 //************************   숫자 입력 체크 *******************************************
 function RemoveRougeChar(convertString){

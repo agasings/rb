@@ -42,15 +42,6 @@ define('S3_SEC', $d['mediaset']['S3_SEC'] ); //발급받은 비밀번호.
 define('S3_REGION', $d['mediaset']['S3_REGION']);  //S3 버킷의 리전.
 define('S3_BUCKET', $d['mediaset']['S3_BUCKET']); //버킷의 이름.
 
-$s3 = new S3Client([
-  'version'     => 'latest',
-  'region'      => S3_REGION,
-  'credentials' => [
-      'key'    => S3_KEY,
-      'secret' => S3_SEC,
-  ],
-]);
-
 if ($type == 2 || $type == 4 || $type == 5 ) {
   $tmpname = $tmpname.'.'.$fileExt;
 }
@@ -111,6 +102,15 @@ if(isset($_FILES["files"])) {
 
       } elseif ($fserver==2) {
 
+        $s3 = new S3Client([
+          'version'     => 'latest',
+          'region'      => S3_REGION,
+          'credentials' => [
+              'key'    => S3_KEY,
+              'secret' => S3_SEC,
+          ],
+        ]);
+        
         // 파일 업로드
         $host= 'https://'.S3_BUCKET.'.s3.'.S3_REGION.'.amazonaws.com';
         $folder = str_replace('./files/','',$saveDir).$folder;

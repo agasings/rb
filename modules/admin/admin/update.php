@@ -23,6 +23,8 @@ $TPG = getTotalPage($_updatelength,$recnum);
 	</div>
 </div>
 
+<?php echo $_lastver ?>
+
 <div class="update-info table-responsive">
 	<table class="table f13 text-center">
 		<thead class="small text-muted">

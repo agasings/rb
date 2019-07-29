@@ -30,7 +30,7 @@ $TMPL['point'] = number_format($_MD['point']);
 $TMPL['level'] = $_MD['level'];
 $TMPL['bio'] = $_MD['bio'];
 $TMPL['d_regis'] = getDateFormat($_MD['d_regis'],'Y.m.d');
-$TMPL['avatar'] = getAavatarSrc($mbruid,'84');
+$TMPL['avatar'] = getAvatarSrc($mbruid,'84');
 
 if ($type=='popover') {
   $markup_file = 'profile-popover'; // 기본 마크업 페이지 전달 (테마 내부 _html/profile-popover.html)

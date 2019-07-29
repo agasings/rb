@@ -1,6 +1,28 @@
 <!--
  // makebbs.php 의 추가설정 부분
 -->
+
+<div class="form-group row">
+    <label class="col-lg-2 col-form-label text-lg-right">게시판 관리자</label>
+    <div class="col-lg-10 col-xl-9">
+      <div class="input-group">
+        <input class="form-control" placeholder="" type="text" name="admin" value="<?php echo $d['bbs']['admin']?>">
+        <div class="input-group-append">
+          <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#bbs_admin-guide" data-tooltip="tooltip" title="도움말">
+            <i class="fa fa-question-circle fa-lg"></i>
+          </button>
+        </div>
+      </div>
+      <p class="help-block collapse" id="bbs_admin-guide">
+        <small class="form-text text-muted">
+         이 게시판에 대해서 관리자권한을 별도로 부여할 회원이 있을경우
+          회원아이디를 콤마(,)로 구분해서 등록해 주세요.<br />
+          관리자로 지정될 경우 열람/수정/삭제등의 모든권한을 얻게 됩니다.
+         </small>
+        </p>
+    </div>
+ </div>
+
    <div class="form-group row">
 			<label class="col-lg-2 col-form-label text-lg-right">최근글 제외</label>
 			<div class="col-lg-10 col-xl-9">
@@ -175,26 +197,6 @@
 				</div>
 			</div>
 	 </div>
-	  <div class="form-group row">
-				<label class="col-lg-2 col-form-label text-lg-right">추가 관리자</label>
-				<div class="col-lg-10 col-xl-9">
-					<div class="input-group">
-						<input class="form-control" placeholder="" type="text" name="admin" value="<?php echo $d['bbs']['admin']?>">
-            <div class="input-group-append">
-              <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#bbs_admin-guide" data-tooltip="tooltip" title="도움말">
-                <i class="fa fa-question-circle fa-lg"></i>
-              </button>
-            </div>
-					</div>
-					<p class="help-block collapse" id="bbs_admin-guide">
-						<small class="form-text text-muted">
-						 이 게시판에 대해서 관리자권한을 별도로 부여할 회원이 있을경우
-					    회원아이디를 콤마(,)로 구분해서 등록해 주세요.<br />
-					    관리자로 지정될 경우 열람/수정/삭제등의 모든권한을 얻게 됩니다.
-				     </small>
-			      </p>
-				</div>
-		 </div>
 		<div class="form-group row">
 			<label class="col-lg-2 col-form-label text-lg-right">부가필드</label>
 			<div class="col-lg-10 col-xl-9">

@@ -21,6 +21,8 @@ if (!$check_id || !$check_nic || !$check_email || !$check_phone)
 $tmpname	= $_FILES['upfile']['tmp_name'];
 $realname	= $_FILES['upfile']['name'];
 
+//getLink('','',$realname.' 여기까지','');
+
 if ($avatar_delete)
 {
 	$photo = '';

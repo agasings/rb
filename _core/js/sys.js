@@ -440,9 +440,19 @@ function isInstallToDevice() {
   return window.localStorage.getItem('installToDevice') == 1;
 }
 
-// oembed 미디어 변환 -ckeditor5 media-embed  : https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html
+// oembed 미디어 변환
 function Iframely(ele) {
-  document.querySelectorAll(ele).forEach( element => {
-    iframely.load( element, element.attributes.url.value );
-  } );
+	$(ele).each(function(index) {
+    var url = $(this).attr('url');
+		var _url = encodeURI(url);
+
+		$.getJSON('//iframe.ly/api/oembed?url=' + _url, {
+				format: "json",
+				key: "9ceb477698ab5a4783ba77ebd60faeaf"
+			},
+			function(data) {
+				var html = data.html;
+				 $(ele+'[url="' + url + '"]').html(html);
+			});
+	});
 }

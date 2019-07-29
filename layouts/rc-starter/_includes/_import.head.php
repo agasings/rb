@@ -1,8 +1,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#333">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="theme-color" content="#333">
 
 <!-- Seo -->
 <meta name="robots" content="<?php echo strip_tags($g['meta_bot'])?>">
@@ -15,22 +17,24 @@
 
 <!-- 웹앱 매니페스트 -->
 <link rel="manifest" href="<?php echo $manifestForSite?>">
+<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $touchIconForSite ?>">
 
 <!-- 사이트 헤드 코드 -->
 <?php echo $_HS['headercode']?>
 
 <!-- rc css -->
-<?php getImport('rc','css/rc','1.0.0-alpha.4','css')?>
-<?php getImport('rc','css/rc-add','1.0.0-alpha.4','css')?>
+<?php getImport('rc','css/rc','1.0.0','css')?>
+<?php getImport('rc','css/rc-add','1.0.0','css')?>
 
 <!-- jQuery -->
 <?php getImport('jquery','jquery.min','1.12.4','js')?>
 
 <!-- rc js -->
-<?php getImport('rc','js/rc-custom','1.0.0-alpha.4','js')?>
+<?php getImport('rc','js/rc','1.0.0','js')?>
 
 <!-- 시스템 폰트 -->
 <?php getImport('font-awesome','css/font-awesome','4.7.0','css')?>
+<?php getImport('font-kimsq','css/font-kimsq',false,'css')?>
 
 <!-- swiper : http://idangero.us/swiper/ -->
 <?php getImport('swiper','css/swiper','4.2.2','css')?>
@@ -41,6 +45,9 @@
 <?php getImport('mediaelement','lang/ko','4.2.8','js') ?>
 <?php getImport('mediaelement','mediaelementplayer','4.2.8','css') ?>
 
+<!-- iframely:  https://iframely.com/ -->
+<script async charset="utf-8" src="//cdn.iframe.ly/embed.js?key=9ceb477698ab5a4783ba77ebd60faeaf"></script>
+
 <!-- 사이트 헤드 코드 -->
 <?php echo $_HS['headercode']?>
 
@@ -49,9 +56,3 @@
 
 <!-- global css -->
 <link href="<?php echo $g['url_layout']?>/_css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
-
-<!-- 카카오 -->
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript">
-	Kakao.init('<?php echo $d['connect']['jskey_k'] ?>');  // 카카오 앱의 JavaScript 키를 설정해 주세요.
-</script>

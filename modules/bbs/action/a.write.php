@@ -2,18 +2,13 @@
 if(!defined('__KIMS__')) exit;
 
 //if (!$_SESSION['wcode']||$_SESSION['wcode']!=$pcode) exit;
+
 if (!$bid) getLink('','','게시판 아이디가 지정되지 않았습니다.','');
 $B = getDbData($table[$m.'list'],"id='".$bid."'",'*');
 if (!$B['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 if (!$subject) getLink('reload','parent.','제목이 입력되지 않았습니다.','');
 include_once $g['dir_module'].'var/var.php';
 include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
-
-//마크다운 필터링 클래스 세팅
-include_once $g['path_core'].'opensrc/markdown-to-html/Michelf/Markdown.inc.php';
-use \Michelf\Markdown;
-use \Michelf\MarkdownExtra;
-
 $bbsuid		= $B['uid'];
 $bbsid		= $B['id'];
 $mbruid		= $my['uid'];
@@ -22,10 +17,7 @@ $name		= $my['uid'] ? $my['name'] : trim($name);
 $nic		= $my['uid'] ? $my['nic'] : $name;
 $category	= trim($category);
 $subject	= $my['admin'] ? trim($subject) : htmlspecialchars(trim($subject));
-
-if ($markdown) $content= MarkdownExtra::defaultTransform($content); //Markdown parser 로 본문내용 구조화 적용
-else $content	= trim($content);
-
+$content	= trim($content);
 $html		= $html ? $html : 'TEXT';
 $tag		= trim($tag);
 $d_regis	= $date['totime'];
@@ -141,6 +133,8 @@ if ($uid)
 
 		$pw = !$R['pw'] && !$R['hidden'] && $hidden && $R['mbruid'] ? $R['mbruid'] : $R['pw'];
 
+				// getLink('','parent.',trim($content).' 여기까지','');
+
 		$QVAL = "display='$display',hidden='$hidden',notice='$notice',pw='$pw',category='$category',subject='$subject',content='$content',html='$html',tag='$tag',point3='$point3',point4='$point4',d_modify='$d_regis',upload='$upload',featured_img='$featured_img',location='$location',pin='$pin',adddata='$adddata'";
 		getDbUpdate($table[$m.'data'],$QVAL,'uid='.$R['uid']);
 		getDbUpdate($table[$m.'idx'],'notice='.$notice,'gid='.$R['gid']);
@@ -221,27 +215,39 @@ if ($tag || $R['tag'])
 	}
 }
 
-
-if ($snsCallBack && ($sns_t||$sns_f||$sns_m||$sns_y))
-{
-	$xcync = "[][][][][][m:".$m.",bid:".$bbsid.",uid:".$NOWUID."]";
-	$orignSubject = strip_tags($subject);
-	$orignContent = getStrCut($orignSubject,60,'..');
-	$orignUrl = 'http://'.$_SERVER['SERVER_NAME'].str_replace('./','/',getCyncUrl($xcync)).'#CMT';
-
-	include_once $g['path_module'].$snsCallBack;
-
-	if ($snsSendResult)
-	{
-		getDbUpdate($table[$m.'data'],"sns='".$snsSendResult."'",'uid='.$LASTUID);
-	}
-}
-
 $_SESSION['bbsback'] = $backtype;
 
 if ($reply == 'Y') $msg = '답변';
 else if ($uid) $msg = '수정';
 else $msg = '등록';
+
+
+//알림 전송 (게시물 등록: 신규 게시물 등록시, 게시판 관리자에게 알림발송)
+if ($d['bbs']['noti_newpost'] && !$my['admin']){
+	include $g['dir_module'].'var/noti/_new.post.php';  // 알림메시지 양식
+	$sendAdmins_array = explode(',',trim($d['bbs']['admin']));
+	if (is_array($sendAdmins_array)) {
+		foreach($sendAdmins_array as $val)
+		{
+			$_M = getDbData($table['s_mbrid'],'id="'.$val.'"','uid');
+			$__M = getDbData($table['s_mbrdata'],'memberuid='.$_M['uid'],'memberuid,email,name,nic');
+			if (!$_M['uid']) continue;
+
+			$noti_title = $d['bbs']['noti_title'];
+			$noti_title = str_replace('{BBS}',$name,$noti_title);
+			$noti_body = $d['bbs']['noti_body'];
+			$noti_body = str_replace('{MEMBER}',$my[$_HS['nametype']],$noti_body);
+			$noti_body = str_replace('{SUBJECT}',$R['subject'],$noti_body);
+			$noti_referer = $g['url_http'].'/?r='.$r.'&mod=settings&page=noti';
+			$noti_button = '게시물 확인';
+			$noti_tag = '';
+			$noti_skipEmail = 0;
+			$noti_skipPush = 0;
+
+			putNotice($_M['uid'],$m,$my['uid'],$my[$_HS['nametype']].'님이 ['.$B['name'].'] 에 등록한 게시물('.$subject.')이 등록되었습니다..',$g['s'].'/?r='.$r.'&amp;m='.$m.'&amp;project='.$_PROJECT['uid'].'&amp;task='.$taskUid,'');
+		}
+	}
+}
 
 setrawcookie('bbs_action_result', rawurlencode('게시물이 '.$msg.' 되었습니다.'));  // 처리여부 cookie 저장
 

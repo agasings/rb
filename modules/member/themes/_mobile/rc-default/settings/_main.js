@@ -347,10 +347,12 @@ $(function() {
 
 
   $(document).on('click','#execDaumPostcode',function(){
+
     // 우편번호 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('postLayer');
 
     function execDaumPostcode() {
+      daum.postcode.load(function(){
         new daum.Postcode({
              oncomplete: function(data) {
                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -383,7 +385,9 @@ $(function() {
              width : '100%',
              height : '100%'
          }).embed(element_wrap);
+        });
          // element_wrap.style.display = 'block';
+
         $('#modal-DaumPostcode').modal('show')
     }
     execDaumPostcode()
