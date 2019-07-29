@@ -316,13 +316,11 @@
 
 </script>
 
-
-
 <?php if ($call_modal_join_site): ?>
 <?php
 $email	= $_SESSION['JOIN']['email']; //본인확인된 이메일
 $phone	= $_SESSION['JOIN']['phone']; //본인확인된 휴대폰번호
-$_SESSION['JOIN'] = ''; //본인확인 세션 초기화
+unset($_SESSION['JOIN']); //본인확인 세션 초기화
 ?>
 <div class="modal fade" id="modal-join-site" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document" style="max-width: 400px;">
@@ -630,6 +628,19 @@ $_SESSION['JOIN'] = ''; //본인확인 세션 초기화
   	}
   	else
   	{
+      if (obj.name == 'name') {
+        if (obj.value.length > 1) {
+          f.check_name.value = '1';
+          f.name.classList.add('is-valid');
+          f.name.classList.remove('is-invalid');
+        } else {
+          f.check_name.value = '0';
+          f.name.classList.add('is-invalid');
+          getId(layer).innerHTML = '이름을 2자 이상으로 입력해주세요.';
+          f.name.focus();
+          return false;
+        }
+      }
       if (obj.name == 'pw1') {
         f.classList.remove('was-validated');
 
@@ -659,19 +670,6 @@ $_SESSION['JOIN'] = ''; //본인확인 세션 초기화
         f.check_pw.value = '1';
       }
 
-      if (obj.name == 'name') {
-        if (obj.value.length > 1) {
-          f.check_name.value = '1';
-          f.name.classList.add('is-valid');
-          f.name.classList.remove('is-invalid');
-        } else {
-          f.check_name.value = '0';
-          f.name.classList.add('is-invalid');
-          getId(layer).innerHTML = '이름을 2자 이상으로 입력해주세요.';
-          f.name.focus();
-          return false;
-        }
-      }
   	}
   }
 
@@ -708,7 +706,7 @@ $_SESSION['JOIN'] = ''; //본인확인 세션 초기화
 <?php
 $avatar_data=array('src'=>$_photo,'width'=>150,'height'=>150);
 $user_avatar_src=getTimThumb($avatar_data);
-$_SESSION['SL'] = ''; //세션 비우기
+unset($_SESSION['SL']); //본인확인 세션 초기화
 ?>
 
 <!-- 1. 일반모달 : 소셜로그인 인증후, 회원가입 -->
@@ -1210,7 +1208,12 @@ $_SESSION['SL'] = ''; //세션 비우기
       getId('name-feedback').innerHTML = '이름을 입력해주세요.';
       return false;
     }
-
+    if (f.check_name.value == '0')
+    {
+      f.name.classList.add('is-invalid')
+      f.name.focus();
+      return false;
+    }
     <?php if ($call_modal_join_social): ?>
     if (f.email.value == '')
     {
@@ -1226,6 +1229,12 @@ $_SESSION['SL'] = ''; //세션 비우기
     {
       f.pw1.classList.add('is-invalid');
       getId('pw-feedback').innerHTML = '비밀번호를 입력해주세요.';
+      f.pw1.focus();
+      return false;
+    }
+    if (f.check_pw.value == '0')
+    {
+      f.pw1.classList.add('is-invalid')
       f.pw1.focus();
       return false;
     }
