@@ -112,7 +112,7 @@ $type = $type ? $type : '_join.complete';
 				<div class="small text-muted">
 					<ul class="pl-3">
 						<li>내용에는 다음과 같은 치환문자를 사용할 수 있습니다.</li>
-						<li>사이트명: <code>{SITE}</code> / 회원이름 : <code>{NAME}</code> / 닉네임 <code>{NICK}</code> / 아이디 <code>{ID}</code> / 이메일 <code>{EMAIL}</code> / 휴대폰 <code>{PHONE}</code></li>
+						<li>사이트명: <code>{SITE}</code> / 회원이름 : <code>{NAME}</code> / 닉네임 <code>{NICK}</code> / 아이디 <code>{ID}</code> / 이메일 <code>{EMAIL}</code> / 휴대폰 <code>{PHONE}</code>/ 가입일시 <code>{DATE}</code></li>
 					</ul>
 				</div>
 				<!-- 에디터 -->

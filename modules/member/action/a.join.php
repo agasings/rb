@@ -168,6 +168,7 @@ if ($auth == 1)
 		$content = str_replace('{ID}',$id,$content);
 		$content = str_replace('{PHONE}',$phone,$content);
 		$content = str_replace('{EMAIL}',$email,$content);
+		$content = str_replace('{DATE}',getDateFormat($d_regis,'Y.m.d H:i'),$content);
 		getSendMail($email.'|'.$name,$email_from.'|'.$_HS['name'], '['.$_HS['name'].']회원가입을 축하드립니다.', $content, 'HTML');
 	}
 
