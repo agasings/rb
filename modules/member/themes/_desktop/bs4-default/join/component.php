@@ -6,7 +6,7 @@
 -->
 
 <div class="modal fade" id="modal-join" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document" style="max-width: 400px;">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
     <div class="modal-content">
       <div class="modal-header border-bottom-0" style="background-color: rgba(0,0,0,.03);">
         <h5 class="modal-title mx-auto">회원가입</h5>
@@ -184,6 +184,10 @@
     modal_join.find('[data-act="send_code"] .not-loading').text('다음')
   })
 
+  modal_join.on('shown.bs.modal', function () {
+    modal_join.find('[name="email"]').trigger('focus')
+  })
+
   function doCountdown(type) {
     modal_join.find('[data-'+type+'-countdown]').each(function() {
       var $this = $(this), finalDate = $(this).data(type+'-countdown');
@@ -323,7 +327,7 @@ $phone	= $_SESSION['JOIN']['phone']; //본인확인된 휴대폰번호
 unset($_SESSION['JOIN']); //본인확인 세션 초기화
 ?>
 <div class="modal fade" id="modal-join-site" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document" style="max-width: 400px;">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
 
     <div class="modal-content">
 
@@ -711,7 +715,7 @@ unset($_SESSION['SL']); //본인확인 세션 초기화
 
 <!-- 1. 일반모달 : 소셜로그인 인증후, 회원가입 -->
 <div class="modal fade" id="modal-join-social" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document" style="max-width: 400px;">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
 
     <div class="modal-content">
 			<ul class="nav nav-tabs nav-justified">

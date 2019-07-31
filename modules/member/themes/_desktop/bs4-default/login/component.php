@@ -7,7 +7,7 @@
 
 <!-- 1. 일반모달 : 로그인 -->
 <div class="modal fade" id="modal-login" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document" style="max-width: 400px;">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
     <div class="modal-content">
       <div class="modal-body">
         <h3 class="text-center my-4">회원 로그인</h3>

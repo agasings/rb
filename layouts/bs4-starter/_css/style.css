@@ -19,6 +19,7 @@
  * 6 - Footer 풋터
  * 7 - Component 컴포넌트
  * 8 - Utilities 유틸리티
+ * 9 - Theme 테마
  * ----------------------------------------------------------------------------
  */
 
@@ -435,3 +436,22 @@ figure.media {
  * 8 - Utilities 유틸리티
  * ----------------------------------------------------------------------------
  */
+
+
+ /**
+  * 9 - Theme 테마
+  * ----------------------------------------------------------------------------
+  */
+
+ .modal-content {
+  border: 1px solid #999;
+  border-radius: 0;
+  box-shadow: 0 2px 4px rgba(17,17,17,0.06), 0 4px 15px rgba(17,17,17,0.08);
+  -webkit-box-shadow: 0 2px 4px rgba(17,17,17,0.06), 0 4px 15px rgba(17,17,17,0.08);
+}
+.modal-backdrop {
+  background-color: #fff;
+}
+.modal-backdrop.show {
+  opacity: .8;
+}
