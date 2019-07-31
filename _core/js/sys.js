@@ -446,13 +446,49 @@ function Iframely(ele) {
     var url = $(this).attr('url');
 		var _url = encodeURI(url);
 
-		$.getJSON('//iframe.ly/api/oembed?url=' + _url, {
-				format: "json",
-				key: "9ceb477698ab5a4783ba77ebd60faeaf"
+		$.getJSON('//embed.kimsq.com/oembed?url=' + _url, {
+				format: "json"
 			},
 			function(data) {
-				var html = data.html;
-				 $(ele+'[url="' + url + '"]').html(html);
+				var type = data.type;
+				var title = data.title;
+				var url = data.url;
+				var author = data.author;
+				var description = data.description;
+				var thumbnail_url = data.thumbnail_url;
+				var author = data.author?data.author:'';
+				var provider_name =  data.provider_name?data.provider_name:'';
+				var thumbnail_width = data.thumbnail_width;
+
+				if (type=='link') {
+					var link_url_parse = $('<a>', {href: url});
+					var provider_url = link_url_parse.prop('protocol')+'//'+link_url_parse.prop('hostname');
+					var thumbnail_url_parse = $('<a>', {href: thumbnail_url});
+					var thumbnail_protocol =  thumbnail_url_parse.prop('protocol')=='https'?'thumb':'thumb-ssl';
+					var thumbnail__url = thumbnail_url_parse.prop('hostname')+thumbnail_url_parse.prop('pathname')+thumbnail_url_parse.prop('search')+thumbnail_url_parse.prop('hash')
+					var thumbnail___url = '/'+thumbnail_protocol+'/160x160/u/'+thumbnail__url
+
+					$.getJSON('//embed.kimsq.com/iframely?uri=' + _url, {
+							format: "json"
+						},
+						function(data) {
+							var title = data.meta.title;
+							var icon = data.links.icon[0].href;
+
+							if (thumbnail_width>500) var html = '<div class="card shadow-sm"><a href="'+url+'" target="_blank"><img class="card-img-top" src="'+thumbnail_url+'"></a><div class="card-body"><h5 class="card-title"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h5><p class="card-text line-clamp-3 text-muted">'+description+'</p><a href="'+provider_url+'" target="_blank"  class="btn btn-link text-reset"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a></div></div>';
+							else var html = '<div class="media border shadow-sm text-reset"><a href="'+url+'" target="_blank" class="align-self-center"><img src="'+thumbnail___url+'"></a><div class="media-body p-3"><h5 class="mt-0"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h5><p class="line-clamp-3 mb-1">'+description+'</p><a href="'+provider_url+'" target="_blank" class="btn btn-link text-reset"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a></div></div>';
+
+							$(ele+'[url="' + url + '"]').html(html);
+					});
+				} else {
+					var html = data.html;
+					$(ele+'[url="' + url + '"]').html(html);
+				}
+
+			})
+			.fail(function() {
+				$(ele+'[url="' + url + '"]').html('<p><a href="'+url+'" target="_blank">'+url+'</a></p>');
 			});
-	});
+
+		});
 }
