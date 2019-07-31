@@ -34,6 +34,11 @@
 <?php getImport('font-awesome','css/font-awesome','4.7.0','css')?>
 <?php getImport('font-kimsq','css/font-kimsq',false,'css')?>
 
+<!-- anchorjs : https://github.com/bryanbraun/anchorjs -->
+<?php getImport('anchorjs','anchor.min','4.2.0','js')?>
+
+<?php getImport('smooth-scroll','smooth-scroll.min','12.1.5','js') ?>
+
 <!-- 엔진코드:삭제하지마세요 -->
 <?php include $g['path_core'].'engine/cssjs.engine.php' ?>
 

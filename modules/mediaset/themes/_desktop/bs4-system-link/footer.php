@@ -52,7 +52,7 @@ $(document).ready(function() {
 
     fieldset.attr('disabled',true)
 
-  	$.get('https://iframe.ly/api/oembed',{
+  	$.get('//embed.kimsq.com/oembed',{
   			api_key : iframe_api_key,
   			url: url
   	}).done(function(response) {
@@ -73,7 +73,7 @@ $(document).ready(function() {
 
         if (type=='video') {
 
-          $.get('https://iframe.ly/api/iframely',{
+          $.get('//embed.kimsq.com/iframely',{
         			api_key : iframe_api_key,
         			url: url
         	}).done(function(response) {

@@ -23,7 +23,7 @@ if ($act=='add') {
 	if ($isId) {
 		echo '<script type="text/javascript">';
 		echo 'parent.$("#emailsForm").find("[name=email]").addClass("is-invalid");';
-		echo 'parent.$("#emailsForm").find(".invalid-feedback").text("이미 추가된 이메일입니다");';
+		echo 'parent.$("#emailsForm").find(".invalid-feedback").text("이미 추가되거나 가입된 이메일입니다");';
 		echo 'parent.$("#emailsForm").find("[type=submit]").attr("disabled",false);';
 		echo '</script>';
 	} else {

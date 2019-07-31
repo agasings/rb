@@ -98,7 +98,7 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 					<td><input type="checkbox" disabled="disabled" /></td>
 					<td class="cat">-</td>
 					<td class="sbj1">내역이 없습니다.</td>
-					<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
+					<td></td>
 				</tr>
 				<?php endif?>
 

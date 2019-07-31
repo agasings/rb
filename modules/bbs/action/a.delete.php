@@ -18,15 +18,6 @@ define('S3_SEC', $d['mediaset']['S3_SEC'] ); //발급받은 비밀번호.
 define('S3_REGION', $d['mediaset']['S3_REGION']);  //S3 버킷의 리전.
 define('S3_BUCKET', $d['mediaset']['S3_BUCKET']); //버킷의 이름.
 
-$s3 = new S3Client([
-  'version'     => 'latest',
-  'region'      => S3_REGION,
-  'credentials' => [
-      'key'    => S3_KEY,
-      'secret' => S3_SEC,
-  ],
-]);
-
 $backUrl = getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').($c?'c='.$c:'m='.$m),array('bid','skin','iframe','cat','p','sort','orderby','recnum','type','where','keyword'));
 
 if ($my['uid'] != $R['mbruid'] && !$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].','))
@@ -153,6 +144,15 @@ if ($R['upload'])
 				ftp_close($FTP_CONNECT);
 
 			} elseif ($U['fserver']==2) {
+
+        $s3 = new S3Client([
+          'version'     => 'latest',
+          'region'      => S3_REGION,
+          'credentials' => [
+              'key'    => S3_KEY,
+              'secret' => S3_SEC,
+          ],
+        ]);
 
 				$s3->deleteObject([
 					'Bucket' => S3_BUCKET,

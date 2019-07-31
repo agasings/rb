@@ -1,4 +1,4 @@
-<li class="media border-bottom mb-3" data-role="comment-item" data-uid="{$comment_uid}" data-page="{$comment_page}" data-totalPage="{$total_page}" data-type="comment">
+<li class="media border-bottom mb-3" id="comment-{$comment_uid}" data-role="comment-item" data-uid="{$comment_uid}" data-page="{$comment_page}" data-totalPage="{$total_page}" data-type="comment">
   <img class="mr-3 border rounded-circle" src="{$comment_user_pic}" alt="아바타" width="50">
   <div class="media-body">
     <div class="d-flex w-100 justify-content-between align-items-center">
@@ -12,7 +12,7 @@
         {$btn_showHideMenu} <!-- 메뉴 출력/숨기 버튼 btn_showHideMenu.html : 권한이 있는 경우(로그인,작성자,관리자) 에만 노출됨 -->
       </span>
     </div><!-- /.d-flex -->
-    <div class="ck-content rb-article">
+    <div class="rb-article">
       <article data-role="comment-origin-content-{$comment_uid}">{$comment_content}</article>
       <article style="display:none" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
     </div>

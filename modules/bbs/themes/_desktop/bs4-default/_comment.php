@@ -73,6 +73,7 @@ $(function () {
   // 댓글이 초기화 된 후
   commentting_container.on('shown.rb.comment',function(){
     Iframely('#commentting-container oembed[url]') // oembed 미디어 변환
+    anchors.add('[data-role="comment-container"] li');
   });
 
   // 댓글이 등록된 후에
