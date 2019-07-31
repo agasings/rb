@@ -46,20 +46,13 @@
       <div class="rb-oneline-write"> <!-- 한줄의견 등록폼 -->
 
         <div class="card my-3" data-role="oneline-input-wrapper-{$comment_uid}">
-
-          <div class="card-header bg-white">
-            <span class="text-muted">{$login_user_nic}</span>
-          </div>
-
-          <section>
-            <div data-role="editor">
-          		<div data-role="oneline-input-{$comment_uid}" class="border-0"></div>
-          	</div>
-          </section>
-
-          <div class="card-footer bg-white p-2">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class=""></div>
+          <div class="d-flex justify-content-between align-items-end">
+            <section class="w-100">
+              <div data-role="editor">
+                <div data-role="oneline-input-{$comment_uid}" class="border-0"></div>
+              </div>
+            </section>
+            <div class="p-2">
               <button type="button" class="btn btn-light" data-role="open-emoticon" hidden>
                 <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
               </button>
@@ -72,8 +65,8 @@
                 data-grant="{$grant_uid}">
                 등록
               </button>
-            </div><!-- /.d-flex -->
-          </div>
+            </div>
+          </div><!-- /.d-flex -->
         </div>
 
 

@@ -185,6 +185,10 @@
                      {
                          name: 'other',
                          url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                     },
+                     {
+                         name: 'another',
+                         url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
                      }
                  ]
              },
@@ -374,6 +378,10 @@
                           {
                               name: 'other',
                               url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                          },
+                          {
+                              name: 'another',
+                              url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
                           }
                       ]
                   },
@@ -448,65 +456,70 @@
             var oneline_input_wrapper = $('[data-role="oneline-input-wrapper-'+parent+'"]');
             $(oneline_input_wrapper).toggle();
 
-            BalloonEditor
-            .create( document.querySelector( '[data-role="oneline-input-'+parent+'"]' ),{
-              placeholder: '답글입력',
-              language: 'ko',
-              extraPlugins: [rbUploadAdapterPlugin],
-              mediaEmbed: {
-                  extraProviders: [
-                      {
-                          name: 'other',
-                          url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                      }
-                  ]
-              },
-              blockToolbar: [
-                 'paragraph', 'heading1', 'heading2', 'heading3',
-                 '|',
-                 'bulletedList', 'numberedList',
-                 '|',
-                 'blockQuote', 'imageUpload'
-              ],
-              typing: {
-                  transformations: {
-                      include: [
-                          // Use only the 'quotes' and 'typography' groups.
-                          'quotes',
-                          'typography',
+            if (!$('[data-role="oneline-input-'+parent+'"]').hasClass('ck-content')) {
+              BalloonEditor
+              .create( document.querySelector( '[data-role="oneline-input-'+parent+'"]' ),{
+                placeholder: '답글입력',
+                language: 'ko',
+                extraPlugins: [rbUploadAdapterPlugin],
+                mediaEmbed: {
+                    extraProviders: [
+                        {
+                            name: 'other',
+                            url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                        },
+                        {
+                            name: 'another',
+                            url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                        }
+                    ]
+                },
+                blockToolbar: [
+                   'paragraph', 'heading1', 'heading2', 'heading3',
+                   '|',
+                   'bulletedList', 'numberedList',
+                   '|',
+                   'blockQuote', 'imageUpload'
+                ],
+                typing: {
+                    transformations: {
+                        include: [
+                            // Use only the 'quotes' and 'typography' groups.
+                            'quotes',
+                            'typography',
 
-                          // Plus, some custom transformation.
-                          { from: '->', to: '→' },
-                          { from: ':)', to: '🙂' },
-                          { from: ':+1:', to: '👍' },
-                          { from: ':tada:', to: '🎉' },
-                      ],
-                  }
-              },
-              image: {
-                  toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
-                  styles: [
-                      'full',
-                      'alignLeft',
-                      'alignRight'
-                  ]
-              }
-            } )
-            .then( newEditor => {
-              editor_oneline = newEditor;
-              editor_oneline.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-                //console.log( 'editable isFocused =', value );
-                oneline_input_wrapper.addClass('active')
+                            // Plus, some custom transformation.
+                            { from: '->', to: '→' },
+                            { from: ':)', to: '🙂' },
+                            { from: ':+1:', to: '👍' },
+                            { from: ':tada:', to: '🎉' },
+                        ],
+                    }
+                },
+                image: {
+                    toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+                    styles: [
+                        'full',
+                        'alignLeft',
+                        'alignRight'
+                    ]
+                }
+              } )
+              .then( newEditor => {
+                editor_oneline = newEditor;
+                editor_oneline.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+                  //console.log( 'editable isFocused =', value );
+                  oneline_input_wrapper.addClass('active')
 
+                } );
+
+
+              })
+              .catch( error => {
+                  console.error( error );
               } );
 
-
-            })
-            .catch( error => {
-                console.error( error );
-            } );
-
-
+            }
 
         },
 
