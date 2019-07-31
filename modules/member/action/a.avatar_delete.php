@@ -1,14 +1,12 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-if (!$my['uid'])
-{
-	getLink('','','정상적인 접근이 아닙니다.','');
-}
+if (!$my['uid']) getLink('','','정상적인 접근이 아닙니다.','');
 
-if (is_file($g['path_var'].'avatar/'.$my['photo']))
+//원본삭제
+if (is_file($g['path_file'].'avatar/'.$my['photo']))
 {
-	unlink($g['path_var'].'avatar/'.$my['photo']);
+	unlink($g['path_file'].'avatar/'.$my['photo']);
 }
 
 getDbUpdate($table['s_mbrdata'],"photo=''",'memberuid='.$my['uid']);

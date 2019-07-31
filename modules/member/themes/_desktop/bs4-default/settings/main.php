@@ -21,6 +21,20 @@ $PCD = getDbArray($table['s_mbrphone'],$sqlque,'*','uid','asc',0,1);
     <?php include_once $g['dir_module_skin'].'_lock.php'?>
     <?php else: ?>
 
+      <!-- 프로필 커버 이미지 -->
+      <div class="d-flex justify-content-between align-items-end bg-light border p-3 mt-3 mb-4" style="height:255px;background-size: cover;background-image: url('<?php echo getCoverSrc($my['uid'],'940','255') ?>');">
+        <div class="">
+          <button type="button" data-toggle="cover" class="btn btn-light">
+            <span class="fa fa-upload fa-lg"></span> 사진 업로드
+          </button>
+        </div>
+        <?php if($my['cover']):?>
+          <a class="btn btn-light" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;a=cover_delete&amp;reload=Y" title="<?php echo $my['cover']?>" onclick="return hrefCheck(this,true,'정말로 삭제 하시겠습니까?');">
+            <i class="fa fa-trash fa-fw" aria-hidden="true"></i> 현재 사진삭제
+          </a>
+        <?php endif?>
+      </div>
+
       <div class="clearfix">
         <form class="float-left" id="memberForm" role="form" action="<?php echo $g['s']?>/" method="post" style="width: 500px;" novalidate>
           <input type="hidden" name="r" value="<?php echo $r?>">
@@ -329,6 +343,14 @@ $PCD = getDbArray($table['s_mbrphone'],$sqlque,'*','uid','asc',0,1);
                 <input type="hidden" name="a" value="avatar">
                 <input type="file" name="upfile" id="rb-upfile-avatar" accept="image/*" class="d-none">
               </form>
+
+              <form name="MbrCoverForm" action="<?php echo $g['s']?>/" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="r" value="<?php echo $r?>">
+                <input type="hidden" name="m" value="<?php echo $m?>">
+                <input type="hidden" name="a" value="cover">
+                <input type="file" name="upfile" id="rb-upfile-cover" accept="image/gif, image/jpg, image/jpeg, image/png" class="d-none">
+              </form>
+
             </dd>
           </dl>
         </aside><!-- /.edit-profile-avatar -->

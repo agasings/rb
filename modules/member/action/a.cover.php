@@ -11,7 +11,7 @@ $realname	= strtolower($_FILES['upfile']['name']);
 $fileExt	= strtolower(getExt($realname));
 $fileExt	= $fileExt == 'jpeg' ? 'jpg' : $fileExt;
 $photo		= md5($realname).substr($date['totime'],8,14).'.'.$fileExt;
-$saveFile	= $g['path_file'].'avatar/'.$photo;
+$saveFile	= $g['path_file'].'cover/'.$photo;
 
 if (is_uploaded_file($tmpname))
 {
@@ -25,9 +25,9 @@ if (is_uploaded_file($tmpname))
 	}
 
 	$wh = getimagesize($tmpname);
-	if ($wh[0] < 250 || $wh[1] < 250)
+	if ($wh[0] < 860 )
 	{
-		getLink('','','가로/세로 250픽셀 이상이어야 합니다.','');
+		getLink('','','가로 860픽셀 이상이어야 합니다.','');
 	}
 
 	include_once $g['path_core'].'function/thumb.func.php';
@@ -42,11 +42,11 @@ if (is_uploaded_file($tmpname))
 		if ($fileExt == 'jpg') {
 			exifRotate($saveFile); //가로세로 교정
 		}
-		ResizeWidth($saveFile,$saveFile,500);
+		ResizeWidth($saveFile,$saveFile,1200);
 	}
 
-	getDbUpdate($table['s_mbrdata'],"photo='".$photo."'",'memberuid='.$my['uid']);
+	getDbUpdate($table['s_mbrdata'],"cover='".$photo."'",'memberuid='.$my['uid']);
 }
-setrawcookie('member_settings_result', rawurlencode('이미지가 수정되었습니다.|success'));  // 처리여부 cookie 저장
+setrawcookie('member_settings_result', rawurlencode('커버 이미지가 수정되었습니다.|success'));  // 처리여부 cookie 저장
 getLink('reload','parent.','','');
 ?>

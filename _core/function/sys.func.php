@@ -661,10 +661,24 @@ function getTimThumb($data=array())
 function getAvatarSrc($mbruid,$size){
 	global $g,$table;
 	$M = getDbData($table['s_mbrdata'],'memberuid='.$mbruid,'photo');
-  $avatar = $g['s'].'/_var/avatar/'.$M['photo'];
-	$avatar_data=array('src'=>$avatar,'width'=>$size,'height'=>$size,'sharpen'=>1);
-	if ($M['photo']) $result=getTimThumb($avatar_data);
-	else $result=$g['s'].'/_var/avatar/0.svg';
+	$_array=explode('.',$M['photo']);
+	$name=$_array[0];
+	$ext=$_array[1];
+	$size=$size.'x'.$size;
+	if ($M['photo']) $result=$g['s'].'/avatar/'.$name.'_'.$size.'.'.$ext;
+	else $result=$g['s'].'/files/avatar/0.svg';
+	return $result;
+}
+
+// 커버 이미지 추출함수
+function getCoverSrc($mbruid,$width,$height){
+	global $g,$table;
+	$M = getDbData($table['s_mbrdata'],'memberuid='.$mbruid,'cover');
+	$_array=explode('.',$M['cover']);
+	$name=$_array[0];
+	$ext=$_array[1];
+	if ($M['cover']) $result=$g['s'].'/cover/'.$name.'_'.$width.'x'.$height.'.'.$ext;
+	else $result=$g['s'].'/files/cover/0.jpg';
 	return $result;
 }
 

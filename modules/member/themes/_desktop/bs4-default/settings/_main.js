@@ -9,6 +9,16 @@ $(function () {
     f.submit();
   });
 
+  $('[data-toggle="cover"]').click(function() {
+     $("#rb-upfile-cover").click();
+  });
+  $("#rb-upfile-cover").change(function() {
+    var f = document.MbrCoverForm;
+    getIframeForAction(f);
+    f.submit();
+  });
+
+
   //본인확인을 위한 로그인
   $('#page-confirmPW').submit(function(e){
     e.preventDefault();
