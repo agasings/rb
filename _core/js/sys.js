@@ -492,9 +492,18 @@ function Iframely(ele) {
 					});
 				} else {
 					var html = data.html;
-					$(ele+'[url="' + url + '"]').html(html);
+					if (!html) {
+						$.getJSON('//embed.kimsq.com/iframely?uri=' + _url, {
+								format: "json"
+							},
+							function(data) {
+								var html = data.html;
+								$(ele+'[url="' + _url + '"]').html(html);
+						});
+					} else {
+						$(ele+'[url="' + _url + '"]').html(html);
+					}
 				}
-
 			})
 			.fail(function() {
 				$(ele+'[url="' + url + '"]').html('<p><a href="'+url+'" target="_blank">'+url+'</a></p>');
