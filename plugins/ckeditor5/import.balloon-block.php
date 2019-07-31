@@ -37,6 +37,10 @@ BalloonEditor
 					{
 							name: 'other',
 							url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+					},
+					{
+							name: 'another',
+							url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
 					}
 			]
 	},
