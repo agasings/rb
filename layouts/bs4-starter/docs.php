@@ -7,7 +7,7 @@
 
 	<?php include $g['dir_layout'].'/_includes/header.php' ?>
 
-	<main role="main" class="container px-0 ck-content">
+	<main role="main" class="container px-0 rb-article">
 		<article class="document mb-3">
 			<?php include __KIMS_CONTENT__ ?>
 		</article>

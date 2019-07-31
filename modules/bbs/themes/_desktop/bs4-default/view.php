@@ -65,7 +65,7 @@
 	</header>
 
 	<!-- 본문 -->
-	<article class="py-4 rb-article ck-content">
+	<article class="py-4 rb-article">
 		<?php echo getContents($R['content'],$R['html'])?>
 	</article>
 

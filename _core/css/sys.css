@@ -1912,7 +1912,7 @@ figure.media {
   display: block
 }
 .media:not(figure) {
-  display: flex !important
+  display: flex
 }
 figure.media oembed:empty {
   display: block;
