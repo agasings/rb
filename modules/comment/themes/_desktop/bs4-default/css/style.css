@@ -80,6 +80,14 @@
 
 .list-group-item[data-role="oneline-item"] {
   border-style: dotted;
+  position: relative;
+}
+
+.list-group-item[data-role="oneline-item"] .anchorjs-link{
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  margin-top: -15px;
 }
 
 .form-control {
