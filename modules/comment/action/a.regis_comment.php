@@ -184,7 +184,7 @@ if (!$sess_code){
 			$noti_body = str_replace('{BBS}',$B['name'],$noti_body); //게시판명
 			$noti_body = str_replace('{SUBJECT}',$subject,$noti_body); //댓글내용
 
-			putNotice($row['parentmbr'],$m,$my['uid'],$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag);
+			putNotice($row['parentmbr'],$m,$my['uid'],$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag,'','');
 		}
 
     $result['last_row'] = $comment->getCommentRow($row,$p);

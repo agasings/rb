@@ -400,11 +400,17 @@ function putNotice($rcvmember,$sendmodule,$sendmember,$title,$message,$referer,$
 				if ($sendmember==0) {
 					$avatar = $g['url_http'].'/_core/images/touch/homescreen-192x192.png';
 				} else {
+
 					$M = getDbData($table['s_mbrdata'],'memberuid='.$sendmember,'photo');
-					$avatar = $g['s'].'/_var/avatar/'.$M['photo'];
-					$avatar_data=array('src'=>$avatar,'width'=>'192','height'=>'192','sharpen'=>1);
-					if ($M['photo']) $avatar=getTimThumb($avatar_data);
-					else $avatar=$g['s'].'/_var/avatar/0.jpg';
+					if ($M['photo']) {
+						$_array=explode('.',$M['photo']);
+						$name=$_array[0];
+						$ext=$_array[1];
+						$size='192x192';
+						$avatar=$g['s'].'/avatar/'.$name.'_'.$size.'.'.$ext;
+					} else {
+						$avatar=$g['s'].'/files/avatar/0.svg';
+					}
 				}
 
 			  while ($row = db_fetch_array($TKD)) {

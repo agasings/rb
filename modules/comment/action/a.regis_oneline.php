@@ -135,7 +135,7 @@ if (!$my['uid'] || !$R['uid']){
 			$noti_body = str_replace('{COMMENT}',$R['subject'],$noti_body); //댓글제목
 			$noti_body = str_replace('{SUBJECT}',$content,$noti_body); //의견내용
 
-			putNotice($row['parentmbr'],$m,$my['uid'],$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag);
+			putNotice($row['parentmbr'],$m,$my['uid'],$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag,'','');
 		}
 
 
