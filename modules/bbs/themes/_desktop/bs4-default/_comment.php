@@ -79,7 +79,7 @@ $(function () {
   // 댓글이 등록된 후에
   commentting_container.on('saved.rb.comment',function(){
     $('[data-toggle="tooltip"]').tooltip()
-    $('[data-role="comment-item"] article').autolink();
+    anchors.add('[data-role="comment-item"]');
   })
 
   // 댓글이 수정된 후에

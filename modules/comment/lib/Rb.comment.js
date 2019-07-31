@@ -199,6 +199,18 @@
                 '|',
                 'blockQuote', 'imageUpload'
              ],
+             link: {
+                 decorators: {
+                     addTargetToLinks: {
+                         mode: 'manual',
+                         label: '새탭에서 열기',
+                         attributes: {
+                             target: '_blank',
+                             rel: 'noopener noreferrer'
+                         }
+                     }
+                 }
+             },
              typing: {
                  transformations: {
                      include: [
@@ -373,6 +385,18 @@
                   placeholder: this.options.commentPlaceHolder,
                   language: 'ko',
                   extraPlugins: [rbUploadAdapterPlugin],
+                  link: {
+                      decorators: {
+                          addTargetToLinks: {
+                              mode: 'manual',
+                              label: '새탭에서 열기',
+                              attributes: {
+                                  target: '_blank',
+                                  rel: 'noopener noreferrer'
+                              }
+                          }
+                      }
+                  },
                   mediaEmbed: {
                       extraProviders: [
                           {
@@ -462,6 +486,18 @@
                 placeholder: '답글입력',
                 language: 'ko',
                 extraPlugins: [rbUploadAdapterPlugin],
+                link: {
+                    decorators: {
+                        addTargetToLinks: {
+                            mode: 'manual',
+                            label: '새탭에서 열기',
+                            attributes: {
+                                target: '_blank',
+                                rel: 'noopener noreferrer'
+                            }
+                        }
+                    }
+                },
                 mediaEmbed: {
                     extraProviders: [
                         {
