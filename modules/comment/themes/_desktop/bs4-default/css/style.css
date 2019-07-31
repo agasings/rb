@@ -83,11 +83,18 @@
   position: relative;
 }
 
+[data-role="comment-main"] .anchorjs-link {
+  font-size: 25px !important
+}
+[data-role="comment-main"] .anchorjs-link:hover {
+  text-decoration: none;
+}
+
 .list-group-item[data-role="oneline-item"] .anchorjs-link{
   position: absolute;
   top: 50%;
-  left: -20px;
-  margin-top: -15px;
+  right: 20px;
+  margin-top: -7px;
 }
 
 .form-control {
