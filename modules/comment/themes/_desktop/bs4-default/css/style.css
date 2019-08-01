@@ -8,10 +8,27 @@
   font-size: 13px;
   word-break: break-all;
 }
+[data-role="comment-item"].highlight,
+[data-role="oneline-item"].highlight {
+  padding: 15px;
+  background-color: #F9F9F3
+}
+[data-role="comment-item"] [data-role="anchor-link"] {
+  visibility: hidden;
+}
+[data-role="comment-item"]:hover [data-role="anchor-link"] {
+  visibility: visible;
+}
 
 [data-role="oneline-item"],
 [data-role="oneline-item"].markdown-body {
   font-size: 12px
+}
+[data-role="oneline-item"] [data-role="anchor-link"] {
+  visibility: hidden;
+}
+[data-role="oneline-item"]:hover [data-role="anchor-link"] {
+  visibility: visible;
 }
 
 [data-role="oneline-item"] blockquote {
