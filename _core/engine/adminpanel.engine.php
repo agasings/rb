@@ -42,11 +42,11 @@ $mf_json = json_decode($mf_str , true);
 <meta name="robots" content="NOINDEX,NOFOLLOW">
 <title>킴스큐 관리모드 (Rb V <?php echo $d['admin']['version']?>)</title>
 
-<?php getImport('bootstrap','css/bootstrap.min','4.1.3','css')?>
+<?php getImport('bootstrap','css/bootstrap.min','4.3.1','css')?>
 
 <?php getImport('jquery','jquery.min','3.3.1','js')?>
 <?php getImport('popper.js','umd/popper.min','1.14.0','js')?>
-<?php getImport('bootstrap','js/bootstrap.min','4.1.3','js')?>
+<?php getImport('bootstrap','js/bootstrap.min','4.3.1','js')?>
 
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $g['s']?>/_core/images/ico/apple-touch-icon-144-precomposed.png">
 <link rel="shortcut icon" href="<?php echo $g['s']?>/_core/images/ico/favicon.ico">
@@ -79,11 +79,7 @@ $mf_json = json_decode($mf_str , true);
 		<div class="login-info">
 			<span class="dropdown">
 				<a href="#" class="rb-username" data-toggle="dropdown">
-					<?php if ($my['photo']): ?>
-					<img class="rounded-circle" data-role="avatar" src="<?php echo $g['s']?>/_core/opensrc/timthumb/thumb.php?src=/_var/avatar/<?php echo $my['photo']?>&w=50&h=50&s=1" width="25">
-					<?php else: ?>
-					<img class="rounded-circle" data-role="avatar" src="<?php echo $g['s']?>/_var/avatar/0.svg" width="25">
-					<?php endif; ?>
+					<img class="rounded-circle" data-role="avatar" src="<?php echo getAvatarSrc($my['uid'],'25') ?>" width="25">
 					<span><?php echo $my[$_HS['nametype']]?></span>
 					<small id="rb-notification-name"></small>
 				</a>
