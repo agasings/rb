@@ -27,6 +27,7 @@ function getPostData(modal_settings){
     modal.find('[name="uid"]').val(uid)
     modal.find('[name="bid"]').val(bid)
     modal.find('[data-role="title"]').text(subject)
+    history.pushState({ data: 'pushpush' }, subject, url);
 
     $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
          bid : bid,
@@ -261,6 +262,8 @@ function getPostData(modal_settings){
       modal.find('[data-role="attach-youtube"]').addClass('hidden').empty() // 유튜브 영역 초기화
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
+
+      window.history.back(); //히스토리백
 
        setTimeout(function(){
          list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
