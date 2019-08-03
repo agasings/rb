@@ -28,7 +28,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" data-role="title">게시물 보기</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" title="닫기(Esc)">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -114,7 +114,7 @@
 
   </div>
 
-  <div class="rb__area bg-light">
+  <div class="rb__area">
     <div data-role="article"></div>
     <div class="commentting-container mt-4" data-role="comment-area"></div>
     <div data-role="comment-alert" class="d-none">
@@ -198,7 +198,7 @@
     <li class="list-inline-item text-center">
       <a href="" role="button" data-role="facebook" target="_blank" class="muted-link">
         <img src="<?php echo $g['img_core']?>/sns/facebook.png" alt="페이스북공유" class="rounded-circle" style="width: 50px">
-        <p><small>페이스북1</small></p>
+        <p><small>페이스북</small></p>
       </a>
     </li>
     <li class="list-inline-item text-center">

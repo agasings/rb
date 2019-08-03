@@ -189,11 +189,13 @@ function getPostData(modal_settings){
 
    //좋아요,싫어요
    $(mid).on('click','[data-toggle="opinion"]',function(){
+     var modal = $(mid)
      var send = $(this).data('send')
      var uid = $(this).data('uid')
      var opinion = $(this).data('opinion')
      var effect = $(this).data('effect')
      var myid = $(this).data('myid')
+     var bid = modal.find('[name="bid"]').val()
 
      if(!memberid){
        alert('로그인이 필요합니다.')
@@ -205,7 +207,8 @@ function getPostData(modal_settings){
        send : send,
        opinion : opinion,
        uid : uid,
-       memberid : memberid
+       memberid : memberid,
+       bid : bid
        },function(response){
         var result = $.parseJSON(response);
         var error=result.error;

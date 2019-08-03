@@ -431,6 +431,11 @@ figure.media {
   border-radius: 0;
 }
 
+/* share */
+.share .list-inline-item img {
+  width: 50px
+}
+
 
 /**
  * 8 - Utilities 유틸리티

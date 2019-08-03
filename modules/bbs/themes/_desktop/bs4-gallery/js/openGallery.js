@@ -71,6 +71,8 @@ $(function () {
         content: linkShare
       })
 
+       Iframely('.pswp [data-role="article"] oembed[url]') // oembed 미디어 변환
+
        if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
        if (is_post_disliked) modal.find('[data-role="btn_post_dislike"]').addClass('active')
        if (is_post_saved) modal.find('[data-role="btn_post_saved"]').addClass('active')
@@ -285,11 +287,13 @@ $(function () {
 
   //좋아요,싫어요
   $('.pswp-comment').on('click','[data-toggle="opinion"]',function(){
+    var modal = $('.pswp')
     var send = $(this).data('send')
     var uid = $(this).data('uid')
     var opinion = $(this).data('opinion')
     var effect = $(this).data('effect')
     var myid = $(this).data('myid')
+    var bid = modal.find('[name="bid"]').val()
 
     if(!memberid){
       alert('로그인이 필요합니다.')
@@ -301,7 +305,8 @@ $(function () {
       send : send,
       opinion : opinion,
       uid : uid,
-      memberid : memberid
+      memberid : memberid,
+      bid : bid
       },function(response){
        var result = $.parseJSON(response);
        var error=result.error;

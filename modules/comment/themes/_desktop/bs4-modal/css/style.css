@@ -305,9 +305,12 @@
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
+.pswp .ck.ck-editor__editable_inline>:first-child,
 .modal .ck.ck-editor__editable_inline>:first-child {
   margin-top: 2px;
 }
+
+.pswp .ck.ck-editor__editable_inline>:last-child,
 .modal .ck.ck-editor__editable_inline>:last-child {
   margin-bottom: 2px;
 }
