@@ -110,8 +110,7 @@ $(function () {
          hideAnimationDuration: 0,
          timeToIdle: 4000,
          loop: false,
-         mainClass: 'pswp-comment',
-         galleryUID : uid
+         mainClass: 'pswp-comment'
        };
 
         if (!items) {
@@ -379,12 +378,12 @@ $(function () {
       if (!error) {
         if (is_post_saved) {
           var msg = '게시물이 저장함에서 삭제되었습니다.';
-          var msgType = 'successs';
+          var msgType = 'danger';
           $('[data-role="btn_post_saved"]').removeClass('active');
         }
         else {
           var msg = '게시물이 저장함에 추가되었습니다.';
-          var msgType = 'successs';
+          var msgType = 'success';
           $('[data-role="btn_post_saved"]').addClass('active');
         }
       }
