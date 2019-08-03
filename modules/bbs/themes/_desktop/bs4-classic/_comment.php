@@ -72,18 +72,18 @@ $(function () {
 
   // 댓글이 초기화 된 후
   commentting_container.on('shown.rb.comment',function(){
-    Iframely('#commentting-container oembed[url]') // oembed 미디어 변환
-    anchors.options = {
-      visible: 'always',
-      icon: '#'
-    };
-    anchors.add('[data-role="comment-container"] li');
+    var hash = $(location).attr('hash');  //URL에서 해시추출
+    if (hash) {
+      setTimeout(function(){
+        location.href = hash;
+        $(hash).addClass('highlight');
+      }, 500);  //해시가 있을 경우, 해당 댓글(한줄의견)으로 이동
+    }
   });
 
   // 댓글이 등록된 후에
   commentting_container.on('saved.rb.comment',function(){
     $('[data-toggle="tooltip"]').tooltip()
-    $('[data-role="comment-item"] article').autolink();
   })
 
   // 댓글이 수정된 후에

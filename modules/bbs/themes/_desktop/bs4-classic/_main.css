@@ -118,31 +118,6 @@
  */
 
 
-/* 모달 */
-.modal [data-role="article"]{
-  min-height: 500px;
-}
-.modal [data-role="comment-main"] .timeline-vscroll {
-  max-height: calc(100vh - 16.8rem) !important
-}
-.modal .article-body {
-  height: calc(100vh - 16.6rem);
-  overflow:auto
-}
-
-
-/* 모달-댓글영역 */
-.modal [data-role="comment-none"] > div {
-  height: calc(100vh - 13.6rem) !important;
-}
-.modal [data-role="comment-main"] nav {
-  height: 62px;
-  background-color: #fff
-}
-.modal-body .media {
-  width: 250px
-}
-
 
 /**
  * 6 - 유틸리티 Utilities

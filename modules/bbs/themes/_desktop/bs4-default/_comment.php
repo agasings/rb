@@ -72,7 +72,6 @@ $(function () {
 
   // 댓글이 초기화 된 후
   commentting_container.on('shown.rb.comment',function(){
-    Iframely('#commentting-container oembed[url]') // oembed 미디어 변환
     var hash = $(location).attr('hash');  //URL에서 해시추출
     if (hash) {
       setTimeout(function(){
@@ -85,7 +84,6 @@ $(function () {
   // 댓글이 등록된 후에
   commentting_container.on('saved.rb.comment',function(){
     $('[data-toggle="tooltip"]').tooltip()
-    anchors.add('[data-role="comment-item"]');
   })
 
   // 댓글이 수정된 후에

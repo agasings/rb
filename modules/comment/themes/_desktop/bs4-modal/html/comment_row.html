@@ -1,6 +1,5 @@
 <li class="media border-bottom p-3 bg-white" data-role="comment-item" data-uid="{$comment_uid}" data-page="{$comment_page}" data-totalPage="{$total_page}" data-type="comment">
-  <input type="hidden" data-role="comment-origin-content-{$comment_uid}" value="{$comment_content}" />
-  <img class="mr-3 border rounded-circle" src="{$comment_user_pic}" alt="아바타" width="50" data-toggle="popover" data-content="{$comment_user_name}" role="button">
+  <img class="mr-3 border rounded-circle" src="{$comment_user_pic}" alt="아바타" style="width:38px" data-toggle="popover" data-content="{$comment_user_name}" role="button">
   <div class="media-body">
     <div class="d-flex w-100 justify-content-between align-items-center">
       <span>
@@ -13,8 +12,9 @@
         {$btn_showHideMenu} <!-- 메뉴 출력/숨기 버튼 btn_showHideMenu.html : 권한이 있는 경우(로그인,작성자,관리자) 에만 노출됨 -->
       </span>
     </div><!-- /.d-flex -->
-    <div class="markdown-body">
-      <article class="mb-0" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
+    <div class="rb-article">
+      <article data-role="comment-origin-content-{$comment_uid}">{$comment_content}</article>
+      <article class="border" style="display:none" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
     </div>
     {$btn_editMod} <!-- 수정 모드시 취소/완료 버튼 btn_ediMod.html -->
 
@@ -44,9 +44,13 @@
 
     <section>
       <div class="my-2" data-role="oneline-input-wrapper-{$comment_uid}"> <!-- 한줄의견 등록폼 -->
-        <form class="input-group">
-          <input type="text" class="form-control" data-role="oneline-input-{$comment_uid}"><!-- 주의 : comment_uid 가 들어가야 함 -->
-          <div class="input-group-append">
+        <div class="d-flex justify-content-between align-items-end">
+          <section class="w-100 align-self-center border">
+            <div data-role="editor">
+              <div data-role="oneline-input-{$comment_uid}" class="py-1 border-0"></div>
+            </div>
+          </section>
+          <div class="p-2">
             <button class="btn btn-light" type="submit"
               title="의견추가"
               data-kcact="regis"
@@ -57,7 +61,7 @@
               등록
             </button>
           </div>
-        </form><!-- /.input-group -->
+        </div><!-- /.d-flex -->
       </div>
 
       <ul class="list-group" data-role="oneline-container-{$comment_uid}">

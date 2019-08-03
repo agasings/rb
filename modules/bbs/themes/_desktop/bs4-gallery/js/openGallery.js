@@ -418,7 +418,7 @@ $(function () {
     popover.find('[data-role="kakaostory"]').attr('href',kakaostory)
     popover.find('[data-role="email"]').attr('href',email)
 
-    var clipboard = new Clipboard('[data-plugin="clipboard"]');
+    var clipboard = new ClipboardJS('[data-plugin="clipboard"]');
     clipboard.on('success', function (e) {
       $(e.trigger)
       .attr('title', '복사완료!')

@@ -63,6 +63,8 @@ function getPostData(modal_settings){
        modal.find('[data-role="subject"]').text(subject)
        modal.find('[data-role="article"]').html(article);
 
+       Iframely('.modal [data-role="article"] oembed[url]') // oembed 미디어 변환
+
        modal.find('[data-role="url"]').attr('href',url);
        modal.find('[data-role="share"]').attr('data-url',url)
        modal.find('[data-toggle="popover"]').popover({
@@ -424,7 +426,7 @@ function getPostData(modal_settings){
     	popover.find('[data-role="kakaostory"]').attr('href',kakaostory)
     	popover.find('[data-role="email"]').attr('href',email)
 
-      var clipboard = new Clipboard('[data-plugin="clipboard"]');
+      var clipboard = new ClipboardJS('[data-plugin="clipboard"]');
       clipboard.on('success', function (e) {
         $(e.trigger)
         .attr('title', '복사완료!')

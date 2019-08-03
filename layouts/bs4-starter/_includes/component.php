@@ -21,10 +21,10 @@
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_main'].'/noti/component.php';  ?>
 
 <!-- 4. 일반모달 : 게시물 보기-->
-<div class="modal fade" id="modal-bbs-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="modal-bbs-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
-  <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 95%">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" data-role="title">게시물 보기</h5>
@@ -35,10 +35,10 @@
       <div class="modal-body p-0">
 
         <div class="row no-gutters">
-          <main class="col-8">
+          <main class="col-7">
             <div data-role="article"></div>
           </main>
-          <aside class="col-4 border-left">
+          <aside class="col-5 border-left">
             <div class="commentting-container" data-role="comment-area"></div>
             <div data-role="comment-alert" class="d-none">
               <div class="d-flex align-items-center justify-content-center text-muted" style="height: calc(100vh - 9.5rem);">

@@ -120,13 +120,13 @@
 
 /* 모달 */
 .modal [data-role="article"]{
-  min-height: 500px;
+  min-height: calc(100vh - 8.5rem);
 }
 .modal [data-role="comment-main"] .timeline-vscroll {
-  max-height: calc(100vh - 16.8rem) !important
+  max-height: calc(100vh - 15rem) !important
 }
 .modal .article-body {
-  height: calc(100vh - 16.6rem);
+  height: calc(100vh - 15rem);
   overflow:auto
 }
 
@@ -136,11 +136,8 @@
   height: calc(100vh - 13.6rem) !important;
 }
 .modal [data-role="comment-main"] nav {
-  height: 62px;
+  height: 63px;
   background-color: #fff
-}
-.modal-body .media {
-  width: 250px
 }
 
 

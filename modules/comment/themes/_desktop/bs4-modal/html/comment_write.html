@@ -3,15 +3,21 @@
    2. data-*="*" 필수
 -->
 
-<div class="input-group border-0 rounded-0 bg-faded" data-role="comment-input-wrapper">
-  <div class="input-group-prepend border-0">
+<div class="d-flex border-0 rounded-0 bg-faded align-items-end" data-role="comment-input-wrapper">
+  <div class="border-0">
     <span class="input-group-text p-1 bg-transparent">
       <img src="{$login_user_pic}" width="28" class="rounded-circle border">
     </span>
   </div>
-  <textarea class="form-control border-0 rounded-0 mt-1" name="content" rows="1" id="meta-description-content" data-role="comment-input"></textarea>
-  <div class="input-group-append">
-    <button type="button" class="btn btn-link ml-1 align-self-end js-submit d-none"
+
+  <section class="w-100 mb-1">
+    <div data-role="editor">
+  		<div data-role="comment-input" id="meta-description-content"  class="border-0"></div>
+  	</div>
+  </section>
+
+  <div class="ml-auto">
+    <button type="button" class="btn btn-link ml-1 align-self-end js-submit "
       data-kcact="regis"
       data-type="comment"
       data-effect="animated fadeInUp"
@@ -22,9 +28,6 @@
 </div>
 
 <script>
-
-// 입력창 자동 리사이즈
-autosize($('[data-role="commentWrite-container"] textarea'));
 
 $('[data-role="commentWrite-container"] textarea').on('keyup', function(event) {
   var writeLine = $('[data-role="commentWrite-container"]')

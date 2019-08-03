@@ -172,6 +172,8 @@
            this.initWritePerm(); // 글쓰기 권한 체크 적용
            this.initBtnMore(); // 더보기 버튼 세팅
            this.initDataNone(); // 자료없은 표시 세팅
+           Iframely('[data-role="comment-container"] oembed[url]') // oembed 미디어 변환
+
            var e = $.Event('shown.rb.comment', { relatedTarget: this.$el_id });
            this.$el.trigger(e);
 
@@ -742,6 +744,7 @@
                 }else{
                     setTimeout(function(){
                        $(role_commentContainer).find(self.loader).remove(); // loader 삭제
+                       Iframely('[data-role="comment-container"] oembed[url]') // oembed 미디어 변환
                     },50);
 
                     if(getType=='more') $(role_commentContainer).append(commentList);

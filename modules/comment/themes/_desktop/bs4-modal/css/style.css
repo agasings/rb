@@ -14,11 +14,26 @@
   font-size: 12px
 }
 
+[data-role="comment-item"] .ck-editor__editable,
+[data-role="oneline-item"] .ck-editor__editable {
+  border: 0.0625rem solid #dee2e6
+}
+
+[data-role="comment-item"] .ck-editor__editable.ck-focused,
+[data-role="oneline-item"] .ck-editor__editable.ck-focused {
+  border: 0.0625rem solid #007bff !important;
+  box-shadow: none !important
+}
+
 [data-role="oneline-item"] blockquote {
   margin-bottom: 0;
   padding: 0 1em;
   color: #6a737d;
   border-left: 0.25em solid #dfe2e5;
+}
+
+[data-role="comment-item"] figure.media oembed .media .align-self-center img {
+  width: 50px
 }
 
 .js-like.active {
@@ -114,7 +129,7 @@
 [data-role="comment-input-wrapper"] .js-submit .fa {
   display: inline-block;
   margin-top: -3px;
-  font-size: 25px;
+  font-size: 20px;
   color: #0084FF;
 }
 
@@ -288,4 +303,38 @@
 [data-role="comment-input"] {
   overflow: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.modal .ck.ck-editor__editable_inline>:first-child {
+  margin-top: 2px;
+}
+.modal .ck.ck-editor__editable_inline>:last-child {
+  margin-bottom: 2px;
+}
+
+.ck-editor__editable.ck-blurred {
+  border : 1px solid #ccc
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  outline: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+.ck.ck-block-toolbar-button,
+.ck.ck-balloon-panel {
+  z-index: 1060
+}
+
+.ck.ck-block-toolbar-button {
+  margin-left: 10px;
+  background-color: #e6e6e6
+}
+.ck.ck-balloon-panel {
+  z-index: 999999;
+}
+
+figure.ck.ck-placeholder:before,
+.ck figure.ck-placeholder:before {
+  content: none;
 }
