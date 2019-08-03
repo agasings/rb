@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------------
- * kimsQ Rb v2.2 데스크탑 기본형 게시판 테마 스크립트 (bs4-default): getPostData.js
+ * kimsQ Rb v2.4 데스크탑 기본형 게시판 테마 스크립트 (bs4-default): getPostData.js
  * Homepage: http://www.kimsq.com
  * Licensed under RBL
  * Copyright 2018 redblock inc

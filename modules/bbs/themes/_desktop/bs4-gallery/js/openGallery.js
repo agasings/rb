@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------------
- * kimsQ Rb v2.2 데스크탑 갤러리 게시판 테마 스크립트 (bs4-gallery): openGallery.js
+ * kimsQ Rb v2.4 데스크탑 갤러리 게시판 테마 스크립트 (bs4-gallery): openGallery.js
  * Homepage: http://www.kimsq.com
  * Licensed under RBL
  * Copyright 2018 redblock inc
@@ -27,6 +27,7 @@ $(function () {
     modal.find('[name="uid"]').val(uid)
     modal.find('[name="bid"]').val(bid)
     modal.find('[data-role="subject"]').text(subject);
+    history.pushState({ data: 'pushpush' }, subject, url);
 
     $('body').addClass('modal-open')  // 페이지 스크롤바를 제거하기 위해
 
@@ -101,8 +102,7 @@ $(function () {
 
        // define options (if needed)
        var options = {
-         // history & focus options are disabled on CodePen
-         history: true,
+         history: false,
          focus: false,
          closeOnScroll: false,
          closeOnVerticalDrag: false,
@@ -110,7 +110,8 @@ $(function () {
          hideAnimationDuration: 0,
          timeToIdle: 4000,
          loop: false,
-         mainClass: 'pswp-comment'
+         mainClass: 'pswp-comment',
+         galleryUID : uid
        };
 
         if (!items) {
@@ -156,6 +157,7 @@ $(function () {
        gallery.listen('close', function() {
          modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
          modal.find('.commentting-container').html(''); // 댓글영역 내용 비우기
+         window.history.back(); //히스토리백
          $('.popover').remove() // 링크공유 popover 제거
 
          $('#item-'+uid).focus() // 목록 아이템 포커스 처리
@@ -240,7 +242,6 @@ $(function () {
     });
 
     $(this).find('[data-role="commentWrite-container"] textarea').removeAttr('style')
-    $(this).find('[data-role="commentWrite-container"] .js-submit').addClass('d-none')
   })
 
   // 댓글이 수정된 후에
