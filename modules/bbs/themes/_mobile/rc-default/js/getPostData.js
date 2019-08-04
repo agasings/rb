@@ -69,6 +69,9 @@ function getPostData(settings){
        var theme_show_share=result.theme_show_share;
 
        modal.find('[data-role="article"]').html(article);
+
+       Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
+
        modal.find('[data-role="linkShare"]').attr('data-url',url)
 
        if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');

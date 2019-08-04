@@ -140,7 +140,7 @@
   line-height: 1.625;
   font-size: 1.0625rem;
 }
-.rb-article img {
+.rb-article figure.image img {
   display: block;
   max-width: 100%;
   height: auto;

@@ -306,6 +306,10 @@ figure.media {
   margin-left: 1.5em;
 }
 
+/* embed media */
+figure.media oembed .media-body {
+  padding: 1rem
+}
 
 /**
  * 5 - Sidebar 사이드바

@@ -265,6 +265,7 @@ body, th, td, input, select, textarea, button {
   color: #fff;
 }
 
+/* embed media */
 figure.media {
   display: block
 }
