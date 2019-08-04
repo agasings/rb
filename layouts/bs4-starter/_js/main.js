@@ -135,4 +135,9 @@ $(function () {
     });
 	});
 
+  // history.back
+  $(document).on('click','[data-history="back"]',function(){
+    window.history.back();
+  });
+
 })
