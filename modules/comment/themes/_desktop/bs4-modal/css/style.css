@@ -341,3 +341,7 @@ figure.ck.ck-placeholder:before,
 .ck figure.ck-placeholder:before {
   content: none;
 }
+
+[data-role="comment-input-wrapper"] [data-role="comment-input"] {
+  max-width: 460px
+}
