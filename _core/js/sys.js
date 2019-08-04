@@ -466,7 +466,14 @@ function Iframely(ele) {
 					var thumbnail_url_parse = $('<a>', {href: thumbnail_url});
 					var thumbnail_protocol =  thumbnail_url_parse.prop('protocol')=='https'?'thumb-ssl':'thumb';
 					var thumbnail__url = thumbnail_url_parse.prop('hostname')+thumbnail_url_parse.prop('pathname')+thumbnail_url_parse.prop('search')+thumbnail_url_parse.prop('hash')
-					var thumbnail___url = '/'+thumbnail_protocol+'/165x165/u/'+thumbnail__url
+
+					if (provider_name=='카카오맵') {
+						var thumbnail___url = thumbnail_url;
+					} else if (provider_name=='네이버 지도') {
+						var thumbnail___url = '/thumb-ssl/165x165/u/ssl.pstatic.net/static/maps/m/og_map.png';
+					} else {
+						var thumbnail___url = '/'+thumbnail_protocol+'/165x165/u/'+thumbnail__url;
+					}
 
 					$.getJSON('//embed.kimsq.com/iframely?uri=' + _url, {
 							format: "json"
@@ -481,7 +488,7 @@ function Iframely(ele) {
 								var thumbnail_markup = '';
 							}
 
-							if (thumbnail_width>500 && thumbnail_width) {
+							if ((thumbnail_width>500 && thumbnail_width) || provider_name=='카카오맵') {
 								var html = '<div class="card shadow-sm bg-white"><a href="'+url+'" target="_blank"><img class="card-img-top" src="'+thumbnail_url+'"></a><div class="card-body"><h5 class="card-title"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h5><p class="card-text line-clamp-3 text-muted">'+description+'</p><a href="'+provider_url+'" target="_blank"  class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
 							}
 							else {
