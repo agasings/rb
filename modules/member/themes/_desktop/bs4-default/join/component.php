@@ -5,7 +5,7 @@
 3. 모달 : modal-join-social :  소셜미디어 사용자인증 후 가입정보 입력 (기존계정 연결 포함)
 -->
 
-<div class="modal fade" id="modal-join" tabindex="-1" role="dialog">
+<div class="modal" id="modal-join" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
     <div class="modal-content">
       <div class="modal-header border-bottom-0" style="background-color: rgba(0,0,0,.03);">

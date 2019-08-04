@@ -256,8 +256,8 @@ modal_combine.find('form').submit(function(e){
 
 
 <!-- 3. 모달 : modal-pwReset :  비밀번호 초기화 -->
-<div class="modal fade" id="modal-pwReset" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document" style="max-width: 400px;">
+<div class="modal" id="modal-pwReset" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
     <div class="modal-content">
       <div class="modal-header border-bottom-0 d-flex flex-column" style="background-color: rgba(0,0,0,.03);">
         <h5 class="modal-title mx-auto">비밀번호 재설정</h5>
