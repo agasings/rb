@@ -36,7 +36,13 @@ if ($send=='ajax') {
 	}
 
 } else {
-	if (!$my['uid']) getLink('','','로그인해 주세요.','');
+
+	if (!$my['uid']) {
+		echo '<script type="text/javascript">';
+		echo 'parent.$("#modal-login").modal();';
+		echo '</script>';
+	  exit;
+	}
 	if (!$R['uid']) exit;
 	if ($d['bbs']['denylikemy'] && ($R['mbruid']==$my['uid'])) getLink('','','자신 글은 평가할 수 없습니다.','');
 }

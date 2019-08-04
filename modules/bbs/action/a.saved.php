@@ -31,7 +31,12 @@ if ($send=='ajax') {
 	}
 
 } else {
-	if (!$my['uid']) getLink('','','로그인해 주세요.','');
+	if (!$my['uid']) {
+		echo '<script type="text/javascript">';
+		echo 'parent.$("#modal-login").modal();';
+		echo '</script>';
+	  exit;
+	}
 	if (!$R['uid']) getLink('','','삭제되었거나 존재하지 않는 게시물입니다.','');
 	if (!$B['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 }

@@ -309,7 +309,6 @@ $(function () {
     var bid = modal.find('[name="bid"]').val()
 
     if(!memberid){
-      alert('로그인이 필요합니다.')
       $('#modal-login').modal()  // 비로그인 일 경우 로그인 모달 호출
       return false;
     }
@@ -373,7 +372,6 @@ $(function () {
    var uid = $(this).data('uid')
 
    if(!memberid){
-     alert('로그인이 필요합니다.')
      $('#modal-login').modal()  // 비로그인 일 경우 로그인 모달 호출
      return false;
    }
