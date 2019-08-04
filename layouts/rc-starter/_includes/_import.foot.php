@@ -21,7 +21,6 @@
 <!-- 댓글출력시 필요 -->
 <script src="<?php echo $g['s']?>/modules/comment/lib/Rb.comment.js"></script>
 
-<script src="<?php echo $g['s']?>/_core/js/jquery.autolink.js"></script>
 
 <!-- 레이아웃 공용 스크립트 -->
 <script src="<?php echo $g['url_layout']?>/_js/main.js<?php echo $g['wcache']?>"></script>

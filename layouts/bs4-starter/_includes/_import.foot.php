@@ -23,9 +23,6 @@
 <?php getImport('jquery-timeago','jquery.timeago',false,'js')?>
 <?php getImport('jquery-timeago','locales/jquery.timeago.ko',false,'js')?>
 
-<!-- 자동링크 -->
-<script src="<?php echo $g['s']?>/_core/js/jquery.autolink.js"></script>
-
 <!-- 댓글출력시 필요 -->
 <?php if ($g['broswer']!='MSIE 11' && $g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 9'): ?>
   <?php if ($mod!='write'): ?>
