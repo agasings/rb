@@ -231,8 +231,6 @@ $col_xs = $d['theme']['xs_item']?' col-xs-'.$col_xs_num:'';
           <i class="fa fa-folder-open-o" aria-hidden="true"></i>
         </div>
         <p>게시물이 없습니다.</p>
-        <?php if ($keyword): ?><a href="<?php echo $g['bbs_reset'] ?>&type=search" class="btn btn-outline-primary btn-lg" data-control="push">재검색</a><?php endif; ?>
-        <?php if ($cat): ?><a href="<?php echo $g['bbs_reset'] ?>&type=category" class="btn btn-outline-primary btn-lg" data-control="push">재탐색</a><?php endif; ?>
       </div>
     </div>
     <?php endif; ?>

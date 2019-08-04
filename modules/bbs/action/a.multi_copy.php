@@ -121,7 +121,7 @@ foreach ($post_members as $val)
 					{
 						$_tmpname = md5($U['tmpname']).'.'.getExt($U['tmpname']);
 
-						if ($U['url']==$d['upload']['ftp_urlpath'])
+						if ($U['host']==$d['upload']['ftp_urlpath'])
 						{
 							$FTP_CONNECT = ftp_connect($d['upload']['ftp_host'],$d['upload']['ftp_port']);
 							$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['upload']['ftp_user'],$d['upload']['ftp_pass']);
@@ -134,14 +134,14 @@ foreach ($post_members as $val)
 							ftp_close($FTP_CONNECT);
 						}
 						else {
-							copy($U['url'].$U['folder'].'/'.$U['tmpname'],$U['url'].$U['folder'].'/'.$_tmpname);
+							copy($U['host'].$U['folder'].'/'.$U['tmpname'],$U['host'].$U['folder'].'/'.$_tmpname);
 						}
 
 						$upload_mingid = getDbCnt($table['s_upload'],'min(gid)','');
 						$upload_gid = $upload_mingid ? $upload_mingid - 1 : 100000000;
 
 						$QKEY = "gid,hidden,tmpcode,site,mbruid,type,ext,fserver,url,folder,name,tmpname,thumbname,size,width,heigth,caption,down,d_regis,d_update,sync";
-						$QVAL = "'".$upload_gid."','".$U['hidden']."','','".$U['site']."','".$U['mbruid']."','".$U['type']."','".$U['ext']."','".$U['fserver']."','".$U['url']."','".$U['folder']."',";
+						$QVAL = "'".$upload_gid."','".$U['hidden']."','','".$U['site']."','".$U['mbruid']."','".$U['type']."','".$U['ext']."','".$U['fserver']."','".$U['host']."','".$U['folder']."',";
 						$QVAL.= "'".addslashes($U['name'])."','".$_tmpname."','".$_thumbna."','".$U['size']."','".$U['width']."','".$U['height']."','".addslashes($U['caption'])."',";
 						$QVAL.= "'".$U['down']."','".$U['d_regis']."','".$U['d_update']."',''";
 						getDbInsert($table['s_upload'],$QKEY,$QVAL);
@@ -172,7 +172,7 @@ foreach ($post_members as $val)
 			{
 				$_tmpname = md5($U['tmpname']).'.'.getExt($U['tmpname']);
 
-				if ($U['url']==$d['upload']['ftp_urlpath'])
+				if ($U['host']==$d['upload']['ftp_urlpath'])
 				{
 					$FTP_CONNECT = ftp_connect($d['upload']['ftp_host'],$d['upload']['ftp_port']);
 					$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['upload']['ftp_user'],$d['upload']['ftp_pass']);
@@ -185,14 +185,14 @@ foreach ($post_members as $val)
 					ftp_close($FTP_CONNECT);
 				}
 				else {
-					copy('.'.$U['url'].$U['folder'].'/'.$U['tmpname'],'.'.$U['url'].$U['folder'].'/'.$_tmpname);
+					copy('.'.$U['host'].$U['folder'].'/'.$U['tmpname'],'.'.$U['host'].$U['folder'].'/'.$_tmpname);
 				}
 
 				$upload_mingid = getDbCnt($table['s_upload'],'min(gid)','');
 				$upload_gid = $upload_mingid ? $upload_mingid - 1 : 100000000;
 
 				$QKEY = "gid,hidden,tmpcode,site,mbruid,type,ext,fserver,url,folder,name,tmpname,thumbname,size,width,height,caption,down,d_regis,d_update,sync";
-				$QVAL = "'$upload_gid','".$U['hidden']."','','".$U['site']."','".$U['mbruid']."','".$U['type']."','".$U['ext']."','".$U['fserver']."','".$U['url']."',";
+				$QVAL = "'$upload_gid','".$U['hidden']."','','".$U['site']."','".$U['mbruid']."','".$U['type']."','".$U['ext']."','".$U['fserver']."','".$U['host']."',";
 				$QVAL.= "'".$U['folder']."','".addslashes($U['name'])."','".$_tmpname."','".$_thumbna."','".$U['size']."','".$U['width']."','".$U['height']."',";
 				$QVAL.= "'".addslashes($U['caption'])."','".$U['down']."','".$U['d_regis']."','".$U['d_update']."',''";
 				getDbInsert($table['s_upload'],$QKEY,$QVAL);

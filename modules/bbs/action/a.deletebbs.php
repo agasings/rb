@@ -48,7 +48,7 @@ while($_R=db_fetch_array($RCD))
 					{
 						getDbUpdate($table['s_numinfo'],'upload=upload-1',"date='".substr($U['d_regis'],0,8)."' and site=".$U['site']);
 						getDbDelete($table['s_upload'],'uid='.$U['uid']);
-						if ($U['url']==$d['upload']['ftp_urlpath'])
+						if ($U['host']==$d['upload']['ftp_urlpath'])
 						{
 							$FTP_CONNECT = ftp_connect($d['upload']['ftp_host'],$d['upload']['ftp_port']);
 							$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['upload']['ftp_user'],$d['upload']['ftp_pass']);
@@ -110,7 +110,7 @@ while($_R=db_fetch_array($RCD))
 			{
 				getDbUpdate($table['s_numinfo'],'upload=upload-1',"date='".substr($U['d_regis'],0,8)."' and site=".$U['site']);
 				getDbDelete($table['s_upload'],'uid='.$U['uid']);
-				if ($U['url']==$d['upload']['ftp_urlpath'])
+				if ($U['host']==$d['upload']['ftp_urlpath'])
 				{
 					$FTP_CONNECT = ftp_connect($d['upload']['ftp_host'],$d['upload']['ftp_port']);
 					$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['upload']['ftp_user'],$d['upload']['ftp_pass']);
