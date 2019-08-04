@@ -254,6 +254,10 @@ function getPostData(modal_settings){
       var modal = $(this);
       var uid = modal.find('[name="uid"]').val()
       var list_parent =  $('[data-role="bbs-list"]').find('#item-'+uid)
+
+      if (!modal.hasClass('history')) window.history.back(); //히스토리백
+
+
       modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
       modal.find('.commentting-container').html(''); // 댓글영역 내용 비우기
 
@@ -263,15 +267,17 @@ function getPostData(modal_settings){
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
 
-      window.history.back(); //히스토리백
-
-       setTimeout(function(){
-         list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
-       }, 10);
-
-
+     setTimeout(function(){
+       list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
+       modal.removeClass('history');
+     }, 10);
    });
 
+   //히스토리 백
+   $(window).on('popstate',function(event) {
+     $(mid).addClass('history');
+     $(mid).modal('hide')
+   });
 
    //게시물 보기 모달에서 댓글이 셋팅된 이후에..
    $(mid).find('.commentting-container').on('shown.rb.comment',function(){
@@ -453,6 +459,5 @@ function getPostData(modal_settings){
         }
       });
     });
-
 
 }

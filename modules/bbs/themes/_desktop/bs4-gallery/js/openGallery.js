@@ -10,6 +10,9 @@
 
 $(function () {
 
+  var pswpElement = document.querySelectorAll('.pswp-comment')[0];
+  var modal = $('.pswp-comment')
+
   //목록에서 photoswipe 연결
   $('[data-toggle="openGallery"]').click(function(e) {
     var category = $(this).data('category')
@@ -17,8 +20,6 @@ $(function () {
     var bid = $(this).data('bid')
     var uid = $(this).data('uid')
     var url = $(this).data('url')
-    var pswpElement = document.querySelectorAll('.pswp-comment')[0];
-    var modal = $('.pswp-comment')
     var bbs_title = document.title
     var linkShare = $('#rb-share').html();
 
@@ -152,11 +153,23 @@ $(function () {
          gallery.close();
        });
 
+       //히스토리 백
+       $(window).on('popstate',function(event) {
+         modal.addClass('history');
+         gallery.close();
+       });
+
        // 갤러리가 닫힐때
        gallery.listen('close', function() {
          modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
          modal.find('.commentting-container').html(''); // 댓글영역 내용 비우기
-         window.history.back(); //히스토리백
+
+         if (!modal.hasClass('history')) window.history.back(); //히스토리백
+
+         setTimeout(function(){
+           modal.removeClass('history');
+         }, 100);
+
          $('.popover').remove() // 링크공유 popover 제거
 
          $('#item-'+uid).focus() // 목록 아이템 포커스 처리
