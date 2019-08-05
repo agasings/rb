@@ -7,9 +7,10 @@
 4. 팝업   : 로그아웃
 5. 일반모달 : 통합검색
 6. 일반모달 : 게시물 보기
-7. 포토모달 : 갤러리형
-8. 팝업 : 링크공유
-9. 시트 : 푸시알림 권한요청
+7. 일반모달 : 게시물 쓰기
+8. 포토모달 : 갤러리형
+9. 팝업 : 링크공유
+10. 시트 : 푸시알림 권한요청
 
 -->
 
@@ -133,7 +134,15 @@
 
 </div><!-- /.modal -->
 
-<!-- 7. 포토모달 : 갤러리형 -->
+<!-- 7. 일반모달 : 게시물 쓰기 -->
+<?php
+if ($m=='bbs') {
+  $bbs_component = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/component.php';
+  if (file_exists($bbs_component)) include_once $bbs_component;
+}
+?>
+
+<!-- 8. 포토모달 : 갤러리형 -->
 <div class="pswp pswp-gallery" tabindex="-1" role="dialog" aria-hidden="true">
 	<input type="hidden" name="uid" value="">
   <input type="hidden" name="bid" value="">
@@ -212,7 +221,7 @@
 
 </div>
 
-<!-- 8. 팝업 : 링크공유 -->
+<!-- 9. 팝업 : 링크공유 -->
 <div id="popup-link-share" class="popup zoom">
   <div class="popup-content">
     <header class="bar bar-nav">
@@ -269,8 +278,7 @@
   </div><!-- /.popup-content -->
 </div><!-- /.popup -->
 
-
-<!-- 9. 시트 : 푸시알림 권한요청 -->
+<!-- 10. 시트 : 푸시알림 권한요청 -->
 <div id="permission_alert" class="sheet">
 
   <div class="card card-full">

@@ -5,10 +5,10 @@
 2. 일반모달 : 로그인
 3. 일반모달 : 알림
 4. 일반모달 : 게시물 보기
-5. 포토모달 : 댓글형
-6. 포토모달 : 갤러리형
-7. 마크업 참조: 링크공유
-
+5. 일반모달 : 게시물 쓰기
+6. 포토모달 : 댓글형
+7. 포토모달 : 갤러리형
+8. 마크업 참조: 링크공유
 -->
 
 <!-- 1. 일반모달 : 회원가입 -->
@@ -54,7 +54,15 @@
   </div>
 </div>
 
-<!-- 5. 포토모달 : 댓글형 -->
+<!-- 5. 일반모달 : 게시물 쓰기 -->
+<?php
+if ($m=='bbs') {
+  $bbs_component = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/component.php';
+  if (file_exists($bbs_component)) include_once $bbs_component;
+}
+?>
+
+<!-- 6. 포토모달 : 댓글형 -->
 <div class="pswp pswp-comment" tabindex="-1" role="dialog" aria-hidden="true">
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="bid" value="">
@@ -128,7 +136,7 @@
 
 </div>
 
-<!-- 6. 포토모달 : 갤러리형 -->
+<!-- 7. 포토모달 : 갤러리형 -->
 <div class="pswp pswp-gallery" tabindex="-1" role="dialog" aria-hidden="true">
 
     <!-- Background of PhotoSwipe.
@@ -192,7 +200,7 @@
 
 </div>
 
-<!-- 7. 마크업 참조 : 링크공유 -->
+<!-- 8. 마크업 참조 : 링크공유 -->
 <div id="rb-share" hidden>
   <ul class="share list-inline mt-2 mb-0 mx-2">
     <li class="list-inline-item text-center">
