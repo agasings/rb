@@ -310,6 +310,9 @@ figure.media {
 figure.media oembed .media-body {
   padding: 1rem
 }
+figure.media oembed iframe {
+  margin: 0 auto !important
+}
 
 /**
  * 5 - Sidebar 사이드바

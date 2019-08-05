@@ -451,7 +451,8 @@ function mobileCheck() {
 function Iframely(ele) {
 	$(ele).each(function(index) {
     var url = $(this).attr('url');
-		var _url = encodeURI(url);
+		var url_orgin = $(this).attr('url');
+		var _url = encodeURIComponent(url);
 
 		$.getJSON('//embed.kimsq.com/oembed?url=' + _url, {
 				format: "json"
@@ -490,7 +491,6 @@ function Iframely(ele) {
 							var icon = data.links.icon[0].href;
 							var thumbnail_markup = '';
 
-
 							if (mobileCheck()) {
 								//모바일
 								var thumbnail_markup = thumbnail___url?'<img src="'+thumbnail___url+'" class="media-object pull-left" style="width:80px">':'';
@@ -503,16 +503,15 @@ function Iframely(ele) {
 								}
 							} else {
 								// 데스크탑
-								var thumbnail_markup = '<a href="'+url+'" target="_blank" class="media-left align-self-center"><img src="'+thumbnail___url+'" class="media-object"></a>';
+								var thumbnail_markup = '<a href="'+url+'" target="_blank" class="align-self-center"><img src="'+thumbnail___url+'" class="media-object"></a>';
 								if ((thumbnail_width>500 && thumbnail_width) || provider_name=='카카오맵') {
-									var html = '<div class="card shadow-sm bg-white"><a href="'+url+'" target="_blank"><img class="card-img-top" src="'+thumbnail_url+'"></a><div class="card-body"><h5 class="card-title"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h5><p class="card-text line-clamp-3 text-muted">'+description+'</p><a href="'+provider_url+'" target="_blank"  class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
+									var html = '<div class="card shadow-sm bg-white"><a href="'+url+'" target="_blank"><img class="card-img-top" src="'+thumbnail_url+'"></a><div class="card-body"><h4 class="card-title"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h4><p class="card-text line-clamp-3 text-muted">'+description+'</p><a href="'+provider_url+'" target="_blank"  class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
 								}
 								else {
-									var html = '<div class="media border shadow-sm text-reset bg-white">'+thumbnail_markup+'<div class="media-body"><h5 class="media-heading mt-0"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h5><p class="line-clamp-3 mb-1">'+description+'</p><a href="'+provider_url+'" target="_blank" class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
+									var html = '<div class="media border shadow-sm text-reset bg-white">'+thumbnail_markup+'<div class="media-body"><h4 class="media-heading line-clamp-1 mt-0"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h4><p class="line-clamp-2 mb-1">'+description+'</p><a href="'+provider_url+'" target="_blank" class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
 								}
 							}
-
-							$(ele+'[url="' + _url + '"]').html(html);
+							$(ele+'[url="' + url_orgin + '"]').html(html);
 					});
 				} else {
 					var html = data.html;
@@ -522,15 +521,15 @@ function Iframely(ele) {
 							},
 							function(data) {
 								var html = data.html;
-								$(ele+'[url="' + _url + '"]').html(html);
+								$(ele+'[url="' + url_orgin + '"]').html(html);
 						});
 					} else {
-						$(ele+'[url="' + _url + '"]').html(html);
+						$(ele+'[url="' + url_orgin + '"]').html(html);
 					}
 				}
 			})
 			.fail(function() {
-				$(ele+'[url="' + url + '"]').html('<p><a href="'+url+'" target="_blank">'+url+'</a></p>');
+				$(ele+'[url="' + url_orgin + '"]').html('<p><a href="'+url+'" target="_blank">'+url+'</a></p>');
 			});
 
 		});
