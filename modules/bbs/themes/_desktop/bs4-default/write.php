@@ -215,7 +215,15 @@ function writeCheck(f) {
 	}
 
   var editorData = editor.getData();
-  $('[name="content"]').val(editorData)
+
+  if (editorData == '')
+  {
+    alert('내용을 입력해 주세요.       ');
+    editor.editing.view.focus();
+    return false;
+  } else {
+    $('[name="content"]').val(editorData)
+  }
 
   // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
   var featured_img_input = $('input[name="featured_img"]'); // 대표이미지 input
