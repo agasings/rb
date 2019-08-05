@@ -36,143 +36,147 @@ function getPostData(settings){
     modal.find('[data-role="article"]').loader({  //  로더 출력
       position:   "inside"
     });
-    $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-         bid : bid,
-         uid : uid,
-         device : 'mobile'
-      },function(response){
-       modal.find('[data-role="article"]').loader("hide");
-       var result = $.parseJSON(response);
-       var article=result.article;
-       var adddata=result.adddata;
-       var photo=result.photo;
-       var video=result.video;
-       var audio=result.audio;
-       var youtube=result.youtube;
-       var file=result.file;
-       var zip=result.zip;
-       var doc=result.doc;
-       var hidden=result.hidden;
-       var hidden_attach=result.hidden_attach;
-       var mypost=result.mypost;
 
-       var is_post_liked=result.is_post_liked;
-       var is_post_disliked=result.is_post_disliked;
-       var is_post_tag=result.is_post_tag;
+    setTimeout(function(){
 
-       var bbs_c_hidden=result.bbs_c_hidden;  // 댓글 사용여부
-       var theme_use_reply=result.theme_use_reply;
-       var theme_show_tag=result.theme_show_tag;
-       var theme_show_upfile=result.theme_show_upfile;
-       var theme_show_like=result.theme_show_like;
-       var theme_show_dislike=result.theme_show_dislike;
-       var theme_show_share=result.theme_show_share;
+      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+           bid : bid,
+           uid : uid,
+           device : 'mobile'
+        },function(response){
+         modal.find('[data-role="article"]').loader("hide");
+         var result = $.parseJSON(response);
+         var article=result.article;
+         var adddata=result.adddata;
+         var photo=result.photo;
+         var video=result.video;
+         var audio=result.audio;
+         var youtube=result.youtube;
+         var file=result.file;
+         var zip=result.zip;
+         var doc=result.doc;
+         var hidden=result.hidden;
+         var hidden_attach=result.hidden_attach;
+         var mypost=result.mypost;
 
-       modal.find('[data-role="article"]').html(article);
+         var is_post_liked=result.is_post_liked;
+         var is_post_disliked=result.is_post_disliked;
+         var is_post_tag=result.is_post_tag;
 
-       Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
+         var bbs_c_hidden=result.bbs_c_hidden;  // 댓글 사용여부
+         var theme_use_reply=result.theme_use_reply;
+         var theme_show_tag=result.theme_show_tag;
+         var theme_show_upfile=result.theme_show_upfile;
+         var theme_show_like=result.theme_show_like;
+         var theme_show_dislike=result.theme_show_dislike;
+         var theme_show_share=result.theme_show_share;
 
-       modal.find('[data-role="linkShare"]').attr('data-url',url)
+         modal.find('[data-role="article"]').html(article);
 
-       if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
-       if (is_post_disliked) modal.find('[data-role="btn_post_dislike"]').addClass('active')
+         Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
-       if (bbs_c_hidden) {
-        modal.find('[data-role="btn_comment"]').remove()  // 좋아요 버튼 제거
-       }
+         modal.find('[data-role="linkShare"]').attr('data-url',url)
 
-       if (theme_show_like==0) {
-        modal.find('[data-role="btn_post_like"]').remove()  // 좋아요 버튼 제거
-       }
-       if (theme_show_dislike==0) {
-        modal.find('[data-role="btn_post_dislike"]').remove()  // 싫어요 버튼 제거
-       }
-       if (theme_show_share==0) {
-        modal.find('[data-role="linkShare"]').remove()  // sns공유 버튼 제거
-       }
+         if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
+         if (is_post_disliked) modal.find('[data-role="btn_post_dislike"]').addClass('active')
 
-       if (theme_show_tag==0 || !is_post_tag) {
-        modal.find('[data-role="post_tags"]').remove()  // 테그목록 제거
-       }
+         if (bbs_c_hidden) {
+          modal.find('[data-role="btn_comment"]').remove()  // 좋아요 버튼 제거
+         }
 
-       if (photo) {  // 첨부 이미지가 있을 경우
-         modal.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
-         RC_initPhotoSwipe(); // photoswipe 초기화
-       }
+         if (theme_show_like==0) {
+          modal.find('[data-role="btn_post_like"]').remove()  // 좋아요 버튼 제거
+         }
+         if (theme_show_dislike==0) {
+          modal.find('[data-role="btn_post_dislike"]').remove()  // 싫어요 버튼 제거
+         }
+         if (theme_show_share==0) {
+          modal.find('[data-role="linkShare"]').remove()  // sns공유 버튼 제거
+         }
 
-       if (video) {  // 첨부 비디오가 있을 경우
-         modal.find('[data-role="attach-video"]').removeClass('hidden').html(video)
-         modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
-         modal.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
-       }
+         if (theme_show_tag==0 || !is_post_tag) {
+          modal.find('[data-role="post_tags"]').remove()  // 테그목록 제거
+         }
 
-       if (audio) {  // 첨부 오디오가 있을 경우
-         modal.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
-         modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
-       }
+         if (photo) {  // 첨부 이미지가 있을 경우
+           modal.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+           RC_initPhotoSwipe(); // photoswipe 초기화
+         }
 
-       if (doc) {  // 첨부 문서 있을 경우
-         modal.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
-       }
+         if (video) {  // 첨부 비디오가 있을 경우
+           modal.find('[data-role="attach-video"]').removeClass('hidden').html(video)
+           modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
+           modal.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
+         }
 
-       if (zip) {  // 첨부 압축파일이 있을 경우
-         modal.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
-       }
+         if (audio) {  // 첨부 오디오가 있을 경우
+           modal.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
+           modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
+         }
 
-       if (file) {  // 첨부 기타파일이 있을 경우
-         modal.find('[data-role="attach-file"]').removeClass('hidden').html(file)
-       }
+         if (doc) {  // 첨부 문서 있을 경우
+           modal.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
+         }
 
-       if (youtube) {  // 첨부 유튜브가 있을 경우
-         modal.find('[data-role="attach-youtube"]').removeClass('hidden').html(youtube)
-         modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
-       }
+         if (zip) {  // 첨부 압축파일이 있을 경우
+           modal.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
+         }
 
-       if (theme_show_upfile==0) {
-        modal.find('[data-role="attach"]').remove()  // 첨부목록 제거
-       }
+         if (file) {  // 첨부 기타파일이 있을 경우
+           modal.find('[data-role="attach-file"]').removeClass('hidden').html(file)
+         }
 
-       // 댓글 출력 함수 정의
-       var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
-         page_allcomment.find('.commentting-all').Rb_comment({
-          moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
-          parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
-          parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
-          theme_name : theme, // 댓글 테마
-          containerClass :'', // 본 엘리먼트(#commentting-container)에 추가되는 class
-          recnum: 5, // 출력갯수
-          commentPlaceHolder : '댓글을 입력해주세요.',
-          noMoreCommentMsg : '댓글 없음 ',
-          commentLength : 200, // 댓글 입력 글자 수 제한
-         });
-       }
-       // 댓글 출력 함수 실행
-       var p_module = 'bbs';
-       var p_table = 'rb_bbs_data';
-       var p_uid = uid; // 게시물 고유번호 적용
-       var theme = ctheme;
+         if (youtube) {  // 첨부 유튜브가 있을 경우
+           modal.find('[data-role="attach-youtube"]').removeClass('hidden').html(youtube)
+           modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
+         }
 
-       if (!hidden) {
-         get_Rb_Comment(p_module,p_table,p_uid,theme);
+         if (theme_show_upfile==0) {
+          modal.find('[data-role="attach"]').remove()  // 첨부목록 제거
+         }
 
-         setTimeout(function(){
-           page.find('[data-role="subject"]').text(subject)
-           page.find('[data-role="cat"]').text(cat)
-         }, 300);
-       }
+         // 댓글 출력 함수 정의
+         var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
+           page_allcomment.find('.commentting-all').Rb_comment({
+            moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
+            parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
+            parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
+            theme_name : theme, // 댓글 테마
+            containerClass :'', // 본 엘리먼트(#commentting-container)에 추가되는 class
+            recnum: 5, // 출력갯수
+            commentPlaceHolder : '댓글을 입력해주세요.',
+            noMoreCommentMsg : '댓글 없음 ',
+            commentLength : 200, // 댓글 입력 글자 수 제한
+           });
+         }
+         // 댓글 출력 함수 실행
+         var p_module = 'bbs';
+         var p_table = 'rb_bbs_data';
+         var p_uid = uid; // 게시물 고유번호 적용
+         var theme = ctheme;
 
-       if (!mypost) {  // 내글이 아니거나 관리자가 아닐때
-        modal.find('[data-role="toolbar"]').remove()  // 수정,삭제가 포함된 툴바,첨부파일,댓글을 제거함
-       }
+         if (!hidden) {
+           get_Rb_Comment(p_module,p_table,p_uid,theme);
 
-       if (hidden || hidden_attach) {  // 권한이 없거나 비밀글 이거나 첨부파일 권한이 없을 경우 일때
-        modal.find('[data-role="attach-photo"]').empty()
-        modal.find('[data-role="attach-video"]').empty()
-        modal.find('[data-role="attach-audio"]').empty()
-        modal.find('[data-role="attach-file"]').empty()
-       }
+           setTimeout(function(){
+             page.find('[data-role="subject"]').text(subject)
+             page.find('[data-role="cat"]').text(cat)
+           }, 300);
+         }
 
-    });
+         if (!mypost) {  // 내글이 아니거나 관리자가 아닐때
+          modal.find('[data-role="toolbar"]').remove()  // 수정,삭제가 포함된 툴바,첨부파일,댓글을 제거함
+         }
+
+         if (hidden || hidden_attach) {  // 권한이 없거나 비밀글 이거나 첨부파일 권한이 없을 경우 일때
+          modal.find('[data-role="attach-photo"]').empty()
+          modal.find('[data-role="attach-video"]').empty()
+          modal.find('[data-role="attach-audio"]').empty()
+          modal.find('[data-role="attach-file"]').empty()
+         }
+
+      });
+    }, 300);
   })
 
   //  게시물보기 모달이 보여진 후에..
