@@ -37,8 +37,8 @@
 <?php getImport('font-kimsq','css/font-kimsq',false,'css')?>
 
 <!-- swiper : http://idangero.us/swiper/ -->
-<?php getImport('swiper','css/swiper','4.2.2','css')?>
-<?php getImport('swiper','js/swiper.min','4.2.2','js')?>
+<?php getImport('swiper','css/swiper','4.5.0','css')?>
+<?php getImport('swiper','js/swiper.min','4.5.0','js')?>
 
 <!-- 동영상,유튜브,오디오 player : http://www.mediaelementjs.com/ -->
 <?php getImport('mediaelement','mediaelement-and-player.min','4.2.8','js') ?>
