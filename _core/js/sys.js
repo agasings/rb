@@ -471,6 +471,7 @@ function Iframely(ele) {
 				if (type=='link') {
 					var link_url_parse = $('<a>', {href: url});
 					var provider_url = link_url_parse.prop('protocol')+'//'+link_url_parse.prop('hostname');
+					if (thumbnail_url) var thumbnail_url = thumbnail_url.replace('http://img1.daumcdn.net/thumb/S1200x630/?fname=','');  //다음포털 룰 필터링
 					var thumbnail_url_parse = $('<a>', {href: thumbnail_url});
 					var thumbnail_protocol =  thumbnail_url_parse.prop('protocol')=='https'?'thumb-ssl':'thumb';
 					var thumbnail__url = thumbnail_url_parse.prop('hostname')+thumbnail_url_parse.prop('pathname')+thumbnail_url_parse.prop('search')+thumbnail_url_parse.prop('hash')
@@ -493,22 +494,22 @@ function Iframely(ele) {
 
 							if (mobileCheck()) {
 								//모바일
-								var thumbnail_markup = thumbnail___url?'<img src="'+thumbnail___url+'" class="media-object pull-left" style="width:80px">':'';
+								var thumbnail_markup = thumbnail_url?'<img src="'+thumbnail___url+'" class="media-object pull-left" style="width:80px">':'';
 
 								if ((thumbnail_width>500 && thumbnail_width) || provider_name=='카카오맵') {
-									var html = '<div class="card m-0 bg-white"><a href="'+url+'" target="_blank"><img class="card-img-top img-fluid" src="'+thumbnail_url+'"><div class="card-block"><h6 class="card-title muted-link">'+title+'</h6><p class="card-text small line-clamp-2 text-muted mb-1">'+description+'</p><img src="'+icon+'" class="mr-2" style="width:16px"><span class="badge badge-default badge-inverted">'+author+'</span><span class="badge badge-default badge-inverted">'+provider_name+'</span><span class="badge badge-default badge-inverted">'+link_url_parse.prop('hostname')+'</span></div></a></div>';
+									var html = '<div class="card m-0 bg-white"><a href="'+url+'" target="_blank"><img class="card-img-top img-fluid" src="'+thumbnail_url+'"><div class="card-block"><h6 class="card-title muted-link">'+title+'</h6><p class="card-text small line-clamp-2 text-muted mb-1">'+(description?description:'')+'</p><img src="'+icon+'" class="mr-2" style="width:16px"><span class="badge badge-default badge-inverted">'+author+'</span><span class="badge badge-default badge-inverted">'+provider_name+'</span><span class="badge badge-default badge-inverted">'+link_url_parse.prop('hostname')+'</span></div></a></div>';
 								}
 								else {
-									var html = '<div class="card m-0"><ul class="table-view"><li class="table-view-cell media w-100"><a href="'+url+'" target="_blank" class="navigate-right">'+thumbnail_markup+'<div class="media-body"><span class="line-clamp-1">'+title+'</span><p class="line-clamp-1">'+description+'</p><img src="'+icon+'" class="mr-2" style="width:1rem"><span class="badge badge-default badge-inverted">'+author+'</span><span class="badge badge-default badge-inverted">'+provider_name+'</span><span class="badge badge-default badge-inverted">'+link_url_parse.prop('hostname')+'</span></div></a></li></ul></div>';
+									var html = '<a href="'+url+'" class="card m-0 muted-link" target="_blank"><ul class="table-view"><li class="table-view-cell media"><span class="navigate-right w-100">'+thumbnail_markup+'<div class="media-body"><span class="line-clamp-1">'+title+'</span><p class="line-clamp-1">'+(description?description:'')+'</p><img src="'+icon+'" class="mr-2" style="width:1rem"><span class="badge badge-default badge-inverted">'+(author?author:(provider_name?provider_name:link_url_parse.prop('hostname')))+'</span></div></span></li></ul></a>';
 								}
 							} else {
 								// 데스크탑
-								var thumbnail_markup = '<a href="'+url+'" target="_blank" class="align-self-center"><img src="'+thumbnail___url+'" class="media-object"></a>';
-								if ((thumbnail_width>500 && thumbnail_width) || provider_name=='카카오맵') {
+								var thumbnail_markup = thumbnail_url?'<a href="'+url+'" target="_blank" class="align-self-center"><img src="'+thumbnail___url+'" class="media-object"></a>':'';
+								if (provider_name=='카카오맵') {
 									var html = '<div class="card shadow-sm bg-white"><a href="'+url+'" target="_blank"><img class="card-img-top" src="'+thumbnail_url+'"></a><div class="card-body"><h4 class="card-title"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h4><p class="card-text line-clamp-3 text-muted">'+description+'</p><a href="'+provider_url+'" target="_blank"  class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
 								}
 								else {
-									var html = '<div class="media border shadow-sm text-reset bg-white">'+thumbnail_markup+'<div class="media-body"><h4 class="media-heading line-clamp-1 mt-0"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h4><p class="line-clamp-2 mb-1">'+description+'</p><a href="'+provider_url+'" target="_blank" class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+author+'</small><small class="text-muted">'+provider_name+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
+									var html = '<div class="media border shadow-sm text-reset bg-white">'+thumbnail_markup+'<div class="media-body"><h4 class="media-heading line-clamp-1 mt-0"><a href="'+url+'" class="text-reset" target="_blank">'+title+'</a></h4><p class="line-clamp-2 mb-1">'+(description?description:'')+'</p><a href="'+provider_url+'" target="_blank" class="btn btn-link text-reset pl-0"><img src="'+icon+'" class="mr-2" style="width:16px"><small class="text-muted">'+(author?author:provider_name)+'</small></a><small class="text-muted">'+link_url_parse.prop('hostname')+'</small></div></div>';
 								}
 							}
 							$(ele+'[url="' + url_orgin + '"]').html(html);

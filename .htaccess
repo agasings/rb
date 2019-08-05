@@ -54,9 +54,9 @@ RewriteRule ^(search)/?$ ./index.php?m=search&%1 [L]
 
 #timthumb
 RewriteCond %{QUERY_STRING} ^(.*)$
-RewriteRule ^(thumb)/(.*)x(.*)/u/(.*) ./_core/opensrc/timthumb/thumb.php?src=http://$4?%1&h=$3&w=$2&s=1 [NC,L]
+RewriteRule ^(thumb)/(.*)x(.*)/u/(.*) ./_core/opensrc/timthumb/thumb.php?src=http://$4&h=$3&w=$2&s=1 [NC,L]
 RewriteCond %{QUERY_STRING} ^(.*)$
-RewriteRule ^(thumb-ssl)/(.*)x(.*)/u/(.*) ./_core/opensrc/timthumb/thumb.php?src=https://$4%1&h=$3&w=$2&s=1 [NC,L]
+RewriteRule ^(thumb-ssl)/(.*)x(.*)/u/(.*) ./_core/opensrc/timthumb/thumb.php?src=https://$4&h=$3&w=$2&s=1 [NC,L]
 
 RewriteRule ^(files)/([a-zA-Z0-9_\-]+)/(.*)_([0-9]+)x([0-9]+)\.(jpg|jpeg|png|gif)$ ./_core/opensrc/timthumb/thumb.php?src=./files/$2/$3.$6&w=$4&h=$5&s=1 [NC,L]
 RewriteRule ^(files)/([a-zA-Z0-9_\-]+)/(.*)_s\.(jpg|jpeg|png|gif)$ ./_core/opensrc/timthumb/thumb.php?src=./files/$2/$3.$4&w=75&h=75&s=1 [NC,L]
