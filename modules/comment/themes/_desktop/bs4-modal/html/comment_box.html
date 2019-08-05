@@ -54,17 +54,4 @@
 
 $('[data-toggle="tooltip"]').tooltip()
 
-$('.add-comment').click(function() {
-  var uid = $(this).data('parent')
-  var textarea = $('[data-role="oneline-input-'+uid+'"]')
-  setTimeout(function(){ textarea.focus(); }, 200); // 한줄의견 추가시에 textarea focus 처리하기
-});
-
-$('.js-comment-focus').click(function() {
- $('#meta-description-content').focus()
-});
-
-$('[data-role="comment-item"] article').autolink();
-$('[data-role="oneline-item"] article').autolink();
-
 </script>
