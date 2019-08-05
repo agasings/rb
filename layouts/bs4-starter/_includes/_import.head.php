@@ -5,12 +5,23 @@
 <meta name="title" content="<?php echo strip_tags($g['meta_tit'])?>">
 <meta name="keywords" content="<?php echo strip_tags($g['meta_key'])?>">
 <meta name="description" content="<?php echo strip_tags($g['meta_des'])?>">
-<link rel="image_src" href="<?php echo strip_tags($g['meta_img'])?>">
+<meta name="author" content="<?php echo $_HS['name'] ?>">
+
+<link rel="image_src" href="<?php echo strip_tags($g['url_root'].$g['meta_img'])?>">
+<link rel="canonical" href="<?php echo strip_tags($g['url_root'].$_SERVER['REQUEST_URI'])?>">
+
+<meta property="og:site_name" content="<?php echo $_HS['name'] ?>">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:type" content="article">
+<meta property="og:url" content="<?php echo strip_tags($g['url_root'].$_SERVER['REQUEST_URI'])?>">
+<meta property="og:title" content="<?php echo strip_tags($g['meta_tit'])?>">
+<meta property="og:description" content="<?php echo strip_tags($g['meta_des'])?>">
+<meta property="og:image" content="<?php echo strip_tags($g['meta_img'])?>">
 
 <title><?php echo $g['browtitle']?></title>
 
 <!-- 파비콘 -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $g['img_layout']?>/icon/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $g['img_layout']?>/icon/homescreen.png">
 <link rel="shortcut icon" href="<?php echo $g['img_layout']?>/icon/favicon.ico">
 
 <!-- 웹앱 매니페스트 -->
