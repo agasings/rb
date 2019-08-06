@@ -3,34 +3,27 @@ if ($c) $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'
 else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':''));
 ?>
 
-
 <section id="page-bbs-list" class="rb-bbs-list page center" data-role="bbs-list" data-snap-ignore="true">
 
   <header class="bar bar-nav bar-dark bg-primary p-x-0">
 
     <a href="#drawer-left" data-toggle="drawer" class="icon icon-bars pull-left p-x-1" role="button"></a>
 
-    <?php if ($my['uid']): ?>
-    <a class="btn btn-link btn-nav pull-right p-x-1" href="<?php echo $g['bbs_write']?>">
-      <span class="icon icon-compose"></span>
+    <a class="btn btn-link btn-nav pull-right p-x-1" data-href="/" data-text="홈으로 이동..">
+      <span class="icon icon-home"></span>
     </a>
-    <?php else: ?>
-    <a class="btn btn-link btn-nav pull-right p-x-1" href="#modal-login" data-toggle="modal" data-title="<?php echo stripslashes($d['layout']['header_title'])?>">
-      <span class="icon icon-compose"></span>
-    </a>
-    <?php endif; ?>
 
     <h1 class="title">
-      <a href="<?php echo $g['bbs_reset'] ?>"><?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?></a>
+      <a data-href="<?php echo $g['bbs_reset'] ?>" data-text="새로고침..">
+        <?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?>
+      </a>
     </h1>
   </header>
 
   <?php if ($NUM_NOTICE || $B['category'] || $d['theme']['search']): ?>
-  <div class="bar bar-standard bar-header-secondary bg-white px-0">
-    <nav class="nav nav-inline">
-      <!-- 동적생성 -->
-    </nav>
-  </div>
+  <nav class="bar bar-tab bar-light bg-faded px-0">
+    <!-- 동적생성 -->
+  </nav>
   <?php endif; ?>
 
   <main class="content rb-bbs-list" id="page-bbs-list" data-role="bbs-list">
@@ -39,12 +32,12 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
       <div class="swiper-wrapper">
 
         <!-- 전체글 -->
-        <div class="swiper-slide" id="swiper-allpost">
+        <div class="swiper-slide" id="swiper-allpost" data-hash="allpost">
           <ul class="table-view my-0 border-top-0">
             <?php if ($cat || $keyword): ?>
             <li class="table-view-cell table-view-active text-muted">
               <i class="fa <?php echo $cat?'fa-folder-open-o':'fa-search' ?> fa-fw" aria-hidden="true"></i> <?php echo $cat ?> <?php echo $keyword ?> <small>(<?php echo $NUM ?>건)</small>
-              <a class="btn btn-secondary js-btn-href" href="<?php echo $g['bbs_reset'] ?>" ><i class="fa fa-history fa-lg" aria-hidden="true"></i></a>
+              <a class="btn btn-secondary js-btn-href" data-href="<?php echo $g['bbs_reset'] ?>" data-text="전체글 보기.."><i class="fa fa-history fa-lg" aria-hidden="true"></i></a>
             </li>
             <?php endif; ?>
 
@@ -52,7 +45,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
             <!-- 일반글 출력부 -->
             <?php foreach($RCD as $R):?>
             <?php $R['mobile']=isMobileConnect($R['agent'])?>
-            <li class="table-view-cell<?php echo $R['depth']?' rb-reply rb-reply-0'.$R['depth']:'' ?><?php echo $R['hidden']?' secret':'' ?>" id="item-<?php echo $R['uid']?>">
+            <li class="table-view-cell<?php echo $R['depth']?' rb-reply rb-reply-0'.$R['depth']:'' ?><?php echo $R['hidden']?' secret':'' ?>" id="item-<?php echo $R['uid']?>" data-plugin="markjs">
               <a data-title="<?php echo $B['name']?>"
                  data-toggle="page"
                  data-target="#page-bbs-view"
@@ -107,8 +100,8 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                 </div>
                 <p>게시물이 없습니다.</p>
-                <?php if ($keyword): ?><a href="<?php echo $g['bbs_reset'] ?>&type=search" class="btn btn-outline-primary btn-lg">재검색</a><?php endif; ?>
-                <?php if ($cat): ?><a href="<?php echo $g['bbs_reset'] ?>&type=category" class="btn btn-outline-primary btn-lg">재탐색</a><?php endif; ?>
+                <?php if ($keyword): ?><a data-href="<?php echo $g['bbs_reset'] ?>&type=search" class="btn btn-outline-primary btn-lg" data-text="전체글 보기">재검색</a><?php endif; ?>
+                <?php if ($cat): ?><a data-href="<?php echo $g['bbs_reset'] ?>&type=category" class="btn btn-outline-primary btn-lg" data-text="전체글 보기">재탐색</a><?php endif; ?>
               </div>
             </div>
             <?php endif; ?>
@@ -117,7 +110,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
         <!-- 공지 -->
         <?php if ($NUM_NOTICE): ?>
-        <div class="swiper-slide">
+        <div class="swiper-slide" data-hash="notice">
           <ul class="table-view border-top-0 mt-0">
             <?php foreach($NCD as $R):?>
             <?php $R['mobile']=isMobileConnect($R['agent'])?>
@@ -136,7 +129,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84') ?>" width="42">
                   <?php elseif ($d['theme']['media_object']=='2'): ?>
                     <?php if (getUpImageSrc($R)): ?>
-                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'q') ?>" width="60">
+                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'120x120') ?>" width="60">
                     <?php endif; ?>
                   <?php else: ?>
                   <?php endif; ?>
@@ -173,12 +166,12 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
         <!-- 분류 -->
         <?php if($B['category']):$_catexp = explode(',',$B['category']);$_catnum=count($_catexp)?>
-        <div class="swiper-slide">
+        <div class="swiper-slide" data-hash="category">
           <ul class="table-view border-top-0 mt-0">
             <li class="table-view-divider"><?php echo $_catexp[0]?></li>
             <?php for($i = 1; $i < $_catnum; $i++):if(!$_catexp[$i])continue;?>
             <li class="table-view-cell">
-              <a href="<?php echo $g['bbs_reset'] ?>&cat=<?php echo $_catexp[$i]?>">
+              <a data-href="<?php echo $g['bbs_reset'] ?>&cat=<?php echo $_catexp[$i]?>" data-text="<?php echo $_catexp[$i]?> 분류">
                 <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> <?php echo $_catexp[$i]?>
                 <?php if($d['theme']['show_catnum']):?>
                 <span class="badge badge-pill"><?php echo getDbRows($table[$m.'data'],'site='.$s.' and notice=0 and bbs='.$B['uid']." and category='".$_catexp[$i]."'")?></span>
@@ -192,7 +185,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
         <!-- 검색 -->
         <?php if($d['theme']['search']):?>
-        <div class="swiper-slide">
+        <div class="swiper-slide" data-hash="search">
           <form class="content-padded" name="bbssearchf" action="<?php echo $g['s']?>/">
             <input type="hidden" name="r" value="<?php echo $r?>">
             <input type="hidden" name="c" value="<?php echo $c?>">
@@ -207,19 +200,19 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
             <input type="hidden" name="type" value="">
 
             <div class="form-group">
+              <label class="sr-only">검색어</label>
+              <input type="search" class="form-control" placeholder="검색어를 입력해주세요." name="keyword" value="<?php echo $_keyword?>" autocomplete="off">
+            </div>
+
+            <div class="form-group">
               <label class="sr-only">검색범위</label>
-              <select class="form-control" name="where" style="width: 92%;height: 1.5rem;">
+              <select class="form-control form-control-sm" name="where" style="width: 92%;height: 1.5rem;">
                 <option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
                 <option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
                 <option value="name"<?php if($where=='name'):?> selected="selected"<?php endif?>>이름</option>
                 <option value="nic"<?php if($where=='nic'):?> selected="selected"<?php endif?>>닉네임</option>
                 <option value="id"<?php if($where=='id'):?> selected="selected"<?php endif?>>아이디</option>
               </select>
-            </div>
-
-            <div class="form-group">
-              <label class="sr-only">검색어</label>
-              <input type="search" class="form-control" placeholder="검색어를 입력해주세요." name="keyword" value="<?php echo $_keyword?>" autocomplete="off">
             </div>
 
           </form>
@@ -239,7 +232,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
   <input type="hidden" name="theme" value="">
   <header class="bar bar-nav bar-dark bg-primary p-x-0">
 		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-    <h1 class="title" data-role="title">
+    <h1 class="title" data-role="title" data-history="back">
       <?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?>
     </h1>
   </header>
@@ -250,7 +243,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
     </div>
 
     <div data-role="article">
-      본문내용
+      <div class="p-4 text-xs-center">다시 시도해주세요.</div>
     </div>
 
     <div data-role="attach">
@@ -301,63 +294,81 @@ var settings={
   ctheme  : '<?php echo $d['bbs']['c_mskin_modal']?>' //모달 댓글테마
 }
 
-$(function () {
+getPostData(settings); // 모달 출력관련
+
+<?php if ($NUM_NOTICE || $B['category'] || $d['theme']['search']): ?>
+// 상단 navi(swiper)
+var bar_nav = new Swiper('.swiper-container', {
+  autoHeight: true,
+  pagination: {
+    el: '.rb-bbs-list .bar-tab',
+    dynamicBullets: false,
+    type: 'bullets',
+    className : 'tab-swiper',
+    bulletClass: 'tab-swiper',
+    bulletActiveClass : 'active' ,
+    clickable: true,
+    renderBullet: function (index, className) {
+      var title;
+      var tab_allpost = '<span class="icon icon-list"></span><span class="tab-label">전체글</span>';
+      var tab_category ='<span class="icon fa fa-folder-o"></span><span class="tab-label">분류</span>';
+      var tab_notice = '<span class="icon icon-sound"></span><span class="tab-label">공지 <?php echo $NUM_NOTICE ?></span>';
+      var tab_search = '<span class="icon icon-search"></span><span class="tab-label">검색</span>';
+
+
+
+      <?php if (!$NUM_NOTICE && $B['category'] && !$d['theme']['search']): ?>
+      if (index === 0) title = tab_allpost
+      if (index === 1) title = tab_category
+      <?php elseif (!$NUM_NOTICE && !$B['category'] && $d['theme']['search']): ?>
+      if (index === 0) title = tab_allpost
+      if (index === 1) title = tab_search
+      <?php elseif (!$NUM_NOTICE && $B['category'] && $d['theme']['search']): ?>
+      if (index === 0) title = tab_allpost
+      if (index === 1) title = tab_category
+      if (index === 2) title = tab_search
+      <?php elseif ($NUM_NOTICE && $B['category'] && !$d['theme']['search']): ?>
+      if (index === 0) title = tab_allpost
+      if (index === 1) title = tab_notice
+      if (index === 2) title = tab_category
+      <?php elseif ($NUM_NOTICE && !$B['category'] && $d['theme']['search']): ?>
+      if (index === 0) title = tab_allpost
+      if (index === 1) title = tab_notice
+      if (index === 2) title = tab_search
+      <?php else: ?>
+      if (index === 0) title = tab_allpost
+      if (index === 1) title = tab_notice
+      if (index === 2) title = tab_category
+      if (index === 3) title = tab_search
+      <?php endif; ?>
+      return '<a class="tab-item tab-swiper ' + className + '">'+title+'</a>';
+    }
+  },
+  on: {
+    init: function () {
+      console.log('swiper가 초기화 되었습니다.');
+      var btn_write = '<a class="tab-item" role="button" tabindex="0" href="#modal-bbs-write" data-toggle="modal"><span class="icon icon-compose"></span><span class="tab-label">글쓰기</span></a>';
+      setTimeout(function(){ $('.rb-bbs-list .bar-tab').append(btn_write); }, 300);
+    },
+  }
+});
+<?php endif; ?>
+
+$(document).ready(function() {
+
   // 사용자 액션에 대한 피드백 메시지 제공을 위해 액션 실행후 쿠키에 저장된 결과 메시지를 출력시키고 초기화 시킵니다.
   putCookieAlert('bbs_action_result') // 실행결과 알림 메시지 출력
 
-  getPostData(settings); // 모달 출력관련
-
-
-  <?php if ($NUM_NOTICE || $B['category'] || $d['theme']['search']): ?>
-  // 상단 navi(swiper)
-  var bar_nav = new Swiper('.swiper-container', {
-    autoHeight: true,
-    pagination: {
-      el: '.rb-bbs-list .nav-inline',
-      dynamicBullets: false,
-      type: 'bullets',
-      className : 'nav-link',
-      bulletClass: 'nav-link',
-      bulletActiveClass : 'active' ,
-      clickable: true,
-      renderBullet: function (index, className) {
-        var title;
-
-        <?php if (!$NUM_NOTICE && $B['category'] && !$d['theme']['search']): ?>
-        if (index === 0) title = '전체글'
-        if (index === 1) title = '분류'
-        <?php elseif (!$NUM_NOTICE && !$B['category'] && $d['theme']['search']): ?>
-        if (index === 0) title = '전체글'
-        if (index === 1) title = '검색'
-        <?php elseif (!$NUM_NOTICE && $B['category'] && $d['theme']['search']): ?>
-        if (index === 0) title = '전체글'
-        if (index === 1) title = '분류'
-        if (index === 2) title = '검색'
-        <?php elseif ($NUM_NOTICE && $B['category'] && !$d['theme']['search']): ?>
-        if (index === 0) title = '전체글'
-        if (index === 1) title = '공지'
-        if (index === 2) title = '분류'
-        <?php elseif ($NUM_NOTICE && !$B['category'] && $d['theme']['search']): ?>
-        if (index === 0) title = '전체글'
-        if (index === 1) title = '공지'
-        if (index === 2) title = '검색'
-        <?php else: ?>
-        if (index === 0) title = '전체글'
-        if (index === 1) title = '공지'
-        if (index === 2) title = '분류'
-        if (index === 3) title = '검색'
-        <?php endif; ?>
-        return '<a class=" ' + className + '">'+title+'</a>';
-      }
-    },
-    on: {
-      init: function () {
-        console.log('swiper가 초기화 되었습니다.');
-      },
-    }
-  });
+  // marks.js
+  $('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
 
   bar_nav.on('slideChange', function () {
+
+    setTimeout(function(){
+      var activeSlide = $('.swiper-slide-active').data('hash');
+      if (activeSlide=='search') $('[name="keyword"]').focus();
+    }, 300);
+
     if (bar_nav.activeIndex == 0) {
       $('.infinitescroll-end').removeClass("d-none");
       $('.infinitescroll-load').removeClass("d-none");
@@ -366,7 +377,6 @@ $(function () {
       $('.infinitescroll-load').addClass("d-none");
     }
   });
-  <?php endif; ?>
 
   // 더보기(무한스크롤)
   var currentPage =1; // 처음엔 무조건 1, 아래 더보기 진행되면서 +1 증가

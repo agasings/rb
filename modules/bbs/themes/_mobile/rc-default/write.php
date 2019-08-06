@@ -89,8 +89,7 @@
 				 var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
 				 </script>
 				 <?php
-					 $__SRC__ = htmlspecialchars($R['content']);
-					 include $g['path_plugin'].($d['bbs']['editor']?$d['bbs']['editor']: ($d['theme']['editor']?$d['theme']['editor']:$d['bbs']['editor_main'])).'/import.inline-mobile.php';
+					 include $g['path_plugin'].'/ckeditor5/import.inline-mobile.php';
 				 ?>
 			 </div>
 

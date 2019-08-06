@@ -225,3 +225,46 @@
 .rb-attach.active ~ .guide  {
   display: none
 }
+
+.modal .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.modal .ck.ck-placeholder:before,
+.modal .ck .ck-placeholder:before {
+  font-size: 1rem;
+}
+
+.modal .ck-editor__editable_inline {
+  min-height: 150px;
+}
+
+.modal [data-role="editor-nav"] {
+  display: none
+}
+.modal.editor-focused header,
+.modal.editor-focused .form-list,
+.modal.editor-focused [data-role="write-nav"] {
+  display: none
+}
+.modal.editor-focused [data-role="editor-nav"] {
+  display: block
+}
+
+.modal.editor-focused .bar-nav ~ .content {
+  padding-top: 0;
+  bottom: 3.5rem;
+}
+.modal .bar-tab .ck-toolbar {
+  border: none;
+  box-shadow: none;
+  background-color: #fff;
+}
+.modal .bar-tab .ck-toolbar .ck-button {
+  padding: .5rem .3rem;
+}
+.modal .bar-tab .ck-toolbar .ck.ck-icon {
+  font-size: 1em;
+}

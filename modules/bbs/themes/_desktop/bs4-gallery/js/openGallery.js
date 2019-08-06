@@ -231,7 +231,6 @@ $(function () {
     var showComment_Ele = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
     var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 
-    $('[data-role="comment-item"] article').autolink(); // 자동링크 플러그인 초기화
     modal.find('.timeline-vscroll').animate({scrollTop : 0}, 100);  // 스크롤 상단 이동
     modal.find('.add-comment').click(function() {
       var uid = $(this).data('parent')
@@ -272,7 +271,6 @@ $(function () {
     var list_item = $('#page-bbs-list').find('#item-'+uid)
     var showComment_Ele = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
     var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-    $('[data-role="oneline-item"] article').autolink();  // 자동 링크 플러그인 초기화
     modal.find('[data-toggle="popover"]').popover({
        trigger: 'hover'
      })

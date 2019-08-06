@@ -296,7 +296,6 @@ function getPostData(modal_settings){
      var showComment_Ele = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 	   var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 
-     $('[data-role="comment-item"] article').autolink(); // 자동링크 플러그인 초기화
      modal.find('.timeline-vscroll').animate({scrollTop : 0}, 100); // 스크롤 상단 이동
      modal.find('[data-toggle="tooltip"]').tooltip()
      modal.find('.add-comment').click(function() {
@@ -304,7 +303,6 @@ function getPostData(modal_settings){
        var textarea = $('[data-role="oneline-input-'+uid+'"]')
        setTimeout(function(){ textarea.focus(); }, 200); // 한줄의견 추가시에 textarea focus 처리하기
      });
-     modal.find('[data-role="comment-item"] article').autolink();
      modal.find('#meta-description-content').removeAttr("style"); //댓글 입력창 크기 원상복귀
 
      modal.find('[data-toggle="popover"]').popover({
@@ -337,8 +335,6 @@ function getPostData(modal_settings){
      modal.find('[data-toggle="popover"]').popover({
        trigger: 'hover'
      })
-
-     $('[data-role="oneline-item"] article').autolink();  // 자동 링크 플러그인 초기화
 
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
           bid : bid,

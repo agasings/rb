@@ -105,13 +105,11 @@ function getPostData(settings){
 
          if (video) {  // 첨부 비디오가 있을 경우
            modal.find('[data-role="attach-video"]').removeClass('hidden').html(video)
-           modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
            modal.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
          }
 
          if (audio) {  // 첨부 오디오가 있을 경우
            modal.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
-           modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
          }
 
          if (doc) {  // 첨부 문서 있을 경우
@@ -124,11 +122,6 @@ function getPostData(settings){
 
          if (file) {  // 첨부 기타파일이 있을 경우
            modal.find('[data-role="attach-file"]').removeClass('hidden').html(file)
-         }
-
-         if (youtube) {  // 첨부 유튜브가 있을 경우
-           modal.find('[data-role="attach-youtube"]').removeClass('hidden').html(youtube)
-           modal.find('[data-plugin="mediaelement"]').mediaelementplayer(); // http://www.mediaelementjs.com/
          }
 
          if (theme_show_upfile==0) {
@@ -283,9 +276,6 @@ function getPostData(settings){
       var uid = $(mid).find('[name="uid"]').val()
       page.find('[data-role="total_comment"]').text(num); //댓글갯수 적용
 
-      // 댓글 등록창 자동 리사이즈
-  		autosize($('.commentting-all textarea'));
-
   		// 댓글 등록 버튼 동적 출력
   		$('.commentting-all .input-group textarea').on('keyup', function(event) {
   			var $oneline = $('.commentting-all .input-group');
@@ -306,9 +296,6 @@ function getPostData(settings){
      var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
      var showComment_Ele_2 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 	   var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-
-     $('.commentting-all .input-group textarea').removeAttr("style"); //늘어난 댓글 입력창 초기화
-     $('.commentting-all .rb-submit').css('display','none')
 
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
           bid : bid,

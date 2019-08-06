@@ -17,9 +17,11 @@ $(function() {
     frames.__iframe_for_action__.location.href = $(this).attr("data-url");
   });
 
-	$(".js-btn-href").click(function() {
-		location.href = $(this).attr("data-href");
-	});
+  $('[data-act="write"]').tap(function() {
+    $.loader({ text: $(this).attr("data-text") });
+    location.href = $(this).attr("data-href");
+  });
+
 
   // 게시물 보기 페이지에서 댓글이 등록된 이후에 댓글 수량 업데이트
   $('#page-bbs-view').find('#commentting-container').on('saved.rb.comment',function(){
