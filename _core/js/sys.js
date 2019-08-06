@@ -451,6 +451,20 @@ function mobileCheck() {
 function Iframely(ele) {
 	$(ele).each(function(index) {
     var url = $(this).attr('url');
+		var link_url_parse = $('<a>', {href: url});
+
+		//네이버 블로그 URL의 실제 URL 변환
+		if (link_url_parse.prop('hostname')=='blog.naver.com' && link_url_parse.prop('pathname')) {
+			var nblog_path_arr = link_url_parse.prop('pathname').split("/");
+			var nblog_id = nblog_path_arr[1];
+			var nblog_pid = nblog_path_arr[2];
+			if (nblog_pid) {
+				var url =  'https://blog.naver.com/PostView.nhn?blogId='+nblog_id+'&logNo='+nblog_pid;
+			} else {
+				var url = 'https://blog.naver.com/PostList.nhn?blogId='+nblog_id;
+			}
+		}
+
 		var url_orgin = $(this).attr('url');
 		var _url = encodeURIComponent(url);
 
@@ -469,7 +483,6 @@ function Iframely(ele) {
 				var thumbnail_width = data.thumbnail_width;
 
 				if (type=='link') {
-					var link_url_parse = $('<a>', {href: url});
 					var provider_url = link_url_parse.prop('protocol')+'//'+link_url_parse.prop('hostname');
 					if (thumbnail_url) var thumbnail_url = thumbnail_url.replace('http://img1.daumcdn.net/thumb/S1200x630/?fname=','');  //다음포털 룰 필터링
 					var thumbnail_url_parse = $('<a>', {href: thumbnail_url});
@@ -481,7 +494,7 @@ function Iframely(ele) {
 					} else if (provider_name=='네이버 지도') {
 						var thumbnail___url = '/thumb-ssl/165x165/u/ssl.pstatic.net/static/maps/m/og_map.png';
 					} else {
-						var thumbnail___url = '/'+thumbnail_protocol+'/165x165/u/'+thumbnail__url;
+						var thumbnail___url = '/_core/opensrc/timthumb/thumb.php?src='+encodeURIComponent(thumbnail_url)+'&w=165&h=165&s=1';
 					}
 
 					$.getJSON('//embed.kimsq.com/iframely?uri=' + _url, {
@@ -500,7 +513,7 @@ function Iframely(ele) {
 									var html = '<div class="card m-0 bg-white"><a href="'+url+'" target="_blank"><img class="card-img-top img-fluid" src="'+thumbnail_url+'"><div class="card-block"><h6 class="card-title muted-link">'+title+'</h6><p class="card-text small line-clamp-2 text-muted mb-1">'+(description?description:'')+'</p><img src="'+icon+'" class="mr-2" style="width:16px"><span class="badge badge-default badge-inverted">'+author+'</span><span class="badge badge-default badge-inverted">'+provider_name+'</span><span class="badge badge-default badge-inverted">'+link_url_parse.prop('hostname')+'</span></div></a></div>';
 								}
 								else {
-									var html = '<a href="'+url+'" class="card m-0 muted-link" target="_blank"><ul class="table-view"><li class="table-view-cell media"><span class="navigate-right w-100">'+thumbnail_markup+'<div class="media-body"><span class="line-clamp-1">'+title+'</span><p class="line-clamp-1">'+(description?description:'')+'</p><img src="'+icon+'" class="mr-2" style="width:1rem"><span class="badge badge-default badge-inverted">'+(author?author:(provider_name?provider_name:link_url_parse.prop('hostname')))+'</span></div></span></li></ul></a>';
+									var html = '<a href="'+url+'" class="card m-0 muted-link" target="_blank"><ul class="table-view"><li class="table-view-cell media"><span class="navigate-right w-100">'+thumbnail_markup+'<div class="media-body"><span class="line-clamp-1">'+title+'</span><p class="line-clamp-1 mb-1">'+(description?description:'')+'</p><p class="text-truncate mb-0"><span class="badge badge-default badge-inverted text-nowrap"><img src="'+icon+'" class="mr-2" style="width:1rem">'+(author?author:(provider_name?provider_name:link_url_parse.prop('hostname')))+'</span></p></div></span></li></ul></a>';
 								}
 							} else {
 								// 데스크탑
