@@ -40,11 +40,6 @@
 <?php getImport('swiper','css/swiper','4.5.0','css')?>
 <?php getImport('swiper','js/swiper.min','4.5.0','js')?>
 
-<!-- 동영상,유튜브,오디오 player : http://www.mediaelementjs.com/ -->
-<?php getImport('mediaelement','mediaelement-and-player.min','4.2.8','js') ?>
-<?php getImport('mediaelement','lang/ko','4.2.8','js') ?>
-<?php getImport('mediaelement','mediaelementplayer','4.2.8','css') ?>
-
 <!-- iframely:  https://iframely.com/ -->
 <script async charset="utf-8" src="//cdn.iframe.ly/embed.js?key=9ceb477698ab5a4783ba77ebd60faeaf"></script>
 

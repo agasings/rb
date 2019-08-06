@@ -7,7 +7,6 @@
 <?php getImport('photoswipe','rc-photoswipe','4.1.1','js') ?>
 <?php getImport('photoswipe','photoswipe-ui-default.min','4.1.1','js') ?>
 
-
 <!-- 입력 textarea 자동확장 -->
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 
@@ -18,9 +17,17 @@
 <!-- jQuery-Autocomplete : https://github.com/devbridge/jQuery-Autocomplete -->
 <?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>
 
-<!-- 댓글출력시 필요 -->
-<script src="<?php echo $g['s']?>/modules/comment/lib/Rb.comment.js"></script>
+<!-- markjs js : https://github.com/julmot/mark.js -->
+<?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
 
+<!-- 댓글출력시 필요 -->
+<?php if ($mod!='write'): ?>
+<?php getImport('ckeditor5','mobile-comment/build/ckeditor','12.2.0','js');  ?>
+<?php getImport('ckeditor5','mobile-comment/build/translations/ko','12.2.0','js');  ?>
+
+<script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>
+<?php endif; ?>
+<script src="<?php echo $g['url_root']?>/modules/comment/lib/Rb.comment.js"></script>
 
 <!-- 레이아웃 공용 스크립트 -->
 <script src="<?php echo $g['url_layout']?>/_js/main.js<?php echo $g['wcache']?>"></script>

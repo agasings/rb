@@ -128,10 +128,8 @@ body, th, td, input, select, textarea, button {
 
  /* ckeditor content */
 .ck-content p {
-  margin: 0.625rem;
-  font-size: 1.0625rem;
-  line-height: 1.625;
   color: #333;
+  margin-bottom: .3rem;
 }
 .ck-content figure.image {
   display: table;
@@ -149,6 +147,9 @@ body, th, td, input, select, textarea, button {
   font-size: 0.8125rem;
   line-height: 1.125rem;
   color: #919191;
+}
+figure.media.ck-placeholder:before {
+  display: none
 }
 
 /* 포커스된 아이템 강조표시 */
@@ -332,6 +333,9 @@ figure.media {
 }
 .bar .btn-link {
   color: #0275d8;
+}
+.bar.bar-dark .btn-link {
+  color: rgba(255, 255, 255, 0.5);
 }
 
  .modal {

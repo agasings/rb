@@ -96,7 +96,6 @@
 			</div>
 
       <div data-role="article">
-        본문내용
       </div>
 
       <div data-role="attach">

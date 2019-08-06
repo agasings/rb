@@ -58,7 +58,6 @@ $(function() {
   RC_initPhotoSwipe(); // 포토갤러리 초기화 (모바일 전용)
 
 	$('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화
-  $('[data-plugin="mediaelement"]').mediaelementplayer(); // 동영상, 오디오 플레이어 초기화 http://www.mediaelementjs.com/
 
   $(document).on('tap','[data-toggle="changeModal"]', function (e) {
     var $this   = $(this)
@@ -220,20 +219,21 @@ $(function() {
     });
 	});
 
-
-  // ckeditor5 media-embed  : https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html
-  document.querySelectorAll( 'oembed[url]' ).forEach( element => {
-    iframely.load( element, element.attributes.url.value );
-  } );
-
-  document.querySelectorAll( 'div[data-oembed-url]' ).forEach( element => {
-      // Discard the static media preview from the database (empty the <div data-oembed-url="...">).
-      while ( element.firstChild ) {
-          element.removeChild( element.firstChild );
-      }
-
-      // Generate the media preview using Iframely.
-      iframely.load( element, element.dataset.oembedUrl ) ;
-  } );
+  // 페이지 이동
+  $('[data-href]').tap(function() {
+    var text = $(this).attr("data-text")?$(this).attr("data-text"):'이동중..';
+    var url = $(this).attr("data-href");
+    if ($(this).attr("data-toggle")=='drawer-close') {
+      drawer_left.drawer('hide')
+      drawer_right.drawer('hide')
+      setTimeout(function(){
+        $.loader({ text: text });
+        location.href = url;
+      }, 200);
+    } else {
+      $.loader({ text: text });
+      location.href = url;
+    }
+  });
 
 });
