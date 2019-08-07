@@ -11,7 +11,7 @@ if (!function_exists('getMenuWidgetCollapse'))
 
 <ul class="table-view mt-0 bg-white" id="<?php echo $w['collid']?>">
 	<li class="table-view-cell">
-		<a class="" href="<?php echo RW(0)?>">
+		<a class="" data-href="<?php echo RW(0)?>" data-toggle="drawer-close">
 			<div class="media-body">
 				홈
 			</div>
@@ -36,11 +36,11 @@ if (!function_exists('getMenuWidgetCollapse'))
 
 		<ul class="table-view collapse<?php if($_isActive):?> in<?php endif?>" id="<?php echo $w['collid']?>-<?php echo $C['uid']?>">
 			<?php if($w['dispfmenu']):?>
-			<li class="table-view-cell"><a href="<?php echo $_href?>"<?php echo $_addattr.$_target?>><?php echo $_name?></a></li>
+			<li class="table-view-cell"><a data-href="<?php echo $_href?>"<?php echo $_addattr.$_target?> data-toggle="drawer-close"><?php echo $_name?></a></li>
 			<?php endif?>
 			<?php while($C1 = db_fetch_array($CD1)):?>
 			<li class="table-view-cell<?php if(in_array($C1['id'],$_CA)):?> table-view-info<?php endif?>">
-				<a class="" href="<?php echo $w['link']=='bookmark'?'#'.$_newTreeB.'-'.$C1['id']:RW('c='.$_newTree.'/'.$C1['id'])?>"<?php if($C1['addattr']):?> <?php echo $C1['addattr']?><?php endif?><?php if($C1['target']):?> target="<?php echo $C1['target']?>"<?php endif?>>
+				<a class="" data-href="<?php echo $w['link']=='bookmark'?'#'.$_newTreeB.'-'.$C1['id']:RW('c='.$_newTree.'/'.$C1['id'])?>" data-toggle="drawer-close" <?php if($C1['addattr']):?> <?php echo $C1['addattr']?><?php endif?><?php if($C1['target']):?> target="<?php echo $C1['target']?>"<?php endif?>>
 					<?php echo $C1['name']?>
 				</a>
 			</li>
@@ -49,7 +49,7 @@ if (!function_exists('getMenuWidgetCollapse'))
 	</li>
 	<?php else:?>
 	<li class="table-view-cell<?php if($_isActive):?> table-view-info<?php endif?>">
-		<a href="<?php echo $_href?>"<?php echo $_addattr.$_target?> >
+		<a data-href="<?php echo $_href?>"<?php echo $_addattr.$_target?>  data-toggle="drawer-close">
 			<?php echo $C['name']?>
 			<?php if($C['is_child']):?><span class="branch"></span><?php endif?>
 		</a>
@@ -57,7 +57,7 @@ if (!function_exists('getMenuWidgetCollapse'))
 		<ul class="table-view">
 			<?php while($C1 = db_fetch_array($CD1)):?>
 			<li class="table-view-cell<?php if(in_array($C1['id'],$_CA)):?> table-view-info<?php endif?>">
-				<a href="<?php echo $w['link']=='bookmark'?'#'.$_newTreeB.'-'.$C1['id']:RW('c='.$_newTree.'/'.$C1['id'])?>"<?php if($C1['addattr']):?> <?php echo $C1['addattr']?><?php endif?><?php if($C1['target']):?> target="<?php echo $C1['target']?>"<?php endif?>>
+				<a data-href="<?php echo $w['link']=='bookmark'?'#'.$_newTreeB.'-'.$C1['id']:RW('c='.$_newTree.'/'.$C1['id'])?>" data-toggle="drawer-close" <?php if($C1['addattr']):?> <?php echo $C1['addattr']?><?php endif?><?php if($C1['target']):?> target="<?php echo $C1['target']?>"<?php endif?>>
 					<?php echo $C1['name']?>
 				</a>
 			</li>
