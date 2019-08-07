@@ -82,7 +82,7 @@
 <!-- 6. 일반모달 : 게시물 보기 -->
 <div id="modal-bbs-view" class="modal zoom">
 
-	<section id="page-bbs-view" class="rb-bbs-list page center" data-role="bbs-list">
+	<section id="page-bbs-view" class="rb-bbs-list page center" data-role="bbs-view">
 		<input type="hidden" name="bid" value="">
 	  <input type="hidden" name="uid" value="">
 	  <header class="bar bar-nav bar-light bg-faded px-0">
@@ -126,10 +126,35 @@
 	</section>
 
 	<!-- 전체댓글보기 -->
-	<section id="page-bbs-allcomments" class="page right">
-		  <div class="commentting-all"></div>
+	<section id="page-bbs-allcomments" class="page right" data-role="bbs-comment">
+	  <div class="commentting-all"></div>
 	</section>
 
+  <section id="page-bbs-photo" class="page right" data-role="bbs-photo">
+		<header class="bar bar-nav bar-dark bg-black px-0">
+			<button class="btn btn-link btn-nav pull-left p-x-1" data-history="back">
+				<i class="material-icons">arrow_back</i>
+			</button>
+		 <h1 class="title" data-role="title" data-history="back">제목</h1>
+		</header>
+		<div class="bar bar-standard bar-header-secondary bar-dark bg-black">
+		   <h1 class="title text-muted"><small><i class="fa fa-expand mr-2" aria-hidden="true"></i> 이미지를 터치해서 확대해서 볼 수 있습니다.</small></h1>
+		</div>
+		<div class="bar bar-footer bar-dark bg-black text-muted">
+			<div class="swiper-pagination"></div>
+		</div>
+		<div class="content bg-black">
+			<div class="d-flex" style="height:78vh">
+				<div class="swiper-container align-self-center" style="height:78vh">
+					<div class="swiper-wrapper">
+					</div>
+			</div>
+		    <!-- Add Navigation -->
+		    <div class="swiper-button-prev"></div>
+		    <div class="swiper-button-next"></div>
+		  </div>
+		</div>
+	</section>
 
 </div><!-- /.modal -->
 
