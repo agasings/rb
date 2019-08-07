@@ -8,8 +8,10 @@
 .rb-commentting header h1 {
   line-height: 30px
 }
-
-[data-role="comment-container"] > .media {
+[data-role="commentWrite-container"].active {
+  box-shadow: 1rem 0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
+}
+[data-role="comment-container"] > li {
   margin-top: -1px;
   padding: 15px 0;
   border-top: 1px solid #eee;
@@ -22,6 +24,21 @@
 
 [data-role="comment-container"] > .media:first-child {
   border-bottom: 0
+}
+
+[data-role="commentWrite-container"] .ck-editor__editable  {
+  max-height: 13.7rem;
+  overflow: auto
+}
+
+[data-role="commentWrite-container"] .toolbar-container,
+[data-role="commentWrite-container"] [data-kcact="regis"] {
+  visibility: hidden
+}
+
+[data-role="commentWrite-container"].active .toolbar-container,
+[data-role="commentWrite-container"].active [data-kcact="regis"] {
+  visibility: visible;
 }
 
 .media-list > .media .media {
@@ -225,19 +242,64 @@
   outline: none;
 }
 .rb-comments-write .rb-submit {
-  position: absolute;
-  top: -2px;
-  left: auto;
-  right: 5px;
+
 }
 .rb-comments-write .btn-link {
-  padding: 5px 10px 0 10px;
+  padding: .5rem 1rem .7rem .4rem;
   color: #666;
-  line-height: 2rem;
+  line-height: 1rem;
 }
 .rb-comments-write .rb-submit .fa {
   display: inline-block;
   margin-top: -3px;
   font-size: 25px;
   color: #0084FF;
+}
+.rb-comments-write .ck.ck-editor__editable_inline>:first-child {
+  margin-top: 0;
+  margin-bottom: 0
+}
+.rb-comments-write .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+[data-role="commentWrite-container"] .ck.ck-toolbar,
+[data-role="comment-item"] .ck.ck-toolbar {
+  border: 0;
+  background-color: transparent
+}
+
+[data-role="commentWrite-container"] .ck.ck-icon {
+  font-size: 1rem;
+}
+[data-role="comment-item"] .ck.ck-icon {
+  font-size: .7rem;
+}
+
+.comment-editmod.rb-comments-write {
+  display: none
+}
+
+
+[data-role="anchor-link"]:before {
+  display: block;
+  content: " ";
+  margin-top: -65px;
+  height: 65px;
+  visibility: hidden;
+}
+
+[data-role="comment-box"].edit_mod [data-role="header-container"],
+[data-role="comment-box"].edit_mod [data-role="comment-item"],
+[data-role="comment-box"].edit_mod [data-role="btnMore-container"],
+[data-role="comment-box"].edit_mod [data-role="trigger-edit"],
+[data-role="comment-box"].edit_mod [data-kcact="delete"],
+[data-role="comment-box"].edit_mod [data-role="toggle-oneline-input"],
+[data-role="comment-box"].edit_mod [data-kcact="like"] {
+  display: none
+}
+[data-role="comment-box"].edit_mod [data-role="comment-item"].edit_active {
+  display: block
 }

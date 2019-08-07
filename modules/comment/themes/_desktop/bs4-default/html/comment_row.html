@@ -49,26 +49,22 @@
       <div class="rb-oneline-write"> <!-- 한줄의견 등록폼 -->
 
         <div class="card my-3 shadow-sm" data-role="oneline-input-wrapper-{$comment_uid}">
-          <div class="d-flex justify-content-between align-items-end">
-            <section class="w-100">
-              <div data-role="editor">
-                <div data-role="oneline-input-{$comment_uid}" class="border-0"></div>
-              </div>
-            </section>
-            <div class="p-2">
-              <button type="button" class="btn btn-light" data-role="open-emoticon" hidden>
-                <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
-              </button>
-              <button class="btn btn-light" type="submit"
-                title="의견추가"
-                data-kcact="regis"
-                data-type="oneline"
-                data-parent="{$comment_uid}"
-                data-effect="animated fadeInUp"
-                data-grant="{$grant_uid}">
-                등록
-              </button>
+          <section class="w-100">
+            <div data-role="editor">
+              <div data-role="oneline-input-{$comment_uid}" class="border-0"></div>
             </div>
+          </section>
+          <div class="card-footer p-0 d-flex justify-content-between align-items-center bg-light">
+            <div class="toolbar-container align-self-end"></div>
+            <button class="btn btn-link" type="submit"
+              title="의견추가"
+              data-kcact="regis"
+              data-type="oneline"
+              data-parent="{$comment_uid}"
+              data-effect="animated fadeInUp"
+              data-grant="{$grant_uid}">
+              등록
+            </button>
           </div><!-- /.d-flex -->
         </div>
 

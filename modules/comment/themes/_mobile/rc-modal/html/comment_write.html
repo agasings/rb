@@ -4,9 +4,17 @@
 -->
 <div data-role="comment-input-wrapper">
 
-  <div class="input-group" data-role="form">
-    <textarea rows="1" name="content" placeholder="메시지를 입력하세요..." data-role="comment-input" id="meta-description-content"></textarea>
-    <button class="btn btn-link rb-submit" type="submit" style="display:none"  data-kcact="regis" data-type="comment" data-parent="{$comment_parent}">
+  <div class="d-flex border-0 rounded-0 align-items-center mt-1" data-role="form">
+
+    <section class="w-100">
+      <div data-role="editor">
+    		<div data-role="comment-input" id="meta-description-content"  class="border-0"></div>
+    	</div>
+    </section>
+    <div class="toolbar-container align-self-end">
+
+    </div>
+    <button class="btn btn-link rb-submit align-self-end" type="submit"  data-kcact="regis" data-type="comment" data-parent="{$comment_parent}">
       <i class="fa fa-paper-plane"></i>
     </button>
   </div>
@@ -15,9 +23,6 @@
 
 
 <script type="text/javascript">
-
-
-autosize($('[data-role="comment-input"] textarea'));  //입력창 자동확장 플러그인 적용
 
 if(!memberid){
    $('.rb-comments-write .card-header').css('display','none')

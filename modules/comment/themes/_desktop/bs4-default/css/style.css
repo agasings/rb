@@ -73,15 +73,15 @@
   background-color: #fff;
 }
 
-.rb-comments-write .card .card-header,
-.rb-comments-write .card .card-footer,
+[data-role="commentWrite-container"] .card-header,
+[data-role="commentWrite-container"] .card-footer,
 .rb-oneline-write .card .card-header,
 .rb-oneline-write .card .card-footer {
   display: none
 }
 
-.rb-comments-write .card.active .card-header,
-.rb-comments-write .card.active .card-footer,
+[data-role="commentWrite-container"].active .card-header,
+[data-role="commentWrite-container"].active .card-footer,
 .rb-oneline-write .card.active .card-header,
 .rb-oneline-write .card.active .card-footer {
   display: block
@@ -294,4 +294,9 @@
 figure.ck.ck-placeholder:before,
 .ck figure.ck-placeholder:before {
   content: none;
+}
+
+.ck.ck-toolbar {
+  border: 0;
+  background-color: transparent
 }
