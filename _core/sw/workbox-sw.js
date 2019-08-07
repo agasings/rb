@@ -18,11 +18,10 @@ if (workbox) {
 // 프리캐싱
 workbox.precaching.precacheAndRoute([
 
-  {url: '/_core/css/sys.css', revision: '2.3.1'},
-  {url: '/_core/js/sys.js', revision: '2.3.1'},
-  {url: '/_core/js/jquery.autolink.js', revision: '1.0'},
+  {url: '/_core/css/sys.css', revision: '2.4.0'},
+  {url: '/_core/js/sys.js', revision: '2.4.0'},
 
-  {url: '/modules/comment/lib/Rb.comment.js', revision: '1.0'},
+  {url: '/modules/comment/lib/Rb.comment.js', revision: '1.1'},
 
   '/plugins/font-awesome/4.7.0/css/font-awesome.css',
   '/plugins/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0',
@@ -43,29 +42,33 @@ workbox.precaching.precacheAndRoute([
   '/plugins/is-loading/1.0.6/jquery.isloading.min.js',
   '/plugins/js-cookie/2.2.0/js.cookie.min.js',
 
+  '/plugins/ckeditor5/12.2.0/classic/build/ckeditor.js',
+  '/plugins/ckeditor5/12.2.0/classic/build/translations/ko.js',
+
+  '/plugins/ckeditor5/12.2.0/mobile/build/ckeditor',
+  '/plugins/ckeditor5/12.2.0/mobile/build/translations/ko.js',
+
+  '/plugins/ckeditor5/12.2.0/decoupled-document/build/ckeditor.js',
+  '/plugins/ckeditor5/12.2.0/decoupled-document/build/translations/ko.js',
+
   '/plugins/bootstrap-notify/3.1.3/bootstrap-notify.min.js',
 
-  '/plugins/swiper/4.2.2/css/swiper.css',
-  '/plugins/swiper/4.2.2/js/swiper.min.js',
+  '/plugins/swiper/4.5.0/css/swiper.css',
+  '/plugins/swiper/4.5.0/js/swiper.min.js',
 
   '/plugins/snap/1.9.3/rc-snap.js',
 
-  '/plugins/mediaelement/4.2.8/mediaelement.min.js',
-  '/plugins/mediaelement/4.2.8/lang/ko.js',
-  '/plugins/mediaelement/4.2.8/mediaelementplayer.css',
-  '/plugins/mediaelement/4.2.8/mediaelement-and-player.min.js',
-
   '/plugins/jquery.countdown/2.2.0/jquery.countdown.min.js',
 
-  '/plugins/clipboard/1.5.5/clipboard.min.js',
-
-  '/plugins/photoswipe/4.1.1/photoswipe.css',
-  '/plugins/photoswipe/4.1.1/default-skin/default-skin.css',
-  '/plugins/photoswipe/4.1.1/photoswipe.min.js',
-  '/plugins/photoswipe/4.1.1/rc-photoswipe.js',
-  '/plugins/photoswipe/4.1.1/photoswipe-ui-default.min.js',
-
   '/plugins/autosize/3.0.14/autosize.min.js',
+  '/plugins/clipboard/2.0.4/clipboard.min.js',
+  '/plugins/markjs/8.11.1/jquery.mark.min.js',
+
+  '/plugins/photoswipe/4.1.2/photoswipe.css',
+  '/plugins/photoswipe/4.1.2/default-skin/default-skin.css',
+  '/plugins/photoswipe/4.1.2/photoswipe.min.js',
+  '/plugins/photoswipe/4.1.2/rc-photoswipe.js',
+  '/plugins/photoswipe/4.1.2/photoswipe-ui-default.min.js',
 
   '/plugins/jquery-timeago/1.6.1/jquery.timeago.js',
   '/plugins/jquery-timeago/1.6.1/locales/jquery.timeago.ko.js',
