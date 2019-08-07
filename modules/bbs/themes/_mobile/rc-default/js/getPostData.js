@@ -14,8 +14,10 @@ function getPostData(settings){
   var ctheme=settings.ctheme; // 댓글테마
   var page = $('.page')
   var page_allcomment = $('#page-bbs-allcomments')  // 댓글 전체보기 페이지
+  var page_bbs_photo = $('#page-bbs-photo');  // 샤진 크게보기 페이지
   var popup_linkshare = $('#popup-link-share')  //링크공유 팝업
   var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
+
 
   //  게시물보기 모달이 보여질때 : 게시물 본문영역 셋팅
   $(mid).on('show.rc.'+type, function(event) {
@@ -416,7 +418,28 @@ function getPostData(settings){
       kakao_link_btn.click(function() {
         sendLink()
       });
-
   })
+
+  page_bbs_photo.on('hidden.rc.page', function () {
+    // 줌상태 초기화
+    setTimeout(function(){
+      page_bbs_photo.find('.swiper-zoom-container').removeAttr('style');
+      page_bbs_photo.find('.swiper-zoom-container img').removeAttr('style');
+    }, 500);
+  })
+
+  //첨부된 사진 크게보기 페이지 호출
+  $(document).on('tap','figure.image',function(){
+    if (!$(this).hasClass('ck-widget')) {
+      var page_start = $(this).closest('.page').attr('id');
+      var src = $(this).find('img').attr('src')
+      $('#page-bbs-photo').page({ start: '#'+page_start });
+      $('#page-bbs-photo').find('.swiper-slide img').attr('src',src)
+      var swiper = new Swiper('#page-bbs-photo .swiper-container', {
+        zoom: true,
+      });
+    }
+    return false;
+  });
 
 };

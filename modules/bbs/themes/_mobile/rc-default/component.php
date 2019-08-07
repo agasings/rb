@@ -1,7 +1,7 @@
 <!-- 게시판 글쓰기 -->
 <div id="modal-bbs-write" class="modal zoom">
   <section id="page-main" class="page center">
-  	<header class="bar bar-nav bar-dark bg-primary p-x-0">
+  	<header class="bar bar-nav bar-dark bg-primary p-x-0" data-role="write-nav">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" onclick="cancelCheck();">
   			취소
   	  </button>
@@ -12,6 +12,17 @@
   			글쓰기
   		</h1>
   	</header>
+
+    <header class="bar bar-nav bar-light bg-faded p-x-0 border-top" data-role="editor-nav">
+      <div class="d-flex align-items-center">
+        <div class="toolbar-container w-100"></div>
+        <?php if ($g['mobile']!='iphone' && $g['mobile']!='ipad'): ?>
+        <div class="flex-shrink-1 border-left text-xs-center" style="min-width:4rem">
+          <button class="btn btn-link" type="button">완료</button>
+        </div>
+      <?php endif; ?>
+      </div>
+    </header>
 
   	<nav class="bar bar-tab bar-light bg-faded" data-role="write-nav">
   	  <a class="tab-item active" role="button">
@@ -41,16 +52,6 @@
   	    <span class="tab-label">옵션</span>
   	  </a>
   	</nav>
-
-    <nav class="bar bar-tab bar-light bg-white" data-role="editor-nav">
-      <div class="d-flex align-items-center">
-        <div class="toolbar-container w-100"></div>
-        <div class="flex-shrink-1 border-left text-xs-center" style="min-width:4rem">
-          <button class="btn btn-link" type="button">완료</button>
-        </div>
-      </div>
-    </nav>
-
 
   	<div class="content">
 
@@ -430,12 +431,19 @@ $(function() {
 		$('#location-map').css('height',height+'px')
 	})
 
+
+
   DecoupledEditor
     .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
       placeholder: '내용',
-      toolbar: [ 'paragraph', 'heading1', 'heading2','bold', 'bulletedList', 'blockQuote','imageUpload'],
+        toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
+      removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
+      image: {},
       language: 'ko',
       extraPlugins: [rbUploadAdapterPlugin],
+      table: {
+          contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+      },
       mediaEmbed: {
           extraProviders: [
               {
@@ -447,9 +455,6 @@ $(function() {
                   url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
               }
           ]
-      },
-      image: {
-        toolbar: [ 'imageTextAlternative' ]
       },
       typing: {
           transformations: {

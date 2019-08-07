@@ -238,7 +238,7 @@
 }
 
 .modal .ck-editor__editable_inline {
-  min-height: 150px;
+  min-height: 75vh;
 }
 
 .modal [data-role="editor-nav"] {
@@ -254,17 +254,35 @@
 }
 
 .modal.editor-focused .bar-nav ~ .content {
+  top: 2.75rem;
+  bottom: .5rem;
   padding-top: 0;
-  bottom: 3.5rem;
 }
-.modal .bar-tab .ck-toolbar {
+.modal .bar-nav .ck-toolbar {
   border: none;
   box-shadow: none;
-  background-color: #fff;
+  background-color: inherit;
 }
-.modal .bar-tab .ck-toolbar .ck-button {
-  padding: .5rem .3rem;
+.modal .bar-nav .ck-toolbar .ck-button {
+  padding: .2rem .3rem;
 }
-.modal .bar-tab .ck-toolbar .ck.ck-icon {
+.modal .bar-nav .ck-toolbar .ck.ck-icon {
   font-size: 1em;
+}
+.ck-insert-table-dropdown__grid {
+  padding: .6rem!important;
+}
+.ck .ck-insert-table-dropdown-grid-box,
+.ck-insert-table-dropdown__label {
+  display: none;
+}
+.ck .ck-insert-table-dropdown-grid-box{
+  -ms-flex: 1 1 auto!important;
+  flex: 1 1 auto!important;
+  height: 2rem!important;
+}
+.ck .ck-insert-table-dropdown-grid-box:nth-child(1),
+.ck .ck-insert-table-dropdown-grid-box:nth-child(2),
+.ck .ck-insert-table-dropdown-grid-box:nth-child(3 ) {
+  display: block;
 }

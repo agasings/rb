@@ -225,8 +225,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
 </section>
 
-
-<section id="page-bbs-view" class="page right">
+<section id="page-bbs-view" class="page right" data-role="bbs-view">
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="theme" value="">
@@ -274,13 +273,34 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 </section>
 
 <!-- 전체댓글보기 -->
-<section id="page-bbs-allcomments" class="page right" data-role="comment">
+<section id="page-bbs-allcomments" class="page right" data-role="bbs-comment">
   <div class="commentting-all"></div>
 </section>
 
+<section id="page-bbs-photo" class="page right" data-role="bbs-photo">
+  <header class="bar bar-nav bar-dark bg-black px-0" style="opacity: 0.3;">
+    <a class="icon icon-left-nav pull-left text-white p-x-1" role="button" data-history="back"></a>
+   <h1 class="title" data-role="title" data-history="back"></h1>
+  </header>
+  <div class="bar bar-footer bar-dark bg-black text-muted" style="opacity: 0.3;">
+    <span class="title"><small>이미지를 터치해서 확대해서 볼 수 있습니다.</small></span>
+  </div>
+  <div class="content bg-black py-0">
+    <div class="d-flex" style="height:100vh">
+      <div class="swiper-container align-self-center" style="height:100vh">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" style="height:100vh;overflow:hidden">
+            <div class="swiper-zoom-container">
+              <img src="">
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
 
 <!-- 모달 댓글 출력관련  -->
-
 <?php $d['bbs']['c_mskin_modal'] = '_mobile/rc-modal'; ?>
 
 <link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin_modal']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
@@ -297,8 +317,8 @@ var settings={
 getPostData(settings); // 모달 출력관련
 
 <?php if ($NUM_NOTICE || $B['category'] || $d['theme']['search']): ?>
-// 상단 navi(swiper)
-var bar_nav = new Swiper('.swiper-container', {
+// 하단 navi(swiper)
+var bar_nav = new Swiper('#page-bbs-list .swiper-container', {
   autoHeight: true,
   pagination: {
     el: '.rb-bbs-list .bar-tab',
