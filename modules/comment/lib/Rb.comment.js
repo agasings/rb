@@ -177,9 +177,10 @@
            var e = $.Event('shown.rb.comment', { relatedTarget: this.$el_id });
            this.$el.trigger(e);
 
-           BalloonEditor
+           DecoupledEditor
            .create( document.querySelector( '[data-role="comment-input"]' ),{
              placeholder: this.options.commentPlaceHolder,
+             toolbar: ['imageUpload'],
              language: 'ko',
              extraPlugins: [rbUploadAdapterPlugin],
              mediaEmbed: {
@@ -193,25 +194,6 @@
                          url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
                      }
                  ]
-             },
-             blockToolbar: [
-                'paragraph', 'heading1', 'heading2', 'heading3',
-                '|',
-                'bulletedList', 'numberedList',
-                '|',
-                'blockQuote', 'imageUpload'
-             ],
-             link: {
-                 decorators: {
-                     addTargetToLinks: {
-                         mode: 'manual',
-                         label: '새탭에서 열기',
-                         attributes: {
-                             target: '_blank',
-                             rel: 'noopener noreferrer'
-                         }
-                     }
-                 }
              },
              typing: {
                  transformations: {
@@ -228,21 +210,21 @@
                      ],
                  }
              },
-             image: {
-                 toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
-                 styles: [
-                     'full',
-                     'alignLeft',
-                     'alignRight'
-                 ]
-             }
+             removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
+             image: {}
            } )
            .then( newEditor => {
              editor = newEditor;
-
+             $('[data-role="comment-input-wrapper"]').find('.toolbar-container').html(editor.ui.view.toolbar.element)
              editor.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-               //console.log( 'editable isFocused =', value );
-               if (memberid) $('[data-role="comment-input-wrapper"]').addClass('active')
+               if (value) {
+                 console.log('댓글 신규입력 에디터에 포커스 되었습니다.');
+                 if (memberid) $('[data-role="commentWrite-container"]').addClass('active')
+               } else {
+                 console.log('댓글 신규입력 에디터에 포커스 되지 않았습니다..');
+                 $('[data-role="commentWrite-container"]').removeClass('active')
+               }
+
              } );
 
            })
@@ -370,7 +352,7 @@
 
             if(mod=='active'){
                 // 입력창 active
-
+                $('[data-role="commentWrite-container"]').addClass('comment-editmod')
                 $('[data-role^="'+data.type+'-content-editable-"]').css('display','none').html('')
                 $('[data-role^="'+data.type+'-origin-content-"]').css('display','block');
                 $('[data-role^="'+data.type+'-modify-btn-wrapper-"]').hide();
@@ -382,10 +364,11 @@
 
                 $('[data-role="showHide-menu"]').css('display','none')
 
-                BalloonEditor
+                DecoupledEditor
                 .create( document.querySelector( '[data-role="'+data.type+'-content-editable-'+data.uid+'"]' ),{
                   placeholder: this.options.commentPlaceHolder,
                   language: 'ko',
+                  toolbar: ['imageUpload'],
                   extraPlugins: [rbUploadAdapterPlugin],
                   link: {
                       decorators: {
@@ -411,13 +394,6 @@
                           }
                       ]
                   },
-                  blockToolbar: [
-                     'paragraph', 'heading1', 'heading2', 'heading3',
-                     '|',
-                     'bulletedList', 'numberedList',
-                     '|',
-                     'blockQuote', 'imageUpload'
-                  ],
                   typing: {
                       transformations: {
                           include: [
@@ -433,14 +409,8 @@
                           ],
                       }
                   },
-                  image: {
-                      toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
-                      styles: [
-                          'full',
-                          'alignLeft',
-                          'alignRight'
-                      ]
-                  }
+                  removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
+                  image: {}
                 } )
                 .then( newEditor => {
                   editor_edit = newEditor;
@@ -449,18 +419,29 @@
                   const modelFragment = editor_edit.data.toModel( viewFragment );
                   editor_edit.model.insertContent( modelFragment );
                   editor_edit.editing.view.focus();
+                  $('[data-role="comment-item"][data-uid="'+data.uid+'"]').find('.toolbar-container').html(editor_edit.ui.view.toolbar.element)
 
                 })
                 .catch( error => {
                     console.error( error );
                 } );
 
-
                 // 수정/취소 버튼 노출
                 $('[data-role="'+data.type+'-modify-btn-wrapper-'+data.uid+'"]').show();
+
+                $('[data-role="comment-box"]').addClass('edit_mod');
+                $('[data-role="comment-item"][data-uid="'+data.uid+'"]').addClass('edit_active')
+
+                if (mobileCheck()) { // 모바일에서만 수정항목의 해시로 이동
+                  setTimeout(function(){
+                    document.getElementById("CMT-" + data.uid).scrollIntoView(true);
+                  }, 300);
+                }
+
             }else if(mod=='deactive'){
                 // 입력창 deactive
                 editor_edit.destroy()
+                $('[data-role="commentWrite-container"]').removeClass('comment-editmod')
                 $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','none')
                 $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','block');
 
@@ -468,6 +449,9 @@
                 $('[data-role="'+data.type+'-modify-btn-wrapper-'+data.uid+'"]').hide();
 
                 $('[data-role="showHide-menu"]').css('display','block')
+
+                $('[data-role="comment-box"]').removeClass('edit_mod');
+                $('[data-role="comment-item"][data-uid="'+data.uid+'"]').removeClass('edit_active')
             }
         },
 
@@ -483,7 +467,7 @@
             $(oneline_input_wrapper).toggle();
 
             if (!$('[data-role="oneline-input-'+parent+'"]').hasClass('ck-content')) {
-              BalloonEditor
+              DecoupledEditor
               .create( document.querySelector( '[data-role="oneline-input-'+parent+'"]' ),{
                 placeholder: '답글입력',
                 language: 'ko',
@@ -512,13 +496,6 @@
                         }
                     ]
                 },
-                blockToolbar: [
-                   'paragraph', 'heading1', 'heading2', 'heading3',
-                   '|',
-                   'bulletedList', 'numberedList',
-                   '|',
-                   'blockQuote', 'imageUpload'
-                ],
                 typing: {
                     transformations: {
                         include: [
@@ -534,17 +511,12 @@
                         ],
                     }
                 },
-                image: {
-                    toolbar: [ 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
-                    styles: [
-                        'full',
-                        'alignLeft',
-                        'alignRight'
-                    ]
-                }
+                removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
+                image: {}
               } )
               .then( newEditor => {
                 editor_oneline = newEditor;
+                $('[data-role="oneline-input-wrapper-'+parent+'"]').find('.toolbar-container').html(editor_oneline.ui.view.toolbar.element)
                 editor_oneline.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
                   //console.log( 'editable isFocused =', value );
                   oneline_input_wrapper.addClass('active')
@@ -853,8 +825,10 @@
                             var last_uid = result.lastuid;
                             $(result_container).prepend(last_row); // 등록된 댓글 출력
                             $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').addClass(effect).css('z-index',1);
-                            if(type=='comment') self.updateTotal(1,'add');
-
+                            if(type=='comment') {
+                              self.updateTotal(1,'add');
+                              document.getElementById("CMT-" + last_uid).scrollIntoView(true);  // 방금 등록된 댓글 이동
+                            }
                             Iframely('[data-role="'+type+'-item"][data-uid="'+last_uid+'"] [data-role="'+type+'-origin-content-'+last_uid+'"] oembed[url]') // oembed 미디어 변환
 
                             // 콜백 이벤트
