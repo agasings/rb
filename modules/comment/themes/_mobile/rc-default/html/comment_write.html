@@ -2,36 +2,18 @@
    1. 등록폼에 등록자 아바타가 필요한 경우 : <img src="{$login_user_pic}">
    2. data-*="*" 필수
 -->
-<div data-role="comment-input-wrapper" class="">
-
-    <input class="form-control comment-input-tmp" type="text" placeholder="댓글 입력">
-
-    <div class="card m-x-0">
-      <div class="card-header clearfix">
-        <div class="pull-xs-left">
-          {$login_user_nic}
-        </div>
-        <div class="pull-xs-right">
-          <small>글자수  <strong class="text-danger" data-role="show-inputLength">0</strong> / <span data-role="show-textLimit"><!-- 옵션에서 정한 값--></span></small>
-          <button type="button" class="btn btn-outline-primary cmt-post pull-xs-right m-l-1" data-kcact="regis" data-type="comment" data-parent="{$comment_parent}">등록</button>
-        </div>
-      </div>
-      <textarea class="form-control m-b-0" name="content" rows="3" id="meta-description-content" data-role="comment-input"></textarea>
+<button class="btn btn-secondary btn-block text-xs-left border-0" data-toggle="commentWrite" data-type="comment">
+  <div class="media w-100 align-items-center">
+    <img class="media-object pull-left img-circle mr-3" src="{$login_user_pic}" alt="{$login_user_nic}" style="width:2.25rem;height:2.25rem">
+    <div class="media-body text-muted">
+      댓글을 남겨보세요..
     </div>
+  </div>
+</button>
 
-
+<div data-role="comment-input-wrapper" hidden>
+  <div id="meta-description-content"  class="border-0"></div>
+  <button class="btn btn-link rb-submit align-self-end" type="submit"  data-kcact="regis" data-type="comment" data-parent="{$comment_parent}" data-effect="animated fadeInUp">
+    <i class="fa fa-paper-plane"></i>
+  </button>
 </div>
-
-
-<script type="text/javascript">
-// 임시 입력창이 포커스 되었을때 실제 입력영역 출력
-$('[data-role="comment-box"]').on('focus','.comment-input-tmp',function() {
-  $('[data-role="comment-input-wrapper"]').addClass('active')
-  $('[data-role="comment-input"]').focus()
-});
-
-if(!memberid){
-   $('.rb-comments-write .card-header').css('display','none')
-}
-
-</script>
