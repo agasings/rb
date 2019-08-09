@@ -172,70 +172,13 @@
            this.initWritePerm(); // 글쓰기 권한 체크 적용
            this.initBtnMore(); // 더보기 버튼 세팅
            this.initDataNone(); // 자료없은 표시 세팅
+           this.initEditorComment(); //에디터 초기화
            Iframely('[data-role="comment-container"] oembed[url]') // oembed 미디어 변환
 
            var e = $.Event('shown.rb.comment', { relatedTarget: this.$el_id });
            this.$el.trigger(e);
 
-           DecoupledEditor
-           .create( document.querySelector( '[data-role="comment-input"]' ),{
-             placeholder: this.options.commentPlaceHolder,
-             toolbar: ['imageUpload'],
-             language: 'ko',
-             extraPlugins: [rbUploadAdapterPlugin],
-             mediaEmbed: {
-                 extraProviders: [
-                     {
-                         name: 'other',
-                         url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                     },
-                     {
-                         name: 'another',
-                         url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                     }
-                 ]
-             },
-             typing: {
-                 transformations: {
-                     include: [
-                         // Use only the 'quotes' and 'typography' groups.
-                         'quotes',
-                         'typography',
-
-                         // Plus, some custom transformation.
-                         { from: '->', to: '→' },
-                         { from: ':)', to: '🙂' },
-                         { from: ':+1:', to: '👍' },
-                         { from: ':tada:', to: '🎉' },
-                     ],
-                 }
-             },
-             removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
-             image: {}
-           } )
-           .then( newEditor => {
-             editor = newEditor;
-             $('[data-role="comment-input-wrapper"]').find('.toolbar-container').html(editor.ui.view.toolbar.element)
-             editor.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-               if (value) {
-                 console.log('댓글 신규입력 에디터에 포커스 되었습니다.');
-                 if (memberid) $('[data-role="commentWrite-container"]').addClass('active')
-               } else {
-                 console.log('댓글 신규입력 에디터에 포커스 되지 않았습니다..');
-                 $('[data-role="commentWrite-container"]').removeClass('active')
-               }
-
-             } );
-
-           })
-           .catch( error => {
-               console.error( error );
-           } );
-
-
-
         },
-
 
         // 메제시 템플릿 초기화 함수 (type : me,other,notice)
         initMsgTpl : function(){
@@ -275,6 +218,77 @@
             $(comment_main_ele).removeClass('d-none');
             $(comment_none_ele).addClass('d-none')
           }
+        },
+
+        //에디터
+        initEditorComment : function(){
+          DecoupledEditor
+          .create( document.querySelector( '[data-role="comment-input"]' ),{
+            placeholder: this.options.commentPlaceHolder,
+            toolbar: ['imageUpload'],
+            language: 'ko',
+            extraPlugins: [rbUploadAdapterPlugin],
+            mediaEmbed: {
+                extraProviders: [
+                    {
+                        name: 'other',
+                        url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                    },
+                    {
+                        name: 'another',
+                        url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                    }
+                ]
+            },
+            typing: {
+                transformations: {
+                    include: [
+                        // Use only the 'quotes' and 'typography' groups.
+                        'quotes',
+                        'typography',
+
+                        // Plus, some custom transformation.
+                        { from: '->', to: '→' },
+                        { from: ':)', to: '🙂' },
+                        { from: ':+1:', to: '👍' },
+                        { from: ':tada:', to: '🎉' },
+                    ],
+                }
+            },
+            removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle','WordCount' ],
+            image: {}
+          } )
+          .then( newEditor => {
+
+            console.log('editor_comment 초기화');
+            editor_comment = newEditor;
+            editor_comment.setData('');  //댓글 에디터 내용초기화
+
+            $('[data-role="comment-input-wrapper"]').find('.toolbar-container').html(editor_comment.ui.view.toolbar.element)
+            $('[data-role="commentWrite-container"]').removeClass('active')
+
+            //입력글자수 1자 이상일때 전송버튼 활성처리
+            // const wordCountPlugin = editor_comment.plugins.get('WordCount');
+            // wordCountPlugin.on( 'update', ( evt, data ) => {
+              // var btn_regis = $('[data-role="comment-input-wrapper"] [data-kcact="regis"]');
+              // if (data.characters > 0) btn_regis.addClass('active');
+              // else btn_regis.removeClass('active');
+            // } );
+
+            editor_comment.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+              if (value) {
+                console.log('editor_comment focus');
+                $('[data-role="commentWrite-container"]').addClass('active');
+              } else {
+                console.log('editor_comment blur');
+              }
+
+            } );
+
+          })
+          .catch( error => {
+              console.error( error );
+          } );
         },
 
         delegateEvents: function() {
@@ -414,7 +428,6 @@
                 } )
                 .then( newEditor => {
                   editor_edit = newEditor;
-
                   const viewFragment = editor_edit.data.processor.toView( content );
                   const modelFragment = editor_edit.data.toModel( viewFragment );
                   editor_edit.model.insertContent( modelFragment );
@@ -429,18 +442,19 @@
                 // 수정/취소 버튼 노출
                 $('[data-role="'+data.type+'-modify-btn-wrapper-'+data.uid+'"]').show();
 
-                $('[data-role="comment-box"]').addClass('edit_mod');
+                $('.commentting-all').addClass('edit_mod');
                 $('[data-role="comment-item"][data-uid="'+data.uid+'"]').addClass('edit_active')
 
                 if (mobileCheck()) { // 모바일에서만 수정항목의 해시로 이동
                   setTimeout(function(){
                     document.getElementById("CMT-" + data.uid).scrollIntoView(true);
-                  }, 300);
+                  }, 450);
                 }
 
             }else if(mod=='deactive'){
                 // 입력창 deactive
                 editor_edit.destroy()
+                console.log('editor_edit.destroy')
                 $('[data-role="commentWrite-container"]').removeClass('comment-editmod')
                 $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','none')
                 $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','block');
@@ -450,7 +464,7 @@
 
                 $('[data-role="showHide-menu"]').css('display','block')
 
-                $('[data-role="comment-box"]').removeClass('edit_mod');
+                $('.commentting-all').removeClass('edit_mod');
                 $('[data-role="comment-item"][data-uid="'+data.uid+'"]').removeClass('edit_active')
             }
         },
@@ -730,7 +744,7 @@
 
         // 사용자 액션 실행
         doUserAct : function(e){
-            e.preventDefault();
+
             var self = this;
             var target = e.currentTarget;
             var act = $(target).data('kcact'); // 액션 구분값
@@ -747,7 +761,6 @@
             var sess_code = this.getWriteToken(); // 보안 토큰값
             var recnum = this.recnum;
             var html = $(target).data('html');
-            var markdown = $(target).data('markdown');
             var effect = $(target).data('effect');
 
             if(!memberid && (act!='reload'&&act!='more')){
@@ -772,8 +785,8 @@
                     msg_container = $('[data-role="oneline-input-wrapper-'+parent+'"]');
                 }
                 // 입력내용
-                if(act=='regis' && type=='comment') content = editor.getData();
-                if(act=='regis' && type=='oneline') content = editor_oneline.getData();
+                if(act=='regis' && type=='comment') content = editor_comment.getData();
+                if(act=='regis' && type=='oneline') content = editor_comment.getData();
 
                 else if(act=='edit') {
                   var content_editable = $('[data-role="'+type+'-content-editable-'+uid+'"]')
@@ -786,20 +799,11 @@
                 }
                 html = 'HTML';
 
-
                 if(content==''){
                     self.showNotify(msg_container,'내용을 입력해주세요.',null);
                     return false;
                 }else{
-                    if(type=='comment') editor.setData( '' ); // 입력내용 초기화
-
-                    if(type=='oneline'){
-                      if (act=='edit') editor_edit.setData( '' ); // 입력내용 초기화
-                      else editor_oneline.setData( '' ); // 입력내용 초기화
-                    }
-
                     msg_container.removeClass('active')
-                    if(this.options.commentLength) $(this.options.role_showInputLength).text(0); // 입력 글자수 초기화
                 }
 
                 $.post(rooturl+'/?r='+raccount+'&m='+this.module+'&a=regis_'+type,{
@@ -812,22 +816,35 @@
                     sess_code : sess_code,
                     uid : uid,
                     recnum : recnum,
-                    html : html,
-                    markdown : markdown,
+                    html : html
                 },function(response) {
                     var result = $.parseJSON(response);
                     var error = result.error;
                     if(error){
                         self.showNotify(msg_container,result.error_msg,null);
                     }else{
+
+                      if(type=='comment') editor_comment.setData( '' ); // 입력내용 초기화
+
+                      if(type=='oneline'){
+                        if (act=='edit') editor_edit.setData( '' ); // 입력내용 초기화
+                        else editor_comment.setData( '' ); // 입력내용 초기화
+                      }
+
                         if(act=='regis'){
                             var last_row = result.last_row;
                             var last_uid = result.lastuid;
                             $(result_container).prepend(last_row); // 등록된 댓글 출력
                             $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').addClass(effect).css('z-index',1);
+
+                            setTimeout(function(){
+                              $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').addClass('animate-bg');
+                            }, 400);
+
+                            $('[data-role="commentWrite-container"]').removeClass('active');
                             if(type=='comment') {
                               self.updateTotal(1,'add');
-                              document.getElementById("CMT-" + last_uid).scrollIntoView(true);  // 방금 등록된 댓글 이동
+
                             }
                             Iframely('[data-role="'+type+'-item"][data-uid="'+last_uid+'"] [data-role="'+type+'-origin-content-'+last_uid+'"] oembed[url]') // oembed 미디어 변환
 
@@ -841,6 +858,18 @@
                             var edit_time = result.edit_time;
                             var edit_data = {"type": type,"content": edit_content,"uid": edit_uid,"time": edit_time};
                             var e = $.Event('edited.rb.'+type, { relatedTarget: self.$el_id });
+
+                            if (mobileCheck()) { // 모바일에서만 등록된 댓글 이동
+                              setTimeout(function(){
+                                var anchor_prefix = (type=='comment'?'CMT':'OLN');
+                                document.getElementById(anchor_prefix + '-' + edit_uid).scrollIntoView(true);
+                                $(result_container).find('[data-role="'+type+'-item"][data-uid='+edit_uid+']').addClass('animate-bg');
+                                setTimeout(function(){
+                                  $(result_container).find('[data-role="'+type+'-item"][data-uid='+edit_uid+']').removeClass('animate-bg');
+                                }, 1500);
+                              }, 200);
+                            }
+
                             self.$el.trigger(e);
                             self.updateEdit(edit_data); // 수정 적용 함수로 넘김
                             Iframely('[data-role="'+type+'-item"][data-uid="'+edit_uid+'"]  oembed[url]') // oembed 미디어 변환
