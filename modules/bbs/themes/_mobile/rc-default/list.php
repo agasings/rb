@@ -231,6 +231,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
   <input type="hidden" name="theme" value="">
   <header class="bar bar-nav bar-dark bg-primary p-x-0">
 		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
+    <a href="#popover-bbs-view" data-role="toolbar" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
     <h1 class="title" data-role="title" data-history="back">
       <?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?>
     </h1>
@@ -268,6 +269,9 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
       </ul>
     </div>
 
+    <!-- 댓글출력 -->
+    <div data-role="comment_anchor" class="anchor-link"></div>
+    <div data-role="bbs-comment"></div>
 
   </div>
 </section>
@@ -300,8 +304,8 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
   </div>
 </section>
 
-<!-- 모달 댓글 출력관련  -->
-<?php $d['bbs']['c_mskin_modal'] = '_mobile/rc-modal'; ?>
+<!-- 댓글 출력관련  -->
+<?php $d['bbs']['c_mskin_modal'] = '_mobile/rc-default'; ?>
 
 <link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin_modal']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
 <script src="<?php echo $g['url_module_skin'] ?>/js/getPostData.js<?php echo $g['wcache']?>" ></script>

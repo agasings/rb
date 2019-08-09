@@ -13,6 +13,7 @@ function getPostData(settings){
   var mid=settings.mid; // 컴포넌트 아이디
   var ctheme=settings.ctheme; // 댓글테마
   var page = $('.page')
+  var sheet_comment_write = $('#sheet-comment-write') // 댓글 작성 sheet
   var page_allcomment = $('#page-bbs-allcomments')  // 댓글 전체보기 페이지
   var page_bbs_photo = $('#page-bbs-photo');  // 샤진 크게보기 페이지
   var popup_linkshare = $('#popup-link-share')  //링크공유 팝업
@@ -132,7 +133,7 @@ function getPostData(settings){
 
          // 댓글 출력 함수 정의
          var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
-           page_allcomment.find('.commentting-all').Rb_comment({
+           modal.find('[data-role="bbs-comment"]').Rb_comment({
             moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
             parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
             parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
@@ -157,6 +158,7 @@ function getPostData(settings){
              page.find('[data-role="subject"]').text(subject)
              page.find('[data-role="cat"]').text(cat)
            }, 300);
+
          }
 
          if (!mypost) {  // 내글이 아니거나 관리자가 아닐때
@@ -179,6 +181,13 @@ function getPostData(settings){
     var ele = $(event.relatedTarget) // element that triggered the modal
     var uid = ele.data('uid') // 게시물 고유번호 추출
     var modal = $(this);
+   });
+
+   //댓글 바로가기 버튼을 터치 할때
+   $(mid).on('tap','[data-move="comment"]',function(event){
+     event.preventDefault();
+     event.stopPropagation();
+     document.querySelector('[data-role="comment_anchor"]').scrollIntoView(true);
    });
 
    //링크공유 버튼을 터치 할때
@@ -204,7 +213,6 @@ function getPostData(settings){
 
    //좋아요,싫어요
    $(mid).on('tap','[data-act="opinion"]',function(){
-     console.log('dd')
      var send = $(this).data('send')
      var uid = $(this).data('uid')
      var opinion = $(this).data('opinion')
@@ -254,7 +262,7 @@ function getPostData(settings){
       });
     });
 
-   //게시물보기 모달이 닫혔을 때
+   //게시물보기 모달(페이지)이 닫혔을 때
    $(mid).on('hidden.rc.'+type, function() {
       var modal = $(this);
       var uid = modal.find('[name="uid"]').val()
@@ -264,10 +272,11 @@ function getPostData(settings){
 
       modal.find('[data-role="attach-photo"]').addClass('hidden').empty() // 사진 영역 초기화
       modal.find('[data-role="attach-video"]').addClass('hidden').empty() // 비디오 영역 초기화
-      modal.find('[data-role="attach-youtube"]').addClass('hidden').empty() // 유튜브 영역 초기화
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
-      page.find('.commentting-all').html(''); // 댓글영역 내용 비우기
+      modal.find('[data-role="bbs-comment"]').html(''); // 댓글영역 내용 비우기
+      editor_comment.destroy();  //댓글 에디터 삭제
+      console.log('editor_comment.destroy');
    });
 
    //전체댓글보기 페이지가 호출되었을때
@@ -278,18 +287,11 @@ function getPostData(settings){
       var uid = $(mid).find('[name="uid"]').val()
       page.find('[data-role="total_comment"]').text(num); //댓글갯수 적용
 
-  		// 댓글 등록 버튼 동적 출력
-  		$('.commentting-all .input-group textarea').on('keyup', function(event) {
-  			var $oneline = $('.commentting-all .input-group');
-  			$oneline.find('button[type="submit"]').css("display", "none").removeClass("animated bounceIn delay-3");
-  			if ($(this).val().length >= 1) {
-  				$oneline.find('button[type="submit"]').css("display", "block").addClass("animated bounceIn delay-3");
-  			}
-  		});
    });
 
-	 // 게시물 보기 모달에서 댓글이 등록된 이후에 ..
-   page_allcomment.find('.commentting-all').on('saved.rb.comment',function(){
+	 // 게시물 보기 에서 댓글이 등록된 이후에 ..
+   $(mid).find('[data-role="bbs-comment"]').on('saved.rb.comment',function(){
+     window.history.back(); //댓글작성 sheet 내림
      var modal = $(mid)
      var bid = modal.find('[name="bid"]').val()
      var uid = modal.find('[name="uid"]').val()
@@ -306,16 +308,16 @@ function getPostData(settings){
        },function(response){
           var result = $.parseJSON(response);
           var total_comment=result.total_comment;
-					$.notify({message: '댓글이 등록 되었습니다.'},{type: 'default'});
+					// $.notify({message: '댓글이 등록 되었습니다.'},{type: 'default'});
           showComment_Ele_1.text(total_comment); // 모달 상단 최종 댓글수량 합계 업데이트
           showComment_Ele_2.text(total_comment); // 모달 상단 최종 댓글수량 합계 업데이트
 					showComment_ListEle.text(total_comment); // 게시물 목록 해당 항목의 최종 댓글수량 합계 업데이트
      });
-     page_allcomment.find('.content').animate({ scrollTop: 100000000 }, 600);  // 댓글 타임라인 스크롤 최하단으로 이동
    });
 
    // 게시물 보기 모달에서 한줄의견이 등록된 이후에..
-   page_allcomment.find('.commentting-all').on('saved.rb.oneline',function(){
+   $(mid).find('[data-role="bbs-comment"]').on('saved.rb.oneline',function(){
+     window.history.back(); //댓글작성 sheet 내림
      var modal = $(mid)
      var bid = modal.find('[name="bid"]').val()
      var uid = modal.find('[name="uid"]').val()
@@ -332,7 +334,7 @@ function getPostData(settings){
        },function(response){
           var result = $.parseJSON(response);
           var total_comment=result.total_comment;
-          $.notify({message: '한줄의견이 등록 되었습니다.'},{type: 'default'});
+          //$.notify({message: '한줄의견이 등록 되었습니다.'},{type: 'default'});
           showComment_Ele_1.text(total_comment); // 최종 댓글수량 합계 업데이트
           showComment_Ele_2.text(total_comment); // 최종 댓글수량 합계 업데이트
 					showComment_ListEle.text(total_comment); // 게시물 목록 해당 항목의 최종 댓글수량 합계 업데이트
@@ -342,7 +344,7 @@ function getPostData(settings){
    // 댓글이 수정된 후에..
    page_allcomment.find('.commentting-all').on('edited.rb.comment',function(){
      setTimeout(function(){
-       $.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
+       //$.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
      }, 300);
    })
 

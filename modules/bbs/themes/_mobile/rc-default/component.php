@@ -1,12 +1,12 @@
 <!-- 게시판 글쓰기 -->
-<div id="modal-bbs-write" class="modal zoom">
+<div id="modal-bbs-write" class="modal<?php echo $g['mobile']=='iphone' || $g['mobile']=='ipad'?' zoom':'' ?>">
   <section id="page-main" class="page center">
   	<header class="bar bar-nav bar-dark bg-primary p-x-0" data-role="write-nav">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" onclick="cancelCheck();">
   			취소
   	  </button>
-  		<button class="btn btn-link btn-nav pull-right js-submit p-x-1" type="button">
-  			<?php echo $uid?'수정':'등록' ?>
+  		<button class="btn btn-link btn-nav pull-right js-submit p-x-1" type="button" data-act="submit">
+  			등록
   	  </button>
   		<h1 class="title">
   			글쓰기
@@ -269,6 +269,62 @@
 
 </div>
 
+<!-- 게시물 보기 수정/삭제 Popover -->
+<div id="popover-bbs-view" class="popover">
+  <ul class="table-view">
+    <li class="table-view-cell" data-toggle="postSaved" data-uid="237" data-history="back">저장하기</li>
+    <li class="table-view-cell" data-toggle="postEdit" data-uid="237" data-history="back">수정하기</li>
+    <li class="table-view-cell" data-toggle="PostDelete" data-uid="237" data-history="back">삭제하기</li>
+    <li class="table-view-cell" data-toggle="linkCopy" data-history="back">URL 복사</li>
+    <li class="table-view-cell" data-toggle="linkShare" data-history="back">공유하기...</li>
+  </ul>
+</div>
+
+<!-- Sheet : 신규 댓글작성 -->
+<div id="sheet-comment-write" class="sheet">
+  <fieldset data-role="commentWrite-container">
+    <div data-role="comment-input-wrapper">
+      <div class="d-flex border-0 rounded-0 align-items-center" data-role="form">
+        <img class="img-circle bg-faded ml-3" data-role="avatar" src="<?php echo getAvatarSrc($my['uid'],'100') ?>" style="width:2.25rem;height:2.25rem">
+        <section class="w-100">
+          <div data-role="editor">
+        		<div data-role="comment-input" id="meta-description-content"  class="border-0"></div>
+        	</div>
+        </section>
+        <div class="toolbar-container align-self-end"></div>
+        <button class="btn btn-link rb-submit align-self-end" type="submit" data-kcact="regis">
+          <i class="fa fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<!-- Popup : 댓글관리 -->
+<div id="popup-comment-myrow" class="popup zoom">
+  <div class="popup-content">
+    <div class="content">
+      <ul class="table-view table-view-full mt-0 text-xs-center">
+        <li class="table-view-cell">
+          <a data-role="trigger-edit" data-type="{$entry_type}" data-uid="{$uid}">수정하기</a>
+        </li>
+        <li class="table-view-cell" data-kcact="delete" data-type="{$entry_type}" data-uid="{$uid}" data-parent="{$entry_parent}">
+          <a data-type="{$entry_type}" data-uid="{$uid}">삭제하기</a>
+        </li>
+        <li class="table-view-cell">
+          <a data-type="{$entry_type}" data-uid="{$uid}">상단고정</a>
+        </li>
+        <li class="table-view-cell">
+          <a data-type="{$entry_type}" data-uid="{$uid}">신고하기</a>
+        </li>
+        <li class="table-view-cell">
+          <a data-type="{$entry_type}" data-uid="{$uid}">댓글 답글쓰기</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <script>
 
 var f = document.getElementById("writeForm");
@@ -277,8 +333,9 @@ var writeForm = $('#writeForm')
 var submitFlag = false;
 var loadingMsg = '<?php echo $uid?'수정중..':'등록중..' ?>'
 
-var bbs_editor;
+var editor_bbs;
 var modal_bbs_write = $('#modal-bbs-write');
+var sheet_comment_write = $('#sheet-comment-write');
 
 function cancelCheck(){
 	if (confirm('정말 취소하시겠습니까?    ')){
@@ -286,7 +343,8 @@ function cancelCheck(){
 	}
 }
 
-$(function() {
+
+$(document).ready(function() {
 
 	// 카테고리 항목 클릭에 글쓰기폼의 name="category" 에 값 적용하기
 	$("#page-category").find('[type="radio"]').click(function() {
@@ -295,6 +353,23 @@ $(function() {
 		 page_main.find('[data-role="tap-category"] .icon').removeClass('text-muted')
 		 page_main.find('[data-role="tap-category"]').removeClass('text-muted').addClass('active')
 	});
+
+  //게시물 수정
+  $('[data-toggle="postEdit"]').tap(function() {
+    setTimeout(function(){modal_bbs_write.modal()}, 50);
+  });
+
+  //글쓰기 컴포넌트가 호출될때
+  modal_bbs_write.on('show.rc.modal', function (e) {
+    var modal = modal_bbs_write;
+    var button = $(e.relatedTarget);
+    var uid = button.attr('data-uid');
+    if (uid) {
+      modal.find('[data-act="submit"]').text('수정');
+    } else {
+      modal.find('[data-act="submit"]').text('등록');
+    }
+  })
 
 	// 태그 페이지가 닫힐때 태그폼의 내용을 추출하여 글쓰기폼의 name="tag" 에 값 적용하기
 	$('#page-tag').on('hidden.rc.page', function () {
@@ -370,11 +445,11 @@ $(function() {
 		}
 		<?php endif; ?>
 
-    var editorData = editor.getData();
+    var editorData = editor_bbs.getData();
 
     if (editorData == '') {
 			alert('내용을 입력해 주세요.       ');
-			setTimeout(function(){editor.editing.view.focus();}, 100);
+			setTimeout(function(){editor_bbs.editing.view.focus();}, 100);
 			return false;
 		} else {
       $('[name="content"]').val(editorData);
@@ -432,82 +507,128 @@ $(function() {
 	})
 
 
+  //댓글쓰기 컴포넌트가 호출
+  $(document).on('tap click','[data-toggle="commentWrite"]',function(){
+    if (memberid) {
+      var type = $(this).attr('data-type');
+      var parent = $(this).attr('data-parent');
+      sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-parent',parent);
+      setTimeout(function(){sheet_comment_write.sheet()}, 10);
+    } else {
+      $('#modal-login').modal();
+    }
+    return false;
+  });
 
-  DecoupledEditor
-    .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
-      placeholder: '내용',
-        toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
-      removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
-      image: {},
-      language: 'ko',
-      extraPlugins: [rbUploadAdapterPlugin],
-      table: {
-          contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
-      },
-      mediaEmbed: {
-          extraProviders: [
-              {
-                  name: 'other',
-                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-              },
-              {
-                  name: 'another',
-                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-              }
-          ]
-      },
-      typing: {
-          transformations: {
-              include: [
-                'quotes',
-                'typography',
-              ],
-              extra: [
-                  // Add some custom transformations – e.g. for emojis.
-                  { from: ':)', to: '🙂' },
-                  { from: ':+1:', to: '👍' },
-                  { from: ':tada:', to: '🎉' }
-              ],
-          }
+  sheet_comment_write.find('[data-kcact="regis"]').click(function() {
+    sheet_comment_write.find('fieldset').prop('disabled', true);
+    $(this).addClass('fa-spin');
+
+    var type = $(this).attr('data-type');
+    var parent = $(this).attr('data-parent');
+
+    setTimeout(function(){
+      if (type=='comment') {
+        $('[data-role="bbs-comment"] [data-role="comment-input-wrapper"]').find('[data-kcact="regis"]').click();
+      } else {
+        $('[data-role="oneline-input-wrapper-'+parent+'"]').find('[data-kcact="regis"]').click();
       }
-    } )
-    .then( newEditor => {
-      console.log('글쓰기 에디터가 초기화 되었습니다.');
 
-      bbs_editor = newEditor;
+    }, 700);
 
-      // console.log(bbs_editor.ui.view.toolbar.element)
+  });
 
-      modal_bbs_write.find('.toolbar-container').html(bbs_editor.ui.view.toolbar.element)
+  //댓글쓰기 컴포넌트가 호출될때
+  sheet_comment_write.on('show.rc.sheet', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','.2');
+    setTimeout(function(){ editor_comment.editing.view.focus(); },10);
+  })
 
-      // document.querySelector( '.toolbar-container' ).appendChild( bbs_editor.ui.view.toolbar.element );
-
-      bbs_editor.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-        if (value) {
-          console.log('본문입력 에디터에 포커스 되었습니다.');
-          modal_bbs_write.addClass('editor-focused');
-        } else {
-          console.log('본문입력 에디터에 포커스 되지 않았습니다..');
-          modal_bbs_write.removeClass('editor-focused');
-        }
-      } );
+  sheet_comment_write.on('hidden.rc.sheet', function (e) {
+    sheet_comment_write.find('fieldset').prop('disabled', false);
+    sheet_comment_write.find('[data-kcact="regis"]').removeClass('fa-spin').attr('data-type','').attr('data-parent','');
+    $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','1')
+  })
 
 
-    })
-    .catch( error => {
-        console.error( error );
-    } );
 
   $('#modal-bbs-write').on('show.rc.modal', function (e) {
     // 글쓰기 권한 체크
     var modal = $(this)
+
+
+      DecoupledEditor
+        .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
+          placeholder: '내용',
+            toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
+          removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
+          image: {},
+          language: 'ko',
+          extraPlugins: [rbUploadAdapterPlugin],
+          table: {
+              contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+          },
+          mediaEmbed: {
+              extraProviders: [
+                  {
+                      name: 'other',
+                      url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                  },
+                  {
+                      name: 'another',
+                      url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                  }
+              ]
+          },
+          typing: {
+              transformations: {
+                  include: [
+                    'quotes',
+                    'typography',
+                  ],
+                  extra: [
+                      // Add some custom transformations – e.g. for emojis.
+                      { from: ':)', to: '🙂' },
+                      { from: ':+1:', to: '👍' },
+                      { from: ':tada:', to: '🎉' }
+                  ],
+              }
+          }
+        } )
+        .then( newEditor => {
+          console.log('게시판 에디터가 초기화 되었습니다.');
+
+          editor_bbs = newEditor;
+          modal_bbs_write.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
+          editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+            if (value) {
+              console.log('게시판 에디터 focus');
+              editor_bbs.setData(''); //에디터 내용 초기화
+              console.log('게시판 에디터 내용 초기화');
+              modal_bbs_write.addClass('editor-focused');
+            } else {
+              console.log('게시판 에디터 blur');
+              modal_bbs_write.removeClass('editor-focused');
+            }
+          } );
+
+
+        })
+        .catch( error => {
+            console.error( error );
+        } );
+
   })
 
   $('#modal-bbs-write').on('hidden.rc.modal', function (e) {
     var modal = $(this)
     modal.find('[name="subject"]').val(''); //제목 초기화
-    bbs_editor.setData( '' );  //본문내용 초기화
+    editor_bbs.destroy();  //에디터 제거
+    console.log('editor_bbs.destroy');
   })
+
 
 });
 
