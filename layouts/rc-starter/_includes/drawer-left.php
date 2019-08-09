@@ -16,7 +16,7 @@
 
 <nav class="bar bar-tab bg-faded">
   <?php if ($my['uid']): ?>
-  <a class="tab-item" role="button" href="<?php echo RW('mod=settings') ?>">
+  <a class="tab-item" role="button" data-href="<?php echo RW('mod=settings') ?>">
     <span class="icon icon-person"></span>
     <span class="tab-label">개인설정</span>
   </a>

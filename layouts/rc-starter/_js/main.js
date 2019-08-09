@@ -87,6 +87,16 @@ $(function() {
  	 $(this).removeClass('is-invalid') //에러 발생후 다시 입력 시도시에 에러 흔적 초기화
   });
 
+  // 로그아웃
+  $('[data-act="logout"]').tap(function(){
+    history.back(); // 팝업닫기
+    $.loader({ text: "잠시만 기다리세요..." });
+    getIframeForAction('');
+    setTimeout(function(){
+      frames.__iframe_for_action__.location.href = '/?r=home&m=site&a=logout';
+    }, 300);
+  });
+
 	// 드로어(사이드메뉴영역) 닫기
   $('body').on('tap click','[data-toggle="drawer-close"]',function(){
 		drawer_left.drawer('hide')

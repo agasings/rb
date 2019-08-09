@@ -22,8 +22,8 @@
 
 <!-- 댓글출력시 필요 -->
 <?php if ($mod!='write'): ?>
-<?php getImport('ckeditor5','mobile-comment/build/ckeditor','12.2.0','js');  ?>
-<?php getImport('ckeditor5','mobile-comment/build/translations/ko','12.2.0','js');  ?>
+<?php getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');  ?>
+<?php getImport('ckeditor5','decoupled-document/build/translations/ko','12.2.0','js');  ?>
 
 <script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>
 <?php endif; ?>

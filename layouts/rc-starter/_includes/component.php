@@ -35,7 +35,7 @@
           <button type="button" class="btn btn-secondary btn-block" data-history="back">취소</button>
         </div>
         <div class="col-xs-6 p-l-0">
-          <a href="<?php echo $g['s']?>/logout" type="button" class="btn btn-primary btn-block">로그이웃</a>
+          <button type="button" class="btn btn-primary btn-block" data-act="logout">로그이웃</button>
         </div>
       </div>
     </nav>

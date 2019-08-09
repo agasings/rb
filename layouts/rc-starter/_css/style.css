@@ -271,6 +271,14 @@ figure.media {
   display: block
 }
 
+/* comment */
+[data-role="comment-box"] [data-role="comment-item"] article p {
+  margin: .4rem 0;
+  line-height: 1.25;
+  font-size: .9rem;
+  letter-spacing: -.0625rem
+}
+
 /**
  * 6 - Drawer 드로어(사이드 메뉴)
  * ----------------------------------------------------------------------------
@@ -428,6 +436,27 @@ figure.media {
   font-size: 13px;
   color: #eee;
   line-height: 1.7
+}
+
+.popover {
+  top: 40px;
+  left: auto;
+  right: 15px;
+  width: 200px;
+  margin-left: 0;
+  border: none;
+  border-radius: 0;
+  -webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
+  box-shadow: 0 0 3px rgba(0,0,0,.2);
+  -webkit-transition: -webkit-transform .1s ease-in-out,opacity .2s ease-in-out;
+  -moz-transition: -moz-transform .1s ease-in-out,opacity .2s ease-in-out;
+  transition: transform .1s ease-in-out,opacity .2s ease-in-out;
+  -webkit-transform: scale(.75);
+  -ms-transform: scale(.75);
+  transform: scale(.75);
+}
+.popover:before {
+  content: none;
 }
 
 
