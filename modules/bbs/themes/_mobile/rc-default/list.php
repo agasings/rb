@@ -371,7 +371,7 @@ var bar_nav = new Swiper('#page-bbs-list .swiper-container', {
   on: {
     init: function () {
       console.log('swiper가 초기화 되었습니다.');
-      var btn_write = '<a class="tab-item" role="button" tabindex="0" href="#modal-bbs-write" data-toggle="modal"><span class="icon icon-compose"></span><span class="tab-label">글쓰기</span></a>';
+      var btn_write = '<a class="tab-item" role="button" tabindex="0" href="#modal-bbs-write" data-toggle="modal" data-new="ture"><span class="icon icon-compose"></span><span class="tab-label">글쓰기</span></a>';
       setTimeout(function(){ $('.rb-bbs-list .bar-tab').append(btn_write); }, 300);
     },
   }
