@@ -11,7 +11,7 @@ var noti_sort = 'uid';
 var noti_orderby = 'desc';
 var noti_recnum = '10';
 
-$(function () {
+$(document).ready(function() {
 
 	// navbar dropdown 로그인 - 실행
 	$('#popover-loginform').submit(function(e){
