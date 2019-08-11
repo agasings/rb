@@ -13,7 +13,7 @@
 
 			<?php if ($my['uid']): ?>
 			<li class="list-inline-item">
-				<a href="<?php echo $g['s']?>/logout" class="muted-link" title="">
+				<a href="#" data-act="logout" class="muted-link" title="">
 					로그아웃
 				</a>
 			</li>
