@@ -228,7 +228,7 @@ $pagesarray = array
 foreach($pagesarray as $_key => $_val)
 {
 	$QUE = "insert into ".$table['s_page']."
-	(site,pagetype,ismain,mobile,id,category,name,perm_g,perm_l,layout,m_layout,joint,hit,d_regis,d_update,upload,featured_img)
+	(site,pagetype,ismain,mobile,id,category,name,perm_g,perm_l,layout,m_layout,joint,hit,d_regis,d_last,upload,featured_img)
 	values
 	('$LASTUID','$_val[1]','$_val[2]','$_val[3]','$_key','"._LANG('a007','install')."','$_val[0]','','0','$_val[4]','$_val[5]','$_val[6]','0','".$date['totime']."','','0','')";
 	db_query($QUE,$DB_CONNECT);
