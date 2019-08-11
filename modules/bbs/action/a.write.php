@@ -252,7 +252,7 @@ if ($d['bbs']['noti_newpost'] && !$my['admin']){
 
 setrawcookie('bbs_action_result', rawurlencode('게시물이 '.$msg.' 되었습니다.'));  // 처리여부 cookie 저장
 
-if ($backtype="ajax") {
+if ($backtype == "ajax") {
 
 	$result=array();
 	$result['error']=false;
