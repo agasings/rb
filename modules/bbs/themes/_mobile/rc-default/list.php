@@ -321,8 +321,8 @@ var settings={
 getPostData(settings); // 모달 출력관련
 
 <?php if ($NUM_NOTICE || $B['category'] || $d['theme']['search']): ?>
-// 하단 navi(swiper)
-var bar_nav = new Swiper('#page-bbs-list .swiper-container', {
+// 하단 tab(swiper)
+var bar_tab_swiper = new Swiper('#page-bbs-list .swiper-container', {
   autoHeight: true,
   pagination: {
     el: '.rb-bbs-list .bar-tab',
@@ -370,8 +370,8 @@ var bar_nav = new Swiper('#page-bbs-list .swiper-container', {
   },
   on: {
     init: function () {
-      console.log('swiper가 초기화 되었습니다.');
-      var btn_write = '<a class="tab-item" role="button" tabindex="0" href="#modal-bbs-write" data-toggle="modal" data-new="ture"><span class="icon icon-compose"></span><span class="tab-label">글쓰기</span></a>';
+      console.log('bar_tab_swiper init');
+      var btn_write = '<a class="tab-item" role="button" tabindex="0" href="#modal-bbs-write" data-toggle="modal" data-mod="new"><span class="icon icon-compose"></span><span class="tab-label">글쓰기</span></a>';
       setTimeout(function(){ $('.rb-bbs-list .bar-tab').append(btn_write); }, 300);
     },
   }
@@ -386,14 +386,14 @@ $(document).ready(function() {
   // marks.js
   $('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
 
-  bar_nav.on('slideChange', function () {
+  bar_tab_swiper.on('slideChange', function () {
 
     setTimeout(function(){
       var activeSlide = $('.swiper-slide-active').data('hash');
       if (activeSlide=='search') $('[name="keyword"]').focus();
     }, 300);
 
-    if (bar_nav.activeIndex == 0) {
+    if (bar_tab_swiper.activeIndex == 0) {
       $('.infinitescroll-end').removeClass("d-none");
       $('.infinitescroll-load').removeClass("d-none");
     } else {

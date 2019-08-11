@@ -1,5 +1,6 @@
 <?php
 if(!defined('__KIMS__')) exit;
+require_once $g['path_core'].'function/sys.class.php';
 
 //if (!$_SESSION['wcode']||$_SESSION['wcode']!=$pcode) exit;
 
@@ -18,7 +19,7 @@ $nic		= $my['uid'] ? $my['nic'] : $name;
 $category	= trim($category);
 $subject	= $my['admin'] ? trim($subject) : htmlspecialchars(trim($subject));
 $content	= trim($content);
-$html		= $html ? $html : 'TEXT';
+$html		= $html ? $html : 'HTML';
 $tag		= trim($tag);
 $d_regis	= $date['totime'];
 $d_comment	= '';
@@ -251,21 +252,32 @@ if ($d['bbs']['noti_newpost'] && !$my['admin']){
 
 setrawcookie('bbs_action_result', rawurlencode('게시물이 '.$msg.' 되었습니다.'));  // 처리여부 cookie 저장
 
-if ($backtype == 'list')
-{
-	getLink($nlist,'parent.','','');
-}
-else if ($backtype == 'view')
-{
-	if ($_HS['rewrite']&&!strstr($nlist,'&'))
+if ($backtype="ajax") {
+
+	$result=array();
+	$result['error']=false;
+
+	echo json_encode($result);
+	exit;
+
+} else {
+	if ($backtype == 'list')
 	{
-		getLink($nlist.'/'.$NOWUID,'parent.','','');
+		getLink($nlist,'parent.','','');
+	}
+	else if ($backtype == 'view')
+	{
+		if ($_HS['rewrite']&&!strstr($nlist,'&'))
+		{
+			getLink($nlist.'/'.$NOWUID,'parent.','','');
+		}
+		else {
+			getLink($nlist.'&mod=view&uid='.$NOWUID,'parent.','','');
+		}
 	}
 	else {
-		getLink($nlist.'&mod=view&uid='.$NOWUID,'parent.','','');
+		getLink('reload','parent.','','');
 	}
 }
-else {
-	getLink('reload','parent.','','');
-}
+
 ?>

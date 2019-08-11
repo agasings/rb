@@ -1,12 +1,27 @@
-<!-- 게시판 글쓰기 -->
+<!-- Modal : 게시판 글쓰기 -->
 <div id="modal-bbs-write" class="modal<?php echo $g['mobile']=='iphone' || $g['mobile']=='ipad'?' zoom':'' ?>">
-  <section id="page-main" class="page center">
+  <input type="hidden" name="c" value="<?php echo $c?>">
+  <input type="hidden" name="cuid" value="<?php echo $_HM['uid']?>">
+  <input type="hidden" name="bid" value="<?php echo $R['bbsid']?$R['bbsid']:$bid?>">
+  <input type="hidden" name="name" value="<?php echo $my['name']?>">
+  <input type="hidden" name="uid" value="">
+  <input type="hidden" name="reply" value="">
+  <input type="hidden" name="notice" value="">
+  <input type="hidden" name="hidden" value="">
+  <input type="hidden" name="category" value="">
+  <input type="hidden" name="tag" value="">
+  <input type="hidden" name="featured_img" value="">
+  <input type="hidden" name="upfiles" id="upfilesValue" value="">
+  <input type="hidden" name="backtype" value="ajax">
+
+  <section id="page-bbs-write-main" class="page center">
   	<header class="bar bar-nav bar-dark bg-primary p-x-0" data-role="write-nav">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" data-history="back">
   			취소
   	  </button>
-  		<button class="btn btn-link btn-nav pull-right js-submit p-x-1" type="button" data-act="submit">
-  			등록
+  		<button class="btn btn-link btn-nav pull-right p-x-1" type="button" data-act="submit">
+        <span class="not-loading"></span>
+        <span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i></span>
   	  </button>
   		<h1 class="title">
   			글쓰기
@@ -30,24 +45,24 @@
   	    <span class="tab-label">본문작성</span>
   	  </a>
   		<?php if($B['category']):$_catexp = explode(',',$B['category']);$_catnum=count($_catexp)?>
-  	  <a class="tab-item<?php echo $R['category']?' active':' text-muted' ?>" role="button" data-toggle="page" data-start="#page-main" href="#page-category" data-role="tap-category">
+  	  <a class="tab-item<?php echo $R['category']?' active':' text-muted' ?>" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-bbs-write-category" data-role="tab-category">
   	    <span class="icon fa fa-folder-o text-muted"></span>
   	    <span class="tab-label">카테고리</span>
   	  </a>
   		<?php endif?>
-  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-main" href="#page-attach" data-role="tap-attach">
+  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-attach" data-role="tap-attach">
   	    <span class="icon fa fa-paperclip text-muted"></span>
   	    <span class="tab-label">파일첨부</span>
   	  </a>
-  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-main" href="#page-tag" data-role="tap-tag">
+  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-bbs-write-tag" data-role="tap-tag">
   	    <span class="icon fa fa-tag text-muted"></span>
   	    <span class="tab-label">태그</span>
   	  </a>
-  		<a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-main" href="#page-location" data-role="tap-location" hidden>
+  		<a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-location" data-role="tap-location" hidden>
   			<span class="icon fa fa-map-marker text-muted"></span>
   			<span class="tab-label">위치</span>
   		</a>
-  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-main" href="#page-option" data-role="tap-option">
+  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-bbs-write-option" data-role="tap-option">
   	    <span class="icon icon-more text-muted"></span>
   	    <span class="tab-label">옵션</span>
   	  </a>
@@ -55,36 +70,18 @@
 
   	<div class="content">
 
-  		<form id="writeForm" method="post" action="<?php echo $g['s']?>/"  enctype="multipart/form-data">
-  			<input type="hidden" name="r" value="<?php echo $r?>">
-  			<input type="hidden" name="a" value="write">
-  			<input type="hidden" name="c" value="<?php echo $c?>">
-  			<input type="hidden" name="cuid" value="<?php echo $_HM['uid']?>">
-  			<input type="hidden" name="m" value="<?php echo $m?>">
-  			<input type="hidden" name="bid" value="<?php echo $R['bbsid']?$R['bbsid']:$bid?>">
-  			<input type="hidden" name="uid" value="<?php echo $R['uid']?>">
-  			<input type="hidden" name="reply" value="<?php echo $reply?>">
-  			<input type="hidden" name="nlist" value="<?php echo $g['bbs_list']?>">
-  			<input type="hidden" name="pcode" value="<?php echo $date['totime']?>">
-  			<input type="hidden" name="upfiles" id="upfilesValue" value="<?php echo $reply=='Y'?'':$R['upload']?>">
-  			<input type="hidden" name="html" value="TEXT">
-  		  <input type="hidden" name="backtype" value="list">
-  			<input type="hidden" name="notice" value="<?php echo $R['notice'] ?>">
-  			<input type="hidden" name="hidden" value="<?php echo $R['hidden'] ?>">
-  			<input type="hidden" name="category" value="<?php echo $R['category'] ?>">
-  			<input type="hidden" name="tag" value="<?php echo $R['tag'] ?>">
-  			<input type="hidden" name="featured_img" value="<?php echo $R['featured_img'] ?>">
+  		<form>
 
   			<div class="form-list m-b-0">
   				<?php if(!$my['id']):?>
   		     <div class="input-row">
   		       <label>이름</label>
-  		       <input type="text" name="name" placeholder="이름을 입력해 주세요." value="<?php echo $R['name']?>" class="form-control" autocomplete="off">
+  		       <input type="text" name="name" placeholder="이름을 입력해 주세요." value="" class="form-control" autocomplete="off">
   		     </div>
   				 <?php if(!$R['uid']||$reply=='Y'):?>
   				 <div class="input-row">
   					 <label>암호</label>
-  					 <input type="password" name="pw" placeholder="암호는 게시글 수정 및 삭제에 필요합니다." value="<?php echo $R['pw']?>" class="form-control" autocomplete="off">
+  					 <input type="password" name="pw" placeholder="암호는 게시글 수정 및 삭제에 필요합니다." value="" class="form-control" autocomplete="off">
   					 <small class="form-text text-muted">비밀답변은 비번을 수정하지 않아야 원게시자가 열람할 수 있습니다.</small>
   				 </div>
   				 <?php endif?>
@@ -95,13 +92,8 @@
   			 </div><!-- /.form-list -->
 
   			 <div class="mt-0">
-  				 <script>
-  				 var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드 폴더
-  				 var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
-  				 </script>
            <div class="rb-article">
            	<div data-role="editor">
-           		<input type="hidden" name="content" value="">
            		<div data-role="editor-body" class="editable-container"></div>
            	</div>
            </div>
@@ -112,7 +104,7 @@
   	</div>
   </section>
 
-  <section id="page-category" class="page right">
+  <section id="page-bbs-write-category" class="page right">
   	<header class="bar bar-nav bar-dark bg-primary p-x-0">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" data-history="back">
   			<span class="icon icon-left-nav"></span>
@@ -128,7 +120,7 @@
   			<?php for($i = 1; $i < $_catnum; $i++):if(!$_catexp[$i])continue;?>
   		  <li class="table-view-cell radio" >
   		    <label class="custom-control custom-radio">
-  		      <input id="radio1" name="radio" type="radio" class="custom-control-input" value="<?php echo $_catexp[$i]?>" <?php if($_catexp[$i]==$R['category']||$_catexp[$i]==$cat):?> checked<?php endif?>>
+  		      <input id="radio-<?php echo $_catexp[$i]?>" name="radio" type="radio" class="custom-control-input" value="<?php echo $_catexp[$i]?>" <?php if($_catexp[$i]==$R['category']||$_catexp[$i]==$cat):?> checked<?php endif?>>
   		      <span class="custom-control-indicator"></span>
   		      <span class="custom-control-description">
   						<?php echo $_catexp[$i]?>
@@ -143,7 +135,7 @@
   	</div>
   </section>
 
-  <section id="page-attach" class="page right">
+  <section id="page-bbs-write-attach" class="page right">
   	<header class="bar bar-nav bar-dark bg-primary p-x-0">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" data-history="back">
   			<span class="icon icon-left-nav"></span>
@@ -178,7 +170,7 @@
 
   </section>
 
-  <section id="page-tag" class="page right">
+  <section id="page-bbs-write-tag" class="page right">
   	<header class="bar bar-nav bar-dark bg-primary p-x-0">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" data-history="back">
   			<span class="icon icon-left-nav"></span>
@@ -196,7 +188,7 @@
   	</div>
   </section>
 
-  <section id="page-location" class="page right">
+  <section id="page-bbs-write-location" class="page right">
   	<header class="bar bar-nav bar-dark bg-primary p-x-0">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" data-history="back">
   			<span class="icon icon-left-nav"></span>
@@ -227,7 +219,7 @@
   	</div>
   </section>
 
-  <section id="page-option" class="page right">
+  <section id="page-bbs-write-option" class="page right">
   	<header class="bar bar-nav bar-dark bg-primary p-x-0">
   		<button class="btn btn-link btn-nav pull-left p-x-1" type="button" data-history="back">
   			<span class="icon icon-left-nav"></span>
@@ -272,15 +264,13 @@
 <!-- Popup : 글쓰기 취소확인 -->
 <div id="popup-bbs-cancelCheck" class="popup zoom">
   <div class="popup-content">
-    <nav class="bar bar-standard bar-footer">
-      <div class="row">
-        <div class="col-xs-6">
-          <button type="button" class="btn btn-link text-muted btn-block" data-toggle="cancelCheck" data-value="no">아니요</button>
-        </div>
-        <div class="col-xs-6 p-l-0">
-          <button type="button" class="btn btn-link btn-block" data-toggle="cancelCheck" data-value='yes'>예</button>
-        </div>
-      </div>
+    <nav class="bar bar-tab">
+      <a class="tab-item" role="button" data-toggle="cancelCheck" data-value="no">
+        아니요
+      </a>
+      <a class="tab-item border-left text-primary" role="button" data-history="back">
+        예
+      </a>
     </nav>
     <div class="content" style="min-height: 115px;">
       <div class="p-a-2 text-xs-center">글쓰기를 취소 하시겠습니까?</div>
@@ -288,12 +278,12 @@
   </div>
 </div>
 
-<!-- 게시물 보기 수정/삭제 Popover -->
+<!-- Popover : 게시물 관리 -->
 <div id="popover-bbs-view" class="popover">
   <ul class="table-view">
-    <li class="table-view-cell" data-toggle="postSaved" data-uid="237" data-history="back">저장하기</li>
-    <li class="table-view-cell" data-toggle="postEdit" data-uid="237" data-history="back">수정하기</li>
-    <li class="table-view-cell" data-toggle="PostDelete" data-uid="237" data-history="back">삭제하기</li>
+    <li class="table-view-cell" data-toggle="postSaved" data-history="back">저장하기</li>
+    <li class="table-view-cell" data-toggle="postEdit" data-history="back">수정하기</li>
+    <li class="table-view-cell" data-toggle="PostDelete" data-history="back">삭제하기</li>
     <li class="table-view-cell" data-toggle="linkCopy" data-history="back">URL 복사</li>
     <li class="table-view-cell" data-toggle="linkShare" data-history="back">공유하기...</li>
   </ul>
@@ -346,157 +336,177 @@
 
 <script>
 
-var f = document.getElementById("writeForm");
-var page_main = $('#page-main')
-var writeForm = $('#writeForm')
-var submitFlag = false;
-var loadingMsg = '<?php echo $uid?'수정중..':'등록중..' ?>'
-
-var editor_bbs;
+var page_bbs_write_main = $('#page-bbs-write-main')
+var page_bbs_view = $('#page-bbs-view')
 var modal_bbs_write = $('#modal-bbs-write');
 var sheet_comment_write = $('#sheet-comment-write');
 var popup_bbs_cancelCheck = $('#popup-bbs-cancelCheck')
+var popover_bbs_view = $('#popover-bbs-view')
+
+var editor_bbs;
+var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드 폴더
+var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
+
 
 $(document).ready(function() {
 
-	// 카테고리 항목 클릭에 글쓰기폼의 name="category" 에 값 적용하기
-	$("#page-category").find('[type="radio"]').click(function() {
-	   var radio_val = $(this).val()
-		 writeForm.find('[name="category"]').val(radio_val)
-		 page_main.find('[data-role="tap-category"] .icon').removeClass('text-muted')
-		 page_main.find('[data-role="tap-category"]').removeClass('text-muted').addClass('active')
-	});
+  // Popover : 게시물 관리
+  popover_bbs_view.on('show.rc.popover', function (e) {
+    var button = $(e.relatedTarget)
+    var uid =  button.attr('data-uid')
+    $(this).find('.table-view-cell').attr('data-uid',uid)
+  })
 
-  //게시물 수정
-  $('[data-toggle="postEdit"]').tap(function() {
-    setTimeout(function(){modal_bbs_write.modal()}, 50);
-  });
+  // 글 등록
+  modal_bbs_write.find('[data-act="submit"]').click(function(){
+    var modal = modal_bbs_write;
+    var bid = modal.find('[name="bid"]').val();
+    var uid = modal.find('[name="uid"]').val();
+    var theme = modal.find('[name="theme"]').val();
+    var notice = modal.find('[name="notice"]').val();
+    var hidden = modal.find('[name="hidden"]').val();
+    var category = modal.find('[name="category"]').val();
+    var upfiles = modal.find('[name="upfiles"]').val();
+    var featured_img = modal.find('[name="featured_img"]').val();
+    var backtype = modal.find('[name="backtype"]').val();
+    var nlist = modal.find('[name="nlist"]').val();
 
-	// 태그 페이지가 닫힐때 태그폼의 내용을 추출하여 글쓰기폼의 name="tag" 에 값 적용하기
-	$('#page-tag').on('hidden.rc.page', function () {
-		var tag = $('#page-tag').find('[name="tag"]').val()
-		page_main.find('[name="tag"]').val(tag)
-	})
+    <?php if(!$my['uid']):?>
+    var name_el = modal.find('[name="name"]');
+    var name = name_el.val();
+    var pw_el = modal.find('[name="pw"]');
+    var pw = pw_el.val();
+    <?php endif?>
 
-	// 옵션 페이지의 항목 비밀글 항목에 클릭시에 글쓰기폼의 name="hidden" 에 값 적용하기
-	$("#page-option").find('[name="hidden"]').click(function() {
-		if ($(this).is(":checked")) {
-			var check_val = 1
-		} else {
-			var check_val = 0
-		}
-		 writeForm.find('[name="hidden"]').val(check_val)
-		 page_main.find('[data-role="tap-option"] .icon').removeClass('text-muted')
-		 page_main.find('[data-role="tap-option"]').removeClass('text-muted').addClass('active')
-	});
+    var subject_el = modal.find('[name="subject"]');
+    var subject = subject_el.val();
 
-	// 옵션 페이지의 항목 공지글 항목에 클릭시에 글쓰기폼의 name="notice" 에 값 적용하기
-	$("#page-option").find('[name="notice"]').click(function() {
-		if ($(this).is(":checked")) {
-			var check_val = 1
-		} else {
-			var check_val = 0
-		}
-		 writeForm.find('[name="notice"]').val(check_val)
-		 page_main.find('[data-role="tap-option"] .icon').removeClass('text-muted')
-		 page_main.find('[data-role="tap-option"]').removeClass('text-muted').addClass('active')
-	});
+    var editorData = editor_bbs.getData();
 
-	$('#writeForm').submit( function(event){
-
-		if (submitFlag == true)
-		{
-			alert('게시물을 등록하고 있습니다. 잠시만 기다려 주세요.');
-			return false;
-		}
-		if (f.name && f.name.value == '')
-		{
-			alert('이름을 입력해 주세요. ');
-			setTimeout(function(){f.name.focus()}, 100);
-			return false;
-		}
-		if (f.pw && f.pw.value == '')
-		{
-			alert('비밀번호를 입력해 주세요. ');
-			setTimeout(function(){f.pw.focus()}, 100);
-			return false;
-		}
-		if (f.subject.value == '')
-		{
+    if (!subject_el.val()) {
 			alert('제목을 입력해 주세요.       ');
-			setTimeout(function(){f.subject.focus()}, 100);
+			setTimeout(function(){subject_el.focus()}, 100);
 			return false;
 		}
-		if (f.notice && f.hidden)
-		{
-			if (f.notice.value == 1 && f.hidden.value == 1)
-			{
-				alert('공지글은 비밀글로 등록할 수 없습니다.  ');
-				$('#page-option').page({ start: '#page-main' });
-				return false;
-			}
-		}
 
-		<?php if ($B['category']): ?>
-		if (f.category && f.category.value == '')
+    if (editorData == '') {
+      alert('내용을 입력해 주세요.       ');
+      setTimeout(function(){editor_bbs.editing.view.focus();}, 100);
+      return false;
+    }
+
+    if (notice && hidden) {
+      if (notice == 1 && hidden == 1)
+      {
+        alert('공지글은 비밀글로 등록할 수 없습니다.  ');
+        $('#page-bbs-write-option').page({ start: '#page-bbs-write-main' });
+        return false;
+      }
+    }
+
+    <?php if ($B['category']): ?>
+		if (category && category == '')
 		{
 			alert('카테고리를 선택해 주세요. ');
-			$('#page-category').page({ start: '#page-main' });
+			$('#page-bbs-write-category').page({ start: '#page-bbs-write-main' });
 			return false;
 		}
 		<?php endif; ?>
 
-    var editorData = editor_bbs.getData();
-
-    if (editorData == '') {
-			alert('내용을 입력해 주세요.       ');
-			setTimeout(function(){editor_bbs.editing.view.focus();}, 100);
-			return false;
-		} else {
-      $('[name="content"]').val(editorData);
+    // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
+    var featured_img_input = $('#page-bbs-write-main').find('input[name="featured_img"]'); // 대표이미지 input
+    var featured_img_uid = $(featured_img_input).val();
+    if(featured_img_uid ==''){ // 대표이미지로 지정된 값이 없는 경우
+      var first_attach_img_li = $('#page-bbs-write-attach').find('[data-role="attach-preview-photo"] li:first'); // 첫번째 첨부된 이미지 리스트 li
+      var first_attach_img_uid = $(first_attach_img_li).data('id');
+      $(featured_img_input).val(first_attach_img_uid);
     }
 
-		// 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
-	  var featured_img_input = $('#page-main').find('input[name="featured_img"]'); // 대표이미지 input
-	  var featured_img_uid = $(featured_img_input).val();
-	  if(featured_img_uid ==''){ // 대표이미지로 지정된 값이 없는 경우
-	    var first_attach_img_li = $('#page-attach').find('[data-role="attach-preview-photo"] li:first'); // 첫번째 첨부된 이미지 리스트 li
-	    var first_attach_img_uid = $(first_attach_img_li).data('id');
-	    $(featured_img_input).val(first_attach_img_uid);
-	  }
+    // 첨부파일 uid 를 upfiles 값에 추가하기
+    var attachfiles=$('#page-bbs-write-attach').find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
+    var new_upfiles='';
+    if(attachfiles){
+      for(var i=0;i<attachfiles.length;i++) {
+        new_upfiles+=attachfiles[i];
+      }
+      $('#modal-bbs-write').find('input[name="upfiles"]').val(new_upfiles);
+    }
 
-	  // 첨부파일 uid 를 upfiles 값에 추가하기
-	  var attachfiles=$('#page-attach').find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
-	  var new_upfiles='';
-	  if(attachfiles){
-	    for(var i=0;i<attachfiles.length;i++) {
-   			new_upfiles+=attachfiles[i];
-	    }
-	    $('#page-main').find('input[name="upfiles"]').val(new_upfiles);
-	  }
+    // console.log(subject)
+    // return false
 
-		submitFlag = true;
+    $(this).attr("disabled",true);
 
-	  $('.js-submit').attr("disabled",true);
-		$('.form-control').focusout()
-		setTimeout(function(){ // 스마트폰 가상키보드가 내려갈때까지 대기
-			$.loader({
-			  text: loadingMsg
-			});
-		}, 500);
+    setTimeout(function(){
+      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=write',{
+          bid : bid,
+          uid : uid,
+          theme : theme,
+          name : name,
+          subject : subject,
+          content : editorData,
+          hidden : hidden,
+          category : category,
+          upfiles : upfiles,
+          featured_img : featured_img,
+          backtype : backtype
+       },function(response){
+          var result = $.parseJSON(response);
+          var error = result.error
 
-		setTimeout(function(){
-			getIframeForAction(f);
-			f.submit();
-		}, 700);
+          if (!error) {
+            location.reload();
+          }
 
-		event.preventDefault();
-	  event.stopPropagation();
-	  }
-	);
+      });
+    }, 300);
 
-	$(".js-submit").tap(function() {
-		$('#writeForm').submit()
+  });
+
+	// 카테고리 항목 클릭에 글쓰기폼의 name="category" 에 값 적용하기
+	$("#page-bbs-write-category").find('[type="radio"]').click(function() {
+	   var radio_val = $(this).val()
+     console.log('dfdf')
+		 modal_bbs_write.find('[name="category"]').val(radio_val)
+		 modal_bbs_write.find('[data-role="tab-category"] .icon').removeClass('text-muted')
+		 modal_bbs_write.find('[data-role="tab-category"]').removeClass('text-muted').addClass('active')
+	});
+
+  //게시물 수정
+  $('[data-toggle="postEdit"]').tap(function() {
+    var uid = $(this).attr('data-uid');
+    modal_bbs_write.find('[name="uid"]').val(uid)
+    setTimeout(function(){modal_bbs_write.modal()}, 50);
+  });
+
+	// 태그 페이지가 닫힐때 태그폼의 내용을 추출하여 글쓰기폼의 name="tag" 에 값 적용하기
+	$('#page-bbs-write-tag').on('hidden.rc.page', function () {
+		var tag = $('#page-bbs-write-tag').find('[name="tag"]').val()
+		modal_bbs_write.find('[name="tag"]').val(tag)
+	})
+
+	// 옵션 페이지의 항목 비밀글 항목에 클릭시에 글쓰기폼의 name="hidden" 에 값 적용하기
+	$("#page-bbs-write-option").find('[name="hidden"]').click(function() {
+		if ($(this).is(":checked")) {
+			var check_val = 1
+		} else {
+			var check_val = 0
+		}
+		 modal_bbs_write.find('[name="hidden"]').val(check_val)
+		 modal_bbs_write.find('[data-role="tap-option"] .icon').removeClass('text-muted')
+		 modal_bbs_write.find('[data-role="tap-option"]').removeClass('text-muted').addClass('active')
+	});
+
+	// 옵션 페이지의 항목 공지글 항목에 클릭시에 글쓰기폼의 name="notice" 에 값 적용하기
+	$("#page-bbs-write-option").find('[name="notice"]').click(function() {
+		if ($(this).is(":checked")) {
+			var check_val = 1
+		} else {
+			var check_val = 0
+		}
+		 page_bbs_write_main.find('[name="notice"]').val(check_val)
+		 page_bbs_write_main.find('[data-role="tap-option"] .icon').removeClass('text-muted')
+		 page_bbs_write_main.find('[data-role="tap-option"]').removeClass('text-muted').addClass('active')
 	});
 
 	// 위치지정 페이지가 호출되었을때
@@ -506,7 +516,6 @@ $(document).ready(function() {
 		$('#location-map').css('width',width+'px')
 		$('#location-map').css('height',height+'px')
 	})
-
 
   //댓글쓰기 컴포넌트가 호출
   $(document).on('tap click','[data-toggle="commentWrite"]',function(){
@@ -555,21 +564,22 @@ $(document).ready(function() {
 
   //글쓰기 모달이 열릴때
   modal_bbs_write.on('show.rc.modal', function (e) {
-    // 글쓰기 권한 체크
-    var modal = modal_bbs_write;
-    var button = $(e.relatedTarget);
-    var uid = button.attr('data-uid');
-    var newPost = button.attr('data-new');
 
-    if (uid) {
-      modal.find('[data-act="submit"]').text('수정');
-    } else {
-      modal.find('[data-act="submit"]').text('등록');
-    }
-    if (newPost) {
+    // 글쓰기 권한 체크
+    var button = $(e.relatedTarget)
+    var mod = button.attr('data-mod')
+    var modal = modal_bbs_write;
+    var bid = modal.find('[name="bid"]').val();
+    var uid = modal.find('[name="uid"]').val();
+    var back = modal.attr('data-back')
+    var subject =  page_bbs_view.find('[data-role="subject"]').text();
+
+    // 새글 작성 일때
+    if (mod=='new') {
       modal_bbs_write.find('[name="subject"]').val(''); //제목 초기화
       modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
     }
+
     DecoupledEditor
         .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
           placeholder: '내용',
@@ -609,18 +619,16 @@ $(document).ready(function() {
           }
         } )
         .then( newEditor => {
-          console.log('게시판 에디터가 초기화 되었습니다.');
+          console.log('editor_bbs init');
 
           editor_bbs = newEditor;
           modal_bbs_write.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
           editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
             if (value) {
-              console.log('게시판 에디터 focus');
-              editor_bbs.setData(''); //에디터 내용 초기화
-              console.log('게시판 에디터 내용 초기화');
+              console.log('editor_bbs focus');
               modal_bbs_write.addClass('editor-focused');
             } else {
-              console.log('게시판 에디터 blur');
+              console.log('editor_bbs blur');
               modal_bbs_write.removeClass('editor-focused');
             }
           } );
@@ -630,26 +638,55 @@ $(document).ready(function() {
         .catch( error => {
             console.error( error );
         } );
+
+    if (uid) {
+      modal.find('[data-act="submit"] .not-loading').text('수정');
+
+      if (!back) {
+        modal_bbs_write.find('[name="subject"]').val(subject);
+
+        $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+             bid : bid,
+             uid : uid,
+             device : 'mobile'
+          },function(response){
+           var result = $.parseJSON(response);
+           var content=result.content;
+           var adddata=result.adddata;
+           var photo=result.photo;
+           var video=result.video;
+           var audio=result.audio;
+           var file=result.file;
+           editor_bbs.setData(content);
+        });
+      }
+
+    } else {
+      modal.find('[data-act="submit"] .not-loading').text('등록');
+    }
+
   })
 
   //글쓰기 모달이 닫힐때
   modal_bbs_write.on('hidden.rc.modal', function (e) {
+    $(this).find('[name="uid"]').val(''); // uid 초기화
+    $(this).removeAttr('data-back'); // uid 초기화
     editor_bbs.destroy();  //에디터 제거
     console.log('editor_bbs.destroy');
     setTimeout(function(){
-      popup_bbs_cancelCheck.popup();  // 글쓰기 취소확인 팝업 호출
+      popup_bbs_cancelCheck.popup({
+        backdrop: 'static'
+      });  // 글쓰기 취소확인 팝업 호출
     }, 200);
   })
 
   // 글쓰기 취소확인 처리
   popup_bbs_cancelCheck.find('[data-toggle="cancelCheck"]').tap(function() {
     var value = $(this).attr('data-value');
-    if (value=='yes') {
+    if (value=='no') {
       history.back();
-      modal_bbs_write.find('[name="subject"]').val(''); //제목 초기화
-      modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
-    } else {
-      history.back();
+      var uid = page_bbs_view.find('[name="uid"]').val()
+      modal_bbs_write.attr('data-back',true)
       setTimeout(function(){ modal_bbs_write.modal('show'); }, 10);
     }
 	});

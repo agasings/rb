@@ -44,6 +44,8 @@ $TMPL['date'] = getDateFormat($R['d_regis'],$d['theme']['date_viewf']);
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
 $TMPL['name'] = $R[$_HS['nametype']];
 
+$result['content'] = getContents($R['content'],$R['html']);
+
 if ($R['featured_img']) {
   $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'c'); //게시물 대표이미지
 } else {

@@ -286,3 +286,6 @@
 .ck .ck-insert-table-dropdown-grid-box:nth-child(3 ) {
   display: block;
 }
+.ck.ck-editor__editable > .ck-placeholder::before {
+  color: #999;
+}

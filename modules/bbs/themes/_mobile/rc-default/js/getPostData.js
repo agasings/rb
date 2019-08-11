@@ -18,7 +18,7 @@ function getPostData(settings){
   var page_bbs_photo = $('#page-bbs-photo');  // 샤진 크게보기 페이지
   var popup_linkshare = $('#popup-link-share')  //링크공유 팝업
   var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
-
+  var popover_bbs_view = $('#popover-bbs-view') // 게시물 관리 팝오버
 
   //  게시물보기 모달이 보여질때 : 게시물 본문영역 셋팅
   $(mid).on('show.rc.'+type, function(event) {
@@ -35,13 +35,12 @@ function getPostData(settings){
     modal.find('[name="bid"]').val(bid)
     page.find('[data-role="subject"]').text(subject)
     page.find('[data-role="cat"]').text(cat)
-
+    page.find('.bar-nav [data-role="toolbar"]').attr('data-uid',uid)
     modal.find('[data-role="article"]').loader({  //  로더 출력
       position:   "inside"
     });
 
     setTimeout(function(){
-
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
            bid : bid,
            uid : uid,
@@ -267,7 +266,9 @@ function getPostData(settings){
       var modal = $(this);
       var uid = modal.find('[name="uid"]').val()
       var list_parent =  $('[data-role="bbs-list"]').find('#item-'+uid)
+      modal.find('.bar-nav [data-role="toolbar"]').removeAttr('data-uid')
       list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
+      modal.find('[name="uid"]').val('') 
       modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
 
       modal.find('[data-role="attach-photo"]').addClass('hidden').empty() // 사진 영역 초기화
