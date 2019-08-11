@@ -51,7 +51,7 @@ function moreNOTI(container,totalPage){
 
 }
 
-$(function() {
+$(document).ready(function() {
 
   putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
 
