@@ -8,19 +8,9 @@
 		<?php echo sprintf('%s님, 이 페이지를 보고 계시면 킴스큐가 정상적으로 설치된 것입니다.',$my['name'])?><br>
 		이제 킴스큐를 시작할 준비가 되셨습니다.
 	</p>
-	<p>
-	<div class="btn-group btn-group-lg animated bounce delay-3">
-	  <a href="./?r=<?php echo $r?>&amp;panel=Y&amp;_admpnl_=<?php echo urlencode('./?r='.$r.'&m=admin&module=project&front=start')?>" class="btn btn-primary">시작하기</a>
-	  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	    <span class="sr-only">Toggle Dropdown</span>
-	  </button>
-	  <div class="dropdown-menu dropdown-menu-right">
-	    <a class="dropdown-item" href="./?r=<?php echo $r?>&amp;panel=Y&amp;_admpnl_=<?php echo urlencode('./?r='.$r.'&m=admin&module=site')?>">사이트 모듈로 이동</a>
-	    <a class="dropdown-item" href="./?r=<?php echo $r?>&amp;panel=Y&amp;_admpnl_=<?php echo urlencode('./?r='.$r.'&m=admin&module=admin')?>">시스템 모듈로 이동</a>
-	  </div>
-	</div>
-
-	</p>
+	<a href="./?r=<?php echo $r?>&amp;panel=Y&amp;_admpnl_=<?php echo urlencode('./?r='.$r.'&m=admin&module=project&front=start')?>" class="btn btn-primary btn-lg animated bounce delay-3">
+		시작하기
+	</a>
 </div>
 
 <script>
