@@ -35,18 +35,3 @@
 	<p><!-- 출력을 원치 않으실 경우 지우세요 -->Powered by kimsQ rb (Runtime <?php echo round(getNowTimes()-$g['time_start'],3)?>)</p>
 
 </footer>
-
-<!-- highlight.js : https://github.com/highlightjs/highlight.js -->
-<?php getImport('highlight.js','styles/default','9.15.8','css') ?>
-<?php getImport('highlight.js','highlight.pack','9.15.8','js') ?>
-
-<script>
-$(document).ready(function() {
-	$('pre').each(function(i, block) {
-		hljs.highlightBlock(block);
-	});
-});
-
-
-
-</script>
