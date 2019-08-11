@@ -1,9 +1,5 @@
 .ftpconfig
 .DS_Store
-layouts/bs4-biz-01/
-layouts/bs4-corp-01/
-layouts/bs4-corp-02/
-layouts/bs4-default/
 _var/db.info.php
 _var/install.txt
 _var/php.version.txt
@@ -11,9 +7,6 @@ _var/project.key.txt
 _var/table.info.php
 _var/site/*
 _var/update/*
-modules/bbs/var/
 modules/post/
-modules/mediaset/var/var.php
 pages/*
 _tmp/widget/*
-plugins/highlight.js/
