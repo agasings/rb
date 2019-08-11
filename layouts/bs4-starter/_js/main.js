@@ -135,6 +135,18 @@ $(function () {
     });
 	});
 
+  // 로그아웃
+  $('[data-act="logout"]').click(function(){
+    $('body').isLoading({
+      position: 'inside',
+      text:   '<div class="d-flex justify-content-center align-items-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>',
+    });
+    getIframeForAction('');
+    setTimeout(function(){
+      frames.__iframe_for_action__.location.href = '/?r=home&m=site&a=logout';
+    }, 100);
+  });
+
   // history.back
   $(document).on('click','[data-history="back"]',function(){
     window.history.back();

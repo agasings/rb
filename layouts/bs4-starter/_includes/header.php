@@ -83,9 +83,9 @@
 						<a class="dropdown-item" href="<?php echo RW('mod=settings')?>">
 							<i class="fa fa-cog fa-fw" aria-hidden="true"></i> 설정
 						</a>
-				    <a class="dropdown-item" href="<?php echo $g['s']?>/logout">
+						<button class="dropdown-item" type="button" data-act="logout" role="button">
 							<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> 로그아웃
-						</a>
+						</button>
 						<?php if ($my['admin']): ?>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item text-danger" href="/?m=admin&pickmodule=site&panel=Y" target="_top">관리자모드</a>
