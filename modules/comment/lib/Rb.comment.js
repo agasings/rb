@@ -423,7 +423,7 @@
                           ],
                       }
                   },
-                  removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
+                  removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle','WordCount' ],
                   image: {}
                 } )
                 .then( newEditor => {
@@ -525,7 +525,7 @@
                         ],
                     }
                 },
-                removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle' ],
+                removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle','WordCount' ],
                 image: {}
               } )
               .then( newEditor => {
