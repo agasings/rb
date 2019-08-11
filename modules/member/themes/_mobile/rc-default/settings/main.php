@@ -8,7 +8,7 @@ $my_shipping_num = getDbRows($table['s_mbrshipping'],'mbruid='.$my['uid']);
 <!-- Start Page -->
 <div id="page-main" class="page center">
 	<header class="bar bar-nav bar-dark bg-primary px-0">
-		<a class="icon icon-home pull-left p-x-1" role="button" href="<?php  echo RW(0) ?>"></a>
+		<a class="icon icon-home pull-left p-x-1" role="button" data-href="<?php  echo RW(0) ?>"></a>
 		<h1 class="title" data-location="reload">설정</h1>
 	</header>
 	<main class="content bg-faded">
@@ -34,25 +34,25 @@ $my_shipping_num = getDbRows($table['s_mbrshipping'],'mbruid='.$my['uid']);
 		    </a>
 		  </li>
 			<li class="table-view-cell">
-				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=account">
+				<a class="navigate-right" data-href="<?php echo$g['url_reset']?>&page=account">
 					<span class="badge badge-default badge-inverted"><?php echo $my['id'] ?></span>
 					<i class="fa fa-user fa-fw text-muted mr-1" aria-hidden="true"></i> 회원계정
 				</a>
 			</li>
 			<li class="table-view-cell">
-				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=email">
+				<a class="navigate-right" data-href="<?php echo$g['url_reset']?>&page=email">
 					<span class="badge badge-default badge-inverted"><?php echo $my['email']?$my['email']:'미등록' ?></span>
 					<i class="fa fa-envelope fa-fw mr-1 text-muted" aria-hidden="true"></i> 이메일
 				</a>
 			</li>
 			<li class="table-view-cell">
-				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=phone">
+				<a class="navigate-right" data-href="<?php echo$g['url_reset']?>&page=phone">
 					<span class="badge badge-default badge-inverted"><?php echo $my['phone']?$my['phone']:'미등록' ?></span>
 					<i class="fa fa-mobile fa-lg fa-fw text-muted" aria-hidden="true"></i> 휴대폰
 				</a>
 			</li>
 			<li class="table-view-cell">
-				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=noti">
+				<a class="navigate-right" data-href="<?php echo$g['url_reset']?>&page=noti">
 					<?php if ($nt_web==''): ?>
 					<span class="badge badge-primary badge-pill">ON</span>
 					<?php else: ?>
@@ -65,7 +65,7 @@ $my_shipping_num = getDbRows($table['s_mbrshipping'],'mbruid='.$my['uid']);
 			<?php if ($d['member']['login_social']): ?>
 			<?php $isSNSlogin = getDbData($table['s_mbrsns'],'memberuid='.$my['uid'],'*'); ?>
 			<li class="table-view-cell">
-				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=connect">
+				<a class="navigate-right" data-href="<?php echo$g['url_reset']?>&page=connect">
 					<span class="badge badge-inverted">
 						<?php if ($my_naver['uid']): ?><img class="rounded-circle" src="/_core/images/sns/naver.png" alt="네이버" width="22"><?php endif; ?>
 						<?php if ($my_kakao['uid']): ?><img class="rounded-circle" src="/_core/images/sns/kakao.png" alt="카카오" width="22"><?php endif; ?>
@@ -78,7 +78,7 @@ $my_shipping_num = getDbRows($table['s_mbrshipping'],'mbruid='.$my['uid']);
 			</li>
 			<?php endif; ?>
 			<li class="table-view-cell">
-				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=shipping">
+				<a class="navigate-right" data-href="<?php echo$g['url_reset']?>&page=shipping">
 					<span class="badge badge-default badge-inverted">
 						<?php echo $my_shipping_num?number_format($my_shipping_num).' 곳':'미등록'?>
 					</span>
@@ -87,7 +87,7 @@ $my_shipping_num = getDbRows($table['s_mbrshipping'],'mbruid='.$my['uid']);
 			</li>
 
 			<li class="table-view-cell">
-				<a class="navigate-right" href="<?php echo$g['url_reset']?>&page=point">
+				<a class="navigate-right" data-href="<?php echo$g['url_reset']?>&page=point">
 					<span class="badge badge-default badge-inverted"><?php echo number_format($my['point'])?> P</span>
 					<i class="fa fa-product-hunt mr-1 fa-fw text-muted" aria-hidden="true"></i> 포인트 내역
 				</a>

@@ -89,8 +89,8 @@ function getAttachFile($R,$mod,$featured_img_uid)
       if($type=='photo'){
             $caption=$R['caption']?$R['caption']:$file_name;
             $img_origin=$R['url'].$R['folder'].'/'.$R['tmpname'];
-            $thumb_list=getPreviewResize($img_origin,'q'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-            $thumb_modal=getPreviewResize($img_origin,'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+						$thumb_list=getPreviewResize($R['src'],'q'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+            $thumb_modal=getPreviewResize($R['src'],'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
             $insert_text='!['.$caption.']('.$g['url_root'].$img_origin.')';
 			}else if($type=='file'){
 						$caption=$R['caption']?$R['caption']:$R['name'];

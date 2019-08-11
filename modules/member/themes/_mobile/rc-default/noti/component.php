@@ -86,7 +86,7 @@ $(function() {
 
   })
 
-  $(document).on('hidden.rc.sheet',sheet_noti,function(event){
+  $(document).find('#sheet-noti').on('hidden.rc.sheet',sheet_noti,function(event){
     //내용 초기화
     var item = $(event.relatedTarget)
     var noti_badge  = $('[data-role="noti-status"]')

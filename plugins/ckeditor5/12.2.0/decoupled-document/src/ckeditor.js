@@ -39,6 +39,7 @@ import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
+import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 
 import '../theme/theme.css';
 
@@ -78,7 +79,8 @@ DecoupledEditor.builtinPlugins = [
 	Indent,
 	IndentBlock,
 	Font,
-	Code
+	Code,
+	WordCount
 ];
 
 // Editor configuration.
