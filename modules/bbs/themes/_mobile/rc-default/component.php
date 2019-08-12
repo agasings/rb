@@ -82,7 +82,9 @@
   				 <div class="input-row">
   					 <label>암호</label>
   					 <input type="password" name="pw" placeholder="암호는 게시글 수정 및 삭제에 필요합니다." value="" class="form-control" autocomplete="off">
-  					 <small class="form-text text-muted">비밀답변은 비번을 수정하지 않아야 원게시자가 열람할 수 있습니다.</small>
+            <?php if($R['hidden']&&$reply=='Y'):?>
+            <small class="form-text text-muted">비밀답변은 비번을 수정하지 않아야 원게시자가 열람할 수 있습니다.</small>
+            <?php endif?>
   				 </div>
   				 <?php endif?>
   				 <?php endif?>
@@ -565,101 +567,105 @@ $(document).ready(function() {
 
   //글쓰기 모달이 열릴때
   modal_bbs_write.on('show.rc.modal', function (e) {
-
-    // 글쓰기 권한 체크
     var button = $(e.relatedTarget)
-    var mod = button.attr('data-mod')
     var modal = modal_bbs_write;
     var bid = modal.find('[name="bid"]').val();
     var uid = modal.find('[name="uid"]').val();
     var subject =  page_bbs_view.find('[data-role="subject"]').text();
 
-    // 새글 작성 일때
-    if (mod=='new') {
-      modal_bbs_write.find('[name="subject"]').val(''); //제목 초기화
-      modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
-    }
+    // 글쓰기 권한 체크
+    $.post(rooturl+'/?r='+raccount+'&m=bbs&a=check_permWrite',{
+         bid : bid
+      },function(response){
+       var result = $.parseJSON(response);
+       var main=result.main;
+       var isperm =result.isperm;
+       if (!isperm) {
+         console.log('권한없음');
+         modal_bbs_write.find('.page .content').html(main);
+         modal_bbs_write.find('.bar-tab').remove();
+       } else {
+         modal_bbs_write.find('[name="subject"]').val(''); //제목 초기화
+         modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
 
-    DecoupledEditor
-        .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
-          placeholder: '내용',
-            toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
-          removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle',,'WordCount' ],
-          image: {},
-          language: 'ko',
-          extraPlugins: [rbUploadAdapterPlugin],
-          table: {
-              contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
-          },
-          mediaEmbed: {
-              extraProviders: [
-                  {
-                      name: 'other',
-                      url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                  },
-                  {
-                      name: 'another',
-                      url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                  }
-              ]
-          },
-          typing: {
-              transformations: {
-                  include: [
-                    'quotes',
-                    'typography',
-                  ],
-                  extra: [
-                      // Add some custom transformations – e.g. for emojis.
-                      { from: ':)', to: '🙂' },
-                      { from: ':+1:', to: '👍' },
-                      { from: ':tada:', to: '🎉' }
-                  ],
-              }
-          }
-        } )
-        .then( newEditor => {
-          console.log('editor_bbs init');
+         DecoupledEditor
+             .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
+               placeholder: '내용',
+               toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
+               removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle',,'WordCount' ],
+               image: {},
+               language: 'ko',
+               extraPlugins: [rbUploadAdapterPlugin],
+               table: {
+                 contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+               },
+               mediaEmbed: {
+                 extraProviders: [
+                   {
+                     name: 'other',
+                     url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                   },
+                   {
+                     name: 'another',
+                     url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                   }
+                 ]
+               },
+               typing: {
+                 transformations: {
+                   include: [
+                   'quotes',
+                   'typography',
+                   ],
+                   extra: [
+                     // Add some custom transformations – e.g. for emojis.
+                     { from: ':)', to: '🙂' },
+                     { from: ':+1:', to: '👍' },
+                     { from: ':tada:', to: '🎉' }
+                   ],
+                 }
+               }
+             } )
+             .then( newEditor => {
+               console.log('editor_bbs init');
 
-          editor_bbs = newEditor;
-          modal_bbs_write.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
-          editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-            if (value) {
-              console.log('editor_bbs focus');
-              modal_bbs_write.addClass('editor-focused');
-            } else {
-              console.log('editor_bbs blur');
-              modal_bbs_write.removeClass('editor-focused');
-            }
-          } );
+               editor_bbs = newEditor;
+               modal_bbs_write.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
+               editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+                 if (value) {
+                   console.log('editor_bbs focus');
+                   modal_bbs_write.addClass('editor-focused');
+                 } else {
+                   console.log('editor_bbs blur');
+                   modal_bbs_write.removeClass('editor-focused');
+                 }
+               } );
+             })
+             .catch( error => {
+                 console.error( error );
+             } );
 
-
-        })
-        .catch( error => {
-            console.error( error );
-        } );
-
-    if (uid) {
-      modal.find('[data-act="submit"] .not-loading').text('수정');
-      modal_bbs_write.find('[name="subject"]').val(subject);
-      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-           bid : bid,
-           uid : uid,
-           device : 'mobile'
-        },function(response){
-         var result = $.parseJSON(response);
-         var content=result.content;
-         var adddata=result.adddata;
-         var photo=result.photo;
-         var video=result.video;
-         var audio=result.audio;
-         var file=result.file;
-         editor_bbs.setData(content);
-      });
-
-    } else {
-      modal.find('[data-act="submit"] .not-loading').text('등록');
-    }
+         if (uid) {
+           modal.find('[data-act="submit"] .not-loading').text('수정');
+           modal_bbs_write.find('[name="subject"]').val(subject);
+           $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+                bid : bid,
+                uid : uid
+             },function(response){
+              var result = $.parseJSON(response);
+              var content=result.content;
+              var adddata=result.adddata;
+              var photo=result.photo;
+              var video=result.video;
+              var audio=result.audio;
+              var file=result.file;
+              editor_bbs.setData(content);
+           });
+         } else {
+           modal.find('[data-act="submit"] .not-loading').text('등록');
+         }
+       }
+    });
 
   })
 
