@@ -673,12 +673,12 @@ $(document).ready(function() {
     if (editor_bbs) {
       editor_bbs.destroy();  //에디터 제거
       console.log('editor_bbs.destroy');
+      setTimeout(function(){
+        popup_bbs_cancelCheck.popup({
+          backdrop: 'static'
+        });  // 글쓰기 취소확인 팝업 호출
+      }, 200);
     }
-    setTimeout(function(){
-      popup_bbs_cancelCheck.popup({
-        backdrop: 'static'
-      });  // 글쓰기 취소확인 팝업 호출
-    }, 200);
   })
 
   // 글쓰기 취소확인 처리
