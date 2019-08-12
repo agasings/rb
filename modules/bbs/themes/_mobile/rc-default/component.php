@@ -69,8 +69,12 @@
   	</nav>
 
   	<div class="content">
-
-  		<form>
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center text-muted" style="height:70vh">
+          <div class="spinner-border mr-2" role="status"></div>
+        </div>
+      </div>
+  		<form class="d-none">
 
   			<div class="form-list m-b-0">
   				<?php if(!$my['id']):?>
@@ -462,10 +466,24 @@ $(document).ready(function() {
           backtype : backtype
        },function(response){
           var result = $.parseJSON(response);
-          var error = result.error
+          var error = result.error;
+          var item = result.item;
+          var notice = result.notice;
+          var uid = result.uid;
 
           if (!error) {
-            location.reload();
+            history.back();
+            setTimeout(function(){
+              $('#page-bbs-list').find('.content').animate({scrollTop : 0}, 100);
+
+              if (notice==1) $('[data-role="bbs-list"] [data-role="notice"]').prepend(item);
+              else $('[data-role="bbs-list"] [data-role="allpost"]').prepend(item);
+              $('[data-role="bbs-list"]').find('#item-'+uid).addClass('animated fadeInDown');
+              setTimeout(function(){$('[data-role="bbs-list"]').find('#item-'+uid).addClass('animate-bg');}, 500);
+              $(this).attr('disabled', false);
+              modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
+              modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
+            }, 600);
           }
 
       });
@@ -566,118 +584,130 @@ $(document).ready(function() {
   })
 
   //글쓰기 모달이 열릴때
-  modal_bbs_write.on('show.rc.modal', function (e) {
+  modal_bbs_write.on('shown.rc.modal', function (e) {
     var button = $(e.relatedTarget)
     var modal = modal_bbs_write;
     var bid = modal.find('[name="bid"]').val();
     var uid = modal.find('[name="uid"]').val();
     var subject =  page_bbs_view.find('[data-role="subject"]').text();
 
-    // 글쓰기 권한 체크
-    $.post(rooturl+'/?r='+raccount+'&m=bbs&a=check_permWrite',{
-         bid : bid
-      },function(response){
-       var result = $.parseJSON(response);
-       var main=result.main;
-       var isperm =result.isperm;
-       if (!isperm) {
-         console.log('권한없음');
-         modal_bbs_write.find('.page .content').html(main);
-         modal_bbs_write.find('.bar-tab').remove();
-       } else {
+    modal.find('[data-act="submit"]').attr('disabled', false);
+    modal.find('[data-role="loader"]').removeClass('d-none') //로더 제거
+    modal.find('form').addClass('d-none')
 
-         DecoupledEditor
-             .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
-               placeholder: '내용',
-               toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
-               removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle',,'WordCount' ],
-               image: {},
-               language: 'ko',
-               extraPlugins: [rbUploadAdapterPlugin],
-               table: {
-                 contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
-               },
-               mediaEmbed: {
-                 extraProviders: [
-                   {
-                     name: 'other',
-                     url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                   },
-                   {
-                     name: 'another',
-                     url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                   }
-                 ]
-               },
-               typing: {
-                 transformations: {
-                   include: [
-                   'quotes',
-                   'typography',
-                   ],
-                   extra: [
-                     // Add some custom transformations – e.g. for emojis.
-                     { from: ':)', to: '🙂' },
-                     { from: ':+1:', to: '👍' },
-                     { from: ':tada:', to: '🎉' }
-                   ],
-                 }
-               }
-             } )
-             .then( newEditor => {
-               console.log('editor_bbs init');
-
-               editor_bbs = newEditor;
-               modal_bbs_write.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
-               editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-                 if (value) {
-                   console.log('editor_bbs focus');
-                   modal_bbs_write.addClass('editor-focused');
-                 } else {
-                   console.log('editor_bbs blur');
-                   modal_bbs_write.removeClass('editor-focused');
-                 }
-               } );
-             })
-             .catch( error => {
-                 console.error( error );
-             } );
-
-         if (uid) {
-           modal.find('[data-act="submit"] .not-loading').text('수정');
-           modal_bbs_write.find('[name="subject"]').val(subject);
-           $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-                bid : bid,
-                uid : uid
-             },function(response){
-              var result = $.parseJSON(response);
-              var content=result.content;
-              var adddata=result.adddata;
-              var photo=result.photo;
-              var video=result.video;
-              var audio=result.audio;
-              var file=result.file;
-              editor_bbs.setData(content);
-           });
+    setTimeout(function(){
+      // 글쓰기 권한 체크
+      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=check_permWrite',{
+           bid : bid
+        },function(response){
+         var result = $.parseJSON(response);
+         var main=result.main;
+         var isperm =result.isperm;
+         if (!isperm) {
+           console.log('권한없음');
+           modal_bbs_write.find('.page .content').html(main);
+           modal_bbs_write.find('.bar-tab').remove();
          } else {
-           modal.find('[data-act="submit"] .not-loading').text('등록');
+
+           DecoupledEditor
+               .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
+                 placeholder: '내용',
+                 toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
+                 removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle',,'WordCount' ],
+                 image: {},
+                 language: 'ko',
+                 extraPlugins: [rbUploadAdapterPlugin],
+                 table: {
+                   contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+                 },
+                 mediaEmbed: {
+                   extraProviders: [
+                     {
+                       name: 'other',
+                       url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                     },
+                     {
+                       name: 'another',
+                       url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                     }
+                   ]
+                 },
+                 typing: {
+                   transformations: {
+                     include: [
+                     'quotes',
+                     'typography',
+                     ],
+                     extra: [
+                       // Add some custom transformations – e.g. for emojis.
+                       { from: ':)', to: '🙂' },
+                       { from: ':+1:', to: '👍' },
+                       { from: ':tada:', to: '🎉' }
+                     ],
+                   }
+                 }
+               } )
+               .then( newEditor => {
+                 console.log('editor_bbs init');
+                 modal.find('[data-role="loader"]').addClass('d-none') //로더 제거
+                 modal.find('form').removeClass('d-none')
+                 editor_bbs = newEditor;
+                 modal_bbs_write.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
+                 editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+                   if (value) {
+                     console.log('editor_bbs focus');
+                     modal_bbs_write.addClass('editor-focused');
+                   } else {
+                     console.log('editor_bbs blur');
+                     modal_bbs_write.removeClass('editor-focused');
+                   }
+                 } );
+               })
+               .catch( error => {
+                   console.error( error );
+               } );
+
+           if (uid) {
+             modal.find('[data-act="submit"] .not-loading').text('수정');
+             modal_bbs_write.find('[name="subject"]').val(subject);
+             $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+                  bid : bid,
+                  uid : uid
+               },function(response){
+                var result = $.parseJSON(response);
+                var content=result.content;
+                var adddata=result.adddata;
+                var photo=result.photo;
+                var video=result.video;
+                var audio=result.audio;
+                var file=result.file;
+                editor_bbs.setData(content);
+             });
+           } else {
+             modal.find('[data-act="submit"] .not-loading').text('등록');
+           }
          }
-       }
-    });
+      });
+    }, 300);
+
 
   })
 
   //글쓰기 모달이 닫힐때
   modal_bbs_write.on('hidden.rc.modal', function (e) {
+    var submitting = false;
+    if(modal_bbs_write.find('[data-act="submit"]').is(":disabled")) var submitting = true;
     $(this).find('[name="uid"]').val(''); // uid 초기화
     if (editor_bbs) {
       editor_bbs.destroy();  //에디터 제거
       console.log('editor_bbs.destroy');
-      setTimeout(function(){
-        popup_bbs_cancelCheck.popup({
-          backdrop: 'static'
-        });  // 글쓰기 취소확인 팝업 호출
-      }, 200);
+      if (!submitting) {
+        setTimeout(function(){
+          popup_bbs_cancelCheck.popup({
+            backdrop: 'static'
+          });  // 글쓰기 취소확인 팝업 호출
+        }, 200);
+      }
     }
   })
 

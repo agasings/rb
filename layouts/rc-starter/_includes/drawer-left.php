@@ -25,13 +25,13 @@
     <span class="tab-label">로그아웃</span>
   </a>
   <?php else: ?>
-  <a class="tab-item" role="button" href="#modal-login" data-toggle="modal" data-title="<?php echo stripslashes($d['layout']['header_title'])?>">
-    <span class="icon fa fa-sign-in"></span>
-    <span class="tab-label">로그인</span>
-  </a>
   <a class="tab-item" role="button" href="#modal-join" data-toggle="modal" data-url="">
     <span class="icon icon-person"></span>
     <span class="tab-label">회원가입</span>
+  </a>
+  <a class="tab-item" role="button" href="#modal-login" data-toggle="modal" data-title="<?php echo stripslashes($d['layout']['header_title'])?>">
+    <span class="icon fa fa-sign-in"></span>
+    <span class="tab-label">로그인</span>
   </a>
   <?php endif; ?>
 </nav>

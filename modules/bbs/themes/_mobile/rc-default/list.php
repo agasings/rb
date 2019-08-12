@@ -32,8 +32,8 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
       <div class="swiper-wrapper">
 
         <!-- 전체글 -->
-        <div class="swiper-slide" id="swiper-allpost" data-hash="allpost">
-          <ul class="table-view my-0 border-top-0">
+        <div class="swiper-slide" id="swiper-allpost">
+          <ul class="table-view my-0 border-top-0" data-role="allpost">
             <?php if ($cat || $keyword): ?>
             <li class="table-view-cell table-view-active text-muted">
               <i class="fa <?php echo $cat?'fa-folder-open-o':'fa-search' ?> fa-fw" aria-hidden="true"></i> <?php echo $cat ?> <?php echo $keyword ?> <small>(<?php echo $NUM ?>건)</small>
@@ -110,8 +110,8 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
 
         <!-- 공지 -->
         <?php if ($NUM_NOTICE): ?>
-        <div class="swiper-slide" data-hash="notice">
-          <ul class="table-view border-top-0 mt-0">
+        <div class="swiper-slide">
+          <ul class="table-view border-top-0 mt-0" data-role="notice">
             <?php foreach($NCD as $R):?>
             <?php $R['mobile']=isMobileConnect($R['agent'])?>
             <li class="table-view-cell<?php echo $R['depth']?' rb-reply rb-reply-0'.$R['depth']:'' ?><?php echo $R['hidden']?' secret':'' ?>" id="item-<?php echo $R['uid']?>">
@@ -160,7 +160,6 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
             </li>
             <?php endforeach?>
           </ul>
-
         </div><!-- /.swiper-slide -->
         <?php endif; ?>
 
