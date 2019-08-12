@@ -640,25 +640,21 @@ $(document).ready(function() {
 
     if (uid) {
       modal.find('[data-act="submit"] .not-loading').text('수정');
-
-      if (!back) {
-        modal_bbs_write.find('[name="subject"]').val(subject);
-
-        $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-             bid : bid,
-             uid : uid,
-             device : 'mobile'
-          },function(response){
-           var result = $.parseJSON(response);
-           var content=result.content;
-           var adddata=result.adddata;
-           var photo=result.photo;
-           var video=result.video;
-           var audio=result.audio;
-           var file=result.file;
-           editor_bbs.setData(content);
-        });
-      }
+      modal_bbs_write.find('[name="subject"]').val(subject);
+      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+           bid : bid,
+           uid : uid,
+           device : 'mobile'
+        },function(response){
+         var result = $.parseJSON(response);
+         var content=result.content;
+         var adddata=result.adddata;
+         var photo=result.photo;
+         var video=result.video;
+         var audio=result.audio;
+         var file=result.file;
+         editor_bbs.setData(content);
+      });
 
     } else {
       modal.find('[data-act="submit"] .not-loading').text('등록');
