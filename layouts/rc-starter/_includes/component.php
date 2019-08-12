@@ -121,7 +121,6 @@
         </ul>
       </div>
 
-	    <div class="commentting-container content-padded m-t-3" id="anchor-comments"></div>
 	  </div>
 	</section>
 

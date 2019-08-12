@@ -281,9 +281,7 @@
 <!-- Popover : 게시물 관리 -->
 <div id="popover-bbs-view" class="popover">
   <ul class="table-view">
-    <li class="table-view-cell" data-toggle="postSaved" data-history="back">저장하기</li>
-    <li class="table-view-cell" data-toggle="postEdit" data-history="back">수정하기</li>
-    <li class="table-view-cell" data-toggle="PostDelete" data-history="back">삭제하기</li>
+    <!-- 저장,수정,삭제 항목 동적 추가 -->
     <li class="table-view-cell" data-toggle="linkCopy" data-history="back">URL 복사</li>
     <li class="table-view-cell" data-toggle="linkShare" data-history="back">공유하기...</li>
   </ul>
@@ -471,13 +469,6 @@ $(document).ready(function() {
 		 modal_bbs_write.find('[data-role="tab-category"] .icon').removeClass('text-muted')
 		 modal_bbs_write.find('[data-role="tab-category"]').removeClass('text-muted').addClass('active')
 	});
-
-  //게시물 수정
-  $('[data-toggle="postEdit"]').tap(function() {
-    var uid = $(this).attr('data-uid');
-    modal_bbs_write.find('[name="uid"]').val(uid)
-    setTimeout(function(){modal_bbs_write.modal()}, 50);
-  });
 
 	// 태그 페이지가 닫힐때 태그폼의 내용을 추출하여 글쓰기폼의 name="tag" 에 값 적용하기
 	$('#page-bbs-write-tag').on('hidden.rc.page', function () {

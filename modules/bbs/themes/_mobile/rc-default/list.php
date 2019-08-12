@@ -231,7 +231,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
   <input type="hidden" name="theme" value="">
   <header class="bar bar-nav bar-dark bg-primary p-x-0">
 		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-    <a href="#popover-bbs-view" data-role="toolbar" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
+    <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
     <h1 class="title" data-role="title" data-history="back">
       <?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?>
     </h1>
@@ -270,7 +270,6 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
     </div>
 
     <!-- 댓글출력 -->
-    <div data-role="comment_anchor" class="anchor-link"></div>
     <div data-role="bbs-comment"></div>
 
   </div>

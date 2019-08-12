@@ -77,7 +77,8 @@ function getPostData(settings){
 
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
-         modal.find('[data-role="linkShare"]').attr('data-url',url)
+         modal.find('[data-role="linkShare"]').attr('data-url',url);
+         modal.find('[data-toggle="popover"]').attr('data-uid',uid);
 
          if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
          if (is_post_disliked) modal.find('[data-role="btn_post_dislike"]').addClass('active')
@@ -160,8 +161,16 @@ function getPostData(settings){
 
          }
 
-         if (!mypost) {  // 내글이 아니거나 관리자가 아닐때
-          modal.find('[data-role="toolbar"]').remove()  // 수정,삭제가 포함된 툴바,첨부파일,댓글을 제거함
+         $('#popover-bbs-view').find('[data-role="toolbar"]').remove();  //popover 항목 초기화
+
+         if (memberid) {  // 로그인 상태 일때
+          var item_memberid = '<li class="table-view-cell" data-toggle="postSaved" data-send="ajax" data-role="toolbar" data-history="back">저장하기</li>';
+          $('#popover-bbs-view').find('.table-view').prepend(item_memberid)  // 수정,삭제 버튼을 추가함
+         }
+
+         if (mypost) {  // 내글이 아니거나 관리자 일때
+          var items_mypost = '<li class="table-view-cell" data-toggle="postEdit" data-history="back" data-role="toolbar">수정하기</li><li class="table-view-cell" data-toggle="PostDelete" data-role="toolbar">삭제하기</li>';
+          $('#popover-bbs-view').find('.table-view').prepend(items_mypost)  // 수정,삭제 버튼을 추가함
          }
 
          if (hidden || hidden_attach) {  // 권한이 없거나 비밀글 이거나 첨부파일 권한이 없을 경우 일때
@@ -211,17 +220,19 @@ function getPostData(settings){
    });
 
    //좋아요,싫어요
-   $(mid).on('tap','[data-act="opinion"]',function(){
+   $(mid).on('tap','[data-toggle="opinion"]',function(){
      var send = $(this).data('send')
      var uid = $(this).data('uid')
      var opinion = $(this).data('opinion')
      var effect = $(this).data('effect')
      var myid = $(this).data('myid')
+     var bid = $(mid).find('[name="bid"]').val()
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=opinion',{
        send : send,
        opinion : opinion,
        uid : uid,
-       memberid : memberid
+       memberid : memberid,
+       bid : bid
        },function(response){
         var result = $.parseJSON(response);
         var error=result.error;
@@ -261,6 +272,42 @@ function getPostData(settings){
       });
     });
 
+    //게시물 링크저장(스크랩)
+    $(document).on('tap','[data-toggle="postSaved"]',function(){
+      var send = $(this).data('send')
+      var uid = $(this).data('uid')
+
+      if(!memberid){
+        $('#modal-login').modal()  // 비로그인 일 경우 로그인 모달 호출
+        return false;
+      }
+
+      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=saved',{
+        send : send,
+        uid : uid
+        },function(response){
+         var result = $.parseJSON(response);
+         var error=result.error;
+         var is_post_saved=result.is_post_saved;
+         var msg=result.msg;
+         var msgType=result.msgType;
+
+         if (!error) {
+           if (is_post_saved) {
+             var msg = '게시물이 저장함에서 삭제되었습니다.';
+             var msgType = 'successs';
+             $('[data-role="btn_post_saved"]').removeClass('active');
+           }
+           else {
+             var msg = '게시물이 저장함에 추가되었습니다.';
+             var msgType = 'successs';
+             $('[data-role="btn_post_saved"]').addClass('active');
+           }
+         }
+         $.notify({message: msg},{type: 'success'});
+       });
+     });
+
    //게시물보기 모달(페이지)이 닫혔을 때
    $(mid).on('hidden.rc.'+type, function() {
       var modal = $(this);
@@ -268,7 +315,7 @@ function getPostData(settings){
       var list_parent =  $('[data-role="bbs-list"]').find('#item-'+uid)
       modal.find('.bar-nav [data-role="toolbar"]').removeAttr('data-uid')
       list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
-      modal.find('[name="uid"]').val('') 
+      modal.find('[name="uid"]').val('')
       modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
 
       modal.find('[data-role="attach-photo"]').addClass('hidden').empty() // 사진 영역 초기화
@@ -430,6 +477,56 @@ function getPostData(settings){
       page_bbs_photo.find('.swiper-zoom-container img').removeAttr('style');
     }, 500);
   })
+
+
+  //게시물 수정
+  $(document).on('tap','[data-toggle="postEdit"]',function() {
+    var uid = $(this).attr('data-uid');
+    modal_bbs_write.find('[name="uid"]').val(uid)
+    setTimeout(function(){modal_bbs_write.modal()}, 50);
+  });
+
+  // 게시물 삭제
+  $(document).on('tap','[data-toggle="PostDelete"]',function() {
+
+    var uid = $(this).data('uid');
+    var bid = $(mid).find('[name="bid"]').val();
+
+    history.back();
+    
+    setTimeout(function(){
+      if (confirm('정말 삭제하시겠습니까?    ')){
+
+        $('.content').loader({
+          text:       "삭제중...",
+          position:   "overlay"
+        });
+
+        $.post(rooturl+'/?r='+raccount+'&m=bbs&a=delete',{
+          send : 'ajax',
+          uid : uid,
+          bid : bid
+          },function(response){
+           var result = $.parseJSON(response);
+           var error=result.error;
+
+           if (!error) {
+             $('.content').loader('hide');
+             history.back();
+             setTimeout(function(){
+               $('#item-'+uid).slideUp();
+             }, 700);
+           }
+         });
+      }
+    }, 10);
+
+
+
+
+
+
+  });
 
   //첨부된 사진 크게보기 페이지 호출
   $(document).on('tap','figure.image',function(){

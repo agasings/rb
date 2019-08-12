@@ -200,6 +200,18 @@ if ($R['point1']&&$R['mbruid'])
 	getDbUpdate($table['s_mbrdata'],'point=point-'.$R['point1'],'memberuid='.$R['mbruid']);
 }
 
-setrawcookie('bbs_action_result', rawurlencode('게시물이 삭제 되었습니다.|default'));  // 처리여부 cookie 저장
-getLink($backUrl ,'parent.' , $alert , $history);
+if ($send=="ajax") {
+
+	$result=array();
+	$result['error']=false;
+	echo json_encode($result);
+	exit;
+
+} else {
+
+	setrawcookie('bbs_action_result', rawurlencode('게시물이 삭제 되었습니다.|default'));  // 처리여부 cookie 저장
+	getLink($backUrl ,'parent.' , $alert , $history);
+	
+}
+
 ?>

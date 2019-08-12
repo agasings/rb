@@ -1,5 +1,6 @@
 <div class="mt-2 bg-white">
 
+
   <!-- 공통 사항 data-* ="*" 과 {$*} 는 수정 금지 -->
   <section data-role="comment-box">
 
@@ -8,7 +9,7 @@
       <h6 class="content-padded">
         댓글 <span data-role="total_comment">{$comment_total}</span>
       </h6>
-
+      <div data-role="comment_anchor" class="anchor-link"></div>
       <header data-role="header-container">
          {$comment_header} <!-- 댓글 header : comment_header.html  -->
       </header>
