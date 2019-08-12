@@ -1,3 +1,10 @@
+@charset "utf-8";
+/*!
+ * kimsQ Rb system css
+ * Homepage: http://www.kimsq.com
+ * Copyright 2019 redblock inc
+*/
+
 /* utility */
 .rb-new {
   display: inline-block;
