@@ -7,7 +7,6 @@
  * --------------------------------------------------------------------------
  */
 
-
 function getPostData(settings){
   var type=settings.type; //컴포넌트 타입
   var mid=settings.mid; // 컴포넌트 아이디
@@ -78,6 +77,8 @@ function getPostData(settings){
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
          modal.find('[data-role="linkShare"]').attr('data-url',url);
+         modal.find('.bar-nav [data-toggle="popover"]').attr('data-url',url);
+
          modal.find('[data-toggle="popover"]').attr('data-uid',uid);
 
          if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
@@ -493,7 +494,7 @@ function getPostData(settings){
     var bid = $(mid).find('[name="bid"]').val();
 
     history.back();
-    
+
     setTimeout(function(){
       if (confirm('정말 삭제하시겠습니까?    ')){
 

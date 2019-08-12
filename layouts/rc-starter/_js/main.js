@@ -246,4 +246,12 @@ $(document).ready(function() {
     }
   });
 
+  //링크복사
+  var clipboard = new ClipboardJS('[data-toggle="linkCopy"]');
+  $(document).on('tap','[data-toggle="linkCopy"]',function(){
+    setTimeout(function(){
+      $.notify({message: '링크가 복사 되었습니다.'},{type: 'default'});
+    }, 300);
+  });
+
 });

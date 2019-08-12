@@ -50,7 +50,7 @@
   	    <span class="tab-label">카테고리</span>
   	  </a>
   		<?php endif?>
-  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-attach" data-role="tap-attach">
+  	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-bbs-write-attach" data-role="tap-attach">
   	    <span class="icon fa fa-paperclip text-muted"></span>
   	    <span class="tab-label">파일첨부</span>
   	  </a>
@@ -308,24 +308,24 @@
 </div>
 
 <!-- Popup : 댓글관리 -->
-<div id="popup-comment-myrow" class="popup zoom">
+<div id="popup-comment-mypost" class="popup zoom">
   <div class="popup-content">
     <div class="content">
       <ul class="table-view table-view-full mt-0 text-xs-center">
         <li class="table-view-cell">
-          <a data-role="trigger-edit" data-type="{$entry_type}" data-uid="{$uid}">수정하기</a>
-        </li>
-        <li class="table-view-cell" data-kcact="delete" data-type="{$entry_type}" data-uid="{$uid}" data-parent="{$entry_parent}">
-          <a data-type="{$entry_type}" data-uid="{$uid}">삭제하기</a>
+          <a data-toggle="edit">수정하기</a>
         </li>
         <li class="table-view-cell">
-          <a data-type="{$entry_type}" data-uid="{$uid}">상단고정</a>
+          <a data-kcact="delete">삭제하기</a>
         </li>
         <li class="table-view-cell">
-          <a data-type="{$entry_type}" data-uid="{$uid}">신고하기</a>
+          <a data-kcact="notice">상단고정</a>
         </li>
         <li class="table-view-cell">
-          <a data-type="{$entry_type}" data-uid="{$uid}">댓글 답글쓰기</a>
+          <a data-kcact="report">신고하기</a>
+        </li>
+        <li class="table-view-cell">
+          <a data-toggle="commentWrite">댓글 답글쓰기</a>
         </li>
       </ul>
     </div>
@@ -339,6 +339,7 @@ var page_bbs_view = $('#page-bbs-view')
 var modal_bbs_write = $('#modal-bbs-write');
 var sheet_comment_write = $('#sheet-comment-write');
 var popup_bbs_cancelCheck = $('#popup-bbs-cancelCheck')
+var popup_comment_mypost = $('#popup-comment-mypost')
 var popover_bbs_view = $('#popover-bbs-view')
 
 var editor_bbs;
@@ -353,6 +354,15 @@ $(document).ready(function() {
     var button = $(e.relatedTarget)
     var uid =  button.attr('data-uid')
     $(this).find('.table-view-cell').attr('data-uid',uid)
+    var subject = button.attr('data-subject')
+    var popover = $(this)
+
+    var origin = $(location).attr('origin');
+    var path = button.attr('data-url')?button.attr('data-url'):'';
+
+    popover.find('[data-toggle="linkCopy"]').attr('data-clipboard-text',origin+path)
+    popover.find('[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-url',origin+path)
+
   })
 
   // 글 등록
@@ -678,6 +688,35 @@ $(document).ready(function() {
       console.log('editor_bbs 제목,본문입력사항 초기화');
     }
 	});
+
+  popup_comment_mypost.on('show.rc.popup', function (e) {
+    var button = $(e.relatedTarget);
+    var uid = button.attr('data-uid');
+    var type = button.attr('data-type');
+    var parent = button.attr('data-parent');
+    var popup = $(this);
+    console.log(uid)
+    popup.find('.table-view-cell a').attr('data-uid',uid);
+    popup.find('.table-view-cell a').attr('data-type',type)
+  })
+
+  $(document).on('tap','#popup-comment-mypost .table-view-cell a',function(){
+    var button = $(this);
+    var uid = button.attr('data-uid');
+    var type = button.attr('data-type');
+    var parent = button.attr('data-parent');
+    var toggle = button.attr('data-toggle');
+    var kcact = button.attr('data-kcact');
+    history.back() // popup 닫기
+    setTimeout(function() {
+      if (toggle) {
+        $('[data-role="bbs-comment"]').find('[data-role="'+type+'-item"][data-uid="'+uid+'"] [data-toggle="'+toggle+'"]').click()
+      } else {
+        $('[data-role="bbs-comment"]').find('[data-role="'+type+'-item"][data-uid="'+uid+'"] [data-kcact="'+kcact+'"]').click()
+      }
+    }, 100);
+	});
+
 
 });
 

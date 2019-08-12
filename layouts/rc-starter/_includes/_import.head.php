@@ -40,8 +40,8 @@
 <?php getImport('swiper','css/swiper','4.5.0','css')?>
 <?php getImport('swiper','js/swiper.min','4.5.0','js')?>
 
-<!-- iframely:  https://iframely.com/ -->
-<script async charset="utf-8" src="//cdn.iframe.ly/embed.js?key=9ceb477698ab5a4783ba77ebd60faeaf"></script>
+<!-- 소셜공유시 URL 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
+<?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 
 <!-- 사이트 헤드 코드 -->
 <?php echo $_HS['headercode']?>

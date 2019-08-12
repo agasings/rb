@@ -67,8 +67,8 @@
             'click [data-role="insert-emoticon"]' : 'insertEmoticon', // 이모티콘 입력
             'click [data-role="toggle-oneline-input"]' : 'showHideOnelineInput',// 한줄의견 입력창 노출/숨김 toggel
             'tab [data-role="toggle-oneline-input"]' : 'showHideOnelineInput',// 한줄의견 입력창 노출/숨김 toggel
-            'click [data-role="trigger-edit"]' : 'createEditMod',// 수정 모드 시작
-            'tab [data-role="trigger-edit"]' : 'createEditMod',// 수정 모드 시작
+            'click [data-toggle="edit"]' : 'createEditMod',// 수정 모드 시작
+            'tab [data-toggle="edit"]' : 'createEditMod',// 수정 모드 시작
             'click [data-role="cancel-edit"]' : 'cancelEditMod',// 수정 취소
             'tab [data-role="cancel-edit"]' : 'cancelEditMod',// 수정 취소
             'click [data-role="trigger-getMoreComment"]' : 'getMoreComment',
