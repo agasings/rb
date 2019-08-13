@@ -380,10 +380,11 @@ $(document).ready(function() {
     var notice = modal.find('[name="notice"]').val();
     var hidden = modal.find('[name="hidden"]').val();
     var category = modal.find('[name="category"]').val();
-    var upfiles = modal.find('[name="upfiles"]').val();
-    var featured_img = modal.find('[name="featured_img"]').val();
     var backtype = modal.find('[name="backtype"]').val();
     var nlist = modal.find('[name="nlist"]').val();
+
+    var upfiles = modal.find('[name="upfiles"]').val('');
+    var featured_img = modal.find('[name="featured_img"]').val('');
 
     <?php if(!$my['uid']):?>
     var name_el = modal.find('[name="name"]');
@@ -446,8 +447,8 @@ $(document).ready(function() {
       $('#modal-bbs-write').find('input[name="upfiles"]').val(new_upfiles);
     }
 
-    // console.log(subject)
-    // return false
+    var upfiles = modal.find('[name="upfiles"]').val();
+    var featured_img = modal.find('[name="featured_img"]').val();
 
     $(this).attr("disabled",true);
 
@@ -478,8 +479,7 @@ $(document).ready(function() {
 
               if (notice==1) $('[data-role="bbs-list"] [data-role="notice"]').prepend(item);
               else $('[data-role="bbs-list"] [data-role="allpost"]').prepend(item);
-              $('[data-role="bbs-list"]').find('#item-'+uid).addClass('animated fadeInDown');
-              setTimeout(function(){$('[data-role="bbs-list"]').find('#item-'+uid).addClass('animate-bg');}, 500);
+              $('[data-role="bbs-list"]').find('#item-'+uid).addClass('animated fadeInDown').attr('tabindex','-1').focus();;
               $(this).attr('disabled', false);
               modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
               modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
@@ -494,7 +494,6 @@ $(document).ready(function() {
 	// 카테고리 항목 클릭에 글쓰기폼의 name="category" 에 값 적용하기
 	$("#page-bbs-write-category").find('[type="radio"]').click(function() {
 	   var radio_val = $(this).val()
-     console.log('dfdf')
 		 modal_bbs_write.find('[name="category"]').val(radio_val)
 		 modal_bbs_write.find('[data-role="tab-category"] .icon').removeClass('text-muted')
 		 modal_bbs_write.find('[data-role="tab-category"]').removeClass('text-muted').addClass('active')

@@ -1527,15 +1527,15 @@ anger {
   animation: animate-highlight 2s ease 0s 1 alternate;
 }
 @-webkit-keyframes animate-highlight {
-  from { background-color: #F6F6BC;}
+  from { background-color: #F5FFFE;}
   to {background-color: white;}
 }
 @-moz-keyframes animate-highlight {
-  from { background-color: #F6F6BC;}
+  from { background-color: #F5FFFE;}
   to {background-color: white;}
 }
 @-keyframes animate-highlight {
-  from { background-color: #F6F6BC;}
+  from { background-color: #F5FFFE;}
   to {background-color: white;}
 }
 

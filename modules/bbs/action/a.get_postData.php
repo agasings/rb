@@ -24,6 +24,7 @@ $R = getUidData($table['bbsdata'],$uid);
 $B = getUidData($table['bbslist'],$R['bbs']);
 
 $mbruid = $my['uid'];
+$result['uid'] = $R['uid'];
 
 $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."' and opinion='like'";
 $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."' and opinion='dislike'";

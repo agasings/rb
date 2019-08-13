@@ -47,6 +47,7 @@ function getPostData(settings){
         },function(response){
          modal.find('[data-role="article"]').loader("hide");
          var result = $.parseJSON(response);
+         var _uid=result.uid;
          var article=result.article;
          var adddata=result.adddata;
          var photo=result.photo;
@@ -71,6 +72,14 @@ function getPostData(settings){
          var theme_show_like=result.theme_show_like;
          var theme_show_dislike=result.theme_show_dislike;
          var theme_show_share=result.theme_show_share;
+
+         if (!_uid) {
+           history.back();
+           setTimeout(function(){
+             $.notify({message: '존재하지 않는 게시물 입니다.'},{type: 'default'});
+             $('[data-role="bbs-list"]').find('#item-'+uid).slideUp();
+           }, 600);
+         }
 
          modal.find('[data-role="article"]').html(article);
 
@@ -104,7 +113,6 @@ function getPostData(settings){
 
          if (photo) {  // 첨부 이미지가 있을 경우
            modal.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
-           RC_initPhotoSwipe(); // photoswipe 초기화
          }
 
          if (video) {  // 첨부 비디오가 있을 경우
@@ -152,7 +160,7 @@ function getPostData(settings){
          var p_uid = uid; // 게시물 고유번호 적용
          var theme = ctheme;
 
-         if (!hidden) {
+         if (!hidden && _uid) {
            get_Rb_Comment(p_module,p_table,p_uid,theme);
 
            setTimeout(function(){
@@ -324,8 +332,10 @@ function getPostData(settings){
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
       modal.find('[data-role="bbs-comment"]').html(''); // 댓글영역 내용 비우기
-      editor_comment.destroy();  //댓글 에디터 삭제
-      console.log('editor_comment.destroy');
+      if (editor_comment) {
+        editor_comment.destroy();  //댓글 에디터 삭제
+        console.log('editor_comment.destroy');
+      }
    });
 
    //전체댓글보기 페이지가 호출되었을때

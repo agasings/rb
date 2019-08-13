@@ -141,8 +141,8 @@ function getAttachPhoto($R,$mod,$featured_img_uid) {
   $caption=$R['caption']?$R['caption']:$file_name;
   $img_origin=$R['host'].$R['folder'].'/'.$R['tmpname'];
   $img_origin_size=$R['width'].'x'.$R['height'];
-  $thumb_list=getPreviewResize($img_origin,'c'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-  $thumb_modal=getPreviewResize($img_origin,'q'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+  $thumb_list=getPreviewResize($R['src'],'c'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+  $thumb_modal=getPreviewResize($R['src'],'q'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
   $insert_text='!['.$caption.']('.$g['url_root'].$img_origin.')';
 
   $html='';
@@ -263,10 +263,10 @@ function getAttachPhoto_m($R,$mod,$featured_img_uid) {
   $file_name=$fileName[0]; // 파일명만 분리
 
   $caption=$R['caption']?$R['caption']:$file_name;
-  $img_origin=$R['host'].$R['folder'].'/'.$R['tmpname'];
+  $img_origin=$R['host'].$R['src'];
   $img_origin_size=$R['width'].'x'.$R['height'];
-  $thumb_list=getPreviewResize($img_origin,'c'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-  $thumb_modal=getPreviewResize($img_origin,'q'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+  $thumb_list=getPreviewResize($R['src'],'c'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+  $thumb_modal=getPreviewResize($R['src'],'q'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
   $insert_text='!['.$caption.']('.$g['url_root'].$img_origin.')';
 
   $html='';
