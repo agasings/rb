@@ -28,7 +28,6 @@
 }(function($) {
 
     var editor;
-
     var Comments = {
 
         // Instance variables
@@ -863,10 +862,7 @@
                               setTimeout(function(){
                                 var anchor_prefix = (type=='comment'?'CMT':'OLN');
                                 document.getElementById(anchor_prefix + '-' + edit_uid).scrollIntoView(true);
-                                $(result_container).find('[data-role="'+type+'-item"][data-uid='+edit_uid+']').addClass('animate-bg');
-                                setTimeout(function(){
-                                  $(result_container).find('[data-role="'+type+'-item"][data-uid='+edit_uid+']').removeClass('animate-bg');
-                                }, 1500);
+                                $(result_container).find('[data-role="'+type+'-item"][data-uid='+edit_uid+']').attr('tabindex','-1').focus();
                               }, 200);
                             }
 
