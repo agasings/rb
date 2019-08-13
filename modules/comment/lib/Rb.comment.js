@@ -131,7 +131,6 @@
             this.sort = this.options.sort;
             this.recnum = this.options.recnum;
             this.loader = this.getLoader();
-
             this.initCommentBox(); // load 챗박스
         },
 
@@ -224,7 +223,7 @@
           DecoupledEditor
           .create( document.querySelector( '[data-role="comment-input"]' ),{
             placeholder: this.options.commentPlaceHolder,
-            toolbar: ['imageUpload'],
+            toolbar: this.options.toolbar,
             language: 'ko',
             extraPlugins: [rbUploadAdapterPlugin],
             mediaEmbed: {
@@ -381,7 +380,7 @@
                 .create( document.querySelector( '[data-role="'+data.type+'-content-editable-'+data.uid+'"]' ),{
                   placeholder: this.options.commentPlaceHolder,
                   language: 'ko',
-                  toolbar: ['imageUpload'],
+                  toolbar: this.options.toolbar,
                   extraPlugins: [rbUploadAdapterPlugin],
                   link: {
                       decorators: {
@@ -484,6 +483,7 @@
               .create( document.querySelector( '[data-role="oneline-input-'+parent+'"]' ),{
                 placeholder: '답글입력',
                 language: 'ko',
+                toolbar: this.options.toolbar,
                 extraPlugins: [rbUploadAdapterPlugin],
                 link: {
                     decorators: {
