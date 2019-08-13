@@ -14,6 +14,11 @@
   border-bottom: 1px solid #eee;
 }
 
+[data-role="comment-container"] [data-role="comment-item"]:focus,
+[data-role="comment-container"] [data-role="oneline-item"]:focus {
+  background-color: #F5FFFE !important;
+}
+
 [data-role="comment-container"] .media-body {
   word-break: break-all;
 }

@@ -838,7 +838,7 @@
                             $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').addClass(effect).css('z-index',1);
 
                             setTimeout(function(){
-                              $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').addClass('animate-bg');
+                              $(result_container).find('[data-role="'+type+'-item"][data-uid='+last_uid+']').attr('tabindex','-1').focus();
                             }, 400);
 
                             $('[data-role="commentWrite-container"]').removeClass('active');
