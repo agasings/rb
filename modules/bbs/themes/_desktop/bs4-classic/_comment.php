@@ -65,6 +65,7 @@ $(function () {
        commentPlaceHolder : '댓글을 입력해 주세요..',
        noMoreCommentMsg : '댓글 없음 ',
        commentLength : 500, // 댓글 입력 글자 수 제한
+       toolbar : ['imageUpload','bold','link'] // 툴바 항목
     });
   }
 
