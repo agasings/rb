@@ -38,7 +38,7 @@ var kakao_jskey = '<?php echo $d['connect']['jskey_k'] ?>';
 <?php getImport('is-loading','jquery.isloading.min','1.0.6','js')?>
 
 <!-- js-cookie : https://github.com/js-cookie/js-cookie -->
-<?php getImport('js-cookie','js.cookie.min','2.2.0','js')?>
+<?php getImport('js-cookie','js.cookie.min','2.2.1','js')?>
 
 <!-- bootstrap-notify : https://github.com/mouse0270/bootstrap-notify  -->
 <?php getImport('bootstrap-notify','bootstrap-notify.min','3.1.3','js')?>

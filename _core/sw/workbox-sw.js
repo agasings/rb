@@ -40,7 +40,7 @@ workbox.precaching.precacheAndRoute([
   '/plugins/rc/1.0.0/fonts/ratchicons.woff',
 
   '/plugins/is-loading/1.0.6/jquery.isloading.min.js',
-  '/plugins/js-cookie/2.2.0/js.cookie.min.js',
+  '/plugins/js-cookie/2.2.1/js.cookie.min.js',
 
   '/plugins/ckeditor5/12.2.0/classic/build/ckeditor.js',
   '/plugins/ckeditor5/12.2.0/classic/build/translations/ko.js',
