@@ -76,7 +76,8 @@ if($act=='like'){
     // $result['content'] = $comment->getCommentLog($parent,$sort,$orderby,$recnum,$page);
 
 }else if($act=='getCommentList'){  // 댓글 더보기 & 리로드
-    $result['content'] = $comment->getCommentLog($parent,$sort,$orderby,$recnum,$page);
+    $result['content'] = $comment->getCommentLog($parent,$sort,$orderby,$recnum,$page,0);
+    $result['notice']  = $comment->getCommentLog($parent,$sort,$orderby,$recnum,$page,1);
 }
 
 echo json_encode($result);

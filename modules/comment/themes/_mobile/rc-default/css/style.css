@@ -7,6 +7,7 @@
   line-height: 30px
 }
 
+[data-role="comment-notice-container"] > li,
 [data-role="comment-container"] > li {
   margin-top: -1px;
   padding: 1rem 0.625rem;

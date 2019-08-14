@@ -74,6 +74,7 @@
             return {
                 role_commentInput : '[data-role="comment-input"]',
                 role_commentContainer: '[data-role="comment-container"]',
+                role_commentNoticeContainer: '[data-role="comment-notice-container"]',
                 role_commentWriteContainer : '[data-role="commentWrite-container"]',
                 role_commentItem: '[data-role="comment-item"]',
                 role_commentRowTotal: '[data-role="comment-itemTotal"]',
@@ -120,6 +121,7 @@
             this.module = this.options.moduleName; // module name 값 세팅
             this.parent = this.options.parent; // 위젯에서 세팅
             this.role_commentContainer = this.options.role_commentContainer;
+            this.role_commentNoticeContainer = this.options.role_commentNoticeContainer;
             this.role_commentInput = this.options.role_commentInput;
             this.parent_table = this.options.parent_table; // 위젯에서 세팅
             this.theme_name = this.options.theme_name; // 위젯에서 세팅
@@ -698,6 +700,7 @@
         // 댓글 리스트 출력 함수  : getType (getMore : append , reload: html)
         getCommentList : function(sort,orderby,recnum,page,getType){
             var role_commentContainer = this.options.role_commentContainer;
+            var role_commentNoticeContainer = this.options.role_commentNoticeContainer;
             var role_moreBtnContainer = this.options.role_moreBtnContainer;
             var self = this;
             var sort = sort?sort:this.sort;
@@ -722,6 +725,7 @@
                 var result = $.parseJSON(response);
                 var error = result.error;
                 var commentList = result.content;
+                var commentNoticeList = result.notice;
                 if(error){
                     var error_comment = result.error_comment;
                     self.showNotify(null,error_comment,null);
@@ -732,7 +736,10 @@
                     },50);
 
                     if(getType=='more') $(role_commentContainer).append(commentList);
-                    else if(getType=='reload') $(role_commentContainer).html(commentList);
+                    else if(getType=='reload') {
+                      $(role_commentNoticeContainer).html(commentNoticeList);
+                      $(role_commentContainer).html(commentList);
+                    }
 
                     // 더보기 버튼 초기화
                     self.initBtnMore();
@@ -893,14 +900,6 @@
                   if (delete_confirm == false) return false;
                 }
 
-                if(act=='notice'){
-
-                    var sort = this.sort;
-                    var orderby = this.orderby;
-                    console.log('상단 고정 입니다.'+uid);
-                    this.currentPage = 1; // 페이지 리셋
-                }
-
                 var comment_container = $('[data-role="'+type+'-container"]');
                 var comment_item_container = $('[data-role="comment-item"][data-uid="'+uid+'"]');
                 var oneline_container = $('[data-role="'+type+'-container-'+parent+'"]');
@@ -933,7 +932,21 @@
                               $('[data-role="'+type+'-isLiked-'+entry+'"]').removeClass('active '+effect);
                             }
 
-                        }else if(act=='delete'){
+                        } else if (act=='notice') {
+
+                          var sort = self.sort;
+                          var orderby = self.orderby;
+                          self.currentPage = 1; // 페이지 리셋
+                          self.getCommentList(sort,orderby,null,1,'reload');
+                          document.querySelector('[data-role="comment_anchor"]').scrollIntoView({ behavior: 'smooth' });
+
+                          if (mobileCheck()) { // 모바일에서만 수정항목의 해시로 이동
+                            setTimeout(function(){
+                              $.notify({message: '처리 되었습니다.'},{type: 'default'});
+                            }, 500);
+                          }
+
+                        } else if (act=='delete'){
 
                           if(type=='comment') {
                             self.updateTotal(1,'del');

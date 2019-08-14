@@ -113,7 +113,7 @@ class Comment extends Comment_base{
         $TMPL['comment_content'] = getContents($row['content'],'HTML');
         $TMPL['comment_user_name'] = $row[$_HS['nametype']]?$row[$_HS['nametype']]:'손님';
         $TMPL['comment_user_pic'] = $this->getUserAvatar($row['mbruid'],'src');
-        $TMPL['comment_like_total'] = $row['likes'];
+        $TMPL['comment_like_total'] = ($row['likes']==0)?'':$row['likes'];
         $TMPL['comment_uid'] = $row['uid'];
         $TMPL['comment_regis_time'] = $this->getJNTime($row['d_modify']?$row['d_modify']:$row['d_regis']);
         $TMPL['comment_getNew'] = $this->getNew($row['d_modify']?$row['d_modify']:$row['d_regis'],$d['comment']['newtime']);
