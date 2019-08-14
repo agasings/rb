@@ -8,5 +8,4 @@ _var/table.info.php
 _var/site/*
 _var/update/*
 modules/post/
-pages/*
 _tmp/widget/*
