@@ -56,10 +56,10 @@ class Comment extends Comment_base{
 
 
     // 전체 페이지 값 추출
-    public function getTotalData($parent,$recnum,$type,$data){
+    public function getTotalData($parent,$recnum,$type,$data,$notice){
         global $s,$table;
         if($type=='comment'){
-           $_wh = $this->getCommentWhere($parent);
+           $_wh = $this->getCommentWhere($parent,$notice);
            $query = sprintf("SELECT uid FROM `%s` WHERE %s", $this->commentTable,$_wh);
         }
         else if($type=='oneline'){
@@ -76,34 +76,34 @@ class Comment extends Comment_base{
     }
 
     // chat 쿼리 추출
-    public function getCommentWhere($parent){
+    public function getCommentWhere($parent,$notice){
         global $s;
         $_parent = str_replace('-','',$parent);
-        $where = "site='".$s."' and parent='".$_parent."'";
+        $where = "site='".$s."' and notice=".$notice." and parent='".$_parent."'";
         return $where;
     }
 
     // 챗팅 history 추출 함수
-    public function getCommentLog($parent,$sort,$orderby,$recnum,$page){
+    public function getCommentLog($parent,$sort,$orderby,$recnum,$page,$notice){
         global $table,$s;
         $parent = $this->db->real_escape_string($parent);
         $page = $page?$page:1;
         $sort = $sort?$sort:$this->sort;
         $orderby = $orderby?$orderby:$this->orderby;
         $recnum = $recnum?$recnum:$this->recnum;
-        $_wh = $this->getCommentWhere($parent);
+        $_wh = $this->getCommentWhere($parent,$notice);
         $limit=(($page-1)*$recnum).','.$recnum;
         $query = sprintf("SELECT * FROM `%s` WHERE %s ORDER BY `%s` %s LIMIT %s", $this->commentTable,$_wh,$sort,$orderby,$limit);
         $rows = $this->getAssoc($query);
         $commentLog ='';
         foreach($rows as $row) {
-           $commentLog .= $this->getCommentRow($row,$page);
+           $commentLog .= $this->getCommentRow($row,$page,$notice);
         }
         return $commentLog;
 
     }
     // 채팅 history row 추출 함수
-    public function getCommentRow($row,$page){
+    public function getCommentRow($row,$page,$notice){
 
         global $TMPL,$my,$g,$d,$_HS;
         include_once $g['path_module'].$this->module.'/var/var.php';
@@ -117,6 +117,7 @@ class Comment extends Comment_base{
         $TMPL['comment_uid'] = $row['uid'];
         $TMPL['comment_regis_time'] = $this->getJNTime($row['d_modify']?$row['d_modify']:$row['d_regis']);
         $TMPL['comment_getNew'] = $this->getNew($row['d_modify']?$row['d_modify']:$row['d_regis'],$d['comment']['newtime']);
+        $TMPL['comment_getIsNoitce'] = $row['notice']?'':'d-none';
         $TMPL['comment_getIsLiked'] = $this->getIsLiked('comment',$row['uid'],'like');
         $TMPL['comment_getIsDisliked'] = $this->getIsLiked('comment',$row['uid'],'dislike');
         $TMPL['comment_page'] = $page;
@@ -125,7 +126,7 @@ class Comment extends Comment_base{
         $TMPL['entry_type'] = 'comment';
         $TMPL['entry_parent'] = $sync_arr[1].$sync_arr[2];
         $TMPL['comment_parent'] =$this->parent;
-        $TMPL['total_page'] = $this->getTotalData($sync_arr[1].$sync_arr[2],$this->recnum,'comment','page');
+        $TMPL['total_page'] = $this->getTotalData($sync_arr[1].$sync_arr[2],$this->recnum,'comment','page',$notice);
 
         $my_menu = $this->getHtml('my_menu');
         $btn_showHideMenu = $this->getHtml('btn_showHideMenu');

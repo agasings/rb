@@ -53,6 +53,7 @@ $(function () {
        commentPlaceHolder : '비방 및 욕설이 들어간 댓글은 별다른 고지 없이 삭제 될 수 있습니다.',
        noMoreCommentMsg : '댓글 없음 ',
        commentLength : 500, // 댓글 입력 글자 수 제한
+       toolbar : ['imageUpload'] // 툴바 항목
     });
 
   }

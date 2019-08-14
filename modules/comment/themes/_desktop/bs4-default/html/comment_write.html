@@ -4,8 +4,11 @@
 -->
 <div class="card shadow-sm mb-4" data-role="comment-input-wrapper">
 
-  <div class="card-header bg-white">
-    <span class="text-muted">{$login_user_nic}</span>
+  <div class="card-header py-0 pr-0">
+      <div class="d-flex justify-content-between align-items-center">
+      <span class="text-muted">{$login_user_nic}</span>
+      <div class="toolbar-container"></div>
+    </div><!-- /.d-flex -->
   </div>
 
   <section>
@@ -16,8 +19,8 @@
 
   <div class="card-footer bg-white p-2">
     <div class="d-flex justify-content-between align-items-center">
-      <div class="toolbar-container align-self-end"></div>
-      <button type="button" class="btn btn btn-outline-primary cmt-post ml-1 align-self-end"
+      <div class=""></div>
+      <button type="button" class="btn btn btn-link cmt-post ml-1 align-self-end"
         data-kcact="regis"
         data-type="comment"
         data-effect="animated fadeInUp"

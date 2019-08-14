@@ -150,7 +150,8 @@ function getPostData(modal_settings){
           commentPlaceHolder : '댓글을 입력해 주세요.',
           noMoreCommentMsg : '댓글 없음 ',
           commentLength : 200, // 댓글 입력 글자 수 제한
-          useEnterSend: true
+          useEnterSend: true,
+          toolbar : [] // 툴바 항목
          });
        }
 

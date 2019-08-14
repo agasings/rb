@@ -187,7 +187,7 @@ if (!$sess_code){
 			putNotice($row['parentmbr'],$m,$my['uid'],$noti_title,$noti_body,$noti_referer,$noti_button,$noti_tag,'','');
 		}
 
-    $result['last_row'] = $comment->getCommentRow($row,$p);
+    $result['last_row'] = $comment->getCommentRow($row,$p,0);
     $result['lastuid'] = $LASTUID;
     $result['parent_table'] = $parent_table;
     $result['sess_code'] = $sess_code;

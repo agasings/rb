@@ -61,6 +61,20 @@ if($act=='like'){
         $result['error_msg'] = $del_msg;
     }
 
+}else if($act=='notice'){  // 공지글 지정
+    $update_table = $comment->commentTable;
+    $check_qry = "notice=1 and uid=".$uid;
+    $is_notice = getDbRows($update_table,$check_qry);
+
+    if ($is_notice) {
+      getDbUpdate($update_table,'notice=0','uid='.$uid);
+      $result['is_notice'] = 0;
+    } else {
+      getDbUpdate($update_table,'notice=1','uid='.$uid);
+      $result['is_notice'] = 1;
+    }
+    // $result['content'] = $comment->getCommentLog($parent,$sort,$orderby,$recnum,$page);
+
 }else if($act=='getCommentList'){  // 댓글 더보기 & 리로드
     $result['content'] = $comment->getCommentLog($parent,$sort,$orderby,$recnum,$page);
 }

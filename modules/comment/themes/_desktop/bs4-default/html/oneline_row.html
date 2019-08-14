@@ -16,8 +16,9 @@
       </span>
     </div>
     <article class="mb-0" data-role="oneline-origin-content-{$oneline_uid}">{$oneline_content}</article>
+    <div data-role="{$entry_type}-modify-btn-wrapper-{$uid}" class="toolbar-container" data-item="oneline"></div>
     <article class="mb-0 bg-white" data-role="oneline-content-editable-{$oneline_uid}" style="display:none" >{$oneline_content}</article>
     {$btn_editMod}
-    <!-- <a data-kcact="like" data-type="oneline" data-entry="{$oneline_uid}">좋아요(<span data-role="oneline-likeTotal-{$oneline_uid}">{$oneline_like_total}</span>)</a> -->
+    <a data-kcact="like" data-type="oneline" data-entry="{$oneline_uid}">좋아요(<span data-role="oneline-likeTotal-{$oneline_uid}">{$oneline_like_total}</span>)</a>
   </blockquote>
 </li>

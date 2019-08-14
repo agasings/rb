@@ -152,6 +152,7 @@ function getPostData(settings){
             commentPlaceHolder : '댓글을 입력해주세요.',
             noMoreCommentMsg : '댓글 없음 ',
             commentLength : 200, // 댓글 입력 글자 수 제한
+            toolbar : ['imageUpload'] // 툴바 항목
            });
          }
          // 댓글 출력 함수 실행
@@ -191,6 +192,7 @@ function getPostData(settings){
 
       });
     }, 300);
+
   })
 
   //  게시물보기 모달이 보여진 후에..
@@ -332,20 +334,6 @@ function getPostData(settings){
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
       modal.find('[data-role="bbs-comment"]').html(''); // 댓글영역 내용 비우기
-      if (editor_comment) {
-        editor_comment.destroy();  //댓글 에디터 삭제
-        console.log('editor_comment.destroy');
-      }
-   });
-
-   //전체댓글보기 페이지가 호출되었을때
-   page_allcomment.on('show.rc.page', function(event) {
-      var button = $(event.relatedTarget)
-      var num = button.data('num')
-      var page = $(this);
-      var uid = $(mid).find('[name="uid"]').val()
-      page.find('[data-role="total_comment"]').text(num); //댓글갯수 적용
-
    });
 
 	 // 게시물 보기 에서 댓글이 등록된 이후에 ..

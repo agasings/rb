@@ -17,7 +17,11 @@
         {$comment_write}
       </div>
 
-      <ul class="media-list mt-3" data-role="comment-container"> <!-- 댓글 출력부 : comment_row.html -->
+      <ul class="media-list my-0" data-role="comment-container"> <!-- 공지(고정)댓글 출력부 : comment_row.html -->
+        {$comment_rows_notice}
+      </ul>
+
+      <ul class="media-list" data-role="comment-container"> <!-- 댓글 출력부 : comment_row.html -->
           {$comment_rows}
       </ul>
       <div data-role="btnMore-container" class="content-padded"> <!-- 더보기 버튼 -->
@@ -28,7 +32,7 @@
 
     <div class="d-none animated fadeIn" data-role="comment-none">
      <div class="d-flex justify-content-center align-items-center p-3" style="height:200px">
-       <div class="text-muted text-xs-center" data-toggle="commentWrite" data-type="comment">
+       <div class="text-muted text-xs-center" data-toggle="commentWrite" data-type="comment" data-act="regis">
          <i class="fa fa-comment-o mb-3" aria-hidden="true" style="font-size: 3rem"></i><br>
          첫번째 댓글을 남겨주세요.
        </div>

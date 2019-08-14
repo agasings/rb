@@ -350,3 +350,9 @@ figure.ck.ck-placeholder:before,
 [data-role="comment-input-wrapper"] [data-role="comment-input"] {
   max-width: 460px
 }
+
+.ck.ck-toolbar {
+  background: #fff;
+  padding: 0;
+  border: none;
+}

@@ -17,6 +17,7 @@
     </div><!-- /.d-flex -->
     <div class="rb-article">
       <article data-role="comment-origin-content-{$comment_uid}">{$comment_content}</article>
+      <div data-role="{$entry_type}-modify-btn-wrapper-{$uid}" class="toolbar-container" data-item="comment"></div>
       <article style="display:none" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
     </div>
     {$btn_editMod} <!-- 수정 모드시 취소/완료 버튼 btn_ediMod.html -->

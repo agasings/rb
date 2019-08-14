@@ -47,7 +47,7 @@ var sheet_noti = $('#sheet-noti')  // 알림보기 시트
 
 $(function() {
 
-  $(document).on('show.rc.sheet',sheet_noti,function(event){
+  $(document).on('show.rc.sheet','#sheet-noti',function(event){
 
     var item = $(event.relatedTarget)
     var from = item.data('from')

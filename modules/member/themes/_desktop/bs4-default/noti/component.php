@@ -27,7 +27,7 @@ var modal_noti = $('#modal-noti')  // 알림보기 팝업
 
 $(function() {
 
-  $(document).on('show.bs.modal',modal_noti,function(event){
+  $(document).on('show.bs.modal','#sheet-noti',function(event){
 
     var item = $(event.relatedTarget)
     var uid = item.data('uid')
