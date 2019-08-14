@@ -326,7 +326,7 @@
         </li>
         <?php if ($my['admin'] || strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].',')): ?>
         <li class="table-view-cell" data-role="comment">
-          <a data-kcact="notice">상단고정</a>
+          <a data-kcact="notice">상단고정 <span></span></a>
         </li>
         <?php endif; ?>
         <li class="table-view-cell d-none">
@@ -835,10 +835,14 @@ $(document).ready(function() {
     var uid = button.attr('data-uid');
     var type = button.attr('data-type');
     var parent = button.attr('data-parent');
+    var notice = button.attr('data-notice');
     var popup = $(this);
 
     popup.find('[data-role="comment"]').removeClass('d-none');
     if (type=='oneline') popup.find('[data-role="comment"]').addClass('d-none');
+
+    if (notice=="true") popup.find('[data-kcact="notice"] span').text('해제')
+    else popup.find('[data-kcact="notice"] span').text('')
 
     popup.find('.table-view-cell a').attr('data-uid',uid);
     popup.find('.table-view-cell a').attr('data-type',type)

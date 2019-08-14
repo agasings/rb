@@ -117,6 +117,7 @@ class Comment extends Comment_base{
         $TMPL['comment_uid'] = $row['uid'];
         $TMPL['comment_regis_time'] = $this->getJNTime($row['d_modify']?$row['d_modify']:$row['d_regis']);
         $TMPL['comment_getNew'] = $this->getNew($row['d_modify']?$row['d_modify']:$row['d_regis'],$d['comment']['newtime']);
+        $TMPL['comment_getNoitce'] = $row['notice']?'true':'false';
         $TMPL['comment_getIsNoitce'] = $row['notice']?'':'d-none';
         $TMPL['comment_getIsLiked'] = $this->getIsLiked('comment',$row['uid'],'like');
         $TMPL['comment_getIsDisliked'] = $this->getIsLiked('comment',$row['uid'],'dislike');
