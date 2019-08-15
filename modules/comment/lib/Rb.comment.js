@@ -439,9 +439,9 @@
                     const modelFragment = editor_comment_edit.data.toModel( viewFragment );
                     editor_comment_edit.model.insertContent( modelFragment );
                     editor_comment_edit.editing.view.focus();
+                    $('[data-role="'+data.type+'-item"][data-uid="'+data.uid+'"]').find('.toolbar-container[data-item="'+data.type+'"]').html(editor_comment_edit.ui.view.toolbar.element);
                   }
 
-                  $('[data-role="'+data.type+'-item"][data-uid="'+data.uid+'"]').find('.toolbar-container[data-item="'+data.type+'"]').html(editor_comment_edit.ui.view.toolbar.element);
                 })
                 .catch( error => {
                     console.error( error );

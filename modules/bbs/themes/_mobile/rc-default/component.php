@@ -371,73 +371,6 @@ var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
 
 $(document).ready(function() {
 
-  DecoupledEditor
-  .create( document.querySelector('#sheet-comment-write [data-role="comment-input"]'),{
-    placeholder: '댓글을 남겨보세요..',
-    toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
-    language: 'ko',
-    extraPlugins: [rbUploadAdapterPlugin],
-    mediaEmbed: {
-        extraProviders: [
-            {
-                name: 'other',
-                url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-            },
-            {
-                name: 'another',
-                url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-            }
-        ]
-    },
-    typing: {
-        transformations: {
-            include: [
-                // Use only the 'quotes' and 'typography' groups.
-                'quotes',
-                'typography',
-
-                // Plus, some custom transformation.
-                { from: '->', to: '→' },
-                { from: ':)', to: '🙂' },
-                { from: ':+1:', to: '👍' },
-                { from: ':tada:', to: '🎉' },
-            ],
-        }
-    },
-    removePlugins: [ 'WordCount' ],
-    image: {}
-  } )
-  .then( newEditor => {
-
-    console.log('editor_comment init');
-    editor_sheet = newEditor;
-
-    $('[data-role="comment-input-wrapper"]').find('.toolbar-container').html(editor_sheet.ui.view.toolbar.element)
-    $('[data-role="commentWrite-container"]').removeClass('active')
-
-    //입력글자수 1자 이상일때 전송버튼 활성처리
-    // const wordCountPlugin = editor_comment.plugins.get('WordCount');
-    // wordCountPlugin.on( 'update', ( evt, data ) => {
-      // var btn_regis = $('[data-role="comment-input-wrapper"] [data-kcact="regis"]');
-      // if (data.characters > 0) btn_regis.addClass('active');
-      // else btn_regis.removeClass('active');
-    // } );
-
-    editor_sheet.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-      if (value) {
-        console.log('editor focus');
-        $('[data-role="commentWrite-container"]').addClass('active');
-      } else {
-        console.log('editor blur');
-      }
-
-    } );
-
-  })
-  .catch( error => {
-      console.error( error );
-  } );
-
   // Popover : 게시물 관리
   popover_bbs_view.on('show.rc.popover', function (e) {
     var button = $(e.relatedTarget)
@@ -455,7 +388,9 @@ $(document).ready(function() {
   })
 
   // 글 등록
-  modal_bbs_write.find('[data-act="submit"]').click(function(){
+  modal_bbs_write.find('[data-act="submit"]').tap(function(event){
+    event.preventDefault();
+    event.stopPropagation();
     var modal = modal_bbs_write;
     var bid = modal.find('[name="bid"]').val();
     var uid = modal.find('[name="uid"]').val();
@@ -629,8 +564,7 @@ $(document).ready(function() {
       var act = $(this).attr('data-act');
 
       sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-parent',parent).attr('data-act',act);
-      editor_sheet.setData('');
-      setTimeout(function(){sheet_comment_write.sheet();editor_sheet.editing.view.focus();}, 10);
+      setTimeout(function(){sheet_comment_write.sheet();}, 10);
 
     } else {
       $('#modal-login').modal();
@@ -639,7 +573,9 @@ $(document).ready(function() {
   });
 
   //댓글 저장버튼 클릭
-  sheet_comment_write.find('[data-kcact="regis"]').click(function() {
+  sheet_comment_write.find('[data-kcact="regis"]').tap(function(event) {
+    event.preventDefault();
+    event.stopPropagation();
     sheet_comment_write.find('fieldset').prop('disabled', true);
     $(this).addClass('fa-spin');
 
@@ -683,12 +619,79 @@ $(document).ready(function() {
         commentRegisEditorInstance.setData(content);
         $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-type="oneline"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
       }
-    }, 700);
+    }, 600);
 
   });
 
   //댓글쓰기 컴포넌트가 호출될때
   sheet_comment_write.on('shown.rc.sheet', function (e) {
+
+    DecoupledEditor
+    .create( document.querySelector('#sheet-comment-write [data-role="comment-input"]'),{
+      placeholder: '댓글을 남겨보세요..',
+      toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
+      language: 'ko',
+      extraPlugins: [rbUploadAdapterPlugin],
+      mediaEmbed: {
+          extraProviders: [
+              {
+                  name: 'other',
+                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+              },
+              {
+                  name: 'another',
+                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+              }
+          ]
+      },
+      typing: {
+          transformations: {
+              include: [
+                  // Use only the 'quotes' and 'typography' groups.
+                  'quotes',
+                  'typography',
+
+                  // Plus, some custom transformation.
+                  { from: '->', to: '→' },
+                  { from: ':)', to: '🙂' },
+                  { from: ':+1:', to: '👍' },
+                  { from: ':tada:', to: '🎉' },
+              ],
+          }
+      },
+      removePlugins: [ 'WordCount' ],
+      image: {}
+    } )
+    .then( newEditor => {
+      editor_sheet = newEditor;
+      console.log('editor_sheet init');
+      editor_sheet.editing.view.focus();
+      console.log('editor_comment focus');
+      sheet_comment_write.find('.toolbar-container').html(editor_sheet.ui.view.toolbar.element)
+      $('[data-role="commentWrite-container"]').removeClass('active')
+
+      //입력글자수 1자 이상일때 전송버튼 활성처리
+      // const wordCountPlugin = editor_comment.plugins.get('WordCount');
+      // wordCountPlugin.on( 'update', ( evt, data ) => {
+        // var btn_regis = $('[data-role="comment-input-wrapper"] [data-kcact="regis"]');
+        // if (data.characters > 0) btn_regis.addClass('active');
+        // else btn_regis.removeClass('active');
+      // } );
+
+      editor_sheet.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+        if (value) {
+          console.log('editor_comment focus');
+          $('[data-role="commentWrite-container"]').addClass('active');
+        } else {
+          console.log('editor_comment blur');
+        }
+
+      } );
+
+    })
+    .catch( error => {
+        console.error( error );
+    } );
 
     $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','.2');
 
@@ -704,6 +707,11 @@ $(document).ready(function() {
   })
 
   sheet_comment_write.on('hidden.rc.sheet', function (e) {
+
+    editor_sheet.setData('');
+    console.log('editor_sheet empty')
+    editor_sheet.destroy();
+    console.log('editor_sheet destroy')
     sheet_comment_write.find('fieldset').prop('disabled', false);
     sheet_comment_write.find('[data-kcact="regis"]').removeClass('fa-spin').attr('data-type','').attr('data-parent','').attr('data-act','').attr('data-hidden','');
     $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','1')
@@ -858,7 +866,9 @@ $(document).ready(function() {
   })
 
   // 글쓰기 취소확인 처리
-  popup_bbs_cancelCheck.find('[data-toggle="cancelCheck"]').tap(function() {
+  popup_bbs_cancelCheck.find('[data-toggle="cancelCheck"]').tap(function(event) {
+    event.preventDefault();
+    event.stopPropagation();
     var value = $(this).attr('data-value');
     if (value=='no') {
       history.back();
@@ -914,10 +924,9 @@ $(document).ready(function() {
           console.log('댓글 수정모드');
           var content = $('[data-role="bbs-comment"]').find('[data-role="'+type+'-origin-content-'+uid+'"]').html();
           $('[data-role="bbs-comment"]').find('[data-toggle="edit"][data-type="'+type+'"][data-uid="'+uid+'"]').click();
+          sheet_comment_write.sheet();
           setTimeout(function(){
-            sheet_comment_write.sheet();
             sheet_comment_write.attr('data-uid',uid).attr('data-type',type);
-            editor_sheet.setData('');
             InserHTMLtoEditor(editor_sheet,content);
             sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-uid',uid).attr('data-act',act).attr('data-hidden',hidden);;
             if(hidden=='true') {

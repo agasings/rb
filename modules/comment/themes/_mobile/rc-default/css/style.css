@@ -68,11 +68,11 @@
 
 .sheet [data-role="commentWrite-container"] .toolbar-container,
 .sheet [data-role="commentWrite-container"] [data-kcact="regis"] {
-  visibility: hidden
+  /* visibility: hidden */
 }
 .sheet [data-role="commentWrite-container"].active .toolbar-container,
 .sheet [data-role="commentWrite-container"].active [data-kcact="regis"] {
-  visibility: visible;
+  /* visibility: visible; */
 }
 
 .sheet .fa-paper-plane:before {
