@@ -389,16 +389,18 @@ function getPostData(settings){
    });
 
    // 댓글이 수정된 후에..
-   page_allcomment.find('.commentting-all').on('edited.rb.comment',function(){
+   $(mid).find('[data-role="bbs-comment"]').on('edited.rb.comment',function(){
      setTimeout(function(){
-       //$.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
+       history.back()
+       $.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
      }, 300);
    })
 
    // 한줄의견이 수정 후에
-   page_allcomment.find('.commentting-all').on('edited.rb.oneline',function(){
+   $(mid).find('[data-role="bbs-comment"]').on('edited.rb.oneline',function(){
      setTimeout(function(){
-       $.notify({message: '의견이 수정 되었습니다.'},{type: 'default'});
+       history.back()
+       $.notify({message: '답글이 수정 되었습니다.'},{type: 'default'});
      }, 300);
    })
 

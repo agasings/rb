@@ -296,7 +296,20 @@
 <!-- Sheet : 신규 댓글작성 -->
 <div id="sheet-comment-write" class="sheet">
   <fieldset data-role="commentWrite-container">
+
     <div data-role="comment-input-wrapper">
+      <ul class="table-view mb-0 collapse" id="sheet-comment-write-toolbar">
+        <li class="table-view-cell text-muted bg-faded">
+          비밀글
+          <small class="ml-1">운영자에게만 공개</small>
+          <div data-toggle="switch" class="switch">
+            <div class="switch-handle"></div>
+          </div>
+        </li>
+        <li class="table-view-cell py-0 px-2 bg-faded">
+          <div class="toolbar-container align-self-end"></div>
+        </li>
+      </ul>
       <div class="d-flex border-0 rounded-0 align-items-center" data-role="form">
         <img class="img-circle bg-faded ml-3" data-role="avatar" src="<?php echo getAvatarSrc($my['uid'],'100') ?>" style="width:2.25rem;height:2.25rem">
         <section class="w-100">
@@ -304,9 +317,11 @@
         		<div data-role="comment-input" id="meta-description-content"  class="border-0"></div>
         	</div>
         </section>
-        <div class="toolbar-container align-self-end"></div>
-        <button class="btn btn-link rb-submit align-self-end" type="submit" data-kcact="regis">
+        <button class="btn btn-link align-self-end" type="submit" data-kcact="regis">
           <i class="fa fa-paper-plane"></i>
+        </button>
+        <button class="btn btn-link align-self-end" type="button" data-toggle="collapse" data-target="#sheet-comment-write-toolbar">
+          <i class="fa fa-ellipsis-v"></i>
         </button>
       </div>
     </div>
@@ -354,16 +369,12 @@ var editor_bbs;
 var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드 폴더
 var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
 
-function editorFocus( editor ) {
-	editor.editing.view.focus();
-}
-
 $(document).ready(function() {
 
   DecoupledEditor
   .create( document.querySelector('#sheet-comment-write [data-role="comment-input"]'),{
     placeholder: '댓글을 남겨보세요..',
-    toolbar: '',
+    toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
     language: 'ko',
     extraPlugins: [rbUploadAdapterPlugin],
     mediaEmbed: {
@@ -393,14 +404,13 @@ $(document).ready(function() {
             ],
         }
     },
-    removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle','WordCount' ],
+    removePlugins: [ 'WordCount' ],
     image: {}
   } )
   .then( newEditor => {
 
     console.log('editor_comment init');
     editor_sheet = newEditor;
-
 
     $('[data-role="comment-input-wrapper"]').find('.toolbar-container').html(editor_sheet.ui.view.toolbar.element)
     $('[data-role="commentWrite-container"]').removeClass('active')
@@ -619,16 +629,9 @@ $(document).ready(function() {
       var act = $(this).attr('data-act');
 
       sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-parent',parent).attr('data-act',act);
+      editor_sheet.setData('');
+      setTimeout(function(){sheet_comment_write.sheet();editor_sheet.editing.view.focus();}, 10);
 
-      console.log(act)
-
-      if (act=='edit') {
-        editor_sheet.setData('test');
-      } else {
-        editor_sheet.setData('');
-      }
-
-      setTimeout(function(){sheet_comment_write.sheet();editorFocus( editor_sheet );}, 10);
     } else {
       $('#modal-login').modal();
     }
@@ -641,9 +644,9 @@ $(document).ready(function() {
 
     var type = $(this).attr('data-type');
     var parent = $(this).attr('data-parent');
+    var uid = $(this).attr('data-uid');
     var act = $(this).attr('data-act');
     var content = editor_sheet.getData();
-    editor_sheet.setData('');
 
     setTimeout(function(){
 
@@ -661,11 +664,23 @@ $(document).ready(function() {
         $('[data-role="oneline-input-wrapper-'+parent+'"]').find('[data-kcact="regis"]').click();
       }
 
-      if (act=='edit') {
+      if (type=='comment' && act=='edit') {
 
-
+        console.log('comment 수정 실행')
+        const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] [data-role="comment-item"] .ck-editor__editable' );
+        const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
+        commentRegisEditorInstance.setData(content);
+        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-uid="'+uid+'"]').click();
       }
 
+      if (type=='oneline' && act=='edit') {
+
+        console.log('oneline 수정 실행')
+        const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] [data-role="oneline-item"][data-uid="'+uid+'"] .ck-editor__editable' );
+        const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
+        commentRegisEditorInstance.setData(content);
+        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-type="oneline"][data-uid="'+uid+'"]').click();
+      }
     }, 700);
 
   });
@@ -674,13 +689,23 @@ $(document).ready(function() {
   sheet_comment_write.on('shown.rc.sheet', function (e) {
     var button = $(e.relatedTarget);
     $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','.2');
-
   })
 
   sheet_comment_write.on('hidden.rc.sheet', function (e) {
     sheet_comment_write.find('fieldset').prop('disabled', false);
     sheet_comment_write.find('[data-kcact="regis"]').removeClass('fa-spin').attr('data-type','').attr('data-parent','').attr('data-act','');
     $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','1')
+    $('#sheet-comment-write-toolbar').collapse('hide');
+
+    var uid = sheet_comment_write.attr('data-uid');
+    var type = sheet_comment_write.attr('data-type');
+
+    sheet_comment_write.removeAttr('data-uid').removeAttr('data-type')
+
+    if (uid && type) {
+      $('body').removeClass('comment-editmod');
+      console.log(type+' 수정모드 해제')
+    }
 
     const onelineRegisEditor = document.querySelector( '[data-role="comment-item"] .ck-editor__editable' );
     if (onelineRegisEditor) {
@@ -864,11 +889,17 @@ $(document).ready(function() {
     setTimeout(function() {
       if (toggle) {
         if (act=='edit') {
-          var content = $('[data-role="bbs-comment"]').find('[data-role="'+type+'-content-editable-'+uid+'"]').html();
-          editor_sheet.setData(content)
-          $('[data-role="bbs-comment"]').find('[data-role="'+type+'-item"][data-uid="'+uid+'"]').attr('tabindex','-1').focus();
+          console.log('댓글 수정모드');
+          var content = $('[data-role="bbs-comment"]').find('[data-role="'+type+'-origin-content-'+uid+'"]').html();
           $('[data-role="bbs-comment"]').find('[data-toggle="edit"][data-type="'+type+'"][data-uid="'+uid+'"]').click();
-          setTimeout(function(){sheet_comment_write.sheet();}, 10);
+          setTimeout(function(){
+            sheet_comment_write.sheet();
+            sheet_comment_write.attr('data-uid',uid).attr('data-type',type);
+            editor_sheet.setData('');
+            InserHTMLtoEditor(editor_sheet,content);
+            sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-uid',uid).attr('data-act',act);
+          }, 10);
+
         } else {
           $('[data-role="bbs-comment"]').find('[data-role="'+type+'-item"][data-uid="'+uid+'"] [data-toggle="'+toggle+'"]').click()
         }

@@ -3,6 +3,10 @@
     display: none !important;
 }
 
+.comment-editmod .bar-nav {
+  display: none
+}
+
 .rb-commentting header h1 {
   line-height: 30px
 }
@@ -33,7 +37,7 @@
   overflow: auto
 }
 
-.sheet [data-role="commentWrite-container"] [data-kcact="regis"] {
+.sheet [data-role="commentWrite-container"] [data-role="form"] .btn{
   padding-top: .8rem;
   padding-bottom: 1rem;
   padding-left: .8rem;
@@ -75,7 +79,7 @@
   margin-top: .5rem;
 }
 .media-list .media-list {
-  margin: 10px 0 0 -60px;
+  margin: 10px 0 0 -20px;
   padding: 2px 20px;
 }
 .media-list .media-list:empty {
@@ -307,34 +311,18 @@
 
 .anchor-link::before,
 [data-role="anchor-link"]::before {
+  position: relative;
   display: block;
   content: " ";
   margin-top: -50px;
   height: 50px;
   visibility: hidden;
 }
-.comment-editmod.rb-comments-write {
-  display: none
-}
-[data-role="comment-box"].edit_mod .bar-nav,
-[data-role="comment-box"].edit_mod [data-role="post"],
-[data-role="comment-box"].edit_mod [data-role="header-container"],
-[data-role="comment-box"].edit_mod [data-role="comment-item"],
-[data-role="comment-box"].edit_mod [data-role="btnMore-container"],
-[data-role="comment-box"].edit_mod [data-role="trigger-edit"],
-[data-role="comment-box"].edit_mod [data-kcact="delete"],
-[data-role="comment-box"].edit_mod [data-role="toggle-oneline-input"],
-[data-role="comment-box"].edit_mod [data-kcact="like"] {
-  display: none
-}
+
 [data-role="comment-box"].edit_mod .content {
   top: 0;
   padding-top: 0
 }
-[data-role="comment-box"].edit_mod [data-role="comment-item"].edit_active {
-  display: block
-}
-
 
 .sheet .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
   outline: none;

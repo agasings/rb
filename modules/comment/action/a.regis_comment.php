@@ -122,7 +122,7 @@ if (!$sess_code){
 			}
 		}
 
-		$QVAL = "display='$display',hidden='$hidden',notice='$notice',subject='$subject',content='$content',html='$html',";
+		$QVAL = "display='$display',hidden='$hidden',subject='$subject',content='$content',html='$html',";
 		$QVAL .="d_modify='$d_regis',upload='$upload',adddata='$adddata'";
 		getDbUpdate($comment->commentTable,$QVAL,'uid='.$R['uid']);
     $result['edit_content'] = $content;

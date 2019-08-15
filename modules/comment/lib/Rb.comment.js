@@ -65,7 +65,7 @@
             'click [data-role="insert-emoticon"]' : 'insertEmoticon', // 이모티콘 입력
             'click [data-role="toggle-oneline-input"]' : 'showHideOnelineInput',// 한줄의견 입력창 노출/숨김 toggel
             'click [data-toggle="edit"]' : 'createEditMod',// 수정 모드 시작
-            'click [data-role="cancel-edit"]' : 'cancelEditMod',// 수정 취소
+            'click [data-toggle="cancel-edit"]' : 'cancelEditMod',// 수정 취소
             'click [data-role="trigger-getMoreComment"]' : 'getMoreComment',
         },
 
@@ -361,17 +361,26 @@
 
             if(mod=='active'){
                 // 입력창 active
-                $('[data-role="commentWrite-container"]').addClass('comment-editmod')
-                $('[data-role^="'+data.type+'-content-editable-"]').css('display','none').html('')
-                $('[data-role^="'+data.type+'-origin-content-"]').css('display','block');
-                $('[data-role^="'+data.type+'-modify-btn-wrapper-"]').hide();
-
-
-                const content = $(document).find('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').html()
-                $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','block').html('')
-                $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','none')
-
+                $('body').addClass('comment-editmod')
                 $('[data-role="showHide-menu"]').css('display','none')
+                $('[data-role="'+data.type+'-modify-btn-wrapper-'+data.uid+'"]').show();
+                $('[data-role="comment-box"]').addClass('edit_mod');
+                $('[data-role="'+data.type+'-item"][data-uid="'+data.uid+'"]').addClass('edit_active')
+                const content = $(document).find('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').html()
+
+                if (mobileCheck()) {
+                  setTimeout(function(){
+                    if (data.type=='comment') document.getElementById("CMT-" + data.uid).scrollIntoView({ behavior: 'smooth' });
+                    else document.getElementById("OLN-" + data.uid).scrollIntoView({ behavior: 'smooth' });
+                  }, 450);
+
+                } else {
+                  $('[data-role^="'+data.type+'-content-editable-"]').css('display','none').html('')
+                  $('[data-role^="'+data.type+'-origin-content-"]').css('display','block');
+                  $('[data-role^="'+data.type+'-modify-btn-wrapper-"]').hide();
+                  $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','block').html('')
+                  $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','none')
+                }
 
                 DecoupledEditor
                 .create( document.querySelector( '[data-role="'+data.type+'-content-editable-'+data.uid+'"]' ),{
@@ -424,33 +433,32 @@
                 .then( newEditor => {
                   console.log('editor_comment_edit init')
                   editor_comment_edit = newEditor;
-                  const viewFragment = editor_comment_edit.data.processor.toView( content );
-                  const modelFragment = editor_comment_edit.data.toModel( viewFragment );
-                  editor_comment_edit.model.insertContent( modelFragment );
-                  editor_comment_edit.editing.view.focus();
+
+                  if (!mobileCheck()) {
+                    const viewFragment = editor_comment_edit.data.processor.toView( content );
+                    const modelFragment = editor_comment_edit.data.toModel( viewFragment );
+                    editor_comment_edit.model.insertContent( modelFragment );
+                    editor_comment_edit.editing.view.focus();
+                  }
+
                   $('[data-role="'+data.type+'-item"][data-uid="'+data.uid+'"]').find('.toolbar-container[data-item="'+data.type+'"]').html(editor_comment_edit.ui.view.toolbar.element);
                 })
                 .catch( error => {
                     console.error( error );
                 } );
 
-                // 수정/취소 버튼 노출
-                $('[data-role="'+data.type+'-modify-btn-wrapper-'+data.uid+'"]').show();
-
-                $('[data-role="comment-box"]').addClass('edit_mod');
-                $('[data-role="comment-item"][data-uid="'+data.uid+'"]').addClass('edit_active')
 
                 if (mobileCheck()) { // 모바일에서만 수정항목의 해시로 이동
-                  setTimeout(function(){
-                    // document.getElementById("CMT-" + data.uid).scrollIntoView(true);
-                  }, 450);
+
                 }
 
             }else if(mod=='deactive'){
                 // 입력창 deactive
+
                 editor_comment_edit.destroy()
                 console.log('editor_comment.destroy')
-                $('[data-role="commentWrite-container"]').removeClass('comment-editmod')
+
+                $('body').removeClass('comment-editmod')
                 $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','none')
                 $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','block');
 
@@ -863,7 +871,6 @@
                             if (mobileCheck()) { // 모바일에서만 등록된 댓글 이동
                               setTimeout(function(){
                                 var anchor_prefix = (type=='comment'?'CMT':'OLN');
-                                document.getElementById(anchor_prefix + '-' + edit_uid).scrollIntoView(true);
                                 $(result_container).find('[data-role="'+type+'-item"][data-uid='+edit_uid+']').attr('tabindex','-1').focus();
                               }, 200);
                             }
