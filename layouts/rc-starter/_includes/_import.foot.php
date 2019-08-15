@@ -11,8 +11,8 @@
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 
 <!-- timeago : 상대시간 표기 -->
-<?php getImport('jquery-timeago','jquery.timeago',false,'js')?>
-<?php getImport('jquery-timeago','locales/jquery.timeago.ko',false,'js')?>
+<?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
+<?php getImport('jquery-timeago','locales/jquery.timeago.ko','1.6.7','js')?>
 
 <!-- jQuery-Autocomplete : https://github.com/devbridge/jQuery-Autocomplete -->
 <?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>

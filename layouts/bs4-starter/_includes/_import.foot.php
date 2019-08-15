@@ -20,8 +20,8 @@
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 
 <!-- timeago : 상대시간 표기 -->
-<?php getImport('jquery-timeago','jquery.timeago',false,'js')?>
-<?php getImport('jquery-timeago','locales/jquery.timeago.ko',false,'js')?>
+<?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
+<?php getImport('jquery-timeago','locales/jquery.timeago.ko','1.6.7','js')?>
 
 <!-- 댓글출력시 필요 -->
 <?php if ($g['broswer']!='MSIE 11' && $g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 9'): ?>
