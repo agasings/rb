@@ -876,7 +876,7 @@ $(document).ready(function() {
     var uid = button.attr('data-uid');
     var type = button.attr('data-type');
     var parent = button.attr('data-parent');
-    var notice = button.attr('data-notice');
+    var notice = button.closest('[data-role="'+type+'-item"]').attr('data-notice');
     var hidden = button.closest('[data-role="'+type+'-item"]').attr('data-hidden');
     var popup = $(this);
 
