@@ -102,6 +102,7 @@ class Comment extends Comment_base{
         return $commentLog;
 
     }
+
     // 채팅 history row 추출 함수
     public function getCommentRow($row,$page,$notice){
 
@@ -115,7 +116,8 @@ class Comment extends Comment_base{
         $TMPL['comment_user_pic'] = $this->getUserAvatar($row['mbruid'],'src');
         $TMPL['comment_like_total'] = ($row['likes']==0)?'':$row['likes'];
         $TMPL['comment_uid'] = $row['uid'];
-        $TMPL['comment_regis_time'] = $this->getJNTime($row['d_modify']?$row['d_modify']:$row['d_regis']);
+        $TMPL['comment_regis_time'] = getDateFormat($row['d_modify']?$row['d_modify']:$row['d_regis'],'Y.m.d H:i');
+        $TMPL['comment_regis_ago'] = getDateFormat($row['d_modify']?$row['d_modify']:$row['d_regis'],'c');
         $TMPL['comment_getNew'] = $this->getNew($row['d_modify']?$row['d_modify']:$row['d_regis'],$d['comment']['newtime']);
         $TMPL['comment_getNoitce'] = $row['notice']?'true':'false';
         $TMPL['comment_getIsNoitce'] = $row['notice']?'':'d-none';
@@ -191,7 +193,8 @@ class Comment extends Comment_base{
         $TMPL['oneline_user_pic'] = $this->getUserAvatar($row['mbruid'],'src');
         $TMPL['oneline_like_total'] = $row['likes']?$row['likes']:0;
         $TMPL['oneline_uid'] = $row['uid'];
-        $TMPL['oneline_regis_time'] = $this->getJNTime($row['d_modify']?$row['d_modify']:$row['d_regis']);
+        $TMPL['oneline_regis_time'] = getDateFormat($row['d_modify']?$row['d_modify']:$row['d_regis'],'Y.m.d H:i');
+        $TMPL['oneline_regis_ago'] = getDateFormat($row['d_modify']?$row['d_modify']:$row['d_regis'],'c');
         $TMPL['oneline_getNew'] = $this->getNew($row['d_modify']?$row['d_modify']:$row['d_regis'],$d['comment']['newtime']);
         $TMPL['oneline_getHidden'] = $row['hidden']?'true':'false';
         $TMPL['oneline_page'] = $page;

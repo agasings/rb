@@ -6,7 +6,9 @@
 
       <div class="media-heading h6 d-flex align-items-center">
         <span class="badge badge-default badge-inverted">{$oneline_user_name}</span>
-        <span class="pl-1 badge badge-default badge-inverted" data-role="oneline-time-wrapper-{$oneline_uid}">{$oneline_regis_time}</span>
+        <time class="pl-1 badge badge-default badge-inverted" data-role="oneline-time-wrapper-{$oneline_uid}" datetime="{$oneline_regis_ago}" data-plugin="timeago">
+          {$oneline_regis_time}
+        </time>
         <small class="ml-1 {$oneline_getNew}"></small><!-- 24시간이내 new 출력 -->
       </div>
 

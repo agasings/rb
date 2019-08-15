@@ -169,8 +169,8 @@
            this.initBtnMore(); // 더보기 버튼 세팅
            this.initDataNone(); // 자료없은 표시 세팅
            this.initEditorComment(); //에디터 초기화
-           Iframely('[data-role="comment-container"] oembed[url]') // oembed 미디어 변환
-
+           Iframely('[data-role="comment-main"] oembed[url]'); // oembed 미디어 변환
+           $('[data-role="comment-main"]').find('[data-plugin="timeago"]').timeago();
            var e = $.Event('shown.rb.comment', { relatedTarget: this.$el_id });
            this.$el.trigger(e);
         },
@@ -740,7 +740,8 @@
                 }else{
                     setTimeout(function(){
                        $(role_commentContainer).find(self.loader).remove(); // loader 삭제
-                       Iframely('[data-role="comment-container"] oembed[url]') // oembed 미디어 변환
+                       Iframely('[data-role="comment-main"] oembed[url]') // oembed 미디어 변환
+                       $('[data-role="comment-main"]').find('[data-plugin="timeago"]').timeago(); //상대시간 적용
                     },50);
 
                     if(getType=='more') $(role_commentContainer).append(commentList);
@@ -858,6 +859,7 @@
 
                             }
                             Iframely('[data-role="'+type+'-item"][data-uid="'+last_uid+'"] [data-role="'+type+'-origin-content-'+last_uid+'"] oembed[url]') // oembed 미디어 변환
+                            $('[data-role="'+type+'-item"][data-uid="'+last_uid+'"]').find('[data-plugin="timeago"]').timeago(); //상대시간 적용
 
                             // 콜백 이벤트
                             var e = $.Event('saved.rb.'+type, { relatedTarget: self.$el_id });
@@ -880,7 +882,8 @@
 
                             self.$el.trigger(e);
                             self.updateEdit(edit_data); // 수정 적용 함수로 넘김
-                            Iframely('[data-role="'+type+'-item"][data-uid="'+edit_uid+'"]  oembed[url]') // oembed 미디어 변환
+                            Iframely('[data-role="'+type+'-item"][data-uid="'+edit_uid+'"]  oembed[url]'); // oembed 미디어 변환
+                            $('[data-role="'+type+'-item"][data-uid="'+edit_uid+'"]').find('[data-plugin="timeago"]').timeago();
                         }
                     }
 
@@ -971,6 +974,8 @@
                 });
             }
 
+
+
         },
 
         // 수정사항 업데이트 함수 d : edit_data
@@ -982,7 +987,7 @@
           $('[data-role="'+d.type+'-origin-content-'+d.uid+'"]').html(content);
 
            // 수정시간 업데이트
-          $('[data-role="'+d.type+'-time-wrapper-'+d.uid+'"]').text(d.time);
+          $('[data-role="'+d.type+'-time-wrapper-'+d.uid+'"]').timeago('update',d.time);
 
           //비밀글 업데이트
           if (d.hidden==1) {

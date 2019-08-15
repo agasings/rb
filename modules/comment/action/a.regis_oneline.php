@@ -87,7 +87,7 @@ if (!$my['uid'] || !$R['uid']){
 		$result['edit_content'] = $content;
     $result['edit_uid'] = $uid;
 		$result['edit_hidden'] = $hidden;
-    $result['edit_time'] = $comment->getJNTime($d_regis);
+    $result['edit_time'] = getDateFormat($d_regis,'c');
 		echo json_encode($result);
     exit;
 	}
