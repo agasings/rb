@@ -388,7 +388,7 @@ $(document).ready(function() {
   })
 
   // 글 등록
-  modal_bbs_write.find('[data-act="submit"]').tap(function(event){
+  modal_bbs_write.find('[data-act="submit"]').click(function(event){
     event.preventDefault();
     event.stopPropagation();
     var modal = modal_bbs_write;
@@ -573,9 +573,15 @@ $(document).ready(function() {
   });
 
   //댓글 저장버튼 클릭
-  sheet_comment_write.find('[data-kcact="regis"]').tap(function(event) {
+  sheet_comment_write.find('[data-kcact="regis"]').click(function(event) {
     event.preventDefault();
     event.stopPropagation();
+
+    if (!$(this).hasClass("active")) {
+      $.notify({message: '내용을 입력해주세요.'},{type: 'default'});
+      return false
+    }
+
     sheet_comment_write.find('fieldset').prop('disabled', true);
     $(this).addClass('fa-spin');
 
@@ -629,7 +635,7 @@ $(document).ready(function() {
     DecoupledEditor
     .create( document.querySelector('#sheet-comment-write [data-role="comment-input"]'),{
       placeholder: '댓글을 남겨보세요..',
-      toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
+      toolbar: [ 'bold','italic','bulletedList','numberedList','blockQuote','imageUpload','|','undo','redo'],
       language: 'ko',
       extraPlugins: [rbUploadAdapterPlugin],
       mediaEmbed: {
@@ -668,15 +674,7 @@ $(document).ready(function() {
       editor_sheet.editing.view.focus();
       console.log('editor_comment focus');
       sheet_comment_write.find('.toolbar-container').html(editor_sheet.ui.view.toolbar.element)
-      $('[data-role="commentWrite-container"]').removeClass('active')
-
-      //입력글자수 1자 이상일때 전송버튼 활성처리
-      // const wordCountPlugin = editor_comment.plugins.get('WordCount');
-      // wordCountPlugin.on( 'update', ( evt, data ) => {
-        // var btn_regis = $('[data-role="comment-input-wrapper"] [data-kcact="regis"]');
-        // if (data.characters > 0) btn_regis.addClass('active');
-        // else btn_regis.removeClass('active');
-      // } );
+      $('[data-role="commentWrite-container"]').removeClass('active');
 
       editor_sheet.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
         if (value) {
@@ -685,7 +683,12 @@ $(document).ready(function() {
         } else {
           console.log('editor_comment blur');
         }
+      } );
 
+      editor_sheet.model.document.on( 'change:data', () => {
+        var content = editor_sheet.getData();
+        if (content) sheet_comment_write.find('[data-kcact="regis"]').addClass('active');
+        else sheet_comment_write.find('[data-kcact="regis"]').removeClass('active');
       } );
 
     })
@@ -712,6 +715,7 @@ $(document).ready(function() {
     console.log('editor_sheet empty')
     editor_sheet.destroy();
     console.log('editor_sheet destroy')
+    sheet_comment_write.find('[data-kcact="regis"]').removeClass('active');
     sheet_comment_write.find('fieldset').prop('disabled', false);
     sheet_comment_write.find('[data-kcact="regis"]').removeClass('fa-spin').attr('data-type','').attr('data-parent','').attr('data-act','').attr('data-hidden','');
     $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','1')
@@ -903,7 +907,7 @@ $(document).ready(function() {
     popup.find('.table-view-cell a').attr('data-type',type)
   })
 
-  $(document).on('tap','#popup-comment-mypost .table-view-cell a',function(event){
+  $(document).on('click','#popup-comment-mypost .table-view-cell a',function(event){
     event.preventDefault();
     event.stopPropagation();
     var button = $(this);
