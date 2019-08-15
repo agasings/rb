@@ -23,8 +23,6 @@ getImport('ckeditor5','classic/build/ckeditor','12.2.0','js');
 getImport('ckeditor5','classic/build/translations/ko','12.2.0','js');
 ?>
 
-<script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>
-
 <script>
 
 let editor;

@@ -41,8 +41,6 @@ getImport('ckeditor5','decoupled-document/build/translations/ko','12.2.0','js');
   var attach_module_theme = '_desktop/bs4-default-attach';// attach 모듈 테마
 </script>
 
-<script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>
-
 <script>
 
 
