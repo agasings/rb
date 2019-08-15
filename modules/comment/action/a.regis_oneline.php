@@ -34,6 +34,7 @@ if (!$my['uid'] || !$R['uid']){
 	$content	= trim($content);
 	$html		= $html ? $html : 'TEXT';
 	$report		= 0;
+	$hidden		= ($hidden=='true') ? 1 : 0;
 	$point		= $d['comment']['give_opoint'];
 	$d_regis	= $date['totime'];
 	$d_modify	= '';
@@ -72,7 +73,7 @@ if (!$my['uid'] || !$R['uid']){
 	{
 		$R = getUidData($comment->onelineTable,$uid);
 		if((!$my['admin'] && $my['uid'] != $R['mbruid'])||!$R['uid']){
-	        $result['error'] = true;
+      $result['error'] = true;
 			$result['error_msg'] = '정상적인 접근이 아닙니다.';
 			$result['mbruid'] = $R['mbruid'];
 			$result['uid'] = $R['uid'];
@@ -84,10 +85,11 @@ if (!$my['uid'] || !$R['uid']){
 		getDbUpdate($comment->onelineTable,$QVAL,'uid='.$R['uid']);
 
 		$result['edit_content'] = $content;
-        $result['edit_uid'] = $uid;
-        $result['edit_time'] = $comment->getJNTime($d_regis);
+    $result['edit_uid'] = $uid;
+		$result['edit_hidden'] = $hidden;
+    $result['edit_time'] = $comment->getJNTime($d_regis);
 		echo json_encode($result);
-        exit;
+    exit;
 	}
 	else
 	{

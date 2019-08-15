@@ -119,6 +119,7 @@ class Comment extends Comment_base{
         $TMPL['comment_getNew'] = $this->getNew($row['d_modify']?$row['d_modify']:$row['d_regis'],$d['comment']['newtime']);
         $TMPL['comment_getNoitce'] = $row['notice']?'true':'false';
         $TMPL['comment_getIsNoitce'] = $row['notice']?'':'d-none';
+        $TMPL['comment_getHidden'] = $row['hidden']?'true':'false';
         $TMPL['comment_getIsLiked'] = $this->getIsLiked('comment',$row['uid'],'like');
         $TMPL['comment_getIsDisliked'] = $this->getIsLiked('comment',$row['uid'],'dislike');
         $TMPL['comment_page'] = $page;
@@ -146,6 +147,12 @@ class Comment extends Comment_base{
         $TMPL['btn_editMod'] = $this->getHtml('btn_editMod');
 
         $commentRow = $this->getHtml('comment_row');
+
+        if ($row['hidden']) {
+          if ($my['uid'] != $row['mbruid'] && !$my['admin']) {
+            $commentRow = $this->getHtml('comment_row_hidden');
+          }
+        }
 
         return $commentRow;
     }
@@ -186,6 +193,7 @@ class Comment extends Comment_base{
         $TMPL['oneline_uid'] = $row['uid'];
         $TMPL['oneline_regis_time'] = $this->getJNTime($row['d_modify']?$row['d_modify']:$row['d_regis']);
         $TMPL['oneline_getNew'] = $this->getNew($row['d_modify']?$row['d_modify']:$row['d_regis'],$d['comment']['newtime']);
+        $TMPL['oneline_getHidden'] = $row['hidden']?'true':'false';
         $TMPL['oneline_page'] = $page;
         $TMPL['oneline_rows'] = $this->getOnelineLog($row['uid'],1,$this->oneline_recnum);
         $TMPL['uid'] = $row['uid'];
@@ -208,8 +216,13 @@ class Comment extends Comment_base{
 
         // 수정모드 버튼
         $TMPL['btn_editMod'] = $this->getHtml('btn_editMod');
-
         $onelineRow = $this->getHtml('oneline_row');
+
+        if ($row['hidden']) {
+          if ($my['uid'] != $row['mbruid'] && !$my['admin']) {
+            $onelineRow = $this->getHtml('oneline_row_hidden');
+          }
+        }
 
         return $onelineRow;
     }

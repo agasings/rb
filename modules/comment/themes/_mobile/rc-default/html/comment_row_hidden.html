@@ -5,21 +5,15 @@
     <div class="media-body">
 
         <h4 class="media-heading h6 d-flex align-items-center">
-          <span data-role="comment-hidden" class="badge badge-default badge-inverted"><i class="fa fa-lock" aria-hidden="true"></i></span>
           <span class="badge badge-default badge-inverted">{$comment_user_name}</span>
           <span class="pl-1 badge badge-default badge-inverted" data-role="comment-time-wrapper-{$comment_uid}">{$comment_regis_time}</span>
           <small class="ml-1 {$comment_getNew}"></small><!-- 24시간이내 new 출력 -->
-
-          <div class="ml-auto">
-            <span class="badge badge-primary badge-inverted {$comment_getIsNoitce}"><i class="fa fa-thumb-tack fa-fw" aria-hidden="true"></i> 고정</span>
-          </div>
-
+          <span class="badge badge-primary badge-inverted ml-auto {$comment_getIsNoitce}"><i class="fa fa-thumb-tack fa-fw" aria-hidden="true"></i> 고정</span>
         </h4>
 
-        <article class="mb-1" data-role="comment-origin-content-{$comment_uid}">{$comment_content}</article>
-        <article class="mb-1 border" style="display:none" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
-
-        <div class="d-flex justify-content-between align-items-center">{$btn_editMod} <!-- 수정 모드시 취소/완료 버튼 btn_ediMod.html --></div>
+        <article data-role="comment-content-editable-{$comment_uid}">
+          <div class="text-xs-center text-muted bg-faded p-4 my-2 mr-2 small"><i class="fa fa-lock fa-fw" aria-hidden="true"></i> 비밀글</div>
+        </article>
 
         <div class="d-flex align-items-center">
           <div class="">
@@ -51,7 +45,8 @@
             </span>
           </form>
         </div>
-        <div class="media-list flex-column pr-0" data-role="oneline-container-{$comment_uid}">
+
+        <div class="media-list flex-column pr-0 mt-3" data-role="oneline-container-{$comment_uid}">
            <!-- 한줄의견 리스트 -->
            {$oneline_rows}
         </div>

@@ -762,6 +762,7 @@
             var target = e.currentTarget;
             var act = $(target).data('kcact'); // 액션 구분값
             var parent = $(target).data('parent'); // 부모 PK
+            var hidden = $(target).attr('data-hidden'); // 숨김여부
             var grant = $(target).data('grant'); // 한줄의견 기준 댓글의 부모 PK
             var register = $(target).data('register');// 등록자 PK
             var type = $(target).data('type'); // comment, oneline...
@@ -825,7 +826,8 @@
                     sess_code : sess_code,
                     uid : uid,
                     recnum : recnum,
-                    html : html
+                    html : html,
+                    hidden : hidden,
                 },function(response) {
                     var result = $.parseJSON(response);
                     var error = result.error;
@@ -864,8 +866,9 @@
                         }else if(act=='edit'){
                             var edit_content = result.edit_content;
                             var edit_uid = result.edit_uid;
+                            var edit_hidden = result.edit_hidden;
                             var edit_time = result.edit_time;
-                            var edit_data = {"type": type,"content": edit_content,"uid": edit_uid,"time": edit_time};
+                            var edit_data = {"type": type,"content": edit_content,"uid": edit_uid,"time": edit_time,"hidden": edit_hidden};
                             var e = $.Event('edited.rb.'+type, { relatedTarget: self.$el_id });
 
                             if (mobileCheck()) { // 모바일에서만 등록된 댓글 이동
@@ -980,6 +983,13 @@
 
            // 수정시간 업데이트
           $('[data-role="'+d.type+'-time-wrapper-'+d.uid+'"]').text(d.time);
+
+          //비밀글 업데이트
+          if (d.hidden==1) {
+            $('[data-role="'+d.type+'-item"][data-uid="'+d.uid+'"]').attr('data-hidden','true');
+          } else {
+            $('[data-role="'+d.type+'-item"][data-uid="'+d.uid+'"]').attr('data-hidden','false');
+          }
 
           // 입력창 및 버튼 세팅 함수 호출
           var e_data ={"type":d.type,"uid":d.uid}

@@ -37,6 +37,17 @@
   overflow: auto
 }
 
+[data-role="comment-item"] [data-role="comment-hidden"],
+[data-role="oneline-item"] [data-role="oneline-hidden"] {
+  display: none
+}
+[data-role="comment-item"][data-hidden="true"] [data-role="comment-hidden"] {
+  display: inline-block;
+}
+[data-role="oneline-item"][data-hidden="true"] [data-role="oneline-hidden"] {
+  display: inline-block;
+}
+
 .sheet [data-role="commentWrite-container"] [data-role="form"] .btn{
   padding-top: .8rem;
   padding-bottom: 1rem;

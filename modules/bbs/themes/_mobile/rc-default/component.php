@@ -302,7 +302,7 @@
         <li class="table-view-cell text-muted bg-faded">
           비밀글
           <small class="ml-1">운영자에게만 공개</small>
-          <div data-toggle="switch" class="switch">
+          <div data-toggle="switch" data-role="comment-hidden" class="switch">
             <div class="switch-handle"></div>
           </div>
         </li>
@@ -638,6 +638,7 @@ $(document).ready(function() {
     return false;
   });
 
+  //댓글 저장버튼 클릭
   sheet_comment_write.find('[data-kcact="regis"]').click(function() {
     sheet_comment_write.find('fieldset').prop('disabled', true);
     $(this).addClass('fa-spin');
@@ -646,6 +647,7 @@ $(document).ready(function() {
     var parent = $(this).attr('data-parent');
     var uid = $(this).attr('data-uid');
     var act = $(this).attr('data-act');
+    var hidden = $(this).attr('data-hidden');
     var content = editor_sheet.getData();
 
     setTimeout(function(){
@@ -654,14 +656,14 @@ $(document).ready(function() {
         const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] .ck-editor__editable' );
         const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
         commentRegisEditorInstance.setData(content);
-        $('[data-role="bbs-comment"] [data-role="comment-input-wrapper"]').find('[data-kcact="regis"]').click();
+        $('[data-role="bbs-comment"] [data-role="comment-input-wrapper"]').find('[data-kcact="regis"]').attr('data-hidden',hidden).click();
       }
 
       if (type=='oneline' && act=='regis') {
         const onelineRegisEditor = document.querySelector( '[data-role="oneline-input-wrapper-'+parent+'"] .ck-editor__editable' );
         const onelineRegisEditorInstance = onelineRegisEditor.ckeditorInstance;
         onelineRegisEditorInstance.setData(content);
-        $('[data-role="oneline-input-wrapper-'+parent+'"]').find('[data-kcact="regis"]').click();
+        $('[data-role="oneline-input-wrapper-'+parent+'"]').find('[data-kcact="regis"]').attr('data-hidden',hidden).click();
       }
 
       if (type=='comment' && act=='edit') {
@@ -670,7 +672,7 @@ $(document).ready(function() {
         const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] [data-role="comment-item"] .ck-editor__editable' );
         const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
         commentRegisEditorInstance.setData(content);
-        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-uid="'+uid+'"]').click();
+        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
       }
 
       if (type=='oneline' && act=='edit') {
@@ -679,7 +681,7 @@ $(document).ready(function() {
         const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] [data-role="oneline-item"][data-uid="'+uid+'"] .ck-editor__editable' );
         const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
         commentRegisEditorInstance.setData(content);
-        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-type="oneline"][data-uid="'+uid+'"]').click();
+        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-type="oneline"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
       }
     }, 700);
 
@@ -687,15 +689,29 @@ $(document).ready(function() {
 
   //댓글쓰기 컴포넌트가 호출될때
   sheet_comment_write.on('shown.rc.sheet', function (e) {
-    var button = $(e.relatedTarget);
+
     $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','.2');
+
+    sheet_comment_write.find('[data-role="comment-hidden"]').off('changed.rc.switch').on('changed.rc.switch', function () {
+      if ($(this).hasClass("active")) {
+        console.log('비밀글 ON')
+        sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','true');
+      } else {
+        console.log('비밀글 OFF')
+        sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','false');
+      }
+    })
   })
 
   sheet_comment_write.on('hidden.rc.sheet', function (e) {
     sheet_comment_write.find('fieldset').prop('disabled', false);
-    sheet_comment_write.find('[data-kcact="regis"]').removeClass('fa-spin').attr('data-type','').attr('data-parent','').attr('data-act','');
+    sheet_comment_write.find('[data-kcact="regis"]').removeClass('fa-spin').attr('data-type','').attr('data-parent','').attr('data-act','').attr('data-hidden','');
     $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','1')
     $('#sheet-comment-write-toolbar').collapse('hide');
+
+    // 비밀글 옵션 초기화
+    sheet_comment_write.find('[data-role="comment-hidden"]').removeClass('active');
+    sheet_comment_write.find('[data-role="comment-hidden"] .switch-handle').removeAttr('style');
 
     var uid = sheet_comment_write.attr('data-uid');
     var type = sheet_comment_write.attr('data-type');
@@ -861,6 +877,7 @@ $(document).ready(function() {
     var type = button.attr('data-type');
     var parent = button.attr('data-parent');
     var notice = button.attr('data-notice');
+    var hidden = button.closest('[data-role="'+type+'-item"]').attr('data-hidden');
     var popup = $(this);
 
     popup.find('[data-role="comment"]').removeClass('d-none');
@@ -868,6 +885,9 @@ $(document).ready(function() {
 
     if (notice=="true") popup.find('[data-kcact="notice"] span').text('해제')
     else popup.find('[data-kcact="notice"] span').text('')
+
+    if (hidden=="true") popup.find('[data-act="edit"]').attr('data-hidden','true');
+    else popup.find('[data-act="edit"]').attr('data-hidden','false');
 
     popup.find('.table-view-cell a').attr('data-uid',uid);
     popup.find('.table-view-cell a').attr('data-type',type)
@@ -883,6 +903,8 @@ $(document).ready(function() {
     var toggle = button.attr('data-toggle');
     var kcact = button.attr('data-kcact');
     var act = button.attr('data-act');
+    var hidden =  button.attr('data-hidden');
+
     history.back() // popup 닫기
 
     // console.log(toggle)
@@ -897,7 +919,10 @@ $(document).ready(function() {
             sheet_comment_write.attr('data-uid',uid).attr('data-type',type);
             editor_sheet.setData('');
             InserHTMLtoEditor(editor_sheet,content);
-            sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-uid',uid).attr('data-act',act);
+            sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-uid',uid).attr('data-act',act).attr('data-hidden',hidden);;
+            if(hidden=='true') {
+              sheet_comment_write.find('[data-role="comment-hidden"]').addClass('active');
+            }
           }, 10);
 
         } else {

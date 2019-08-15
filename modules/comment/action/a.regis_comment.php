@@ -48,7 +48,7 @@ if (!$sess_code){
 	$dislikes		= 0;
 	$report		= 0;
 	$point		= $d['comment']['give_point'];
-	$hidden		= $hidden ? intval($hidden) : 0;
+	$hidden		= ($hidden=='true') ? 1 : 0;
 	$notice		= $notice ? intval($notice) : 0;
 	$display	= $hidepost || $hidden ? 0 : 1;
 
@@ -95,6 +95,7 @@ if (!$sess_code){
 	if ($uid)
 	{
 		$R = getUidData($comment->commentTable,$uid);
+
 		if (!$R['uid']){
 			$result['error'] = true;
 			$result['error_msg'] = '존재하지 않는 댓글입니다.';
@@ -127,6 +128,7 @@ if (!$sess_code){
 		getDbUpdate($comment->commentTable,$QVAL,'uid='.$R['uid']);
     $result['edit_content'] = $content;
     $result['edit_uid'] = $uid;
+		$result['edit_hidden'] = $hidden;
     $result['edit_time'] = $comment->getJNTime($d_regis);
 		echo json_encode($result);
     exit;
