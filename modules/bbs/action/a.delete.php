@@ -69,16 +69,16 @@ if ($R['comment'])
 					getDbUpdate($table['s_numinfo'],'upload=upload-1',"date='".substr($U['d_regis'],0,8)."' and site=".$U['site']);
 					getDbDelete($table['s_upload'],'uid='.$U['uid']);
 
-					if ($U['host']==$d['upload']['ftp_urlpath'])
+					if ($U['host']==$d['mediaset']['ftp_urlpath'])
 					{
-						$FTP_CONNECT = ftp_connect($d['upload']['ftp_host'],$d['upload']['ftp_port']);
-						$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['upload']['ftp_user'],$d['upload']['ftp_pass']);
+						$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
+						$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);
 						if (!$FTP_CONNECT) getLink('','','FTP서버 연결에 문제가 발생했습니다.','');
 						if (!$FTP_CRESULT) getLink('','','FTP서버 아이디나 패스워드가 일치하지 않습니다.','');
-						if($d['upload']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
+						if($d['mediaset']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
 
-						ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
-						if($U['type']==2) ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
+						ftp_delete($FTP_CONNECT,$d['mediaset']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
+						if($U['type']==2) ftp_delete($FTP_CONNECT,$d['mediaset']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
 						ftp_close($FTP_CONNECT);
 
 					} elseif ($U['fserver']==2) {
@@ -89,8 +89,7 @@ if ($R['comment'])
 		        ]);
 
 					} else {
-						unlink($g['path_file'].$U['folder'].'/'.$U['tmpname']);
-						if($U['type']==2) unlink($g['path_file'].$U['folder'].'/'.$U['thumbname']);
+						unlink($U['folder'].'/'.$U['tmpname']);
 					}
 				}
 			}
@@ -132,16 +131,16 @@ if ($R['upload'])
 			getDbUpdate($table['s_numinfo'],'upload=upload-1',"date='".substr($U['d_regis'],0,8)."' and site=".$U['site']);
 			getDbDelete($table['s_upload'],'uid='.$U['uid']);
 
-			if ($U['host']==$d['upload']['ftp_urlpath'])
+			if ($U['host']==$d['mediaset']['ftp_urlpath'])
 			{
-				$FTP_CONNECT = ftp_connect($d['upload']['ftp_host'],$d['upload']['ftp_port']);
-				$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['upload']['ftp_user'],$d['upload']['ftp_pass']);
-				if (!$FTP_CONNECT) getLink('','','FTP서버 연결에 문제가 발생했습니다.','');
+				$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
+				$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);
+				if (!$FTP_CONNECT) getLink('','','FTP서버 연결에 문제가 발생했습니다.1','');
 				if (!$FTP_CRESULT) getLink('','','FTP서버 아이디나 패스워드가 일치하지 않습니다.','');
-				if($d['upload']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
+				if($d['mediaset']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
 
-				ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
-				if($U['type']==2) ftp_delete($FTP_CONNECT,$d['upload']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
+				ftp_delete($FTP_CONNECT,$d['mediaset']['ftp_folder'].$U['folder'].'/'.$U['tmpname']);
+				if($U['type']==2) ftp_delete($FTP_CONNECT,$d['mediaset']['ftp_folder'].$U['folder'].'/'.$U['thumbname']);
 				ftp_close($FTP_CONNECT);
 
 			} elseif ($U['fserver']==2) {
@@ -161,7 +160,7 @@ if ($R['upload'])
 				]);
 
 			} else {
-				unlink($g['path_file'].$m.'/'.$U['folder'].'/'.$U['tmpname']);
+				unlink($U['folder'].'/'.$U['tmpname']);
 			}
 
 
@@ -211,7 +210,7 @@ if ($send=="ajax") {
 
 	setrawcookie('bbs_action_result', rawurlencode('게시물이 삭제 되었습니다.|default'));  // 처리여부 cookie 저장
 	getLink($backUrl ,'parent.' , $alert , $history);
-	
+
 }
 
 ?>
