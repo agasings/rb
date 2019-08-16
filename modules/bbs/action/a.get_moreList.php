@@ -48,7 +48,7 @@ while($R = db_fetch_array($RCD)){
  $TMPL['bbs_view_url'] = $bbs_view.$R['uid'];
  $TMPL['datetime'] = getDateFormat($R['d_regis'],'c');
  $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
- $TMPL['preview'] = getPreviewResize(getUpImageSrc($R),'120x120');
+ $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'120x120');
 
  $TMPL['check_secret'] = $R['hidden']?' secret':'';
  $TMPL['check_hidden'] = $R['hidden']?'':' d-none';
