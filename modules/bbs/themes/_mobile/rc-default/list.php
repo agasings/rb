@@ -61,7 +61,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84') ?>" width="42">
                   <?php elseif ($d['theme']['media_object']=='2'): ?>
                     <?php if (getUpImageSrc($R)): ?>
-                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'120x120') ?>" width="60">
+                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'120x120') ?>" width="60" data-role="featured_img">
                     <?php endif; ?>
                   <?php else: ?>
                   <?php endif; ?>
@@ -75,7 +75,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                 </span>
                 <div class="media-body">
                   <?php if(getNew($R['d_regis'],24)):?><span class="rb-new mr-1"></span><?php endif?>
-                  <?php echo getStrCut($R['subject'],$d['bbs']['sbjcut'],'')?>
+                  <span data-role="subject"><?php echo getStrCut($R['subject'],$d['bbs']['sbjcut'],'')?></span>
                   <?php if($R['hidden']):?><span class="badge badge-default badge-inverted"><i class="fa fa-lock fa-lg"></i></span><?php endif?>
                   <p>
                     <?php if($R['notice']):?><span class="badge badge-primary badge-outline">공지</span><?php endif?>
@@ -129,7 +129,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84') ?>" width="42">
                   <?php elseif ($d['theme']['media_object']=='2'): ?>
                     <?php if (getUpImageSrc($R)): ?>
-                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'120x120') ?>" width="60">
+                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'120x120') ?>" width="60" data-role="featured_img">
                     <?php endif; ?>
                   <?php else: ?>
                   <?php endif; ?>
@@ -144,7 +144,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                 <div class="media-body">
                   <?php if(getNew($R['d_regis'],24)):?><span class="rb-new mr-1"></span><?php endif?>
                   <?php if($R['hidden']):?><span class="badge badge-default badge-inverted"><i class="fa fa-lock"></i></span><?php endif?>
-                  <?php echo getStrCut($R['subject'],$d['bbs']['sbjcut'],'')?>
+                  <span data-role="subject"><?php echo getStrCut($R['subject'],$d['bbs']['sbjcut'],'')?></span>
                   <p>
                     <?php if($R['notice']):?><span class="badge badge-primary badge-outline">공지</span><?php endif?>
                     <?php if($R['category']):?><span class="badge badge-default badge-inverted"><i class="fa fa-folder-o fa-fw"></i> <?php echo $R['category']?></span><?php endif?>
@@ -228,7 +228,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="theme" value="">
-  <header class="bar bar-nav bar-dark bg-primary p-x-0">
+  <header class="bar bar-nav bar-dark bg-primary p-x-0" data-scroll-header>
 		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
     <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
     <h1 class="title" data-role="title" data-history="back">

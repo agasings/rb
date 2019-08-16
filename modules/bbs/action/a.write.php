@@ -266,60 +266,69 @@ if ($backtype == "ajax") {
 
 	$R = getUidData($table['bbsdata'],$NOWUID);
 
-	$TMPL['category'] = $R['category'];
-  $TMPL['subject'] = $R['subject'];
-  $TMPL['bname'] = $B['name'];
-  $TMPL['bid'] = $B['id'];
-  $TMPL['uid'] = $R['uid'];
-  $TMPL['name'] = $R[$_HS['nametype']];
-  $TMPL['comment'] = $R['comment'];
-  $TMPL['oneline'] = $R['oneline']?'+'.$R['oneline']:'';
-  $TMPL['category'] = $R['category'];
-  $TMPL['hit'] = $R['hit'];
-  $TMPL['likes'] = $R['likes'];
-  $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d');
-  $TMPL['bbs_view_url'] = $bbs_view.$R['uid'];
-  $TMPL['datetime'] = getDateFormat($R['d_regis'],'c');
-  $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
-  $TMPL['preview'] = getPreviewResize(getUpImageSrc($R),'120x120');
+  if (!$uid) {
 
-  $TMPL['check_secret'] = $R['hidden']?' secret':'';
-  $TMPL['check_hidden'] = $R['hidden']?'':' d-none';
-  $TMPL['check_new'] = getNew($R['d_regis'],24)?'':' d-none';
-  $TMPL['check_notice'] = $R['notice']?'':' d-none';
-  $TMPL['check_upload'] = $R['upload']?'':' d-none';
-  $TMPL['check_category'] = $R['category']?'':' d-none';
-  $TMPL['check_timeago'] = $d['theme']['timeago']?'data-plugin="timeago"':'';
-  $TMPL['check_depth'] = $R['depth']?' rb-reply rb-reply-0'.$R['depth']:'';
+    $TMPL['category'] = $R['category'];
+    $TMPL['subject'] = $R['subject'];
+    $TMPL['bname'] = $B['name'];
+    $TMPL['bid'] = $B['id'];
+    $TMPL['uid'] = $R['uid'];
+    $TMPL['name'] = $R[$_HS['nametype']];
+    $TMPL['comment'] = $R['comment'];
+    $TMPL['oneline'] = $R['oneline']?'+'.$R['oneline']:'';
+    $TMPL['category'] = $R['category'];
+    $TMPL['hit'] = $R['hit'];
+    $TMPL['likes'] = $R['likes'];
+    $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d');
+    $TMPL['bbs_view_url'] = $bbs_view.$R['uid'];
+    $TMPL['datetime'] = getDateFormat($R['d_regis'],'c');
+    $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
+    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'120x120');
 
-  // 미디어 오브젝트 (아바타=1/대표이미지=2/감춤=0)
-  if ($d['theme']['media_object']=='1' && !$R['depth']) {
+    $TMPL['check_secret'] = $R['hidden']?' secret':'';
+    $TMPL['check_hidden'] = $R['hidden']?'':' d-none';
+    $TMPL['check_new'] = getNew($R['d_regis'],24)?'':' d-none';
+    $TMPL['check_notice'] = $R['notice']?'':' d-none';
+    $TMPL['check_upload'] = $R['upload']?'':' d-none';
+    $TMPL['check_category'] = $R['category']?'':' d-none';
+    $TMPL['check_timeago'] = $d['theme']['timeago']?'data-plugin="timeago"':'';
+    $TMPL['check_depth'] = $R['depth']?' rb-reply rb-reply-0'.$R['depth']:'';
 
-    $TMPL['check_avatar'] = '';
-    $TMPL['check_preview'] = 'd-none';
-    $TMPL['check_replay'] = 'd-none';
+    // 미디어 오브젝트 (아바타=1/대표이미지=2/감춤=0)
+    if ($d['theme']['media_object']=='1' && !$R['depth']) {
 
-  } elseif ($d['theme']['media_object']=='2' && !$R['depth']) {
+      $TMPL['check_avatar'] = '';
+      $TMPL['check_preview'] = 'd-none';
+      $TMPL['check_replay'] = 'd-none';
 
-    $TMPL['check_avatar'] = 'd-none';
-    $TMPL['check_replay'] = 'd-none';
-    if (getUpImageSrc($R)) $TMPL['check_preview'] = '';
-    else $TMPL['check_preview'] = 'd-none';
+    } elseif ($d['theme']['media_object']=='2' && !$R['depth']) {
+
+      $TMPL['check_avatar'] = 'd-none';
+      $TMPL['check_replay'] = 'd-none';
+      if (getUpImageSrc($R)) $TMPL['check_preview'] = '';
+      else $TMPL['check_preview'] = 'd-none';
+
+    } else {
+
+      $TMPL['check_avatar'] = 'd-none';
+      $TMPL['check_preview'] = 'd-none';
+      $TMPL['check_replay'] = '';
+    }
+
+    // 최종 결과값 추출 (sys.class.php)
+    $skin=new skin('moreList');
+    $result['item']=$skin->make();
+    $result['notice']=$R['notice'];
+    $result['uid']=$NOWUID;
+    $result['depth']=$R['depth'];
+    $result['media_object']=$d['theme']['media_object'];
 
   } else {
-
-    $TMPL['check_avatar'] = 'd-none';
-    $TMPL['check_preview'] = 'd-none';
-    $TMPL['check_replay'] = '';
+    $result['notice']=$R['notice'];
+    $result['uid']=$NOWUID;
+    $result['subject'] = $R['subject'];
+    $result['content'] = getContents($R['content'],$R['html']);
   }
-
-	// 최종 결과값 추출 (sys.class.php)
-	$skin=new skin('moreList');
-	$result['item']=$skin->make();
-	$result['notice']=$R['notice'];
-	$result['uid']=$NOWUID;
-	$result['depth']=$R['depth'];
-	$result['media_object']=$d['theme']['media_object'];
 
 	echo json_encode($result);
 	exit;

@@ -11,7 +11,7 @@ function getPostData(settings){
   var type=settings.type; //컴포넌트 타입
   var mid=settings.mid; // 컴포넌트 아이디
   var ctheme=settings.ctheme; // 댓글테마
-  var page = $('.page')
+  var page = $('[data-role="bbs-view"]')
   var sheet_comment_write = $('#sheet-comment-write') // 댓글 작성 sheet
   var page_allcomment = $('#page-bbs-allcomments')  // 댓글 전체보기 페이지
   var page_bbs_photo = $('#page-bbs-photo');  // 샤진 크게보기 페이지
@@ -200,13 +200,6 @@ function getPostData(settings){
     var ele = $(event.relatedTarget) // element that triggered the modal
     var uid = ele.data('uid') // 게시물 고유번호 추출
     var modal = $(this);
-   });
-
-   //댓글 바로가기 버튼을 터치 할때
-   $(mid).on('tap','[data-move="comment"]',function(event){
-     event.preventDefault();
-     event.stopPropagation();
-     document.querySelector('[data-role="comment_anchor"]').scrollIntoView(true);
    });
 
    //링크공유 버튼을 터치 할때

@@ -358,6 +358,7 @@
 <script>
 
 var page_bbs_write_main = $('#page-bbs-write-main')
+var page_bbs_list = $('#page-bbs-list')
 var page_bbs_view = $('#page-bbs-view')
 var modal_bbs_write = $('#modal-bbs-write');
 var sheet_comment_write = $('#sheet-comment-write');
@@ -389,8 +390,6 @@ $(document).ready(function() {
 
   // 글 등록
   modal_bbs_write.find('[data-act="submit"]').click(function(event){
-    event.preventDefault();
-    event.stopPropagation();
     var modal = modal_bbs_write;
     var bid = modal.find('[name="bid"]').val();
     var uid = modal.find('[name="uid"]').val();
@@ -488,19 +487,33 @@ $(document).ready(function() {
           var error = result.error;
           var item = result.item;
           var notice = result.notice;
-          var uid = result.uid;
+          var _uid = result.uid;
+          var subject = result.subject;
+          var content = result.content;
 
           if (!error) {
-            history.back();
-            setTimeout(function(){
-              $('#page-bbs-list').find('.content').animate({scrollTop : 0}, 100);
+            history.back(); // 게시판 글쓰기 모달 닫기
 
-              if (notice==1) $('[data-role="bbs-list"] [data-role="notice"]').prepend(item);
-              else $('[data-role="bbs-list"] [data-role="allpost"]').prepend(item);
-              $('[data-role="bbs-list"]').find('#item-'+uid).addClass('animated fadeInDown').attr('tabindex','-1').focus();;
-              $(this).attr('disabled', false);
+            setTimeout(function(){
+
+              if (!uid) {
+                $('[data-role="bbs-list"]').find('.content').animate({scrollTop : 0}, 100);
+                if (notice==1) $('[data-role="bbs-list"] [data-role="notice"]').prepend(item);
+                else $('[data-role="bbs-list"] [data-role="allpost"]').prepend(item);
+                $('[data-role="bbs-list"]').find('#item-'+_uid).addClass('animated fadeInDown').attr('tabindex','-1').focus();
+              } else {
+                $('[data-role="bbs-view"]').find('[data-role="subject"]').text(subject);
+                $('[data-role="bbs-view"]').find('[data-role="article-body"]').html(content);
+                $('[data-role="bbs-list"]').find('#item-'+uid+' a').removeAttr('data-subject').attr('data-subject',subject);
+                $('[data-role="bbs-list"]').find('#item-'+uid+' [data-role="subject"]').text(subject);
+                $('[data-role="bbs-list"]').find('#item-'+uid).attr('tabindex','-1').focus();
+              }
+
+              //글쓰기 모달 상태 초기화
+              $(this).attr('disabled', false); //글쓰기 전성버튼 상태 초기화
               modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
               modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
+
             }, 600);
           }
 
@@ -547,14 +560,6 @@ $(document).ready(function() {
 		 page_bbs_write_main.find('[data-role="tap-option"]').removeClass('text-muted').addClass('active')
 	});
 
-	// 위치지정 페이지가 호출되었을때
-	$('#page-location').on('show.rc.page', function () {
-		var width = $(document).width();
-		var height = $(document).width();
-		$('#location-map').css('width',width+'px')
-		$('#location-map').css('height',height+'px')
-	})
-
   //댓글쓰기 컴포넌트가 호출
   $(document).on('click','[data-role="bbs-comment"] [data-toggle="commentWrite"]',function(){
     if (memberid) {
@@ -574,11 +579,10 @@ $(document).ready(function() {
 
   //댓글 저장버튼 클릭
   sheet_comment_write.find('[data-kcact="regis"]').click(function(event) {
-    event.preventDefault();
-    event.stopPropagation();
 
     if (!$(this).hasClass("active")) {
       $.notify({message: '내용을 입력해주세요.'},{type: 'default'});
+      editor_sheet.editing.view.focus();
       return false
     }
 
