@@ -320,6 +320,12 @@
   font-size: .7rem;
 }
 
+
+[data-role="comment-box"].edit_mod .content {
+  top: 0;
+  padding-top: 0
+}
+
 .anchor-link::before,
 [data-role="anchor-link"]::before {
   position: relative;
@@ -329,12 +335,6 @@
   height: 50px;
   visibility: hidden;
 }
-
-[data-role="comment-box"].edit_mod .content {
-  top: 0;
-  padding-top: 0
-}
-
 .sheet .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
   outline: none;
   border: none;

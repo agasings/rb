@@ -373,11 +373,9 @@
                     if (data.type=='comment') document.getElementById("CMT-" + data.uid).scrollIntoView({ behavior: 'smooth' });
                     else document.getElementById("OLN-" + data.uid).scrollIntoView({ behavior: 'smooth' });
                   }, 450);
-
                 } else {
                   $('[data-role^="'+data.type+'-content-editable-"]').css('display','none').html('')
                   $('[data-role^="'+data.type+'-origin-content-"]').css('display','block');
-                  $('[data-role^="'+data.type+'-modify-btn-wrapper-"]').hide();
                   $('[data-role="'+data.type+'-content-editable-'+data.uid+'"]').css('display','block').html('')
                   $('[data-role="'+data.type+'-origin-content-'+data.uid+'"]').css('display','none')
                 }
