@@ -848,6 +848,7 @@ $(document).ready(function() {
                 editor_bbs.setData(content);
              });
            } else {
+             setTimeout(function(){ modal.find('[name="subject"]').focus(); }, 1000);
              modal.find('[data-act="submit"] .not-loading').text('등록');
            }
          }
