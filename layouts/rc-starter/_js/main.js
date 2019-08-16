@@ -189,6 +189,16 @@ $(document).ready(function() {
     }, 10);
   });
 
+  // 바로가기
+  $(document).on('tap','[data-toggle="move"]',function(event){
+    var button =  $(this);
+    var target =  button.attr('data-target');
+    var page = button.attr('data-page')?button.attr('data-page'):'body'; // 컨테이너
+    var top = $(target).offset().top;  // 타켓의 위치값
+    var bar_height = $(page).find('.bar-nav').height();  // bar-nav의 높이값
+    $(page).find('.content').animate({ scrollTop: (top-bar_height)-15 }, 300);
+  });
+
 	// 검색모달이 닫혔을때
   $('#modal-search').on('hidden.rc.modal', function () {
 		var modal = $(this)
