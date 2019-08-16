@@ -508,6 +508,7 @@ $(document).ready(function() {
                 $('[data-role="bbs-list"]').find('#item-'+uid+' [data-role="subject"]').text(subject);
                 $('[data-role="bbs-list"]').find('#item-'+uid).attr('tabindex','-1').focus();
               }
+              bar_tab_swiper.updateAutoHeight(10); //item 추가 후, swiper 높이 업데이트
 
               //글쓰기 모달 상태 초기화
               $(this).attr('disabled', false); //글쓰기 전성버튼 상태 초기화
