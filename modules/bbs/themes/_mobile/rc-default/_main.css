@@ -238,7 +238,7 @@
 }
 
 .modal .ck-editor__editable_inline {
-  min-height: 75vh;
+  min-height: 35vh;
 }
 
 .modal [data-role="editor-nav"] {
