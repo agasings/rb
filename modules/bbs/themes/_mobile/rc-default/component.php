@@ -12,6 +12,7 @@
   <input type="hidden" name="tag" value="">
   <input type="hidden" name="featured_img" value="">
   <input type="hidden" name="upfiles" id="upfilesValue" value="">
+  <input type="hidden" name="pcode" value="">
   <input type="hidden" name="backtype" value="ajax">
 
   <section id="page-bbs-write-main" class="page center">
@@ -399,7 +400,7 @@ $(document).ready(function() {
     var category = modal.find('[name="category"]').val();
     var backtype = modal.find('[name="backtype"]').val();
     var nlist = modal.find('[name="nlist"]').val();
-
+    var pcode = modal.find('[name="pcode"]').val();
     var upfiles = modal.find('[name="upfiles"]').val('');
     var featured_img = modal.find('[name="featured_img"]').val('');
 
@@ -481,7 +482,8 @@ $(document).ready(function() {
           category : category,
           upfiles : upfiles,
           featured_img : featured_img,
-          backtype : backtype
+          backtype : backtype,
+          pcode : pcode
        },function(response){
           var result = $.parseJSON(response);
           var error = result.error;
@@ -766,12 +768,14 @@ $(document).ready(function() {
         },function(response){
          var result = $.parseJSON(response);
          var main=result.main;
+         var totime=result.totime;
          var isperm =result.isperm;
          if (!isperm) {
            console.log('권한없음');
            modal_bbs_write.find('.page .content').html(main);
            modal_bbs_write.find('.bar-tab').remove();
          } else {
+           modal_bbs_write.find('[name="pcode"]').val(totime)
 
            DecoupledEditor
                .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
@@ -862,6 +866,7 @@ $(document).ready(function() {
     var submitting = false;
     if(modal_bbs_write.find('[data-act="submit"]').is(":disabled")) var submitting = true;
     $(this).find('[name="uid"]').val(''); // uid 초기화
+    $(this).find('[name="pcode"]').val(''); // pcode 초기화
     if (editor_bbs) {
       editor_bbs.destroy();  //에디터 제거
       console.log('editor_bbs.destroy');

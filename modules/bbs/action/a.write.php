@@ -2,7 +2,7 @@
 if(!defined('__KIMS__')) exit;
 require_once $g['path_core'].'function/sys.class.php';
 
-//if (!$_SESSION['wcode']||$_SESSION['wcode']!=$pcode) exit;
+if (!$_SESSION['wcode']||$_SESSION['wcode']!=$pcode) exit;
 
 if (!$bid) getLink('','','게시판 아이디가 지정되지 않았습니다.','');
 $B = getDbData($table[$m.'list'],"id='".$bid."'",'*');
