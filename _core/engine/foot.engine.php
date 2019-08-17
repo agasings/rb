@@ -93,10 +93,4 @@ $(function() {
 	ga('send', 'pageview');
 	<?php endif?>
 
-	<?php if(!$my['uid']):?>
-	$('.rb-modal-login').on('click',function() {
-		modalSetting('modal_window','<?php echo getModalLink('&amp;system=popup.login')?>');
-	});
-	<?php endif?>
-
 </script>
