@@ -364,16 +364,7 @@ function getPopover(type,val,id)
 		getId(id).innerHTML = '<iframe src="'+rooturl +'/?system=popup.popover&iframe=Y&mbruid='+val+'&layer='+id+'" width="250" height="100" frameborder="0" scrolling="no"></iframe>';
 	}
 }
-//콘텍스트
-function getContext(context,event)
-{
-	var xy = getEventXY(event);
-	getId('rb-context-menu').children[1].innerHTML = context;
-	getId('rb-context-menu').style.position = 'absolute';
-	getId('rb-context-menu').style.top = xy.y + 'px';
-	getId('rb-context-menu').style.left = xy.x + 'px';
-	getId('rb-context-menu').children[0].click();
-}
+
 // 알림 출력 (쿠키 활용, js-cookie, bootstrap-notify 플러그인 필요)
 function putCookieAlert(name)
 {
