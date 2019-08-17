@@ -449,6 +449,14 @@ figure.media oembed iframe {
  * ----------------------------------------------------------------------------
  */
 
+ /* CKEditor 5 Balloon with Bootstrap 4 */
+.ck.ck-balloon-panel {
+ z-index: 1090;
+}
+.ck.ck-balloon-panel[class*=arrow_n]:after {
+ z-index: 1090;
+}
+
 
  /**
   * 9 - Theme 테마
