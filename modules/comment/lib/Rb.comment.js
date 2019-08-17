@@ -235,6 +235,18 @@
                     }
                 ]
             },
+            link: {
+                decorators: {
+                    addTargetToLinks: {
+                        mode: 'manual',
+                        label: '새탭에서 열기',
+                        attributes: {
+                            target: '_blank',
+                            rel: 'noopener noreferrer'
+                        }
+                    }
+                }
+            },
             typing: {
                 transformations: {
                     include: [
