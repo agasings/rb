@@ -82,7 +82,6 @@ if($R['upload']) {
     $result['audio'] = getAttachFileList($R,'view','audio',$device);
     $result['doc'] = getAttachFileList($R,'view','doc',$device);
     $result['zip'] = getAttachFileList($R,'view','zip',$device);
-    $result['youtube'] = getAttachPlatformList($R,'view','default',$device);
   }
 }
 
