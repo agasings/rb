@@ -74,9 +74,13 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <small>댓글</small>
                 </span>
                 <div class="media-body">
-                  <?php if(getNew($R['d_regis'],24)):?><span class="rb-new mr-1"></span><?php endif?>
-                  <span data-role="subject"><?php echo getStrCut($R['subject'],$d['bbs']['sbjcut'],'')?></span>
-                  <?php if($R['hidden']):?><span class="badge badge-default badge-inverted"><i class="fa fa-lock fa-lg"></i></span><?php endif?>
+
+                  <span class="line-clamp-2">
+                    <?php if(getNew($R['d_regis'],24)):?><span class="rb-new mr-1"></span><?php endif?>
+                    <?php if($R['hidden']):?><span class="badge badge-default badge-inverted"><i class="fa fa-lock fa-lg"></i></span><?php endif?>
+                    <span data-role="subject"><?php echo getStrCut($R['subject'],100,'')?></span>
+                  </span>
+
                   <p>
                     <?php if($R['notice']):?><span class="badge badge-primary badge-outline">공지</span><?php endif?>
                     <span class="badge badge-default badge-inverted"><?php echo $R[$_HS['nametype']]?></span>
@@ -142,9 +146,13 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <small>댓글</small>
                 </span>
                 <div class="media-body">
-                  <?php if(getNew($R['d_regis'],24)):?><span class="rb-new mr-1"></span><?php endif?>
-                  <?php if($R['hidden']):?><span class="badge badge-default badge-inverted"><i class="fa fa-lock"></i></span><?php endif?>
-                  <span data-role="subject"><?php echo getStrCut($R['subject'],$d['bbs']['sbjcut'],'')?></span>
+
+                  <span class="line-clamp-2">
+                    <?php if(getNew($R['d_regis'],24)):?><span class="rb-new mr-1"></span><?php endif?>
+                    <?php if($R['hidden']):?><span class="badge badge-default badge-inverted"><i class="fa fa-lock fa-lg"></i></span><?php endif?>
+                    <span data-role="subject"><?php echo getStrCut($R['subject'],100,'')?></span>
+                  </span>
+
                   <p>
                     <?php if($R['notice']):?><span class="badge badge-primary badge-outline">공지</span><?php endif?>
                     <?php if($R['category']):?><span class="badge badge-default badge-inverted"><i class="fa fa-folder-o fa-fw"></i> <?php echo $R['category']?></span><?php endif?>
@@ -418,7 +426,7 @@ $(document).ready(function() {
     dataSource: function(helpers, callback){
       var nextPage = parseInt(currentPage)+1;
       if (totalPage>currentPage) {
-        $.get(rooturl+'/?r='+raccount+'&m=bbs&a=get_moreList',{
+        $.get(rooturl+'/?r='+raccount+'&m='+moduleid+'&a=get_moreList',{
             page : nextPage,
             bbs: bbs,
             sort: sort,
