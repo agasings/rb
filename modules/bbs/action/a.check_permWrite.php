@@ -36,7 +36,7 @@ if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').','
 
 if ($result['isperm']==true) {
   $_SESSION['wcode'] = $date['totime'];
-  $result['totime']=$date['totime'];
+  $result['pcode']=$date['totime'];
 }
 
 // 최종 결과값 추출 (sys.class.php)

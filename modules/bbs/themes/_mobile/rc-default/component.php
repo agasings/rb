@@ -768,14 +768,14 @@ $(document).ready(function() {
         },function(response){
          var result = $.parseJSON(response);
          var main=result.main;
-         var totime=result.totime;
+         var pcode=result.pcode;
          var isperm =result.isperm;
          if (!isperm) {
            console.log('권한없음');
            modal_bbs_write.find('.page .content').html(main);
            modal_bbs_write.find('.bar-tab').remove();
          } else {
-           modal_bbs_write.find('[name="pcode"]').val(totime)
+           modal_bbs_write.find('[name="pcode"]').val(pcode)
 
            DecoupledEditor
                .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
