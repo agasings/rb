@@ -110,7 +110,7 @@ if(isset($_FILES["files"])) {
               'secret' => S3_SEC,
           ],
         ]);
-        
+
         // 파일 업로드
         $host= 'https://'.S3_BUCKET.'.s3.'.S3_REGION.'.amazonaws.com';
         $folder = str_replace('./files/','',$saveDir).$folder;

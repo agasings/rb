@@ -43,6 +43,9 @@
 <!-- 소셜공유시 URL 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
 <?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 
+<!-- smooth-scroll: https://github.com/cferdinandi/smooth-scroll -->
+<?php getImport('smooth-scroll','smooth-scroll.polyfills.min','16.1.0','js') ?>
+
 <!-- 사이트 헤드 코드 -->
 <?php echo $_HS['headercode']?>
 

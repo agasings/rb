@@ -22,7 +22,7 @@ $result['error'] = false;
 if (!$sess_code){
 	$result['error'] = true;
 	$result['error_msg'] = '정상적인 접근이 아닙니다.';
-    echo json_encode($result);
+  echo json_encode($result);
 	exit;
 }else{
 	$mbruid		= $my['uid'];

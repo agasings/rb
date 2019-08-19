@@ -830,31 +830,33 @@ $(document).ready(function() {
                      modal_bbs_write.removeClass('editor-focused');
                    }
                  } );
+
+                 if (uid) {
+                   modal.find('[data-act="submit"] .not-loading').text('수정');
+                   modal_bbs_write.find('[name="subject"]').val(subject);
+                   $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+                        bid : bid,
+                        uid : uid
+                     },function(response){
+                      var result = $.parseJSON(response);
+                      var content=result.content;
+                      var adddata=result.adddata;
+                      var photo=result.photo;
+                      var video=result.video;
+                      var audio=result.audio;
+                      var file=result.file;
+                      editor_bbs.setData(content);
+                   });
+                 } else {
+                   setTimeout(function(){ modal.find('[name="subject"]').focus(); }, 1000);
+                   modal.find('[data-act="submit"] .not-loading').text('등록');
+                 }
+
                })
                .catch( error => {
                    console.error( error );
                } );
 
-           if (uid) {
-             modal.find('[data-act="submit"] .not-loading').text('수정');
-             modal_bbs_write.find('[name="subject"]').val(subject);
-             $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-                  bid : bid,
-                  uid : uid
-               },function(response){
-                var result = $.parseJSON(response);
-                var content=result.content;
-                var adddata=result.adddata;
-                var photo=result.photo;
-                var video=result.video;
-                var audio=result.audio;
-                var file=result.file;
-                editor_bbs.setData(content);
-             });
-           } else {
-             setTimeout(function(){ modal.find('[name="subject"]').focus(); }, 1000);
-             modal.find('[data-act="submit"] .not-loading').text('등록');
-           }
          }
       });
     }, 300);
