@@ -1,9 +1,9 @@
 /**
  * --------------------------------------------------------------------------
- * kimsQ Rb v2.2 모바일 시작하기 레이아웃 스크립트 (rc-starter)
+ * kimsQ Rb v2.4 모바일 시작하기 레이아웃 스크립트 (rc-starter)
  * Homepage: http://www.kimsq.com
  * Licensed under RBL
- * Copyright 2018 redblock inc
+ * Copyright 2019 redblock inc
  * --------------------------------------------------------------------------
  */
 

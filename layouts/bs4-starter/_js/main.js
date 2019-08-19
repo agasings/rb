@@ -1,9 +1,9 @@
 /**
  * --------------------------------------------------------------------------
- * kimsQ Rb v2.2 데스크탑 시작하기 레이아웃 스크립트 (bs4-starter)
+ * kimsQ Rb v2.4 데스크탑 시작하기 레이아웃 스크립트 (bs4-starter)
  * Homepage: http://www.kimsq.com
  * Licensed under RBL
- * Copyright 2018 redblock inc
+ * Copyright 2019 redblock inc
  * --------------------------------------------------------------------------
  */
 
