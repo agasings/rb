@@ -29,10 +29,6 @@
   padding-left: 7.5px;
 }
 
-.alert {
-  z-index: 1060
-}
-
 .alert-media {
   background-color: rgb(241, 242, 240);
   border-color: rgba(149, 149, 149, 0.3);
