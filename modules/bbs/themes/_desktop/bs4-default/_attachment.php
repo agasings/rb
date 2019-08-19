@@ -48,22 +48,15 @@
 	<?php endif?>
 
 
-	<?php if($attach_youtube_num>0):?>
-		<?php foreach($youtube_files as $_u):?>
-		 <video class="mejs-player mb-4"  style="max-width:100%;" preload="none">
-				 <source src="https://www.youtube.com/embed/<?php echo $_u['name']?>" type="video/youtube">
-		 </video>
-		<?php endforeach?>
-	<?php endif?>
-
 	<?php if($attach_photo_num>0):?>
-	<h5>사진 <span class="badge badge-light"><?php echo $attach_photo_num?></span></h5>
+	<h5 class="mt-3">사진 <span class="badge badge-light"><?php echo $attach_photo_num?></span></h5>
 	<ul class="list-inline mb-3 gallery" data-plugin="photoswipe">
 		<?php foreach($img_files as $_u):?>
 
 		<?php
-			$thumb_list=getPreviewResize($_u['tmpname'],'q',$_u['url'],$_u['folder']); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-			$thumb_modal=getPreviewResize($_u['tmpname'],'c',$_u['url'],$_u['folder']); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+			$thumb_list=getPreviewResize($_u['src'],'q'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+			$thumb_modal=getPreviewResize($_u['src'],'c'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+			$img_origin=$_u['host'].$_u['src'];
 		?>
 			<figure class="list-inline-item">
 				<a href="<?php echo $img_origin ?>" data-size="<?php echo $_u['width']?>x<?php echo $_u['height']?>" title="<?php echo $_u['name']?>">
@@ -86,7 +79,7 @@
 	   ?>
 	  <div class="card">
 	    <video width="320" height="240" controls data-plugin="mediaelement" class="card-img-top">
-	      <source src="<?php echo $_u['url']?><?php echo $_u['folder']?>/<?php echo $_u['tmpname']?>" type="video/<?php echo $_u['ext']?>">
+	      <source src="<?php echo $_u['host']?><?php echo $_u['folder']?>/<?php echo $_u['tmpname']?>" type="video/<?php echo $_u['ext']?>">
 	    </video>
 	    <div class="card-body">
 	      <h6 class="card-title"><?php echo $_u['name']?></h6>
@@ -107,7 +100,7 @@
 	   ?>
 	  <div class="card">
 	    <audio controls data-plugin="mediaelement" class="card-img-top w-100">
-	      <source src="<?php echo $_u['url']?><?php echo $_u['folder']?>/<?php echo $_u['tmpname']?>" type="audio/mp3">
+	      <source src="<?php echo $_u['host']?><?php echo $_u['folder']?>/<?php echo $_u['tmpname']?>" type="audio/mp3">
 	    </audio>
 	    <div class="card-body">
 	      <h6 class="card-title"><?php echo $_u['name']?></h6>

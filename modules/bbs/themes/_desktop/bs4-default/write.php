@@ -228,7 +228,7 @@ function writeCheck(f) {
   // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
   var featured_img_input = $('input[name="featured_img"]'); // 대표이미지 input
   var featured_img_uid = $(featured_img_input).val();
-  if(featured_img_uid ==''){ // 대표이미지로 지정된 값이 없는 경우
+  if(!featured_img_uid){ // 대표이미지로 지정된 값이 없는 경우
     var first_attach_img_li = $('.rb-attach-photo li:first'); // 첫번째 첨부된 이미지 리스트 li
     var first_attach_img_uid = $(first_attach_img_li).data('id');
     featured_img_input.val(first_attach_img_uid);
