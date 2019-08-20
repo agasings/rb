@@ -787,6 +787,7 @@ $(document).ready(function() {
     modal.find('[data-act="submit"]').attr('disabled', false);
     modal.find('[data-role="loader"]').removeClass('d-none') //로더 제거
     modal.find('form').addClass('d-none')
+    modal.find('[data-role="tap-attach"] .badge').text('')
 
     setTimeout(function(){
       // 글쓰기 권한 체크
@@ -799,10 +800,10 @@ $(document).ready(function() {
          var isperm =result.isperm;
          if (!isperm) {
            console.log('권한없음');
-           modal_bbs_write.find('.page .content').html(main);
-           modal_bbs_write.find('.bar-tab').remove();
+           modal.find('.page .content').html(main);
+           modal.find('.bar-tab').remove();
          } else {
-           modal_bbs_write.find('[name="pcode"]').val(pcode)
+           modal.find('[name="pcode"]').val(pcode)
 
            DecoupledEditor
                .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
@@ -847,20 +848,20 @@ $(document).ready(function() {
                  modal.find('[data-role="loader"]').addClass('d-none') //로더 제거
                  modal.find('form').removeClass('d-none')
                  editor_bbs = newEditor;
-                 modal_bbs_write.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
+                 modal.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
                  editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
                    if (value) {
                      console.log('editor_bbs focus');
-                     modal_bbs_write.addClass('editor-focused');
+                     modal.addClass('editor-focused');
                    } else {
                      console.log('editor_bbs blur');
-                     modal_bbs_write.removeClass('editor-focused');
+                     modal.removeClass('editor-focused');
                    }
                  } );
 
                  if (uid) {
                    modal.find('[data-act="submit"] .not-loading').text('수정');
-                   modal_bbs_write.find('[name="subject"]').val(subject);
+                   modal.find('[name="subject"]').val(subject);
                    $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
                         bid : bid,
                         uid : uid,
@@ -876,12 +877,12 @@ $(document).ready(function() {
                       var audio=result.audio;
                       var file=result.file;
                       editor_bbs.setData(content);
-                      modal_bbs_write.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
+                      modal.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
                       $('#page-bbs-write-attach').find('[data-role="attach-preview-photo"]').html(photo);
                       $('#page-bbs-write-attach').find('[data-role="attach-preview-video"]').html(video)
                       $('#page-bbs-write-attach').find('[data-role="attach-preview-audio"]').html(audio)
                       $('#page-bbs-write-attach').find('[data-role="attach-preview-file"]').html(file)
-                      modal_bbs_write.find('[data-role="tap-attach"] .badge').text(attachNum)
+                      modal.find('[data-role="tap-attach"] .badge').text(attachNum)
 
                    });
                  } else {
@@ -903,18 +904,18 @@ $(document).ready(function() {
   //글쓰기 모달이 닫힐때
   modal_bbs_write.on('hidden.rc.modal', function (e) {
     var submitting = false;
-    if(modal_bbs_write.find('[data-act="submit"]').is(":disabled")) var submitting = true;
-    $(this).find('[name="uid"]').val(''); // uid 초기화
-    $(this).find('[name="pcode"]').val(''); // pcode 초기화
-    $(this).find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
-    $(this).find('[data-role="attach-preview-video"]').html('')
-    $(this).find('[data-role="attach-preview-audio"]').html('')
-    $(this).find('[data-role="attach-preview-file"]').html('')
+    var modal = modal_bbs_write;
+    var subject = modal.find('[name="subject"]').val();
+    var content = editor_bbs.getData();
+
+    if(modal.find('[data-act="submit"]').is(":disabled")) var submitting = true;
+    modal.find('[name="uid"]').val(''); // uid 초기화
+    modal.find('[name="pcode"]').val(''); // pcode 초기화
 
     if (editor_bbs) {
       editor_bbs.destroy();  //에디터 제거
       console.log('editor_bbs.destroy');
-      if (!submitting) {
+      if (!submitting && (content || subject)) {
         setTimeout(function(){
           popup_bbs_cancelCheck.popup({
             backdrop: 'static'
@@ -937,6 +938,10 @@ $(document).ready(function() {
       modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
       modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
       modal_bbs_write.find('[data-role="tap-attach"] .badge').text('')  //첨부수량 초기화
+      modal.find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
+      modal.find('[data-role="attach-preview-video"]').html('')
+      modal.find('[data-role="attach-preview-audio"]').html('')
+      modal.find('[data-role="attach-preview-file"]').html('')
       console.log('editor_bbs 제목,본문입력 초기화');
     }
 	});

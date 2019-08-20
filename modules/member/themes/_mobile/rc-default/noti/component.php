@@ -47,8 +47,7 @@ var sheet_noti = $('#sheet-noti')  // 알림보기 시트
 
 $(function() {
 
-  $(document).on('show.rc.sheet','#sheet-noti',function(event){
-
+  sheet_noti.on('show.rc.sheet', function (event) {
     var item = $(event.relatedTarget)
     var from = item.data('from')
     var avatar = item.data('avatar')
@@ -86,7 +85,7 @@ $(function() {
 
   })
 
-  $(document).find('#sheet-noti').on('hidden.rc.sheet',sheet_noti,function(event){
+  sheet_noti.on('hidden.rc.sheet', function (event) {
     //내용 초기화
     var item = $(event.relatedTarget)
     var noti_badge  = $('[data-role="noti-status"]')
