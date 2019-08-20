@@ -53,7 +53,6 @@ function getPostData(settings){
          var photo=result.photo;
          var video=result.video;
          var audio=result.audio;
-         var youtube=result.youtube;
          var file=result.file;
          var zip=result.zip;
          var doc=result.doc;

@@ -29,6 +29,7 @@ if ($mod=='view') {
     $theme = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
     $device = 'desktop';
   }
+
   include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 
   $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."' and opinion='like'";
@@ -53,7 +54,8 @@ if ($mod=='view') {
   $result['content'] = getContents($R['content'],$R['html']);
 
   if ($R['featured_img']) {
-    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'c'); //게시물 대표이미지
+    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),$d['theme']['thumb_size']); //게시물 대표이미지
+    $result['featured_img'] = getPreviewResize(getUpImageSrc($R),$d['theme']['thumb_size']); //게시물 대표이미지
   } else {
     $TMPL['featured_img'] = $g['meta_img']?getPreviewResize($g['meta_img'],'c'):$g['img_core'].'/noimage_kimsq.png'; //사이트 대표
   }

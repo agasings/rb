@@ -490,11 +490,52 @@ $(document).ready(function() {
                 else $('[data-role="bbs-list"] [data-role="allpost"]').prepend(item);
                 $('[data-role="bbs-list"]').find('#item-'+_uid).addClass('animated fadeInDown').attr('tabindex','-1').focus();
               } else {
+
+                // 게시물 수정일 경우
                 $('[data-role="bbs-view"]').find('[data-role="subject"]').text(subject);
                 $('[data-role="bbs-view"]').find('[data-role="article-body"]').html(content);
                 $('[data-role="bbs-list"]').find('#item-'+uid+' a').removeAttr('data-subject').attr('data-subject',subject);
                 $('[data-role="bbs-list"]').find('#item-'+uid+' [data-role="subject"]').text(subject);
                 $('[data-role="bbs-list"]').find('#item-'+uid).attr('tabindex','-1').focus();
+
+                $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+                     bid : bid,
+                     uid : uid,
+                     mod : 'view'
+                  },function(response){
+                   var result = $.parseJSON(response);
+                   var featured_img=result.featured_img;
+                   var adddata=result.adddata;
+                   var photo=result.photo;
+                   var video=result.video;
+                   var audio=result.audio;
+                   var file=result.file;
+                   var hidden=result.hidden;
+
+                   $('[data-role="bbs-list"]').find('#item-'+uid+' [data-role="featured_img"]').attr('src',featured_img); //대표이미지 갱신
+
+                   if (photo) {  // 첨부 이미지가 있을 경우
+                     $('[data-role="bbs-view"]').find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+                   }
+
+                   if (video) {  // 첨부 비디오가 있을 경우
+                     $('[data-role="bbs-view"]').find('[data-role="attach-video"]').removeClass('hidden').html(video)
+                     $('[data-role="bbs-view"]').find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
+                   }
+
+                   if (audio) {  // 첨부 오디오가 있을 경우
+                     $('[data-role="bbs-view"]').find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
+                   }
+
+                   if (file) {  // 첨부 기타파일이 있을 경우
+                     $('[data-role="bbs-view"]').find('[data-role="attach-file"]').removeClass('hidden').html(file)
+                   }
+
+
+                 });
+
+
+
               }
               bar_tab_swiper.updateAutoHeight(10); //item 추가 후, swiper 높이 업데이트
 

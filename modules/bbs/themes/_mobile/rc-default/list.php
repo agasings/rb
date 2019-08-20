@@ -61,7 +61,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84') ?>" width="42">
                   <?php elseif ($d['theme']['media_object']=='2'): ?>
                     <?php if (getUpImageSrc($R)): ?>
-                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'120x120') ?>" width="60" data-role="featured_img">
+                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),$d['theme']['thumb_size']) ?>" width="60" data-role="featured_img">
                     <?php endif; ?>
                   <?php else: ?>
                   <?php endif; ?>
@@ -133,7 +133,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
                   <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84') ?>" width="42">
                   <?php elseif ($d['theme']['media_object']=='2'): ?>
                     <?php if (getUpImageSrc($R)): ?>
-                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),'120x120') ?>" width="60" data-role="featured_img">
+                      <img class="media-object pull-left bg-faded border" src="<?php echo getPreviewResize(getUpImageSrc($R),$d['theme']['thumb_size']) ?>" width="60" data-role="featured_img">
                     <?php endif; ?>
                   <?php else: ?>
                   <?php endif; ?>
