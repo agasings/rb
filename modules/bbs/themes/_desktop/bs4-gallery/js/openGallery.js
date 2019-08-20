@@ -36,7 +36,8 @@ $(function () {
     $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
        bid : bid,
        uid : uid,
-       AttachListType : 'object'
+       AttachListType : 'object',
+       mod : 'view'
       },function(response){
        // modal.find('[data-role="article"]').loader("hide");
        var result = $.parseJSON(response);
@@ -243,7 +244,8 @@ $(function () {
     $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
          bid : bid,
          uid : uid,
-         theme : theme
+         theme : theme,
+         mod : 'view'
       },function(response){
          var result = $.parseJSON(response);
          var total_comment=result.total_comment;
@@ -278,7 +280,8 @@ $(function () {
     $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
          bid : bid,
          uid : uid,
-         theme : theme
+         theme : theme,
+         mod : 'view'
       },function(response){
          var result = $.parseJSON(response);
          var total_comment=result.total_comment;

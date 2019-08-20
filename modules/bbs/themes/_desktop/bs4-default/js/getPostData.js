@@ -31,7 +31,8 @@ function getPostData(modal_settings){
 
     $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
          bid : bid,
-         uid : uid
+         uid : uid,
+         mod : 'view'
       },function(response){
        var result = $.parseJSON(response);
        var article=result.article;
@@ -313,7 +314,8 @@ function getPostData(modal_settings){
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
           bid : bid,
           uid : uid,
-          theme : theme
+          theme : theme,
+          mod : 'view'
        },function(response){
           var result = $.parseJSON(response);
           var total_comment=result.total_comment;
@@ -340,7 +342,8 @@ function getPostData(modal_settings){
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
           bid : bid,
           uid : uid,
-          theme : theme
+          theme : theme,
+          mod : 'view'
        },function(response){
           var result = $.parseJSON(response);
           var total_comment=result.total_comment;
