@@ -183,11 +183,11 @@ function getAttachFile($R,$mod,$featured_img_uid) {
 
       if($type=='photo'){
         $caption=$R['caption']?$R['caption']:$file_name;
-        $img_origin=$R['host'].$R['folder'].'/'.$R['tmpname'];
+        $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
         $thumb_list=getPreviewResize($img_origin,'c'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
         $thumb_modal=getPreviewResize($img_origin,'q'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
       }else if($type=='file'){
-        $src=$R['host'].$R['folder'].'/'.$R['name'];
+        $src=$R['host'].'/'.$R['folder'].'/'.$R['name'];
         $download_link=$g['url_root'].'/?r='.$r.'&m=mediaset&a=download&uid='.$R['uid'];
       }
 
@@ -230,7 +230,7 @@ function getAttachAudio($R,$mod,$featured_audio_uid) {
     $html.='<span class="badge badge-default'.($R['uid']==$featured_audio_uid?'':' hidden-xs-up').'" data-role="attachList-label-featured" data-id="'.$R['uid'].'">대표</span> ';
     $html.='<span class="badge badge-default'.(!$R['hidden']?' hidden-xs-up':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
     $html.='
-    <audio controls data-plugin="mediaelement" class="w-100"><source src="'.$R['host'].$R['folder'].'/'.$R['tmpname'].'" type="audio/mpeg"></audio>';
+    <audio controls data-plugin="mediaelement" class="w-100"><source src="'.$R['host'].'/'.$R['folder'].'/'.$R['tmpname'].'" type="audio/mpeg"></audio>';
     $html.='</li>';
     return $html;
 }
@@ -247,7 +247,7 @@ function getAttachVideo($R,$mod,$featured_video_uid) {
     $html.='
     <div class="card bg-white" data-id="'.$R['uid'].'">';
     $html.='
-    <video controls data-plugin="mediaelement" class="card-img-top img-fluid" width="640" height="360" style="max-width:100%;"><source src="'.$R['host'].$R['folder'].'/'.$R['tmpname'].'" type="video/'.$R['ext'].'"></video>';
+    <video controls data-plugin="mediaelement" class="card-img-top img-fluid" width="640" height="360" style="max-width:100%;"><source src="'.$R['host'].'/'.$R['folder'].'/'.$R['tmpname'].'" type="video/'.$R['ext'].'"></video>';
     $html.='<div class="card-block"><h5 class="card-title">'.$R['name'].'</h5>';
     $html.='
     <p class="card-text text-muted"><small>'.getSizeFormat($R['size'],2).'</small></p></div></div>';
@@ -307,11 +307,11 @@ function getAttachFile_m($R,$mod,$featured_img_uid) {
 
   if($type=='photo'){
     $caption=$R['caption']?$R['caption']:$file_name;
-    $img_origin=$R['host'].$R['folder'].'/'.$R['tmpname'];
+    $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
     $thumb_list=getPreviewResize($img_origin,'c'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
     $thumb_modal=getPreviewResize($img_origin,'q'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
   }else if($type=='file'){
-    $src=$R['host'].$R['folder'].'/'.$R['name'];
+    $src=$R['host'].'/'.$R['folder'].'/'.$R['name'];
     $download_link=$g['url_root'].'/?r='.$r.'&m=mediaset&a=download&uid='.$R['uid'];
   }
 
@@ -355,7 +355,7 @@ function getAttachAudio_m($R,$mod,$featured_audio_uid) {
     $html.='<span class="badge badge-default'.($R['uid']==$featured_audio_uid?'':' hidden-xs-up').'" data-role="attachList-label-featured" data-id="'.$R['uid'].'">대표</span> ';
     $html.='<span class="badge badge-default'.(!$R['hidden']?' hidden-xs-up':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
     $html.='
-    <audio controls data-plugin="mediaelement" class="w-100"><source src="'.$R['host'].$R['folder'].'/'.$R['tmpname'].'" type="audio/mpeg"></audio>';
+    <audio controls data-plugin="mediaelement" class="w-100"><source src="'.$R['host'].'/'.$R['folder'].'/'.$R['tmpname'].'" type="audio/mpeg"></audio>';
     $html.='</li>';
     return $html;
 }
@@ -372,7 +372,7 @@ function getAttachVideo_m($R,$mod,$featured_video_uid) {
     $html.='
     <div class="card bg-white" data-id="'.$R['uid'].'">';
     $html.='
-    <video controls data-plugin="mediaelement" class="card-img-top img-fluid" width="640" height="360" style="max-width:100%;"><source src="'.$R['host'].$R['folder'].'/'.$R['tmpname'].'" type="video/'.$R['ext'].'"></video>';
+    <video controls data-plugin="mediaelement" class="card-img-top img-fluid" width="640" height="360" style="max-width:100%;"><source src="'.$R['host'].'/'.$R['folder'].'/'.$R['tmpname'].'" type="video/'.$R['ext'].'"></video>';
     $html.='<div class="card-block"><h5 class="card-title">'.$R['name'].'</h5>';
     $html.='
     <p class="card-text text-muted"><small>'.getSizeFormat($R['size'],2).'</small></p></div></div>';
