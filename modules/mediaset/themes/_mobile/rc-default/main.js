@@ -57,7 +57,7 @@
         $('body').on('click','[data-attach-act]',function(e){
               e.preventDefault();
               var act=$(this).data('attach-act');
-              var uid=$(this).data('id');
+              var uid=$(this).attr('data-id');
               var type=$(this).data('type'); // file or photo
               if(act=='edit'){
                 // data 값 세팅
@@ -161,7 +161,9 @@
                    });
                }else if(act=='featured-img'){ // 대표이미지 설정
                     // write.php 페이지 <input name="featured_img" value > 값에 적용
-                    $('input[name="featured_img"]').val(uid);
+
+                    console.log('대표이미지 설정'+uid)
+                    $(document).find('input[name="featured_img"]').val(uid);
 
                     // 대표 이미지 라벨 업데이트
                     $('[data-role="attachList-label-featured"]').each(function(){

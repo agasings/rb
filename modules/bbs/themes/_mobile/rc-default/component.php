@@ -54,15 +54,12 @@
   	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-bbs-write-attach" data-role="tap-attach">
   	    <span class="icon fa fa-paperclip text-muted"></span>
   	    <span class="tab-label">파일첨부</span>
+        <span class="badge badge-primary"></span>
   	  </a>
   	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-bbs-write-tag" data-role="tap-tag">
   	    <span class="icon fa fa-tag text-muted"></span>
   	    <span class="tab-label">태그</span>
   	  </a>
-  		<a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-location" data-role="tap-location" hidden>
-  			<span class="icon fa fa-map-marker text-muted"></span>
-  			<span class="tab-label">위치</span>
-  		</a>
   	  <a class="tab-item text-muted" role="button" data-toggle="page" data-start="#page-bbs-write-main" href="#page-bbs-write-option" data-role="tap-option">
   	    <span class="icon icon-more text-muted"></span>
   	    <span class="tab-label">옵션</span>
@@ -161,17 +158,6 @@
 
   		<!-- 첨부파일 업로드 -->
   		<?php include $g['dir_module_skin'].'_uploader.php'?>
-
-  		<?php if (!$R['upload']): ?>
-  		<div class="content-padded text-muted guide text-center">
-  			<div data-role="attach-handler-file" data-type="file" title="파일첨부" role="button" data-loading-text="업로드 중...">
-  				<div class="display-3">
-  					<i class="fa fa-paperclip" aria-hidden="true"></i>
-  				</div>
-  				<small>사진,비디오,오디오,문서,파일을<br>첨부할 수 있습니다.</small>
-  			</div>
-  		</div>
-  		<?php endif; ?>
 
   	</div><!-- /.content -->
 
@@ -361,6 +347,7 @@
 var page_bbs_write_main = $('#page-bbs-write-main')
 var page_bbs_list = $('#page-bbs-list')
 var page_bbs_view = $('#page-bbs-view')
+var page_bbs_write_attach = $('#page-bbs-write-attach')
 var modal_bbs_write = $('#modal-bbs-write');
 var sheet_comment_write = $('#sheet-comment-write');
 var popup_bbs_cancelCheck = $('#popup-bbs-cancelCheck')
@@ -402,7 +389,6 @@ $(document).ready(function() {
     var nlist = modal.find('[name="nlist"]').val();
     var pcode = modal.find('[name="pcode"]').val();
     var upfiles = modal.find('[name="upfiles"]').val('');
-    var featured_img = modal.find('[name="featured_img"]').val('');
 
     <?php if(!$my['uid']):?>
     var name_el = modal.find('[name="name"]');
@@ -447,12 +433,12 @@ $(document).ready(function() {
 		<?php endif; ?>
 
     // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
-    var featured_img_input = $('#page-bbs-write-main').find('input[name="featured_img"]'); // 대표이미지 input
-    var featured_img_uid = $(featured_img_input).val();
-    if(featured_img_uid ==''){ // 대표이미지로 지정된 값이 없는 경우
+    var featured_img_input = $('#modal-bbs-write').find('input[name="featured_img"]'); // 대표이미지 input
+    var featured_img_uid = featured_img_input.val();
+    if(!featured_img_uid){ // 대표이미지로 지정된 값이 없는 경우
       var first_attach_img_li = $('#page-bbs-write-attach').find('[data-role="attach-preview-photo"] li:first'); // 첫번째 첨부된 이미지 리스트 li
-      var first_attach_img_uid = $(first_attach_img_li).data('id');
-      $(featured_img_input).val(first_attach_img_uid);
+      var first_attach_img_uid = first_attach_img_li.attr('data-id');
+      featured_img_input.val(first_attach_img_uid);
     }
 
     // 첨부파일 uid 를 upfiles 값에 추가하기
@@ -836,16 +822,26 @@ $(document).ready(function() {
                    modal_bbs_write.find('[name="subject"]').val(subject);
                    $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
                         bid : bid,
-                        uid : uid
+                        uid : uid,
+                        mod : 'edit'
                      },function(response){
                       var result = $.parseJSON(response);
                       var content=result.content;
                       var adddata=result.adddata;
+                      var featured_img=result.featured_img;
+                      var attachNum=result.attachNum;
                       var photo=result.photo;
                       var video=result.video;
                       var audio=result.audio;
                       var file=result.file;
                       editor_bbs.setData(content);
+                      modal_bbs_write.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
+                      $('#page-bbs-write-attach').find('[data-role="attach-preview-photo"]').html(photo);
+                      $('#page-bbs-write-attach').find('[data-role="attach-preview-video"]').html(video)
+                      $('#page-bbs-write-attach').find('[data-role="attach-preview-audio"]').html(audio)
+                      $('#page-bbs-write-attach').find('[data-role="attach-preview-file"]').html(file)
+                      modal_bbs_write.find('[data-role="tap-attach"] .badge').text(attachNum)
+
                    });
                  } else {
                    setTimeout(function(){ modal.find('[name="subject"]').focus(); }, 1000);
@@ -869,6 +865,11 @@ $(document).ready(function() {
     if(modal_bbs_write.find('[data-act="submit"]').is(":disabled")) var submitting = true;
     $(this).find('[name="uid"]').val(''); // uid 초기화
     $(this).find('[name="pcode"]').val(''); // pcode 초기화
+    $(this).find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
+    $(this).find('[data-role="attach-preview-video"]').html('')
+    $(this).find('[data-role="attach-preview-audio"]').html('')
+    $(this).find('[data-role="attach-preview-file"]').html('')
+
     if (editor_bbs) {
       editor_bbs.destroy();  //에디터 제거
       console.log('editor_bbs.destroy');
@@ -894,7 +895,8 @@ $(document).ready(function() {
       history.back();
       modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
       modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
-      console.log('editor_bbs 제목,본문입력사항 초기화');
+      modal_bbs_write.find('[data-role="tap-attach"] .badge').text('')  //첨부수량 초기화
+      console.log('editor_bbs 제목,본문입력 초기화');
     }
 	});
 
@@ -918,6 +920,13 @@ $(document).ready(function() {
 
     popup.find('.table-view-cell a').attr('data-uid',uid);
     popup.find('.table-view-cell a').attr('data-type',type)
+  })
+
+  //파일 첨부 페이지가 숨겨질때
+  page_bbs_write_attach.on('hide.rc.page', function () {
+    page =  page_bbs_write_attach;
+    length = page.find('[data-role="attach-item"]').length;
+    modal_bbs_write.find('[data-role="tap-attach"] .badge').text(length)  // 첨부파일 수량 업데이트
   })
 
   $(document).on('click','#popup-comment-mypost .table-view-cell a',function(event){

@@ -328,3 +328,44 @@ if ($m=='bbs') {
   </div><!-- /.card -->
 
 </div>
+
+
+<!-- 11. 시트 : 첨부파일 설정 -->
+<div id="sheet-attach-moreAct" class="sheet bg-faded">
+  <ul class="table-view table-view-full bg-white mb-0">
+    <li class="table-view-cell table-view-divider" data-dismiss="sheet"><span data-role="title"></span></li>
+    <li class="table-view-cell">
+      <a data-attach-act="featured-img">
+        대표이미지 설정
+      </a>
+    </li>
+    <li class="table-view-cell d-none">
+      <a data-attach-act="showhide">
+        정보수정
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a data-attach-act="delete">
+        삭제
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<!-- 12. 팝업 : 첨부파일 업로드 성공 -->
+<div id="popup-success" class="popup zoom">
+  <div class="popup-content">
+    <header class="bar bar-nav bar-dark bg-inverse">
+      <h1 class="title">업로드 완료</h1>
+    </header>
+    <nav class="bar bar-standard bar-footer">
+      <button type="button" class="btn btn-secondary btn-block" data-history="back">확인</button>
+    </nav>
+    <div class="content">
+      <div class="p-a-3 text-xs-center">
+        본문작성으로 돌아가려면 <br> 상단 <code>본문작성</code>을 누르세요.
+      </div>
+    </div>
+  </div>
+</div>

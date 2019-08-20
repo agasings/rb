@@ -43,7 +43,7 @@ function getPostData(settings){
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
            bid : bid,
            uid : uid,
-           device : 'mobile'
+           mod : 'view'
         },function(response){
          modal.find('[data-role="article"]').loader("hide");
          var result = $.parseJSON(response);

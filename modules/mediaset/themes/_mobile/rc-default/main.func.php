@@ -13,12 +13,12 @@ function getAttachNum($upload,$mod)
 		if($U['fileonly']==1) $attach_file_num++; // 전체 첨부파일 수량 증가
 		if($U['hidden']==1) $hidden_file_num++; // 숨김파일 수량 증가
 	}
-      $down_file_num=$attach_file_num-$hidden_file_num; // 다운로드 가능한 첨부파일
-      $result=array();
-      $result['modify']=$attach_file_num;
-      $result['view']=$down_file_num;
+  $down_file_num=$attach_file_num-$hidden_file_num; // 다운로드 가능한 첨부파일
+  $result=array();
+  $result['modify']=$attach_file_num;
+  $result['view']=$down_file_num;
 
-      return $result[$mod];
+  return $result[$mod];
 }
 
 // 첨부파일 리스트 추출 함수 (전체)
@@ -127,12 +127,9 @@ function getAttachFile($R,$mod,$featured_img_uid)
 				<div class="btn-group">';
 					 if($mod=='upload')  $html.='<input type="hidden" name="attachfiles[]" value="['.$R['uid'].']"/>';
 						$html.='
-						<button type="button" class="btn btn-secondary" data-attach-act="delete" data-id="'.$R['uid'].'" data-role="attachList-menu-delete-'.$R['uid'].'" data-featured="'.($R['uid']==$featured_img_uid?'1':'').'" data-type="'.$type.'">삭제</button>';
+						<button type="button" class="btn btn-secondary" data-act="sheet" data-target="#sheet-attach-moreAct" data-id="'.$R['uid'].'" data-insert="'.$insert_text.'" data-title="'.$R['name'].'" data-type="'.$type.'"><span class="fa fa-caret-down"></span></button>';
 						if($mod=='upload'){
 						$html.='
-						<button type="button" class="btn btn-secondary" data-toggle="sheet" data-target="#attach-moreAct" data-backdrop="false" data-history="false" data-id="'.$R['uid'].'" data-insert="'.$insert_text.'" data-title="'.$R['name'].'" data-type="'.$type.'">
-							<span class="fa fa-caret-down"></span>
-						</button>
 						<ul class="hidden dropdown-menu dropdown-menu-right" role="menu">';
 							if($R['type']==2){
 								$html.='
@@ -250,78 +247,5 @@ function getInsertImgUid($upload)
     return $upfiles;
 }
 
-// youtube
-function getAttachPlatformList($parent_data,$mod,$type) {
-  global $table;
-
-      $upload=$parent_data['upload'];
-      $featured_img_uid=$parent_data['featured_img'];// 대표이미지 uid
-
-      $sql='type=8';
-      $attach = getArrayString($upload);
-
-      $uid_q='(';
-      foreach($attach['data'] as $uid)
-     {
-         $uid_q.='uid='.$uid.' or ';
-     }
-
-     $uid_q=substr($uid_q,0,-4).')';
-       $sql=$sql.' and '.$uid_q;
-       $RCD=getDbArray($table['s_upload'],$sql,'*','gid','desc','',1);
-       $html='';
-       while($R=db_fetch_array($RCD)){
-             $U=getUidData($table['s_upload'],$R['uid']);
-         $html.=getAttachPlatform($U,$mod,$featured_img_uid);
-       }
-  return $html;
-
-}
-
-// Youtube 추출 함수 (낱개)
-function getAttachPlatform($R) {
-      global $g,$r;
-
-      $md_title=str_replace('|','-',$R['title']);
-      $insert_text='<video class=mejs-player img-responsive img-fluid  style=max-width:100% preload=none><source src=https://www.youtube.com/embed/'.$R['src'].' type=video/youtube></video>';
-      $html='';
-      $html.='
-      <li class="list-group-item d-flex" data-id="'.$R['uid'].'" style="background-color: transparent">';
-
-        $html.='
-            <div class="media w-75 mr-auto align-items-center">
-                <img class="d-flex align-self-center mr-3" src="/files/youtube/'.$R['name'].'/thumb_50x50.jpg" alt="">
-                <div class="media-body">';
-                    $html.='<span class="badge badge-pill badge-warning '.($R['uid']==$featured_img_uid?'':'hidden').'" data-role="attachList-label-featured" data-id="'.$R['uid'].'">대표</span> ';
-                    $html.='<span class="badge badge-pill badge-default '.(!$R['hidden']?'hidden':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
-                    $html.='
-                     <div class="title d-inline" data-role="attachList-list-name-'.$R['uid'].'" >'.($R['caption']?$R['caption']:'제목없음').'</div>
-                     <div class="meta"><span class="badge badge-pill badge-danger">Youtube</span> <span class="badge badge-pill badge-default" data-role="attachList-list-time-'.$R['uid'].'">'.$R['time'].'</span></div>
-                </div>
-            </div>';
-
-						$html.='
-						<span class="ml-auto">
-							<div class="btn-group btn-group-sm">';
-									$html.='<input type="hidden" name="attachfiles[]" value="['.$R['uid'].']"/>';
-									 $html.='
-									 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal-attach-'.($R['type']==8?'youtube':'file').'-meta" data-filename="'.$R['name'].'"  data-caption="'.$R['caption'].'" data-description="'.$R['description'].'" data-time="'.$R['time'].'" data-id="'.$R['uid'].'" data-type="'.($R['type']==8?'youtube':'file').'" data-role="attachList-menu-edit-'.$R['uid'].'"  role="button">정보등록</button>
-			 						 <button type="button" class="btn btn-secondary" data-attach-act="delete" data-id="'.$R['uid'].'" data-role="attachList-menu-delete-'.$R['uid'].'" data-featured="" data-type="'.($R['type']==8?'youtube':'file').'" role="button">삭제</button>';
-									$html.='
-									<div class="btn-group"><button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" role="button">
-									</button>
-									<div class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item" href="#" data-attach-act="featured-img" data-type="'.$type.'" data-id="'.$R['uid'].'">대표이미지 설정</a>
-										<a class="dropdown-item" href="#" data-attach-act="showhide" data-role="attachList-menu-showhide-'.$R['uid'].'" data-id="'.$R['uid'].'" data-content="'.($R['hidden']?'show':'hide').'" >'.($R['hidden']?'보이기':'숨기기').'</a>
-									 </div>
-									 </div>
-
-							</div>
-						</span>';
-					$html.='
-  				</li>';
-
-  return $html;
-}
 
 ?>
