@@ -314,6 +314,75 @@ figure.media oembed iframe {
   margin: 0 auto !important
 }
 
+/*attach*/
+.attach-section  figure,
+.attach-section .card {
+  position: relative;
+}
+.attach-section figcaption,
+.attach-section .card-img-overlay  {
+  opacity: 0;
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  word-break: break-all;
+  cursor: pointer;
+  transition-timing-function: ease-in;
+  transition-duration: .3s;
+  transition-property: all;
+  transition-delay: 0s;
+}
+.attach-section figcaption {
+  color: #fff;
+}
+.attach-section .card-img-overlay:hover,
+.attach-section  figcaption:hover {
+  opacity: 1 !important;
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  text-decoration: none;
+}
+.attach-section .card-img-overlay:hover {
+  background-color: #fff !important
+}
+.attach-section [data-role="caption"] {
+  display: none;
+}
+.attach-section .float-left:first-child {
+  margin-right: 10px
+}
+.attach-section .card__corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2em;
+  height: 2em;
+  background-color: #e6e7e8;
+  border: 1px solid rgba(0,0,0,.045);
+  border-top: 0;
+}
+.attach-section .card .card__corner {
+  top: -1px;
+  right: -1px;
+}
+.attach-section .card__corner .card__corner-triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 2em 2em 0;
+  border-color: transparent #fff transparent transparent;
+}
+.attach-section .card:hover .card__corner,
+.attach-section figure:hover .card__corner {
+  display: none
+}
+
+
 /**
  * 5 - Sidebar 사이드바
  * ----------------------------------------------------------------------------
