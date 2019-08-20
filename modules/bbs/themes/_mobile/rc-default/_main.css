@@ -240,6 +240,9 @@
 .modal .ck-editor__editable_inline {
   min-height: 35vh;
 }
+.mac-os .modal .ck-editor__editable_inline {
+  min-height: 20vh;
+}
 
 .modal [data-role="editor-nav"] {
   display: none

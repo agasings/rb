@@ -53,6 +53,10 @@ function moreNOTI(container,totalPage){
 
 $(document).ready(function() {
 
+  if(navigator.userAgent.indexOf("Mac") > 0) {
+    $("body").addClass("mac-os");
+  }
+
   putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
 
   RC_initPhotoSwipe(); // 포토갤러리 초기화 (모바일 전용)
