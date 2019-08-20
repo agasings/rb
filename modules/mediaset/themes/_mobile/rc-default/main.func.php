@@ -88,13 +88,13 @@ function getAttachFile($R,$mod,$featured_img_uid)
 
       if($type=='photo'){
             $caption=$R['caption']?$R['caption']:$file_name;
-            $img_origin=$R['url'].$R['folder'].'/'.$R['tmpname'];
+            $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
 						$thumb_list=getPreviewResize($R['src'],'q'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
             $thumb_modal=getPreviewResize($R['src'],'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
             $insert_text='!['.$caption.']('.$g['url_root'].$img_origin.')';
 			}else if($type=='file'){
 						$caption=$R['caption']?$R['caption']:$R['name'];
-						$src=$R['url'].$R['folder'].'/'.$R['name'];
+						$src=$R['host'].$R['folder'].'/'.$R['name'];
 						$insert_text='['.$caption.']('.$g['url_root'].'/?r='.$r.'&m=attach&a=download&uid='.$R['uid'].')';
 			}
 
@@ -161,7 +161,7 @@ function getAttachAudio($R,$mod,$featured_audio_uid)
 		$html='';
 	  $html.='
 		<div class="card bg-white" data-id="'.$R['uid'].'" data-role="attach-item">
-				<audio controls class="card-img-top w-100"><source src="'.$R['url'].$R['folder'].'/'.$R['tmpname'].'" type="audio/mp3"></audio>
+				<audio controls class="card-img-top w-100"><source src="'.$R['host'].'/'.$R['folder'].'/'.$R['tmpname'].'" type="audio/mp3"></audio>
 				<div class="card-block">';
 				if($mod=='upload')  $html.='<input type="hidden" name="attachfiles[]" value="['.$R['uid'].']"/>';
 				$html.='
@@ -198,7 +198,7 @@ function getAttachVideo($R,$mod,$featured_video_uid)
 		<div class="card bg-white" data-id="'.$R['uid'].'" data-role="attach-item">';
 
 		$html.='
-		<div class="card-img-top embed-responsive embed-responsive-4by3"><video controls class="embed-responsive-item" controls preload="none"><source src="'.$R['url'].$R['folder'].'/'.$R['tmpname'].'" type="video/'.$R['ext'].'"></video></div>';
+		<div class="card-img-top embed-responsive embed-responsive-4by3"><video controls class="embed-responsive-item" controls preload="none"><source src="'.$R['host'].'/'.$R['folder'].'/'.$R['tmpname'].'" type="video/'.$R['ext'].'"></video></div>';
 		$html.='<div class="card-block"><h5 class="card-title" data-role="attachList-list-name-'.$R['uid'].'" >'.$R['name'];
 
 		$html.='<span class="badge badge-default'.($R['uid']==$featured_video_uid?'':' hidden-xs-up').'" data-role="attachList-label-featured" data-id="'.$R['uid'].'">대표</span> ';
