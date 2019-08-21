@@ -29,7 +29,7 @@
 <?php getImport('is-loading','jquery.isloading.min','1.0.6','js')?>
 
 <!-- js-cookie : https://github.com/js-cookie/js-cookie -->
-<?php getImport('js-cookie','js.cookie.min','2.2.0','js')?>
+<?php getImport('js-cookie','js.cookie.min','2.2.1','js')?>
 
 <!-- bootstrap-notify : https://github.com/mouse0270/bootstrap-notify  -->
 <?php getImport('bootstrap-notify','bootstrap-notify.min','3.1.3','js')?>
@@ -40,7 +40,7 @@
 <?php getImport('bootstrap-toc','bootstrap-toc','1.0.1','css')?>
 <?php getImport('bootstrap-toc','bootstrap-toc.min','1.0.1','js')?>
 
-<?php getImport('smooth-scroll','smooth-scroll.min','12.1.5','js') ?>
+<?php getImport('smooth-scroll','smooth-scroll.min','16.1.0','js') ?>
 
 <!-- global css -->
 <link href="<?php echo $g['url_layout']?>/_css/style.css" rel="stylesheet">

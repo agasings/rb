@@ -1,9 +1,9 @@
 <?php
 $d['ov']['is-loading'] = '1.0.6';
-$d['ov']['smooth-scroll'] = '12.1.5';
+$d['ov']['smooth-scroll'] = '16.1.0';
 $d['ov']['codemirror'] = '5.37.0';
 $d['ov']['photoswipe'] = '4.0.6';
-$d['ov']['swiper'] = '4.1.0';
+$d['ov']['swiper'] = '4.5.0';
 $d['ov']['rc'] = '1.0.0';
 $d['ov']['autosize'] = '3.0.14';
 $d['ov']['jquery-markdown'] = '0.0.10';
@@ -22,7 +22,7 @@ $d['ov']['summernote'] = '0.8.9';
 $d['ov']['bootstrap-datepicker'] = '1.3.0';
 $d['ov']['bootstrap-colorpicker'] = '2.0.0-beta3';
 $d['ov']['jquery'] = '3.3.1';
-$d['ov']['js-cookie'] = '2.2.0';
+$d['ov']['js-cookie'] = '2.2.1';
 $d['ov']['jquery-timeago'] = '1.6.7';
 $d['ov']['bootstrap-validator'] = '0.5.0';
 $d['ov']['simplemde'] = '1.11.2';
