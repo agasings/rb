@@ -163,44 +163,4 @@ KEY bbs(bbs)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'xtra'],$DB_CONNECT);
 }
-
-//첨부파일데이터
-$_tmp = db_query( "select count(*) from ".$table[$module.'upload'], $DB_CONNECT );
-if ( !$_tmp ) {
-$_tmp = ("
-
-CREATE TABLE ".$table[$module.'upload']." (
-uid			INT				PRIMARY KEY		NOT NULL AUTO_INCREMENT,
-gid			INT				DEFAULT '0'		NOT NULL,
-hidden		TINYINT			DEFAULT '0'		NOT NULL,
-tmpcode		VARCHAR(20)		DEFAULT ''		NOT NULL,
-site		INT				DEFAULT '0'		NOT NULL,
-mbruid		INT				DEFAULT '0'		NOT NULL,
-type		TINYINT			DEFAULT '0'		NOT NULL,
-ext			VARCHAR(4)		DEFAULT '0'		NOT NULL,
-fserver		TINYINT			DEFAULT '0'		NOT NULL,
-url			VARCHAR(150)	DEFAULT ''		NOT NULL,
-folder		VARCHAR(30)		DEFAULT ''		NOT NULL,
-name		VARCHAR(250)	DEFAULT ''		NOT NULL,
-tmpname		VARCHAR(100)	DEFAULT ''		NOT NULL,
-thumbname	VARCHAR(100)	DEFAULT ''		NOT NULL,
-size		INT				DEFAULT '0'		NOT NULL,
-width		INT				DEFAULT '0'		NOT NULL,
-height		INT				DEFAULT '0'		NOT NULL,
-caption		TEXT			NOT NULL,
-down		INT				DEFAULT '0'		NOT NULL,
-d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
-d_update	VARCHAR(14)		DEFAULT ''		NOT NULL,
-cync		VARCHAR(250)	DEFAULT ''		NOT NULL,
-KEY gid(gid),
-KEY tmpcode(tmpcode),
-KEY site(site),
-KEY mbruid(mbruid),
-KEY type(type),
-KEY ext(ext),
-KEY name(name),
-KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
-db_query($_tmp, $DB_CONNECT);
-db_query("OPTIMIZE TABLE ".$table[$module.'upload'],$DB_CONNECT);
-}
 ?>
