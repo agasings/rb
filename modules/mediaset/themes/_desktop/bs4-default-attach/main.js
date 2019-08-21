@@ -203,9 +203,9 @@
                         var file_html = '<p><a href="'+dn_url+'">'+caption+'</a></p>';
 
                         if(type=='photo') {
-                          InserHTMLtoEditor(img_html)
+                          // InserHTMLtoEditor(img_html)
                         } else {
-                          InserHTMLtoEditor(file_html)
+                          // InserHTMLtoEditor(file_html)
                         }
 
                       }
