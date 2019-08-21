@@ -1,26 +1,15 @@
-
-
-
-<li class="table-view-cell {$check_read}">
-  <a data-toggle="sheet" href="#sheet-noti"
-    data-from="{$from}"
-    data-icon="{$icon}"
-    data-avatar="{$avatar}"
-    data-uid="{$uid}">
-    <span class="media-object pull-left position-relative">
-      <img class="img-circle" src="{$avatar}" style="width:52px">
-      <i class="{$icon} bg-primary position-absolute {$check_from}"></i>
-    </span>
-
-    <div class="media-body">
-      <span class="d-flex justify-content-between">
-        <span>{$title} <span class="badge">{$from}</span></span>
-        <span style="margin-top: -.2rem">
-          <span class="rb-new ml-1 {$check_new}"></span>
-          <time class="small badge badge-default badge-inverted" data-plugin="timeago" datetime="{$datetime}"></time>
-        </span>
+<li class="table-view-cell media {$check_read}">
+  <span class="mr-3 position-relative">
+    <img class="rounded-circle" src="{$avatar}" style="width:52px">
+  </span>
+  <div class="media-body">
+    <span class="d-flex justify-content-between">
+      <span><i class="{$icon} {$check_from}"></i> {$title} <span class="badge">{$from}</span> </span>
+      <span style="margin-top: -.2rem">
+        <span class="rb-new ml-1 {$check_new}"></span>
+        <time class="small badge badge-default badge-inverted" data-plugin="timeago" datetime="{$datetime}"></time>
       </span>
-      <p>{$message}</p>
-    </div>
-  </a>
+    </span>
+    <p>{$message}</p>
+  </div>
 </li>

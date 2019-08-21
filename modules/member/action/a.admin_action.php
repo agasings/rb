@@ -170,7 +170,7 @@ foreach ($MEMBERS as $M)
 		********************************************************************************/
 		$notice_title = $notice_title?$notice_title:'관리자 알림';
 		$notice_button = $notice_button?$notice_button:'내용확인';
-    putNotice($M['memberuid'],$m,$my['uid'],$notice_title,$notice,$notice_referer,$notice_button,'');
+    putNotice($M['memberuid'],$m,$my['uid'],$notice_title,$notice,$notice_referer,$notice_button,'','','');
 	}
 
 	//메일전송
