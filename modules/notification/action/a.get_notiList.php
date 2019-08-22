@@ -48,8 +48,8 @@ while($R = db_fetch_array($RCD)){
   $TMPL['title'] = $R['title'];
   $TMPL['message'] = getStrCut($R['message'],150,'');
   $TMPL['datetime'] = getDateFormat($R['d_regis'],'c');
-
-  $TMPL['check_read'] = $R['d_read']?'':'table-view-active';
+  $TMPL['referer'] = $R['referer'];
+  $TMPL['check_read'] = $R['d_read']?'bg-light bg-faded':'';
   $TMPL['check_new'] = getNew($R['d_regis'],24)?'':' d-none';
 
   $html.=$skin->make();

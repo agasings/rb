@@ -58,7 +58,7 @@
 							<!-- 드롭다운이 열릴때, 여기에 알림정보를 받아옴 -->
 						</div><!-- /.list-group -->
 
-						<a class="btn btn-block btn-link muted-link f13 py-2" href="<?php echo RW('mod=noti')?>">모두보기</a>
+						<a class="btn btn-block btn-link muted-link f13 py-2 border-top" href="<?php echo RW('mod=noti')?>">모두보기</a>
 
 				  </div><!-- /.dropdown-menu -->
 				</li>
