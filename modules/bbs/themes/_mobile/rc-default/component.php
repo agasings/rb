@@ -788,6 +788,10 @@ $(document).ready(function() {
     modal.find('[data-role="loader"]').removeClass('d-none') //로더 제거
     modal.find('form').addClass('d-none')
     modal.find('[data-role="tap-attach"] .badge').text('')
+    page_bbs_write_attach.find('[data-role="attach-preview-photo"]').html('');
+    page_bbs_write_attach.find('[data-role="attach-preview-video"]').html('')
+    page_bbs_write_attach.find('[data-role="attach-preview-audio"]').html('')
+    page_bbs_write_attach.find('[data-role="attach-preview-file"]').html('')
 
     setTimeout(function(){
       // 글쓰기 권한 체크
@@ -878,10 +882,10 @@ $(document).ready(function() {
                       var file=result.file;
                       editor_bbs.setData(content);
                       modal.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
-                      $('#page-bbs-write-attach').find('[data-role="attach-preview-photo"]').html(photo);
-                      $('#page-bbs-write-attach').find('[data-role="attach-preview-video"]').html(video)
-                      $('#page-bbs-write-attach').find('[data-role="attach-preview-audio"]').html(audio)
-                      $('#page-bbs-write-attach').find('[data-role="attach-preview-file"]').html(file)
+                      page_bbs_write_attach.find('[data-role="attach-preview-photo"]').html(photo);
+                      page_bbs_write_attach.find('[data-role="attach-preview-video"]').html(video)
+                      page_bbs_write_attach.find('[data-role="attach-preview-audio"]').html(audio)
+                      page_bbs_write_attach.find('[data-role="attach-preview-file"]').html(file)
                       modal.find('[data-role="tap-attach"] .badge').text(attachNum)
 
                    });
@@ -972,7 +976,7 @@ $(document).ready(function() {
   page_bbs_write_attach.on('hide.rc.page', function () {
     page =  page_bbs_write_attach;
     length = page.find('[data-role="attach-item"]').length;
-    modal_bbs_write.find('[data-role="tap-attach"] .badge').text(length)  // 첨부파일 수량 업데이트
+    modal_bbs_write.find('[data-role="tap-attach"] .badge').text(length==0?'':length)  // 첨부파일 수량 업데이트
   })
 
   $(document).on('click','#popup-comment-mypost .table-view-cell a',function(event){
