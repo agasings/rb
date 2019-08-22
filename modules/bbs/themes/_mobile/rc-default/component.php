@@ -942,10 +942,10 @@ $(document).ready(function() {
       modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
       modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
       modal_bbs_write.find('[data-role="tap-attach"] .badge').text('')  //첨부수량 초기화
-      modal.find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
-      modal.find('[data-role="attach-preview-video"]').html('')
-      modal.find('[data-role="attach-preview-audio"]').html('')
-      modal.find('[data-role="attach-preview-file"]').html('')
+      modal_bbs_write.find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
+      modal_bbs_write.find('[data-role="attach-preview-video"]').html('')
+      modal_bbs_write.find('[data-role="attach-preview-audio"]').html('')
+      modal_bbs_write.find('[data-role="attach-preview-file"]').html('')
       console.log('editor_bbs 제목,본문입력 초기화');
     }
 	});
