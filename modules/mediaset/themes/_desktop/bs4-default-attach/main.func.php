@@ -111,12 +111,12 @@ function getAttachFile($R,$mod,$featured_img_uid,$editor)
 	      $html.='
 						<div class="dd-handle fa fa-arrows" title="순서변경"></div>
             <div class="media ml-3 mr-auto align-items-center text-truncate">
-                <a href="#" class="d-flex align-self-center mr-3 " data-attach-act="insert" data-editor="editor" data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-editor="'.$editor.'"><img class="border" src="'.$thumb_list.'" alt="'.$caption.'" style="width: 50px"></a>
+                <a href="#" class="d-flex align-self-center mr-3 " data-attach-act="insert" data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-editor="'.$editor.'"><img class="border" src="'.$thumb_list.'" alt="'.$caption.'" style="width: 50px"></a>
                 <div class="media-body">';
                     $html.='<span class="badge badge-warning'.($R['uid']==$featured_img_uid?'':' d-none').'" data-role="attachList-label-featured" data-id="'.$R['uid'].'">대표</span> ';
                     $html.='<span class="badge badge-secondary'.(!$R['hidden']?' d-none':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
                     $html.='
-                    <a href="#" data-role="attachList-list-name-'.$R['uid'].'" data-attach-act="insert" data-editor="editor"  data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-editor="'.$editor.'">'.$R['name'].'</a>
+                    <a href="#" data-role="attachList-list-name-'.$R['uid'].'" data-attach-act="insert"  data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-editor="'.$editor.'">'.$R['name'].'</a>
                     <small class="text-muted">'.getSizeFormat($R['size'],2).'</small>
                 </div>
             </div>';
@@ -127,14 +127,14 @@ function getAttachFile($R,$mod,$featured_img_uid,$editor)
             <i class="fa fa-floppy-o fa-fw mr-1"></i>';
            $html.='<span class="badge badge-secondary'.(!$R['hidden']?' d-none':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
            $html.='
-            <a href="#" class="list-group-item-text text-truncate" data-role="attachList-list-name-'.$R['uid'].'" data-attach-act="insert" data-editor="editor"  data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-editor="'.$editor.'">'.$R['name'].'</a>
+            <a href="#" class="list-group-item-text text-truncate" data-role="attachList-list-name-'.$R['uid'].'" data-attach-act="insert"  data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-editor="'.$editor.'">'.$R['name'].'</a>
             <small class="text-muted">'.getSizeFormat($R['size'],2).'</small>
 						</div>';
       }
 		 	if($mod=='upload')  $html.='<input type="hidden" name="attachfiles[]" value="['.$R['uid'].']"/>';
       $html.='<div class="align-self-center"><div class="btn-group btn-group-sm">';
 						$html.='
-						<button type="button" class="btn btn-light" data-attach-act="insert" data-editor="editor"  data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-id="'.$R['uid'].'" data-role="attachList-menu-insert-'.$R['uid'].'" data-editor="'.$editor.'">삽입</button>';
+						<button type="button" class="btn btn-light" data-attach-act="insert"  data-type="'.$type.'" data-origin="'.($R['type']==2?$img_origin:$src).'" data-caption="'.$caption.'" data-id="'.$R['uid'].'" data-role="attachList-menu-insert-'.$R['uid'].'" data-editor="'.$editor.'">삽입</button>';
 						if($mod=='upload'){
 						$html.='
 						<button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">

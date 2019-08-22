@@ -54,9 +54,10 @@
         // 이벤트 바인딩 및 세팅
         $('body').on('click','[data-attach-act]',function(e){
               e.preventDefault();
-              var act=$(this).data('attach-act');
+              var act=$(this).attr('data-attach-act');
               var uid=$(this).attr('data-id');
-              var type=$(this).data('type'); // file or photo
+              var type=$(this).attr('data-type'); // file or photo
+
               if(act=='edit'){
                 // data 값 세팅
                 var modal=$(this).data('target');
@@ -176,6 +177,8 @@
                     });
                }else if(act=='insert'){
 
+                      console.log('본문삽입')
+
                       var agent = navigator.userAgent.toLowerCase();
                       var src=$(this).data('origin');
                       var type=$(this).attr('data-type');
@@ -203,9 +206,9 @@
                         var file_html = '<p><a href="'+dn_url+'">'+caption+'</a></p>';
 
                         if(type=='photo') {
-                          // InserHTMLtoEditor(img_html)
+                          InserHTMLtoEditor(editor,img_html)
                         } else {
-                          // InserHTMLtoEditor(file_html)
+                          InserHTMLtoEditor(editor,file_html)
                         }
 
                       }
