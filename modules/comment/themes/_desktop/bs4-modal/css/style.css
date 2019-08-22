@@ -40,6 +40,16 @@
 [data-role="comment-item"] figure.media oembed .media .align-self-center img {
   width: 155px
 }
+[data-role="comment-item"] [data-role="comment-hidden"],
+[data-role="oneline-item"] [data-role="oneline-hidden"] {
+  display: none
+}
+[data-role="comment-item"][data-hidden="true"] [data-role="comment-hidden"] {
+  display: inline-block;
+}
+[data-role="oneline-item"][data-hidden="true"] [data-role="oneline-hidden"] {
+  display: inline-block;
+}
 
 .js-like.active {
   color: #007bff !important
