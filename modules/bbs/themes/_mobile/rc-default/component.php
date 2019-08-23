@@ -485,11 +485,11 @@ $(document).ready(function() {
             setTimeout(function(){
 
               if (!uid) {
+                $('[data-role="bbs-list"]').find('[data-role="empty"]').addClass('d-none');
                 $('[data-role="bbs-list"]').find('.content').animate({scrollTop : 0}, 100);
                 if (notice==1) $('[data-role="bbs-list"] [data-role="notice"]').prepend(item);
                 else $('[data-role="bbs-list"] [data-role="allpost"]').prepend(item);
                 $('[data-role="bbs-list"]').find('#item-'+_uid).addClass('animated fadeInDown').attr('tabindex','-1').focus();
-                $('[data-role="bbs-list"]').find('[data-role="empty"]').addClass('d-none');
               } else {
 
                 // 게시물 수정일 경우
@@ -535,7 +535,7 @@ $(document).ready(function() {
                  });
 
               }
-              bar_tab_swiper.updateAutoHeight(50); //item 추가 후, swiper 높이 업데이트
+              setTimeout(function(){bar_tab_swiper.updateAutoHeight(10);}, 50); //item 추가 후, swiper 높이 업데이트
 
               //글쓰기 모달 상태 초기화
               $(this).attr('disabled', false); //글쓰기 전성버튼 상태 초기화
