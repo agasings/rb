@@ -131,7 +131,7 @@ if ($R['upload'])
 			getDbUpdate($table['s_numinfo'],'upload=upload-1',"date='".substr($U['d_regis'],0,8)."' and site=".$U['site']);
 			getDbDelete($table['s_upload'],'uid='.$U['uid']);
 
-			if ($U['host']==$d['mediaset']['ftp_urlpath'])
+			if ($d['mediaset']['ftp_urlpath'] && ($U['host']==$d['mediaset']['ftp_urlpath']))
 			{
 				$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
 				$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);

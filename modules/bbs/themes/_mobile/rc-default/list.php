@@ -98,7 +98,7 @@ else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&am
             <?php endforeach?>
 
             <?php else: ?>
-            <div class="rb-none">
+            <div class="rb-none" data-role="empty">
               <div class="text-xs-center">
                 <div class="display-1">
                   <i class="fa fa-folder-open-o" aria-hidden="true"></i>
