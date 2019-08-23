@@ -87,8 +87,8 @@ if ($act == 'info')  // 프로필 정보 변경
 		}
 	}
 
-	$_QVAL = "email='$email',name='$name',nic='$nic',home='$home',sex='$sex',birth1='$birth1',birth2='$birth2',birthtype='$birthtype',tel1='$tel1',tel2='$tel2',";
-	$_QVAL.= "zip='$zip',addr0='$addr0',addr1='$addr1',addr2='$addr2',job='$job',marr1='$marr1',marr2='$marr2',sms='$sms',mailing='$mailing',bio='$bio',addfield='$addfield'";
+	$_QVAL = "email='$email',name='$name',nic='$nic',home='$home',sex='$sex',birth1='$birth1',birth2='$birth2',birthtype='$birthtype',phone='$phone',tel='$tel',";
+	$_QVAL.= "location='$location',job='$job',marr1='$marr1',marr2='$marr2',sms='$sms',mailing='$mailing',bio='$bio',addfield='$addfield'";
 	getDbUpdate($table['s_mbrdata'],$_QVAL,'memberuid='.$memberuid);
 
 	if ($send_mod == 'ajax') {
