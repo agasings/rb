@@ -43,6 +43,7 @@ DirMake($g['path_tmp'].'cache');
 DirMake($g['path_tmp'].'out');
 DirMake($g['path_tmp'].'session');
 DirMake($g['path_tmp'].'widget');
+DirMake($g['path_tmp'].'HTMLPurifier');
 DirMake($g['path_var'].'menu');
 DirMake($g['path_var'].'peak');
 DirMake($g['path_var'].'update');
