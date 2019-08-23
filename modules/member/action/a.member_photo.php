@@ -17,6 +17,7 @@ if ($_FILES['upfile']['tmp_name'])
 
 	if (strstr('[jpg][png][gif]',$fileExt))
 	{
+		if ($fileExt == 'jpg') exifRotate($_FILES['upfile']['tmp_name']); //가로세로 교정
 		ResizeWidth($_FILES['upfile']['tmp_name'],$saveFile1,680);
 		@chmod($saveFile1,0707);
 
