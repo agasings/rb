@@ -13,7 +13,7 @@ if ($_FILES['upfile']['tmp_name'])
 	$fileExt	= $fileExt == 'jpeg' ? 'jpg' : $fileExt;
 	$fileType	= getFileType($fileExt);
 	$filePhoto	= $my['uid'].'-'.$g['time_srnad'].'.'.$fileExt;
-	$saveFile1	= $g['path_var'].'avatar/'.$filePhoto;
+	$saveFile1	= $g['path_file'].'avatar/'.$filePhoto;
 
 	if (strstr('[jpg][png][gif]',$fileExt))
 	{
@@ -30,14 +30,14 @@ if ($_FILES['upfile']['tmp_name'])
 var avatar = '<?php echo $filePhoto?>';
 
 function logoChange(logo) {
-	//parent.location.reload();
-	parent.$('[data-role="avatar"]').attr('src',parent.rooturl + '/_core/opensrc/timthumb/thumb.php?src=/_var/avatar/' + logo+'&w=320&h=320&s=1');
-	parent.$('#page-profile').find('.content').loader("hide");
+	parent.$('[data-role="avatar"]').attr('src',parent.rooturl + '/_core/opensrc/timthumb/thumb.php?src=/files/avatar/' + logo+'&w=320&h=320&s=1');
 }
+
 logoChange(avatar);
 parent.$('[data-role="avatar-wrapper"]').addClass('active');
 setTimeout(function(){
 	parent.$.notify({message: '아바타가 등록되었습니다.'},{type: 'default'});
+	parent.$('#page-profile').find('.content').loader('hide');
 }, 500);
 
 </script>
