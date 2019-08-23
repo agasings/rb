@@ -281,13 +281,13 @@ require $g['path_core'].'function/sys.func.php';
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i035','install')?> </label>
 											<div class="col-sm-8">
-												<input class="form-control" type="text" name="name" value="<?php echo $_SESSION['_live_name']?>"  placeholder="">
+												<input class="form-control" type="text" name="name" value="<?php echo $_POST['_live_name']?>"  placeholder="">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i036','install')?></label>
 											<div class="col-sm-8">
-												<input class="form-control" type="email" name="email" value="<?php echo $_SESSION['_live_email']?>" placeholder="">
+												<input class="form-control" type="email" name="email" value="<?php echo $_POST['_live_email']?>" placeholder="">
 											</div>
 										</div>
 										<div class="form-group">
