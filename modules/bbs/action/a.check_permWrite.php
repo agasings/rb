@@ -23,12 +23,16 @@ if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').','
 	if ($d['bbs']['perm_l_write'] > $my['level'] || strpos('_'.$d['bbs']['perm_g_write'],'['.$my['mygroup'].']')) {
     $markup_file = 'permcheck'; //잠김페이지 전달 (테마 내부 _html/permcheck.html)
     $result['isperm'] = false;
+    $skin=new skin($markup_file);
+    $result['main']=$skin->make();
 	}
   if ($R['uid'] && $reply != 'Y') {
     if ($my['uid'] != $R['mbruid']) {
        if (!strpos('_'.$_SESSION['module_'.$m.'_pwcheck'],'['.$R['uid'].']')) {
          $markup_file = 'pwcheck'; //인증페이지 전달 (테마 내부 _html/pwcheck.html)
          $result['isperm'] = false;
+         $skin=new skin($markup_file);
+         $result['main']=$skin->make();
        }
     }
   }
@@ -38,10 +42,6 @@ if ($result['isperm']==true) {
   $_SESSION['wcode'] = $date['totime'];
   $result['pcode']=$date['totime'];
 }
-
-// 최종 결과값 추출 (sys.class.php)
-$skin=new skin($markup_file);
-$result['main']=$skin->make();
 
 echo json_encode($result);
 exit;

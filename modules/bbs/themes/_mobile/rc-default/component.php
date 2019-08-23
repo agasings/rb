@@ -909,14 +909,14 @@ $(document).ready(function() {
   modal_bbs_write.on('hidden.rc.modal', function (e) {
     var submitting = false;
     var modal = modal_bbs_write;
-    var subject = modal.find('[name="subject"]').val();
-    var content = editor_bbs.getData();
 
     if(modal.find('[data-act="submit"]').is(":disabled")) var submitting = true;
     modal.find('[name="uid"]').val(''); // uid 초기화
     modal.find('[name="pcode"]').val(''); // pcode 초기화
 
     if (editor_bbs) {
+      var subject = modal.find('[name="subject"]').val();
+      var content = editor_bbs.getData();
       editor_bbs.destroy();  //에디터 제거
       console.log('editor_bbs.destroy');
       if (!submitting && (content || subject)) {
