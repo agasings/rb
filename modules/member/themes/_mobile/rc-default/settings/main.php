@@ -734,7 +734,7 @@ $my_shipping_num = getDbRows($table['s_mbrshipping'],'mbruid='.$my['uid']);
 	</div>
 </div>
 
-
+<?php if ($_add): ?>
 <script>
 
 //추가정보 전용
@@ -790,3 +790,4 @@ page_addfield.find('.js-save').tap(function() {
 });
 
 </script>
+<?php endif; ?>
