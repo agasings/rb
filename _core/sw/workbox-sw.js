@@ -45,9 +45,6 @@ workbox.precaching.precacheAndRoute([
   '/plugins/ckeditor5/12.2.0/classic/build/ckeditor.js',
   '/plugins/ckeditor5/12.2.0/classic/build/translations/ko.js',
 
-  '/plugins/ckeditor5/12.2.0/mobile/build/ckeditor',
-  '/plugins/ckeditor5/12.2.0/mobile/build/translations/ko.js',
-
   '/plugins/ckeditor5/12.2.0/decoupled-document/build/ckeditor.js',
   '/plugins/ckeditor5/12.2.0/decoupled-document/build/translations/ko.js',
 
@@ -70,8 +67,8 @@ workbox.precaching.precacheAndRoute([
   '/plugins/photoswipe/4.1.2/rc-photoswipe.js',
   '/plugins/photoswipe/4.1.2/photoswipe-ui-default.min.js',
 
-  '/plugins/jquery-timeago/1.6.1/jquery.timeago.js',
-  '/plugins/jquery-timeago/1.6.1/locales/jquery.timeago.ko.js',
+  '/plugins/jquery-timeago/1.6.7/jquery.timeago.js',
+  '/plugins/jquery-timeago/1.6.7/locales/jquery.timeago.ko.js',
 
   '/plugins/jQuery-Autocomplete/1.3.0/jquery.autocomplete.min.js',
 
