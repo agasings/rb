@@ -47,6 +47,12 @@ body, th, td, input, select, textarea, button {
   letter-spacing:-0.0625rem
 }
 
+body.disabled .bar,
+body.disabled .bar .title,
+body.disabled .content{
+  opacity: 0
+}
+
 /**
  * 2 - Structure 구조
  *
