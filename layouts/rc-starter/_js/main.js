@@ -244,7 +244,7 @@ $(document).ready(function() {
 	});
 
   // 페이지 이동
-  $('[data-href]').tap(function() {
+  $(document).on('tap','[data-href]',function(){
     var text = $(this).attr("data-text")?$(this).attr("data-text"):'이동중..';
     var url = $(this).attr("data-href");
     if ($(this).attr("data-toggle")=='drawer-close') {
