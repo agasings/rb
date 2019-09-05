@@ -11,18 +11,6 @@ fwrite($fp, "<?php\n");
 //기초환경 설정
 fwrite($fp, "\$d['member']['theme_main'] = \"".$theme_main."\";\n");
 fwrite($fp, "\$d['member']['theme_mobile'] = \"".$theme_mobile."\";\n");
-fwrite($fp, "\$d['member']['layout_join'] = \"".$layout_join."\";\n");
-fwrite($fp, "\$d['member']['layout_join_mobile'] = \"".$layout_join_mobile."\";\n");
-fwrite($fp, "\$d['member']['layout_login'] = \"".$layout_login."\";\n");
-fwrite($fp, "\$d['member']['layout_login_mobile'] = \"".$layout_login_mobile."\";\n");
-fwrite($fp, "\$d['member']['layout_profile'] = \"".$layout_profile."\";\n");
-fwrite($fp, "\$d['member']['layout_profile_mobile'] = \"".$layout_profile_mobile."\";\n");
-fwrite($fp, "\$d['member']['layout_settings'] = \"".$layout_settings."\";\n");
-fwrite($fp, "\$d['member']['layout_settings_mobile'] = \"".$layout_settings_mobile."\";\n");
-fwrite($fp, "\$d['member']['layout_saved'] = \"".$layout_saved."\";\n");
-fwrite($fp, "\$d['member']['layout_saved_mobile'] = \"".$layout_saved_mobile."\";\n");
-fwrite($fp, "\$d['member']['layout_noti'] = \"".$layout_noti."\";\n");
-fwrite($fp, "\$d['member']['layout_noti_mobile'] = \"".$layout_noti_mobile."\";\n");
 fwrite($fp, "\$d['member']['sosokmenu_join'] = \"".$sosokmenu_join."\";\n");
 fwrite($fp, "\$d['member']['sosokmenu_login'] = \"".$sosokmenu_login."\";\n");
 fwrite($fp, "\$d['member']['sosokmenu_profile'] = \"".$sosokmenu_profile."\";\n");
