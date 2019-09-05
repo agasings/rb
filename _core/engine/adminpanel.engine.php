@@ -84,13 +84,15 @@ $mf_json = json_decode($mf_str , true);
 					<small id="rb-notification-name"></small>
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a href="#" data-toggle="modal" data-target="#modal_window" class="dropdown-item rb-modal-profile"><i class="fa fa-user"></i> 프로필관리</a></li>
-					<a href="#" data-toggle="modal" data-target="#modal_window" class="dropdown-item rb-modal-log"><i class="fa fa-clock-o"></i> 접속기록</a></li>
+					<a href="#" data-toggle="modal" data-target="#modal_window" class="dropdown-item rb-modal-profile"><i class="fa fa-user mr-1"></i> 프로필관리</a></li>
+					<a href="#" data-toggle="modal" data-target="#modal_window" class="dropdown-item rb-modal-log"><i class="fa fa-clock-o mr-1"></i> 접속기록</a></li>
 					<a href="#" data-toggle="modal" data-target="#modal_window" class="dropdown-item rb-modal-notification">
-						<i class="kf kf-notify"></i> 알림 <small id="rb-notification-badge" class="badge badge-light pull-right"></small>
+						<i class="kf kf-notify mr-1"></i> 알림 <small id="rb-notification-badge" class="badge badge-light pull-right"></small>
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;a=logout"><i class="fa fa-sign-out"></i> 로그아웃</a>
+					<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>"><i class="fa fa-refresh mr-1"></i> 사용자모드</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;a=logout"><i class="fa fa-sign-out mr-1"></i> 로그아웃</a>
 				</div>
 			</span>
 		</div>
