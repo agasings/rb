@@ -1,18 +1,6 @@
 <?php
 $d['member']['theme_main'] = "_desktop/bs4-default";
 $d['member']['theme_mobile'] = "_mobile/rc-default";
-$d['member']['layout_join'] = "";
-$d['member']['layout_join_mobile'] = "rc-starter/blank.php";
-$d['member']['layout_login'] = "";
-$d['member']['layout_login_mobile'] = "rc-starter/blank.php";
-$d['member']['layout_profile'] = "";
-$d['member']['layout_profile_mobile'] = "rc-starter/blank.php";
-$d['member']['layout_settings'] = "";
-$d['member']['layout_settings_mobile'] = "rc-starter/blank.php";
-$d['member']['layout_saved'] = "";
-$d['member']['layout_saved_mobile'] = "rc-starter/blank.php";
-$d['member']['layout_noti'] = "";
-$d['member']['layout_noti_mobile'] = "rc-starter/blank.php";
 $d['member']['sosokmenu_join'] = "";
 $d['member']['sosokmenu_login'] = "";
 $d['member']['sosokmenu_profile'] = "";
