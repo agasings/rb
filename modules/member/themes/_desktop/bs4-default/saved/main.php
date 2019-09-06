@@ -19,97 +19,99 @@ $TPG = getTotalPage($NUM,$recnum);
 
 	<div class="subhead mt-0">
 		<h2 class="subhead-heading">
-			<i class="fa fa-bookmark-o fa-fw" aria-hidden="true"></i> <?php echo $my['nic'] ?>님 저장함</h2>
+			<i class="fa fa-bookmark-o fa-fw" aria-hidden="true"></i> 내 저장함
+		</h2>
+		<span class="text-muted">스크랩한 게시물을 모아볼수 있습니다.</span>
 	</div>
 
-	<div class="d-flex justify-content-between align-items-end my-2">
+	<div class="row mt-3">
+		<div class="col-3">
 
-		<div class="article">
-			<?php echo number_format($NUM)?>개
-			<small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
-		</div>
-		<div class="category">
-			<select onchange="goHref('<?php echo $g['url_page']?>&category='+this.value);" class="form-control">
-				<option value="">&nbsp;+ 전체</option>
-				<option value="" disabled>-------------</option>
+
+			<nav class="nav flex-column nav-pills">
+			  <a class="nav-link filter-item d-flex justify-content-between align-items-center<?php echo !$category?' active':'' ?>" href="<?php echo $g['url_page']?>">
+			    전체보기
+			    <span class="badge badge-pill"><?php echo number_format(getDbRows($table['s_saved'],'mbruid='.$my['uid']))?></span>
+			  </a>
+
 				<?php $_CATS = getDbSelect($table['s_saved'],"mbruid=".$my['uid']." and category<>'' group by category",'category')?>
 				<?php while($_R=db_fetch_array($_CATS)):?>
-				<option value="<?php echo $_R['category']?>"<?php if($_R['category']==$category):?> selected="selected"<?php endif?>>ㆍ<?php echo $_R['category']?></option>
+			  <a class="nav-link filter-item d-flex justify-content-between align-items-center<?php if($_R['category']==$category):?> active<?php endif?>" href="<?php echo $g['url_page']?>&category=<?php echo $_R['category']?>">
+			    <?php echo $_R['category']?>
+			    <span class="badge badge-pill"><?php echo number_format(getDbRows($table['s_saved'],'mbruid='.$my['uid'].' and  category="'.$_R['category'].'"'))?></span>
+			  </a>
 				<?php endwhile?>
-			</select>
-		</div>
-	</div>
+			</nav>
 
-	<form name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return submitCheck(this);">
-		<input type="hidden" name="r" value="<?php echo $r?>" />
-		<input type="hidden" name="m" value="<?php echo $m?>" />
-		<input type="hidden" name="front" value="<?php echo $front?>" />
-		<input type="hidden" name="a" value="" />
+		</div><!-- /.col-3 -->
+		<div class="col-9">
+			<form name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return submitCheck(this);">
+				<input type="hidden" name="r" value="<?php echo $r?>" />
+				<input type="hidden" name="m" value="<?php echo $m?>" />
+				<input type="hidden" name="front" value="<?php echo $front?>" />
+				<input type="hidden" name="a" value="" />
 
-		<table class="table text-center">
-			<colgroup>
-				<col width="50">
-				<col width="50">
-				<col width="100">
-				<col>
-				<col width="150">
-			</colgroup>
-			<thead class="thead-light">
-				<tr>
-					<th scope="col">
-						<i class="fa fa-check-square-o fa-lg" aria-hidden="true"  onclick="chkFlag('members[]');" role="button" data-toggle="tooltip" title="전체선택"></i>
-					</th>
-					<th scope="col">번호</th>
-					<th scope="col">분류</th>
-					<th scope="col">제목</th>
-					<th scope="col">저장날짜</th>
-				</tr>
-			</thead>
-			<tbody>
+				<table class="table text-center border-bottom">
+					<colgroup>
+						<col width="50">
+						<col width="50">
+						<col width="100">
+						<col>
+						<col width="150">
+					</colgroup>
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">
+								<i class="fa fa-check-square-o fa-lg" aria-hidden="true"  onclick="chkFlag('members[]');" role="button" data-toggle="tooltip" title="전체선택"></i>
+							</th>
+							<th scope="col">번호</th>
+							<th scope="col">분류</th>
+							<th scope="col">제목</th>
+							<th scope="col">저장날짜</th>
+						</tr>
+					</thead>
+					<tbody>
 
-				<?php while($R=db_fetch_array($RCD)):?>
-				<tr>
-					<td><input type="checkbox" name="members[]" value="<?php echo $R['uid']?>" /></td>
-					<td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
-					<td><?php echo $R['category']?></td>
-					<td class="text-left">
-						<a href="<?php echo $R['url']?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
-						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
-					</td>
-					<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-				</tr>
-				<?php endwhile?>
+						<?php while($R=db_fetch_array($RCD)):?>
+						<tr>
+							<td><input type="checkbox" name="members[]" value="<?php echo $R['uid']?>" /></td>
+							<td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
+							<td><?php echo $R['category']?></td>
+							<td class="text-left">
+								<a href="<?php echo $R['url']?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
+								<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
+							</td>
+							<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
+						</tr>
+						<?php endwhile?>
 
-				<?php if(!$NUM):?>
-				<tr>
-					<td><input type="checkbox" disabled="disabled" /></td>
-					<td>1</td>
-					<td>알림</td>
-					<td>저장된 자료가 없습니다.</td>
-					<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
-				</tr>
-				<?php endif?>
+						<?php if(!$NUM):?>
+						<tr>
+							<td colspan="5" class="text-center text-muted p-5">저장된 자료가 없습니다.</td>
+						</tr>
+						<?php endif?>
 
-			</tbody>
-		</table>
+					</tbody>
+				</table>
 
-		<div class="d-flex justify-content-between my-4">
-			<ul class="pagination mb-0">
-				<?php echo getPageLink(10,$p,$TPG,'')?>
-			</ul>
-			<div class="form-inline">
-				<input type="text" name="category" id="iCategory" value="" class="form-control none" />
+				<div class="d-flex justify-content-between my-4">
+					<div class="form-inline">
+						<input type="text" name="category" id="iCategory" value="" class="form-control none" />
 
-				<button type="button" class="btn btn-light ml-1" onclick="actCheck('saved_category');">
-					분류지정
-				</button>
-				<button type="button" class="btn btn-light ml-2" onclick="actCheck('saved_delete');">
-					삭제
-				</button>
-			</div><!-- /.form-inline -->
-
-		</div>
-	</form>
+						<button type="button" class="btn btn-light ml-1" onclick="actCheck('saved_category');">
+							분류지정
+						</button>
+						<button type="button" class="btn btn-light ml-2" onclick="actCheck('saved_delete');">
+							삭제
+						</button>
+					</div><!-- /.form-inline -->
+					<ul class="pagination mb-0">
+						<?php echo getPageLink(10,$p,$TPG,'')?>
+					</ul>
+				</div>
+			</form>
+		</div><!-- /.col-9 -->
+	</div><!-- /.row -->
 
 </div><!-- /.container -->
 
