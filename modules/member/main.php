@@ -32,12 +32,6 @@ switch ($front) {
 		$page = $page=='main' ? 'main' : $page;
 		if (!$d['member']['form_agree']) $page = $page == 'agree' ? 'agree' : $page;
 		if ($token) $page = 'auth_email';
-
-		if ($d['member']['layout_join_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
-			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_join_mobile'];
-		} else {
-			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_join'];
-		}
 	break;
 
 	case 'login' :
@@ -47,11 +41,6 @@ switch ($front) {
 
 		if ($page !='password_reset' && $my['uid']){
 			getLink(RW(0),'','','');
-		}
-		if ($d['member']['layout_login_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
-			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_login_mobile'];
-		} else {
-			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_login'];
 		}
 	break;
 
@@ -63,21 +52,11 @@ switch ($front) {
 		if ($mbrid){
 
 			$_MP = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
-
 			if ($_MP['uid']) {
-				if ($_MH['org'] == 1) {
-					$_MP = array_merge(getDbData($table['s_orgdata'],"memberuid='".$_MP['uid']."'",'*'),$_MP);
-				} else {
-			  	$_MP = array_merge(getDbData($table['s_mbrdata'],"memberuid='".$_MP['uid']."'",'*'),$_MP);
-				}
+				$_MP = array_merge(getDbData($table['s_mbrdata'],"memberuid='".$_MP['uid']."'",'*'),$_MP);
 			} else {
 				$page = '_404';
 			}
-		}
-		if ($d['member']['layout_profile_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
-			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_profile_mobile'];
-		} else {
-			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_profile'];
 		}
 	break;
 
@@ -87,12 +66,10 @@ switch ($front) {
 
 		if (!$my['uid']) getLink(RW(0),'','','');
 
-		if ($d['member']['layout_settings_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
-			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_settings_mobile'];
-		} else {
-			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_settings'];
-		}
+	break;
 
+	case 'dashboard' :
+		if (!$my['uid']) getLink('/','','','');
 	break;
 
 	case 'saved' :
@@ -100,12 +77,6 @@ switch ($front) {
 
 		if (!$my['uid']){
 			getLink($g['s'].'/?r='.$r.'&mod=login&referer='.urlencode(RW('mod=saved')),'','','');
-		}
-
-		if ($d['member']['layout_saved_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
-			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_saved_mobile'];
-		} else {
-			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_saved'];
 		}
 
 	break;
@@ -117,18 +88,9 @@ switch ($front) {
 			getLink($g['s'].'/?r='.$r.'&mod=login&referer='.urlencode(RW('mod=noti')),'','','');
 		}
 
-		if ($d['member']['layout_noti_mobile'] && $g['mobile'] && $_SESSION['pcmode'] != 'Y') {
-			$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['member']['layout_noti_mobile'];
-		} else {
-			$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['member']['layout_noti'];
-		}
-
 	break;
 
 }
-
-$_IS_ORGMBR=getDbRows($table['orgsmember'],'mbruid='.$my['uid'].' and org='.$_MH['uid'].' and auth=1');  // 단체 회원 포함여부
-$_IS_ORGOWNER=getDbRows($table['orgsmember'],'mbruid='.$my['uid'].' and org='.$_MH['uid'].' and owner=1');  // 단체 오너 여부
 
 $g['url_reset']	 = $g['s'].'/?r='.$r.'&amp;'.($_mod ? 'mod='.$_mod : 'm='.$m.'&amp;front='.$front).($iframe?'&amp;iframe='.$iframe:'');
 $g['url_page']	 = $g['url_reset'].'&amp;page='.$page;
