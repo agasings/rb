@@ -2530,13 +2530,15 @@ if (typeof jQuery === 'undefined') {
 
 	// Document Reload
 	$(document).on('tap click', '[data-location="reload"]', function() {
-	      window.location.reload();
+    var text =  $(this).attr("data-text");
+    if (text) $.loader({ text: text });
+    window.location.reload();
 	});
 
-      var utility=new Utility(null,null).init();
-      window.addEventListener('popstate', utility.popComponentState);
+  var utility=new Utility(null,null).init();
+  window.addEventListener('popstate', utility.popComponentState);
 
-      window.Utility = Utility;
+  window.Utility = Utility;
 
 })(jQuery);
 
