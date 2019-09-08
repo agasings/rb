@@ -280,6 +280,29 @@
   </ul>
 </div>
 
+<!-- Popover : 게시물 관리 -->
+<div id="popover-bbs-listMarkup" class="popover">
+  <ul class="table-view">
+    <li class="table-view-divider"><small>목록타입 변경</small></li>
+    <li class="table-view-cell" data-toggle="listMarkup" data-markup="media" data-bid="">
+      <i class="fa fa-th-list fa-fw mr-1" aria-hidden="true"></i>
+      섬네일형
+    </li>
+    <li class="table-view-cell" data-toggle="listMarkup" data-markup="avatar" data-bid="">
+      <i class="fa fa-list fa-fw mr-1" aria-hidden="true"></i>
+      아바타형
+    </li>
+    <li class="table-view-cell" data-toggle="listMarkup" data-markup="card" data-bid="">
+      <i class="fa fa-square-o fa-lg mr-1" aria-hidden="true"></i>
+      카드형
+    </li>
+    <li class="table-view-cell" data-toggle="listMarkup" data-markup="gallery" data-bid="">
+      <i class="fa fa-th fa-fw mr-1" aria-hidden="true"></i>
+      갤러리형
+    </li>
+  </ul>
+</div>
+
 <!-- Sheet : 신규 댓글작성 -->
 <div id="sheet-comment-write" class="sheet">
   <fieldset data-role="commentWrite-container">
@@ -352,6 +375,7 @@ var modal_bbs_write = $('#modal-bbs-write');
 var sheet_comment_write = $('#sheet-comment-write');
 var popup_bbs_cancelCheck = $('#popup-bbs-cancelCheck')
 var popup_comment_mypost = $('#popup-comment-mypost')
+var popover_bbs_listMarkup = $('#popover-bbs-listMarkup');
 var popover_bbs_view = $('#popover-bbs-view')
 
 var editor_bbs;
@@ -359,6 +383,17 @@ var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드
 var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
 
 $(document).ready(function() {
+
+  // Popover : 리스트 마크업 목록
+  popover_bbs_listMarkup.on('show.rc.popover', function (e) {
+    var button = $(e.relatedTarget)
+    var bid =  button.attr('data-bid')
+    $(this).find('.table-view-cell').attr('data-bid',bid)
+    var popover = $(this)
+    var local_listMarkup = localStorage.getItem('bbs-'+bid+'-listMarkup');
+    popover.find('[data-toggle="listMarkup"]').removeClass('table-view-info');
+    popover.find('[data-toggle="listMarkup"][data-markup="'+local_listMarkup+'"]').addClass('table-view-info');
+  })
 
   // Popover : 게시물 관리
   popover_bbs_view.on('show.rc.popover', function (e) {
@@ -389,6 +424,8 @@ $(document).ready(function() {
     var nlist = modal.find('[name="nlist"]').val();
     var pcode = modal.find('[name="pcode"]').val();
     var upfiles = modal.find('[name="upfiles"]').val('');
+    var bbs_tab_swiper = document.querySelector('#page-bbs-list .swiper-container').swiper;
+    var markup = 'tableview';
 
     <?php if(!$my['uid']):?>
     var name_el = modal.find('[name="name"]');
@@ -469,7 +506,8 @@ $(document).ready(function() {
           upfiles : upfiles,
           featured_img : featured_img,
           backtype : backtype,
-          pcode : pcode
+          pcode : pcode,
+          markup : markup
        },function(response){
           var result = $.parseJSON(response);
           var error = result.error;
@@ -487,8 +525,8 @@ $(document).ready(function() {
               if (!uid) {
                 $('[data-role="bbs-list"]').find('[data-role="empty"]').addClass('d-none');
                 $('[data-role="bbs-list"]').find('.content').animate({scrollTop : 0}, 100);
-                if (notice==1) $('[data-role="bbs-list"] [data-role="notice"]').prepend(item);
-                else $('[data-role="bbs-list"] [data-role="allpost"]').prepend(item);
+                if (notice==1) $('[data-role="bbs-list"] [data-role="notice"] [data-role="list-wrapper"]').prepend(item);
+                else $('[data-role="bbs-list"] [data-role="post"] [data-role="list-wrapper"]').prepend(item);
                 $('[data-role="bbs-list"]').find('#item-'+_uid).addClass('animated fadeInDown').attr('tabindex','-1').focus();
               } else {
 
@@ -535,7 +573,7 @@ $(document).ready(function() {
                  });
 
               }
-              setTimeout(function(){bar_tab_swiper.updateAutoHeight(10);}, 50); //item 추가 후, swiper 높이 업데이트
+              setTimeout(function(){bbs_tab_swiper.updateAutoHeight(10);}, 50); //item 추가 후, swiper 높이 업데이트
 
               //글쓰기 모달 상태 초기화
               $(this).attr('disabled', false); //글쓰기 전성버튼 상태 초기화

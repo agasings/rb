@@ -1,13 +1,13 @@
 /**
  * --------------------------------------------------------------------------
- * kimsQ Rb v2.2 모바일 기본형 게시판 테마 스크립트 (rc-default): getPostData.js
+ * kimsQ Rb v2.4 모바일 기본형 게시판 테마 스크립트 (rc-default): getBbstData.js
  * Homepage: http://www.kimsq.com
  * Licensed under RBL
- * Copyright 2018 redblock inc
+ * Copyright 2019 redblock inc
  * --------------------------------------------------------------------------
  */
 
-function getPostData(settings){
+function getBbsData(settings){
   var type=settings.type; //컴포넌트 타입
   var mid=settings.mid; // 컴포넌트 아이디
   var ctheme=settings.ctheme; // 댓글테마

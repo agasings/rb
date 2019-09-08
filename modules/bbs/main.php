@@ -165,7 +165,6 @@ $d['bbs']['m_attach'] = $d['bbs']['a_mskin'] ? $d['bbs']['a_mskin'] : $d['bbs'][
 $d['bbs']['c_skin'] = $d['bbs']['c_skin']?$d['bbs']['c_skin']:$d['bbs']['comment_main'];
 $d['bbs']['c_mskin'] = $d['bbs']['c_mskin']?$d['bbs']['c_mskin']:$d['bbs']['comment_mobile'];
 $d['bbs']['c_skin_modal'] = $d['bbs']['c_skin_modal']?$d['bbs']['c_skin_modal']:$d['bbs']['comment_main_modal'];
-$d['bbs']['c_mskin_modal'] = $d['bbs']['c_mskin_modal']?$d['bbs']['c_mskin_modal']:$d['bbs']['comment_mobile_modal'];
 $d['bbs']['skin'] = $skin ? $skin : $d['bbs']['skin'];
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y')

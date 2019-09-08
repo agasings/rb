@@ -1,11 +1,10 @@
 <?php
 //목록
+$d['theme']['listMarkup'] = "media"; //리스트 마크업(media/avatar/table/card/gallery)
 $d['theme']['show_catnum'] = "1"; //분류별등록수출력(출력=1/감춤=0)
 $d['theme']['pagenum'] = "5"; //페이지스킵숫자갯수
-$d['theme']['media_object'] = "2"; //미디어 오브젝트 (아바타=1/대표이미지=2/감춤=0)
 $d['theme']['search'] = "1"; //검색폼출력(출력=1/감춤=0)
-$d['theme']['timeago'] = "0"; //상대시간 표기(사용=1/날짜표기=0)
-$d['theme']['thumb_size'] = "120x120"; // 섬네일 사이즈
+$d['theme']['timeago'] = "1"; //상대시간 표기(사용=1/날짜표기=0)
 
 //본문
 $d['theme']['date_viewf'] = "Y.m.d H:i"; //날짜포맷

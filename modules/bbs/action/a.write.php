@@ -316,7 +316,7 @@ if ($backtype == "ajax") {
     }
 
     // 최종 결과값 추출 (sys.class.php)
-    $skin=new skin('moreList');
+    $skin=new skin('item-'.$markup);
     $result['item']=$skin->make();
     $result['notice']=$R['notice'];
     $result['uid']=$NOWUID;
