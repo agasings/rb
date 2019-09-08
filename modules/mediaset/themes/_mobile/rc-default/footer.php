@@ -32,7 +32,7 @@ $(document).ready(function() {
 
   // main.js 기본값 세팅
   var attach_settings={
-        module : 'attach',
+        module : 'mediaset',
         theme : attach_module_theme,
         handler_photo : '<?php echo $attach_handler_photo?>',
         handler_file : '<?php echo $attach_handler_file?>',
@@ -47,20 +47,25 @@ $(document).ready(function() {
     var type = button.attr('data-type');
     var title = button.attr('data-title');
 
-    var uid = button.attr('data-id')
-    var type = button.attr('data-type')
-    var name = button.attr('data-name')
-    var insert_text = button.attr('data-insert')
+    var uid = button.attr('data-id');
+    var type = button.attr('data-type');
+    var showhide = button.attr('data-showhide');
+    var name = button.attr('data-name');
+    var insert_text = button.attr('data-insert');
     var sheet = $('#sheet-attach-moreAct');
-    $('#attach-files-backdrop').removeClass('hidden')
-    sheet.find('[data-role="insert_text"]').val(insert_text)
-    sheet.find('[data-attach-act="featured-img"]').attr('data-id',uid).attr('data-type',type)
-    sheet.find('[data-attach-act="delete"]').attr('data-id',uid).attr('data-type',type)
+    $('#attach-files-backdrop').removeClass('hidden');
+    sheet.find('[data-role="insert_text"]').val(insert_text);
+    sheet.find('[data-attach-act="featured-img"]').attr('data-id',uid).attr('data-type',type);
+    sheet.find('[data-attach-act="showhide"]').attr('data-id',uid).attr('data-content',showhide);
+    sheet.find('[data-attach-act="delete"]').attr('data-id',uid).attr('data-type',type);
+
+    if (showhide=='show') sheet.find('[data-attach-act="showhide"]').text('보이기');
+    else sheet.find('[data-attach-act="showhide"]').text('숨기기');
 
     if (type!='photo') { // 이미지가 아닐 경우
-      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').addClass('hidden')  // 대표이미지 항목 숨김처리함
+      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').addClass('hidden');  // 대표이미지 항목 숨김처리함
     } else {
-      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').removeClass('hidden')  // 대표이미지 항목 숨김처리함
+      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').removeClass('hidden');  // 대표이미지 항목 숨김처리함
     }
     $(target).sheet({
       title : title

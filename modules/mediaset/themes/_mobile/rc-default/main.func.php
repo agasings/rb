@@ -85,7 +85,6 @@ function getAttachFile($R,$mod,$featured_img_uid)
 				$type='file';
 			}
 
-
       if($type=='photo'){
             $caption=$R['caption']?$R['caption']:$file_name;
             $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
@@ -127,7 +126,7 @@ function getAttachFile($R,$mod,$featured_img_uid)
 				<div class="btn-group">';
 					 if($mod=='upload')  $html.='<input type="hidden" name="attachfiles[]" value="['.$R['uid'].']"/>';
 						$html.='
-						<button type="button" class="btn btn-secondary" data-act="sheet" data-target="#sheet-attach-moreAct" data-id="'.$R['uid'].'" data-insert="'.$insert_text.'" data-title="'.$R['name'].'" data-type="'.$type.'"><span class="fa fa-caret-down"></span></button>';
+						<button type="button" class="btn btn-secondary" data-act="sheet" data-target="#sheet-attach-moreAct" data-id="'.$R['uid'].'" data-showhide="'.(!$R['hidden']?'hide':'show').'" data-insert="'.$insert_text.'" data-title="'.$R['name'].'" data-type="'.$type.'"><span class="fa fa-caret-down"></span></button>';
 						if($mod=='upload'){
 						$html.='
 						<ul class="hidden dropdown-menu dropdown-menu-right" role="menu">';

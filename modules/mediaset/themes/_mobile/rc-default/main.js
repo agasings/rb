@@ -42,14 +42,12 @@
         // 업로드 리스트 showhide 값 reset 함수
         var updateShowHide=function(uid,showhide){
           if(showhide=='show'){
-            $('[data-role="attachList-menu-showhide-'+uid+'"]').attr('data-content','hide'); // data-content 값 수정
-            $('[data-role="attachList-menu-showhide-'+uid+'"]').text('숨기기'); // 메뉴명 변경
-            $('[data-role="attachList-label-hidden-'+uid+'"]').addClass('hidden-xs-up'); // 숨김 라벨 숨기기
+            $('[data-role="attach-item"] [data-act="sheet"][data-id="'+uid+'"]').attr('data-showhide','hide');
+            $('[data-role="attachList-label-hidden-'+uid+'"]').addClass('hidden'); // 숨김 라벨 숨기기
             console.log($('[data-role="attachList-label-hidden-'+uid+'"]'));
           }else{
-            $('[data-role="attachList-menu-showhide-'+uid+'"]').attr('data-content','show'); // data-content 값 수정
-            $('[data-role="attachList-menu-showhide-'+uid+'"]').text('보이기'); // 메뉴명 변경
-            $('[data-role="attachList-label-hidden-'+uid+'"]').removeClass('hidden-xs-up'); // 숨김 라벨 노출
+            $('[data-role="attach-item"] [data-act="sheet"][data-id="'+uid+'"]').attr('data-showhide','show');
+            $('[data-role="attachList-label-hidden-'+uid+'"]').removeClass('hidden'); // 숨김 라벨 노출
           }
         }
 
