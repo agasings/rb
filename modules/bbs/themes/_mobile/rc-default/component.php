@@ -584,7 +584,7 @@ $(document).ready(function() {
                  });
 
               }
-              setTimeout(function(){bbs_tab_swiper.updateAutoHeight(10);}, 50); //item 추가 후, swiper 높이 업데이트
+              setTimeout(function(){bbs_tab_swiper.updateAutoHeight(300);}, 300); //item 추가 후, swiper 높이 업데이트
 
               //글쓰기 모달 상태 초기화
               $(this).attr('disabled', false); //글쓰기 전성버튼 상태 초기화
