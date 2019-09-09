@@ -27,6 +27,7 @@ function getBbsData(settings){
     var subject = $(ele).attr('data-subject')?$(ele).attr('data-subject'):''; // 제목
     var cat = $(ele).attr('data-cat')?$(ele).attr('data-cat'):''; // 카테고리
     var url = $(ele).attr('data-url')?$(ele).attr('data-url'):''; // url
+    var markup = $(ele).attr('data-markup')?$(ele).attr('data-markup'):''; // 마크업
     var item = ele.closest('.table-view-cell')
     item.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
     var modal = $(this)
@@ -43,6 +44,7 @@ function getBbsData(settings){
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
            bid : bid,
            uid : uid,
+           markup_file : markup,
            mod : 'view'
         },function(response){
          modal.find('[data-role="article"]').loader("hide");

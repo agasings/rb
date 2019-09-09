@@ -425,7 +425,7 @@ $(document).ready(function() {
     var pcode = modal.find('[name="pcode"]').val();
     var upfiles = modal.find('[name="upfiles"]').val('');
     var bbs_tab_swiper = document.querySelector('#page-bbs-list .swiper-container').swiper;
-    var markup = 'tableview';
+    var markup = localStorage.getItem('bbs-'+bid+'-listMarkup');
 
     <?php if(!$my['uid']):?>
     var name_el = modal.find('[name="name"]');
