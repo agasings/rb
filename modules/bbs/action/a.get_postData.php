@@ -106,7 +106,7 @@ if ($mod=='view') {
   $result['theme_show_dislike'] = $d['theme']['show_dislike'];
   $result['theme_show_share'] = $d['theme']['show_share'];
 
-  $markup_file = 'view'; // 기본 마크업 페이지 전달 (테마 내부 _html/view.html)
+  $markup_file = $markup_file?$markup_file:'view'; // 기본 마크업 페이지 전달 (테마 내부 _html/view.html)
 
   if ($R['hidden']) {  // 비밀글의 경우
     if ($my['uid'] != $R['mbruid'] && $my['uid'] != $R['pw'] && !$my['admin']) {

@@ -274,49 +274,29 @@ if ($backtype == "ajax") {
     $TMPL['bid'] = $B['id'];
     $TMPL['uid'] = $R['uid'];
     $TMPL['name'] = $R[$_HS['nametype']];
-    $TMPL['comment'] = $R['comment'];
-    $TMPL['oneline'] = $R['oneline']?'+'.$R['oneline']:'';
-    $TMPL['category'] = $R['category'];
+    $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
     $TMPL['hit'] = $R['hit'];
     $TMPL['likes'] = $R['likes'];
     $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d');
-    $TMPL['bbs_view_url'] = $bbs_view.$R['uid'];
-    $TMPL['datetime'] = getDateFormat($R['d_regis'],'c');
+    $TMPL['d_regis_c']=getDateFormat($R['d_regis'],'c');
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
-    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'120x120');
+    $TMPL['featured_img_sm'] = getPreviewResize(getUpImageSrc($R),'240x180');
+    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x360');
+    $TMPL['featured_img_lg'] = getPreviewResize(getUpImageSrc($R),'686x386');
+    $TMPL['featured_img_sq_200'] = getPreviewResize(getUpImageSrc($R),'200x200');
+    $TMPL['featured_img_sq_300'] = getPreviewResize(getUpImageSrc($R),'300x300');
+    $TMPL['featured_img_sq_600'] = getPreviewResize(getUpImageSrc($R),'600x600');
+    $TMPL['has_featured_img'] = getUpImageSrc($R)=='/files/noimage.png'?'d-none':'';
 
-    $TMPL['check_secret'] = $R['hidden']?' secret':'';
-    $TMPL['check_hidden'] = $R['hidden']?'':' d-none';
-    $TMPL['check_new'] = getNew($R['d_regis'],24)?'':' d-none';
-    $TMPL['check_notice'] = $R['notice']?'':' d-none';
-    $TMPL['check_upload'] = $R['upload']?'':' d-none';
-    $TMPL['check_category'] = $R['category']?'':' d-none';
-    $TMPL['check_timeago'] = $d['theme']['timeago']?'data-plugin="timeago"':'';
-    $TMPL['check_depth'] = $R['depth']?' rb-reply rb-reply-0'.$R['depth']:'';
+    $TMPL['new']=getNew($R['d_regis'],24)?'':'d-none';
+    $TMPL['hidden']=$R['hidden']?'':'d-none';
+    $TMPL['notice']=$R['notice']?'':'d-none';
+    $TMPL['upload']=$R['upload']?'':'d-none';
 
-    // 미디어 오브젝트 (아바타=1/대표이미지=2/감춤=0)
-    if ($d['theme']['media_object']=='1' && !$R['depth']) {
-
-      $TMPL['check_avatar'] = '';
-      $TMPL['check_preview'] = 'd-none';
-      $TMPL['check_replay'] = 'd-none';
-
-    } elseif ($d['theme']['media_object']=='2' && !$R['depth']) {
-
-      $TMPL['check_avatar'] = 'd-none';
-      $TMPL['check_replay'] = 'd-none';
-      if (getUpImageSrc($R)) $TMPL['check_preview'] = '';
-      else $TMPL['check_preview'] = 'd-none';
-
-    } else {
-
-      $TMPL['check_avatar'] = 'd-none';
-      $TMPL['check_preview'] = 'd-none';
-      $TMPL['check_replay'] = '';
-    }
+    $TMPL['timeago']=$d['theme']['timeago']?'data-plugin="timeago"':'';
 
     // 최종 결과값 추출 (sys.class.php)
-    $skin=new skin('item-'.$markup);
+    $skin=new skin($markup.'-item');
     $result['item']=$skin->make();
     $result['notice']=$R['notice'];
     $result['uid']=$NOWUID;
