@@ -66,11 +66,10 @@ if ($NUM_NOTICE) {
     $html.=$skin_item->make();
     $TMPL['items']=$html;
   }
+  $skin=new skin('media-list');
 } else {
-  $markup_list = 'none';
+  $skin=new skin('none');
 }
-
-$skin=new skin('media-list');
 $result['list_notice']=$skin->make();
 
 $html='';
