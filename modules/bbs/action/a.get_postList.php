@@ -32,7 +32,7 @@ $mbruid = $my['uid'];
 $html='';
 
 $TMPL['r']=$r;
-$TMPL['title']=$B['name'];
+$TMPL['bname']=$B['name'];
 $TMPL['bid']=$B['id'];
 $TMPL['cat']=$cat;
 $TMPL['keyword']=$keyword;
