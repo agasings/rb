@@ -9,3 +9,5 @@ _var/site/*
 _var/update/*
 modules/post/
 _tmp/widget/*
+layouts/bs4-starter/_var/*
+layouts/rc-starter/_var/*
