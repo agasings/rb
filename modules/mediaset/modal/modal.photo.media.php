@@ -297,19 +297,19 @@ $g['base_href'] = $g['s'].'/?r='.$r.'&m='.$m.'&iframe=Y&mdfile='.$mdfile.'&dropf
 	<?php if(!$dfiles):?>
 	<div class="category-box">
 
-		<div class="list-group rb-list-group">
-			<a href="<?php echo $g['base_href']?>" class="list-group-item d-flex justify-content-between align-items-center<?php if(!$album):?> active<?php endif?>">전체사진<span class="badge"><?php echo getDbCnt($table['s_uploadcat'],'sum(r_num)','mbruid='.$my['uid'].' and type=1')?></span></a>
-			<a href="<?php echo $g['base_href']?>&album=none" class="list-group-item d-flex justify-content-between align-items-center<?php if($album=='none'):?> active<?php endif?>">미카테고리<span class="badge"><?php echo getDbCnt($table['s_uploadcat'],'sum(r_num)','mbruid='.$my['uid']." and type=1 and name='none'")?></span></a>
+		<div class="list-group">
+			<a href="<?php echo $g['base_href']?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2<?php if(!$album):?> active<?php endif?>">전체사진<span class="badge"><?php echo getDbCnt($table['s_uploadcat'],'sum(r_num)','mbruid='.$my['uid'].' and type=1')?></span></a>
+			<a href="<?php echo $g['base_href']?>&album=none" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2<?php if($album=='none'):?> active<?php endif?>">미카테고리<span class="badge"><?php echo getDbCnt($table['s_uploadcat'],'sum(r_num)','mbruid='.$my['uid']." and type=1 and name='none'")?></span></a>
 
 			<?php $_TMP_CT=array()?>
 			<?php $_CT_RCD = getDbArray($table['s_uploadcat'],'mbruid='.$my['uid']." and type=1 and name<>'none' and name<>'trash'",'*','gid','asc',0,1)?>
 			<?php while($_CT=db_fetch_array($_CT_RCD)):$_TMP_CT[]=$_CT?>
-			<a href="<?php echo $g['base_href']?>&album=<?php echo $_CT['uid']?>" class="list-group-item d-flex justify-content-between align-items-center<?php if($album==$_CT['uid']):?> active<?php endif?>"><?php echo $_CT['name']?><span class="badge"><?php echo $_CT['r_num']?></span></a></li>
+			<a href="<?php echo $g['base_href']?>&album=<?php echo $_CT['uid']?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2<?php if($album==$_CT['uid']):?> active<?php endif?>"><?php echo $_CT['name']?><span class="badge"><?php echo $_CT['r_num']?></span></a></li>
 			<?php endwhile?>
 
-			<a href="<?php echo $g['base_href']?>&album=trash" class="list-group-item d-flex justify-content-between align-items-center<?php if($album=='trash'):?> active<?php endif?>">휴지통<span class="badge"><?php echo getDbCnt($table['s_uploadcat'],'sum(r_num)','mbruid='.$my['uid']." and type=1 and name='trash'")?></span></a>
+			<a href="<?php echo $g['base_href']?>&album=trash" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2<?php if($album=='trash'):?> active<?php endif?>">휴지통<span class="badge"><?php echo getDbCnt($table['s_uploadcat'],'sum(r_num)','mbruid='.$my['uid']." and type=1 and name='trash'")?></span></a>
 		</div>
-		<div class="list-group my-3">
+		<div class="my-3">
 			<form action="<?php echo $g['s']?>/" method="post" target="_upload_iframe_" onsubmit="return AddAlbumRcheck(this);">
 			<input type="hidden" name="r" value="<?php echo $r?>">
 			<input type="hidden" name="m" value="<?php echo $m?>">
@@ -318,7 +318,7 @@ $g['base_href'] = $g['s'].'/?r='.$r.'&m='.$m.'&iframe=Y&mdfile='.$mdfile.'&dropf
 			<div class="input-group">
 				<input type="text" name="name" class="form-control" placeholder="추가할 카테고리">
 				<span class="input-group-append">
-					<button type="submit" class="btn btn-light">추가</button>
+					<button type="submit" class="btn btn-outline-secondary">추가</button>
 				</span>
 			</div>
 			</form>
@@ -394,7 +394,7 @@ $g['base_href'] = $g['s'].'/?r='.$r.'&m='.$m.'&iframe=Y&mdfile='.$mdfile.'&dropf
 					<span id="caption_<?php echo $val['uid']?>" class="hidden"><?php echo htmlspecialchars($val['caption'])?></span>
 					<?php if($val['type']>0):?>
 					<div class="photo"
-						style="background-image:url('<?php echo $val['url'].$val['folder'].'/'.getPreviewResize($val['tmpname'],'t')?>');" onclick="location.href='<?php echo $g['base_href']?>&file_uid=<?php echo $val['uid']?>&tab=file_info&album=<?php echo $album?>';"></div>
+						style="background-image:url('<?php echo getPreviewResize($val['src'],'t')?>');" onclick="location.href='<?php echo $g['base_href']?>&file_uid=<?php echo $val['uid']?>&tab=file_info&album=<?php echo $album?>';"></div>
 					<?php else:?>
 					<div title="외부링크" class="photo" data-toggle="tooltip"><img src="./_core/opensrc/timthumb/thumb.php?src=<?php echo $val['src'] ?>&w=100&h=67&s=1" onclick="location.href='<?php echo $g['base_href']?>&file_uid=<?php echo $val['uid']?>&tab=file_info&album=<?php echo $album?>';"></div>
 					<?php endif?>

@@ -4,7 +4,6 @@ if(!defined('__KIMS__')) exit;
 include $g['path_core'].'function/thumb.func.php';
 include $g['dir_module'].'var/var.php';
 
-
 $savePath1	= $saveDir.substr($date['today'],0,4);
 $savePath2	= $savePath1.'/'.substr($date['today'],4,2);
 $savePath3	= $savePath2.'/'.substr($date['today'],6,2);
@@ -14,7 +13,6 @@ $upfileNum	= count($_FILES['upfiles']['name']);
 $tmpcode	= $mediaset == 'Y' ? '' : $_SESSION['upsescode'];
 $mbruid		= $my['uid'];
 $fserver	= $d['mediaset']['use_fileserver'];
-$url		= $fserver ? $d['mediaset']['ftp_urlpath'] : '/files/';
 $d_regis	= $date['totime'];
 $down		= 0;
 $width		= 0;
@@ -29,10 +27,23 @@ $license	= 0;
 $_fileonly	= $fileonly == 'Y' ? 1 : 0;
 $linkurl	= '';
 
+include_once $g['path_core'].'opensrc/aws-sdk-php/v3/aws-autoloader.php';
+use Aws\S3\S3Client;
+
+define('S3_KEY', $d['mediaset']['S3_KEY']); //발급받은 키.
+define('S3_SEC', $d['mediaset']['S3_SEC'] ); //발급받은 비밀번호.
+define('S3_REGION', $d['mediaset']['S3_REGION']);  //S3 버킷의 리전.
+define('S3_BUCKET', $d['mediaset']['S3_BUCKET']); //버킷의 이름.
+
+if ($type == 2 || $type == 4 || $type == 5 ) {
+  $tmpname = $tmpname.'.'.$fileExt;
+}
+
 if ($link != 'Y')
 {
-	if ($fserver)
-	{
+	if ($fserver==1) {
+		$host = $d['mediaset']['ftp_urlpath'];
+
 		$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
 		$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);
 		if (!$FTP_CONNECT) getLink('','',_LANG('a5001','mediaset'),'');
@@ -42,8 +53,8 @@ if ($link != 'Y')
 	}
 
 
-	for($i = 0; $i < $upfileNum; $i++)
-	{
+	for($i = 0; $i < $upfileNum; $i++) {
+
 		$name		= strtolower($_FILES['upfiles']['name'][$i]);
 		$size		= $_FILES['upfiles']['size'][$i];
 		$fileExt	= getExt($name);
@@ -55,8 +66,7 @@ if ($link != 'Y')
 
 		if ($d['mediaset']['ext_cut'] && strstr($d['mediaset']['ext_cut'],$fileExt)) continue;
 
-		if ($fserver)
-		{
+		if ($fserver==1) {
 			for ($j = 1; $j < 4; $j++)
 			{
 				@ftp_mkdir($FTP_CONNECT,$d['mediaset']['ftp_folder'].str_replace('./files/','',${'savePath'.$j}));
@@ -77,8 +87,63 @@ if ($link != 'Y')
 				}
 			}
 			ftp_put($FTP_CONNECT,$d['mediaset']['ftp_folder'].$folder.'/'.$tmpname,$_FILES['upfiles']['tmp_name'][$i],FTP_BINARY);
-		}
-		else {
+			ftp_close($FTP_CONNECT);
+
+		} elseif ($fserver==2) {
+
+			$name		= strtolower($_FILES['upfiles']['name'][$i]);
+			$size		= $_FILES['upfiles']['size'][$i];
+			$fileExt	= getExt($name);
+			$fileExt	= $fileExt == 'jpeg' ? 'jpg' : $fileExt;
+			$type		= getFileType($fileExt);
+			$tmpname	= md5($name).substr($date['totime'],8,14);
+			$tmpname	= $type == 2 ? $tmpname.'.'.$fileExt : $tmpname;
+			$hidden		= $type == 2 ? 1 : 0;
+
+      // 파일 업로드
+			$host= 'https://'.S3_BUCKET.'.s3.'.S3_REGION.'.amazonaws.com';
+			$folder = str_replace('./files/','',$saveDir).$folder;
+			$src = $host.'/'.$folder.'/'.$tmpname;
+
+			$s3 = new S3Client([
+				'version'     => 'latest',
+				'region'      => S3_REGION,
+				'credentials' => [
+						'key'    => S3_KEY,
+						'secret' => S3_SEC,
+				],
+			]);
+
+			if ($type == 2) {
+					 if ($fileExt == 'jpg') exifRotate($_FILES['upfiles']['tmp_name'][$i]); //가로세로 교정
+					 ResizeWidth($_FILES['upfiles']['tmp_name'][$i],$_FILES['upfiles']['tmp_name'][$i],$d['mediaset']['thumbsize']);
+					 @chmod($_FILES['upfiles']['tmp_name'][$i],0707);
+					 $IM = getimagesize($_FILES['upfiles']['tmp_name'][$i]);
+					 $width = $IM[0];
+					 $height= $IM[1];
+			}
+
+			try {
+				$s3->putObject(Array(
+						'ACL'=>'public-read',
+						'SourceFile'=>$_FILES['upfiles']['tmp_name'][$i],
+						'Bucket'=>S3_BUCKET,
+						'Key'=>$folder.'/'.$tmpname,
+						'ContentType'=>$_FILES['upfiles']['type'][$i]
+				));
+				unlink($_FILES['upfiles']['tmp_name'][$i]);
+
+        // getLink('','',$_FILES['upfiles']['tmp_name'][$i].' 여기까지','');
+
+			} catch (Aws\S3\Exception\S3Exception $e) {
+				$result['error'] = 'AwS S3에 파일을 업로드하는 중 오류가 발생했습니다.';
+			}
+
+		} else  {
+
+			$host = '';
+			$folder = str_replace('.','',$saveDir).$folder;
+			$src = $folder.'/'.$tmpname;
 
 			for ($j = 1; $j < 4; $j++)
 			{
@@ -96,10 +161,9 @@ if ($link != 'Y')
 				move_uploaded_file($_FILES['upfiles']['tmp_name'][$i], $saveFile);
 				if ($type == 2)
 				{
-					$thumbname = md5($tmpname).'.'.$fileExt;
-					$thumbFile = $savePath3.'/'.$thumbname;
-					ResizeWidth($saveFile,$thumbFile,$d['mediaset']['thumbsize']);
-					@chmod($thumbFile,0707);
+					if ($fileExt == 'jpg') exifRotate($_FILES['upfiles']['tmp_name']); //가로세로 교정
+					ResizeWidth($_FILES['upfiles']['tmp_name'],$_FILES['upfiles']['tmp_name'],$d['mediaset']['thumbsize']);
+					@chmod($_FILES['upfiles']['tmp_name'],0707);
 					$IM = getimagesize($saveFile);
 					$width = $IM[0];
 					$height= $IM[1];
@@ -112,8 +176,8 @@ if ($link != 'Y')
 		$mingid = getDbCnt($table['s_upload'],'min(gid)','');
 		$gid = $mingid ? $mingid - 1 : 100000000;
 
-		$QKEY = "gid,pid,category,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,url,folder,name,tmpname,thumbname,size,width,height,alt,caption,description,src,linkto,license,down,d_regis,d_update,sync,linkurl";
-		$QVAL = "'$gid','$gid','$category','$hidden','$tmpcode','$s','$mbruid','$_fileonly','$type','$fileExt','$fserver','$url','$folder','$name','$tmpname','$thumbname','$size','$width','$height','$alt','$caption','$description','$src','$linkto','$license','$down','$d_regis','$d_update','$sync','$linkurl'";
+		$QKEY = "gid,pid,category,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,host,folder,name,tmpname,size,width,height,alt,caption,description,src,linkto,license,down,d_regis,d_update,sync,linkurl";
+		$QVAL = "'$gid','$gid','$category','$hidden','$tmpcode','$s','$mbruid','$_fileonly','$type','$fileExt','$fserver','$host','$folder','$name','$tmpname','$size','$width','$height','$alt','$caption','$description','$src','$linkto','$license','$down','$d_regis','$d_update','$sync','$linkurl'";
 		getDbInsert($table['s_upload'],$QKEY,$QVAL);
 		getDbUpdate($table['s_numinfo'],'upload=upload+1',"date='".$date['today']."' and site=".$s);
 
@@ -140,8 +204,8 @@ else {
 	$mingid = getDbCnt($table['s_upload'],'min(gid)','');
 	$gid = $mingid ? $mingid - 1 : 100000000;
 
-	$QKEY = "gid,pid,category,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,url,folder,name,tmpname,thumbname,size,width,height,alt,caption,description,src,linkto,license,down,d_regis,d_update,sync,linkurl";
-	$QVAL = "'$gid','$gid','$category','0','$tmpcode','$s','$mbruid','$_fileonly','-1','$fileExt','0','','','$name','','','0','0','0','','','','$src','0','0','0','$d_regis','','',''";
+	$QKEY = "gid,pid,category,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,host,folder,name,tmpname,size,width,height,alt,caption,description,src,linkto,license,down,d_regis,d_update,sync,linkurl";
+	$QVAL = "'$gid','$gid','$category','0','$tmpcode','$s','$mbruid','$_fileonly','-1','$fileExt','0','','','$name','','0','0','0','','','','$src','0','0','0','$d_regis','','',''";
 	getDbInsert($table['s_upload'],$QKEY,$QVAL);
 
 	if ($gid == 100000000) db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT);
