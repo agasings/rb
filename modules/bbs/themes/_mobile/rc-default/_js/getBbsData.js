@@ -504,22 +504,19 @@ function getBbsData(settings){
           },function(response){
            var result = $.parseJSON(response);
            var error=result.error;
-
+           var num=result.num;
+           
            if (!error) {
              $('.content').loader('hide');
              history.back();
              setTimeout(function(){
-               $('#item-'+uid).slideUp();
+               if (!num) location.reload();
+               else $('#item-'+uid).slideUp();
              }, 700);
            }
          });
       }
     }, 10);
-
-
-
-
-
 
   });
 

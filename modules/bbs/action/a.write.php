@@ -267,7 +267,6 @@ if ($backtype == "ajax") {
 	$R = getUidData($table['bbsdata'],$NOWUID);
 
   if (!$uid) {
-
     $TMPL['category'] = $R['category'];
     $TMPL['subject'] = $R['subject'];
     $TMPL['bname'] = $B['name'];
@@ -296,8 +295,17 @@ if ($backtype == "ajax") {
     $TMPL['timeago']=$d['theme']['timeago']?'data-plugin="timeago"':'';
 
     // 최종 결과값 추출 (sys.class.php)
-    $skin=new skin($markup.'-item');
-    $result['item']=$skin->make();
+
+    if (!$list_wrapper) {
+      $skin_item=new skin($markup.'-item');
+      $TMPL['items']=$skin_item->make();
+      $skin=new skin($markup.'-list');
+      $result['item']=$skin->make();
+    } else {
+      $skin=new skin($markup.'-item');
+      $result['item']=$skin->make();
+    }
+
     $result['notice']=$R['notice'];
     $result['uid']=$NOWUID;
     $result['depth']=$R['depth'];

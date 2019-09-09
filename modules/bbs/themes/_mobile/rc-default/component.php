@@ -493,6 +493,9 @@ $(document).ready(function() {
 
     $(this).attr("disabled",true);
 
+    if($('[data-role="bbs-list"] [data-role="post"] [data-role="list-wrapper"]').length > 0) var list_wrapper = 1;
+    else var list_wrapper = 0;
+
     setTimeout(function(){
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=write',{
           bid : bid,
@@ -507,7 +510,8 @@ $(document).ready(function() {
           featured_img : featured_img,
           backtype : backtype,
           pcode : pcode,
-          markup : markup
+          markup : markup,
+          list_wrapper: list_wrapper
        },function(response){
           var result = $.parseJSON(response);
           var error = result.error;
@@ -525,8 +529,15 @@ $(document).ready(function() {
               if (!uid) {
                 $('[data-role="bbs-list"]').find('[data-role="empty"]').addClass('d-none');
                 $('[data-role="bbs-list"]').find('.content').animate({scrollTop : 0}, 100);
-                if (notice==1) $('[data-role="bbs-list"] [data-role="notice"] [data-role="list-wrapper"]').prepend(item);
-                else $('[data-role="bbs-list"] [data-role="post"] [data-role="list-wrapper"]').prepend(item);
+
+                if (list_wrapper) {
+                  if (notice==1) $('[data-role="bbs-list"] [data-role="notice"] [data-role="list-wrapper"]').prepend(item);
+                  else $('[data-role="bbs-list"] [data-role="post"] [data-role="list-wrapper"]').prepend(item);
+                } else {
+                  if (notice==1) $('[data-role="bbs-list"] [data-role="notice"]').prepend(item);
+                  else $('[data-role="bbs-list"] [data-role="post"]').prepend(item);
+                }
+
                 $('[data-role="bbs-list"]').find('#item-'+_uid).addClass('animated fadeInDown').attr('tabindex','-1').focus();
               } else {
 

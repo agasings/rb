@@ -201,8 +201,13 @@ if ($R['point1']&&$R['mbruid'])
 
 if ($send=="ajax") {
 
+	$bbsque = 'site='.$s.' and notice=0';
+	$bbsque .= ' and bbs='.$B['uid'];
+	$NUM = getDbRows($table[$m.'data'],$bbsque);
+
 	$result=array();
 	$result['error']=false;
+	$result['num']=$NUM;
 	echo json_encode($result);
 	exit;
 
