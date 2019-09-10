@@ -46,6 +46,10 @@ var kakao_jskey = '<?php echo $d['connect']['jskey_k'] ?>';
 <link href="<?php echo $g['s']?>/_core/css/sys.css<?php echo $g['wcache']?>" rel="stylesheet">
 <script src="<?php echo $g['s']?>/_core/js/sys.js<?php echo $g['wcache']?>"></script>
 
+<?php if ($g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 11'): ?>
+<script src="<?php echo $g['s']?>/_core/js/ckeditor5.js<?php echo $g['wcache']?>"></script>
+<?php endif; ?>
+
 <?php foreach ($g['cssset'] as $_key => $_val):?>
 <?php if (is_file($_key.'.css')):?>
 <link href="<?php echo $_val?>.css<?php echo $g['wcache']?>" rel="stylesheet">

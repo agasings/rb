@@ -38,7 +38,7 @@
 <!-- 레이아웃 공용 스크립트 -->
 <script src="<?php echo $g['url_layout']?>/_js/main.js<?php echo $g['wcache']?>"></script>
 
-<?php if($_SERVER['HTTPS'] == 'on'):?>
+<?php if($_SERVER['HTTPS'] == 'on' && $g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 11'):?>
 <script>
 if ('serviceWorker' in navigator && 'PushManager' in window) {
   console.log('서비스워커와 푸시가 지원되는 브라우저 입니다.');
