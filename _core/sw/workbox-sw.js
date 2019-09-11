@@ -56,6 +56,7 @@ workbox.precaching.precacheAndRoute([
   '/plugins/snap/1.9.3/rc-snap.js',
 
   '/plugins/jquery.countdown/2.2.0/jquery.countdown.min.js',
+  '/plugins/jquery-form/4.2.2/jquery.form.min.js',
 
   '/plugins/autosize/3.0.14/autosize.min.js',
   '/plugins/clipboard/2.0.4/clipboard.min.js',

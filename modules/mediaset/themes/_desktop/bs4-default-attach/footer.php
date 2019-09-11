@@ -1,5 +1,7 @@
 <?php include $g['dir_attach_theme'].'/modals.php'; // 모달 페이지 인클루드 ?>
 
+<?php getImport('jquery-form','jquery.form.min','4.2.2','js'); ?>
+
 <script>
 var inputId='attach-file-input'; // 실제 작옹하는 input 엘리먼트 id 값을 옵션으로 지정을 해준다. (커스텀 버튼으로 click 이벤트 바인딩)
 var attach_file_saveDir = '<?php echo $g['path_file'].$parent_module?>/';// 파일 업로드 폴더

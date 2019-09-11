@@ -7,9 +7,6 @@
  * https://github.com/hayageek/jquery-upload-file
  */
 (function ($) {
-	if($.fn.ajaxForm == undefined) {
-		$.getScript(rooturl+'/plugins/jquery-form/4.2.2/jquery.form.min.js');
-	}
 	var feature = {};
 	feature.fileapi = $("<input type='file'/>").get(0).files !== undefined;
 	feature.formdata = window.FormData !== undefined;
