@@ -3158,10 +3158,10 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					scrollTop: self.curScrollTop
 				};
 				//var $loader = $('<div class="loader"></div>');
-				var $loader=$('<div class="loader-container"></div>');
+				var $loader=$('<div class="loader-container d-flex justify-content-center"></div>');
 				load.append($loader);
 				//$loader.loader();
-				$loader.loader()
+				$loader.html('<div class="spinner-border spinner-border-sm my-3 content-padded text-muted" style="width: 1.5rem; height: 1.5rem" role="status"><span class="sr-only">Loading...</span></div>');
 				if (self.options.dataSource) {
 					self.options.dataSource(helpers, function (resp) {
 						var end;
