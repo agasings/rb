@@ -61,6 +61,7 @@ workbox.precaching.precacheAndRoute([
   '/plugins/autosize/3.0.14/autosize.min.js',
   '/plugins/clipboard/2.0.4/clipboard.min.js',
   '/plugins/markjs/8.11.1/jquery.mark.min.js',
+  '/plugins/pulltorefresh/0.1.19/index.umd.min.js',
 
   '/plugins/photoswipe/4.1.2/photoswipe.css',
   '/plugins/photoswipe/4.1.2/default-skin/default-skin.css',

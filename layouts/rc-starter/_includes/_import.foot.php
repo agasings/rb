@@ -10,6 +10,9 @@
 <!-- 입력 textarea 자동확장 -->
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 
+<!-- pulltorefresh : https://github.com/BoxFactura/pulltorefresh.js-->
+<?php getImport('pulltorefresh','index.umd.min','0.1.19','js')?>
+
 <!-- timeago : 상대시간 표기 -->
 <?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
 <?php getImport('jquery-timeago','locales/jquery.timeago.ko','1.6.7','js')?>
