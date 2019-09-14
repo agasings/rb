@@ -3130,7 +3130,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		},
 
 		end: function (content) {
-			var end = $('<div class="infinitescroll-end"></div>');
+			var end = $('<div class="infinitescroll-end py-4"></div>');
 			if (content) {
 				end.append(content);
 			} else {
@@ -3148,7 +3148,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		},
 
 		fetchData: function (force) {
-			var load = $('<div class="infinitescroll-load content-padded"></div>');
+			var load = $('<div class="infinitescroll-load"></div>');
 			var self = this;
 			var moreBtn;
 
@@ -3157,19 +3157,18 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					percentage: self.curPercentage,
 					scrollTop: self.curScrollTop
 				};
-				//var $loader = $('<div class="loader"></div>');
 				var $loader=$('<div class="loader-container d-flex justify-content-center"></div>');
 				load.append($loader);
 				//$loader.loader();
-				$loader.html('<div class="spinner-border spinner-border-sm my-3 content-padded text-muted" style="width: 1.5rem; height: 1.5rem" role="status"><span class="sr-only">Loading...</span></div>');
+				$loader.html('<div class="spinner-border spinner-border-sm my-4 content-padded text-muted" style="width: 1.5rem; height: 1.5rem;" role="status"><span class="sr-only">Loading...</span></div>');
 				if (self.options.dataSource) {
 					self.options.dataSource(helpers, function (resp) {
 						var end;
-						load.remove();
 						if (resp.content) {
 							if(self.$appendToEle) self.$appendToEle.append(resp.content);
 							else self.$element.append(resp.content);
 						}
+            setTimeout(function(){ load.remove(); }, 10);
 
 						if (resp.end) {
 							end = (resp.end !== true) ? resp.end : undefined;
