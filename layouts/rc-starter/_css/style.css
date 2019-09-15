@@ -285,6 +285,23 @@ figure.media {
   letter-spacing: -.0625rem
 }
 
+/* pull to refresh */
+.ptr--ptr {
+  box-shadow: none !important;
+  pointer-events: none;
+  font-size: 0.85em;
+  font-weight: bold;
+  top: 0;
+  height: 0;
+  transition: height 0.3s, min-height 0.3s;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  align-content: stretch;
+}
+
 /**
  * 6 - Drawer 드로어(사이드 메뉴)
  * ----------------------------------------------------------------------------
