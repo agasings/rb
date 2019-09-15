@@ -53,12 +53,13 @@ if ($mod=='view') {
 
   $result['content'] = getContents($R['content'],$R['html']);
 
-  if ($R['featured_img']) {
-    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),$d['theme']['thumb_size']); //게시물 대표이미지
-    $result['featured_img'] = getPreviewResize(getUpImageSrc($R),$d['theme']['thumb_size']); //게시물 대표이미지
-  } else {
-    $TMPL['featured_img'] = $g['meta_img']?getPreviewResize($g['meta_img'],'c'):$g['img_core'].'/noimage_kimsq.png'; //사이트 대표
-  }
+  $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
+  $result['featured_img_sm'] = getPreviewResize(getUpImageSrc($R),'240x180');
+  $result['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
+  $result['featured_img_lg'] = getPreviewResize(getUpImageSrc($R),'686x386');
+  $result['featured_img_sq_200'] = getPreviewResize(getUpImageSrc($R),'200x200');
+  $result['featured_img_sq_300'] = getPreviewResize(getUpImageSrc($R),'300x300');
+  $result['featured_img_sq_600'] = getPreviewResize(getUpImageSrc($R),'600x600');
 
   if ($R['oneline']) {
     $TMPL['comment'] = $R['comment'].'+'.$R['oneline'];
@@ -153,7 +154,6 @@ if ($mod=='view') {
 } else {
 
   //글쓰기 수정모드 일때
-
   if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
     $theme= $d['bbs']['a_mskin']?$d['bbs']['a_mskin']:$d['bbs']['attach_mobile'];
   } else {
@@ -167,7 +167,7 @@ if ($mod=='view') {
   $result['adddata'] = $R['adddata'];
 
   if($R['upload']) {
-    $result['featured_img'] = $R['featured_img'];
+    $result['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
     $result['attachNum'] = getAttachNum($R['upload'],'modify');
     $result['file'] = getAttachFileList($R,'upload','file');
     $result['photo'] = getAttachFileList($R,'upload','photo');

@@ -124,15 +124,16 @@ figure.photo-mask {
 
 /* photo-grid */
 .rb-photogrid .gutter-half {
-  margin-right: -3.5px;
-  margin-left: -3.5px;
+  margin-top: 2.3px;
+  margin-right: -1.5px;
+  margin-left: -1.5px;
 }
 
 .rb-photogrid .gutter-half > .col,
 .rb-photogrid .gutter-half > [class*="col-"] {
-  padding-bottom: 6px;
-  padding-right: 3.5px;
-  padding-left: 3.5px;
+  padding-bottom: 2.5px;
+  padding-right: 1.5px;
+  padding-left: 1.5px;
   box-sizing: border-box;
 }
 
@@ -194,7 +195,7 @@ figure.photo-mask {
  * ----------------------------------------------------------------------------
  */
 
-[data-role="bbs-view"] .bar-nav .title {
+[data-role="bbs-view"] .bar-nav .title-left {
    padding-right: 1.25rem
  }
 [data-role="bbs-view"] .bar-nav .title span {

@@ -280,7 +280,7 @@ if ($backtype == "ajax") {
     $TMPL['d_regis_c']=getDateFormat($R['d_regis'],'c');
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
     $TMPL['featured_img_sm'] = getPreviewResize(getUpImageSrc($R),'240x180');
-    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x360');
+    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
     $TMPL['featured_img_lg'] = getPreviewResize(getUpImageSrc($R),'686x386');
     $TMPL['featured_img_sq_200'] = getPreviewResize(getUpImageSrc($R),'200x200');
     $TMPL['featured_img_sq_300'] = getPreviewResize(getUpImageSrc($R),'300x300');

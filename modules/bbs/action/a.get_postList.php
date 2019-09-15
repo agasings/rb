@@ -59,7 +59,7 @@ if ($NUM_NOTICE) {
     $TMPL['category']=$R['category'];
     $TMPL['timeago']=$d['theme']['timeago']?'data-plugin="timeago"':'';
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
-    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x360');
+    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
     $TMPL['has_featured_img'] = getUpImageSrc($R)=='/files/noimage.png'?'d-none':'';
     if ($collapse) $TMPL['article'] = getContents($R['content'],$R['html']);
     $skin_item=new skin('media-item');
@@ -83,7 +83,7 @@ if ($NUM) {
     $TMPL['hit']=$R['hit'];
     $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
     $TMPL['likes']=$R['likes'];
-    $TMPL['d_regis']=getDateFormat($R['d_regis'],'Y-m-d');
+    $TMPL['d_regis']=getDateFormat($R['d_regis'],'Y.m.d H:i');
     $TMPL['d_regis_c']=getDateFormat($R['d_regis'],'c');
     $TMPL['new']=getNew($R['d_regis'],24)?'':'d-none';
     $TMPL['hidden']=$R['hidden']?'':'d-none';
@@ -93,7 +93,7 @@ if ($NUM) {
     $TMPL['timeago']=$d['theme']['timeago']?'data-plugin="timeago"':'';
     $TMPL['avatar']=getAvatarSrc($R['mbruid'],'84');
     $TMPL['featured_img_sm'] = getPreviewResize(getUpImageSrc($R),'240x180');
-    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x360');
+    $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');  //16:9
     $TMPL['featured_img_lg'] = getPreviewResize(getUpImageSrc($R),'686x386');
     $TMPL['featured_img_sq_200'] = getPreviewResize(getUpImageSrc($R),'200x200');
     $TMPL['featured_img_sq_300'] = getPreviewResize(getUpImageSrc($R),'300x300');

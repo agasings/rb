@@ -1,39 +1,3 @@
-<div class="clearfix content-padded">
-
-  <div class="pull-xs-left">
-
-    <div class="media" style="width:15rem">
-      <img class="media-object pull-left rb-avatar img-circle bg-faded" src="{$avatar}" style="width:2.25rem;height:2.25rem">
-      <div class="media-body rb-meta m-l-1">
-        <span class="badge badge-default badge-inverted">{$name}</span> <br>
-        <span class="badge badge-default badge-inverted">{$date}</span>
-        <span class="badge badge-default badge-inverted">조회 {$hit}</span>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="pull-xs-right pt-1">
-    <button type="button" class="btn btn-outline-secondary" data-toggle="move" data-target="[data-role='comment-box']" data-page="#page-bbs-view" data-role="btn_comment">
-      <i class="fa fa-comment-o" aria-hidden="true"></i>
-      <span data-role="total_comment" class="badge badge-primary badge-inverted">{$comment}</span>
-    </button>
-
-    <button type="button" class="btn btn-outline-secondary" id="btn-linkShare"
-      data-role="linkShare"
-      data-subject="{$subject}"
-      data-url=""
-      data-likes="{$likes}"
-      data-image="{$featured_img}"
-      data-desc="">
-      <i class="fa fa-share-alt" aria-hidden="true"></i>
-    </button>
-
-  </div>
-
-</div><!-- /.clearfix -->
-
-<hr>
 <article class="rb-article content-padded">
 
   <div data-role="article-body">
@@ -46,7 +10,6 @@
   {$tag}
 </div>
 
-<hr>
 <div class="text-xs-center mb-4">
   <button type="button" class="btn btn-outline-secondary btn-lg"
     data-send="ajax"
@@ -56,7 +19,6 @@
     data-effect="heartbeat"
     data-role="btn_post_like">
     <i class="fa fa fa-heart-o fa-fw fa-lg" aria-hidden="true"></i>
-    <span data-role='likes_{$uid}' class="badge badge-inverted">{$likes}</span>
   </button>
   <button type="button" class="btn btn-outline-secondary btn-lg"
     data-send="ajax"
@@ -69,6 +31,21 @@
     <span data-role='dislikes_{$uid}' class="badge badge-inverted">{$dislikes}</span>
   </button>
 </div>
+
+<ul class="table-view">
+  <li class="table-view-cell">
+    <a href="#page-bbs-opinion"
+      data-toggle="page"
+      data-start="#page-bbs-view"
+      data-bid="{$bid}"
+      data-opinion="like"
+      data-uid="{$uid}"
+      class="navigate-right text-muted">
+      <span class="badge badge-pill" data-role='likes_{$uid}'>{$likes}</span>
+      좋아요한 사람
+    </a>
+  </li>
+</ul>
 
 <script>
   $('[data-role="article-body"]').find('img').addClass('img-fluid')

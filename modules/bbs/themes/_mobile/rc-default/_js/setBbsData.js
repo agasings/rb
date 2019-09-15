@@ -7,9 +7,10 @@
  * --------------------------------------------------------------------------
  */
 
-function getBbsData(settings){
-  var type=settings.type; //컴포넌트 타입
-  var mid=settings.mid; // 컴포넌트 아이디
+function setBbsData(settings){
+  var bid=settings.bid; //게시판 아이디
+  var uid=settings.uid; // 게시물 고유번호
+  var markup=settings.markup; // 게시물 보기 마크업
   var ctheme=settings.ctheme; // 댓글테마
   var page = $('[data-role="bbs-view"]')
   var sheet_comment_write = $('#sheet-comment-write') // 댓글 작성 sheet
@@ -20,215 +21,154 @@ function getBbsData(settings){
   var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
   var popover_bbs_view = $('#popover-bbs-view') // 게시물 관리 팝오버
 
-  //  게시물보기 모달이 보여질때 : 게시물 본문영역 셋팅
-  $(mid).on('show.rc.'+type, function(event) {
-    var ele = $(event.relatedTarget) // 모달을 호출한 아이템 정의
-    var bid = $(ele).attr('data-bid')?$(ele).attr('data-bid'):''; // 게시판 아이디
-    var uid = $(ele).attr('data-uid')?$(ele).attr('data-uid'):''; // 대상 PK
-    var subject = $(ele).attr('data-subject')?$(ele).attr('data-subject'):''; // 제목
-    var cat = $(ele).attr('data-cat')?$(ele).attr('data-cat'):''; // 카테고리
-    var url = $(ele).attr('data-url')?$(ele).attr('data-url'):''; // url
-    var name = $(ele).attr('data-name')?$(ele).attr('data-name'):''; // name
-    var avatar = $(ele).attr('data-avatar')?$(ele).attr('data-avatar'):''; // avatar
-    var comment = $(ele).attr('data-comment')?$(ele).attr('data-comment'):''; // comment
-    var hit = $(ele).attr('data-hit')?$(ele).attr('data-hit'):''; // hit
-    var likes = $(ele).attr('data-likes')?$(ele).attr('data-likes'):''; // likes
-    var d_regis = $(ele).attr('data-dregis')?$(ele).attr('data-dregis'):''; // d_regis
-    var markup = $(ele).attr('data-markup')?$(ele).attr('data-markup'):''; // 마크업
-    var item = ele.closest('.table-view-cell')
-		var move =  ele.attr('data-move');
+  $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+       bid : bid,
+       uid : uid,
+       markup_file : markup,
+       mod : 'view'
+    },function(response){
+     page.find('[data-role="article"]').loader("hide");
+     var result = $.parseJSON(response);
+     var _uid=result.uid;
+     var article=result.article;
+     var adddata=result.adddata;
+     var photo=result.photo;
+     var video=result.video;
+     var audio=result.audio;
+     var file=result.file;
+     var zip=result.zip;
+     var doc=result.doc;
+     var hidden=result.hidden;
+     var hidden_attach=result.hidden_attach;
+     var mypost=result.mypost;
 
-    item.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
-    var modal = $(this);
-    modal.find('[name="uid"]').val(uid);
-    modal.find('[name="bid"]').val(bid);
-    page.find('[data-role="subject"]').text(subject);
-    page.find('[data-role="cat"]').text(cat);
-    page.find('[data-role="name"]').text(name);
-    page.find('[data-role="total_comment"]').text(comment);
-    page.find('[data-role="avatar"]').attr('src',avatar);
-    page.find('[data-role="hit"]').text(hit);
-    page.find('[data-role="likes"]').text(likes);
-    page.find('[data-role="likes"]').text(likes);
-    page.find('[data-role="d_regis"]').text(d_regis);
-    page.find('.bar-nav [data-role="toolbar"]').attr('data-uid',uid);
-    modal.find('[data-role="article"]').loader({  //  로더 출력
-      position:   "inside"
-    });
+     var is_post_liked=result.is_post_liked;
+     var is_post_disliked=result.is_post_disliked;
+     var is_post_tag=result.is_post_tag;
 
-    setTimeout(function(){
-      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-           bid : bid,
-           uid : uid,
-           markup_file : markup,
-           mod : 'view'
-        },function(response){
-         modal.find('[data-role="article"]').loader("hide");
-         var result = $.parseJSON(response);
-         var _uid=result.uid;
-         var article=result.article;
-         var adddata=result.adddata;
-         var photo=result.photo;
-         var video=result.video;
-         var audio=result.audio;
-         var file=result.file;
-         var zip=result.zip;
-         var doc=result.doc;
-         var hidden=result.hidden;
-         var hidden_attach=result.hidden_attach;
-         var mypost=result.mypost;
+     var bbs_c_hidden=result.bbs_c_hidden;  // 댓글 사용여부
+     var theme_use_reply=result.theme_use_reply;
+     var theme_show_tag=result.theme_show_tag;
+     var theme_show_upfile=result.theme_show_upfile;
+     var theme_show_like=result.theme_show_like;
+     var theme_show_dislike=result.theme_show_dislike;
+     var theme_show_share=result.theme_show_share;
 
-         var is_post_liked=result.is_post_liked;
-         var is_post_disliked=result.is_post_disliked;
-         var is_post_tag=result.is_post_tag;
+     if (!_uid) {
+       history.back();
+       setTimeout(function(){
+         $.notify({message: '존재하지 않는 게시물 입니다.'},{type: 'default'});
+         $('[data-role="bbs-list"]').find('#item-'+uid).slideUp();
+       }, 600);
+     }
 
-         var bbs_c_hidden=result.bbs_c_hidden;  // 댓글 사용여부
-         var theme_use_reply=result.theme_use_reply;
-         var theme_show_tag=result.theme_show_tag;
-         var theme_show_upfile=result.theme_show_upfile;
-         var theme_show_like=result.theme_show_like;
-         var theme_show_dislike=result.theme_show_dislike;
-         var theme_show_share=result.theme_show_share;
+     page.find('[data-role="article"]').html(article);
 
-         if (!_uid) {
-           history.back();
-           setTimeout(function(){
-             $.notify({message: '존재하지 않는 게시물 입니다.'},{type: 'default'});
-             $('[data-role="bbs-list"]').find('#item-'+uid).slideUp();
-           }, 600);
-         }
+     Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
-         modal.find('[data-role="article"]').html(article);
+     // page.find('[data-role="linkShare"]').attr('data-url',url);
+     // page.find('.bar-nav [data-toggle="popover"]').attr('data-url',url);
 
-         Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
+     page.find('[data-toggle="popover"]').attr('data-uid',uid);
 
-         modal.find('[data-role="linkShare"]').attr('data-url',url);
-         modal.find('.bar-nav [data-toggle="popover"]').attr('data-url',url);
+     if (is_post_liked) page.find('[data-role="btn_post_like"]').addClass('active');
+     if (is_post_disliked) page.find('[data-role="btn_post_dislike"]').addClass('active')
 
-         modal.find('[data-toggle="popover"]').attr('data-uid',uid);
+     if (bbs_c_hidden) {
+      page.find('[data-role="btn_comment"]').remove()  // 좋아요 버튼 제거
+     }
 
-         if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
-         if (is_post_disliked) modal.find('[data-role="btn_post_dislike"]').addClass('active')
+     if (theme_show_like==0) {
+      page.find('[data-role="btn_post_like"]').remove()  // 좋아요 버튼 제거
+     }
+     if (theme_show_dislike==0) {
+      page.find('[data-role="btn_post_dislike"]').remove()  // 싫어요 버튼 제거
+     }
+     if (theme_show_share==0) {
+      page.find('[data-role="linkShare"]').remove()  // sns공유 버튼 제거
+     }
 
-         if (bbs_c_hidden) {
-          modal.find('[data-role="btn_comment"]').remove()  // 좋아요 버튼 제거
-         }
+     if (theme_show_tag==0 || !is_post_tag) {
+      page.find('[data-role="post_tags"]').remove()  // 테그목록 제거
+     }
 
-         if (theme_show_like==0) {
-          modal.find('[data-role="btn_post_like"]').remove()  // 좋아요 버튼 제거
-         }
-         if (theme_show_dislike==0) {
-          modal.find('[data-role="btn_post_dislike"]').remove()  // 싫어요 버튼 제거
-         }
-         if (theme_show_share==0) {
-          modal.find('[data-role="linkShare"]').remove()  // sns공유 버튼 제거
-         }
+     if (photo) {  // 첨부 이미지가 있을 경우
+       page.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+     }
 
-         if (theme_show_tag==0 || !is_post_tag) {
-          modal.find('[data-role="post_tags"]').remove()  // 테그목록 제거
-         }
+     if (video) {  // 첨부 비디오가 있을 경우
+       page.find('[data-role="attach-video"]').removeClass('hidden').html(video)
+       page.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
+     }
 
-         if (photo) {  // 첨부 이미지가 있을 경우
-           modal.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
-         }
+     if (audio) {  // 첨부 오디오가 있을 경우
+       page.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
+     }
 
-         if (video) {  // 첨부 비디오가 있을 경우
-           modal.find('[data-role="attach-video"]').removeClass('hidden').html(video)
-           modal.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
-         }
+     if (doc) {  // 첨부 문서 있을 경우
+       page.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
+     }
 
-         if (audio) {  // 첨부 오디오가 있을 경우
-           modal.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
-         }
+     if (zip) {  // 첨부 압축파일이 있을 경우
+       page.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
+     }
 
-         if (doc) {  // 첨부 문서 있을 경우
-           modal.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
-         }
+     if (file) {  // 첨부 기타파일이 있을 경우
+       page.find('[data-role="attach-file"]').removeClass('hidden').html(file)
+     }
 
-         if (zip) {  // 첨부 압축파일이 있을 경우
-           modal.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
-         }
+     if (theme_show_upfile==0) {
+      page.find('[data-role="attach"]').remove()  // 첨부목록 제거
+     }
 
-         if (file) {  // 첨부 기타파일이 있을 경우
-           modal.find('[data-role="attach-file"]').removeClass('hidden').html(file)
-         }
+     // 댓글 출력 함수 정의
+     var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
+       page.find('[data-role="bbs-comment"]').Rb_comment({
+        moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
+        parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
+        parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
+        theme_name : theme, // 댓글 테마
+        containerClass :'', // 본 엘리먼트(#commentting-container)에 추가되는 class
+        recnum: 5, // 출력갯수
+        commentPlaceHolder : '댓글을 입력해주세요.',
+        noMoreCommentMsg : '댓글 없음 ',
+        commentLength : 200, // 댓글 입력 글자 수 제한
+        toolbar : ['imageUpload'] // 툴바 항목
+       });
+     }
+     // 댓글 출력 함수 실행
+     var p_module = 'bbs';
+     var p_table = 'rb_bbs_data';
+     var p_uid = uid; // 게시물 고유번호 적용
+     var theme = ctheme;
 
-         if (theme_show_upfile==0) {
-          modal.find('[data-role="attach"]').remove()  // 첨부목록 제거
-         }
+     if (!hidden && _uid) {
+       get_Rb_Comment(p_module,p_table,p_uid,theme);
+     }
 
-         // 댓글 출력 함수 정의
-         var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
-           modal.find('[data-role="bbs-comment"]').Rb_comment({
-            moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
-            parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
-            parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
-            theme_name : theme, // 댓글 테마
-            containerClass :'', // 본 엘리먼트(#commentting-container)에 추가되는 class
-            recnum: 5, // 출력갯수
-            commentPlaceHolder : '댓글을 입력해주세요.',
-            noMoreCommentMsg : '댓글 없음 ',
-            commentLength : 200, // 댓글 입력 글자 수 제한
-            toolbar : ['imageUpload'] // 툴바 항목
-           });
-         }
-         // 댓글 출력 함수 실행
-         var p_module = 'bbs';
-         var p_table = 'rb_bbs_data';
-         var p_uid = uid; // 게시물 고유번호 적용
-         var theme = ctheme;
+     $('#popover-bbs-view').find('[data-role="toolbar"]').remove();  //popover 항목 초기화
 
-         if (!hidden && _uid) {
-           get_Rb_Comment(p_module,p_table,p_uid,theme);
+     if (memberid) {  // 로그인 상태 일때
+      var item_memberid = '<li class="table-view-cell" data-toggle="postSaved" data-send="ajax" data-role="toolbar" data-history="back">저장하기</li>';
+      $('#popover-bbs-view').find('.table-view').prepend(item_memberid)  // 수정,삭제 버튼을 추가함
+     }
 
-           setTimeout(function(){
-             page.find('[data-role="subject"]').text(subject)
-             page.find('[data-role="cat"]').text(cat)
-           }, 300);
-         }
+     if (mypost) {  // 내글이 아니거나 관리자 일때
+      var items_mypost = '<li class="table-view-cell" data-toggle="postEdit" data-history="back" data-role="toolbar">수정하기</li><li class="table-view-cell" data-toggle="PostDelete" data-role="toolbar">삭제하기</li>';
+      $('#popover-bbs-view').find('.table-view').prepend(items_mypost)  // 수정,삭제 버튼을 추가함
+     }
 
-         //댓글영역 바로가기 일 경우,
-         if (move=='comment') {
-           setTimeout(function(){
-             var top = page.find('[data-role="comment-box"]').offset().top;  // 타켓의 위치값
-             var bar_height = page.find('.bar-nav').height();  // bar-nav의 높이값
-             page.find('.content').animate({ scrollTop: (top-bar_height)-15 }, 100);
-           }, 200);
-         }
+     if (hidden || hidden_attach) {  // 권한이 없거나 비밀글 이거나 첨부파일 권한이 없을 경우 일때
+      page.find('[data-role="attach-photo"]').empty()
+      page.find('[data-role="attach-video"]').empty()
+      page.find('[data-role="attach-audio"]').empty()
+      page.find('[data-role="attach-file"]').empty()
+     }
 
-         $('#popover-bbs-view').find('[data-role="toolbar"]').remove();  //popover 항목 초기화
-
-         if (memberid) {  // 로그인 상태 일때
-          var item_memberid = '<li class="table-view-cell" data-toggle="postSaved" data-send="ajax" data-role="toolbar" data-history="back">저장하기</li>';
-          $('#popover-bbs-view').find('.table-view').prepend(item_memberid)  // 수정,삭제 버튼을 추가함
-         }
-
-         if (mypost) {  // 내글이 아니거나 관리자 일때
-          var items_mypost = '<li class="table-view-cell" data-toggle="postEdit" data-history="back" data-role="toolbar">수정하기</li><li class="table-view-cell" data-toggle="PostDelete" data-role="toolbar">삭제하기</li>';
-          $('#popover-bbs-view').find('.table-view').prepend(items_mypost)  // 수정,삭제 버튼을 추가함
-         }
-
-         if (hidden || hidden_attach) {  // 권한이 없거나 비밀글 이거나 첨부파일 권한이 없을 경우 일때
-          modal.find('[data-role="attach-photo"]').empty()
-          modal.find('[data-role="attach-video"]').empty()
-          modal.find('[data-role="attach-audio"]').empty()
-          modal.find('[data-role="attach-file"]').empty()
-         }
-
-      });
-    }, 300);
-
-  })
-
-  //  게시물보기 모달이 보여진 후에..
-   $(mid).on('shown.rc.'+type, function(event) {
-    var ele = $(event.relatedTarget) // element that triggered the modal
-    var uid = ele.data('uid') // 게시물 고유번호 추출
-    var modal = $(this);
-   });
+  });
 
    //링크공유 버튼을 터치 할때
-   $(mid).on('tap','#btn-linkShare',function(){
+   page.on('tap','#btn-linkShare',function(){
      if (navigator.share === undefined) {  //webshare.api가 지원되지 않는 환경
   			popup_linkshare.popup('show')
   		} else {
@@ -249,13 +189,13 @@ function getBbsData(settings){
    });
 
    //좋아요,싫어요
-   $(mid).on('tap','[data-toggle="opinion"]',function(){
+   page.on('tap','[data-toggle="opinion"]',function(){
      var send = $(this).data('send')
      var uid = $(this).data('uid')
      var opinion = $(this).data('opinion')
      var effect = $(this).data('effect')
      var myid = $(this).data('myid')
-     var bid = $(mid).find('[name="bid"]').val()
+     var bid = page.find('[name="bid"]').val()
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=opinion',{
        send : send,
        opinion : opinion,
@@ -337,33 +277,16 @@ function getBbsData(settings){
        });
      });
 
-   //게시물보기 모달(페이지)이 닫혔을 때
-   $(mid).on('hidden.rc.'+type, function() {
-      var modal = $(this);
-      var uid = modal.find('[name="uid"]').val()
-      var list_parent =  $('[data-role="bbs-list"]').find('#item-'+uid)
-      modal.find('.bar-nav [data-role="toolbar"]').removeAttr('data-uid')
-      list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
-      modal.find('[name="uid"]').val('')
-      modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
-
-      modal.find('[data-role="attach-photo"]').addClass('hidden').empty() // 사진 영역 초기화
-      modal.find('[data-role="attach-video"]').addClass('hidden').empty() // 비디오 영역 초기화
-      modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
-      modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
-      modal.find('[data-role="bbs-comment"]').html(''); // 댓글영역 내용 비우기
-   });
 
 	 // 게시물 보기 에서 댓글이 등록된 이후에 ..
-   $(mid).find('[data-role="bbs-comment"]').on('saved.rb.comment',function(){
+   page.find('[data-role="bbs-comment"]').on('saved.rb.comment',function(){
      window.history.back(); //댓글작성 sheet 내림
-     var modal = $(mid)
-     var bid = modal.find('[name="bid"]').val()
-     var uid = modal.find('[name="uid"]').val()
-     var theme = modal.find('[name="theme"]').val()
+     var bid = page.find('[name="bid"]').val()
+     var uid = page.find('[name="uid"]').val()
+     var theme = page.find('[name="theme"]').val()
 		 var list_item = $('[data-role="bbs-list"]').find('#item-'+uid)
      var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-     var showComment_Ele_2 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+     var showComment_Ele_2 = page.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 	   var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
@@ -381,15 +304,14 @@ function getBbsData(settings){
    });
 
    // 게시물 보기 모달에서 한줄의견이 등록된 이후에..
-   $(mid).find('[data-role="bbs-comment"]').on('saved.rb.oneline',function(){
+   page.find('[data-role="bbs-comment"]').on('saved.rb.oneline',function(){
      window.history.back(); //댓글작성 sheet 내림
-     var modal = $(mid)
-     var bid = modal.find('[name="bid"]').val()
-     var uid = modal.find('[name="uid"]').val()
-     var theme = modal.find('[name="theme"]').val()
+     var bid = page.find('[name="bid"]').val()
+     var uid = page.find('[name="uid"]').val()
+     var theme = page.find('[name="theme"]').val()
  		 var list_item = $('[data-role="bbs-list"]').find('#item-'+uid)
      var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-     var showComment_Ele_2 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+     var showComment_Ele_2 = page.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 
 	   var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
@@ -407,7 +329,7 @@ function getBbsData(settings){
    });
 
    // 댓글이 수정된 후에..
-   $(mid).find('[data-role="bbs-comment"]').on('edited.rb.comment',function(){
+   page.find('[data-role="bbs-comment"]').on('edited.rb.comment',function(){
      setTimeout(function(){
        history.back()
        $.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
@@ -415,7 +337,7 @@ function getBbsData(settings){
    })
 
  // 한줄의견이 수정 후에
- $(mid).find('[data-role="bbs-comment"]').on('edited.rb.oneline',function(){
+ page.find('[data-role="bbs-comment"]').on('edited.rb.oneline',function(){
    setTimeout(function(){
      history.back()
      $.notify({message: '답글이 수정 되었습니다.'},{type: 'default'});
@@ -509,7 +431,7 @@ function getBbsData(settings){
   $(document).on('tap','[data-toggle="PostDelete"]',function() {
 
     var uid = $(this).data('uid');
-    var bid = $(mid).find('[name="bid"]').val();
+    var bid = page.find('[name="bid"]').val();
 
     history.back();
 

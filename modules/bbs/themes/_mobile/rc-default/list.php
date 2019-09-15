@@ -27,7 +27,7 @@
 
         <!-- 전체글 -->
         <div class="swiper-slide" id="swiper-post" data-hash="post">
-          <div data-role="post"></div>
+          <div data-pullToRefresh="true" data-role="post"></div>
         </div><!-- /.swiper-slide -->
 
         <!-- 공지 -->
@@ -43,6 +43,12 @@
         <div class="swiper-slide" data-hash="category">
           <ul class="table-view bg-white border-top-0 mt-0">
             <li class="table-view-divider"><?php echo $_catexp[0]?></li>
+            <li class="table-view-cell">
+              <a data-act="reset" data-text="전체글 보기..">
+                <span class="badge badge-pill"><?php echo $NUM ?></span>
+                <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> 전체
+              </a>
+            </li>
             <?php for($i = 1; $i < $_catnum; $i++):if(!$_catexp[$i])continue;?>
             <li class="table-view-cell">
               <a data-act="category" data-cat="<?php echo $_catexp[$i]?>" data-text="<?php echo $_catexp[$i]?> 분류">
@@ -88,32 +94,62 @@
 
 </section>
 
+<!-- Page : 게시물 보기 -->
 <section id="page-bbs-view" class="page right" data-role="bbs-view">
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="theme" value="">
-  <header class="bar bar-nav bar-dark bg-primary p-x-0" data-scroll-header>
+  <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
 		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
+
     <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
-    <h1 class="title" data-role="title" data-history="back">
-      <?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?>
-    </h1>
+
+    <a class="btn-nav pull-right icon px-3" id="btn-linkShare"
+      data-role="linkShare"
+      data-subject="{$subject}"
+      data-url=""
+      data-likes="{$likes}"
+      data-image="{$featured_img}"
+      data-desc="">
+      <i class="fa fa-share" aria-hidden="true"></i>
+    </a>
+
   </header>
   <div class="content">
-    <div class="content-padded" data-role="post">
-      <span data-role="cat" class="badge badge-primary badge-inverted">카테고리</span>
-      <h3 data-role="subject" class="rb-article-title">게시물 제목</h3>
-    </div>
 
+    <div class="clearfix content-padded">
+
+      <div class="pull-xs-left">
+
+        <div class="media" style="width:15rem">
+          <img class="media-object pull-left rb-avatar img-circle bg-faded" src="" style="width:2.25rem;height:2.25rem" data-role="avatar">
+          <div class="media-body rb-meta m-l-1">
+            <span class="badge badge-default badge-inverted" data-role="name"></span> <br>
+            <span class="badge badge-default badge-inverted" data-role="d_regis"></span>
+            <span class="badge badge-default badge-inverted">조회 <span data-role="hit"></span></span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pull-xs-right pt-1">
+        <button type="button" class="btn btn-outline-secondary" data-toggle="move" data-target="[data-role='comment-box']" data-page="#page-bbs-view" data-role="btn_comment">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+          <span data-role="total_comment" class="badge badge-default badge-inverted"></span>
+        </button>
+      </div>
+
+    </div><!-- /.clearfix -->
+    <hr>
+    <div class="content-padded" data-role="post">
+      <span data-role="cat" class="badge badge-primary badge-inverted"></span>
+      <h3 data-role="subject" class="rb-article-title"></h3>
+    </div>
     <div data-role="article">
       <div class="p-4 text-xs-center">다시 시도해주세요.</div>
     </div>
 
     <div data-role="attach">
-
-      <!-- 유튜브 -->
-      <div class="card-group mb-3 hidden" data-role="attach-youtube">
-      </div>
 
       <!-- 비디오 -->
       <div class="mb-3 hidden" data-role="attach-video">
@@ -138,6 +174,7 @@
   </div>
 </section>
 
+<!-- Page : 게시물 사진 크게보기 -->
 <section id="page-bbs-photo" class="page right" data-role="bbs-photo">
   <header class="bar bar-nav bar-dark bg-black px-0" style="opacity: 0.3;">
     <a class="icon icon-left-nav pull-left text-white p-x-1" role="button" data-history="back"></a>
@@ -161,7 +198,36 @@
   </div>
 </section>
 
+<!-- Page : 게시물 좋아요한 사람 -->
+<section id="page-bbs-opinion"  class="page right" data-role="bbs-opinion">
+  <input type="hidden" name="bid" value="">
+  <input type="hidden" name="uid" value="">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
+    <a href="#popover-link-more" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
+    <h1 class="title title-left">좋아요한 사람</h1>
+  </header>
+  <div class="content">
+    <div class="content-padded" data-role="post">
+      <h3 data-role="subject" class="rb-article-title line-clamp-3">게시물 제목</h3>
+      <span data-role="cat" class="badge badge-primary badge-inverted">카테고리</span>
+    </div>
+
+    <div class="text-xs-center my-4">
+      <button type="button" class="btn btn-outline-secondary btn-lg" data-send="ajax" data-toggle="opinion" data-uid="" data-opinion="like" data-effect="heartbeat" data-role="btn_post_like">
+        <i class="fa fa fa-heart-o fa-fw fa-lg" aria-hidden="true"></i>
+        <span data-role="likes_17351" class="badge badge-inverted"></span>
+      </button>
+    </div>
+
+    <!-- 좋아요 목록 -->
+    <ul class="table-view" data-role="list"></ul>
+
+  </div>
+</section>
+
 <link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
+<script src="<?php echo $g['url_module_skin'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
 <script src="<?php echo $g['url_module_skin'] ?>/_js/getBbsList.js<?php echo $g['wcache']?>" ></script>
 <script src="<?php echo $g['url_module_skin'] ?>/_js/getBbsData.js<?php echo $g['wcache']?>" ></script>
 
@@ -210,5 +276,6 @@
 
   getBbsList(settings_list,category,keyword); // 목록 셋팅
   getBbsData(settings_view); // 게시물 보기
+
 
 </script>

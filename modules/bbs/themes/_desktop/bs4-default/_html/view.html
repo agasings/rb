@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-between my-2 mx-3">
 
-  <div class="media">
+  <div class="media" style="width:200px">
     <img class="mr-3 border rounded-circle" src="{$avatar}" style="width:48px" data-toggle="popover" data-content="{$name}" role="button">
     <div class="media-body">
-      <span data-toggle="popover" data-content="{$name}" role="button">{$name}</span> <br>
-      <span>{$date}</span>
-      <span>조회 {$hit}</span>
+      <span class="d-block" data-toggle="popover" data-content="{$name}" role="button">{$name}</span>
+      <small>{$date}</small>
+      <small>조회 {$hit}</small>
     </div>
   </div>
 

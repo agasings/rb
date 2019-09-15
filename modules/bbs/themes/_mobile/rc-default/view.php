@@ -1,268 +1,148 @@
-<section class="rb-bbs-view" data-uid="<?php echo $R['uid'] ?>" data-bid="<?php echo $B['id'] ?>">
+<section id="page-bbs-view" class="page center" data-role="bbs-view" data-bid="<?php echo $bid?>" data-uid="<?php echo $uid?>">
 	<header class="bar bar-nav bar-dark bg-primary px-0">
 		<a class="btn btn-link btn-nav pull-left p-x-1" href="<?php echo RW(0)?>">
 	    <span class="icon icon-home"></span>
 	  </a>
-		<?php if ($my['uid']): ?>
-		<a class="icon icon icon-gear pull-right p-x-1" role="button" href="<?php echo RW('mod=settings') ?>" title="개인정보수정"></a>
-		<?php else: ?>
+		<?php if (!$my['uid']): ?>
 		<a class="icon icon-person pull-right p-x-1" role="button" data-toggle="modal" href="#modal-login" data-title="로그인"></a>
 		<?php endif; ?>
-		<a class="title" href="<?php echo RW(0)?>"><?php echo stripslashes($d['layout']['header_title'])?></a>
+		<a class="title" data-href="<?php echo RW(0)?>"><?php echo stripslashes($d['layout']['header_title'])?></a>
 	</header>
 
 	<div class="bar bar-standard bar-header-secondary bar-light bg-faded">
 		<button class="btn btn-secondary pull-left js-btn-href" data-href="<?php echo $g['bbs_list']?>">
 			목록
 		</button>
-	  <a class="title" href="<?php echo $g['bbs_list']?>"><?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?></a>
+	  <a class="title" data-href="<?php echo $g['bbs_list']?>">
+			<?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?>
+		</a>
 	</div>
 
-	<main class="content">
-		<div class="mb-3" data-role="post">
-			<div class="content-padded">
-				<span class="badge badge-primary badge-inverted"><?php echo $R['category']?></span>
-				<h3 class="rb-article-title"><?php echo $R['subject']?></h3>
-				<div class="clearfix">
+  <div class="content">
 
-					<div class="pull-xs-left">
+    <div class="clearfix content-padded">
 
-						<div class="media">
-							<img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84','') ?>"  width="42" height="42">
-							<div class="media-body m-l-1 rb-meta">
-								<span class="badge badge-default badge-inverted" data-role="regis_name"><?php echo $R[$_HS['nametype']]?></span> <br>
-								<span class="badge badge-default badge-inverted" data-role="regis_time"><?php echo getDateFormat($R['d_regis'],$d['theme']['date_viewf'])?></span>
-								<span class="badge badge-default badge-inverted">조회 <?php echo $R['hit']?></span>
-							</div>
-						</div>
+      <div class="pull-xs-left">
 
-					</div>
+        <div class="media" style="width:15rem">
+          <img class="media-object pull-left rb-avatar img-circle bg-faded" src="<?php echo getAvatarSrc($R['mbruid'],'84','') ?>" style="width:2.25rem;height:2.25rem" data-role="avatar">
+          <div class="media-body rb-meta m-l-1">
+            <span class="badge badge-default badge-inverted"><?php echo $R[$_HS['nametype']]?></span> <br>
+            <span class="badge badge-default badge-inverted"><?php echo getDateFormat($R['d_regis'],$d['theme']['date_viewf'])?></span>
+            <span class="badge badge-default badge-inverted">조회 <?php echo $R['hit']?></span>
+          </div>
+        </div>
 
-					<div class="pull-xs-right">
-						<?php if(!$d['bbs']['c_hidden']):?>
-						<button type="button" class="btn btn-outline-secondary js-moveComments">
-							<i class="fa fa-comment-o" aria-hidden="true"></i>
-							<span class="badge badge-primary badge-inverted" data-role="total_comment">
-								<?php echo $R['comment']?><?php echo $R['oneline']?'+'.$R['oneline']:''?>
-							</span>
-						</button>
-						<?php endif?>
-						<?php if($d['theme']['show_share']):?>
-						<button type="button" class="btn btn-outline-secondary" id="btn-linkShare"
-				      data-role="linkShare"
-				      data-subject="<?php echo $R['subject']?>"
-							data-url="<?php echo $g['bbs_view'] ?><?php echo $R['uid']?>"
-							data-likes="<?php echo $R['likes']?>"
-							data-image="<?php echo getPreviewResize(getUpImageSrc($R),'c') ?>"
-							data-desc="<?php echo $g['browtitle']?>">
-				      <i class="fa fa-share-alt" aria-hidden="true"></i>
-				    </button>
-						<?php endif?>
-					</div>
+      </div>
 
-				</div><!-- /.clearfix -->
-			</div><!-- /.content-padded -->
+      <div class="pull-xs-right pt-1">
+        <button type="button" class="btn btn-outline-secondary" data-toggle="move" data-target="[data-role='comment-box']" data-page="#page-bbs-view" data-role="btn_comment">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+          <span data-role="total_comment" class="badge badge-default badge-inverted">
+						<?php echo $R['comment']?><?php echo $R['oneline']?'+'.$R['oneline']:''?>
+					</span>
+        </button>
+      </div>
 
-			<hr>
+    </div><!-- /.clearfix -->
+    <hr>
+    <div class="content-padded" data-role="post">
+      <span data-role="cat" class="badge badge-primary badge-inverted"><?php echo $R['category']?></span>
+      <h3 class="rb-article-title"><?php echo $R['subject']?></h3>
+    </div>
+    <div data-role="article">
 
-			<article class="rb-article ck-content">
-				<?php echo getContents($R['content'],$R['html'])?>
-			</article>
+    </div>
 
-			<!-- 좋아요 or 싫어요 -->
-			<div class="content-padded text-xs-center my-4" >
+    <div data-role="attach">
 
-				<?php if($d['theme']['show_like']):?>
-				<button type="button" class="btn btn-secondary btn-lg<?php if($is_liked):?> active<?php endif?>"
-					data-act="opinion"
-					data-url="<?php echo $g['bbs_action']?>opinion&amp;opinion=like&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-					data-role="btn_like">
-					<i class="fa fa fa-heart-o fa-fw" aria-hidden="true"></i> <strong></strong>
-					<span data-role='likes_<?php echo $R['uid']?>' class="badge badge-inverted"><?php echo $R['likes']?></span>
-				</button>
-				<?php endif?>
+      <!-- 비디오 -->
+      <div class="mb-3 hidden" data-role="attach-video">
+      </div>
 
-				<?php if($d['theme']['show_dislike']):?>
-				<button type="button" class="btn btn btn-secondary btn-lg<?php if($is_disliked):?> active<?php endif?>"
-					data-act="opinion"
-					data-url="<?php echo $g['bbs_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-					data-role="btn_dislike">
-					<i class="fa fa-thumbs-o-down fa-fw" aria-hidden="true"></i> <strong></strong>
-					<span data-role='dislikes_<?php echo $R['uid']?>' class="badge badge-inverted"><?php echo $R['dislikes']?></span>
-				</button>
-				<?php endif?>
+      <!-- 오디오 -->
+      <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-audio">
+      </ul>
 
-			</div>
+      <!-- 이미지 -->
+      <div class="card-group mb-3 hidden" data-role="attach-photo" data-plugin="photoswipe">
+      </div>
 
-			<!-- 태그 -->
-			<?php if($R['tag']&&$d['theme']['show_tag']):?>
-			<div class="tag content-padded  mt-4">
-  			<?php $_tags=explode(',',$R['tag'])?>
-  			<?php $_tagn=count($_tags)?>
-  			<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
-  			<?php $_tagk=trim($_tags[$i])?>
-  			<a class="badge badge-primary badge-outline" href="<?php echo $g['bbs_orign']?>&amp;where=subject|tag&amp;keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
-  			<?php endfor?>
-			</div>
-			<?php endif?>
+      <!-- 기타파일 -->
+      <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-file">
+      </ul>
+    </div>
 
-			<!-- 첨부파일 인클루드 -->
-			<?php if($d['upload']['data']&&$d['theme']['show_upfile']&&$attach_file_num>0):?>
-			<aside class="mt-4">
-				<?php include $g['dir_module_skin'].'_attachment.php'?>
-			</aside>
-			<?php endif?>
+    <!-- 댓글출력 -->
+    <div data-role="bbs-comment"></div>
 
-		</div>
-
-		<div class="nav nav-control content-padded my-4">
-			<?php if($my['admin'] || $my['uid']==$R['mbruid']):?>
-			<a class="nav-link" role="button" href="<?php echo $g['bbs_modify'].$R['uid']?>">수정</a>
-			<a class="nav-link" role="button" href="<?php echo $g['bbs_delete'].$R['uid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">
-				삭제
-			</a>
-			<?php endif?>
-			<?php if($d['theme']['use_reply']):?>
-			<a class="nav-link" role="button" href="<?php echo $g['bbs_reply'].$R['uid']?>">답변</a>
-			<?php endif?>
-		</div>
-
-		<!-- 댓글 인클루드 -->
-
-
-
-	</main>
+  </div>
 </section>
 
+<!-- Page : 게시물 사진 크게보기 -->
+<section id="page-bbs-photo" class="page right" data-role="bbs-photo">
+  <header class="bar bar-nav bar-dark bg-black px-0" style="opacity: 0.3;">
+    <a class="icon icon-left-nav pull-left text-white p-x-1" role="button" data-history="back"></a>
+   <h1 class="title" data-role="title" data-history="back"></h1>
+  </header>
+  <div class="bar bar-footer bar-dark bg-black text-muted" style="opacity: 0.3;">
+    <span class="title"><small>이미지를 터치해서 확대해서 볼 수 있습니다.</small></span>
+  </div>
+  <div class="content bg-black py-0">
+    <div class="d-flex" style="height:100vh">
+      <div class="swiper-container align-self-center" style="height:100vh">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" style="height:100vh;overflow:hidden">
+            <div class="swiper-zoom-container">
+              <img src="">
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
 
-<script type="text/javascript">
+<!-- Page : 게시물 좋아요한 사람 -->
+<section id="page-bbs-opinion"  class="page right" data-role="bbs-opinion">
+  <input type="hidden" name="bid" value="">
+  <input type="hidden" name="uid" value="">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
+    <a href="#popover-link-more" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
+    <h1 class="title title-left">좋아요한 사람</h1>
+  </header>
+  <div class="content">
+    <div class="content-padded" data-role="post">
+      <h3 data-role="subject" class="rb-article-title line-clamp-3">게시물 제목</h3>
+      <span data-role="cat" class="badge badge-primary badge-inverted">카테고리</span>
+    </div>
 
-$(function() {
+    <div class="text-xs-center my-4">
+      <button type="button" class="btn btn-outline-secondary btn-lg" data-send="ajax" data-toggle="opinion" data-uid="" data-opinion="like" data-effect="heartbeat" data-role="btn_post_like">
+        <i class="fa fa fa-heart-o fa-fw fa-lg" aria-hidden="true"></i>
+        <span data-role="likes_17351" class="badge badge-inverted"></span>
+      </button>
+    </div>
 
-	var post_area = $('[data-role="post"]')
-	var popup_linkshare = $('#popup-link-share')  //링크공유 팝업
-  var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
+    <!-- 좋아요 목록 -->
+    <ul class="table-view" data-role="list"></ul>
 
-	var post_height = post_area.height(); // 게시물 영역의 높이
-	post_area.attr('height',post_height)
+  </div>
+</section>
 
-  //게시물 본문에 삽입된 이미지를 본문에 맞추는 클래스 추가
-  $('.rb-article').find('img').addClass('img-fluid')
+<link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
+<script src="<?php echo $g['url_module_skin'] ?>/_js/setBbsData.js<?php echo $g['wcache']?>" ></script>
 
-	// 게시물 보기(랜딩) 댓글 바로가기 버튼
-	$('#page-bbs-view').find(".js-moveComments").click(function() { // 댓글 컨테이너로 이동
-		$('.content').animate({scrollTop : post_height}, 200);
-	});
+<script>
 
-	// 폰의 키보드가 올라왔을때, 댓글 입력창 위치 재조정
-	var _originalSize = $(window).width() + $(window).height()
+	var settings={
+	  bid      : '<?php echo $bid?>',
+		uid      : '<?php echo $uid?>',
+		markup   : 'view',
+	  ctheme    : '<?php echo $d['bbs']['c_mskin']?>' // 댓글테마
+	}
 
-	$(window).resize(function(){
-		if($(window).width() + $(window).height() != _originalSize){
-			console.log("키보드 올라옴");
-			$('.content').animate({scrollTop : post_height}, 100);
-			return true;
-		}else{
-			console.log("키보드 내려감");
-			return false;
-		}
-	});
+	setBbsData(settings); // 게시물 보기
 
-
-	$("#btn-linkShare").tap(function(){
-		if (navigator.share === undefined) {  //webshare.api가 지원되지 않는 환경
-			popup_linkshare.popup('show')
-		} else {
-			var ele = $(this)
-		  var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
-		  var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
-			var host = $(location).attr('origin');
-			var path = ele.attr('data-url')?ele.attr('data-url'):''
-			var link = host+path // 게시물 보기 URL
-			navigator.share({
-	        title: sbj,
-	        text: desc,
-	        url: link,
-	    })
-      .then(() => console.log('성공적으로 공유되었습니다.'))
-      .catch((error) => console.log('공유에러', error));
-		}
-	});
-
-
-	//링크 공유 팝업이 열릴때
-	popup_linkshare.on('shown.rc.popup', function (event) {
-	  var ele = $(event.relatedTarget)
-	  var path = ele.attr('data-url')?ele.attr('data-url'):''
-	  var host = $(location).attr('origin');
-		var title = '링크공유' // 버튼에서 제목 추출
-	  var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
-	  var email = ele.attr('data-email')?ele.attr('data-email'):'' // 버튼에서 이메일 추출
-	  var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
-	  var image = ele.attr('data-image')?ele.attr('data-image'):'' // 버튼에서 대표이미지 경로 추출
-	  var likes = ele.attr('data-likes')?ele.attr('data-likes'):'' // 버튼에서 좋아요 수 추출
-	  var comment = ele.attr('data-comment')?ele.attr('data-comment'):'' // 버튼에서 댓글수 추출
-	  var popup = $(this)
-
-	  var link = host+path // 게시물 보기 URL
-	  var imageUrl = host+image // 대표이미지 URL
-	  var enc_link = encodeURIComponent(host+path) // URL 인코딩
-	  var enc_sbj = encodeURIComponent(sbj) // 제목 인코딩
-	  var facebook = 'http://www.facebook.com/sharer.php?u=' + enc_link;
-	  var twitter = 'https://twitter.com/intent/tweet?url=' + enc_link + '&text=' + sbj;
-	  var naver = 'http://share.naver.com/web/shareView.nhn?url=' + enc_link + '&title=' + sbj;
-	  var kakaostory = 'https://story.kakao.com/share?url=' + enc_link + '&title=' + enc_sbj;
-	  var email = 'mailto:' + email + '?subject=링크공유-' + enc_sbj+'&body='+ enc_link;
-		popup.find('[data-role="title"]').text(title)
-	  popup.find('[data-role="share"]').val(host+path)
-	  popup.find('[data-role="share"]').focus(function(){
-	    $(this).on("mouseup.a keyup.a", function(e){
-	      $(this).off("mouseup.a keyup.a").select();
-	    });
-	  });
-
-	  popup.find('[data-role="facebook"]').attr('href',facebook)
-	  popup.find('[data-role="twitter"]').attr('href',twitter)
-	  popup.find('[data-role="naver"]').attr('href',naver)
-	  popup.find('[data-role="kakaostory"]').attr('href',kakaostory)
-	  popup.find('[data-role="email"]').attr('href',email)
-
-		//카카오 링크
-		function sendLink() {
-			Kakao.Link.sendDefault({
-				objectType: 'feed',
-				content: {
-					title: sbj,
-					description: desc,
-					imageUrl: imageUrl,
-					link: {
-						mobileWebUrl: link,
-						webUrl: link
-					}
-				},
-				buttons: [
-					{
-						title: '바로가기',
-						link: {
-							mobileWebUrl: link,
-							webUrl: link
-						}
-					},
-				]
-			});
-		}
-
-		//카카오톡 링크공유
-		kakao_link_btn.click(function() {
-			 sendLink()
-		 });
-
-	})
-
-
-
-	//이미지 캡션에 적용된 줄바꿈 태그 제거
-	$('.ck-content figcaption br').remove()
-
-});
 </script>
