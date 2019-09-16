@@ -19,7 +19,7 @@ RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/([0-9]+)/?$ ./index.php?m=bbs&bid=$2
 RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/([0-9]+)/s([0-9]+)/?$ ./index.php?m=bbs&bid=$2&uid=$3&CMT=$4&s=$5#CMT [L]
 
 #대시보드
-#RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(dashboard)/?$ ./index.php?mod=dashboard&%1 [L]
 
 #사이트코드 확장
