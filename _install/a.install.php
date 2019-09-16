@@ -225,6 +225,7 @@ $pagesarray = array
 	'saved'=>array('저장함','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=saved'),
 	'noti'=>array('알림함','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=noti'),
 	'profile'=>array('프로필','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=profile'),
+	'dashboard'=>array('대시보드','1','0','1','bs4-starter/dashboard.php','rc-starter/dashboard.php','/?r='.$siteid.'&m=member&front=dashboard')
 );
 foreach($pagesarray as $_key => $_val)
 {
