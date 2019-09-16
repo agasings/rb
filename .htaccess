@@ -18,6 +18,10 @@ RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/s([0-9]+)/?$ ./index.php?m=bbs&bid=$
 RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/([0-9]+)/?$ ./index.php?m=bbs&bid=$2&uid=$3&CMT=$4#CMT [L]
 RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/([0-9]+)/s([0-9]+)/?$ ./index.php?m=bbs&bid=$2&uid=$3&CMT=$4&s=$5#CMT [L]
 
+#대시보드
+#RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^(dashboard)/?$ ./index.php?mod=dashboard&%1 [L]
+
 #사이트코드 확장
 RewriteRule ^([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1 [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(admin)/?$ ./index.php?r=$1&m=$2&mdule=$2 [L]
@@ -50,7 +54,7 @@ RewriteRule ^(@)([a-z-A-Z-0-9_]+)/?$ ./index.php?mod=profile&mbrid=$2&%1 [L]
 
 #검색
 RewriteCond %{QUERY_STRING} ^(.*)$
-RewriteRule ^(search)/?$ ./index.php?m=search&%1 [L]
+RewriteRule ^([a-zA-Z0-9_\-]+)/(search)/?$ ./index.php?r=$1&m=search&%1 [L]
 
 #timthumb
 RewriteCond %{QUERY_STRING} ^(.*)$
