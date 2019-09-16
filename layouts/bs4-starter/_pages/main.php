@@ -1,3 +1,5 @@
+<?php if ($my['uid'] && $d['layout']['main_dashboard']=='true') getLink('/dashboard','','','');?>
+
 <section>
 
   <div class="alert alert-warning text-center mt-5" role="alert">

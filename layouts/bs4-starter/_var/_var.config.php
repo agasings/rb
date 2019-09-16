@@ -27,6 +27,14 @@ $d['layout']['dom'] = array(
 		),
 	),
 
+	/* 메인 페이지 */
+	'main' => array(
+		'메인 페이지',
+		'데스크탑 메인페이지 설정을 관리합니다.',
+		array(
+			array('dashboard','select','로그인 후, 대시보드 이동','아니오=false,예=true'),
+		),
+	),
 
 	/* 도움말 */
 	'help' => array(

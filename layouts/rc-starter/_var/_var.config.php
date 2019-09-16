@@ -26,6 +26,15 @@ $d['layout']['dom'] = array(
 		),
 	),
 
+	/* 메인 페이지 */
+	'main' => array(
+		'메인 페이지',
+		'모바일 메인페이지 설정을 관리합니다.',
+		array(
+			array('dashboard','select','로그인 후, 대시보드 이동','아니오=false,예=true'),
+		),
+	),
+
 	/* 외부연결-카카오 */
 	'kakao' => array(
 		'카카오 연동',
