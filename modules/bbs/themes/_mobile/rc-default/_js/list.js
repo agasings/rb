@@ -158,9 +158,12 @@ $(document).ready(function() {
      },
      onRefresh() {
        location.reload();
-       //$('#page-bbs-list').find('[data-role="post"]').html('');
-       //getBbsList(settings_list,category,keyword);
      }
    });
 
+});
+
+$(window).load(function() {
+  var bbs_tab_swiper = document.querySelector('#page-bbs-list .swiper-container').swiper
+  bbs_tab_swiper.updateAutoHeight(10);
 });
