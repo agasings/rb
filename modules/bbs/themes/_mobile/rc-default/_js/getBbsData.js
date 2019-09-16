@@ -545,7 +545,7 @@ function getBbsData(settings){
   });
 
   //첨부된 사진 크게보기 페이지 호출
-  $(document).on('tap','figure.image',function(){
+  $(document).on('click','figure.image',function(){
     if (!$(this).hasClass('ck-widget')) {
       var page_start = $(this).closest('.page').attr('id');
       var src = $(this).find('img').attr('src')
