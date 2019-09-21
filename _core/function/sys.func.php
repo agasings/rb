@@ -819,8 +819,7 @@ function getConnectUrl($s,$id,$secret,$callBack,$type){
 	$g['connect']['state'] = $_SESSION['SL']['state'.$s];
 
 	if ($s == 'naver') {
-		$_type = $type?'&auth_type='.$type:'';
-		$g['connect'] = 'https://nid.naver.com/oauth2.0/authorize?client_id='.$g['connect']['client_id'].'&response_type=code&redirect_uri='.$g['connect']['redirect_uri'].'&state='.$g['connect']['state'].$_type;
+		$g['connect'] = 'https://nid.naver.com/oauth2.0/authorize?client_id='.$g['connect']['client_id'].'&response_type=code&redirect_uri='.$g['connect']['redirect_uri'].'&state='.$g['connect']['state'];
 	}
 	if ($s == 'kakao') {
 		$g['connect'] = 'https://kauth.kakao.com/oauth/authorize?client_id='.$g['connect']['client_id'].'&redirect_uri='.$g['connect']['redirect_uri'].'&response_type=code&scope=';
