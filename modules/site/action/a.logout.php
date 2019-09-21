@@ -4,8 +4,9 @@ if(!defined('__KIMS__')) exit;
 if ($my['uid'])
 {
 	getDbUpdate($table['s_mbrdata'],"now_log=0,sns=''",'memberuid='.$my['uid']);
-	$_SESSION['mbr_uid'] = '';
 	$_SESSION['mbr_logout'] = '1';
+	unset($_SESSION['mbr_uid']);
+	unset($_SESSION['SL']); //소셜로그인  세션 삭제
 	setAccessToken($my['uid'],'logout'); // 토큰 데이타 삭제 및 쿠키 초기화
 }
 
