@@ -7,6 +7,7 @@ $tmpname	= $_FILES['upfile']['tmp_name'];
 $realname	= $_FILES['upfile']['name'];
 $nameinfo	= explode('_',str_replace('.zip','',$realname));
 $plFolder	= $nameinfo[2];
+
 for($_i = 3; $_i < count($nameinfo); $_i++)
 {
 	$plFolder .= '_';
@@ -33,11 +34,16 @@ if (is_uploaded_file($tmpname))
 
 	move_uploaded_file($tmpname,$saveFile);
 
-	require $g['path_core'].'opensrc/unzip/ArchiveExtractor.class.php';
 	require $g['path_core'].'function/dir.func.php';
 
-	$extractor = new ArchiveExtractor();
-	$extractor -> extractArchive($saveFile,$extPath1);
+	$zip = new ZipArchive;
+	if ($zip->open($saveFile) === TRUE) {
+			$zip->extractTo($extPath1);
+			$zip->close();
+	} else {
+			echo 'failed';
+	}
+
 	unlink($saveFile);
 	mkdir($plfldPath,0707);
 	@chmod($plfldPath,0707);
@@ -49,6 +55,8 @@ if (is_uploaded_file($tmpname))
 else {
 	getLink('','','모듈 파일을 선택해 주세요.','');
 }
+
+
 
 $module		= $plFolder;
 $_tmptable2 = $table;
