@@ -178,7 +178,7 @@ include_once $g['path_module'].$m.'/themes/'.$d['bbs']['skin'].'/_var.php';
 if ($c) $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
 else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
 $g['bbs_list']	= $g['bbs_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['bbs']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['bbs_list'];
+$g['pagelink']	= $g['bbs_reset'];
 $g['bbs_orign'] = $g['bbs_reset'];
 $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 $g['bbs_write'] = $g['bbs_list'].'&amp;mod=write';

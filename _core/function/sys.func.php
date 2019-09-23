@@ -33,11 +33,6 @@ function getPageLink($lnum,$p,$tpage,$link)
 	include_once $GLOBALS['g']['path_core'].'function/lib/page.lib.php';
 	return LIB_getPageLink($lnum,$p,$tpage,$link);
 }
-function getPageLink_RC($lnum,$p,$tpage,$push,$link)
-{
-	include_once $GLOBALS['g']['path_core'].'function/lib/page.lib.php';
-	return LIB_getPageLink_RC($lnum,$p,$tpage,$push,$link);
-}
 //문자열끊기
 function getStrCut($long_str,$cutting_len,$cutting_str)
 {

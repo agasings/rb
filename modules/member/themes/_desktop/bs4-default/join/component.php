@@ -756,6 +756,7 @@ unset($_SESSION['SL']); //본인확인 세션 초기화
 	    			<input type="hidden" name="front" value="<?php echo $front?>">
 	    			<input type="hidden" name="a" value="join">
 	    			<input type="hidden" name="check_id" value="1">
+            <input type="hidden" name="check_name" value="1">
 	    			<input type="hidden" name="check_nic" value="0">
 	    			<input type="hidden" name="sns_access_token" value="<?php echo $sns_access_token?>">
 	    			<input type="hidden" name="sns_refresh_token" value="<?php echo $sns_refresh_token?>">
@@ -772,7 +773,7 @@ unset($_SESSION['SL']); //본인확인 세션 초기화
 
 	    			<div class="form-group">
 	    		    <label>이름</label>
-	    				<input type="text" class="form-control form-control-lg" name="name" id="name" value="<?php echo $name ?>" placeholder="이름" autocomplete="off"  placeholder="이름">
+	    				<input type="text" class="form-control form-control-lg" name="name" id="name" value="<?php echo $name ?>" placeholder="이름" autocomplete="off"  placeholder="이름" readonly>
 	    				<div class="invalid-feedback" id="name-feedback">이름을 입력해주세요.</div>
 	    		  </div>
 
