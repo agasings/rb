@@ -35,7 +35,7 @@ if(!defined('__KIMS__')) exit;
 getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');
 getImport('ckeditor5','decoupled-document/build/translations/ko','12.2.0','js');
 ?>
-
+<script src="<?php echo $g['s']?>/_core/js/ckeditor5.js"></script>
 <script>
   var attach_file_saveDir = '<?php echo $g['path_file']?>site/';// 파일 업로드 폴더
   var attach_module_theme = '_desktop/bs4-default-attach';// attach 모듈 테마
