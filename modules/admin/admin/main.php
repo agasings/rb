@@ -307,7 +307,7 @@
 							<select name="editor" class="form-control custom-select">
 								<?php $dirs = opendir($g['path_plugin'])?>
 								<?php while(false !== ($tpl = readdir($dirs))):?>
-								<?php if(!is_file($g['path_plugin'].$tpl.'/import.desktop.php'))continue?>
+								<?php if(!is_file($g['path_plugin'].$tpl.'/import.system.php'))continue?>
 								<option value="<?php echo $tpl?>"<?php if($d['admin']['editor']==$tpl):?> selected<?php endif?>><?php echo $tpl?></option>
 								<?php endwhile?>
 								<?php closedir($dirs)?>
