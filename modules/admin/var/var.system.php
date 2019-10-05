@@ -45,4 +45,5 @@ $d['admin']['sms_key'] = "";
 $d['admin']['fcm_key'] = "";
 $d['admin']['fcm_SenderId'] = "";
 $d['admin']['fcm_VAPID'] = "";
+$d['admin']['site_cutid'] = "admin,logout,files,dashboard,post,avatar,cover";
 ?>

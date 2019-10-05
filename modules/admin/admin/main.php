@@ -215,6 +215,18 @@
 			</div>
 		</div><!-- /.card -->
 
+		<div class="card mb-3">
+			<div class="card-header">
+				사이트 코드 제한
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+				  <label>사용제한 사이트 코드</label>
+				  <textarea class="form-control" name="site_cutid" rows="4"><?php echo $d['admin']['site_cutid']?></textarea>
+				  <small class="form-text text-muted">사용을 제한하려는 아이디를 콤마(,)로 구분해서 입력해 주세요.</small>
+				</div>
+			</div>
+		</div><!-- /.card -->
 
 		<div class="card mb-3">
 			<div class="card-header">

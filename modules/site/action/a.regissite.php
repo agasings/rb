@@ -18,7 +18,11 @@ $meta_image_src = trim($meta_image_src);
 if ($site_uid)
 {
 	$ISID = getDbData($Table['s_site'],"uid<>".$site_uid." and id='".$id."'",'*');
-	if ($ISID['uid']) getLink('','','이미 동일한 명칭의 계정아이디가 존재합니다.','');
+	if ($ISID['uid']) getLink('','','이미 동일한 명칭의 사이트 코드가 존재합니다.','');
+
+	if(strstr(','.$d['admin']['site_cutid'].',',','.$id.',')) {
+		getLink('','','사용할 수 없는 사이트 코드 입니다.','');
+	}
 
 	if ($iconaction)
 	{
@@ -67,7 +71,7 @@ else {
 	}
 
 	$ISID = getDbData($Table['s_site'],"id='".$id."'",'*');
-	if ($ISID['uid']) getLink('','','이미 동일한 명칭의 계정아이디가 존재합니다.','');
+	if ($ISID['uid']) getLink('','','이미 동일한 명칭의 사이트 코드가 존재합니다.','');
 
 	$MAXC = getDbCnt($table['s_site'],'max(gid)','');
 	$gid = $MAXC + 1;
