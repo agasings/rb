@@ -88,7 +88,7 @@
 						</button>
 						<?php if ($my['admin']): ?>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item text-danger" href="/?m=admin&pickmodule=site&panel=Y" target="_top">관리자모드</a>
+						<a class="dropdown-item text-danger" href="<?php echo RW('m=admin')?>" target="_top">관리자모드</a>
 						<?php endif; ?>
 				  </div>
 				</li>
