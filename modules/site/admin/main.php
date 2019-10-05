@@ -78,7 +78,7 @@ if ($R['uid'])
 			<input type="hidden" name="a" value="regissite">
 			<input type="hidden" name="site_uid" value="<?php echo $R['uid']?>">
 			<input type="hidden" name="seouid" value="<?php echo $_SEO['uid']?>">
-			<input type="hidden" name="usescode" value="1">
+			<input type="hidden" name="usescode" value="<?php echo !$R['gid']?0:1?>">
 			<input type="hidden" name="icon" value="<?php echo $R['icon']?$R['icon']:'fa fa-home'?>">
 			<input type="hidden" name="backgo" value="admin">
 			<input type="hidden" name="iconaction" value="">
