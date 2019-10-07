@@ -26,9 +26,6 @@
     <a href="<?php echo $g['url_reset']?>&amp;page=noti" class="list-group-item list-group-item-action<?php if($page=='noti'):?> selected<?php endif?>">
       알림 설정
     </a>
-    <a href="<?php echo $g['url_reset']?>&amp;page=point" class="list-group-item list-group-item-action<?php if($page=='point'):?> selected<?php endif?>">
-      포인트 내역
-    </a>
     <?php if ($g['push_active']): ?>
     <a href="<?php echo $g['url_reset']?>&amp;page=pwa" class="d-none list-group-item list-group-item-action<?php if($page=='pwa'):?> selected<?php endif?>">
       웹앱 설치내역
