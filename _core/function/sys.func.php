@@ -297,14 +297,23 @@ function RW($rewrite)
 	{
 		if(!$rewrite) return $GLOBALS['g']['r']?$GLOBALS['g']['r']:'/';
 		$rewrite = str_replace('c=','c/',$rewrite);
+		$rewrite = str_replace('m=post&mbruid=','@',$rewrite);
+		$rewrite = str_replace('m=post','post',$rewrite);
+		$rewrite = str_replace('&mod=write','/write',$rewrite);
+		$rewrite = str_replace('mod=dashboard','dashboard',$rewrite);
+		$rewrite = str_replace('mod=settings','settings',$rewrite);
+		$rewrite = str_replace('mod=profile&mbrid=','@',$rewrite);
 		$rewrite = str_replace('mod=','p/',$rewrite);
 		$rewrite = str_replace('m=admin','admin',$rewrite);
 		$rewrite = str_replace('m=bbs','b',$rewrite);
 		$rewrite = str_replace('&bid=','/',$rewrite);
 		$rewrite = str_replace('&uid=','/',$rewrite);
+		$rewrite = str_replace('&cid=','/',$rewrite);
 		$rewrite = str_replace('&CMT=','/',$rewrite);
+		$rewrite = str_replace('&page=','?page=',$rewrite);
 		$rewrite = str_replace('&s=','/s',$rewrite);
-		$rewrite = str_replace('m=member&front=profile&mbrid=','@',$rewrite);
+		$rewrite = str_replace('&cat=','/category/',$rewrite);
+
 		return $GLOBALS['g']['r'].'/'.$rewrite;
 	}
 	else return $GLOBALS['_HS']['usescode']?('./?r='.$GLOBALS['_HS']['id'].($rewrite?'&amp;'.$rewrite:'')):'./'.($rewrite?'?'.$rewrite:'');
@@ -439,6 +448,7 @@ function getThumbPic($width,$height,$crop,$img)
 //트리(@ 2.0.0)
 function getTreeMenu($conf,$code,$depth,$parent,$tmpcode)
 {
+	global $_HS;
 	$ctype = $conf['ctype']?$conf['ctype']:'uid';
 	$id = 'tree_'.filterstr(microtime());
 	$tree = '<div class="rb-tree"><ul id="'.$id.'">';
@@ -457,7 +467,7 @@ function getTreeMenu($conf,$code,$depth,$parent,$tmpcode)
 			$tree.= '<a data-toggle="collapse" href="#'.$id.'-'.$_i.'-'.$C['uid'].'" class="rb-branch'.($conf['allOpen']||$topen?'':' collapsed').'"></a>';
 			if ($conf['userMenu']=='link') $tree.= '<a href="'.RW('c='.$rcode).'"><span'.($code==$rcode?' class="rb-active"':'').'>';
 			else if($conf['userMenu']=='bookmark') $tree.= '<a data-scroll href="#rb-tree-menu-'.$C['id'].'"><span'.($code==$rcode?' class="rb-active"':'').'>';
-			else $tree.= '<a href="'.$conf['link'].$C['uid'].'&amp;code='.$rcode.($conf['bookmark']?'#'.$conf['bookmark']:'').'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			else $tree.= '<a href="'.$conf['link'].$C['uid'].($_HS['rewrite']?'?':'&amp;').'code='.$rcode.($conf['bookmark']?'#'.$conf['bookmark']:'').'"><span'.($code==$rcode?' class="rb-active"':'').'>';
 			if($conf['dispCheckbox']) $tree.= '<input type="checkbox" name="tree_members[]" value="'.$C['uid'].'">';
 			if($C['hidden']) $tree.='<u title="숨김" data-tooltip="tooltip">';
 			$tree.= $C['name'];
@@ -480,7 +490,7 @@ function getTreeMenu($conf,$code,$depth,$parent,$tmpcode)
 			$tree.= '<a href="#." class="rb-leaf"></a>';
 			if ($conf['userMenu']=='link') $tree.= '<a href="'.RW('c='.$rcode).'"><span'.($code==$rcode?' class="rb-active"':'').'>';
 			else if ($conf['userMenu']=='bookmark') $tree.= '<a data-scroll href="#rb-tree-menu'.$C['id'].'"><span'.($code==$rcode?' class="rb-active"':'').'>';
-			else $tree.= '<a href="'.$conf['link'].$C['uid'].'&amp;code='.$rcode.($conf['bookmark']?'#'.$conf['bookmark']:'').'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			else $tree.= '<a href="'.$conf['link'].$C['uid'].($_HS['rewrite']?'?':'&amp;').'code='.$rcode.($conf['bookmark']?'#'.$conf['bookmark']:'').'"><span'.($code==$rcode?' class="rb-active"':'').'>';
 			if($conf['dispCheckbox']) $tree.= '<input type="checkbox" name="tree_members[]" value="'.$C['uid'].'">';
 			if($C['hidden']) $tree.='<u title="숨김" data-tooltip="tooltip">';
 			$tree.= $C['name'];
@@ -687,7 +697,7 @@ function getCoverSrc($mbruid,$width,$height){
 function getProfileLink($mbruid) {
 	global $g,$table;
 	$M = getUidData($table['s_mbrid'],$mbruid);
-	$result = $g['s'].'/@'.$M['id'];
+	$result = RW('mod=profile&mbrid=').$M['id'];
 	return $result;
 }
 
@@ -774,6 +784,16 @@ function getFeaturedimgMeta($R,$meta){
 }
 
 //게시물 링크
+function getPostLink($arr,$profile){
+	global $table;
+	if ($profile) {
+		$M = getUidData($table['s_mbrid'],$arr['mbruid']);
+		return RW('m=post&mbruid='.$M['id'].'&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+	}  else {
+		return RW('m=post&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+	}
+}
+
 function getBbsPostLink($arr){
 	return RW('m=bbs&bid='.$arr['bbsid'].'&uid='.$arr['uid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
 }
