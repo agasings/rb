@@ -80,10 +80,32 @@ body.rb-layout-docs {
   max-width: 77%;
 }
 
+.rb-layout-dashboard [role="main"] {
+    padding-left: 221px;
+}
+
+.rb-layout-dashboard [role="main"] .container {
+  position: relative;
+  box-sizing: content-box;
+  width: 940px;
+  padding: 0 60px 100px;
+  margin: 0 auto;
+}
+
+
 /**
  * 3 - Header 헤더
  * ----------------------------------------------------------------------------
  */
+
+.rb-layout-dashboard .navbar {
+  padding: 1rem 1.5rem;
+}
+
+.rb-layout-dashboard .navbar-brand {
+  font-size: 1.4rem;
+}
+
 
  .navbar-brand img {
    max-width: 100px;
@@ -382,6 +404,16 @@ figure.media oembed iframe {
   display: none
 }
 
+.rb-layout-dashboard .subhead {
+  padding: 51px 0 12px;
+}
+
+.rb-layout-dashboard .subhead h3 {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 28px;
+}
+
 
 /**
  * 5 - Sidebar 사이드바
@@ -406,8 +438,29 @@ figure.media oembed iframe {
   color: #4080ff;
 }
 
+.rb-layout-dashboard .sidebar {
+  position: fixed;
+  top: 69px;
+  left: 0;
+  bottom: 0;
+  z-index: 9997;
+  width: 220px;
+  border-right: 1px solid rgb(221,221,221);
+  background-color: rgb(255,255,255);
+}
 
+.rb-layout-dashboard .sidebar .list-group-item {
+  padding-left: 32px;
+  font-size: 16px;
+}
 
+.rb-layout-dashboard .sidebar .list-group-item.active {
+  font-weight: 600;
+  color: #007bff;
+  background-color: rgb(249,249,250);
+  -webkit-font-smoothing: antialiased;
+  border-color: inherit;
+}
 
 
 /**
@@ -440,6 +493,21 @@ figure.media oembed iframe {
 .btn {
   border-radius: 0
 }
+
+.btn-white {
+  color: #24292e;
+  user-select: none;
+  background-color: #fff;
+  border: 1px solid rgba(27,31,35,0.2);
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.btn-white:hover {
+  border-color: #999;
+  background-color: #eff3f6;
+}
+
 .btn-light {
   color: #24292e;
   user-select: none;

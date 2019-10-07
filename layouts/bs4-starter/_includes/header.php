@@ -69,26 +69,28 @@
 				  </a>
 				  <div class="dropdown-menu dropdown-menu-right">
 				    <h6 class="dropdown-header"><?php echo $my['nic'] ?> 님</h6>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="<?php echo RW('m=post&mod=write')?>">
+							새 포스트
+						</a>
 				    <div class="dropdown-divider"></div>
-				    <a class="dropdown-item" href="/@<?php echo $my['id'] ?>">
-							<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i> 프로필
+						<a class="dropdown-item" href="<?php echo RW('mod=dashboard')?>">
+							대시보드
 						</a>
-				    <a class="dropdown-item" href="<?php echo RW('mod=noti')?>">
-							<i class="fa fa-bell-o fa-fw" aria-hidden="true"></i> 알림함
-						</a>
-						<a class="dropdown-item" href="<?php echo RW('mod=saved')?>">
-							<i class="fa fa-bookmark-o fa-fw" aria-hidden="true"></i> 저장함
+						<div class="dropdown-divider"></div>
+				    <a class="dropdown-item" href="<?php echo getProfileLink($my['uid'])?>">
+							프로필
 						</a>
 				    <div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<?php echo RW('mod=settings')?>">
-							<i class="fa fa-cog fa-fw" aria-hidden="true"></i> 설정
+							설정
 						</a>
 						<button class="dropdown-item" type="button" data-act="logout" role="button">
-							<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> 로그아웃
+							로그아웃
 						</button>
 						<?php if ($my['admin']): ?>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item text-danger" href="<?php echo RW('m=admin')?>" target="_top">관리자모드</a>
+						<a class="dropdown-item text-danger" href="/admin" target="_top">관리자모드</a>
 						<?php endif; ?>
 				  </div>
 				</li>
