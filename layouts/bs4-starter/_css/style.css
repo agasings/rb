@@ -447,21 +447,59 @@ figure.media oembed iframe {
   width: 220px;
   border-right: 1px solid rgb(221,221,221);
   background-color: rgb(255,255,255);
+  overflow: auto;
 }
 
-.rb-layout-dashboard .sidebar .list-group-item {
-  padding-left: 32px;
+.rb-layout-dashboard .sidebar > .nav {
+  border-top: 1px solid rgb(221,221,221);
+  border-bottom: 1px solid rgb(221,221,221);
+}
+
+.rb-layout-dashboard .sidebar .nav-link {
+  display: block;
+  position: relative;
+  height: 49px;
+  padding: 0 0 0 32px;
   font-size: 16px;
+  line-height: 50px;
+  color: rgb(51,51,51);
 }
-
-.rb-layout-dashboard .sidebar .list-group-item.active {
+.rb-layout-dashboard .sidebar > .nav > .nav-item + .nav-item {
+  border-top: 1px solid rgb(238,238,238);
+}
+.rb-layout-dashboard .sidebar .nav-link:hover {
+  color: #007bff;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: none;
+}
+.rb-layout-dashboard .sidebar .nav .nav-item.active > .nav-link {
   font-weight: 600;
   color: #007bff;
   background-color: rgb(249,249,250);
   -webkit-font-smoothing: antialiased;
-  border-color: inherit;
 }
 
+.rb-layout-dashboard .sidebar .nav .nav {
+  display: none;
+  padding: 12px 0 14px;
+  border-top: 1px solid rgb(238,238,238);
+  background-color: rgb(249,249,250);
+}
+.rb-layout-dashboard .sidebar .nav .active .nav {
+  display: block;
+}
+
+.rb-layout-dashboard .sidebar .nav .nav .nav-link {
+  display: block;
+  height: 27px;
+  padding-left: 43px;
+  font-size: 14px;
+  line-height: 29px;
+  color: rgb(102,102,102);
+}
+.rb-layout-dashboard .sidebar .nav .nav .nav-link:hover {
+  text-decoration: underline;
+}
 
 /**
  * 6 - Footer 풋터

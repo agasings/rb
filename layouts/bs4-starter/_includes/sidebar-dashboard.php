@@ -1,39 +1,39 @@
 <section class="p-3">
-
   <div class="text-reset text-center">
-
-    <a href="/<?php echo $my['id'] ?>" class="d-inline-block mb-2">
+    <a href="<?php echo getProfileLink($my['uid'])?>" class="d-inline-block">
       <img src="<?php echo getAvatarSrc($my['uid'],'60') ?>" width="60" height="60" alt="" class="rounded-circle border">
     </a>
-
-    <span class="d-block h3 contrib-number"><span id="myPoint"><?php echo number_format($my['point'])?></span>  <i class="fa fa-product-hunt" aria-hidden="true"></i></span>
-    <a href="" data-toggle="modal" class="badge badge-pill badge-light mt-2 text-gray"><?php echo $g['grade']['m'.$my['level']]?></a>
-
-
+    <span class="d-block f16 mt-2">
+      <?php echo $my['nic'] ?>
+    </span>
   </div>
-
 </section>
 
-
-<div class="list-group list-group-flush border-bottom">
-  <a href="<?php echo RW('mod=dashboard')?>" class="list-group-item list-group-item-action<?php echo $page=='main'?' active':'' ?>">
-    대시보드
-  </a>
-  <a href="<?php echo RW('mod=dashboard&page=post')?>" class="list-group-item list-group-item-action<?php echo $page=='post'?' active':'' ?>">
-    포스트
-  </a>
-  <a href="<?php echo RW('mod=dashboard&page=postlist')?>" class="list-group-item list-group-item-action<?php echo $page=='postlist'?' active':'' ?>">
-    리스트
-  </a>
-  <a href="<?php echo RW('mod=dashboard&page=noti')?>" class="list-group-item list-group-item-action<?php echo $page=='noti'?' active':'' ?>">
-    알림내역
-  </a>
-
-  <a href="<?php echo RW('mod=dashboard&page=saved')?>" class="list-group-item list-group-item-action<?php echo $page=='saved'?' active':'' ?>">
-    저장내역
-  </a>
-
-  <a href="<?php echo RW('mod=dashboard&page=order')?>" class="list-group-item list-group-item-action<?php echo $page=='order'?' active':'' ?>">
-    구매내역
-  </a>
-</div>
+<ul class="nav flex-column border-bottom">
+  <li class="nav-item<?php echo $page=='main'?' active':'' ?>">
+    <a class="nav-link" href="<?php echo RW('mod=dashboard')?>">대시보드</a>
+  </li>
+  <li class="nav-item<?php echo $page=='post' || $page=='postlist'?' active':'' ?>">
+    <a class="nav-link" href="<?php echo RW('mod=dashboard&page=post')?>">포스트</a>
+    <ul class="nav flex-column">
+      <li class="nav-item<?php echo $page=='post'?' active':'' ?>">
+        <a class="nav-link" href="<?php echo RW('mod=dashboard&page=post')?>">포스트</a>
+      </li>
+      <li class="nav-item<?php echo $page=='postlist'?' active':'' ?>">
+        <a class="nav-link" href="<?php echo RW('mod=dashboard&page=postlist')?>">리스트</a>
+      </li>
+    </ul>
+  </li>
+  <li class="nav-item<?php echo $page=='noti'?' active':'' ?>">
+    <a class="nav-link" href="<?php echo RW('mod=dashboard&page=noti')?>">알림내역</a>
+  </li>
+  <li class="nav-item<?php echo $page=='saved'?' active':'' ?>">
+    <a class="nav-link" href="<?php echo RW('mod=dashboard&page=saved')?>">저장내역</a>
+  </li>
+  <li class="nav-item<?php echo $page=='point'?' active':'' ?>">
+    <a class="nav-link" href="<?php echo RW('mod=dashboard&page=point')?>">포인트내역</a>
+  </li>
+  <li class="nav-item<?php echo $page=='order'?' active':'' ?>">
+    <a class="nav-link" href="<?php echo RW('mod=dashboard&page=order')?>">구매내역</a>
+  </li>
+</ul>
