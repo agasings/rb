@@ -7,7 +7,7 @@ _var/project.key.txt
 _var/table.info.php
 _var/site/*
 _var/update/*
-modules/post/
+modules/shop/
 _tmp/widget/*
 layouts/bs4-starter/_var/*
 layouts/rc-starter/_var/*

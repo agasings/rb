@@ -1,0 +1,75 @@
+/*attach*/
+.post-section  .gallery figure,
+.post-section .gallery .card {
+  position: relative;
+}
+
+.post-section .gallery figcaption,
+.post-section .gallery .card-img-overlay  {
+  opacity: 0;
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  word-break: break-all;
+  cursor: pointer;
+  transition-timing-function: ease-in;
+  transition-duration: .3s;
+  transition-property: all;
+  transition-delay: 0s;
+}
+
+.post-section .gallery figcaption {
+    color: #fff;
+}
+
+.post-section .gallery .card-img-overlay:hover,
+.post-section .gallery figcaption:hover {
+  opacity: 1 !important;
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  text-decoration: none;
+}
+
+.post-section .gallery .card-img-overlay:hover {
+  background-color: #fff !important
+}
+
+.post-section .gallery [data-role="caption"] {
+  display: none;
+}
+.post-section .clearfix .float-left:first-child {
+  margin-right: 10px
+}
+
+.card__corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2em;
+  height: 2em;
+  background-color: #e6e7e8;
+  border: 1px solid rgba(0,0,0,.045);
+  border-top: 0;
+}
+.card .card__corner {
+  top: -1px;
+  right: -1px;
+}
+
+.card__corner .card__corner-triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 2em 2em 0;
+  border-color: transparent #fff transparent transparent;
+}
+
+.post-section .gallery .card:hover .card__corner,
+.post-section .gallery figure:hover .card__corner {
+  display: none
+}
