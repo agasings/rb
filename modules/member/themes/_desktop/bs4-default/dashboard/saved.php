@@ -29,28 +29,25 @@ $TPG = getTotalPage($NUM,$recnum);
 			<label class="mt-1 mr-2">분류</label>
 			<div class="dropdown">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					전체
+					<?php echo $category?$category:'전체' ?>
 				</a>
 
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo RW('mod=dashboard&page=saved')?>">
 						전체
-						<small>2</small>
+						<small><?php echo number_format(getDbRows($table['s_saved'],'mbruid='.$my['uid']))?></small>
 					</a>
+
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						공개
-						<small>0</small>
+					<h6 class="dropdown-header">게시판</h6>
+					<?php $_CATS = getDbSelect($table['s_saved'],"mbruid=".$my['uid']." and category<>'' group by category",'category')?>
+					<?php while($_R=db_fetch_array($_CATS)):?>
+					<a class="dropdown-item d-flex justify-content-between align-items-center<?php if($_R['category']==$category):?> active<?php endif?>" href="<?php echo RW('mod=dashboard&page=saved')?>&category=<?php echo $_R['category']?>">
+						<?php echo $_R['category']?>
+						<span class="badge badge-pill"><?php echo number_format(getDbRows($table['s_saved'],'mbruid='.$my['uid'].' and  category="'.$_R['category'].'"'))?></span>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						미등록
-						<small>0</small>
-					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						비공개
-						<small>0</small>
-					</a>
-					</a>
+					<?php endwhile?>
+
 
 				</div>
 			</div>
@@ -128,7 +125,7 @@ $TPG = getTotalPage($NUM,$recnum);
 				</button>
 			</div><!-- /.form-inline -->
 
-			<?php if ($TPG > 1): ?>
+			<?php if ($NUM > $recnum): ?>
 			<ul class="pagination mb-0">
 				<?php echo getPageLink(10,$p,$TPG,'')?>
 			</ul>

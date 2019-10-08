@@ -192,13 +192,17 @@ $MD = getDbData($table['s_module'],"id='".$module."'",'name');
 
 	</form>
 
-	<?php if($TPG > 1):?>
+
 	<div class="d-flex justify-content-center my-4">
+
+		<?php if($NUM > $recnum):?>
 		<ul class="pagination mb-0">
 			<?php echo getPageLink(10,$p,$TPG,$pageLink)?>
 		</ul>
+		<?php endif?>
+
 	</div>
-	<?php endif?>
+
 </div>
 
 <script type="text/javascript">

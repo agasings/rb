@@ -105,7 +105,7 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 				<button type="button" class="btn btn-white" onclick="actCheck('point_delete');">삭제</button>
 			</div>
 
-			<?php if ($TPG > 1): ?>
+			<?php if ($NUM > $recnum): ?>
 			<ul class="pagination">
 				<?php echo getPageLink(10,$p,$TPG,$PageLink)?>
 			</ul>

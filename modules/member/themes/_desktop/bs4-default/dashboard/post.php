@@ -141,16 +141,20 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			</tbody>
 		</table>
 
-		<?php if ($TPG > 1): ?>
+
 		<div class="d-flex justify-content-between my-4">
 			<div class=""></div>
+
+			<?php if ($NUM > $recnum): ?>
 			<ul class="pagination mb-0">
 				<?php echo getPageLink(10,$p,$TPG,'')?>
 			</ul>
+			<?php endif; ?>
+			
 			<div class="">
 			</div>
 		</div>
-		<?php endif; ?>
+
 
 	</form>
 </div>
