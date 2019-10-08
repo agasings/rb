@@ -37,7 +37,11 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			포스트 관리
 		</h3>
 		<div class="">
-				<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">신규 작성</a>
+			<a href="<?php echo getProfileLink($my['uid']) ?><?php echo $_HS['rewrite']?'?':'&' ?>page=post" class="btn btn-white">
+				<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>
+				프로필 이동
+			</a>
+			<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">신규 작성</a>
 		</div>
 	</div>
 
@@ -45,10 +49,10 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
 		<div class="form-inline ml-auto">
 
-			<label class="mt-1 mr-2">상태</label>
+			<label class="sr-only">상태</label>
 			<div class="dropdown">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					전체
+					상태 : 전체
 				</a>
 
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -92,54 +96,48 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 		<input type="hidden" name="front" value="<?php echo $front?>" />
 		<input type="hidden" name="a" value="" />
 
-		<table class="table text-center border-bottom">
-			<colgroup>
-				<col width="50">
-				<col>
-				<col width="150">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
 
-				<?php foreach($RCD as $R):?>
-				<tr>
+		<ul class="list-unstyled" style="margin-top: -1rem">
 
-					<td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
-					<td class="text-left">
+			<?php foreach($RCD as $R):?>
+		  <li class="media mt-4">
+
+				<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="mr-3" target="_blank">
+					<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+				</a>
+
+		    <div class="media-body">
+		      <h5 class="mt-0 mb-1">
 						<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
 						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
-						<br><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?>
-					</td>
-					<td>
-
-						<div class="dropdown">
-							<button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
-								관리
-							</button>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="min-width: 5rem">
-								<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
-								<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
-								<a class="dropdown-item" href="#">공개</a>
-							</div>
+						<?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?>
+					</h5>
+		      <div class="text-muted line-clamp-2"><?php echo $R['review']?></div>
+		    </div>
+				<div class="ml-3 align-self-center">
+					<div class="dropdown">
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
+							관리
+						</button>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="min-width: 5rem">
+							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
+							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+							<a class="dropdown-item" href="#">공개</a>
 						</div>
-					</td>
-				</tr>
-				<?php endforeach?>
+					</div>
+				</div>
+		  </li>
+			<?php endforeach?>
 
-				<?php if(!$NUM):?>
-				<tr>
-					<td colspan="5" class="text-center text-muted p-5">포스트가 없습니다.</td>
-				</tr>
-				<?php endif?>
+			<?php if(!$NUM):?>
+			<li>
+				<div class="text-center text-muted p-5">포스트가 없습니다.</div>
+			</li>
+			<?php endif?>
 
-			</tbody>
-		</table>
+		</ul>
+
+
 
 
 		<div class="d-flex justify-content-between my-4">
@@ -150,7 +148,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				<?php echo getPageLink(10,$p,$TPG,'')?>
 			</ul>
 			<?php endif; ?>
-			
+
 			<div class="">
 			</div>
 		</div>

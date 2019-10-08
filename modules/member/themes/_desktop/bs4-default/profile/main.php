@@ -52,7 +52,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
 					<?php while($_R=db_fetch_array($_POST)):?>
 					<?php $_R['mobile']=isMobileConnect($_R['agent'])?>
 					<li class="list-group-item px-1 py-2 f13">
-						<a href="<?php echo getPostLink($_R)?>" class="muted-link" target="_blank">
+						<a href="<?php echo getBbsPostLink($_R)?>" class="muted-link" target="_blank">
 							<?php echo getStrCut($_R['subject'],29,'..')?>
 						</a>
 						<?php if($_R['mobile']):?><i class="fa fa-mobile fa-lg"></i><?php endif?>

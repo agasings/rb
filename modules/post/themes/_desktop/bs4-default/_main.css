@@ -1,3 +1,36 @@
+/* form */
+.dropdown-toggle {
+  position: relative;
+  text-align: left;
+  min-width: 10rem
+}
+
+.dropdown-toggle::after {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  margin-top: -2px;
+}
+
+.show .dropdown-toggle::after {
+  border-bottom: .3em solid;
+  border-top: 0;
+}
+
+.dropdown-menu {
+  border-radius: 0;
+}
+
+.input-group .form-control:focus {
+  border-color: #ced4da;
+  outline: 0;
+  box-shadow: none;
+}
+.input-group .btn:hover {
+  background-color: inherit;
+  border-color: rgba(27,31,35,0.2);
+}
+
 /*attach*/
 .post-section  .gallery figure,
 .post-section .gallery .card {

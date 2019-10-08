@@ -35,14 +35,14 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 건</span>
 		<div class="form-inline ml-auto">
 
-			<label class="mt-1 mr-2">상태</label>
+			<label class="sr-only">상태</label>
 			<form  name="hideForm" action="<?php echo $g['s']?>/" method="get">
 				<input type="hidden" name="r" value="<?php echo $r?>">
 				<input type="hidden" name="m" value="<?php echo $m?>">
 				<input type="hidden" name="front" value="<?php echo $front?>">
 				<input type="hidden" name="page" value="<?php echo $page?>">
 				<select name="type" class="form-control custom-select" onchange="this.form.submit();">
-					<option value="">전체</option>
+					<option value="">구분 : 전체</option>
 					<option value="1"<?php if($type=='1'):?> selected="selected"<?php endif?>>획득</option>
 					<option value="2"<?php if($type=='2'):?> selected="selected"<?php endif?>>사용</option>
 				</select>

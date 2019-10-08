@@ -2,23 +2,25 @@
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
-$bbsque = 'mbruid='.$_MP['uid'].' and site='.$s;
+$postque = 'mbruid='.$_MP['uid'];
 if ($where && $keyword)
 {
-	if (strstr('[name][nic][id][ip]',$where)) $bbsque .= " and ".$where."='".$keyword."'";
-	else if ($where == 'term') $bbsque .= " and d_regis like '".$keyword."%'";
-	else $bbsque .= getSearchSql($where,$keyword,$ikeyword,'or');
+	if (strstr('[name][nic][id][ip]',$where)) $postque .= " and ".$where."='".$keyword."'";
+	else if ($where == 'term') $postque .= " and d_regis like '".$keyword."%'";
+	else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
 }
-$RCD = getDbArray($table['bbsdata'],$bbsque,'*',$sort,$orderby,$recnum,$p);
-$NUM = getDbRows($table['bbsdata'],$bbsque);
+$TCD = getDbArray($table['postmember'],$postque,'*',$sort,$orderby,$recnum,$p);
+
+while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
+
+$NUM = getDbRows($table['postmember'],$postque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$m = 'bbs';
-if ($c) $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['bbs_list']	= $g['bbs_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['bbs']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['bbs_list'];
-$g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
+$m = 'post';
+$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['post_list'];
+$g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 
 ?>
 
@@ -33,13 +35,11 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 
 		<section>
 
-			<header class="d-flex justify-content-between mt-4 mb-2">
+			<header class="d-flex justify-content-between align-items-center mt-4 mb-2">
 				<div>
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
-					<a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=bbs&amp;mbruid=<?php echo $_MP['uid']?>&amp;mod=rss" target="_blank" class="ml-2 muted-link">
-		        <i class="fa fa-rss-square" aria-hidden="true"></i> RSS
-		      </a>
 				</div>
+				<a href="<?php echo RW('mod=dashboard&page=postlist')?>" class="btn btn-light btn-sm">관리</a>
 			</header>
 
 			<table class="table text-center">
@@ -60,9 +60,9 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 				</thead>
 				<tbody>
 
-				<?php while($R=db_fetch_array($RCD)):?>
+				<?php foreach($RCD as $R):?>
 				<?php $R['mobile']=isMobileConnect($R['agent'])?>
-				<?php $R['sbjlink']=getBbsPostLink($R)?>
+				<?php $R['sbjlink']=getPostLink($R,1)?>
 				<tr>
 					<td>
 						<?php if($R['uid'] != $uid):?>
@@ -77,7 +77,7 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
             <span class="badge badge-secondary"><?php echo $R['category']?></span>
             <?php endif?>
             <a href="<?php echo $R['sbjlink']?>" class="muted-link">
-              <?php echo getStrCut($R['subject'],$d['bbs']['sbjcut'],'')?>
+              <?php echo getStrCut($R['subject'],$d['post']['sbjcut'],'')?>
             </a>
             <?php if(strstr($R['content'],'.jpg') || strstr($R['content'],'.png')):?>
             <span class="badge badge-light" data-toggle="tooltip" title="사진">
@@ -98,7 +98,7 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 						<time class="small text-muted"><?php echo getDateFormat($R['d_regis'],'Y.m.d')?></time>
 					</td>
 					</tr>
-					<?php endwhile?>
+					<?php endforeach?>
 
 
 					<?php if(!$NUM):?>

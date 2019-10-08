@@ -37,7 +37,11 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			리스트 관리
 		</h3>
 		<div class="">
-			<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">
+			<a href="<?php echo getProfileLink($my['uid']) ?><?php echo $_HS['rewrite']?'?':'&' ?>page=postlist" class="btn btn-white">
+				<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>
+				프로필 이동
+			</a>
+			<a href="#modal-postlist-new" data-toggle="modal" data-backdrop="static" class="btn btn-primary">
 				리스트 만들기
 			</a>
 		</div>
@@ -47,10 +51,10 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
 		<div class="form-inline ml-auto">
 
-			<label class="mt-1 mr-2">상태</label>
+			<label class="mt-1 mr-2 sr-only">상태</label>
 			<div class="dropdown">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					전체
+					상태 : 전체
 				</a>
 
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -94,45 +98,73 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 		<input type="hidden" name="front" value="<?php echo $front?>" />
 		<input type="hidden" name="a" value="" />
 
-		<table class="table text-center border-bottom">
-			<colgroup>
-				<col width="50">
-				<col>
-				<col width="150">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
 
-				<?php foreach($RCD as $R):?>
-				<tr>
+		<ul class="list-unstyled">
 
-					<td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
-					<td class="text-left">
-						<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
-						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
-						<br><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?>
-					</td>
-					<td class="text-right">
-						<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-light">수정</a>
-						<a href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btn btn-light">삭제</a>
-					</td>
-				</tr>
-				<?php endforeach?>
+		  <li class="media align-items-center">
+				<span class="px-3">
+					:
+				</span>
+				<strong class="mr-3 f18">1</strong>
+				<a href="<?php echo RW('mod=dashboard&page=postlist_view&id=0000')?>" class="mr-3" >
+					<img src="/thumb-ssl/180x100/u/rb2demo.s3.ap-northeast-2.amazonaws.com/post/2019/10/08/d2b5ca33bd970f64a6301fa75ae2eb22145339.png" alt="">
+				</a>
 
-				<?php if(!$NUM):?>
-				<tr>
-					<td colspan="5" class="text-center text-muted p-5">저장된 자료가 없습니다.</td>
-				</tr>
-				<?php endif?>
+		    <div class="media-body">
+		      <h5 class="mt-0 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=postlist_view&id=0000')?>">길에서 길을 묻다</a></h5>
+		      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+		    </div>
+				<div class="ml-3">
+					<div class="dropdown">
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
+							관리
+						</button>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="min-width: 5rem">
+							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
+							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+							<a class="dropdown-item" href="#">공개</a>
+						</div>
+					</div>
+				</div>
+		  </li>
 
-			</tbody>
-		</table>
+			<li class="media align-items-center my-4">
+				<span class="px-3">
+					:
+				</span>
+				<strong class="mr-3 f18">2</strong>
+				<a href="#" class="mr-3" >
+					<img src="http://placehold.it/180x100" alt="..." style="width:180px;height:100px">
+				</a>
+		    <div class="media-body">
+		      <h5 class="mt-0 mb-1">List-based media object</h5>
+		      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+		    </div>
+				<div class="ml-3">
+					<div class="dropdown">
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
+							관리
+						</button>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="min-width: 5rem">
+							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
+							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+							<a class="dropdown-item" href="#">공개</a>
+						</div>
+					</div>
+				</div>
+		  </li>
+
+		</ul>
+
+
+
+
+
+
+
+
+
+
 
 		<div class="d-flex justify-content-between my-4">
 			<div class=""></div>
@@ -147,6 +179,35 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			</div>
 		</div>
 	</form>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal-postlist-new" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="width: 560px">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title" id="exampleModalLongTitle">목록 생성</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+				<div class="input-group input-group-lg">
+				  <input type="text" class="form-control rounded-0" placeholder="리스트명 입력" aria-describedby="basic-addon2">
+				  <div class="input-group-append">
+				    <span class="input-group-text bg-white rounded-0" id="basic-addon2">0<span class="text-muted">/45</span></span>
+				  </div>
+				</div>
+
+
+      </div>
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-white" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -185,5 +246,10 @@ function actCheck(act) {
 }
 
 putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
+
+$('#modal-postlist-new').on('shown.bs.modal', function () {
+	var modal = $(this);
+  modal.find('.form-control').trigger('focus')
+})
 
 </script>

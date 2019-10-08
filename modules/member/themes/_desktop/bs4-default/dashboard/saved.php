@@ -26,10 +26,10 @@ $TPG = getTotalPage($NUM,$recnum);
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 건</span>
 		<div class="form-inline ml-auto">
 
-			<label class="mt-1 mr-2">분류</label>
+			<label class="sr-only">분류</label>
 			<div class="dropdown">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<?php echo $category?$category:'전체' ?>
+					<?php echo $category?$category:'분류 : 전체' ?>
 				</a>
 
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

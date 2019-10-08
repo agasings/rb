@@ -66,16 +66,28 @@
           </div>
 
           <div class="form-group">
-            <label for="exampleFormControlSelect1">리스트</label>
-            <select class="form-control custom-select">
-              <option>선택하세요.</option>
-              <option>리스트 2</option>
-              <option>리스트 3</option>
-              <option>리스트 4</option>
-              <option>리스트 5</option>
-              <option>리스트 5</option>
-              <option>리스트 만들기</option>
-            </select>
+            <label for="">리스트</label>
+
+            <div class="dropdown" data-role="list-selector">
+              <button class="btn btn-white btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                리스트 선택 (3)
+              </button>
+              <div class="dropdown-menu shadow p-3" style="width: 305px">
+
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" id="customRadio1" name="customRadio" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadio1">리스트 1</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" id="customRadio2" name="customRadio" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadio2">리스트 2</label>
+                </div>
+
+                <button type="button" class="btn btn-white btn-block mt-3">+ 리스트 추가</button>
+
+              </div>
+            </div>
+
           </div>
 
           <div class="card mb-4">
