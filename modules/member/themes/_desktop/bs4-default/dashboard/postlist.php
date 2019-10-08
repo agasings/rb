@@ -106,8 +106,9 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 					:
 				</span>
 				<strong class="mr-3 f18">1</strong>
-				<a href="<?php echo RW('mod=dashboard&page=postlist_view&id=0000')?>" class="mr-3" >
+				<a href="<?php echo RW('mod=dashboard&page=postlist_view&id=0000')?>" class="position-relative mr-3">
 					<img src="/thumb-ssl/180x100/u/rb2demo.s3.ap-northeast-2.amazonaws.com/post/2019/10/08/d2b5ca33bd970f64a6301fa75ae2eb22145339.png" alt="">
+					<span class="playitem"><em class="sr-only">영상 수 : </em><span>1<i class="fa fa-list-ul d-block" aria-hidden="true"></i></span></span>
 				</a>
 
 		    <div class="media-body">

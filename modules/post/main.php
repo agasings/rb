@@ -53,7 +53,7 @@ switch ($mod) {
 
   if (!$g['mobile']||$_SESSION['pcmode']=='Y') {
     $layoutArr = explode('/',$d['post']['layout']);
-    $d['post']['layout'] = $layoutArr[0].'/full.php';
+    $d['post']['layout'] = $layoutArr[0].'/blank.php';
   }
 
   break;

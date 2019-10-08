@@ -115,7 +115,7 @@ if ($tag || $R['tag']) RegisPostTag($tag,$R,$m,$B['uid'],$reply,$NOWUID);
 
 if ($uid) {
   setrawcookie('post_action_result', rawurlencode('저장 되었습니다.'));
-	getLink('reload','parent.','','');
+	getLink(RW('mod=dashboard&page=post'),'parent.','','');
 } else {
   setrawcookie('post_action_result', rawurlencode('포스트가 등록 되었습니다.'));
 	getLink(RW('mod=dashboard&page=post'),'parent.','','');

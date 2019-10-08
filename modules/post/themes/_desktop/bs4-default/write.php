@@ -10,7 +10,7 @@
 
   <header class="d-flex align-items-center py-3 px-4">
 
-    <a href="<?php echo RW('mod=library')?>" title="내 보관함" class="muted-link mr-2" data-toggle="tooltip">
+    <a href="<?php echo RW('mod=dashboard&page=post')?>" title="포스트 관리" class="muted-link mr-2" data-toggle="tooltip">
       <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>
     </a>
 
@@ -153,7 +153,7 @@
     </div>
   </aside><!-- /.col -->
 
-  <div class="position-absolute" style="top:65px;right:30px">
+  <div class="position-absolute" style="top:15px;right:30px">
 
     <?php if ($uid): ?>
     <a class="btn btn btn-outline-success" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;uid=<?php echo $R['uid']?>" target="_blank">
@@ -161,14 +161,47 @@
     </a>
     <?php endif; ?>
 
-    <button type="submit" class="btn btn-outline-primary">
+    <button type="button" class="btn btn-link" data-history="back">취소</button>
+
+    <button type="submit" class="btn btn-primary">
       <span class="not-loading">
         저장하기
       </span>
       <span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i>저장 중 ...</span>
     </button>
 
-    <button type="button" class="btn btn-light text-primary" data-history="back">취소</button>
+    <div class="d-inline-block dropdown">
+      <a class="d-block ml-3" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-role="tooltip" title="프로필보기 및 회원계정관리">
+        <img src="<?php echo getAvatarSrc($my['uid'],'30') ?>" width="30" height="30" alt="" class="rounded-circle">
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <h6 class="dropdown-header"><?php echo $my['nic'] ?> 님</h6>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="<?php echo RW('m=post&mod=write')?>">
+          새 포스트
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="<?php echo RW('mod=dashboard')?>">
+          대시보드
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="<?php echo getProfileLink($my['uid'])?>">
+          프로필
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="<?php echo RW('mod=settings')?>">
+          설정
+        </a>
+        <button class="dropdown-item" type="button" data-act="logout" role="button">
+          로그아웃
+        </button>
+        <?php if ($my['admin']): ?>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-danger" href="/admin" target="_top">관리자모드</a>
+        <?php endif; ?>
+      </div>
+    </div>
+
 
   </div>
 

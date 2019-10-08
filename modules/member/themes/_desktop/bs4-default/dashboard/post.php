@@ -107,12 +107,39 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				</a>
 
 		    <div class="media-body">
-		      <h5 class="mt-0 mb-1">
+					<a href="#" class="f13">
+						<i class="fa fa-list-ul mr-1" aria-hidden="true"></i>
+						파란방 육아일기
+					</a>
+		      <h5 class="my-1">
 						<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
 						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
-						<?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?>
 					</h5>
-		      <div class="text-muted line-clamp-2"><?php echo $R['review']?></div>
+		      <div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
+					<div class="mb-1">
+						<ul class="list-inline d-inline-block ml-2 f13 text-muted">
+							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
+							<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
+							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
+							<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
+						</ul>
+						<span class="ml-2 f13 text-muted">
+							<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
+						</span>
+						<span class="ml-2 f13 text-muted">
+							<!-- 태그 -->
+							<?php $_tags=explode(',',$R['tag'])?>
+							<?php $_tagn=count($_tags)?>
+							<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
+							<?php $_tagk=trim($_tags[$i])?>
+							<a class="badge badge-light" href="<?php echo $g['bbs_orign']?>&amp;where=subject|tag&amp;keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
+							<?php endfor?>
+						</span>
+
+					</div>
+
+
+
 		    </div>
 				<div class="ml-3 align-self-center">
 					<div class="dropdown">

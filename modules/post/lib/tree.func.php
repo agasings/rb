@@ -340,68 +340,6 @@ function setSendMail($SM,$RM,$mod,$link)
 
 }
 
-// 포스트의 최종 depth 카테고리 정보 출력
-function getPostCatName($Post,$post)
-{
-    global $table;
-
-    $m='Post';
-    $catque='Post='.$Post.' and post='.$post;
-    $CAX=array();
-    $CATS_ARR=getDbArray($table[$m.'catidx'],$catque,'*','depth','asc',1,1);
-    while ($CA=db_fetch_array($CATS_ARR)) $CAX[]=$CA;
-    $C=getUidData($table[$m.'category'],$CAX[0]['category']);
-
-    return $C['name']?$C['name']:0;
-}
-
-// 포스트의 모든 카테고리 출력
-function getAllPostCat($Post,$post)
-{
-    global $table;
-
-    $m='post';
-    $catque='data='.$post;
-    $RCD=getDbArray($table[$m.'index'],$catque,'*','depth','asc','',1);
-    $CatName='';
-    while ($R=db_fetch_array($RCD)){
-    	    $C=getUidData($table[$m.'category'],$R['category']);
-          $CatName.=$C['name'].', ';
-    }
-    $result=substr($CatName,0,-2);
-
-    return $result?$result:'';
-}
-
-// 포스트에 카테고리가 있는지 체크함수
-function IsPostCat($Post,$post)
-{
-    global $table;
-    $m='Post';
-    $catque='Post='.$Post.' and post='.$post;
-    $NUM=getDbRows($table[$m.'catidx'],$catque);
-
-    return $NUM;
-}
-
-// 포스트의 카테고리 링크값  출력
-function getPostCatLink($Post,$post)
-{
-   global $g,$table;
-
-   $m='Post';
-   $catque='Post='.$Post.' and post='.$post;
-   $CAX=array();
-   $CATS_ARR=getDbArray($table[$m.'catidx'],$catque,'*','depth','desc',1,1);
-   while ($CA=db_fetch_array($CATS_ARR)) $CAX[]=$CA;
-   $C=getUidData($table[$m.'category'],$CAX[0]['category']);
-   $cat=$C['uid'];
-   $code=$C['parent']?$C['parent'].'/'.$C['uid']:$C['uid'];
-
-    $result=$g['Post_home'].'&cat='.$cat;
-
-    return $result;
-}
 
 // 포스트 위젯에서 사용되는 base 쿼리 정의
 function getPostBaseQry($m)

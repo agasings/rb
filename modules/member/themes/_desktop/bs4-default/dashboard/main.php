@@ -21,9 +21,9 @@
 
   <div class="d-flex justify-content-center align-items-center" style="height:80vh">
 
-    <h3 class="text-muted">
+    <div class="text-muted">
       준비중 입니다.
-    </h3>
+    </div>
 
   </div>
 

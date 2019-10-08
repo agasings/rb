@@ -110,7 +110,7 @@
 /* 쓰기 */
 .rb-post-write header {
   position: fixed;
-  top: 50px;
+  top: 0;
   left: 0;
   right:0;
   bottom:auto
@@ -118,7 +118,7 @@
 
 .rb-post-write aside {
   position: fixed;
-  top: 114px;
+  top: 64px;
   bottom: 0;
   right:0;
   left: auto;
@@ -174,7 +174,7 @@
 }
 .document-editor {
   position: absolute;
-  top: 153px;
+  top: 103px;
   right: 350px;
   bottom: 0;
   left: 0;
@@ -182,7 +182,7 @@
 }
 .document-editor__toolbar {
   position: fixed;
-  top: 114px;
+  top: 64px;
   right: 350px;
   left: 0;
 }

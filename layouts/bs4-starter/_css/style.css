@@ -443,7 +443,7 @@ figure.media oembed iframe {
   top: 69px;
   left: 0;
   bottom: 0;
-  z-index: 9997;
+  z-index: 1030;
   width: 220px;
   border-right: 1px solid rgb(221,221,221);
   background-color: rgb(255,255,255);
@@ -472,11 +472,20 @@ figure.media oembed iframe {
   -webkit-font-smoothing: antialiased;
   text-decoration: none;
 }
+.rb-layout-dashboard .sidebar .nav .nav-item > .nav-link .fa-plus {
+  color: #ccc;
+  font-size: 14px;
+}
+
 .rb-layout-dashboard .sidebar .nav .nav-item.active > .nav-link {
   font-weight: 600;
   color: #007bff;
   background-color: rgb(249,249,250);
   -webkit-font-smoothing: antialiased;
+}
+
+.rb-layout-dashboard .sidebar .nav .nav-item.active > .nav-link .fa-plus::before {
+  content: "\f068";
 }
 
 .rb-layout-dashboard .sidebar .nav .nav {
