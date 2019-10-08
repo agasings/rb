@@ -21,28 +21,36 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 ?>
 
 <div class="container">
-	<div class="subhead mt-0">
-		<h2 class="subhead-heading">
+
+	<div class="d-flex justify-content-between align-items-center subhead mt-0">
+		<h3 class="mb-0">
 			포인트 내역 <span class="badge badge-pill badge-dark align-top"><?php echo number_format($my['point'])?> P</span>
-		</h2>
+		</h3>
+		<div class="">
+				<button type="button" class="btn btn-white" onclick="actCheck('point_sum');">내역정리</button>
+		</div>
 	</div>
 
-	<div class="d-flex justify-content-between align-items-end mb-2">
-		<div class="">
-			<span>총 <?php echo number_format($NUM)?>건</span>
-		</div>
-		<form class="w-25" name="hideForm" action="<?php echo $g['s']?>/" method="get">
-			<input type="hidden" name="r" value="<?php echo $r?>">
-			<input type="hidden" name="m" value="<?php echo $m?>">
-			<input type="hidden" name="front" value="<?php echo $front?>">
-			<input type="hidden" name="page" value="<?php echo $page?>">
-			<select name="type" class="form-control" onchange="this.form.submit();">
-				<option value="">전체</option>
-				<option value="1"<?php if($type=='1'):?> selected="selected"<?php endif?>>획득</option>
-				<option value="2"<?php if($type=='2'):?> selected="selected"<?php endif?>>사용</option>
-			</select>
-		</form>
-	</div>
+	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
+		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 건</span>
+		<div class="form-inline ml-auto">
+
+			<label class="mt-1 mr-2">상태</label>
+			<form  name="hideForm" action="<?php echo $g['s']?>/" method="get">
+				<input type="hidden" name="r" value="<?php echo $r?>">
+				<input type="hidden" name="m" value="<?php echo $m?>">
+				<input type="hidden" name="front" value="<?php echo $front?>">
+				<input type="hidden" name="page" value="<?php echo $page?>">
+				<select name="type" class="form-control custom-select" onchange="this.form.submit();">
+					<option value="">전체</option>
+					<option value="1"<?php if($type=='1'):?> selected="selected"<?php endif?>>획득</option>
+					<option value="2"<?php if($type=='2'):?> selected="selected"<?php endif?>>사용</option>
+				</select>
+			</form>
+
+
+		</div><!-- /.form-inline -->
+	</div><!-- /.d-flex -->
 
 	<form name="procForm" action="<?php echo $g['s']?>/" method="post"  onsubmit="return submitCheck(this);">
 		<input type="hidden" name="m" value="<?php echo $m?>">
@@ -56,7 +64,7 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 				<col>
 				<col width="150">
 			</colgroup>
-			<thead class="thead-light">
+			<thead>
 			<tr>
 				<th scope="col" class="side1">
 					<i class="fa fa-check-square-o fa-lg" aria-hidden="true"  onclick="chkFlag('members[]');" role="button" data-toggle="tooltip" title="전체선택"></i>
@@ -93,15 +101,15 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 		</table>
 
 		<nav aria-label="Page navigation" class="d-flex justify-content-between my-4">
+			<div>
+				<button type="button" class="btn btn-white" onclick="actCheck('point_delete');">삭제</button>
+			</div>
+
+			<?php if ($TPG > 1): ?>
 			<ul class="pagination">
 				<?php echo getPageLink(10,$p,$TPG,$PageLink)?>
 			</ul>
-
-			<div>
-				<button type="button" class="btn btn-light" onclick="actCheck('point_sum');">내역정리</button>
-				<button type="button" class="btn btn-light" onclick="actCheck('point_delete');">삭제</button>
-			</div>
-
+			<?php endif; ?>
 		</nav>
 
 	</form>

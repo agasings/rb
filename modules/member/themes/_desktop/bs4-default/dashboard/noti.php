@@ -12,26 +12,74 @@ $RCD = getDbArray($table['s_notice'],$sqlque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_notice'],$sqlque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$pageHome = './noti';
-
-if ($module) {
-	$pageLink = './noti?module='.$module.'&amp;';
-} else {
-	$pageLink = './noti?';
-}
+$pageHome = RW('mod=dashboard&page=noti');;
+$pageLink = RW('mod=dashboard&page=noti');
 
 //모든 알림 읽음처리
 getDbUpdate($table['s_notice'],"d_read='".$date['totime']."'",$sqlque);
 getDbUpdate($table['s_mbrdata'],'num_notice=0','memberuid='.$my['uid']);
+
+$MD = getDbData($table['s_module'],"id='".$module."'",'name');
 ?>
 
 <div class="container">
-	<div class="subhead mt-0">
-		<h2 class="subhead-heading">
-			<i class="fa fa-bell-o fa-fw" aria-hidden="true"></i> 내 알림함
+	<div class="subhead d-flex justify-content-between align-items-center">
+		<h2 class="mb-0">
+			알림내역
 		</h2>
-		<span class="text-muted">알림을 수신하면 웹 사이트내의 정보는 물론 회원님이 언급되거나 관련된 정보들을 실시간으로 받아보실 수 있습니다.</span>
+
+		<div class="">
+			<a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=notification&amp;a=multi_delete_user&amp;deltype=delete_all" class="btn btn-white" onclick="return hrefCheck(this,true,'정말로 전체 알림 삭제를 하시겠습니까?');">
+			  <i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>
+			  알림함 비우기
+			</a>
+
+			<a href="<?php echo RW('mod=settings&page=noti')?>" class="btn btn-white">
+			  <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
+			  알림 설정
+			</a>
+
+		</div>
+
 	</div>
+
+<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
+	<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
+	<div class="form-inline ml-auto">
+		<label class="mt-1 mr-2 sr-only">모듈별</label>
+		<div class="dropdown">
+			<a class="btn btn-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<?php echo $module?$MD['name']:($fromsys=='Y'?'시스템':'전체') ?>
+			</a>
+
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $pageHome ?>">
+					전체
+					<small><?php echo number_format(getDbRows($table['s_notice'],'mbruid='.$my['uid']))?></small>
+				</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $pageHome ?>&fromsys=Y">
+					시스템
+					<small><?php echo number_format(getDbRows($table['s_notice'],'mbruid='.$my['uid'].' and  frommbr=0'))?></small>
+				</a>
+
+				<?php $_MODULES=getDbArray($table['s_module'],'','*','gid','asc',0,1)?>
+			  <?php while($_MD=db_fetch_array($_MODULES)):?>
+			  <a class="dropdown-item <?php echo $module==$_MD['id']?' active ':'' ?><?php if(strstr($d['ntfc']['cut_modules'],'['.$_MD['id'].']')):?>d-none<?php else: ?>d-flex justify-content-between align-items-center<?php endif?>"
+			      href="<?php echo $pageHome ?>&module=<?php echo $_MD['id']?>"  id="module_members_<?php echo $_MD['id']?>">
+			    <?php echo $_MD['name']?>
+			    <small class="ml-auto"><?php echo number_format(getDbRows($table['s_notice'],'mbruid='.$my['uid'].' and  frommodule="'.$_MD['id'].'"'))?></small>
+			  </a>
+			  <?php endwhile?>
+
+			</div>
+		</div>
+	</div><!-- /.form-inline -->
+</div><!-- /.flex -->
+
+
+
+
 
 	<form name="listForm" action="<?php echo $g['s']?>/" method="post">
 		<input type="hidden" name="r" value="<?php echo $r?>">
@@ -144,7 +192,7 @@ getDbUpdate($table['s_mbrdata'],'num_notice=0','memberuid='.$my['uid']);
 
 	</form>
 
-	<?php if($NUM):?>
+	<?php if($TPG > 1):?>
 	<div class="d-flex justify-content-center my-4">
 		<ul class="pagination mb-0">
 			<?php echo getPageLink(10,$p,$TPG,$pageLink)?>

@@ -32,14 +32,59 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 ?>
 
 <div class="container">
-	<div class="d-flex justify-content-between align-items-center subhead mt-0 mb-3">
+	<div class="d-flex justify-content-between align-items-center subhead mt-0">
 		<h3 class="mb-0">
 			포스트 관리
 		</h3>
 		<div class="">
-				<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-outline-primary">새 포스트</a>
+				<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">신규 작성</a>
 		</div>
 	</div>
+
+	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
+		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
+		<div class="form-inline ml-auto">
+
+			<label class="mt-1 mr-2">상태</label>
+			<div class="dropdown">
+				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					전체
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
+						전체
+						<small>2</small>
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						공개
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						미등록
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						비공개
+						<small>0</small>
+					</a>
+				  </a>
+
+				</div>
+			</div>
+
+			<div class="input-group ml-2">
+			  <input type="text" class="form-control" placeholder="제목,요약 검색">
+			  <div class="input-group-append">
+			    <button class="btn btn-white text-muted border-left-0" type="button">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
+			  </div>
+			</div>
+
+		</div><!-- /.form-inline -->
+	</div><!-- /.d-flex -->
 
 	<form name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return submitCheck(this);">
 		<input type="hidden" name="r" value="<?php echo $r?>" />
@@ -53,7 +98,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				<col>
 				<col width="150">
 			</colgroup>
-			<thead class="thead-light">
+			<thead>
 				<tr>
 					<th scope="col">번호</th>
 					<th scope="col">제목</th>
@@ -71,13 +116,13 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 						<br><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?>
 					</td>
-					<td class="text-right">
+					<td>
 
 						<div class="dropdown">
-							<button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
 								관리
 							</button>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="min-width: 5rem">
 								<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 								<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 								<a class="dropdown-item" href="#">공개</a>
@@ -96,6 +141,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			</tbody>
 		</table>
 
+		<?php if ($TPG > 1): ?>
 		<div class="d-flex justify-content-between my-4">
 			<div class=""></div>
 			<ul class="pagination mb-0">
@@ -104,6 +150,8 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			<div class="">
 			</div>
 		</div>
+		<?php endif; ?>
+
 	</form>
 </div>
 

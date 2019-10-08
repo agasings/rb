@@ -17,11 +17,55 @@ $TPG = getTotalPage($NUM,$recnum);
 
 <div class="container">
 	<div class="subhead mt-0">
-		<h2 class="subhead-heading">
-			<i class="fa fa-bookmark-o fa-fw" aria-hidden="true"></i> 내 저장함
+		<h2 class="mb-0">
+			저장내역
 		</h2>
-		<span class="text-muted">스크랩한 게시물을 모아볼수 있습니다.</span>
 	</div>
+
+	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
+		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 건</span>
+		<div class="form-inline ml-auto">
+
+			<label class="mt-1 mr-2">분류</label>
+			<div class="dropdown">
+				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					전체
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
+						전체
+						<small>2</small>
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						공개
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						미등록
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						비공개
+						<small>0</small>
+					</a>
+					</a>
+
+				</div>
+			</div>
+
+			<div class="input-group ml-2">
+				<input type="text" class="form-control" placeholder="제목 검색">
+				<div class="input-group-append">
+					<button class="btn btn-white text-muted border-left-0" type="button">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+
+		</div><!-- /.form-inline -->
+	</div><!-- /.d-flex -->
 
 	<form name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return submitCheck(this);">
 		<input type="hidden" name="r" value="<?php echo $r?>" />
@@ -83,9 +127,12 @@ $TPG = getTotalPage($NUM,$recnum);
 					삭제
 				</button>
 			</div><!-- /.form-inline -->
+
+			<?php if ($TPG > 1): ?>
 			<ul class="pagination mb-0">
 				<?php echo getPageLink(10,$p,$TPG,'')?>
 			</ul>
+			<?php endif; ?>
 		</div>
 	</form>
 </div>

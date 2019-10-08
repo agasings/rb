@@ -11,9 +11,9 @@ if (!$my['uid']) getLink('/','','','');
 
 	<nav class="navbar fixed-top navbar-expand navbar-light bg-white border-bottom">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="<?php  echo RW(0) ?>">
+			<a class="navbar-brand pl-3" href="<?php  echo RW(0) ?>">
 				<?php echo $d['layout']['header_file']?'<img src="'.$g['url_layout'].'/_var/'.$d['layout']['header_file'].'">':stripslashes($d['layout']['header_title'])?>
-				<span class="font-weight-light">대시보드</span>
+				<strong>대시보드</strong>
 			</a>
 
 			<div class="">

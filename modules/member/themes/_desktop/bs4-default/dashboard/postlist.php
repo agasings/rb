@@ -32,16 +32,61 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 ?>
 
 <div class="container">
-	<div class="d-flex justify-content-between align-items-center subhead mb-3">
+	<div class="d-flex justify-content-between align-items-center subhead">
 		<h3 class="mb-0">
 			리스트 관리
 		</h3>
 		<div class="">
-			<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-white">
+			<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">
 				리스트 만들기
 			</a>
 		</div>
 	</div>
+
+	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
+		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
+		<div class="form-inline ml-auto">
+
+			<label class="mt-1 mr-2">상태</label>
+			<div class="dropdown">
+				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					전체
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
+						전체
+						<small>2</small>
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						공개
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						미등록
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						비공개
+						<small>0</small>
+					</a>
+				  </a>
+
+				</div>
+			</div>
+
+			<div class="input-group ml-2">
+			  <input type="text" class="form-control" placeholder="리스트명 검색">
+			  <div class="input-group-append">
+			    <button class="btn btn-white text-muted border-left-0" type="button">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
+			  </div>
+			</div>
+
+		</div><!-- /.form-inline -->
+	</div><!-- /.d-flex -->
 
 	<form name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return submitCheck(this);">
 		<input type="hidden" name="r" value="<?php echo $r?>" />
@@ -55,7 +100,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				<col>
 				<col width="150">
 			</colgroup>
-			<thead class="thead-light">
+			<thead>
 				<tr>
 					<th scope="col">번호</th>
 					<th scope="col">제목</th>
@@ -91,9 +136,13 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 
 		<div class="d-flex justify-content-between my-4">
 			<div class=""></div>
+
+			<?php if ($TPG > 1): ?>
 			<ul class="pagination mb-0">
 				<?php echo getPageLink(10,$p,$TPG,'')?>
 			</ul>
+			<?php endif; ?>
+
 			<div class="">
 			</div>
 		</div>
