@@ -10,7 +10,7 @@
 				<div class="card-body">
 					<?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>true,'dispHidden'=>true,'dispCheckbox'=>false,'allOpen'=>true)?>
 					<?php $_treeOptions['link'] = RW('m=post&cat=')?>
-					<?php echo getTreeMenu($_treeOptions,$code,0,0,'')?>
+					<?php echo getTreeCategory($_treeOptions,$code,0,0,'')?>
 				</div>
 			</div><!-- /.card -->
 

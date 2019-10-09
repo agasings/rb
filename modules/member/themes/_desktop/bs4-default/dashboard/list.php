@@ -64,7 +64,6 @@ $TPG = getTotalPage($NUM,$recnum);
 						비공개
 						<small>0</small>
 					</a>
-				  </a>
 
 				</div>
 			</div>
@@ -95,14 +94,14 @@ $TPG = getTotalPage($NUM,$recnum);
 					:
 				</span>
 				<strong class="mr-3 f18">1</strong>
-				<a href="<?php echo RW('mod=dashboard&page=list_view&id=0000')?>" class="position-relative mr-3">
+				<a href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" class="position-relative mr-3">
 					<img src="/thumb-ssl/180x100/u/rb2demo.s3.ap-northeast-2.amazonaws.com/post/2019/10/08/d2b5ca33bd970f64a6301fa75ae2eb22145339.png" alt="">
-					<span class="playitem"><em class="sr-only">포스트 수 : </em><span><?php echo $R['num_r']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span></span>
+					<span class="playitem"><em class="sr-only">포스트 수 : </em><span><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span></span>
 				</a>
 
 		    <div class="media-body">
 		      <h5 class="mt-0 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>"><?php echo $R['name']?></a></h5>
-		      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+		      <?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?>
 		    </div>
 				<div class="ml-3">
 					<div class="dropdown">
@@ -110,7 +109,7 @@ $TPG = getTotalPage($NUM,$recnum);
 							관리
 						</button>
 						<div class="dropdown-menu dropdown-menu-right"  style="min-width: 5rem">
-							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
+							<a class="dropdown-item" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" >수정</a>
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<a class="dropdown-item" href="#">공개</a>
 						</div>
@@ -167,7 +166,6 @@ $TPG = getTotalPage($NUM,$recnum);
 					</div>
 
 				</form>
-
 
       </div>
       <div class="modal-footer border-top-0">

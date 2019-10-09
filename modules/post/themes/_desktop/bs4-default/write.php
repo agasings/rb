@@ -3,7 +3,8 @@
   <input type="hidden" name="m" value="<?php echo $m?>">
   <input type="hidden" name="a" value="write">
   <input type="hidden" name="uid" value="<?php echo $R['uid']?>">
-  <input type="hidden" name="category_members">
+  <input type="hidden" name="category_members" value="">
+  <input type="hidden" name="list_members" value="">
   <input type="hidden" name="upload" id="upfilesValue" value="<?php echo $R['upload']?>">
   <input type="hidden" name="featured_img" value="<?php echo $R['featured_img'] ?>">
   <input type="hidden" name="html" value="HTML">
@@ -66,25 +67,47 @@
           </div>
 
           <div class="form-group">
-            <label for="">리스트</label>
+            <label class="sr-only">리스트</label>
 
             <div class="dropdown" data-role="list-selector">
-              <button class="btn btn-white btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                리스트 선택 (3)
+              <button class="btn btn-white btn-block dropdown-toggle d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                리스트 선택
+                <div class="mr-4"><span class="badge badge-primary" data-role="list_num"></span></div>
               </button>
-              <div class="dropdown-menu shadow p-3" style="width: 305px">
+              <div class="dropdown-menu shadow pt-0" style="width: 305px">
 
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" id="customRadio1" name="customRadio" class="custom-control-input">
-                  <label class="custom-control-label" for="customRadio1">리스트 1</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" id="customRadio2" name="customRadio" class="custom-control-input">
-                  <label class="custom-control-label" for="customRadio2">리스트 2</label>
-                </div>
+                <div class="dropdown-body p-3" style="max-height: 300px;overflow:auto">
 
-                <button type="button" class="btn btn-white btn-block mt-3">+ 리스트 추가</button>
+                  <?php
+                    $listque	= 'mbruid='.$my['uid'];
+                    $_RCD = getDbArray($table['postlist'],$listque,'*','gid','asc',30,1);
+                    $NUM = getDbRows($table['postlist'],$listque);
+                  ?>
+                  <?php foreach($_RCD as $_R):?>
+                  <?php $is_list =  getDbRows($table[$m.'list_index'],'data='.$R['uid'].' and list='.$_R['uid'])  ?>
 
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="listRadio<?php echo $_R['uid'] ?>" name="postlist_members[]" value="<?php echo $_R['uid'] ?>" class="custom-control-input" <?php echo $is_list?' checked':'' ?>>
+                    <label class="custom-control-label" for="listRadio<?php echo $_R['uid'] ?>"><?php echo $_R['name'] ?></label>
+                  </div>
+                  <?php endforeach?>
+
+                  <?php if(!$NUM):?>
+                  <div class="text-center text-muted p-5">리스트가 없습니다.</div>
+                  <?php endif?>
+
+                </div><!-- /.dropdown-body -->
+
+                <div class="dropdown-footer px-2">
+                  <button type="button" class="btn btn-white btn-block mt-3" data-role="list-add-button">+ 리스트 추가</button>
+                  <div class="input-group mt-3 d-none" data-role="list-add-input">
+                    <input type="text" class="form-control" placeholder="리스트명 입력" name="list_name">
+                    <div class="input-group-append">
+                      <button class="btn btn-white" type="button" data-act="list-add-submit">추가</button>
+                      <button class="btn btn-white" type="button" data-act="list-add-cancel">취소</button>
+                    </div>
+                  </div><!-- /.input-group -->
+                </div><!-- /.dropdown-footer -->
               </div>
             </div>
 
@@ -99,8 +122,6 @@
               <?php echo getTreePostCategoryCheck($_treeOptions,$R['uid'],0,0,'')?>
             </div>
           </div>
-
-
 
         </div>
         <div class="tab-pane fade" id="attach" role="tabpanel" aria-labelledby="attach-tab">
@@ -208,5 +229,32 @@
 </form>
 
 <script>
-  putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
+
+putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
+
+$( document ).ready(function() {
+
+  listCheckedNum()
+
+  // dropdown 내부클릭시 dropdown 유지
+	$('.dropdown-menu').on('click', function(e) {
+		e.stopPropagation();
+	});
+
+  $('[data-role="list-add-button"]').click( function() {
+    $(this).addClass('d-none');
+    $('[data-role="list-add-input"]').removeClass('d-none')
+    $('[data-role="list-add-input"]').find('.form-control').val('').focus();
+  } );
+  $('[data-act="list-add-cancel"]').click( function() {
+    $('[data-role="list-add-button"]').removeClass('d-none');
+    $('[data-role="list-add-input"]').addClass('d-none')
+  } );
+
+  $('[data-role="list-selector"] [type="checkbox"]').change(function(){
+    listCheckedNum()
+  });
+
+
+});
 </script>

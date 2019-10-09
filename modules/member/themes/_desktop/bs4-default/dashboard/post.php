@@ -73,7 +73,6 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 						비공개
 						<small>0</small>
 					</a>
-				  </a>
 
 				</div>
 			</div>
@@ -107,10 +106,6 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				</a>
 
 		    <div class="media-body">
-					<a href="#" class="f13">
-						<i class="fa fa-list-ul mr-1" aria-hidden="true"></i>
-						파란방 육아일기
-					</a>
 		      <h5 class="my-1">
 						<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
 						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
@@ -139,10 +134,10 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 		    </div>
 				<div class="ml-3 align-self-center">
 					<div class="dropdown">
-						<button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
 							관리
 						</button>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="min-width: 5rem">
+						<div class="dropdown-menu dropdown-menu-right" style="min-width: 5rem">
 							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<a class="dropdown-item" href="#">공개</a>

@@ -29,6 +29,7 @@ if ($uid) {
   $QVAL1 .="d_modify='$d_modify',upload='$upload',log='$log',featured_img='$featured_img',linkedmenu='$linkedmenu'";
   getDbUpdate($table[$m.'data'],$QVAL1,'uid='.$R['uid']);
 
+  //카테고리 업데이트
   $_orign_category_members = getDbArray($table[$m.'index'],'data='.$R['uid'],'*','data','asc',0,1);
 
 	while($_ocm=db_fetch_array($_orign_category_members)) {
@@ -49,6 +50,28 @@ if ($uid) {
     getDbInsert($table[$m.'index'],'site,data,category,depth,gid',"'".$s."','".$R['uid']."','".$_ct1."','".$_ct1_depth."','".$gid."'");
     getDbUpdate($table[$m.'category'],'num=num+1','uid='.$_ct1);
 	}
+
+  //리스트 업데이트
+  $_orign_list_members = getDbArray($table[$m.'list_index'],'data='.$R['uid'],'*','data','asc',0,1);
+
+	while($_olm=db_fetch_array($_orign_list_members)) {
+  	if(!strstr($list_members,'['.$_olm['list'].']')) {
+  		getDbDelete($table[$m.'list_index'],'list='.$_olm['list']);
+      getDbUpdate($table[$m.'list'],'num=num-1','uid='.$_olm['list']);
+  	}
+	}
+
+  $_list_members = array();
+  $_list_members = getArrayString($list_members);
+
+  foreach($_list_members['data'] as $_lt1) {
+    // getLink('','',$_lt1.' 여기까지','');
+    if (getDbRows($table[$m.'list_index'],'data='.$uid.' and list='.$_lt1)) continue;
+    $mingid = getDbCnt($table[$m.'list_index'],'min(gid)','');
+    $gid = $mingid ? $mingid-1 : 100000000;
+    getDbInsert($table[$m.'list_index'],'site,list,data,gid',"'".$s."','".$_lt1."','".$R['uid']."','".$gid."'");
+    getDbUpdate($table[$m.'list'],'num=num+1','uid='.$_lt1);
+  }
 
 
 } else {
@@ -82,6 +105,17 @@ if ($uid) {
       getDbUpdate($table[$m.'category'],'num=num+1','uid='.$_ct1);
     }
 	}
+
+
+  $_list_members = array();
+  $_list_members = getArrayString($list_members);
+
+  foreach($_list_members['data'] as $_lt1) {
+    if (!getDbRows($table[$m.'list_index'],'data='.$LASTUID.' and list='.$_lt1)) {
+      getDbInsert($table[$m.'list_index'],'site,data,list,gid',"'".$s."','".$LASTUID."','".$_lt1."','".$gid."'");
+      getDbUpdate($table[$m.'list'],'num=num+1','uid='.$_lt1);
+    }
+  }
 
 	if ($gid == 100000000)
 	{

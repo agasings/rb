@@ -43,7 +43,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
   <li class="nav-item<?php echo $page=='main'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard')?>">대시보드</a>
   </li>
-  <li class="nav-item<?php echo $page=='post' || $page=='list'?' active':'' ?>">
+  <li class="nav-item<?php echo $page=='post' || $page=='list' || $page=='list_view'?' active':'' ?>">
     <a class="nav-link d-flex justify-content-between align-items-center" href="<?php echo RW('mod=dashboard&page=post')?>">
       포스트
       <i class="fa fa-plus mr-4" aria-hidden="true"></i>
@@ -52,7 +52,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
       <li class="nav-item<?php echo $page=='post'?' active':'' ?>">
         <a class="nav-link" href="<?php echo RW('mod=dashboard&page=post')?>">포스트</a>
       </li>
-      <li class="nav-item<?php echo $page=='list'?' active':'' ?>">
+      <li class="nav-item<?php echo $page=='list' || $page=='list_view'?' active':'' ?>">
         <a class="nav-link" href="<?php echo RW('mod=dashboard&page=list')?>">리스트</a>
       </li>
     </ul>

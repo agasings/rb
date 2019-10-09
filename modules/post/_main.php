@@ -54,7 +54,7 @@ function getPostCategoryCodeToPath($table,$cat,$j)
 //카테고리코드->SQL
 function getPostCategoryCodeToSql($table,$cat)
 {
-	$R=getUidData($table,$cat);
+	$R=getDbData($table,'id="'.$cat.'"','*');
 	if ($R['uid']) $sql .= 'category='.$R['uid'].' or ';
 	if ($R['is_child'])
 	{

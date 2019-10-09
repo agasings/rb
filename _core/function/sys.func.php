@@ -300,6 +300,7 @@ function RW($rewrite)
 		$rewrite = str_replace('m=post&mbruid=','@',$rewrite);
 		$rewrite = str_replace('m=post','post',$rewrite);
 		$rewrite = str_replace('&mod=write','/write',$rewrite);
+		$rewrite = str_replace('&mod=keyword&','/search?',$rewrite);
 		$rewrite = str_replace('mod=dashboard','dashboard',$rewrite);
 		$rewrite = str_replace('mod=settings','settings',$rewrite);
 		$rewrite = str_replace('mod=profile&mbrid=','@',$rewrite);
@@ -311,6 +312,7 @@ function RW($rewrite)
 		$rewrite = str_replace('&cid=','/',$rewrite);
 		$rewrite = str_replace('&CMT=','/',$rewrite);
 		$rewrite = str_replace('&page=','?page=',$rewrite);
+		$rewrite = str_replace('&code=','?code=',$rewrite);
 		$rewrite = str_replace('&s=','/s',$rewrite);
 		$rewrite = str_replace('&cat=','/category/',$rewrite);
 
@@ -511,6 +513,73 @@ function getTreeMenu($conf,$code,$depth,$parent,$tmpcode)
 	$tree.= '</ul></div>';
 	return $tree;
 }
+
+function getTreeCategory($conf,$code,$depth,$parent,$tmpcode)
+{
+	global $_HS;
+	$ctype = $conf['ctype']?$conf['ctype']:'uid';
+	$id = 'tree_'.filterstr(microtime());
+	$tree = '<div class="rb-tree"><ul id="'.$id.'">';
+	$CD=getDbSelect($conf['table'],($conf['site']?'site='.$conf['site'].' and ':'').'depth='.($depth+1).' and parent='.$parent.($conf['dispHidden']?' and hidden=0':'').($conf['mobile']?' and mobile=1':'').' order by gid asc','*');
+	$_i = 0;
+	while($C=db_fetch_array($CD))
+	{
+		$rcode= $tmpcode?$tmpcode.'/'.$C[$ctype]:$C[$ctype];
+		$t_arr = explode('/', $code);
+		$t1_arr = explode('/', $rcode);
+		$topen= in_array($t1_arr[count($t1_arr)-1], $t_arr)?true:false;
+
+		$tree.= '<li>';
+		if ($C['is_child'])
+		{
+			$tree.= '<a data-toggle="collapse" href="#'.$id.'-'.$_i.'-'.$C['uid'].'" class="rb-branch'.($conf['allOpen']||$topen?'':' collapsed').'"></a>';
+			if ($conf['userMenu']=='link') $tree.= '<a href="'.RW('c='.$rcode).'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			else if($conf['userMenu']=='bookmark') $tree.= '<a data-scroll href="#rb-tree-menu-'.$C['id'].'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			else $tree.= '<a href="'.$conf['link'].$C['id'].($_HS['rewrite']?'?':'&amp;').'code='.$rcode.($conf['bookmark']?'#'.$conf['bookmark']:'').'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			if($conf['dispCheckbox']) $tree.= '<input type="checkbox" name="tree_members[]" value="'.$C['uid'].'">';
+			if($C['hidden']) $tree.='<u title="숨김" data-tooltip="tooltip">';
+			$tree.= $C['name'];
+			if($C['hidden']) $tree.='</span>';
+			$tree.='</u></a>';
+
+			if($conf['dispNum']&&$C['num']) $tree.= ' <small>('.$C['num'].')</small>';
+			if(!$conf['hideIcon'])
+			{
+				if($C['mobile']) $tree.= '<i class="fa fa-mobile fa-fw fa-lg" title="모바일" data-tooltip="tooltip"></i>&nbsp;';
+				if($C['target']) $tree.= ' <i class="fa fa-window-restore fa-fw" title="새창" data-tooltip="tooltip"></i>';
+				if($C['reject']) $tree.= ' <i class="fa fa-lock fa-lg fa-fw" title="차단" data-tooltip="tooltip"></i>';
+			}
+
+			$tree.= '<ul id="'.$id.'-'.$_i.'-'.$C['uid'].'" class="collapse'.($conf['allOpen']||$topen?' show':'').'">';
+			$tree.= getTreeCategory($conf,$code,$C['depth'],$C['uid'],$rcode);
+			$tree.= '</ul>';
+		}
+		else {
+			$tree.= '<a href="#." class="rb-leaf"></a>';
+			if ($conf['userMenu']=='link') $tree.= '<a href="'.RW('c='.$rcode).'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			else if ($conf['userMenu']=='bookmark') $tree.= '<a data-scroll href="#rb-tree-menu'.$C['id'].'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			else $tree.= '<a href="'.$conf['link'].$C['id'].($_HS['rewrite']?'?':'&amp;').'code='.$rcode.($conf['bookmark']?'#'.$conf['bookmark']:'').'"><span'.($code==$rcode?' class="rb-active"':'').'>';
+			if($conf['dispCheckbox']) $tree.= '<input type="checkbox" name="tree_members[]" value="'.$C['uid'].'">';
+			if($C['hidden']) $tree.='<u title="숨김" data-tooltip="tooltip">';
+			$tree.= $C['name'];
+			if($C['hidden']) $tree.='</u>';
+			$tree.='</span></a>';
+
+			if($conf['dispNum']&&$C['num']) $tree.= ' <small>('.$C['num'].')</small>';
+			if(!$conf['hideIcon'])
+			{
+				if($C['mobile']) $tree.= '<i class="fa fa-mobile fa-lg fa-fw" title="모바일" data-tooltip="tooltip"></i>&nbsp;';
+				if($C['target']) $tree.= ' <i class="fa fa-window-restore fa-fw" title="새창" data-tooltip="tooltip"></i>';
+				if($C['reject']) $tree.= ' <i class="fa fa-lock fa-lg fa-fw" title="차단" data-tooltip="tooltip"></i>';
+			}
+		}
+		$tree.= '</li>';
+		$_i++;
+	}
+	$tree.= '</ul></div>';
+	return $tree;
+}
+
 //현재경로(@ 2.0.0)
 function getLocation($loc)
 {
@@ -850,5 +919,37 @@ function getConnectUrl($s,$id,$secret,$callBack,$type){
 	}
 	return $g['connect'];
 }
+
+// 포스트의 모든 카테고리 출력
+function getAllPostCat($post) {
+  global $table;
+
+  $m='post';
+  $catque='data='.$post;
+  $RCD=getDbArray($table[$m.'index'],$catque,'*','gid','asc','',1);
+  $CatName='';
+  while ($R=db_fetch_array($RCD)){
+    $C=getUidData($table[$m.'category'],$R['category']);
+		$code=$C['parent']?$C['parent'].'/'.$C['uid']:$C['uid'];
+    $CatName.= '<a href="'.RW('m=post&cat='.$C['uid'].'&code=').$code.'" class="muted-link">'.$C['name'].'</a>, ';
+
+
+  }
+  $result=substr($CatName,0,-2);
+
+  return $result?$result:'';
+}
+
+// 포스트에 카테고리가 있는지 체크함수
+function IsPostCat($post) {
+  global $table;
+  $m='post';
+  $catque='post='.$post;
+  $NUM=getDbRows($table[$m.'index'],$catque);
+
+  return $NUM;
+}
+
+
 
 ?>

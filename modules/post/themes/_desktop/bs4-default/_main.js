@@ -1,5 +1,11 @@
 var submitFlag = false;
 
+function listCheckedNum() {
+  var checked_num = $('[data-role="list-selector"] :checkbox:checked').length;
+  if(checked_num==0) checked_num='';
+  $('[data-role="list_num"]').text(checked_num);
+}
+
 function writeCheck(f) {
 
   if (submitFlag == true) {
@@ -41,6 +47,16 @@ function writeCheck(f) {
     }
     f.category_members.value = s;
 	}
+
+  // 리스트 체크
+  var list_sel=$('input[name="postlist_members[]"]');
+  var list_arr=$('input[name="postlist_members[]"]:checked').map(function(){return $(this).val();}).get();
+	var list_n=list_arr.length;
+  var l='';
+  for (var i=0;i <list_n;i++) {
+    if(list_arr[i]!='')  l += '['+list_arr[i]+']';
+  }
+  $('input[name="list_members"]').val(l);
 
   // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
   var featured_img_input = $('input[name="featured_img"]'); // 대표이미지 input
