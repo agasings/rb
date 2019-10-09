@@ -1,6 +1,6 @@
 <?php
 $levelnum = getDbData($table['s_mbrlevel'],'gid=1','*');
-$levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
+$levelname= getDbData($table['s_mbrlevel'],'uid='.$_MP['level'],'*');
 ?>
 
 <div class="page-wrapper row">
@@ -30,7 +30,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
 					<span class="text-muted">등급</span>
 					<span class="contrib-number">
 						<?php echo $levelname['name']?>
-						<small>(<?php echo $my['level']?>/<?php echo $levelnum['uid']?>)</small>
+						<small>(<?php echo $_MP['level']?>/<?php echo $levelnum['uid']?>)</small>
 					</span>
 				</div>
 				<div class="contrib-column table-column">

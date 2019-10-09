@@ -1,4 +1,9 @@
-<section class="pt-4 pb-2 px-3">
+<?php
+$levelnum = getDbData($table['s_mbrlevel'],'gid=1','*');
+$levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
+?>
+
+<section class="pt-4 px-3">
   <div class="text-reset text-center">
     <a href="<?php echo getProfileLink($my['uid'])?>" class="d-inline-block">
       <img src="<?php echo getAvatarSrc($my['uid'],'60') ?>" width="60" height="60" alt="" class="rounded-circle border">
@@ -8,12 +13,22 @@
     </span>
   </div>
 
-  <ul class="nav flex-column mt-3 border-top">
+  <ul class="nav flex-column mt-3 py-3 border-top">
     <li class="nav-item">
-      <a class="nav-link d-flex justify-content-between px-2 f13 text-reset" href="<?php echo RW('mod=dashboard&page=point')?>">
-        <span>총 포인트</span>
+      <a class="nav-link d-flex justify-content-between py-1 px-2 f13 text-reset" href="<?php echo RW('mod=dashboard&page=point')?>">
+        <span>포인트</span>
         <span>
           <strong class="text-danger"><?php echo number_format($my['point'])?> </strong> P
+          <i class="fa fa-angle-right text-muted ml-2" aria-hidden="true"></i>
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link d-flex justify-content-between py-1 px-2 f13 text-reset" href="<?php echo RW('mod=dashboard&page=point')?>">
+        <span>등급</span>
+        <span>
+          <?php echo $levelname['name']?>
+          <small>(<?php echo $my['level']?>/<?php echo $levelnum['uid']?>)</small>
           <i class="fa fa-angle-right text-muted ml-2" aria-hidden="true"></i>
         </span>
       </a>
@@ -24,7 +39,7 @@
 
 
 
-<ul class="nav flex-column border-bottom">
+<ul class="nav nav-menu flex-column border-bottom">
   <li class="nav-item<?php echo $page=='main'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard')?>">대시보드</a>
   </li>

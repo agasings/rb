@@ -450,12 +450,12 @@ figure.media oembed iframe {
   overflow: auto;
 }
 
-.rb-layout-dashboard .sidebar > .nav {
+.rb-layout-dashboard .sidebar > .nav-menu {
   border-top: 1px solid rgb(221,221,221);
   border-bottom: 1px solid rgb(221,221,221);
 }
 
-.rb-layout-dashboard .sidebar .nav-link {
+.rb-layout-dashboard .sidebar .nav-menu .nav-link {
   display: block;
   position: relative;
   height: 49px;
@@ -464,41 +464,41 @@ figure.media oembed iframe {
   line-height: 50px;
   color: rgb(51,51,51);
 }
-.rb-layout-dashboard .sidebar > .nav > .nav-item + .nav-item {
+.rb-layout-dashboard .sidebar > .nav-menu > .nav-item + .nav-item {
   border-top: 1px solid rgb(238,238,238);
 }
-.rb-layout-dashboard .sidebar .nav-link:hover {
+.rb-layout-dashboard .sidebar .nav-menu .nav-link:hover {
   color: #007bff;
   -webkit-font-smoothing: antialiased;
   text-decoration: none;
 }
-.rb-layout-dashboard .sidebar .nav .nav-item > .nav-link .fa-plus {
+.rb-layout-dashboard .sidebar .nav-menu .nav-item > .nav-link .fa-plus {
   color: #ccc;
   font-size: 14px;
 }
 
-.rb-layout-dashboard .sidebar .nav .nav-item.active > .nav-link {
+.rb-layout-dashboard .sidebar .nav-menu .nav-item.active > .nav-link {
   font-weight: 600;
   color: #007bff;
   background-color: rgb(249,249,250);
   -webkit-font-smoothing: antialiased;
 }
 
-.rb-layout-dashboard .sidebar .nav .nav-item.active > .nav-link .fa-plus::before {
+.rb-layout-dashboard .sidebar .nav-menu .nav-item.active > .nav-link .fa-plus::before {
   content: "\f068";
 }
 
-.rb-layout-dashboard .sidebar .nav .nav {
+.rb-layout-dashboard .sidebar .nav-menu .nav {
   display: none;
   padding: 12px 0 14px;
   border-top: 1px solid rgb(238,238,238);
   background-color: rgb(249,249,250);
 }
-.rb-layout-dashboard .sidebar .nav .active .nav {
+.rb-layout-dashboard .sidebar .nav-menu .active .nav {
   display: block;
 }
 
-.rb-layout-dashboard .sidebar .nav .nav .nav-link {
+.rb-layout-dashboard .sidebar .nav-menu .nav .nav-link {
   display: block;
   height: 27px;
   padding-left: 43px;
@@ -506,7 +506,7 @@ figure.media oembed iframe {
   line-height: 29px;
   color: rgb(102,102,102);
 }
-.rb-layout-dashboard .sidebar .nav .nav .nav-link:hover {
+.rb-layout-dashboard .sidebar .nav-menu .nav .nav-link:hover {
   text-decoration: underline;
 }
 
