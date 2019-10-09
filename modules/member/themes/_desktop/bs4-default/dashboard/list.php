@@ -96,7 +96,9 @@ $TPG = getTotalPage($NUM,$recnum);
 				<strong class="mr-3 f18">1</strong>
 				<a href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" class="position-relative mr-3">
 					<img src="/thumb-ssl/180x100/u/rb2demo.s3.ap-northeast-2.amazonaws.com/post/2019/10/08/d2b5ca33bd970f64a6301fa75ae2eb22145339.png" alt="">
-					<span class="playitem"><em class="sr-only">포스트 수 : </em><span><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span></span>
+					<span class="list_mask">
+						<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+					</span>
 				</a>
 
 		    <div class="media-body">
@@ -112,6 +114,8 @@ $TPG = getTotalPage($NUM,$recnum);
 							<a class="dropdown-item" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" >수정</a>
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<a class="dropdown-item" href="#">공개</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" target="_blank">보기</a>
 						</div>
 					</div>
 				</div>

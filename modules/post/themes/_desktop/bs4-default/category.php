@@ -16,8 +16,8 @@
 
 		</div>
 		<div class="col-9">
+			<h3> <?php echo $CAT['name']?$CAT['name']:'전체 포스트' ?></h3>
 			<?php if ($NUM): ?>
-
 			<?php echo $NUM ?>개
 			<ul class="list-unstyled">
 			<?php foreach($RCD as $R):?>

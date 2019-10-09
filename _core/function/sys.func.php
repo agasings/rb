@@ -931,12 +931,9 @@ function getAllPostCat($post) {
   while ($R=db_fetch_array($RCD)){
     $C=getUidData($table[$m.'category'],$R['category']);
 		$code=$C['parent']?$C['parent'].'/'.$C['uid']:$C['uid'];
-    $CatName.= '<a href="'.RW('m=post&cat='.$C['uid'].'&code=').$code.'" class="muted-link">'.$C['name'].'</a>, ';
-
-
+    $CatName.= '<a href="'.RW('m=post&cat='.$C['id'].'&code=').$code.'" class="muted-link">'.$C['name'].'</a>, ';
   }
   $result=substr($CatName,0,-2);
-
   return $result?$result:'';
 }
 

@@ -101,13 +101,13 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			<?php foreach($RCD as $R):?>
 		  <li class="media mt-4">
 
-				<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="mr-3" target="_blank">
+				<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="mr-3">
 					<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
 				</a>
 
 		    <div class="media-body">
 		      <h5 class="my-1">
-						<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
+						<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="muted-link" ><?php echo $R['subject']?></a>
 						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 					</h5>
 		      <div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
@@ -141,6 +141,9 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<a class="dropdown-item" href="#">공개</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" target="_blank">보기</a>
+
 						</div>
 					</div>
 				</div>
@@ -154,8 +157,6 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			<?php endif?>
 
 		</ul>
-
-
 
 
 		<div class="d-flex justify-content-between my-4">

@@ -42,75 +42,66 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 				<a href="<?php echo RW('mod=dashboard&page=post')?>" class="btn btn-light btn-sm">관리</a>
 			</header>
 
-			<table class="table text-center">
-
-				<colgroup>
-					<col width="50">
-					<col>
-					<col width="70">
-					<col width="100">
-				</colgroup>
-				<thead class="thead-light">
-					<tr>
-						<th scope="col" class="side1">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">조회</th>
-						<th scope="col">날짜</th>
-					</tr>
-				</thead>
-				<tbody>
+			<ul class="list-unstyled" style="margin-top: -1rem">
 
 				<?php foreach($RCD as $R):?>
-				<?php $R['mobile']=isMobileConnect($R['agent'])?>
-				<?php $R['sbjlink']=getPostLink($R,1)?>
-				<tr>
-					<td>
-						<?php if($R['uid'] != $uid):?>
-						<?php echo $NUM-((($p-1)*$recnum)+$_rec++)?>
-						<?php else:$_rec++?>
-						<span class="now">&gt;&gt;</span>
-						<?php endif?>
-					</td>
-					<td class="text-left">
-						<?php if($R['mobile']):?><i class="fa fa-mobile fa-lg"></i><?php endif?>
-            <?php if($R['category']):?>
-            <span class="badge badge-secondary"><?php echo $R['category']?></span>
-            <?php endif?>
-            <a href="<?php echo $R['sbjlink']?>" class="muted-link">
-              <?php echo getStrCut($R['subject'],$d['post']['sbjcut'],'')?>
-            </a>
-            <?php if(strstr($R['content'],'.jpg') || strstr($R['content'],'.png')):?>
-            <span class="badge badge-light" data-toggle="tooltip" title="사진">
-              <i class="fa fa-camera-retro fa-lg"></i>
-            </span>
-            <?php endif?>
-            <?php if($R['upload']):?>
-            <span class="badge badge-light" data-toggle="tooltip" title="첨부파일">
-              <i class="fa fa-paperclip fa-lg"></i>
-            </span>
-            <?php endif?>
-            <?php if($R['hidden']):?><span class="badge badge-light" data-toggle="tooltip" title="비밀글"><i class="fa fa-lock fa-lg"></i></span><?php endif?>
-            <?php if($R['comment']):?><span class="badge badge-light"><?php echo $R['comment']?><?php echo $R['oneline']?'+'.$R['oneline']:''?></span><?php endif?>
-            <?php if(getNew($R['d_regis'],24)):?><small class="text-danger"><small>New</small></span><?php endif?>
-					</td>
-					<td class="small"><?php echo $R['hit']?></td>
-					<td>
-						<time class="small text-muted"><?php echo getDateFormat($R['d_regis'],'Y.m.d')?></time>
-					</td>
-					</tr>
-					<?php endforeach?>
+			  <li class="media mt-4">
 
+					<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="mr-3">
+						<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+					</a>
 
-					<?php if(!$NUM):?>
-					<tr>
-						<td colspan="4" class="py-5 text-muted">
-							게시물이 없습니다.
-						</td>
-					</tr>
+			    <div class="media-body">
+			      <h5 class="my-1">
+							<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" ><?php echo $R['subject']?></a>
+							<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
+						</h5>
+			      <div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
+						<div class="mb-1">
+							<ul class="list-inline d-inline-block ml-2 f13 text-muted">
+								<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
+								<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
+								<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
+								<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
+							</ul>
+							<span class="ml-2 f13 text-muted">
+								<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
+							</span>
+							<span class="ml-2 f13 text-muted">
+								<!-- 태그 -->
+								<?php $_tags=explode(',',$R['tag'])?>
+								<?php $_tagn=count($_tags)?>
+								<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
+								<?php $_tagk=trim($_tags[$i])?>
+								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
+								<?php endfor?>
+							</span>
+						</div>
+			    </div>
+			  </li>
+				<?php endforeach?>
+
+				<?php if(!$NUM):?>
+				<li>
+					<div class="text-center text-muted p-5">포스트가 없습니다.</div>
+				</li>
 				<?php endif?>
 
-				</tbody>
-			</table>
+			</ul>
+
+
+			<div class="d-flex justify-content-between my-4">
+				<div class=""></div>
+
+				<?php if ($NUM > $recnum): ?>
+				<ul class="pagination mb-0">
+					<?php echo getPageLink(10,$p,$TPG,'')?>
+				</ul>
+				<?php endif; ?>
+
+				<div class="">
+				</div>
+			</div>
 
 			<footer class="d-flex justify-content-between align-items-center my-4">
 		    <ul class="pagination mb-0">

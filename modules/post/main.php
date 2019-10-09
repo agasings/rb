@@ -28,6 +28,7 @@ if ($cid) {
 switch ($mod) {
   case 'category' :
     include_once $g['dir_module'].'mod/_list.php';
+    $CAT  = getDbData($table[$m.'category'],"id='".$cat."'",'*');
   break;
 
   case 'keyword' :
