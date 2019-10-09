@@ -44,7 +44,7 @@ $(function() {
   // 댓글 출력 함수 실행
   var p_module = '<?php echo $m?>';
   var p_table = '<?php echo $table[$m.'data']?>';
-  var p_uid = '<?php echo $uid?>';
+  var p_uid = '<?php echo $R['uid']?>';
   var theme = '<?php echo $comment_theme ?>';
   var agent = navigator.userAgent.toLowerCase();
 
@@ -73,7 +73,6 @@ $(function() {
   $('#commentting-container').on('saved.rb.comment',function(){
     // $.notify({message:'댓글이 등록 되었습니다.'});
     $('[data-toggle="tooltip"]').tooltip()
-    $('[data-role="comment-item"] article').autolink();
 
     $(document).on('click','.add-comment',function(){
      var uid = $(this).data('parent')
@@ -90,7 +89,6 @@ $(function() {
   // 한줄의견이 등록된 후에
   $('#commentting-container').on('saved.rb.oneline',function(){
     $('[data-toggle="tooltip"]').tooltip()
-    $('[data-role="oneline-item"] article').autolink();
   })
   $('#commentting-container').on('edited.rb.oneline',function(){
     $.notify({message: '의견이 수정 되었습니다.'},{type: 'success'});
