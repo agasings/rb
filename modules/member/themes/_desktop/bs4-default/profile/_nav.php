@@ -26,7 +26,7 @@ $para_str = $_HS['rewrite']?'?':'&';
 		<a class="nav-link f16<?php if ($page=='post'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=post">
 			포스트
 		</a>
-		<a class="nav-link f16<?php if ($page=='postlist'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=postlist">
+		<a class="nav-link f16<?php if ($page=='list'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=list">
 			리스트
 		</a>
     <a class="nav-link f16<?php if ($page=='bbs'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=bbs">

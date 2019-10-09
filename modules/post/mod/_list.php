@@ -3,11 +3,12 @@ $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 20;
 $_WHERE = 'display<2 and site='.$s;
+$where = $where?$where:'subject|tag|review';
 
 if ($sort == 'gid' && (!$cat || $keyword)) {
 
 	if ($where && $keyword) {
-		if (strpos('[name][nic][id][ip]',$where)) $_WHERE .= " and ".$where."='".$keyword."'";
+		if (strpos('[nic][id][ip]',$where)) $_WHERE .= " and ".$where."='".$keyword."'";
 		else if ($where == 'term') $_WHERE .= " and d_regis like '".$keyword."%'";
 		else $_WHERE .= getSearchSql($where,$keyword,$ikeyword,'or');
 	}

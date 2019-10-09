@@ -28,7 +28,7 @@
   <li class="nav-item<?php echo $page=='main'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard')?>">대시보드</a>
   </li>
-  <li class="nav-item<?php echo $page=='post' || $page=='postlist'?' active':'' ?>">
+  <li class="nav-item<?php echo $page=='post' || $page=='list'?' active':'' ?>">
     <a class="nav-link d-flex justify-content-between align-items-center" href="<?php echo RW('mod=dashboard&page=post')?>">
       포스트
       <i class="fa fa-plus mr-4" aria-hidden="true"></i>
@@ -37,8 +37,8 @@
       <li class="nav-item<?php echo $page=='post'?' active':'' ?>">
         <a class="nav-link" href="<?php echo RW('mod=dashboard&page=post')?>">포스트</a>
       </li>
-      <li class="nav-item<?php echo $page=='postlist'?' active':'' ?>">
-        <a class="nav-link" href="<?php echo RW('mod=dashboard&page=postlist')?>">리스트</a>
+      <li class="nav-item<?php echo $page=='list'?' active':'' ?>">
+        <a class="nav-link" href="<?php echo RW('mod=dashboard&page=list')?>">리스트</a>
       </li>
     </ul>
   </li>

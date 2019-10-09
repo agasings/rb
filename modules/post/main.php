@@ -7,7 +7,7 @@ include_once $svfile;
 
 include_once $g['dir_module'].'_main.php';
 
-$mod = $mod ? $mod : 'list';
+$mod = $mod ? $mod : 'category';
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
@@ -26,7 +26,11 @@ if ($cid) {
 }
 
 switch ($mod) {
-  case 'list' :
+  case 'category' :
+    include_once $g['dir_module'].'mod/_list.php';
+  break;
+
+  case 'keyword' :
     include_once $g['dir_module'].'mod/_list.php';
   break;
 

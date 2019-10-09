@@ -1,7 +1,6 @@
 <?php include $g['dir_module_skin'].'_header.php'?>
 
 <section class="post-section">
-	<?php echo $_IS_POSTMBR ?>
 	<h2><?php echo $R['subject'] ?></h2>
 
 	<div class="page-meta f13">

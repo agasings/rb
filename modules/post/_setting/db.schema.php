@@ -163,8 +163,9 @@ gid			INT				DEFAULT '0'		NOT NULL,
 site		INT				DEFAULT '0'		NOT NULL,
 id			VARCHAR(30)		DEFAULT ''		NOT NULL,
 name		VARCHAR(200)	DEFAULT ''		NOT NULL,
-data			INT				DEFAULT '0'		NOT NULL,
+mbruid			INT				DEFAULT '0'		NOT NULL,
 num_r		INT				DEFAULT '0'		NOT NULL,
+tag		   VARCHAR(200)	DEFAULT ''		NOT NULL,
 d_last		VARCHAR(14)		DEFAULT ''		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 imghead		VARCHAR(100)	DEFAULT ''		NOT NULL,
@@ -174,6 +175,7 @@ putfoot		VARCHAR(20)		DEFAULT ''		NOT NULL,
 addinfo		TEXT			NOT NULL,
 writecode	TEXT			NOT NULL,
 KEY gid(gid),
+KEY mbruid(mbruid),
 KEY id(id)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'list'],$DB_CONNECT);

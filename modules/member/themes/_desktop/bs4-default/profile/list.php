@@ -39,7 +39,7 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 				<div>
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 				</div>
-				<a href="<?php echo RW('mod=dashboard&page=postlist')?>" class="btn btn-light btn-sm">관리</a>
+				<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm">관리</a>
 			</header>
 
 			<table class="table text-center">
