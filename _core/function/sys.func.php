@@ -297,7 +297,9 @@ function RW($rewrite)
 	{
 		if(!$rewrite) return $GLOBALS['g']['r']?$GLOBALS['g']['r']:'/';
 		$rewrite = str_replace('c=','c/',$rewrite);
-		$rewrite = str_replace('m=post&mbruid=','@',$rewrite);
+		$rewrite = str_replace('m=post&mbrid=','@',$rewrite);
+		$rewrite = str_replace('m=post&mod=list&listid=','list/',$rewrite);
+		$rewrite = str_replace('&mod=list&listid=','/list/',$rewrite);
 		$rewrite = str_replace('m=post','post',$rewrite);
 		$rewrite = str_replace('&mod=write','/write',$rewrite);
 		$rewrite = str_replace('&mod=keyword&','/search?',$rewrite);
@@ -857,9 +859,20 @@ function getPostLink($arr,$profile){
 	global $table;
 	if ($profile) {
 		$M = getUidData($table['s_mbrid'],$arr['mbruid']);
-		return RW('m=post&mbruid='.$M['id'].'&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+		return RW('m=post&mbrid='.$M['id'].'&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
 	}  else {
 		return RW('m=post&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+	}
+}
+
+//리스트 링크
+function getListLink($arr,$profile){
+	global $table;
+	if ($profile) {
+		$M = getUidData($table['s_mbrid'],$arr['mbruid']);
+		return RW('m=post&mbrid='.$M['id'].'&mod=list&listid='.$arr['id'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+	}  else {
+		return RW('m=post&mod=list&listid='.$arr['id'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
 	}
 }
 

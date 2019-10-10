@@ -20,6 +20,8 @@ RewriteRule ^(post)/(category)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&cat=$3&%1
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/(search)/?$ ./index.php?m=post&mod=keyword&%1 [L]
 
+RewriteRule ^(list)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&mod=list&listid=$2 [L]
+
 RewriteRule ^(b)/?$ ./index.php?m=bbs [L]
 RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=bbs&bid=$2 [L]
 RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/?$ ./index.php?m=bbs&bid=$2&uid=$3 [L]
@@ -79,6 +81,7 @@ RewriteRule ^([a-zA-Z0-9_\-]+)/(download)/([a-zA-Z]+)/?$ ./index.php?r=$1&m=medi
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(@)([a-z-A-Z-0-9_]+)/?$ ./index.php?mod=profile&mbrid=$2&%1 [L]
 RewriteRule ^(@)([a-z-A-Z-0-9_]+)/([0-9_]+)/?$ ./index.php?m=post&mod=view&mbrid=$2&cid=$3 [L]
+RewriteRule ^(@)([a-z-A-Z-0-9_]+)/(list)/([a-z-A-Z-0-9_]+)/?$ ./index.php?m=post&mod=list&mbrid=$2&listid=$4 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^([a-zA-Z0-9_\-]+)/(@)([a-z-A-Z-0-9_]+)/?$ ./index.php?r=$1&mod=profile&mbrid=$3&%1 [L]
 

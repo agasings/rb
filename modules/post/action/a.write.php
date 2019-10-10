@@ -1,7 +1,7 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-include_once $g['dir_module'].'lib/tree.func.php';
+// include_once $g['dir_module'].'lib/tree.func.php';
 include_once $g['dir_module'].'lib/action.func.php';
 
 $mbruid		= $author ? $author : $my['uid'];

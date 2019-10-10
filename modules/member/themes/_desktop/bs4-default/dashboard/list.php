@@ -115,7 +115,7 @@ $TPG = getTotalPage($NUM,$recnum);
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<a class="dropdown-item" href="#">공개</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" target="_blank">보기</a>
+							<a class="dropdown-item" href="<?php echo getListLink($R,0) ?>" target="_blank">보기</a>
 						</div>
 					</div>
 				</div>

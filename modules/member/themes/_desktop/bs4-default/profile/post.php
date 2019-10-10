@@ -47,13 +47,13 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 				<?php foreach($RCD as $R):?>
 			  <li class="media mt-4">
 
-					<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="mr-3">
+					<a href="<?php echo getPostLink($R,1) ?>" class="mr-3">
 						<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
 					</a>
 
 			    <div class="media-body">
 			      <h5 class="my-1">
-							<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" ><?php echo $R['subject']?></a>
+							<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" ><?php echo $R['subject']?></a>
 							<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 						</h5>
 			      <div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
@@ -73,7 +73,9 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 								<?php $_tagn=count($_tags)?>
 								<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
 								<?php $_tagk=trim($_tags[$i])?>
-								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
+								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>">
+									# <?php echo $_tagk?>
+								</a>
 								<?php endfor?>
 							</span>
 						</div>

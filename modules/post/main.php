@@ -35,6 +35,10 @@ switch ($mod) {
     include_once $g['dir_module'].'mod/_list.php';
   break;
 
+  case 'list' :
+    include_once $g['dir_module'].'mod/_list.php';
+  break;
+
   case 'write' :
   if (!$my['uid']) getLink('/','','','');
 

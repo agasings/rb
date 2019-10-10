@@ -1,10 +1,8 @@
 <section>
 
+	<h1 class="h4 my-5 text-center"><?php echo $LIST['name'] ?> <small class="text-muted"><?php echo $NUM ?>개</small>	</h1>
+
 	<?php if ($NUM): ?>
-
-
-
-	<h1 class="h4 my-5 text-center">'<?php echo $keyword ?>' 	<small class="text-muted">포스트 검색결과 <?php echo $NUM ?>개</small></h1>
 
 	<hr>
 	<ul class="list-unstyled" data-plugin="markjs">
@@ -56,23 +54,9 @@
 	<?php else: ?>
 
 		<div class="p-5 text-center text-muted">
-			자료가 없습니다.
+			등록된 포스트가 없습니다.
 		</div>
 
 	<?php endif; ?>
 
 </section>
-
-<!-- markjs js : https://github.com/julmot/mark.js -->
-<?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
-
-<script>
-
-$( document ).ready(function() {
-
-	// marks.js
-	$('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
-
-});
-
-</script>

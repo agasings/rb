@@ -14,14 +14,14 @@
 	<li class="media my-4">
 		<?php if ($R['featured_img']): ?>
 
-		<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>">
+		<a href="<?php echo getPostLink($R,0) ?>">
 			<img src="<?php echo getPreviewResize(getUpImageSrc($R),'t') ?>" class="mr-3" alt="" style="width:100px">
 		</a>
 		<?php endif; ?>
 
 		<div class="media-body">
 			<h5 class="mt-0 mb-1">
-				<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>">
+				<a href="<?php echo getPostLink($R,0) ?>">
 					<?php echo $R['subject']?>
 				</a>
 			</h5>
@@ -42,7 +42,9 @@
 					<?php $_tagn=count($_tags)?>
 					<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
 					<?php $_tagk=trim($_tags[$i])?>
-					<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
+					<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>">
+						# <?php echo $_tagk?>
+					</a>
 					<?php endfor?>
 				</span>
 			</div>
