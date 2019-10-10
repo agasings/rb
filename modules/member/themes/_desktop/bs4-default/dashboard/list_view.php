@@ -20,11 +20,12 @@ $TPG = getTotalPage($NUM,$recnum);
 ?>
 
 <div class="container">
-	<div class="d-flex justify-content-between align-items-center subhead">
+	<div class="d-flex justify-content-between align-items-center subhead border-bottom border-dark ">
 		<h3 class="mb-0">
 			목록 수정
 		</h3>
 		<div class="">
+			<a href="<?php echo getListLink($R,0) ?>" class="btn btn-white" target="_blank">보기</a>
 			<button type="button" class="btn btn-white" data-history="back">이전</button>
 		</div>
 	</div>
@@ -35,7 +36,7 @@ $TPG = getTotalPage($NUM,$recnum);
 		<div class="col-9">
 
 
-			<div class=" border-top border-dark py-4">
+			<div class="py-4">
 				<h4><?php echo $R['name'] ?></h4>
 				<?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?>
 
@@ -78,11 +79,11 @@ $TPG = getTotalPage($NUM,$recnum);
 
 			<ul class="list-unstyled" style="margin-top: -1rem">
 				<?php foreach($RCD as $R):?>
-				<li class="media mt-4">
-					<span class="px-3">
-						:
+				<li class="media mt-4 serial">
+					<span class="px-3  align-self-center">
+						<i class="fa fa-arrows" aria-hidden="true"></i>
 					</span>
-					<strong class="mr-3 f18">1</strong>
+					<strong class="counter mr-3 f18  align-self-center"></strong>
 					<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="mr-3" target="_blank">
 						<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
 					</a>
@@ -99,21 +100,9 @@ $TPG = getTotalPage($NUM,$recnum);
 								<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 								<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
 							</ul>
-							<span class="ml-2 f13 text-muted">
-								<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
-							</span>
-							<span class="ml-2 f13 text-muted">
-								<!-- 태그 -->
-								<?php $_tags=explode(',',$R['tag'])?>
-								<?php $_tagn=count($_tags)?>
-								<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
-								<?php $_tagk=trim($_tags[$i])?>
-								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
-								<?php endfor?>
-							</span>
 						</div>
 			    </div>
-					<div class="ml-3 align-self-center">
+					<div class="ml-3">
 						<div class="dropdown">
 							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
 								관리
@@ -152,10 +141,15 @@ $TPG = getTotalPage($NUM,$recnum);
 
 
 		</div><!-- /.col-9 -->
-		<div class="col-3">
-			<a href="" class="badge badge-pill badge-light f16"># 운전연습</a>
-			<a href="" class="badge badge-pill badge-light f16"># 진짜한다운전</a>
-			<a href="" class="badge badge-pill badge-light f16"># 장롱면허탈출</a>
+		<div class="col-3 border-left">
+
+			<div class="p-3">
+				<a href="" class="badge badge-pill badge-light f14 mb-2"># 운전연습</a>
+				<a href="" class="badge badge-pill badge-light f14 mb-2"># 진짜한다운전</a>
+				<a href="" class="badge badge-pill badge-light f14 mb-2"># 장롱면허탈출</a>
+			</div>
+
+
 		</div><!-- /.col-3 -->
 	</div><!-- /.row -->
 

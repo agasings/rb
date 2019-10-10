@@ -303,6 +303,7 @@ function RW($rewrite)
 		$rewrite = str_replace('m=post','post',$rewrite);
 		$rewrite = str_replace('&mod=write','/write',$rewrite);
 		$rewrite = str_replace('&mod=keyword&','/search?',$rewrite);
+		$rewrite = str_replace('&mod=view&cid=','/post/',$rewrite);
 		$rewrite = str_replace('mod=dashboard','dashboard',$rewrite);
 		$rewrite = str_replace('mod=settings','settings',$rewrite);
 		$rewrite = str_replace('mod=profile&mbrid=','@',$rewrite);
@@ -859,7 +860,7 @@ function getPostLink($arr,$profile){
 	global $table;
 	if ($profile) {
 		$M = getUidData($table['s_mbrid'],$arr['mbruid']);
-		return RW('m=post&mbrid='.$M['id'].'&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+		return RW('m=post&mbrid='.$M['id'].'&mod=view&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
 	}  else {
 		return RW('m=post&cid='.$arr['cid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
 	}

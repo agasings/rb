@@ -1,3 +1,11 @@
+.serial {
+  counter-increment: Serial;
+}
+.serial .counter:before {
+  content: counter(Serial);
+}
+
+
 /* form */
 .dropdown-toggle {
   position: relative;

@@ -37,7 +37,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			포스트 관리
 		</h3>
 		<div class="">
-			<a href="<?php echo getProfileLink($my['uid']) ?><?php echo $_HS['rewrite']?'?':'&' ?>page=post" class="btn btn-white">
+			<a href="<?php echo getProfileLink($my['uid']) ?><?php echo $_HS['rewrite']?'/':'&page=' ?>post" class="btn btn-white">
 				<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>
 				프로필 이동
 			</a>

@@ -17,25 +17,25 @@ function getSyncUrl($sync){
 	else return $GLOBALS['g']['s'].'/?'.($GLOBALS['_HS']['usescode']?'r='.$GLOBALS['_HS']['id'].'&amp;':'').str_replace(':','=',str_replace(',','&amp;',$_r));
 }
 
-$para_str = $_HS['rewrite']?'?':'&';
+$para_str = $_HS['rewrite']?'/':'&page=';
 ?>
 
 <div class="user-profile-nav">
   <nav class="nav underline-nav">
-    <a class="nav-link f16<?php if ($page=='main'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']) ?>">요약</a>
-		<a class="nav-link f16<?php if ($page=='post'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=post">
+    <a class="nav-link f16<?php if ($page=='main'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']) ?>">홈</a>
+		<a class="nav-link f16<?php if ($page=='post'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>post">
 			포스트
 		</a>
-		<a class="nav-link f16<?php if ($page=='list'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=list">
+		<a class="nav-link f16<?php if ($page=='list'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>list">
 			리스트
 		</a>
-    <a class="nav-link f16<?php if ($page=='bbs'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=bbs">
+    <a class="nav-link f16<?php if ($page=='bbs'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>bbs">
       게시판
     </a>
-    <a class="nav-link f16<?php if ($page=='comment'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=comment">
+    <a class="nav-link f16<?php if ($page=='comment'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>comment">
       댓글
     </a>
-    <a class="nav-link f16<?php if ($page=='oneline'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=oneline">
+    <a class="nav-link f16<?php if ($page=='oneline'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>oneline">
       한줄의견
     </a>
     <a class="nav-link f16<?php if ($page=='follower'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=follower">

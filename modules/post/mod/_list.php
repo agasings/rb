@@ -19,6 +19,10 @@ if ($sort == 'gid' && (!$cat || $keyword) && !$listid) {
 
 } else if ($listid) {
 
+	if ($mbrid) {
+		$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
+		$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
+	}
 	$LIST  = getDbData($table[$m.'list'],"id='".$listid."'",'*');
 	$_WHERE .= ' and list="'.$LIST['uid'].'"';
 	$TCD = getDbArray($table[$m.'list_index'],$_WHERE,'*','gid','desc',$recnum,$p);

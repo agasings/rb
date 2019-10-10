@@ -7,13 +7,16 @@ include_once $svfile;
 
 include_once $g['dir_module'].'_main.php';
 
-$mod = $mod ? $mod : 'category';
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
 
+if ($cat) $mod='category';
+
 if ($cid) {
+  $mod = $mod ? $mod : 'view';
   $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
+
   if (!$R['uid']||($R['display']>1&&!$my['admin'])) getLink('','','존재하지 않는 포스트 입니다..','-1');
 	include_once $g['dir_module'].'mod/_view.php';
 
@@ -22,7 +25,6 @@ if ($cid) {
 
   $_POSTMBR_ARR = array();
   $_POSTMBR_RCD = getDbArray($table[$m.'member'],'data='.$R['uid'].' and auth=1','*','gid','asc',0,1);
-
 }
 
 switch ($mod) {

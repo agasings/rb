@@ -26,7 +26,7 @@ $TPG = getTotalPage($NUM,$recnum);
 			리스트 관리
 		</h3>
 		<div class="">
-			<a href="<?php echo getProfileLink($my['uid']) ?><?php echo $_HS['rewrite']?'?':'&' ?>page=list" class="btn btn-white">
+			<a href="<?php echo getProfileLink($my['uid']) ?><?php echo $_HS['rewrite']?'/':'&page=' ?>list" class="btn btn-white">
 				<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>
 				프로필 이동
 			</a>
@@ -89,11 +89,11 @@ $TPG = getTotalPage($NUM,$recnum);
 		<ul class="list-unstyled" style="margin-top: -1rem">
 
 			<?php foreach($RCD as $R):?>
-		  <li class="media align-items-center my-4">
+		  <li class="media align-items-center my-4 serial">
 				<span class="px-3">
-					:
+					<i class="fa fa-arrows" aria-hidden="true"></i>
 				</span>
-				<strong class="mr-3 f18">1</strong>
+				<strong class="counter mr-3 f18"></strong>
 				<a href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" class="position-relative mr-3">
 					<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" alt="">
 					<img class="d-none" src="/thumb-ssl/180x100/u/rb2demo.s3.ap-northeast-2.amazonaws.com/post/2019/10/08/d2b5ca33bd970f64a6301fa75ae2eb22145339.png" alt="">

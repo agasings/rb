@@ -1,6 +1,17 @@
 <?php include $g['dir_module_skin'].'_header.php'?>
 
+
 <section class="post-section">
+	<?php if ($list): ?>
+	<div class="mb-2">
+		<a href="<?php echo getListLink($LIST,$mbrid?1:0) ?>">
+			<?php if ($mbrid): ?>
+			<img src="<?php echo getAvatarSrc($MBR['memberuid'],'20') ?>" width="20" height="20" alt="<?php echo $MBR['name'] ?>" class="mr-1 rounded-circle d-inline-block align-middle">
+			<?php endif; ?>
+			<?php echo $LIST['name'] ?>
+		</a>
+	</div>
+	<?php endif; ?>
 	<h2><?php echo $R['subject'] ?></h2>
 
 	<div class="page-meta f13">

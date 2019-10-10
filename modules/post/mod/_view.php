@@ -1,6 +1,7 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
+
 if (!$my['admin'] && !strstr(','.($d['post']['admin']?$d['post']['admin']:'.').',',','.$my['id'].','))
 {
 	if ($d['post']['perm_l_view'] > $my['level'] || strpos('_'.$d['post']['perm_g_view'],'['.$my['sosok'].']'))
@@ -62,6 +63,13 @@ if ($d['post']['isperm'] && $R['upload'])
 	}
 	$d['upload']['count'] = $d['_pload']['count'];
 }
+
+if ($mbrid) {
+	$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
+	$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
+}
+
+$LIST=getDbData($table[$m.'list'],"id='".$list."'",'*');
 
 // 메타 이미지 세팅 = 해당 포스트의 대표 이미지를 메타 이미지로 적용한다.
 if($R['featured_img']){

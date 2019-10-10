@@ -1,6 +1,13 @@
 <section>
 
-	<h1 class="h4 my-5 text-center"><?php echo $LIST['name'] ?> <small class="text-muted"><?php echo $NUM ?>개</small>	</h1>
+	<h1 class="h4 my-5 text-center">
+
+		<?php if ($mbrid): ?>
+		<a href="<?php echo getProfileLink($MBR['memberuid'])?><?php echo $_HS['rewrite']?'/':'&page=' ?>list" title="<?php echo $MBR['name'] ?>의 리스트"><img src="<?php echo getAvatarSrc($MBR['memberuid'],'40') ?>" width="40" height="40" alt="<?php echo $MBR['name'] ?>" class="mr-2 rounded-circle d-inline-block align-middle"></a>
+		<?php endif; ?>
+
+		<?php echo $LIST['name'] ?> <small class="text-muted"><?php echo $NUM ?>개</small>
+	</h1>
 
 	<?php if ($NUM): ?>
 
@@ -12,14 +19,14 @@
 	<li class="media my-4">
 		<?php if ($R['featured_img']): ?>
 
-		<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>">
+		<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>">
 			<img src="<?php echo getPreviewResize(getUpImageSrc($R),'t') ?>" class="mr-3" alt="" style="width:100px">
 		</a>
 		<?php endif; ?>
 
 		<div class="media-body">
 			<h5 class="mt-0 mb-1">
-				<a href="<?php echo getPostLink($R,$mbrid?1:0) ?>">
+				<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>">
 					<?php echo $R['subject']?>
 				</a>
 			</h5>
