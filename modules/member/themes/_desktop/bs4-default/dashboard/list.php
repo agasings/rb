@@ -80,58 +80,60 @@ $TPG = getTotalPage($NUM,$recnum);
 		</div><!-- /.form-inline -->
 	</div><!-- /.d-flex -->
 
-	<form name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return submitCheck(this);">
-		<input type="hidden" name="r" value="<?php echo $r?>" />
-		<input type="hidden" name="m" value="<?php echo $m?>" />
-		<input type="hidden" name="front" value="<?php echo $front?>" />
-		<input type="hidden" name="a" value="" />
+	<form id="nestableForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>">
+		<input type="hidden" name="r" value="<?php echo $r?>">
+		<input type="hidden" name="m" value="post">
+		<input type="hidden" name="front" value="<?php echo $front?>">
+		<input type="hidden" name="type" value="list">
+		<input type="hidden" name="a" value="modifygid">
 
-		<ul class="list-unstyled" style="margin-top: -1rem">
+		<div class="dd" id="nestable-list">
+			<ul class="dd-list list-unstyled" style="margin-top: -1rem">
 
-			<?php foreach($RCD as $R):?>
-		  <li class="media align-items-center my-4 serial">
-				<span class="px-3">
-					<i class="fa fa-arrows" aria-hidden="true"></i>
-				</span>
-				<strong class="counter mr-3 f18"></strong>
-				<a href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" class="position-relative mr-3">
-					<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" alt="">
-					<img class="d-none" src="/thumb-ssl/180x100/u/rb2demo.s3.ap-northeast-2.amazonaws.com/post/2019/10/08/d2b5ca33bd970f64a6301fa75ae2eb22145339.png" alt="">
-
-
-					<span class="list_mask">
-						<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+				<?php $_i=1;while($R=db_fetch_array($RCD)):?>
+			  <li class="media align-items-center my-4 serial dd-item" data-id="<?php echo $_i?>">
+					<input type="checkbox" name="listmembers[]" value="<?php echo $R['uid']?>" checked class="d-none">
+					<span class="dd-handle px-3">
+						<i class="fa fa-arrows" aria-hidden="true"></i>
 					</span>
-				</a>
+					<strong class="counter mr-3 f18"></strong>
+					<a href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" class="position-relative mr-3">
+						<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" alt="">						
+						<span class="list_mask">
+							<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+						</span>
+					</a>
 
-		    <div class="media-body">
-		      <h5 class="mt-0 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>"><?php echo $R['name']?></a></h5>
-		      <?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?>
-		    </div>
-				<div class="ml-3">
-					<div class="dropdown">
-						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
-							관리
-						</button>
-						<div class="dropdown-menu dropdown-menu-right"  style="min-width: 5rem">
-							<a class="dropdown-item" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" >수정</a>
-							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
-							<a class="dropdown-item" href="#">공개</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="<?php echo getListLink($R,0) ?>" target="_blank">보기</a>
+			    <div class="media-body">
+			      <h5 class="mt-0 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>"><?php echo $R['name']?></a></h5>
+			      <?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?>
+			    </div>
+					<div class="ml-3">
+						<div class="dropdown">
+							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
+								관리
+							</button>
+							<div class="dropdown-menu dropdown-menu-right"  style="min-width: 5rem">
+								<a class="dropdown-item" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" >수정</a>
+								<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+								<a class="dropdown-item" href="#">공개</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="<?php echo getListLink($R,0) ?>" target="_blank">보기</a>
+							</div>
 						</div>
 					</div>
-				</div>
-		  </li>
-		<?php endforeach?>
+			  </li>
+			<?php $_i++;endwhile?>
 
-		<?php if(!$NUM):?>
-		<li>
-			<div class="text-center text-muted p-5">리스트가 없습니다.</div>
-		</li>
-		<?php endif?>
+			<?php if(!$NUM):?>
+			<li>
+				<div class="text-center text-muted p-5">리스트가 없습니다.</div>
+			</li>
+			<?php endif?>
 
-		</ul>
+			</ul>
+		</div>
+
 
 		<div class="d-flex justify-content-between my-4">
 			<div class=""></div>
@@ -188,6 +190,12 @@ $TPG = getTotalPage($NUM,$recnum);
   </div>
 </div>
 
+<!-- nestable : https://github.com/dbushell/Nestable -->
+<?php getImport('nestable','jquery.nestable',false,'js') ?>
+
+<!-- bootstrap-maxlength -->
+<?php getImport('bootstrap-maxlength','bootstrap-maxlength.min',false,'js')?>
+
 <script type="text/javascript">
 
 var f = document.getElementById("listAddForm")
@@ -196,24 +204,43 @@ var modal = $('#modal-list-new');
 
 putCookieAlert('list_action_result') // 실행결과 알림 메시지 출력
 
-modal.on('shown.bs.modal', function () {
-	var modal = $(this);
-  modal.find('.form-control').trigger('focus')
-})
+$(document).ready(function() {
 
-modal.find('[data-act="submit"]').click(function() {
+	$('#nestable-list').nestable({
+		maxDepth : 0
+	});
+	$('.dd').on('change', function() {
+		var f = document.getElementById("nestableForm");
+		getIframeForAction(f);
+		f.submit();
+	});
 
-	var name = modal.find('[name="name"]')
-	if (!name.val()) {
-		name.addClass('is-invalid').focus();
-		return false
-	}
+	$('input.rb-title').maxlength({
+		alwaysShow: true,
+		threshold: 10,
+		warningClass: "label label-success",
+		limitReachedClass: "label label-danger",
+	});
 
-	$(this).attr('disabled',true)
-	getIframeForAction(f);
-	setTimeout(function(){
-		form.submit()
-	}, 500);
+	modal.on('shown.bs.modal', function () {
+		var modal = $(this);
+	  modal.find('.form-control').trigger('focus')
+	})
+
+	modal.find('[data-act="submit"]').click(function() {
+
+		var name = modal.find('[name="name"]')
+		if (!name.val()) {
+			name.addClass('is-invalid').focus();
+			return false
+		}
+
+		$(this).attr('disabled',true)
+		getIframeForAction(f);
+		setTimeout(function(){
+			form.submit()
+		}, 500);
+	});
 });
 
 </script>
