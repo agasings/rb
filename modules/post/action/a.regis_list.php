@@ -14,10 +14,10 @@ if (!$id) getLink('reload','parent.','아이디를 입력해 주세요.','');
 if(getDbRows($table[$m.'list'],"id='".$id."'")) getLink('reload','parent.','이미 같은 아이디의 리스트가 존재합니다.','');
 if(getDbRows($table[$m.'list'],"name='".$name."'")) getLink('reload','parent.','이미 같은 이름의 리스트가 존재합니다.','');
 
-$mingid = getDbCnt($table[$m.'list'],'min(gid)','');
-$gid = $mingid ? $mingid-1 : 100000000;
+$maxgid = getDbCnt($table[$m.'list'],'max(gid)','');
+$gid = $maxgid ? $maxgid+1 : 1;
 
-$QKEY = "gid,site,id,name,mbruid,num_r,d_last,d_regis,imghead,imgfoot,puthead,putfoot,addinfo,writecode";
+$QKEY = "gid,site,id,name,mbruid,num,d_last,d_regis,imghead,imgfoot,puthead,putfoot,addinfo,writecode";
 $QVAL = "'$gid','$s','$id','$name','$mbruid','0','$last_log','$last_log','$imghead','$imgfoot','$puthead','$putfoot','$addinfo','$writecode'";
 getDbInsert($table[$m.'list'],$QKEY,$QVAL);
 

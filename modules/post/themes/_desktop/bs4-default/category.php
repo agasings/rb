@@ -5,7 +5,7 @@
 
 			<div class="card">
 				<div class="card-header">
-					카테고리
+					<a href="<?php echo RW('m=post') ?>" class="muted-link" title="전체보기">카테고리</a>
 				</div>
 				<div class="card-body">
 					<?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>true,'dispHidden'=>true,'dispCheckbox'=>false,'allOpen'=>true)?>
@@ -18,7 +18,7 @@
 		<div class="col-9">
 			<h3> <?php echo $CAT['name']?$CAT['name']:'전체 포스트' ?></h3>
 			<?php if ($NUM): ?>
-			<?php echo $NUM ?>개
+			<?php echo $NUM ?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 			<ul class="list-unstyled">
 			<?php foreach($RCD as $R):?>
 			<?php $R['mobile']=isMobileConnect($R['agent'])?>
@@ -27,19 +27,20 @@
 				<?php if ($R['featured_img']): ?>
 
 				<a href="<?php echo getPostLink($R,0) ?>">
-					<img src="<?php echo getPreviewResize(getUpImageSrc($R),'t') ?>" class="mr-3" alt="" style="width:100px">
+					<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="" class="mr-3">
 				</a>
 				<?php endif; ?>
 
 				<div class="media-body">
 					<h5 class="mt-0 mb-1">
-						<a href="<?php echo getPostLink($R,0) ?>">
+						<a class="muted-link" href="<?php echo getPostLink($R,0) ?>">
 							<?php echo $R['subject']?>
 						</a>
+						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 					</h5>
 					<div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
 					<div class="mb-1">
-						<ul class="list-inline d-inline-block ml-2 f13 text-muted">
+						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 							<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
@@ -54,9 +55,7 @@
 							<?php $_tagn=count($_tags)?>
 							<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
 							<?php $_tagk=trim($_tags[$i])?>
-							<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>">
-								# <?php echo $_tagk?>
-							</a>
+							<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
 							<?php endfor?>
 						</span>
 					</div>
@@ -68,9 +67,12 @@
 
 			<?php else: ?>
 
-				<div class="p-5 text-center text-muted">
-					자료가 없습니다.
+				<div class="d-flex align-items-center justify-content-center" style="height: 50vh">
+					<div class="text-muted">
+						자료가 없습니다.
+					</div>
 				</div>
+
 
 			<?php endif; ?>
 

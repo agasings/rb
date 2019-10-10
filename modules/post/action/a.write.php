@@ -65,10 +65,9 @@ if ($uid) {
   $_list_members = getArrayString($list_members);
 
   foreach($_list_members['data'] as $_lt1) {
-    // getLink('','',$_lt1.' 여기까지','');
     if (getDbRows($table[$m.'list_index'],'data='.$uid.' and list='.$_lt1)) continue;
-    $mingid = getDbCnt($table[$m.'list_index'],'min(gid)','');
-    $gid = $mingid ? $mingid-1 : 100000000;
+    $maxgid = getDbCnt($table[$m.'list_index'],'max(gid)','');
+    $gid = $maxgid ? $maxgid+1 : 1;
     getDbInsert($table[$m.'list_index'],'site,list,data,gid',"'".$s."','".$_lt1."','".$R['uid']."','".$gid."'");
     getDbUpdate($table[$m.'list'],'num=num+1','uid='.$_lt1);
   }

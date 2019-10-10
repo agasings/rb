@@ -73,9 +73,7 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 								<?php $_tagn=count($_tags)?>
 								<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
 								<?php $_tagk=trim($_tags[$i])?>
-								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>">
-									# <?php echo $_tagk?>
-								</a>
+								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
 								<?php endfor?>
 							</span>
 						</div>

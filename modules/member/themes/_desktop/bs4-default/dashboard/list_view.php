@@ -116,6 +116,7 @@ $TPG = getTotalPage($NUM,$recnum);
 								</button>
 								<div class="dropdown-menu dropdown-menu-right"  style="min-width: 5rem">
 									<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 제외 하시겠습니까?');">제외</a>
+									<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 								</div>
 							</div>
 						</div>

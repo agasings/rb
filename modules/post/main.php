@@ -7,6 +7,8 @@ include_once $svfile;
 
 include_once $g['dir_module'].'_main.php';
 
+$mod = $mod ? $mod : 'category';
+
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
