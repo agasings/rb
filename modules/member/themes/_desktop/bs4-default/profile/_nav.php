@@ -38,11 +38,11 @@ $para_str = $_HS['rewrite']?'/':'&page=';
     <a class="nav-link f16<?php if ($page=='oneline'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>oneline">
       한줄의견
     </a>
-    <a class="nav-link f16<?php if ($page=='follower'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=follower">
+    <a class="nav-link f16<?php if ($page=='follower'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>follower">
       팔로워
       <span class="badge badge-pill badge-light"> <?php echo getDbRows($table['s_friend'],'by_mbruid='.$_MP['uid'])?></span>
     </a>
-    <a class="nav-link f16<?php if ($page=='following'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>page=following">
+    <a class="nav-link f16<?php if ($page=='following'): ?> active<?php endif; ?>" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>following">
       팔로잉
       <span class="badge badge-pill badge-light"> <?php echo getDbRows($table['s_friend'],'my_mbruid='.$_MP['uid'])?></span>
     </a>
