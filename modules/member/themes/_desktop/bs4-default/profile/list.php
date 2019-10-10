@@ -9,18 +9,15 @@ if ($where && $keyword)
 	else if ($where == 'term') $postque .= " and d_regis like '".$keyword."%'";
 	else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
 }
-$TCD = getDbArray($table['postmember'],$postque,'*',$sort,$orderby,$recnum,$p);
-
-while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
-
-$NUM = getDbRows($table['postmember'],$postque);
+$RCD = getDbArray($table['postlist'],$postque,'*',$sort,$orderby,$recnum,$p);
+$NUM = getDbRows($table['postlist'],$postque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$m = 'post';
-$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['post_list'];
-$g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
+$c_recnum = 3; // 한 열에 출력할 카드 갯수
+$totalCardDeck=ceil($NUM/$c_recnum); // card-deck 갯수 ($NUM 은 해당 데이타의 총 card 갯수 getDbRows 이용)
+$total_card_num = $totalCardDeck*$c_recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
+$print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
+$lack_card_num = $total_card_num;
 
 ?>
 
@@ -42,75 +39,40 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 				<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm">관리</a>
 			</header>
 
-			<table class="table text-center">
+			<div class="card-deck">
 
-				<colgroup>
-					<col width="50">
-					<col>
-					<col width="70">
-					<col width="100">
-				</colgroup>
-				<thead class="thead-light">
-					<tr>
-						<th scope="col" class="side1">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">조회</th>
-						<th scope="col">날짜</th>
-					</tr>
-				</thead>
-				<tbody>
+				<?php $i=0;while($R=db_fetch_array($RCD)):$i++?>
+				<div class="card border-0">
+					<a href="<?php echo getListLink($R,1) ?>" class="position-relative">
+						<img class="img-fluid" src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" alt="">
+						<span class="list_mask">
+							<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+						</span>
+					</a>
+					<div class="card-body px-0 pt-2 pb-4">
+			      <h5 class="card-title h6 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>"><?php echo $R['name']?></a></h5>
+			      <p class="card-text text-muted f13"><?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?></p>
+			    </div>
+				</div><!-- /.card -->
 
-				<?php foreach($RCD as $R):?>
-				<?php $R['mobile']=isMobileConnect($R['agent'])?>
-				<?php $R['sbjlink']=getPostLink($R,1)?>
-				<tr>
-					<td>
-						<?php if($R['uid'] != $uid):?>
-						<?php echo $NUM-((($p-1)*$recnum)+$_rec++)?>
-						<?php else:$_rec++?>
-						<span class="now">&gt;&gt;</span>
-						<?php endif?>
-					</td>
-					<td class="text-left">
-						<?php if($R['mobile']):?><i class="fa fa-mobile fa-lg"></i><?php endif?>
-            <?php if($R['category']):?>
-            <span class="badge badge-secondary"><?php echo $R['category']?></span>
-            <?php endif?>
-            <a href="<?php echo $R['sbjlink']?>" class="muted-link">
-              <?php echo getStrCut($R['subject'],$d['post']['sbjcut'],'')?>
-            </a>
-            <?php if(strstr($R['content'],'.jpg') || strstr($R['content'],'.png')):?>
-            <span class="badge badge-light" data-toggle="tooltip" title="사진">
-              <i class="fa fa-camera-retro fa-lg"></i>
-            </span>
-            <?php endif?>
-            <?php if($R['upload']):?>
-            <span class="badge badge-light" data-toggle="tooltip" title="첨부파일">
-              <i class="fa fa-paperclip fa-lg"></i>
-            </span>
-            <?php endif?>
-            <?php if($R['hidden']):?><span class="badge badge-light" data-toggle="tooltip" title="비밀글"><i class="fa fa-lock fa-lg"></i></span><?php endif?>
-            <?php if($R['comment']):?><span class="badge badge-light"><?php echo $R['comment']?><?php echo $R['oneline']?'+'.$R['oneline']:''?></span><?php endif?>
-            <?php if(getNew($R['d_regis'],24)):?><small class="text-danger"><small>New</small></span><?php endif?>
-					</td>
-					<td class="small"><?php echo $R['hit']?></td>
-					<td>
-						<time class="small text-muted"><?php echo getDateFormat($R['d_regis'],'Y.m.d')?></time>
-					</td>
-					</tr>
-					<?php endforeach?>
+				<?php
+					$print_card_num++; // 카드 출력될 때마 1씩 증가
+					$lack_card_num = $total_card_num - $print_card_num;
+				 ?>
 
+				<?php if(!($i%$c_recnum)):?></div><div class="card-deck"><?php endif?>
+				<?php endwhile?>
 
-					<?php if(!$NUM):?>
-					<tr>
-						<td colspan="4" class="py-5 text-muted">
-							게시물이 없습니다.
-						</td>
-					</tr>
-				<?php endif?>
+				<?php if($lack_card_num ):?>
+				<?php for($j=0;$j<$lack_card_num;$j++):?>
+				 <div class="card border-0"></div>
+				<?php endfor?>
+			  <?php endif?>
+			</div>
 
-				</tbody>
-			</table>
+			<?php if(!$NUM):?>
+			<div class="text-center text-muted p-5">리스트가 없습니다.</div>
+			<?php endif?>
 
 			<footer class="d-flex justify-content-between align-items-center my-4">
 		    <ul class="pagination mb-0">
