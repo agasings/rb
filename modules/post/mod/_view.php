@@ -10,6 +10,7 @@ if (!$my['admin'] && !strstr(','.($d['post']['admin']?$d['post']['admin']:'.').'
 		$d['post']['isperm'] = false;
 	}
 }
+
 if ($R['hidden'])
 {
 	if ($my['uid'] != $R['mbruid'] && $my['uid'] != $R['pw'] && !$my['admin'])
@@ -21,18 +22,13 @@ if ($R['hidden'])
 		}
 	}
 }
+
 if ($d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']')))
 {
-	if ($R['point2'])
-	{
-		$g['main'] = $g['dir_module'].'mod/_pointcheck.php';
-		$d['post']['isperm'] = false;
-	}
-	else {
-		getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);
-		$_SESSION['module_'.$m.'_view'] .= '['.$R['uid'].']';
-	}
+	getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);
+	$_SESSION['module_'.$m.'_view'] .= '['.$R['uid'].']';
 }
+
 if ($d['post']['isperm'] && $R['upload'])
 {
 	$d['upload'] = array();

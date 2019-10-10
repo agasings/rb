@@ -74,22 +74,17 @@ include_once $_tmpvfile;
 						</div>
 
 						<div class="form-group row">
-						   <label class="col-md-2 col-form-label text-md-right">포스트 URL</label>
+						   <label class="col-md-2 col-form-label text-md-right">조회수 증가</label>
 						   <div class="col-md-10 col-xl-9">
 
-								 <div class="custom-control custom-radio">
-						       <input type="radio" class="custom-control-input" id="urlformat0" name="urlformat" value="0"  <?php if($d['post']['urlformat']==0):?> checked<?php endif?>>
-						       <label class="custom-control-label" for="urlformat0">/post/포스트 고유번호</label>
-						     </div>
-
-						     <div class="custom-control custom-radio mt-2">
-						       <input type="radio" class="custom-control-input" id="urlformat1" name="urlformat" value="1" <?php if($d['post']['urlformat']==1):?> checked<?php endif?>>
-						       <label class="custom-control-label" for="urlformat1">/@회원 아이디/포스트 고유번호</label>
-						     </div>
-
-								 <div class="small text-muted mt-2">
-									 사이트 설정 > 고유주소 (Permalink) 사용시에만 적용됩니다.
-								 </div>
+								 <div class="custom-control custom-radio custom-control-inline">
+			             <input type="radio" id="hitcount_1" name="hitcount" value="1" <?php if($d['post']['hitcount']):?> checked<?php endif?> class="custom-control-input">
+			             <label class="custom-control-label" for="hitcount_1">무조건 증가</label>
+			           </div>
+			           <div class="custom-control custom-radio custom-control-inline">
+			             <input type="radio" id="hitcount_0" name="hitcount" value="0"<?php if(!$d['post']['hitcount']):?> checked<?php endif?> class="custom-control-input">
+			             <label class="custom-control-label" for="hitcount_0">1회만 증가</label>
+			           </div>
 
 						   </div>
 						</div>

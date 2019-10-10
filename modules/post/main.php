@@ -5,6 +5,9 @@ $g['postVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
 $svfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['dir_module'].'var/var.php';
 include_once $svfile;
 
+$d['post']['skin'] = $d['post']['skin_total'];
+$d['post']['isperm'] = true;
+
 include_once $g['dir_module'].'_main.php';
 
 $mod = $mod ? $mod : 'category';
