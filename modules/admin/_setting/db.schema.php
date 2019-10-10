@@ -298,6 +298,7 @@ usepoint	INT				DEFAULT '0'		NOT NULL,
 money		INT				DEFAULT '0'		NOT NULL,
 cash		INT				DEFAULT '0'		NOT NULL,
 num_login	INT				DEFAULT '0'		NOT NULL,
+num_follower	INT				DEFAULT '0'		NOT NULL,
 bio		TEXT			NOT NULL,
 now_log		TINYINT			DEFAULT '0'		NOT NULL,
 last_log	VARCHAR(14)		DEFAULT ''		NOT NULL,
@@ -336,6 +337,7 @@ KEY smail(smail),
 KEY point(point),
 KEY usepoint(usepoint),
 KEY now_log(now_log),
+KEY num_follower(num_follower),
 KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrdata'],$DB_CONNECT);
