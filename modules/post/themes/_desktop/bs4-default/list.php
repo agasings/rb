@@ -19,7 +19,7 @@
 
 		<div class="media-body">
 			<h5 class="mt-0 mb-1">
-				<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>">
+				<a href="<?php echo getPostLink($R,$mbrid?1:0) ?>">
 					<?php echo $R['subject']?>
 				</a>
 			</h5>

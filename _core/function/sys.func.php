@@ -960,6 +960,25 @@ function IsPostCat($post) {
   return $NUM;
 }
 
+// 리스트의 첫번째 포스트의 대표이미지 src 추출
+function getListImageSrc($list) {
+  global $table;
+  $m='post';
+  $que='list='.$list;
+  $LISTX=array();
+  $LIST_ARR=getDbArray($table[$m.'list_index'],$que,'*','gid','desc',1,1);
+  while ($LT=db_fetch_array($LIST_ARR)) $LISTX[]=$LT;
+  $R=getUidData($table[$m.'data'],$LISTX[0]['data']);
+
+	if($R['featured_img']){
+	 $F=getUidData($table['s_upload'],trim($R['featured_img']));
+	 $src=$F['src'];
+	}else{
+	 $img_arr=getImgs($R['content'],'jpg|jpge|gif|png');
+	 $src=$img_arr[0]?$img_arr[0]:'/files/noimage.png';
+	}
+ return $src;
+}
 
 
 ?>

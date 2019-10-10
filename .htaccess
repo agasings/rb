@@ -19,7 +19,6 @@ RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/(category)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&cat=$3&%1 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/(search)/?$ ./index.php?m=post&mod=keyword&%1 [L]
-
 RewriteRule ^(list)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&mod=list&listid=$2 [L]
 
 RewriteRule ^(b)/?$ ./index.php?m=bbs [L]
@@ -52,6 +51,7 @@ RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(search)/?$ ./index.php?m=post&mod=keyword&%1 [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/write/?$ ./index.php?r=$1&m=post&mod=write [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(write)/([0-9_]+)/?$ ./index.php?r=$1&m=post&mod=write&cid=$4 [L]
+RewriteRule ^([a-zA-Z0-9_\-]+)/(list)/([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1&m=post&mod=list&listid=$3 [L]
 
 RewriteRule ^([a-zA-Z0-9_\-]+)/(b)/?$ ./index.php?r=$1&m=bbs [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(b)/([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1&m=bbs&bid=$3 [L]
