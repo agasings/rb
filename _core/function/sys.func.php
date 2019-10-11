@@ -967,7 +967,7 @@ function getListImageSrc($list) {
   $m='post';
   $que='list='.$list;
   $LISTX=array();
-  $LIST_ARR=getDbArray($table[$m.'list_index'],$que,'*','gid','desc',1,1);
+  $LIST_ARR=getDbArray($table[$m.'list_index'],$que,'*','gid','asc',1,1);
   while ($LT=db_fetch_array($LIST_ARR)) $LISTX[]=$LT;
   $R=getUidData($table[$m.'data'],$LISTX[0]['data']);
 

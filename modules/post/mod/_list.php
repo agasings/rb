@@ -25,7 +25,7 @@ if ($sort == 'gid' && (!$cat || $keyword) && !$listid) {
 	}
 	$LIST  = getDbData($table[$m.'list'],"id='".$listid."'",'*');
 	$_WHERE .= ' and list="'.$LIST['uid'].'"';
-	$TCD = getDbArray($table[$m.'list_index'],$_WHERE,'*','gid','desc',$recnum,$p);
+	$TCD = getDbArray($table[$m.'list_index'],$_WHERE,'*','gid','asc',$recnum,$p);
 	$NUM = getDbRows($table[$m.'list_index'],$_WHERE);
 	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table[$m.'data'],'uid='.$_R['data'],'*');
 

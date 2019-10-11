@@ -53,7 +53,7 @@ RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(search)/?$ ./index.php?m=post&mod=keyword&%1 [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/write/?$ ./index.php?r=$1&m=post&mod=write [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(write)/([0-9_]+)/?$ ./index.php?r=$1&m=post&mod=write&cid=$4 [L]
-RewriteRule ^([a-zA-Z0-9_\-]+)/(list)/?$ ./index.php?m=post&mod=list [L]
+RewriteRule ^([a-zA-Z0-9_\-]+)/(list)/?$ ./index.php?r=$1&m=post&mod=list [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(list)/([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1&m=post&mod=list_view&listid=$3 [L]
 
 RewriteRule ^([a-zA-Z0-9_\-]+)/(b)/?$ ./index.php?r=$1&m=bbs [L]

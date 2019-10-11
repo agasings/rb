@@ -40,10 +40,13 @@ $lack_card_num = $total_card_num;
 				<div class="">
 					<div class="dropdown d-inline">
 						<a class="btn btn-white btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							정열 : 생성순
+							정열 : 기본
 						</a>
 
-						<div class="dropdown-menu" style="min-width: 100px;">
+						<div class="dropdown-menu" style="min-width: 85px;">
+							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+								기본
+							</a>
 							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
 								생성순
 							</a>

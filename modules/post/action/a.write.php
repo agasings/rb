@@ -56,7 +56,7 @@ if ($uid) {
 
 	while($_olm=db_fetch_array($_orign_list_members)) {
   	if(!strstr($list_members,'['.$_olm['list'].']')) {
-  		getDbDelete($table[$m.'list_index'],'list='.$_olm['list']);
+  		getDbDelete($table[$m.'list_index'],'list='.$_olm['list'].' and data='.$R['uid']);
       getDbUpdate($table[$m.'list'],'num=num-1','uid='.$_olm['list']);
   	}
 	}
@@ -72,12 +72,15 @@ if ($uid) {
     getDbUpdate($table[$m.'list'],'num=num+1','uid='.$_lt1);
   }
 
-
 } else {
 
   $cid	= substr($g['time_srnad'],9,7);
+
   $mingid = getDbCnt($table[$m.'data'],'min(gid)','');
-  $gid = $mingid ? $mingid-1 : 100000000;
+  $maxgid = getDbCnt($table[$m.'data'],'max(gid)','');
+	$gid = $mingid ? $mingid-1 : 100000000.00;
+  $_gid = $maxgid ? $maxgid+1 : 1;
+
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>';
 
   $QKEY1 = "site,gid,mbruid,cid,subject,review,content,tag,html,";
@@ -114,7 +117,7 @@ if ($uid) {
 
   foreach($_list_members['data'] as $_lt1) {
     if (!getDbRows($table[$m.'list_index'],'data='.$LASTUID.' and list='.$_lt1)) {
-      getDbInsert($table[$m.'list_index'],'site,data,list,gid',"'".$s."','".$LASTUID."','".$_lt1."','".$gid."'");
+      getDbInsert($table[$m.'list_index'],'site,data,list,gid',"'".$s."','".$LASTUID."','".$_lt1."','".$_gid."'");
       getDbUpdate($table[$m.'list'],'num=num+1','uid='.$_lt1);
     }
   }
