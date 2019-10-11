@@ -21,5 +21,5 @@ $d['post']['singo_del_num'] = "";
 $d['post']['singo_del_act'] = "1";
 $d['post']['recnum'] = "20";
 $d['post']['sbjcut'] = "40";
-$d['post']['newtime'] = "24";
+$d['post']['newtime'] = "12";
 ?>

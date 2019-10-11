@@ -9,15 +9,12 @@ $tag		= trim($tag);
 $subject	= $subject?htmlspecialchars(trim($subject)):'(제목 없음)';
 $review		= trim($review);
 $content	= trim($content);
-
 $hit		= 0;
 $comment	= 0;
 $oneline	= 0;
-
 $d_regis	= $date['totime']; // 최초 등록일
 if($uid) $d_modify =$date['totime']; // 수정 등록일
 else $d_modify=''; // 최초에는 수정일 없음
-
 
 if ($uid) {
 
@@ -69,7 +66,7 @@ if ($uid) {
     $maxgid = getDbCnt($table[$m.'list_index'],'max(gid)','');
     $gid = $maxgid ? $maxgid+1 : 1;
     getDbInsert($table[$m.'list_index'],'site,list,data,gid',"'".$s."','".$_lt1."','".$R['uid']."','".$gid."'");
-    getDbUpdate($table[$m.'list'],'num=num+1','uid='.$_lt1);
+    getDbUpdate($table[$m.'list'],'num=num+1,d_last='.$d_regis,'uid='.$_lt1);
   }
 
 } else {
@@ -111,14 +108,13 @@ if ($uid) {
     }
 	}
 
-
   $_list_members = array();
   $_list_members = getArrayString($list_members);
 
   foreach($_list_members['data'] as $_lt1) {
     if (!getDbRows($table[$m.'list_index'],'data='.$LASTUID.' and list='.$_lt1)) {
       getDbInsert($table[$m.'list_index'],'site,data,list,gid',"'".$s."','".$LASTUID."','".$_lt1."','".$_gid."'");
-      getDbUpdate($table[$m.'list'],'num=num+1','uid='.$_lt1);
+      getDbUpdate($table[$m.'list'],'num=num+1,d_last='.$d_regis,'uid='.$_lt1);
     }
   }
 

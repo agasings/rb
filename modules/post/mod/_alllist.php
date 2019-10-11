@@ -1,32 +1,7 @@
 <?php
-$sort	= $sort ? $sort : 'gid';
-$orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 20;
 $_WHERE = 'display<2 and site='.$s;
-$where = $where?$where:'subject|tag|review';
-
-if ($sort == 'gid' && (!$cat || $keyword) && !$listid) {
-
-	if ($where && $keyword) {
-		if (strpos('[nic][id][ip]',$where)) $_WHERE .= " and ".$where."='".$keyword."'";
-		else if ($where == 'term') $_WHERE .= " and d_regis like '".$keyword."%'";
-		else $_WHERE .= getSearchSql($where,$keyword,$ikeyword,'or');
-	}
-
-	$TCD = getDbArray($table[$m.'list'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
-	$NUM = getDbRows($table[$m.'list'],$_WHERE);
-	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
-
-} else {
-
-	$_WHERE .= ' and ('.getPostCategoryCodeToSql($table[$m.'category'],$cat).')';
-	$TCD = getDbArray($table[$m.'index'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
-	$NUM = getDbRows($table[$m.'index'],$_WHERE);
-	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table[$m.'data'],'uid='.$_R['data'],'*');
-
-
-}
-
+$where = $where?$where:'subject|tag';
+$RCD = getDbArray($table[$m.'list'],$_WHERE,'*','d_regis','desc',20,$p);
+$NUM = getDbRows($table[$m.'list'],$_WHERE);
 $TPG = getTotalPage($NUM,$recnum);
-
 ?>

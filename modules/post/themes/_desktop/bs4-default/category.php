@@ -16,9 +16,48 @@
 
 		</div>
 		<div class="col-9">
-			<h3> <?php echo $CAT['name']?$CAT['name']:'전체 포스트' ?></h3>
+
+			<div class="d-flex justify-content-between align-items-center border-bottom border-dark mt-2 pb-2">
+				<h3 class="mb-0">
+					<?php echo $CAT['name']?$CAT['name']:'전체 포스트' ?>
+				</h3>
+				<div class="">
+				</div>
+			</div>
+
 			<?php if ($NUM): ?>
-			<?php echo $NUM ?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
+			<div class="d-flex align-items-center py-3" role="filter">
+				<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
+				<div class="form-inline ml-auto">
+
+					<label class="mt-1 mr-2 sr-only">정열</label>
+					<div class="dropdown">
+						<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							상태 : 생성순
+						</a>
+
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<a class="dropdown-item" href="#">
+								생성순
+							</a>
+							<a class="dropdown-item" href="#">
+								수정순
+							</a>
+						</div>
+					</div>
+
+					<div class="input-group ml-2">
+					  <input type="text" class="form-control" placeholder="포스트 검색">
+					  <div class="input-group-append">
+					    <button class="btn btn-white text-muted border-left-0" type="button">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</button>
+					  </div>
+					</div>
+
+				</div><!-- /.form-inline -->
+			</div><!-- /.d-flex -->
+
 			<ul class="list-unstyled">
 			<?php foreach($RCD as $R):?>
 			<?php $R['mobile']=isMobileConnect($R['agent'])?>
@@ -52,7 +91,7 @@
 							<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
 						</span>
 						<?php endif; ?>
-						
+
 						<span class="ml-2 f13 text-muted">
 							<!-- 태그 -->
 							<?php $_tags=explode(',',$R['tag'])?>
@@ -73,7 +112,7 @@
 
 				<div class="d-flex align-items-center justify-content-center" style="height: 50vh">
 					<div class="text-muted">
-						자료가 없습니다.
+						포스트가 없습니다.
 					</div>
 				</div>
 

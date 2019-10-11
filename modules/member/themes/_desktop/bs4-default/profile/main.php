@@ -13,15 +13,11 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$_MP['level'],'*');
 
 		<?php include $g['dir_module_skin'].'_nav.php';?>
 
+		<div class="mt-3">
+			<?php include $g['dir_module_skin'].'_newPost.php';?>
+		</div>
 
-		<h2 class="f16 font-weight-normal mt-4 mb-2">
-			최근 포스트
-		</h2>
-
-
-		<h2 class="f16 font-weight-normal mt-4 mb-2">
-			최근 리스트
-		</h2>
+		<?php include $g['dir_module_skin'].'_newList.php';?>
 
 		<div class="card border-top-0">
 			<div class="">

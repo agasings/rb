@@ -24,7 +24,6 @@ if ($sort == 'gid' && !$keyword) {
 	$NUM = getDbRows($table['postdata'],$postque);
 	$TCD = getDbArray($table['postdata'],$postque,'*',$sort,$orderby,$recnum,$p);
 	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
-
 }
 
 $TPG = getTotalPage($NUM,$recnum);
@@ -93,15 +92,17 @@ switch ($sort) {
 			    <div class="media-body">
 			      <h5 class="my-1">
 							<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" ><?php echo $R['subject']?></a>
-							<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 						</h5>
 			      <div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
 						<div class="mb-1">
-							<ul class="list-inline d-inline-block ml-2 f13 text-muted">
+							<ul class="list-inline d-inline-block f13 text-muted">
 								<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 								<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 								<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
-								<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
+								<li class="list-inline-item">
+									<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
+									<?php if(getNew($R['d_regis'],12)):?><small class="text-danger">new</small><?php endif?>
+								</li>
 							</ul>
 
 							<?php if (IsPostCat($R['uid'])): ?>

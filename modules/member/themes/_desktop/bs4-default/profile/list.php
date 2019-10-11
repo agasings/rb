@@ -59,8 +59,6 @@ $lack_card_num = $total_card_num;
 					<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm">관리</a>
 				</div>
 
-
-
 			</header>
 
 			<div class="card-deck">
@@ -75,7 +73,11 @@ $lack_card_num = $total_card_num;
 					</a>
 					<div class="card-body px-0 pt-2 pb-4">
 			      <h5 class="card-title h6 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>"><?php echo $R['name']?></a></h5>
-			      <p class="card-text text-muted f13"><?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?></p>
+			      <p class="card-text text-muted f13">
+							<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time>
+							<?php if(getNew($R['d_last'],12)):?><small class="text-danger">new</small><?php endif?>
+						</p>
+
 			    </div>
 				</div><!-- /.card -->
 

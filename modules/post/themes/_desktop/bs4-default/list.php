@@ -8,10 +8,45 @@ $lack_card_num = $total_card_num;
 
 <section>
 
-	<h1 class="h4 my-5 text-center">
+	<div class="d-flex justify-content-between align-items-center mt-4">
+		<h3 class="mb-0">
+			전체 리스트
+		</h3>
+		<div class="">
+		</div>
+	</div>
 
- 	 전체 리스트<small class="text-muted"><?php echo $NUM ?>개</small>
-	</h1>
+	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
+		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
+		<div class="form-inline ml-auto">
+
+			<label class="mt-1 mr-2 sr-only">정열</label>
+			<div class="dropdown">
+				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					상태 : 생성순
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item" href="#">
+						생성순
+					</a>
+					<a class="dropdown-item" href="#">
+						수정순
+					</a>
+				</div>
+			</div>
+
+			<div class="input-group ml-2">
+			  <input type="text" class="form-control" placeholder="리스트명 검색">
+			  <div class="input-group-append">
+			    <button class="btn btn-white text-muted border-left-0" type="button">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
+			  </div>
+			</div>
+
+		</div><!-- /.form-inline -->
+	</div><!-- /.d-flex -->
 
 	<?php if ($NUM): ?>
 
@@ -34,9 +69,8 @@ $lack_card_num = $total_card_num;
 						<?php echo $R['name']?>
 					</a>
 				</h5>
-				<ul class="list-inline f13 text-muted mb-0">
-					<li class="list-inline-item"><?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?></li>
-				</ul>
+				<time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time>
+				<?php if(getNew($R['d_last'],$d['post']['newtime'])):?><span class="rb-new ml-1"></span><?php endif?>
 			</div><!-- /.card-body -->
 		</div><!-- /.card -->
 

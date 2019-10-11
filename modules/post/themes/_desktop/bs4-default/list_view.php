@@ -8,15 +8,18 @@ $lack_card_num = $total_card_num;
 
 <section>
 
-	<h1 class="h4 my-5 text-center">
-
-		<a href="<?php echo getProfileLink($LIST['mbruid'])?><?php echo $_HS['rewrite']?'/':'&page=' ?>list" title="<?php echo $MBR['name'] ?>의 리스트">
-			<img src="<?php echo getAvatarSrc($LIST['mbruid'],'40') ?>" width="40" height="40" alt="<?php echo $MBR['name'] ?>" class="mr-2 rounded-circle d-inline-block align-middle">
-		</a>
-		<?php echo $LIST['name'] ?> <small class="text-muted"><?php echo $NUM ?>개</small>
-
-
-	</h1>
+	<div class="d-flex justify-content-between align-items-center py-2 mt-3 mb-4 border-bottom border-dark">
+		<h3 class="h4 mb-0">
+			<a href="<?php echo getProfileLink($LIST['mbruid'])?><?php echo $_HS['rewrite']?'/':'&page=' ?>list" data-toggle="tooltip" title="<?php echo $MBR['name'] ?>의 리스트" class="d-inline-block align-bottom">
+				<img src="<?php echo getAvatarSrc($LIST['mbruid'],'30') ?>" width="30" height="30" alt="<?php echo $MBR['name'] ?>" class="mr-1 rounded-circle">
+			</a>
+			<?php echo $LIST['name'] ?> <small class="text-muted"><?php echo $NUM ?>개</small>
+		</h3>
+		<div class="">
+			<a class="btn btn-white"  href="<?php echo RW('m=post&mod=list') ?>">전체 리스트</a>
+			<button class="btn btn-white" data-history="back" type="button">이전</button>
+		</div>
+	</div>
 
 	<?php if ($NUM): ?>
 
@@ -40,8 +43,11 @@ $lack_card_num = $total_card_num;
 					<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 					<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 					<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
-					<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
 				</ul>
+				<time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>">
+					<?php echo getDateFormat($R['d_regis'],'Y.m.d')?>
+				</time>
+				<?php if(getNew($R['d_regis'],$d['post']['newtime'])):?><span class="rb-new ml-1"></span><?php endif?>
 			</div><!-- /.card-body -->
 		</div><!-- /.card -->
 
