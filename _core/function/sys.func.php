@@ -298,8 +298,9 @@ function RW($rewrite)
 		if(!$rewrite) return $GLOBALS['g']['r']?$GLOBALS['g']['r']:'/';
 		$rewrite = str_replace('c=','c/',$rewrite);
 		$rewrite = str_replace('m=post&mbrid=','@',$rewrite);
-		$rewrite = str_replace('m=post&mod=list&listid=','list/',$rewrite);
-		$rewrite = str_replace('&mod=list&listid=','/list/',$rewrite);
+		$rewrite = str_replace('m=post&mod=list_view','list',$rewrite);
+		$rewrite = str_replace('&mod=list_view&listid=','/list/',$rewrite);
+		$rewrite = str_replace('&listid=','/',$rewrite);
 		$rewrite = str_replace('m=post','post',$rewrite);
 		$rewrite = str_replace('&mod=write','/write',$rewrite);
 		$rewrite = str_replace('&mod=keyword&','/search?',$rewrite);
@@ -871,9 +872,9 @@ function getListLink($arr,$profile){
 	global $table;
 	if ($profile) {
 		$M = getUidData($table['s_mbrid'],$arr['mbruid']);
-		return RW('m=post&mbrid='.$M['id'].'&mod=list&listid='.$arr['id'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+		return RW('m=post&mbrid='.$M['id'].'&mod=list_view&listid='.$arr['id'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
 	}  else {
-		return RW('m=post&mod=list&listid='.$arr['id'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
+		return RW('m=post&mod=list_view&listid='.$arr['id'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
 	}
 }
 
@@ -966,7 +967,7 @@ function getListImageSrc($list) {
   $m='post';
   $que='list='.$list;
   $LISTX=array();
-  $LIST_ARR=getDbArray($table[$m.'list_index'],$que,'*','gid','asc',1,1);
+  $LIST_ARR=getDbArray($table[$m.'list_index'],$que,'*','gid','desc',1,1);
   while ($LT=db_fetch_array($LIST_ARR)) $LISTX[]=$LT;
   $R=getUidData($table[$m.'data'],$LISTX[0]['data']);
 

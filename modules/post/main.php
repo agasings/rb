@@ -43,7 +43,17 @@ switch ($mod) {
   break;
 
   case 'list' :
+    include_once $g['dir_module'].'mod/_alllist.php';
+  break;
+
+  case 'list_view' :
+    $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
+    if (!$LIST['uid']||($LIST['display']>1&&!$my['admin'])) getLink('','','존재하지 않는 리스트 입니다..','-1');
     include_once $g['dir_module'].'mod/_list.php';
+  break;
+
+  case 'view' :
+    include_once $g['dir_module'].'mod/_view.php';
   break;
 
   case 'write' :

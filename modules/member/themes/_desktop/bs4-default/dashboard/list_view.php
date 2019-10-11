@@ -6,7 +6,7 @@ include_once $svfile;
 $R=getDbData($table['postlist'],"id='".$id."'",'*');
 
 $sort	= $sort ? $sort : 'gid';
-$orderby= $orderby ? $orderby : 'asc';
+$orderby= $orderby ? $orderby : 'desc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 20;
 $listque = 'list='.$R['uid'];
 $TCD = getDbArray($table['postlist_index'],$listque,'*',$sort,$orderby,$recnum,$p);

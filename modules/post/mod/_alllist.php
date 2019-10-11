@@ -13,21 +13,9 @@ if ($sort == 'gid' && (!$cat || $keyword) && !$listid) {
 		else $_WHERE .= getSearchSql($where,$keyword,$ikeyword,'or');
 	}
 
-	$TCD = getDbArray($table[$m.'data'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
-	$NUM = getDbRows($table[$m.'data'],$_WHERE);
+	$TCD = getDbArray($table[$m.'list'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
+	$NUM = getDbRows($table[$m.'list'],$_WHERE);
 	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
-
-} else if ($listid) {
-
-	if ($mbrid) {
-		$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
-		$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
-	}
-	$LIST  = getDbData($table[$m.'list'],"id='".$listid."'",'*');
-	$_WHERE .= ' and list="'.$LIST['uid'].'"';
-	$TCD = getDbArray($table[$m.'list_index'],$_WHERE,'*','gid','desc',$recnum,$p);
-	$NUM = getDbRows($table[$m.'list_index'],$_WHERE);
-	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table[$m.'data'],'uid='.$_R['data'],'*');
 
 } else {
 

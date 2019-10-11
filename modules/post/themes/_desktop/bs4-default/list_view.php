@@ -10,7 +10,12 @@ $lack_card_num = $total_card_num;
 
 	<h1 class="h4 my-5 text-center">
 
- 	 전체 리스트<small class="text-muted"><?php echo $NUM ?>개</small>
+		<a href="<?php echo getProfileLink($LIST['mbruid'])?><?php echo $_HS['rewrite']?'/':'&page=' ?>list" title="<?php echo $MBR['name'] ?>의 리스트">
+			<img src="<?php echo getAvatarSrc($LIST['mbruid'],'40') ?>" width="40" height="40" alt="<?php echo $MBR['name'] ?>" class="mr-2 rounded-circle d-inline-block align-middle">
+		</a>
+		<?php echo $LIST['name'] ?> <small class="text-muted"><?php echo $NUM ?>개</small>
+
+
 	</h1>
 
 	<?php if ($NUM): ?>
@@ -18,24 +23,24 @@ $lack_card_num = $total_card_num;
 	<div class="card-deck">
 
 		<?php $i=0;foreach($RCD as $R):$i++?>
-		<?php $MBR = getDbData($table['s_mbrdata'],'memberuid='.$R['mbruid'],'*'); ?>
 		<div class="card">
-			<a href="<?php echo getListLink($R,0) ?>" class="position-relative">
-				<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" class="img-fluid" alt="">
-				<span class="list_mask">
-					<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
-				</span>
-				<img class="list_avatar border" src="<?php echo getAvatarSrc($R['mbruid'],'50') ?>" width="50" height="50" alt="<?php echo $MBR['name'] ?>">
+			<?php if ($R['featured_img']): ?>
+			<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>">
+				<img src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180') ?>" class="img-fluid" alt="">
 			</a>
+			<?php endif; ?>
 
-			<div class="card-body pt-5 p-3">
+			<div class="card-body p-3">
 				<h5 class="card-title h6 mb-1">
-					<a class="muted-link" href="<?php echo getListLink($R,0) ?>">
-						<?php echo $R['name']?>
+					<a class="muted-link" href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>">
+						<?php echo $R['subject']?>
 					</a>
 				</h5>
 				<ul class="list-inline f13 text-muted mb-0">
-					<li class="list-inline-item"><?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?></li>
+					<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
+					<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
+					<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
+					<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
 				</ul>
 			</div><!-- /.card-body -->
 		</div><!-- /.card -->
@@ -59,7 +64,7 @@ $lack_card_num = $total_card_num;
 	<?php else: ?>
 
 		<div class="p-5 text-center text-muted">
-			등록된 리스트가 없습니다.
+			등록된 포스트가 없습니다.
 		</div>
 
 	<?php endif; ?>

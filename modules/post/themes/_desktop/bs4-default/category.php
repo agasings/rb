@@ -46,9 +46,13 @@
 							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 							<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
 						</ul>
+
+						<?php if (IsPostCat($R['uid'])): ?>
 						<span class="ml-2 f13 text-muted">
 							<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
 						</span>
+						<?php endif; ?>
+						
 						<span class="ml-2 f13 text-muted">
 							<!-- 태그 -->
 							<?php $_tags=explode(',',$R['tag'])?>

@@ -195,7 +195,6 @@ body.rb-layout-docs {
   height: 100%;
   background: rgba(0,0,0,.6);
 }
-
 .list_mask .txt {
   position: absolute;
   top: 50%;
@@ -205,6 +204,14 @@ body.rb-layout-docs {
   line-height: 32px;
   color: #fff;
   text-align: center;
+}
+.list_avatar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-bottom: -25px;
+  margin-left: -25px;
+  border-radius: 50%
 }
 
 /* 포토갤러리 */
