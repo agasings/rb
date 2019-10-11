@@ -955,9 +955,8 @@ function getAllPostCat($post) {
 function IsPostCat($post) {
   global $table;
   $m='post';
-  $catque='post='.$post;
+  $catque='data='.$post;
   $NUM=getDbRows($table[$m.'index'],$catque);
-
   return $NUM;
 }
 
