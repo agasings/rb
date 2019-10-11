@@ -18,6 +18,18 @@ $RCD = getDbArray($table['postlist'],$listque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['postlist'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
+if ($c) $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
+else $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m=post',array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['bbs']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['post_reset'];
+$g['post_orign'] = $g['post_reset'];
+$g['post_view']	= $g['post_list'].'&amp;uid=';
+$g['post_write'] = $g['post_list'].'&amp;mod=write';
+$g['post_modify']= $g['post_write'].'&amp;uid=';
+$g['post_reply']	= $g['post_write'].'&amp;reply=Y&amp;uid=';
+$g['post_action']= $g['post_list'].'&amp;a=';
+$g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
+
 ?>
 
 <div class="container">
@@ -98,7 +110,7 @@ $TPG = getTotalPage($NUM,$recnum);
 					</span>
 					<strong class="counter mr-3 f18"></strong>
 					<a href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" class="position-relative mr-3">
-						<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" alt="">						
+						<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" alt="">
 						<span class="list_mask">
 							<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
 						</span>
@@ -115,8 +127,8 @@ $TPG = getTotalPage($NUM,$recnum);
 							</button>
 							<div class="dropdown-menu dropdown-menu-right"  style="min-width: 5rem">
 								<a class="dropdown-item" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" >수정</a>
-								<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
-								<a class="dropdown-item" href="#">공개</a>
+								<a class="dropdown-item" href="<?php echo $g['post_list_delete'].$R['uid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+								<a class="dropdown-item disabled" href="#">공개</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="<?php echo getListLink($R,0) ?>" target="_blank">보기</a>
 							</div>
@@ -127,7 +139,9 @@ $TPG = getTotalPage($NUM,$recnum);
 
 			<?php if(!$NUM):?>
 			<li>
-				<div class="text-center text-muted p-5">리스트가 없습니다.</div>
+				<div class="d-flex align-items-center justify-content-center" style="height: 40vh">
+					<div class="text-muted">리스트가 없습니다.</div>
+				</div>
 			</li>
 			<?php endif?>
 
@@ -224,7 +238,7 @@ $(document).ready(function() {
 
 	modal.on('shown.bs.modal', function () {
 		var modal = $(this);
-	  modal.find('.form-control').trigger('focus')
+	  modal.find('.form-control').val('').trigger('focus')
 	})
 
 	modal.find('[data-act="submit"]').click(function() {

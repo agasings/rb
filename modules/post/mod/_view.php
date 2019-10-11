@@ -25,6 +25,14 @@ if ($R['hidden'])
 
 if ($d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']')))
 {
+
+	// 포스트 멤버의 포스트 통합조회수 +1
+	$_WHERE1 = 'data='.$R['uid'].' and auth=1';
+	$_RCD1 = getDbSelect($table[$m.'member'],$_WHERE1,'*');
+	while($R1=db_fetch_array($_RCD1)) {
+	  getDbUpdate($table['s_mbrdata'],'hit_post=hit_post+1','memberuid='.$R1['mbruid']);
+	}
+
 	getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);
 	$_SESSION['module_'.$m.'_view'] .= '['.$R['uid'].']';
 }

@@ -132,9 +132,23 @@ while($I=db_fetch_array($IDX)) {
 	getDbUpdate($table[$m.'category'],'num=num-1','uid='.$I['category']);
 }
 
+//리스트 등록 포스트 수 조정
+$IDX2 = getDbSelect($table[$m.'list_index'],'data='.$R['uid'],'*');
+while($I2=db_fetch_array($IDX2)) {
+	getDbUpdate($table[$m.'list'],'num=num-1','uid='.$I2['list']);
+}
+
+// 포스트 멤버의 회원포스트 수량 -1 , 통합조회수 조정
+$_WHERE1 = 'data='.$R['uid'].' and auth=1';
+$_RCD1 = getDbSelect($table[$m.'member'],$_WHERE1,'*');
+while($R1=db_fetch_array($_RCD1)) {
+  getDbUpdate($table['s_mbrdata'],'num_post=num_post-1,hit_post=hit_post-'.$R['hit'],'memberuid='.$R1['mbruid']);
+}
+
 getDbDelete($table[$m.'data'],'uid='.$R['uid']); //데이터삭제
 getDbDelete($table[$m.'index'],'data='.$R['uid']);//인덱스삭제
 getDbDelete($table[$m.'member'],'data='.$R['uid']);//멤버삭제
+getDbDelete($table[$m.'list_index'],'data='.$R['uid']);//리스트 인덱스삭제
 
 if ($R['point1']&&$R['mbruid'])
 {

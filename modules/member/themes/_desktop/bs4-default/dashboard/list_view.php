@@ -154,7 +154,7 @@ $TPG = getTotalPage($NUM,$recnum);
 		</div><!-- /.col-9 -->
 		<div class="col-3 border-left">
 
-			<div class="p-3">
+			<div class="p-3 d-none">
 				<a href="" class="badge badge-pill badge-light f14 mb-2"># 운전연습</a>
 				<a href="" class="badge badge-pill badge-light f14 mb-2"># 진짜한다운전</a>
 				<a href="" class="badge badge-pill badge-light f14 mb-2"># 장롱면허탈출</a>

@@ -3,26 +3,41 @@ $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $postque = 'mbruid='.$_MP['uid'];
-if ($where && $keyword)
-{
-	if (strstr('[name][nic][id][ip]',$where)) $postque .= " and ".$where."='".$keyword."'";
-	else if ($where == 'term') $postque .= " and d_regis like '".$keyword."%'";
-	else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
+
+
+if ($sort == 'gid' && !$keyword) {
+
+	$TCD = getDbArray($table['postmember'],$postque,'*',$sort,$orderby,$recnum,$p);
+	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
+	$NUM = getDbRows($table['postmember'],$postque);
+
+
+} else {
+
+	if ($where && $keyword) {
+		if (strstr('[name][nic][id][ip]',$where)) $postque .= " and ".$where."='".$keyword."'";
+		else if ($where == 'term') $postque .= " and d_regis like '".$keyword."%'";
+		else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
+	}
+
+	$orderby = 'desc';
+	$NUM = getDbRows($table['postdata'],$postque);
+	$TCD = getDbArray($table['postdata'],$postque,'*',$sort,$orderby,$recnum,$p);
+	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
+
 }
-$TCD = getDbArray($table['postmember'],$postque,'*',$sort,$orderby,$recnum,$p);
 
-while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
-
-$NUM = getDbRows($table['postmember'],$postque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$m = 'post';
-$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['post_list'];
-$g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
+switch ($sort) {
+	case 'hit'     : $sort_txt='조회순';break;
+	case 'likes'   : $sort_txt='추천순';break;
+	case 'comment' : $sort_txt='댓글순';break;
+	default        : $sort_txt='최신순';break;
+}
 
 ?>
+
 
 <div class="page-wrapper row">
 	<div class="col-3 page-nav">
@@ -35,11 +50,35 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 
 		<section>
 
-			<header class="d-flex justify-content-between align-items-center mt-4 mb-2">
+			<header class="d-flex justify-content-between align-items-center mt-3 mb-2">
 				<div>
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 				</div>
-				<a href="<?php echo RW('mod=dashboard&page=post')?>" class="btn btn-light btn-sm">관리</a>
+
+				<div class="form-inline">
+
+					<div class="dropdown">
+						<a class="btn btn-white btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							정열 : <?php echo $sort_txt ?>
+						</a>
+						<div class="dropdown-menu" style="min-width: 100px;">
+							<button class="dropdown-item<?php echo $sort=='gid'?' active':'' ?>" type="button" data-sort="gid">
+								최신순
+							</button>
+							<button class="dropdown-item<?php echo $sort=='hit'?' active':'' ?>" type="button" data-sort="hit">
+								조회순
+							</button>
+							<button class="dropdown-item<?php echo $sort=='likes'?' active':'' ?>" type="button" data-sort="likes">
+								추천순
+							</button>
+							<button class="dropdown-item<?php echo $sort=='comment'?' active':'' ?>" type="button" data-sort="comment">
+								댓글순
+							</button>
+						</div>
+					</div>
+					<a href="<?php echo RW('mod=dashboard&page=post')?>" class="btn btn-white text-danger btn-sm ml-2">관리</a>
+				</div><!-- /.form-inline -->
+
 			</header>
 
 			<ul class="list-unstyled" style="margin-top: -1rem">
@@ -83,7 +122,9 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 
 				<?php if(!$NUM):?>
 				<li>
-					<div class="text-center text-muted p-5">포스트가 없습니다.</div>
+					<div class="d-flex align-items-center justify-content-center" style="height: 40vh">
+						<div class="text-muted">포스트가 없습니다.</div>
+					</div>
 				</li>
 				<?php endif?>
 
@@ -95,7 +136,8 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 
 				<?php if ($NUM > $recnum): ?>
 				<ul class="pagination mb-0">
-					<?php echo getPageLink(10,$p,$TPG,'')?>
+					<?php $_N =  $GLOBALS['_HS']['rewrite']?'./'.$page.'?sort='.$sort.'&':'' ?>
+	        <?php echo getPageLink(10,$p,$TPG,$_N)?>
 				</ul>
 				<?php endif; ?>
 
@@ -104,39 +146,63 @@ $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 			</div>
 
 			<footer class="d-flex justify-content-between align-items-center my-4">
-		    <ul class="pagination mb-0">
-					<?php $_N =  '/@'.$mbrid.'?page='.$page.'&' ?>
-	        <?php echo getPageLink(10,$p,$TPG,$_N)?>
-		    </ul>
+				<div class=""></div>
+				<form name="postsearchf" action="<?php echo $GLOBALS['_HS']['rewrite']?'./'.$page:$g['s'].'/' ?>" class="form-inline">
 
-				<form name="bbssearchf" action="<?php echo $g['s']?>/" class="form-inline">
-					<input type="hidden" name="r" value="<?php echo $r?>" />
+					<?php if ($GLOBALS['_HS']['rewrite']): ?>
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<?php else: ?>
+					<input type="hidden" name="r" value="<?php echo $r?>">
 					<?php if($_mod):?>
-					<input type="hidden" name="mod" value="<?php echo $_mod?>" />
+					<input type="hidden" name="mod" value="<?php echo $_mod?>">
 					<?php else:?>
-					<input type="hidden" name="m" value="<?php echo $m?>" />
-					<input type="hidden" name="front" value="<?php echo $front?>" />
+					<input type="hidden" name="m" value="<?php echo $m?>">
+					<input type="hidden" name="front" value="<?php echo $front?>">
 					<?php endif?>
-					<input type="hidden" name="page" value="<?php echo $page?>" />
-					<input type="hidden" name="sort" value="<?php echo $sort?>" />
-					<input type="hidden" name="orderby" value="<?php echo $orderby?>" />
-					<input type="hidden" name="recnum" value="<?php echo $recnum?>" />
+					<input type="hidden" name="page" value="<?php echo $page?>">
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<input type="hidden" name="orderby" value="<?php echo $orderby?>">
+					<input type="hidden" name="recnum" value="<?php echo $recnum?>">
 					<input type="hidden" name="type" value="<?php echo $type?>" />
-					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
-					<input type="hidden" name="skin" value="<?php echo $skin?>" />
+					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+					<?php endif; ?>
 
-					<select name="where" class="form-control">
+
+					<select name="where" class="form-control custom-select">
 						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
 					</select>
 
 					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control ml-2">
-					<button class="btn btn-light ml-2" type="submit" name="button">검색</button>
-				</form>
+					<button class="btn btn-light ml-2" type="submit">검색</button>
 
+					<?php if ($keyword): ?>
+					<a class="btn btn-light ml-1" href="<?php echo getProfileLink($_MP['uid']).$para_str.$page ?>">리셋</a>
+					<?php endif; ?>
+				</form>
+				<div class=""></div>
 		  </footer>
 
 		</section>
 
 	</div><!-- /.page-main -->
 </div><!-- /.page-wrapper -->
+
+
+<script>
+
+$( document ).ready(function() {
+
+	$('[data-sort]').click(function(){
+		var sort =  $(this).attr('data-sort');
+		var form =  $('[name="postsearchf"]')
+
+		$('[name="where"],[name="keyword"]').remove();
+		form.find('[name="sort"]').val(sort)
+		form.submit();
+	});
+
+});
+
+
+</script>

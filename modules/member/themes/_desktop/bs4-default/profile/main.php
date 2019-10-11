@@ -13,29 +13,35 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$_MP['level'],'*');
 
 		<?php include $g['dir_module_skin'].'_nav.php';?>
 
+
 		<h2 class="f16 font-weight-normal mt-4 mb-2">
-			최근 활동
+			최근 포스트
+		</h2>
+
+
+		<h2 class="f16 font-weight-normal mt-4 mb-2">
+			최근 리스트
 		</h2>
 
 		<div class="card border-top-0">
 			<div class="">
 				<div class="contrib-column contrib-column-first table-column">
-					<span class="text-muted">포인트</span>
+					<span class="text-muted">포스트</span>
 					<span class="contrib-number">
-						<?php echo number_format($my['point']) ?>
-						<i class="fa fa-product-hunt" aria-hidden="true"></i>
+						<?php echo number_format($my['num_post']) ?> 개
 					</span>
 				</div>
 				<div class="contrib-column table-column">
-					<span class="text-muted">등급</span>
+					<span class="text-muted">리스트</span>
 					<span class="contrib-number">
-						<?php echo $levelname['name']?>
-						<small>(<?php echo $_MP['level']?>/<?php echo $levelnum['uid']?>)</small>
+						<?php echo number_format($my['num_list']) ?> 개
 					</span>
 				</div>
 				<div class="contrib-column table-column">
-					<span class="text-muted">가입일</span>
-					<span class="contrib-number"><?php echo getDateFormat($_MP['d_regis'],'Y.m.d')?></span>
+					<span class="text-muted">조회수</span>
+					<span class="contrib-number">
+						<?php echo number_format($my['hit_post']) ?> 회
+					</span>
 				</div>
 			</div>
 		</div>
@@ -44,7 +50,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$_MP['level'],'*');
 		<div class="row mt-3">
 			<div class="col-6">
 				<h2 class="f16 p-2 font-weight-normal mt-4 mb-0">
-					<i class="fa fa-file-text-o" aria-hidden="true"></i> 게시물
+					<i class="fa fa-file-text-o mr-1" aria-hidden="true"></i> 게시판
 				</h2>
 
 				<ul class="list-group list-group-flush">
@@ -80,7 +86,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$_MP['level'],'*');
 			<div class="col-6 border-left">
 
 				<h2 class="f16 font-weight-normal mt-4 mb-2">
-					<i class="fa fa-commenting-o" aria-hidden="true"></i> 댓글
+					<i class="fa fa-commenting-o mr-1" aria-hidden="true"></i> 댓글
 				</h2>
 
 

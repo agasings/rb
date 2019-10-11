@@ -658,6 +658,13 @@ figure.media oembed iframe {
 }
 
 
+/* dropdown */
+
+.dropdown-menu {
+  border-radius: 0;
+}
+
+
 /**
  * 8 - Utilities 유틸리티
  * ----------------------------------------------------------------------------

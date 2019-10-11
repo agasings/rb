@@ -113,27 +113,6 @@
 
           </div>
 
-          <div class="card mb-4">
-            <div class="card-header">
-              카테고리
-            </div>
-            <div class="card-body pt-2 pb-0">
-              <?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>true,'dispHidden'=>false,'dispCheckbox'=>true,'allOpen'=>true)?>
-              <?php echo getTreePostCategoryCheck($_treeOptions,$R['uid'],0,0,'')?>
-            </div>
-          </div>
-
-        </div>
-        <div class="tab-pane fade" id="attach" role="tabpanel" aria-labelledby="attach-tab">
-
-          <div class="form-group mt-4 mb-5">
-            <label class="sr-only">첨부파일</label>
-            <?php include $g['dir_module_skin'].'_uploader.php'?>
-          </div>
-
-
-        </div>
-        <div class="tab-pane" id="advan" role="tabpanel" aria-labelledby="link-tab">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="hidden"  value="option1" checked>
             <label class="form-check-label" for="exampleRadios1">
@@ -152,6 +131,53 @@
               비공개 - 나만 액세스할 수 있습니다.
             </label>
           </div>
+
+
+        </div>
+        <div class="tab-pane fade" id="attach" role="tabpanel" aria-labelledby="attach-tab">
+
+          <div class="form-group mt-4 mb-5">
+            <label class="sr-only">첨부파일</label>
+            <?php include $g['dir_module_skin'].'_uploader.php'?>
+          </div>
+
+
+        </div>
+        <div class="tab-pane" id="advan" role="tabpanel" aria-labelledby="link-tab">
+
+          
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="dis_comment" value="1" id="dis_comment" checked>
+            <label class="form-check-label" for="dis_comment">
+              댓글 허용
+            </label>
+          </div>
+
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="dis_like" value="1" id="dis_like" checked>
+            <label class="form-check-label" for="dis_like">
+              좋아요 허용
+            </label>
+          </div>
+
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" name="dis_rating" value="1" id="dis_rating">
+            <label class="form-check-label" for="dis_rating">
+              평가 허용
+            </label>
+          </div>
+
+
+          <div class="card mb-4">
+            <div class="card-header">
+              카테고리
+            </div>
+            <div class="card-body pt-2 pb-0">
+              <?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>true,'dispHidden'=>false,'dispCheckbox'=>true,'allOpen'=>true)?>
+              <?php echo getTreePostCategoryCheck($_treeOptions,$R['uid'],0,0,'')?>
+            </div>
+          </div>
+
 
           최초작성자
 

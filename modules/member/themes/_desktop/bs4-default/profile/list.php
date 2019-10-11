@@ -32,11 +32,32 @@ $lack_card_num = $total_card_num;
 
 		<section>
 
-			<header class="d-flex justify-content-between align-items-center mt-4 mb-2">
+			<header class="d-flex justify-content-between align-items-end my-3">
 				<div>
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 				</div>
-				<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm">관리</a>
+
+				<div class="">
+					<div class="dropdown d-inline">
+						<a class="btn btn-white btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							정열 : 생성순
+						</a>
+
+						<div class="dropdown-menu" style="min-width: 100px;">
+							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+								생성순
+							</a>
+							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+								수정순
+							</a>
+						</div>
+					</div>
+
+					<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm">관리</a>
+				</div>
+
+
+
 			</header>
 
 			<div class="card-deck">
@@ -71,7 +92,9 @@ $lack_card_num = $total_card_num;
 			</div>
 
 			<?php if(!$NUM):?>
-			<div class="text-center text-muted p-5">리스트가 없습니다.</div>
+			<div class="d-flex align-items-center justify-content-center" style="height: 40vh">
+				<div class="text-muted">포스트가 없습니다.</div>
+			</div>
 			<?php endif?>
 
 			<footer class="d-flex justify-content-between align-items-center my-4">
@@ -95,8 +118,9 @@ $lack_card_num = $total_card_num;
 					<input type="hidden" name="type" value="<?php echo $type?>" />
 					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
 					<input type="hidden" name="skin" value="<?php echo $skin?>" />
+					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
 
-					<select name="where" class="form-control">
+					<select name="where" class="form-control custom-select">
 						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
 					</select>

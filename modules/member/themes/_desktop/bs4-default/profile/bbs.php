@@ -133,7 +133,8 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 					<input type="hidden" name="type" value="<?php echo $type?>" />
 					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
 					<input type="hidden" name="skin" value="<?php echo $skin?>" />
-
+					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+					
 					<select name="where" class="form-control">
 						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>

@@ -49,6 +49,28 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
 		<div class="form-inline ml-auto">
 
+
+			<div class="dropdown mr-2">
+				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					정열 : 최신순
+				</a>
+
+				<div class="dropdown-menu">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>post">
+						최신순
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>post">
+						조회순
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+						추천순
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+						댓글순
+					</a>
+				</div>
+			</div>
+
 			<label class="sr-only">상태</label>
 			<div class="dropdown">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -140,7 +162,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 						<div class="dropdown-menu dropdown-menu-right" style="min-width: 5rem">
 							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
-							<a class="dropdown-item" href="#">공개</a>
+							<a class="dropdown-item disabled" href="#">공개</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" target="_blank">보기</a>
 
@@ -152,7 +174,11 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 
 			<?php if(!$NUM):?>
 			<li>
-				<div class="text-center text-muted p-5">포스트가 없습니다.</div>
+
+				<div class="d-flex align-items-center justify-content-center" style="height: 40vh">
+					<div class="text-muted">포스트가 없습니다.</div>
+				</div>
+
 			</li>
 			<?php endif?>
 

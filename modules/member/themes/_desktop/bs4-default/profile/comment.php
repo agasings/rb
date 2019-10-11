@@ -116,6 +116,8 @@ $TPG = getTotalPage($NUM,$recnum);
 					<input type="hidden" name="type" value="<?php echo $type?>" />
 					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
 					<input type="hidden" name="skin" value="<?php echo $skin?>" />
+					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+					
 
 					<select name="where" class="form-control">
 						<option value="subject"<?php if($where=='subject'):?> selected="selected"<?php endif?>>제목</option>

@@ -36,17 +36,18 @@ function writeCheck(f) {
   var cat_arr=$('input[name="tree_members[]"]:checked').map(function(){return $(this).val();}).get();
 	var cat_n=cat_arr.length;
 
-	if(cat_sel_n>0 && cat_arr==''){
-		alert('지정된 카테고리가 없습니다.\n적어도 하나이상의 카테고리를 지정해 주세요.');
-    $('#basic').tab('show')
-		return false;
-	} else {
-    var s='';
-    for (var i=0;i <cat_n;i++) {
-      if(cat_arr[i]!='')  s += '['+cat_arr[i]+']';
-    }
-    f.category_members.value = s;
-	}
+	// if(cat_sel_n>0 && cat_arr==''){
+	// 	alert('지정된 카테고리가 없습니다.\n적어도 하나이상의 카테고리를 지정해 주세요.');
+  //   $('#advan').tab('show')
+	// 	return false;
+	// }
+
+  var s='';
+  for (var i=0;i <cat_n;i++) {
+    if(cat_arr[i]!='')  s += '['+cat_arr[i]+']';
+  }
+  f.category_members.value = s;
+
 
   // 리스트 체크
   var list_sel=$('input[name="postlist_members[]"]');
