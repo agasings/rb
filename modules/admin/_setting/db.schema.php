@@ -303,6 +303,7 @@ num_post	INT				DEFAULT '0'		NOT NULL,
 num_list	INT				DEFAULT '0'		NOT NULL,
 num_notice	INT				DEFAULT '0'		NOT NULL,
 hit_post	INT				DEFAULT '0'		NOT NULL,
+likes_post	INT				DEFAULT '0'		NOT NULL,
 bio		TEXT			NOT NULL,
 now_log		TINYINT			DEFAULT '0'		NOT NULL,
 last_log	VARCHAR(14)		DEFAULT ''		NOT NULL,
@@ -344,6 +345,7 @@ KEY num_follower(num_follower),
 KEY num_post(num_post),
 KEY num_list(num_list),
 KEY hit_post(hit_post),
+KEY likes_post(likes_post),
 KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrdata'],$DB_CONNECT);
