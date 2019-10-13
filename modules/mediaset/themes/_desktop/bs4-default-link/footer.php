@@ -52,6 +52,10 @@ $(document).ready(function() {
         check_url.find('[data-role="thumbnail"]').attr('src',thumbnail_url);
         check_url.find('[data-act="insert"]').attr('data-url',url).attr('data-title',title).attr('data-description',description).attr('data-thumbnail',thumbnail_url).attr('data-provider',provider);
 
+        // 포스트 글쓰기 페이지 저장버튼 출력
+        $('[data-role="postsubmit"]').removeClass('d-none');
+        $('[data-role="library"]').addClass('d-none');
+        
         if (type=='video') {
 
           $.get('https://iframe.ly/api/iframely',{

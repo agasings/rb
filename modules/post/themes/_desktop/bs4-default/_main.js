@@ -1,19 +1,26 @@
 var submitFlag = false;
 
-function isChangeData(changed) {
-  if (changed==true || changed==true ) {
-    $('[data-role="postsubmit"]').removeClass('d-none');
-    $('[data-role="library"]').addClass('d-none')
-  } else {
-    $('[data-role="postsubmit"]').addClass('d-none');
-    $('[data-role="library"]').removeClass('d-none')
-  }
-}
-
 function listCheckedNum() {
   var checked_num = $('[data-role="list-selector"] :checkbox:checked').length;
   if(checked_num==0) checked_num='';
   $('[data-role="list_num"]').text(checked_num);
+}
+
+function doToc() {
+  Toc.init({
+    $nav: $("#toc"),
+    $scope: $(".document-editor__editable-container h2,.document-editor__editable-container h3,.document-editor__editable-container h4")
+  });
+}
+
+function showSaveButton(changed) {
+  if (changed) {
+    $('[data-role="postsubmit"]').removeClass('d-none');
+    $('[data-role="library"]').addClass('d-none');
+  } else {
+    $('[data-role="postsubmit"]').addClass('d-none');
+    $('[data-role="library"]').removeClass('d-none');
+  }
 }
 
 function writeCheck(f) {
@@ -23,11 +30,11 @@ function writeCheck(f) {
 		return false;
 	}
 
-	if (f.subject.value == '') {
-		alert('제목 입력해 주세요.');
-		f.subject.focus();
-		return false;
-	}
+	// if (f.subject.value == '') {
+	// 	alert('제목 입력해 주세요.');
+	// 	f.subject.focus();
+	// 	return false;
+	// }
 
   var editorData = editor.getData();
 
@@ -88,15 +95,53 @@ function writeCheck(f) {
     $('input[name="upload"]').val(new_upfiles);
   }
 
-  $('[type="submit"]').attr( 'disabled', true );
-  setTimeout(function(){
-  	getIframeForAction(f);
-    f.submit()
-  }, 200);
+  checkUnload = false;
+  $('[data-role="postsubmit"]').attr( 'disabled', true );
 
-  return false
+  var form = $('[name="writeForm"]')
+  var uid = form.find('[name="uid"]').val();
+  var category_members = form.find('[name="category_members"]').val();
+  var list_members = form.find('[name="list_members"]').val();
+  var upload = form.find('[name="upload"]').val();
+  var featured_img = form.find('[name="featured_img"]').val();
+  var html = form.find('[name="html"]').val();
+  var subject = form.find('[name="subject"]').val();
+  var review = form.find('[name="review"]').val();
+  var tag = form.find('[name="tag"]').val();
 
-  submitFlag = true;
-  return submitFlag;
+  if (uid) {
+    setTimeout(function(){
 
+      $.post(rooturl+'/?r='+raccount+'&m=post&a=write',{
+        content : editorData,
+        uid : uid,
+        category_members : category_members,
+        list_members : list_members,
+        upload : upload,
+        featured_img : featured_img,
+        html : html,
+        subject : subject,
+        review : review,
+        tag : tag
+        },function(response,status){
+          if(status=='success'){
+            var result = $.parseJSON(response);
+            var d_modify=result.d_modify;
+            form.find('[data-role="postsubmit"]').attr( 'disabled', false );
+            form.find('[data-plugin="timeago"]').text(d_modify);
+            form.find('[data-role="postsubmit"]').addClass('d-none');
+            form.find('[data-role="library"]').removeClass('d-none');
+
+          }else{
+            alert(status);
+          }
+      });
+    }, 200);
+
+  } else {
+    setTimeout(function(){
+      getIframeForAction(f);
+      f.submit()
+    }, 200);
+  }
 }

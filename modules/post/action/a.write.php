@@ -18,6 +18,9 @@ else $d_modify=''; // 최초에는 수정일 없음
 
 if ($uid) {
 
+  $result=array();
+  $result['error'] = false;
+
   $R = getUidData($table[$m.'data'],$uid);
 	if (!$R['uid']) getLink('','','존재하지 않는 포스트입니다.','');
 
@@ -149,7 +152,12 @@ if($attachLink) {
 if ($tag || $R['tag']) RegisPostTag($tag,$R,$m,$B['uid'],$reply,$NOWUID);
 
 if ($uid) {
-	getLink('reload','parent.','','');
+
+  $result['d_modify'] = $d_modify;
+  echo json_encode($result);
+	exit;
+
+
 } else {
   $_R = getUidData($table[$m.'data'],$LASTUID);
 	getLink(RW('m=post&mod=write&cid='.$_R['cid']),'parent.','','');

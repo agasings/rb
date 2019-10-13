@@ -1,4 +1,4 @@
-<form name="writeForm" method="post" action="<?php echo $g['s']?>/" onsubmit="return writeCheck(this);ㄱ" role="form" class="rb-post-write">
+<form name="writeForm" method="post" action="<?php echo $g['s']?>/" role="form" class="rb-post-write">
   <input type="hidden" name="r" value="<?php echo $r?>">
   <input type="hidden" name="m" value="<?php echo $m?>">
   <input type="hidden" name="a" value="write">
@@ -62,7 +62,7 @@
 
           <div class="form-group mt-4">
             <label class="sr-only">태그</label>
-            <input type="text" name="tag" value="<?php echo $R['tag']?>" class="form-control"  placeholder="태그를 입력하세요">
+            <textarea class="form-control" rows="2" name="tag" placeholder="태그를 입력하세요"><?php echo $R['tag']?></textarea>
             <small class="form-text text-muted">콤마(,)로 구분하여 입력해 주세요.</small>
           </div>
 
@@ -140,7 +140,6 @@
         </div>
         <div class="tab-pane" id="advan" role="tabpanel" aria-labelledby="link-tab">
 
-
           <div class="form-check mb-2">
             <input class="form-check-input" type="checkbox" name="dis_comment" value="1" id="dis_comment" checked>
             <label class="form-check-label" for="dis_comment">
@@ -161,7 +160,6 @@
               평가 허용
             </label>
           </div>
-
 
           <div class="card mb-4">
             <div class="card-header">
@@ -201,24 +199,24 @@
 
   <div class="position-absolute" style="top:15px;right:30px">
 
-
     <?php if (!$cid): ?>
     <button type="button" class="btn btn-link" data-history="back">취소</button>
     <?php else: ?>
 
-    <a class="muted-link mr-2 f13 align-middle font-italic d-inline-block animated fadeIn delay-1" href="<?php echo getPostLink($R,1) ?>" target="_blank" data-toggle="tooltip" title="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'Y.m.d H:i')?>" >
-      <?php echo $R['d_modify']?'모든 변경사항이 저장':'저장' ?> 되었습니다.
-    </a>
+    <span class="mr-2 f13 align-middle font-italic d-inline-block animated fadeIn delay-1" data-toggle="tooltip" title="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'Y.m.d H:i')?>" >
+      <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time>
+      저장 되었습니다.
+    </span>
 
     <a class="btn btn-white" href="<?php echo RW('mod=dashboard&page=post')?>" data-role="library">포스트 관리</a>
 
-    <button type="button" class="btn btn-primary js-tooltip" title="나에게만 공개" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
+    <button type="button" class="btn btn-outline-primary js-tooltip" title="나에게만 공개" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
       <i class="fa fa-lock mr-1" aria-hidden="true"></i> 공유
     </button>
 
     <?php endif; ?>
 
-    <button type="submit" class="btn btn-primary<?php echo $cid?' d-none':'' ?>" data-role="postsubmit">
+    <button type="button" class="btn btn-primary<?php echo $cid?' d-none':'' ?>" data-role="postsubmit">
       <span class="not-loading">
         저장하기
       </span>
@@ -308,16 +306,16 @@
 <?php getImport('smooth-scroll','smooth-scroll.min','16.1.0','js') ?>
 <script>
 
+// 내용 변경 감지
+var content = editor.getData();
+var changed_meta = false;  //부가정보 수정여부
+var changed_content =  false;  // 본문수정 여부
+var checkUnload = false;  // 페이지 이탈시 경고창 출력여부 (기본값 : 출력안함)
+
 document.title = '<?php echo $R['subject']?$R['subject']:'글쓰기'?> | <?php echo $g['browtitle']?>';
 
 putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
 
-function doToc() {
-	Toc.init({
-		$nav: $("#toc"),
-		$scope: $(".document-editor__editable-container h2,.document-editor__editable-container h3,.document-editor__editable-container h4")
-	});
-}
 
 $(document).ready(function() {
 
@@ -332,7 +330,7 @@ $(document).ready(function() {
   doToc();
 
   // dropdown 내부클릭시 dropdown 유지
-	$('.dropdown-menu').on('click', function(e) {
+	$('.rb-post-write .dropdown-menu').on('click', function(e) {
 		e.stopPropagation();
 	});
 
@@ -350,20 +348,31 @@ $(document).ready(function() {
     listCheckedNum()
   });
 
-  // 내용 변경 감지
-  var content = editor.getData();
-  var changed_meta = false;
-  var changed_content =  false;
-
-  $('.form-control, .form-check-input, .custom-control-input').change(function(){
-    isChangeData(true)
+  $('.rb-post-write').find('.form-control, .form-check-input, .custom-control-input').change(function(){
+    showSaveButton(true); // 저장버튼 출력
+    checkUnload = true //페이지 이탈시 경고창 출력
   });
 
   editor.model.document.on( 'change:data', () => {
-    if (content!=editor.getData()) isChangeData(true)
-    else isChangeData(false)
-  } );
+    if (content!=editor.getData()) {
+      showSaveButton(true); // 저장버튼 출력
+      checkUnload = true; //페이지 이탈시 경고창 출력
+    } else {
+      showSaveButton(false); // 저장버튼 숨김
+      checkUnload = false; //페이지 이탈시 경고창 미출력
+    }
+  });
 
+  $(window).on("beforeunload", function(){
+      if(checkUnload) return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+  });
+
+  $('[data-role="postsubmit"]').click(function(){
+    checkUnload = false; //페이지 이탈시 경고창 미출력
+    var f = document.writeForm;
+    writeCheck(f)
+  });
 
 });
+
 </script>
