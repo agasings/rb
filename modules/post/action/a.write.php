@@ -153,10 +153,9 @@ if ($tag || $R['tag']) RegisPostTag($tag,$R,$m,$B['uid'],$reply,$NOWUID);
 
 if ($uid) {
 
-  $result['d_modify'] = $d_modify;
+  $result['d_modify'] = getDateFormat($d_modify,'Y.m.d H:i');
   echo json_encode($result);
 	exit;
-
 
 } else {
   $_R = getUidData($table[$m.'data'],$LASTUID);

@@ -17,9 +17,11 @@ function showSaveButton(changed) {
   if (changed) {
     $('[data-role="postsubmit"]').removeClass('d-none');
     $('[data-role="library"]').addClass('d-none');
+    $('[data-role="share"]').addClass('d-none');
   } else {
     $('[data-role="postsubmit"]').addClass('d-none');
     $('[data-role="library"]').removeClass('d-none');
+    $('[data-role="share"]').removeClass('d-none');
   }
 }
 
@@ -128,11 +130,12 @@ function writeCheck(f) {
             var result = $.parseJSON(response);
             var d_modify=result.d_modify;
             form.find('[data-role="postsubmit"]').attr( 'disabled', false );
-            form.find('[data-plugin="timeago"]').text(d_modify);
+            form.find('[data-role="d_modify"]').attr('data-original-title',d_modify);
+            form.find('[data-plugin="timeago"]').timeago("update", new Date());
             form.find('[data-role="postsubmit"]').addClass('d-none');
             form.find('[data-role="library"]').removeClass('d-none');
-
-          }else{
+            form.find('[data-role="share"]').removeClass('d-none');
+          } else {
             alert(status);
           }
       });

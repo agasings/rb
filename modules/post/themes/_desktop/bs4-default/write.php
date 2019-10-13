@@ -203,20 +203,20 @@
     <button type="button" class="btn btn-link" data-history="back">취소</button>
     <?php else: ?>
 
-    <span class="mr-2 f13 align-middle font-italic d-inline-block animated fadeIn delay-1" data-toggle="tooltip" title="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'Y.m.d H:i')?>" >
+    <span class="mr-2 f13 align-middle font-italic d-inline-block animated fadeIn delay-1" data-toggle="tooltip" title="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'Y.m.d H:i')?>" data-role="d_modify">
       <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time>
       저장 되었습니다.
     </span>
 
     <a class="btn btn-white" href="<?php echo RW('mod=dashboard&page=post')?>" data-role="library">포스트 관리</a>
 
-    <button type="button" class="btn btn-outline-primary js-tooltip" title="나에게만 공개" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
+    <button type="button" class="btn btn-outline-primary js-tooltip" title="나에게만 공개" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static" data-role="share">
       <i class="fa fa-lock mr-1" aria-hidden="true"></i> 공유
     </button>
 
     <?php endif; ?>
 
-    <button type="button" class="btn btn-primary<?php echo $cid?' d-none':'' ?>" data-role="postsubmit">
+    <button type="button" class="btn btn-primary<?php echo $cid?' d-none':'' ?>" data-role="postsubmit" data-toggle="tooltip" title="단축키 (ctl+m)">
       <span class="not-loading">
         저장하기
       </span>
@@ -372,6 +372,17 @@ $(document).ready(function() {
     var f = document.writeForm;
     writeCheck(f)
   });
+
+  // 퀵메뉴 단축키 지원
+  $(document).on('keydown', function ( e ) {
+    if ((e.metaKey || e.ctrlKey) && ( String.fromCharCode(e.which).toLowerCase() === 'm') ) {
+      $('[data-role="postsubmit"]').removeClass('d-none');
+      $('[data-role="library"]').addClass('d-none');
+      $('[data-role="share"]').addClass('d-none');
+      $('[data-role="postsubmit"]').click(); // 저장 (ctl+k)
+    }
+  });
+
 
 });
 

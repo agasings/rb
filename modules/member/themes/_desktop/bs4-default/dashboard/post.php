@@ -137,8 +137,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 							<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 							<li class="list-inline-item">
-								<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
-								<?php if(getNew($R['d_regis'],12)):?><small class="text-danger">new</small><?php endif?>
+								<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time>
 							</li>
 						</ul>
 

@@ -39,7 +39,8 @@ import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
-import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
+// import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave';
+import PendingActions from '@ckeditor/ckeditor5-core/src/pendingactions';
 
 import '../theme/theme.css';
 
@@ -80,7 +81,7 @@ DecoupledEditor.builtinPlugins = [
 	IndentBlock,
 	Font,
 	Code,
-	WordCount
+	PendingActions
 ];
 
 // Editor configuration.
