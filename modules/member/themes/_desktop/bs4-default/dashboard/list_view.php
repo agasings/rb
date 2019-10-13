@@ -36,15 +36,26 @@ $TPG = getTotalPage($NUM,$recnum);
 
 
 			<div class="py-4">
-				<h4><?php echo $R['name'] ?></h4>
-				<?php echo getDateFormat($R['d_last'],'Y.m.d H:i')?>
+
+				<div class="media">
+					<span class="position-relative mr-3">
+						<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" class="" alt="...">
+						<span class="list_mask">
+							<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+						</span>
+					</span>
+
+				  <div class="media-body">
+				    <h5 class="mt-0"><?php echo $R['name'] ?></h5>
+						<span class="text-muted">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time></span>
+				  </div>
+				</div>
 
 			</div>
 
 
 			<div class="d-flex align-items-center border-top pt-4 pb-3" role="filter">
-				<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
-				<div class="form-inline ml-auto">
+				<div class="form-inline">
 
 					<label class="mt-1 mr-2 sr-only">상태</label>
 					<div class="dropdown">

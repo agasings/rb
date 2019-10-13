@@ -16,7 +16,7 @@ $lack_card_num = $total_card_num;
 			<?php echo $LIST['name'] ?> <small class="text-muted"><?php echo $NUM ?>개</small>
 		</h3>
 		<div class="">
-			<a class="btn btn-white"  href="<?php echo RW('m=post&mod=list') ?>">전체 리스트</a>
+			<a class="btn btn-white"  href="/list">전체 리스트</a>
 			<button class="btn btn-white" data-history="back" type="button">이전</button>
 		</div>
 	</div>
@@ -34,7 +34,7 @@ $lack_card_num = $total_card_num;
 			<?php endif; ?>
 
 			<div class="card-body p-3">
-				<h5 class="card-title h6 mb-1">
+				<h5 class="card-title h6 mb-1 line-clamp-2">
 					<a class="muted-link" href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>">
 						<?php echo $R['subject']?>
 					</a>

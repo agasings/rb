@@ -149,11 +149,10 @@ if($attachLink) {
 if ($tag || $R['tag']) RegisPostTag($tag,$R,$m,$B['uid'],$reply,$NOWUID);
 
 if ($uid) {
-  setrawcookie('post_action_result', rawurlencode('저장 되었습니다.'));
-	getLink(RW('mod=dashboard&page=post'),'parent.','','');
+	getLink('reload','parent.','','');
 } else {
-  setrawcookie('post_action_result', rawurlencode('포스트가 등록 되었습니다.'));
-	getLink(RW('mod=dashboard&page=post'),'parent.','','');
+  $_R = getUidData($table[$m.'data'],$LASTUID);
+	getLink(RW('m=post&mod=write&cid='.$_R['cid']),'parent.','','');
 }
 
 ?>

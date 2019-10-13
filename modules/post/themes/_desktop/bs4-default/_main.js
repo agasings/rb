@@ -1,5 +1,15 @@
 var submitFlag = false;
 
+function isChangeData(changed) {
+  if (changed==true || changed==true ) {
+    $('[data-role="postsubmit"]').removeClass('d-none');
+    $('[data-role="library"]').addClass('d-none')
+  } else {
+    $('[data-role="postsubmit"]').addClass('d-none');
+    $('[data-role="library"]').removeClass('d-none')
+  }
+}
+
 function listCheckedNum() {
   var checked_num = $('[data-role="list-selector"] :checkbox:checked').length;
   if(checked_num==0) checked_num='';
@@ -81,8 +91,12 @@ function writeCheck(f) {
   $('[type="submit"]').attr( 'disabled', true );
   setTimeout(function(){
   	getIframeForAction(f);
-  }, 600);
+    f.submit()
+  }, 200);
+
+  return false
 
   submitFlag = true;
   return submitFlag;
+
 }

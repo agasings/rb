@@ -19,17 +19,23 @@ $recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
 if ($cat) $mod='category';
 
 if ($cid) {
+
   $mod = $mod ? $mod : 'view';
   $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
+  $_POSTMBR = getDbData($table[$m.'members'],'mbruid='.$my['uid'].' and data='.$R['uid'],'*');
 
-  if (!$R['uid']||($R['display']>1&&!$my['admin'])) getLink('','','존재하지 않는 포스트 입니다..','-1');
+  if (!$R['uid']||($R['display']>1&&!$my['admin'])) $mod = '_404';
+
 	include_once $g['dir_module'].'mod/_view.php';
 
   $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=0');
 	$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=1');
 
-  $_POSTMBR_ARR = array();
-  $_POSTMBR_RCD = getDbArray($table[$m.'member'],'data='.$R['uid'].' and auth=1','*','gid','asc',0,1);
+  $_perm = array();
+  $_perm['project'] = $my['admin'] || $_IS_PROJOWN || $_IS_PROJMBR ? true : false;
+  $_perm['owner'] = $my['admin'] || $_IS_PROJOWN || !$IS_STUDENT ? true : false;
+  $_perm['write'] =  $_PROJMBR['auth'];
+
 }
 
 switch ($mod) {
@@ -48,7 +54,7 @@ switch ($mod) {
 
   case 'list_view' :
     $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
-    if (!$LIST['uid']||($LIST['display']>1&&!$my['admin'])) getLink('','','존재하지 않는 리스트 입니다..','-1');
+    if (!$LIST['uid']||($LIST['display']>1&&!$my['admin'])) $mod = '_404'; 
     include_once $g['dir_module'].'mod/_list.php';
   break;
 

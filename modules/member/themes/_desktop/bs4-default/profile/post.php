@@ -90,10 +90,9 @@ switch ($sort) {
 					</a>
 
 			    <div class="media-body">
-			      <h5 class="my-1">
+			      <h5 class="my-1 font-weight-light">
 							<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" ><?php echo $R['subject']?></a>
 						</h5>
-			      <div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
 						<div class="mb-1">
 							<ul class="list-inline d-inline-block f13 text-muted">
 								<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>

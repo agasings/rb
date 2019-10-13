@@ -86,9 +86,6 @@ $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g
 							<?php else:?>
 							<a class="dropdown-item rb-modal-widgetcode" href="#." data-toggle="modal" data-target="#modal_window">위젯</a>
 							<?php endif?>
-
-
-
 		        </div>
 		      </li>
 				</ul>
@@ -303,7 +300,7 @@ $mobile = is_file($g['path_page'].$_filekind.'.mobile.php') ? implode('',file($g
         </div>
         <div class="tab-pane px-2<?php if($_COOKIE['editor_sidebar_tab']=='link'):?> show active <?php endif?>" id="pane-link" role="tabpanel">
 
-          <?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-system-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>($_mtype=='page'?$_HP:$_HM),'wysiwyg'=>$wysiwyg));?>
+          <?php getWidget('_default/attach',array('parent_module'=>'site','theme'=>'_desktop/bs4-system-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>($_mtype=='page'?$_HP:$_HM),'wysiwyg'=>1));?>
 
         </div><!-- /.tab-pane -->
 				<div class="tab-pane px-4<?php if($_COOKIE['editor_sidebar_tab']=='toc'):?> show active <?php endif?>" id="pane-toc" role="tabpanel">

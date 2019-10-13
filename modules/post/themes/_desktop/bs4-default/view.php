@@ -3,14 +3,19 @@
 
 <section class="post-section">
 	<?php if ($list): ?>
-	<div class="mb-2">
-		<a href="<?php echo getListLink($LIST,$mbrid?1:0) ?>">
-			<?php if ($mbrid): ?>
-			<img src="<?php echo getAvatarSrc($MBR['memberuid'],'20') ?>" width="20" height="20" alt="<?php echo $MBR['name'] ?>" class="mr-1 rounded-circle d-inline-block align-middle">
-			<?php endif; ?>
+	<div class="d-flex justify-content-between align-items-center py-2 mt-3 mb-4 border-bottom border-dark">
+		<h3 class="h4 mb-0">
+			<a href="<?php echo getListLink($LIST,$mbrid?1:0) ?>" data-toggle="tooltip" title="<?php echo $MBR['name'] ?>의 리스트" class="d-inline-block align-bottom">
+				<img src="<?php echo getAvatarSrc($LIST['mbruid'],'30') ?>" width="30" height="30" alt="<?php echo $MBR['name'] ?>" class="mr-1 rounded-circle">
+			</a>
 			<?php echo $LIST['name'] ?>
-		</a>
+		</h3>
+		<div class="">
+				<button class="btn btn-white" data-history="back" type="button">이전</button>
+		</div>
 	</div>
+
+
 	<?php endif; ?>
 	<h2><?php echo $R['subject'] ?></h2>
 
@@ -48,42 +53,30 @@
 
       </div>
     </div><!-- /.page-meta-body -->
-    <div class="page-meta-actions pr-3">
-
-      <?php if($_perm['owner']):?>
-
-			<?php if ($R['type']==3): ?>
-			<a href="<?php echo $g['project_modify'].$R['uid'] ?>" class="btn btn-outline-primary">수정</a>
-			<?php else: ?>
-			<?php if (!$R['published']): ?>
-			<button type="button" class="btn btn-outline-danger" data-toggle="tooltip" data-act="publish" data-publish="1" title="외부에 공개됩니다.">
-				공개 처리
-			</button>
-			<?php else: ?>
-			<button type="button" class="btn btn-outline-warning" data-toggle="tooltip" data-act="publish" data-publish="0" title="매니저와 팀원에게만 공개됩니다.">
-				비공개 처리
-			</button>
-			<?php endif; ?>
-			<?php endif; ?>
-
-      <a href="<?php echo $g['project_act']?>post_delete&amp;cid=<?php echo $R['cid']?>" onclick="return hrefCheck(this,true,'정말로 삭제하시겠습니까?');" class="btn btn-outline-warning">삭제</a>
-      <?php endif?>
-    </div><!-- /.page-meta-actions -->
   </div>
-
 
 	<!-- 본문 -->
 	<article class="py-4 rb-article">
 		<?php echo getContents($R['content'],$R['html'])?>
 	</article>
 
-	<section data-role="project-article" class="project-section mt-5">
-		<h5 class="d-flex justify-content-between">
-			<span class="font-weight-light text-muted">· 첨부파일</span>
-		</h5>
-
+	<section class="mt-5">
 		<?php include $g['dir_module_skin'].'_view_attach.php'?>
 	</section>
+
+	<!-- 포스트 소유자멤버 -->
+	<div class="list-group">
+	<?php foreach($MBR_RCD as $MBR): ?>
+	<a href="<?php echo getProfileLink($MBR['memberuid']) ?>" class="list-group-item list-group-item-action media">
+		<img class="rounded-circle mr-3" src="<?php echo getAvatarSrc($MBR['memberuid'],'50') ?>" width="50" height="50" alt="<?php echo $MBR['name'] ?>">
+    <div class="media-body">
+      <h5 class="mt-0 mb-1"><?php echo $MBR[$_HS['nametype']] ?></h5>
+      <small><?php echo $MBR['bio'] ?>.
+    </div>
+	</a>
+	<?php endforeach?>
+	</div>
+
 
 	<footer class="d-flex justify-content-between align-items-center my-5 d-print-none">
 		<div class="btn-group">

@@ -69,7 +69,7 @@ $lack_card_num = $total_card_num;
 						<?php echo $R['name']?>
 					</a>
 				</h5>
-				<time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time>
+				<span class="small text-muted">업데이트: <time class="text-muted" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time></span>
 				<?php if(getNew($R['d_last'],$d['post']['newtime'])):?><span class="rb-new ml-1"></span><?php endif?>
 			</div><!-- /.card-body -->
 		</div><!-- /.card -->

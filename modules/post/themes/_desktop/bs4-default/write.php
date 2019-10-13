@@ -1,4 +1,4 @@
-<form name="writeForm" method="post" action="<?php echo $g['s']?>/" onsubmit="return writeCheck(this);" role="form" class="rb-post-write">
+<form name="writeForm" method="post" action="<?php echo $g['s']?>/" onsubmit="return writeCheck(this);ㄱ" role="form" class="rb-post-write">
   <input type="hidden" name="r" value="<?php echo $r?>">
   <input type="hidden" name="m" value="<?php echo $m?>">
   <input type="hidden" name="a" value="write">
@@ -11,7 +11,7 @@
 
   <header class="d-flex align-items-center py-3 px-4">
 
-    <a href="<?php echo RW('mod=dashboard&page=post')?>" title="포스트 관리" class="muted-link mr-2" data-toggle="tooltip">
+    <a href="<?php echo RW('mod=dashboard&page=post')?>" title="포스트 관리" class="mr-2" data-toggle="tooltip">
       <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>
     </a>
 
@@ -57,7 +57,7 @@
           <div class="form-group">
             <label class="sr-only">요약설명</label>
             <textarea class="form-control" rows="3" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
-            <small class="form-text text-muted">500자 이내로 등록할 수 있으며 태그를 사용할 수 있습니다.</small>
+            <small class="form-text text-muted">100자 이내로 등록할 수 있으며 태그를 사용할 수 있습니다.</small>
           </div>
 
           <div class="form-group mt-4">
@@ -69,12 +69,12 @@
           <div class="form-group">
             <label class="sr-only">리스트</label>
 
-            <div class="dropdown" data-role="list-selector">
+            <div class="dropdown dropdown-filter" data-role="list-selector">
               <button class="btn btn-white btn-block dropdown-toggle d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 리스트 선택
                 <div class="mr-4"><span class="badge badge-primary" data-role="list_num"></span></div>
               </button>
-              <div class="dropdown-menu shadow pt-0" style="width: 305px">
+              <div class="dropdown-menu shadow pt-0" style="width: 320px">
 
                 <div class="dropdown-body p-3" style="max-height: 300px;overflow:auto">
 
@@ -113,25 +113,20 @@
 
           </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="hidden"  value="option1" checked>
-            <label class="form-check-label" for="exampleRadios1">
-              공개
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="hidden"  value="option1" <?php if($R['hidden']):?> checked<?php endif?>>
-            <label class="form-check-label" for="exampleRadios1">
-              미등록
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="hidden"  value="option2">
-            <label class="form-check-label" for="exampleRadios2">
-              비공개 - 나만 액세스할 수 있습니다.
-            </label>
-          </div>
-
+          <?php if ($cid): ?>
+          <table class="table table-sm table-bordered mt-4 text-center">
+            <tbody>
+              <tr>
+                <th scope="row">최초 작성</th>
+                <td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
+              </tr>
+              <tr>
+                <th scope="row">최근 저장</th>
+                <td><?php echo getDateFormat($R['d_modify'],'Y.m.d H:i')?></td>
+              </tr>
+            </tbody>
+          </table>
+          <?php endif; ?>
 
         </div>
         <div class="tab-pane fade" id="attach" role="tabpanel" aria-labelledby="attach-tab">
@@ -145,7 +140,7 @@
         </div>
         <div class="tab-pane" id="advan" role="tabpanel" aria-labelledby="link-tab">
 
-          
+
           <div class="form-check mb-2">
             <input class="form-check-input" type="checkbox" name="dis_comment" value="1" id="dis_comment" checked>
             <label class="form-check-label" for="dis_comment">
@@ -191,10 +186,14 @@
 
         </div>
         <div class="tab-pane" id="link" role="tabpanel" aria-labelledby="link-tab">
-          링크 추가
+
+          <?php getWidget('_default/attach',array('parent_module'=>'post','theme'=>'_desktop/bs4-default-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y'));?>
+
         </div>
         <div class="tab-pane" id="index" role="tabpanel" aria-labelledby="index-tab">
-          목차
+
+          <nav id="toc" class="ml-3"></nav>
+
         </div>
       </div>
     </div>
@@ -202,19 +201,31 @@
 
   <div class="position-absolute" style="top:15px;right:30px">
 
-    <?php if ($uid): ?>
-    <a class="btn btn btn-outline-success" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;uid=<?php echo $R['uid']?>" target="_blank">
-      보기
+
+    <?php if (!$cid): ?>
+    <button type="button" class="btn btn-link" data-history="back">취소</button>
+    <?php else: ?>
+
+    <a class="muted-link mr-2 f13 align-middle font-italic d-inline-block animated fadeIn delay-1" href="<?php echo getPostLink($R,1) ?>" target="_blank" data-toggle="tooltip" title="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'Y.m.d H:i')?>" >
+      <?php echo $R['d_modify']?'모든 변경사항이 저장':'저장' ?> 되었습니다.
     </a>
+
+    <a class="btn btn-white" href="<?php echo RW('mod=dashboard&page=post')?>" data-role="library">포스트 관리</a>
+
+    <button type="button" class="btn btn-primary js-tooltip" title="나에게만 공개" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
+      <i class="fa fa-lock mr-1" aria-hidden="true"></i> 공유
+    </button>
+
     <?php endif; ?>
 
-    <button type="button" class="btn btn-link" data-history="back">취소</button>
-
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary<?php echo $cid?' d-none':'' ?>" data-role="postsubmit">
       <span class="not-loading">
         저장하기
       </span>
-      <span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i>저장 중 ...</span>
+      <span class="is-loading">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        저장중
+      </span>
     </button>
 
     <div class="d-inline-block dropdown">
@@ -254,13 +265,71 @@
 
 </form>
 
+<!-- Modal -->
+<div class="modal" id="modal-post-share" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">공유</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="hidden"  value="option1" checked>
+          <label class="form-check-label" for="exampleRadios1">
+            공개
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="hidden"  value="option1" <?php if($R['hidden']):?> checked<?php endif?>>
+          <label class="form-check-label" for="exampleRadios1">
+            미등록
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="hidden"  value="option2">
+          <label class="form-check-label" for="exampleRadios2">
+            비공개 - 나만 액세스할 수 있습니다.
+          </label>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- bootstrap-toc : https://github.com/afeld/bootstrap-toc -->
+<?php getImport('bootstrap-toc','bootstrap-toc','1.0.1','css')?>
+<?php getImport('bootstrap-toc','bootstrap-toc.min','1.0.1','js')?>
+
+<?php getImport('smooth-scroll','smooth-scroll.min','16.1.0','js') ?>
 <script>
+
+document.title = '<?php echo $R['subject']?$R['subject']:'글쓰기'?> | <?php echo $g['browtitle']?>';
 
 putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
 
-$( document ).ready(function() {
+function doToc() {
+	Toc.init({
+		$nav: $("#toc"),
+		$scope: $(".document-editor__editable-container h2,.document-editor__editable-container h3,.document-editor__editable-container h4")
+	});
+}
+
+$(document).ready(function() {
+
+  // smoothScroll : https://github.com/cferdinandi/smooth-scroll
+  var scroll_content = new SmoothScroll('[data-toggle="toc"] a[href*="#"]',{
+  	ignore: '[data-scroll-ignore]'
+  });
 
   listCheckedNum()
+
+  $("#toc").empty();
+  doToc();
 
   // dropdown 내부클릭시 dropdown 유지
 	$('.dropdown-menu').on('click', function(e) {
@@ -280,6 +349,20 @@ $( document ).ready(function() {
   $('[data-role="list-selector"] [type="checkbox"]').change(function(){
     listCheckedNum()
   });
+
+  // 내용 변경 감지
+  var content = editor.getData();
+  var changed_meta = false;
+  var changed_content =  false;
+
+  $('.form-control, .form-check-input, .custom-control-input').change(function(){
+    isChangeData(true)
+  });
+
+  editor.model.document.on( 'change:data', () => {
+    if (content!=editor.getData()) isChangeData(true)
+    else isChangeData(false)
+  } );
 
 
 });

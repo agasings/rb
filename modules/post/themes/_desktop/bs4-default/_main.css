@@ -1,18 +1,18 @@
 /* form */
-.dropdown-toggle {
+.dropdown-filter .dropdown-toggle {
   position: relative;
   text-align: left;
   min-width: 10rem
 }
 
-.dropdown-toggle::after {
+.dropdown-filter .dropdown-toggle::after {
   position: absolute;
   top: 50%;
   right: 10px;
   margin-top: -2px;
 }
 
-.show .dropdown-toggle::after {
+.dropdown-filter.show .dropdown-toggle::after {
   border-bottom: .3em solid;
   border-top: 0;
 }

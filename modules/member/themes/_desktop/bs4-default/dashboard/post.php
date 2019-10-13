@@ -129,16 +129,17 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 
 		    <div class="media-body">
 		      <h5 class="my-1">
-						<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="muted-link" ><?php echo $R['subject']?></a>
-						<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
+						<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="font-weight-light muted-link" ><?php echo $R['subject']?></a>
 					</h5>
-		      <div class="text-muted line-clamp-1 mb-1"><?php echo $R['review']?></div>
 					<div class="mb-1">
-						<ul class="list-inline d-inline-block ml-2 f13 text-muted">
+						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 							<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
-							<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
+							<li class="list-inline-item">
+								<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
+								<?php if(getNew($R['d_regis'],12)):?><small class="text-danger">new</small><?php endif?>
+							</li>
 						</ul>
 
 						<?php if (IsPostCat($R['uid'])): ?>
@@ -168,7 +169,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<a class="dropdown-item disabled" href="#">공개</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" target="_blank">보기</a>
+							<a class="dropdown-item" href="<?php echo getPostLink($R,1) ?>" target="_blank">보기</a>
 
 						</div>
 					</div>

@@ -23,26 +23,26 @@ $lack_card_num = $total_card_num;
   <div class="row gutter-half" data-role="post-list">
 
     <?php
-      $_RCD=getDbArray($table['postlist'],'mbruid='.$_MP['uid'],'*','gid','asc',$wdgvar['limit'],1);
+      $_RCD=getDbArray($table['postlist'],'mbruid='.$my['uid'],'*','gid','asc',$wdgvar['limit'],1);
       $i=0;foreach($_RCD as $R):$i++;
     ?>
 
     <div class="col">
-      <div class="card border-0" id="item-<?php echo $_R['uid'] ?>">
+      <div class="card" id="item-<?php echo $_R['uid'] ?>">
 
-        <a class="position-relative" href="<?php echo getListLink($R,1) ?>">
+        <a class="position-relative" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>">
           <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" alt="" class="card-img-top">
           <span class="list_mask">
             <span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
           </span>
         </a>
-        <div class="card-body py-3 px-0">
+        <div class="card-body p-3">
           <h6 class="card-title mb-0 line-clamp-2">
-            <a class="muted-link" href="<?php echo getListLink($R,1) ?>">
+            <a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>">
               <?php echo getStrCut($R['name'],100,'..')?>
             </a>
           </h6>
-          <time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
+          <small class="text-muted small" >업데이트 : <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last']?$R['d_last']:$R['d_regis'],'c')?>"></time></small>
         </div>
 
       </div><!-- /.card -->
