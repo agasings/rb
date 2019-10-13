@@ -20,10 +20,22 @@ $gid = $maxgid ? $maxgid+1 : 1;
 $QKEY = "gid,site,id,name,mbruid,num,d_last,d_regis,imghead,imgfoot,puthead,putfoot,addinfo,writecode";
 $QVAL = "'$gid','$s','$id','$name','$mbruid','0','$last_log','$last_log','$imghead','$imgfoot','$puthead','$putfoot','$addinfo','$writecode'";
 getDbInsert($table[$m.'list'],$QKEY,$QVAL);
-
 getDbUpdate($table['s_mbrdata'],'num_list=num_list+1','memberuid='.$my['uid']);  //회원 리스트수 조정
 
-setrawcookie('postlist_action_result', rawurlencode($name.' 리스트가 추가 되었습니다.|success'));  // 처리여부 cookie 저장
-getLink('reload','parent.','','');
+$LASTUID = getDbCnt($table[$m.'list'],'max(uid)','');
+
+if ($send_mod == 'ajax') {
+
+  $result=array();
+  $result['error'] = false;
+  $result['uid'] = $LASTUID;
+  echo json_encode($result);
+	exit;
+
+} else {
+
+  setrawcookie('postlist_action_result', rawurlencode($name.' 리스트가 추가 되었습니다.|success'));  // 처리여부 cookie 저장
+  getLink('reload','parent.','','');
+}
 
 ?>

@@ -103,7 +103,14 @@
                   <div class="input-group mt-3 d-none" data-role="list-add-input">
                     <input type="text" class="form-control" placeholder="리스트명 입력" name="list_name">
                     <div class="input-group-append">
-                      <button class="btn btn-white" type="button" data-act="list-add-submit">추가</button>
+                      <button class="btn btn-white" type="button" data-act="list-add-submit">
+                        <span class="not-loading">
+                          추가
+                        </span>
+                        <span class="is-loading">
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </span>
+                      </button>
                       <button class="btn btn-white" type="button" data-act="list-add-cancel">취소</button>
                     </div>
                   </div><!-- /.input-group -->
@@ -344,7 +351,7 @@ $(document).ready(function() {
     $('[data-role="list-add-input"]').addClass('d-none')
   } );
 
-  $('[data-role="list-selector"] [type="checkbox"]').change(function(){
+  $(document).on('change','[data-role="list-selector"] [type="checkbox"]',function(){
     listCheckedNum()
   });
 
@@ -373,6 +380,46 @@ $(document).ready(function() {
     writeCheck(f)
   });
 
+  $('[data-act="list-add-submit"]').click(function(){
+    var button = $(this)
+    var input = $('[name="list_name"]');
+    var list = $('[data-role="list-selector"]');
+    var checked_num = list.find('[data-role="list_num"]');
+    var checked_num_val = Number(checked_num.text());
+    var name = input.val();
+
+    if (!name) {
+      input.focus();
+      return false
+    }
+    button.attr( 'disabled', true );
+
+    setTimeout(function(){
+
+      $.post(rooturl+'/?r='+raccount+'&m=post&a=regis_list',{
+        name : name,
+        send_mod : 'ajax'
+        },function(response,status){
+          if(status=='success'){
+            var result = $.parseJSON(response);
+            var uid=result.uid;
+            var item = '<div class="custom-control custom-checkbox">'+
+                          '<input type="checkbox" id="listRadio'+uid+'" name="postlist_members[]" value="'+uid+'" class="custom-control-input" checked>'+
+                          '<label class="custom-control-label" for="listRadio'+uid+'">'+name+'</label>'+
+                        '</div>';
+            button.attr( 'disabled', false );
+            input.val('');
+            $('[data-role="list-add-button"]').removeClass('d-none');
+            $('[data-role="list-add-input"]').addClass('d-none')
+            list.find('.dropdown-body').append(item);
+            checked_num.text(checked_num_val+1);
+          } else {
+            alert(status);
+          }
+      });
+    }, 200);
+  });
+
   // 퀵메뉴 단축키 지원
   $(document).on('keydown', function ( e ) {
     if ((e.metaKey || e.ctrlKey) && ( String.fromCharCode(e.which).toLowerCase() === 'm') ) {
@@ -382,7 +429,6 @@ $(document).ready(function() {
       $('[data-role="postsubmit"]').click(); // 저장 (ctl+k)
     }
   });
-
 
 });
 
