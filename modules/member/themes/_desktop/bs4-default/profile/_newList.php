@@ -31,7 +31,7 @@ $lack_card_num = $total_card_num;
       <div class="card border-0" id="item-<?php echo $_R['uid'] ?>">
 
         <a class="position-relative" href="<?php echo getListLink($R,1) ?>">
-          <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" alt="" class="card-img-top">
+          <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" alt="" class="card-img-top border">
           <span class="list_mask">
             <span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
           </span>

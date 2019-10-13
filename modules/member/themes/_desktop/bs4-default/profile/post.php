@@ -86,7 +86,7 @@ switch ($sort) {
 			  <li class="media mt-4">
 
 					<a href="<?php echo getPostLink($R,1) ?>" class="mr-3">
-						<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+						<img class="border" src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
 					</a>
 
 			    <div class="media-body">

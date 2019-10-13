@@ -31,7 +31,7 @@ $lack_card_num = $total_card_num;
       <div class="card border-0" id="item-<?php echo $_R['uid'] ?>">
 
         <a class="text-nowrap text-truncate muted-link" href="<?php echo getPostLink($R,1) ?>">
-          <img src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180') ?>" alt="" class="card-img-top">
+          <img src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180') ?>" alt="" class="card-img-top border">
         </a>
         <div class="card-body py-3 px-0">
           <h6 class="card-title mb-0 line-clamp-2">
