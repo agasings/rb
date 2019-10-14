@@ -12,12 +12,14 @@ var updateShowHide=function(uid,showhide){
       }
 }
 
-$('body').on('click','[data-attach-act]',function(e){
-      e.preventDefault();
-      var act=$(this).data('attach-act');
+$(document).on('click','[data-attach-act]',function(e){
+      var act=$(this).attr('data-attach-act');
       var uid=$(this).attr('data-id');
-      var type=$(this).data('type'); // file or photo
+      var type=$(this).attr('data-type'); // file or photo
       var module =  'mediaset';
+
+      showSaveButton(true)  //포스트 저장버튼 활성화
+
       if(act=='edit'){
         // data 값 세팅
         var modal=$(this).data('target');
@@ -136,23 +138,9 @@ $('body').on('click','[data-attach-act]',function(e){
                 }
             });
        }else if(act=='insert'){
-              var src=$(this).data('origin');
-              var type=$(this).attr('data-type');
-              var caption=$(this).attr('data-caption');
-              var dn_url = rooturl+'/'+raccount+'/download/'+uid;
-              var img_html = '<figure class="image ck-widget" contenteditable="false">'+
-                                '<img src="'+src+'">'+
-                                '<figcaption class="ck-editor__editable ck-editor__nested-editable ck-placeholder ck-hidden" data-placeholder="이미지 설명을 입력하세요" contenteditable="true">'+caption+'</figcaption>'+
-                              '</figure>';
-
-              var file_html = '<p><a href="'+dn_url+'">'+caption+'</a></p>';
-              console.log(type)
-
-              if(type=='photo') {
-                InserHTMLtoEditor(img_html)
-              } else {
-                InserHTMLtoEditor(file_html)
-              }
+              var url=$(this).attr('data-url');
+              console.log(url)
+              InserHTMLtoEditor(editor,url)
 
               var showhide= 'hide'; // 숨김처리
               $.post(rooturl+'/?r='+raccount+'&m='+module+'&a=edit',{

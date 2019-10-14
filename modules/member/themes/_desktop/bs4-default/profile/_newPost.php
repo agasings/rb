@@ -30,8 +30,9 @@ $lack_card_num = $total_card_num;
     <div class="col">
       <div class="card border-0" id="item-<?php echo $_R['uid'] ?>">
 
-        <a class="text-nowrap text-truncate muted-link" href="<?php echo getPostLink($R,1) ?>">
+        <a class="text-nowrap text-truncate muted-link position-relative" href="<?php echo getPostLink($R,1) ?>">
           <img src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180') ?>" alt="" class="card-img-top border">
+          <time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
         </a>
         <div class="card-body py-3 px-0">
           <h6 class="card-title mb-0 line-clamp-2">

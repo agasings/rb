@@ -46,11 +46,7 @@
 
     </div>
     <div class="col-6 pl-0">
-      <div class="card">
-        <div class="card-body">
 
-        </div>
-      </div><!-- /.card -->
     </div>
 
   </div><!-- /.row -->

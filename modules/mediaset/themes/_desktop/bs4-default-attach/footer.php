@@ -34,7 +34,7 @@ $(document).ready(function() {
     onSuccess:function(files,data,xhr,pd){
       console.log('파일이 업로드 되었습니다.');
       uploadElement.isLoading("hide");
-      
+
       // 포스트 글쓰기 페이지 저장버튼 출력
       $('[data-role="postsubmit"]').removeClass('d-none');
       $('[data-role="library"]').addClass('d-none');

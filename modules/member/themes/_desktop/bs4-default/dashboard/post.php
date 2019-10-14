@@ -123,8 +123,9 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			<?php foreach($RCD as $R):?>
 		  <li class="media mt-4">
 
-				<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="mr-3">
+				<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="position-relative mr-3">
 					<img class="border" src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
 				</a>
 
 		    <div class="media-body">

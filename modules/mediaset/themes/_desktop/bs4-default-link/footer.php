@@ -55,7 +55,7 @@ $(document).ready(function() {
         // 포스트 글쓰기 페이지 저장버튼 출력
         $('[data-role="postsubmit"]').removeClass('d-none');
         $('[data-role="library"]').addClass('d-none');
-        
+
         if (type=='video') {
 
           $.get('https://iframe.ly/api/iframely',{
@@ -133,7 +133,7 @@ $(document).ready(function() {
 
     var html = '<figure class="media"><oembed url="'+url+'"></oembed></figure>'
 
-    InserHTMLtoEditor(html)
+    InserHTMLtoEditor(editor,html)
   } );
 
 

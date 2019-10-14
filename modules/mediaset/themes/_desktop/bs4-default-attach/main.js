@@ -6,6 +6,8 @@
  *
  * Version: 1.0.0
  */
+
+
 (function ($) {
     $.fn.RbAttachTheme= function (settings) {
 
@@ -57,7 +59,6 @@
               var act=$(this).attr('data-attach-act');
               var uid=$(this).attr('data-id');
               var type=$(this).attr('data-type'); // file or photo
-
               if(act=='edit'){
                 // data 값 세팅
                 var modal=$(this).data('target');

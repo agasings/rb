@@ -28,8 +28,9 @@ $lack_card_num = $total_card_num;
 		<?php $i=0;foreach($RCD as $R):$i++?>
 		<div class="card">
 			<?php if ($R['featured_img']): ?>
-			<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>">
+			<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>" class="position-relative">
 				<img src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180') ?>" class="img-fluid" alt="">
+				<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
 			</a>
 			<?php endif; ?>
 

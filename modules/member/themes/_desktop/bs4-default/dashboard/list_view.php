@@ -102,13 +102,14 @@ $TPG = getTotalPage($NUM,$recnum);
 							<i class="fa fa-arrows" aria-hidden="true"></i>
 						</span>
 						<strong class="counter mr-3 f18  align-self-center"></strong>
-						<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="mr-3" target="_blank">
+						<a href="<?php echo getPostLink($R,1) ?>" class="position-relative mr-3" target="_blank">
 							<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+							<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
 						</a>
 
 						<div class="media-body">
 							<h5 class="my-1">
-								<a href="<?php echo getPostLink($R,$d['post']['urlformat']) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
+								<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
 								<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 							</h5>
 							<div class="mb-1">

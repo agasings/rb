@@ -83,8 +83,7 @@ function rbUploadAdapterPlugin( editor ) {
 }
 
 // ckeditor5 내용삽입
-function InserHTMLtoEditor(editor,html) {
-	const content = html;
+function InserHTMLtoEditor(editor,content) {
 	const viewFragment = editor.data.processor.toView( content );
 	const modelFragment = editor.data.toModel( viewFragment );
 	editor.model.insertContent( modelFragment );

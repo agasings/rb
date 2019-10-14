@@ -65,8 +65,9 @@
 			<li class="media my-4">
 				<?php if ($R['featured_img']): ?>
 
-				<a href="<?php echo getPostLink($R,0) ?>">
-					<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="" class="mr-3">
+				<a href="<?php echo getPostLink($R,0) ?>" class="position-relative mr-3">
+					<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
 				</a>
 				<?php endif; ?>
 

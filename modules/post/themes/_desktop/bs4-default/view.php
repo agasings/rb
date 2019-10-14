@@ -87,7 +87,6 @@
 		 </div>
 		 <div class="">
 			 <button type="button" class="btn btn-light" data-history="back">이전가기</button>
-			 <a href="<?php echo $g['post_list']?>" class="btn btn-light">전체목록</a>
 		 </div>
 
 	</footer>

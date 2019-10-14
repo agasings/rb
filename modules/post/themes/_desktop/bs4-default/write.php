@@ -331,13 +331,12 @@ $(document).ready(function() {
   	ignore: '[data-scroll-ignore]'
   });
 
-  listCheckedNum()
-
   $("#toc").empty();
+  listCheckedNum()
   doToc();
 
   // dropdown 내부클릭시 dropdown 유지
-	$('.rb-post-write .dropdown-menu').on('click', function(e) {
+	$('[data-role="list-selector"] .dropdown-menu').on('click', function(e) {
 		e.stopPropagation();
 	});
 
@@ -380,7 +379,7 @@ $(document).ready(function() {
     writeCheck(f)
   });
 
-  $('[data-act="list-add-submit"]').click(function(){
+  $('[data-act="list-add-submit"]').click(function(e){
     var button = $(this)
     var input = $('[name="list_name"]');
     var list = $('[data-role="list-selector"]');

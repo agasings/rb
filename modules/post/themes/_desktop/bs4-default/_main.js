@@ -9,7 +9,7 @@ function listCheckedNum() {
 function doToc() {
   Toc.init({
     $nav: $("#toc"),
-    $scope: $(".document-editor__editable-container h2,.document-editor__editable-container h3,.document-editor__editable-container h4")
+    $scope: $(".document-editor__editable-container h2, .document-editor__editable-container h3, .document-editor__editable-container h4")
   });
 }
 
