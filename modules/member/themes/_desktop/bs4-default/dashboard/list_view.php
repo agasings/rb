@@ -16,6 +16,12 @@ while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'uid='.$
 $NUM = getDbRows($table['postlist_index'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
+$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m=post',array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['bbs']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['post_reset'];
+$g['post_orign'] = $g['post_reset'];
+$g['post_action']= $g['post_list'].'&amp;a=';
+$g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 ?>
 
 <div class="container">
@@ -146,14 +152,12 @@ $TPG = getTotalPage($NUM,$recnum);
 							<div class="media-body">
 								<h5 class="my-1">
 									<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
-									<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 								</h5>
 								<div class="mb-1">
 									<ul class="list-inline d-inline-block ml-2 f13 text-muted">
 										<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 										<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 										<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
-										<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
 									</ul>
 								</div>
 							</div>
@@ -163,7 +167,7 @@ $TPG = getTotalPage($NUM,$recnum);
 										관리
 									</button>
 									<div class="dropdown-menu dropdown-menu-right"  style="min-width: 5rem">
-										<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 제외 하시겠습니까?');">제외</a>
+										<a class="dropdown-item" href="<?php echo $g['listindex_delete'].$R['uid'].'&amp;listid='.$id?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 제외 하시겠습니까?');">제외</a>
 										<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 									</div>
 								</div>
