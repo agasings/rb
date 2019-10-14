@@ -121,15 +121,68 @@
           </div>
 
           <?php if ($cid): ?>
-          <table class="table table-sm table-bordered mt-4 text-center">
+
+          <div class="form-group">
+            <label class="small text-muted">포스트 URL</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" value="<?php echo $g['url_root'].getPostLink($R,0) ?>" readonly>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-white"><i class="fa fa-clone" aria-hidden="true"></i></button>
+                <a class="btn btn-white" href="<?php echo getPostLink($R,0) ?>" target="_blank">
+                  <i class="fa fa-share" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <span class="d-block mt-4 small text-muted">공유 설정</span>
+          <ul class="list-group list-group-flush f13 mt-1">
+            <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
+
+              <div class="media">
+                <span class="fa-stack fa-lg mr-2">
+                  <i class="fa fa-square fa-stack-2x"></i>
+                  <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+                </span>
+
+                <div class="media-body align-self-center">
+                  비공개 - 나에게만 공개
+                </div>
+              </div>
+
+              <div class="">
+                <button type="button" class="btn btn-link btn-sm">변경...</button>
+              </div>
+
+            </li>
+
+          	<?php foreach($MBR_RCD as $MBR): ?>
+            <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
+
+              <div class="media">
+                <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'32') ?>" width="32" height="32" alt="<?php echo $MBR['name'] ?>">
+
+                <div class="media-body align-self-center">
+                  <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
+                  <span class="text-muted"><?php echo $MBR['email'] ?></span>
+                </div>
+              </div>
+
+              <div class="pr-3">
+                <span class="f12 text-muted">소유자</span>
+              </div>
+
+            </li>
+            <?php endforeach?>
+
+          </ul>
+
+
+          <table class="table table-sm border-bottom mt-4 text-center f13">
             <tbody>
               <tr>
                 <th scope="row">최초 작성</th>
                 <td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-              </tr>
-              <tr>
-                <th scope="row">최근 저장</th>
-                <td><?php echo getDateFormat($R['d_modify'],'Y.m.d H:i')?></td>
               </tr>
             </tbody>
           </table>
@@ -147,26 +200,30 @@
         </div>
         <div class="tab-pane" id="advan" role="tabpanel" aria-labelledby="link-tab">
 
-          <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" name="dis_comment" value="1" id="dis_comment" checked>
-            <label class="form-check-label" for="dis_comment">
+          <ul class="list-group mb-4">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               댓글 허용
-            </label>
-          </div>
-
-          <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" name="dis_like" value="1" id="dis_like" checked>
-            <label class="form-check-label" for="dis_like">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="dis_comment" value="1" id="dis_comment" checked>
+                <label class="custom-control-label" for="dis_comment"></label>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               좋아요 허용
-            </label>
-          </div>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="dis_like" value="1" id="dis_like" checked>
+                <label class="custom-control-label" for="dis_like"></label>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              평점 허용
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="dis_rating" value="1" id="dis_rating" checked>
+                <label class="custom-control-label" for="dis_rating"></label>
+              </div>
+            </li>
+          </ul>
 
-          <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" name="dis_rating" value="1" id="dis_rating">
-            <label class="form-check-label" for="dis_rating">
-              평가 허용
-            </label>
-          </div>
 
           <div class="card mb-4">
             <div class="card-header">
@@ -176,17 +233,6 @@
               <?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>true,'dispHidden'=>false,'dispCheckbox'=>true,'allOpen'=>true)?>
               <?php echo getTreePostCategoryCheck($_treeOptions,$R['uid'],0,0,'')?>
             </div>
-          </div>
-
-
-          최초작성자
-
-          <div class="">
-            소유자
-          </div>
-
-          <div class="">
-            참여자
           </div>
 
         </div>
@@ -216,10 +262,6 @@
     </span>
 
     <a class="btn btn-white" href="<?php echo RW('mod=dashboard&page=post')?>" data-role="library">포스트 관리</a>
-
-    <button type="button" class="btn btn-outline-primary js-tooltip" title="나에게만 공개" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static" data-role="share">
-      <i class="fa fa-lock mr-1" aria-hidden="true"></i> 공유
-    </button>
 
     <?php endif; ?>
 
@@ -375,6 +417,7 @@ $(document).ready(function() {
 
   $('[data-role="postsubmit"]').click(function(){
     checkUnload = false; //페이지 이탈시 경고창 미출력
+    $('[data-toggle="tooltip"]').tooltip('hide');
     var f = document.writeForm;
     writeCheck(f)
   });
@@ -424,7 +467,6 @@ $(document).ready(function() {
     if ((e.metaKey || e.ctrlKey) && ( String.fromCharCode(e.which).toLowerCase() === 'm') ) {
       $('[data-role="postsubmit"]').removeClass('d-none');
       $('[data-role="library"]').addClass('d-none');
-      $('[data-role="share"]').addClass('d-none');
       $('[data-role="postsubmit"]').click(); // 저장 (ctl+k)
     }
   });

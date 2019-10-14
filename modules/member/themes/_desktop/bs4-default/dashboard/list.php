@@ -6,7 +6,7 @@ include_once $svfile;
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 201 ? $recnum : 20;
-$listque	= 'mbruid='.$my['uid'];
+$listque	= 'mbruid='.$my['uid'].' and site='.$s;
 
 if ($where && $keyw)
 {

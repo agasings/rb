@@ -2,7 +2,7 @@
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
-$postque = 'mbruid='.$_MP['uid'];
+$postque = 'mbruid='.$_MP['uid'].' and site='.$s;
 if ($where && $keyword)
 {
 	if (strstr('[name][nic][id][ip]',$where)) $postque .= " and ".$where."='".$keyword."'";

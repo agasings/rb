@@ -138,6 +138,7 @@ $_tmp = ("
 
 CREATE TABLE ".$table[$module.'member']." (
 mbruid		INT				DEFAULT '0'		NOT NULL,
+site		    INT				DEFAULT '0'		NOT NULL,
 gid			  INT				DEFAULT '0'		NOT NULL,
 data			INT				DEFAULT '0'		NOT NULL,
 auth		  TINYINT			DEFAULT '0'		NOT NULL,

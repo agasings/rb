@@ -22,7 +22,7 @@ $lack_card_num = $total_card_num;
   <div class="row gutter-half" data-role="post-list">
 
     <?php
-      $_RCD=getDbArray($table['postmember'],'mbruid='.$_MP['uid'],'*','gid','asc',$wdgvar['limit'],1);
+      $_RCD=getDbArray($table['postmember'],'mbruid='.$_MP['uid'].' and site='.$s,'*','gid','asc',$wdgvar['limit'],1);
       while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
       $i=0;foreach($RCD as $R):$i++;
     ?>

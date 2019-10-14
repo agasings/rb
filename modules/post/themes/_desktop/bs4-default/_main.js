@@ -17,11 +17,9 @@ function showSaveButton(changed) {
   if (changed) {
     $('[data-role="postsubmit"]').removeClass('d-none');
     $('[data-role="library"]').addClass('d-none');
-    $('[data-role="share"]').addClass('d-none');
   } else {
     $('[data-role="postsubmit"]').addClass('d-none');
     $('[data-role="library"]').removeClass('d-none');
-    $('[data-role="share"]').removeClass('d-none');
   }
 }
 

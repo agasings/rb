@@ -8,7 +8,7 @@ $R=getDbData($table['postlist'],"id='".$id."'",'*');
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 20;
-$listque = 'list='.$R['uid'];
+$listque = 'list='.$R['uid'].' and site='.$s;
 $TCD = getDbArray($table['postlist_index'],$listque,'*',$sort,$orderby,$recnum,$p);
 
 while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
