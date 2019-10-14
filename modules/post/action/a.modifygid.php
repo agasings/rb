@@ -12,7 +12,7 @@ if ($type=='list') {
 
 if ($type=='post') {
   foreach($listmembers as $val) getDbUpdate($table[$m.'list_index'],'gid='.($i++),'data='.$val);
-  setrawcookie('post_action_result', rawurlencode('순서가 변경되었습니다.|success'));  // 처리여부 cookie 저장
+  setrawcookie('listview_action_result', rawurlencode('순서가 변경되었습니다.|success'));  // 처리여부 cookie 저장
 }
 
 getLink('reload','parent.','','');

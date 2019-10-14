@@ -152,3 +152,14 @@
 .dd-dragel > .dd-item .dd-handle {
   margin-top: 0;
 }
+
+/* list-header */
+.list-header-edit {
+  display: none
+}
+.list-header.edit .list-header-edit {
+  display: block
+}
+.list-header.edit .list-header-show {
+  display: none
+}
