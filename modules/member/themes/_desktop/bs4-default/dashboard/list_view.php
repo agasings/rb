@@ -3,12 +3,12 @@ $g['postVarForSite'] = $g['path_var'].'site/'.$r.'/post.var.php';
 $svfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['path_module'].'post/var/var.php';
 include_once $svfile;
 
-$R=getDbData($table['postlist'],"id='".$id."'",'*');
+$LIST=getDbData($table['postlist'],"id='".$id."'",'*');
 
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 20;
-$listque = 'list='.$R['uid'].' and site='.$s;
+$listque = 'list='.$LIST['uid'].' and site='.$s;
 $TCD = getDbArray($table['postlist_index'],$listque,'*',$sort,$orderby,$recnum,$p);
 
 while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
@@ -38,16 +38,16 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 	<div class="row">
 
-		<div class="col-9">
+		<div class="col-8">
 
 
 			<div class="py-4">
 
 				<div class="media">
 					<span class="position-relative mr-3">
-						<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" class="" alt="...">
+						<img src="<?php echo getPreviewResize(getListImageSrc($LIST['uid']),'180x100') ?>" class="" alt="...">
 						<span class="list_mask">
-							<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+							<span class="txt"><?php echo $LIST['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
 						</span>
 					</span>
 
@@ -58,7 +58,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 								<div class="d-flex">
 									<h5 class="mt-0">
-										<?php echo $R['name'] ?>
+										<?php echo $LIST['name'] ?>
 									</h5>
 									<div class="ml-auto">
 										<a href="#" class="badge badge-light edit" data-toggle="tooltip" title="리스트명 수정"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -66,7 +66,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 								</div>
 
-								<span class="text-muted">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time></span>
+								<span class="text-muted">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($LIST['d_last'],'c')?>"></time></span>
 							</div>
 
 							<div class="list-header-edit">
@@ -74,9 +74,10 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 									<input type="hidden" name="r" value="<?php echo $r?>">
 			      			<input type="hidden" name="m" value="post">
 			      			<input type="hidden" name="a" value="regis_list">
-			      			<input type="hidden" name="uid" value="<?php echo $R['uid']?>">
+									<input type="hidden" name="type" value="name">
+			      			<input type="hidden" name="uid" value="<?php echo $LIST['uid']?>">
 									<label class="sr-only" for="">리스트명</label>
-									<input type="text" name="name" class="form-control mb-2 mr-sm-2 mb-sm-0 bg-white" placeholder="제목을 작성하세요." value="<?php echo $R['name']?>" style="width:350px">
+									<input type="text" name="name" class="form-control mb-2 mr-sm-2 mb-sm-0 bg-white" placeholder="제목을 작성하세요." value="<?php echo $LIST['name']?>" style="width:300px">
 
 									<button type="button" class="btn btn-light" data-act="submit">
 										<span class="not-loading">저장</span>
@@ -204,14 +205,124 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 
 		</div><!-- /.col-9 -->
-		<div class="col-3 border-left">
+		<div class="col-4 border-left">
 
-			<div class="p-3 d-none">
-				<a href="" class="badge badge-pill badge-light f14 mb-2"># 운전연습</a>
-				<a href="" class="badge badge-pill badge-light f14 mb-2"># 진짜한다운전</a>
-				<a href="" class="badge badge-pill badge-light f14 mb-2"># 장롱면허탈출</a>
-			</div>
+			<div class="sidebar-item mt-3 d-none" data-role="display">
+				<button class="btn btn-link btn-block text-left px-0 text-reset" type="button" data-toggle="dropdown">
+					<span class="d-flex justify-content-between small text-muted">
+						공개상태
+						<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+					</span>
+				</button>
+				<div class="dropdown-menu dropdown-menu-right shadow py-0" style="width:300px;line-height: 1.2">
 
+					<div class="list-group list-group-flush">
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="globe" data-display="4">
+							<div class="media align-items-center">
+								<i class="fa fa-globe fa-2x mr-3"></i>
+								<div class="media-body">
+									<span data-heading>전체공개</span><br>
+									<small data-description>모든 사용자가 검색하고 볼 수 있음</small>
+								</div>
+							</div>
+						</button>
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="link" data-display="3">
+							<div class="media align-items-center">
+								<i class="fa fa-link fa-2x mr-3" aria-hidden="true"></i>
+								<div class="media-body">
+									<span data-heading>미등록</span><br>
+									<small data-description>링크 있는 사용자만 볼 수 있음.<br>로그인 불필요</small>
+								</div>
+							</div>
+						</button>
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="users" data-display="2">
+							<div class="media align-items-center">
+								<i class="fa fa-users fa-2x mr-3" aria-hidden="true"></i>
+								<div class="media-body">
+									<span data-heading>회원공개</span><br>
+									<small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
+								</div>
+							</div>
+						</button>
+						<button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="lock" data-display="0">
+							<div class="media align-items-center">
+								<i class="fa fa-lock fa-2x ml-1 mr-4" aria-hidden="true"></i>
+								<div class="media-body">
+									<span data-heading>비공개</span><br>
+									<small data-description>나만 볼수 있음</small>
+								</div>
+							</div>
+						</button>
+					</div>
+
+				</div>
+				<ul class="list-group list-group-flush f13 mt-1 item-body">
+					<li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
+
+						<div class="media">
+							<span class="fa-stack fa-lg mr-2">
+								<i class="fa fa-square fa-stack-2x"></i>
+								<i class="" data-role="icon"></i>
+							</span>
+
+							<div class="media-body align-self-center">
+								<span data-role="heading"></span> <br><span data-role="description"></span>
+							</div>
+						</div>
+
+
+					</li>
+
+				</ul>
+
+			</div><!-- /.sidebar-item -->
+
+			<div class="sidebar-item mt-4" data-role="tag">
+
+				<button class="btn btn-link btn-block text-left px-0 text-reset" type="button" data-toggle="dropdown">
+					<div class="d-flex justify-content-between small text-muted">
+						태그
+						<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+					</div>
+				</button>
+				<div class="dropdown-menu dropdown-menu-right bg-light shadow" style="width: 300px;">
+
+					<div class="dropdown-body p-2">
+						<textarea class="form-control" name="tag" placeholder="검색태그를 입력해 주세요." rows="3"><?php echo $LIST['tag']?></textarea>
+						<small class="form-text text-muted">이 리스트를 가장 잘 표현할 수 있는 단어를 콤마(,)로 구분해서 입력해 주세요.</small>
+					</div>
+
+					<div class="dropdown-footer row p-2">
+						<div class="col-6 pr-1">
+							<button type="button" class="btn btn-light btn-block">취소</button>
+						</div>
+						<div class="col-6 pl-1">
+							<button type="button" class="btn btn-primary btn-block" data-role="submit">
+								<span class="not-loading">저장</span>
+								<span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i> 저장중 ...</span>
+							</button>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="mt-1 pt-3 border-top">
+					<?php if($LIST['tag']):?>
+					<?php $_tags=explode(',',$LIST['tag'])?>
+					<?php $_tagn=count($_tags)?>
+					<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
+					<?php $_tagk=trim($_tags[$i])?>
+					<a class="badge badge-light" href="/<?php echo $r?>/project?keyword=<?php echo urlencode($_tagk)?>">
+						<?php echo $_tagk?>
+					</a>
+					<?php endfor?>
+					<?php else: ?>
+					<div class="text-center small text-muted py-5">
+						태그가 없습니다.
+					</div>
+					<?php endif?>
+				</div>
+			</div><!-- /.sidebar-item -->
 
 		</div><!-- /.col-3 -->
 	</div><!-- /.row -->
@@ -224,6 +335,20 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 <script type="text/javascript">
 
 putCookieAlert('listview_action_result') // 실행결과 알림 메시지 출력
+
+function setPostDisplay(display) {
+  var section = $('[data-role="display"]');
+  var button = section.find('.list-group-item[data-display="'+display+'"]')
+  var icon = button.attr('data-icon');
+  var heading = button.find('[data-heading]').text();
+  var description = button.find('[data-description]').html();
+  section.find('.list-group-item').removeClass('active'); // 상태초기화
+  button.addClass('active');
+  section.find('[data-role="icon"]').removeAttr('class').addClass('fa fa-'+icon+' fa-stack-1x fa-inverse');
+  section.find('[data-role="heading"]').text(heading);
+  section.find('[data-role="description"]').html(description);
+  section.removeClass('d-none')
+}
 
 // Textarea 또는 Input의 끝으로 커서 이동
 jQuery.fn.putCursorAtEnd = function() {
@@ -245,9 +370,62 @@ jQuery.fn.putCursorAtEnd = function() {
   });
 };
 
+var title =  document.title;
+
 $(document).ready(function() {
 
-	var title =  document.title;
+	setPostDisplay(<?php echo $LIST['display'] ?>) // 현재 공개상태 셋팅
+
+	// dropdown 내부클릭시 dropdown 유지
+	$('.dropdown-body, .dropdown-footer [data-role="submit"]').on('click', function(e) {
+		e.stopPropagation();
+	});
+
+	// 태그입력
+	$('[data-role="tag"]').on('show.bs.dropdown', function () {
+	 setTimeout(function(){
+		 $('[data-role="tag"]').find('[name="tag"]').focus().putCursorAtEnd()
+	 }, 100);
+	})
+
+	$('[data-role="tag"]').find('[data-role="submit"]').click(function(){
+	  var tag = $('[name="tag"]').val()
+		$(this).attr( 'disabled', true );
+		setTimeout(function(){
+		  $.post(rooturl+'/?r='+raccount+'&m=post&a=regis_list',{
+		    tag : tag,
+		    type : 'tag',
+				uid : <?php echo $LIST['uid']?>
+		    },function(response,status){
+		      if(status=='success'){
+						location.reload();
+		      }else{
+		        alert(status);
+		      }
+		  });
+		 }, 300);
+
+
+	});
+
+	$('[data-role="display"] .dropdown-menu .list-group-item').click(function(){
+		var button = $(this)
+		var display = button.attr('data-display');
+		setPostDisplay(display) // 공개상태 변경
+
+		$.post(rooturl+'/?r='+raccount+'&m=post&a=regis_list',{
+			uid : <?php echo $LIST['uid']?>,
+			display : display,
+			type : 'display'
+			},function(response,status){
+				if(status=='success'){
+					$.notify({message: '공개상태가 변경되었습니다.'},{type: 'success'});
+				} else {
+					alert(status);
+				}
+		});
+
+	});
 
 	// 리스트 제목(타이틀)수정
 	$('.list-header .edit').click(function(){

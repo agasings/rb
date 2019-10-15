@@ -16,6 +16,8 @@ $d_regis	= $date['totime']; // 최초 등록일
 if($uid) $d_modify =$date['totime']; // 수정 등록일
 else $d_modify=''; // 최초에는 수정일 없음
 
+$hidden = !$display || $display==1?1:0;
+
 if ($uid) {
 
   $result=array();
@@ -25,9 +27,12 @@ if ($uid) {
 	if (!$R['uid']) getLink('','','존재하지 않는 포스트입니다.','');
 
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>'.$R['log'];
-  $QVAL1 = "subject='$subject',review='$review',content='$content',tag='$tag',";
+  $QVAL1 = "subject='$subject',review='$review',content='$content',tag='$tag',display='$display',hidden='$hidden',";
   $QVAL1 .="d_modify='$d_modify',upload='$upload',log='$log',featured_img='$featured_img',linkedmenu='$linkedmenu',dis_comment='$dis_comment',dis_like='$dis_like',dis_rating='$dis_rating'";
   getDbUpdate($table[$m.'data'],$QVAL1,'uid='.$R['uid']);
+
+  //포스트 공유설정 업데이트
+  getDbUpdate($table[$m.'member'],'display='.$display,'data='.$R['uid']);
 
   //카테고리 업데이트
   $_orign_category_members = getDbArray($table[$m.'index'],'data='.$R['uid'],'*','data','asc',0,1);
@@ -42,13 +47,18 @@ if ($uid) {
 	$_category_members = array();
 	$_category_members = getArrayString($category_members);
 	foreach($_category_members['data'] as $_ct1) {
-    if (getDbRows($table[$m.'index'],'data='.$uid.' and category='.$_ct1)) continue;
-    $mingid = getDbCnt($table[$m.'data'],'min(gid)','');
-    $gid = $mingid ? $mingid-1 : 100000000;
-    $_ct1_info=getUidData($table[$m.'category'],$_ct1);
-    $_ct1_depth=$_ct1_info['depth'];
-    getDbInsert($table[$m.'index'],'site,data,category,depth,gid',"'".$s."','".$R['uid']."','".$_ct1."','".$_ct1_depth."','".$gid."'");
-    getDbUpdate($table[$m.'category'],'num=num+1','uid='.$_ct1);
+
+    if (getDbRows($table[$m.'index'],'data='.$uid.' and category='.$_ct1)) {
+      getDbUpdate($table[$m.'index'],'display='.$display,'data='.$uid.' and category='.$_ct1);
+    } else {
+      $mingid = getDbCnt($table[$m.'data'],'min(gid)','');
+      $gid = $mingid ? $mingid-1 : 100000000;
+      $_ct1_info=getUidData($table[$m.'category'],$_ct1);
+      $_ct1_depth=$_ct1_info['depth'];
+      getDbInsert($table[$m.'index'],'site,data,category,display,depth,gid',"'".$s."','".$R['uid']."','".$_ct1."','".$display."','".$_ct1_depth."','".$gid."'");
+      getDbUpdate($table[$m.'category'],'num=num+1','uid='.$_ct1);
+    }
+
 	}
 
   //리스트 업데이트
@@ -65,14 +75,20 @@ if ($uid) {
   $_list_members = getArrayString($list_members);
 
   foreach($_list_members['data'] as $_lt1) {
-    if (getDbRows($table[$m.'list_index'],'data='.$uid.' and list='.$_lt1)) continue;
-    $maxgid = getDbCnt($table[$m.'list_index'],'max(gid)','');
-    $gid = $maxgid ? $maxgid+1 : 1;
-    getDbInsert($table[$m.'list_index'],'site,list,data,gid',"'".$s."','".$_lt1."','".$R['uid']."','".$gid."'");
-    getDbUpdate($table[$m.'list'],'num=num+1,d_last='.$d_regis,'uid='.$_lt1);
+    if (getDbRows($table[$m.'list_index'],'data='.$uid.' and list='.$_lt1)) {
+      getDbUpdate($table[$m.'list_index'],'display='.$display,'data='.$uid.' and list='.$_lt1);
+    } else {
+      $maxgid = getDbCnt($table[$m.'list_index'],'max(gid)','');
+      $gid = $maxgid ? $maxgid+1 : 1;
+      getDbInsert($table[$m.'list_index'],'site,list,display,data,gid',"'".$s."','".$_lt1."','".$display."','".$R['uid']."','".$gid."'");
+      getDbUpdate($table[$m.'list'],'num=num+1,d_last='.$d_regis,'uid='.$_lt1);
+    }
+
   }
 
 } else {
+
+  $display = 0;
 
   $cid	= substr($g['time_srnad'],9,7);
 
@@ -84,14 +100,14 @@ if ($uid) {
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>';
 
   $QKEY1 = "site,gid,mbruid,cid,subject,review,content,tag,html,";
-  $QKEY1.= "hit,comment,oneline,d_regis,d_modify,d_comment,upload,log,display,d_display,featured_img,format,dis_comment,dis_like,dis_rating";
+  $QKEY1.= "hit,comment,oneline,d_regis,d_modify,d_comment,upload,log,display,hidden,featured_img,format,dis_comment,dis_like,dis_rating";
   $QVAL1 = "'$s','$gid','$mbruid','$cid','$subject','$review','$content','$tag','$html',";
-  $QVAL1.= "'0','0','0','$d_regis','','','$upload','$log','$display','$d_display','$featured_img','$format','$dis_comment','$dis_like','$dis_rating'";
+  $QVAL1.= "'0','0','0','$d_regis','','','$upload','$log','$display','$hidden','$featured_img','$format','$dis_comment','$dis_like','$dis_rating'";
   getDbInsert($table[$m.'data'],$QKEY1,$QVAL1);
 
   $LASTUID = getDbCnt($table[$m.'data'],'max(uid)','');
-  $QKEY2 = "mbruid,gid,data,auth,level,d_regis";
-  $QVAL2 = "'$mbruid','$gid','$LASTUID','1','1','$d_regis'";
+  $QKEY2 = "mbruid,site,gid,data,auth,level,d_regis";
+  $QVAL2 = "'$mbruid','$s','$gid','$LASTUID','1','1','$d_regis'";
   getDbInsert($table[$m.'member'],$QKEY2,$QVAL2);
 
   // 회원포스트 수량 +1

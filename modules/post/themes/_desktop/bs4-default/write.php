@@ -67,6 +67,8 @@
             <small class="form-text text-muted">콤마(,)로 구분하여 입력해 주세요.</small>
           </div>
 
+          <?php if ($cid): ?>
+
           <div class="form-group">
             <label class="sr-only">리스트</label>
 
@@ -121,8 +123,6 @@
 
           </div>
 
-          <?php if ($cid): ?>
-
           <div class="form-group">
             <label class="small text-muted">포스트 URL</label>
             <div class="input-group mb-3">
@@ -140,7 +140,7 @@
 
           <div data-role="display" class="d-none">
             <span class="d-block mt-4 small text-muted">공유 설정</span>
-            <ul class="list-group list-group-flush f13 mt-1">
+            <ul class="list-group list-group-flush f13 mt-1 border-bottom">
               <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
 
                 <div class="media">
@@ -159,14 +159,14 @@
                     변경...
                   </button>
 
-                  <div class="dropdown-menu shadow py-0" style="width:260px;line-height: 1.2">
+                  <div class="dropdown-menu dropdown-menu-right shadow py-0" style="width:260px;line-height: 1.2">
 
                     <div class="list-group list-group-flush">
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="globe" data-display="4">
                         <div class="media align-items-center">
                           <i class="fa fa-globe fa-2x mr-3"></i>
                           <div class="media-body">
-                            <span data-heading>공개</span><br>
+                            <span data-heading>전체공개</span><br>
                             <small data-description>모든 사용자가 검색하고 볼 수 있음</small>
                           </div>
                         </div>
@@ -184,16 +184,16 @@
                         <div class="media align-items-center">
                           <i class="fa fa-users fa-2x mr-3" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading>회원 공개</span><br>
+                            <span data-heading>회원공개</span><br>
                             <small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
                           </div>
                         </div>
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==1?' active':'' ?>" data-icon="user-secret" data-display="1">
                         <div class="media align-items-center">
-                          <i class="fa fa-user-secret fa-2x mr-3" aria-hidden="true"></i>
+                          <i class="fa fa-user-secret fa-2x ml-1 mr-3" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading>지정회원 공개</span><br>
+                            <span data-heading>지정공개</span><br>
                             <small data-description>초대된 회원만 볼수 있음</small>
                           </div>
                         </div>
@@ -213,35 +213,40 @@
                 </div>
 
               </li>
-
-            	<?php foreach($MBR_RCD as $MBR): ?>
-              <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
-
-                <div class="media">
-                  <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
-
-                  <div class="media-body align-self-center">
-                    <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
-                    <span class="text-muted"><?php echo $MBR['email'] ?></span>
-                  </div>
-                </div>
-
-                <div class="pr-3">
-                  <span class="f12 text-muted">소유자</span>
-                </div>
-
-              </li>
-              <?php endforeach?>
-
             </ul>
 
-            <div class="text-right mt-2">
-              <button type="button" class="btn btn-white btn-sm" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
-                사용자 초대
-              </button>
-            </div>
-          </div>
+            <div class="d-none" data-role="postmember">
+              <ul class="list-group list-group-flush f13 mt-1">
 
+                <?php foreach($MBR_RCD as $MBR): ?>
+                <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
+
+                  <div class="media">
+                    <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
+
+                    <div class="media-body align-self-center">
+                      <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
+                      <span class="text-muted"><?php echo $MBR['email'] ?></span>
+                    </div>
+                  </div>
+
+                  <div class="pr-3">
+                    <span class="f12 text-muted">소유자</span>
+                  </div>
+
+                </li>
+                <?php endforeach?>
+
+              </ul>
+
+              <div class="text-right mt-2">
+                <button type="button" class="btn btn-white btn-sm" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static" disabled>
+                  사용자 초대
+                </button>
+              </div>
+            </div><!-- /data-role="postmember" -->
+
+          </div><!-- /data-role="display" -->
 
           <?php endif; ?>
 
@@ -457,17 +462,20 @@ function setPostDisplay(display) {
   var section = $('[data-role="display"]');
   var button = section.find('.list-group-item[data-display="'+display+'"]')
   var input = $('[name="display"]');
-  var display = button.attr('data-display');
   var icon = button.attr('data-icon');
   var heading = button.find('[data-heading]').text();
   var description = button.find('[data-description]').html();
+
   section.find('.list-group-item').removeClass('active'); // 상태초기화
+  section.find('[data-role="postmember"]').addClass('d-none');
+
   button.addClass('active');
   input.val(display);
   section.find('[data-role="icon"]').removeAttr('class').addClass('fa fa-'+icon+' fa-stack-1x fa-inverse');
   section.find('[data-role="heading"]').text(heading);
   section.find('[data-role="description"]').html(description);
   section.removeClass('d-none')
+  if (display==1) section.find('[data-role="postmember"]').removeClass('d-none');
 }
 
 $(document).ready(function() {
@@ -578,8 +586,6 @@ $(document).ready(function() {
       });
     }, 200);
   });
-
-  // 공개상태 설정
 
   setPostDisplay(<?php echo $R['display'] ?>) // 현재 공개상태 셋팅
 

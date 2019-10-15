@@ -170,10 +170,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
   <div class="modal-dialog modal-dialog-centered" role="document" style="width: 560px">
     <div class="modal-content">
       <div class="modal-header border-bottom-0">
-        <h5 class="modal-title" id="exampleModalLongTitle">목록 생성</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="exampleModalLongTitle">새 리스트</h5>
       </div>
       <div class="modal-body">
 
@@ -181,6 +178,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 					<input type="hidden" name="r" value="<?php echo $r?>">
 					<input type="hidden" name="m" value="post">
 					<input type="hidden" name="a" value="regis_list">
+					<input type="hidden" name="display" value="4">
 
 					<div class="input-group input-group-lg">
 					  <input type="text" name="name" class="form-control rounded-0" placeholder="리스트명 입력" required>
@@ -189,14 +187,31 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 				</form>
 
       </div>
-      <div class="modal-footer border-top-0">
-        <button type="button" class="btn btn-white" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" data-act="submit">
-					<span class="not-loading">
-		        저장
-		      </span>
-		      <span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i>저장 중 ...</span>
-				</button>
+      <div class="modal-footer bg-light">
+
+				<div class="dropdown mr-auto">
+				  <button class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <i class="fa fa-globe fa-fw"></i>
+						전체공개
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				    <a class="dropdown-item active" href="#" data-display="4"><i class="fa fa-globe fa-fw"></i> 전체공개</a>
+				    <a class="dropdown-item" href="#" data-display="3"><i class="fa fa-link fa-fw"></i> 미등록</a>
+				    <a class="dropdown-item" href="#" data-display="2"><i class="fa fa-users fa-fw"></i> 회원공개</a>
+						<a class="dropdown-item" href="#" data-display="0"><i class="fa fa-lock fa-fw"></i> 비공개</a>
+				  </div>
+				</div>
+
+				<div class="">
+					<button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" data-act="submit">
+						<span class="not-loading">
+							저장
+						</span>
+						<span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i>저장 중 ...</span>
+					</button>
+				</div>
+
       </div>
     </div>
   </div>
@@ -253,6 +268,18 @@ $(document).ready(function() {
 			form.submit()
 		}, 500);
 	});
+
+	// 새 리스트 모달 내부 공개범위 설정 dropdown
+	modal.find('.dropdown-item').click(function(){
+		var item = $(this);
+		var display = item.attr('data-display');
+		var label = item.html();
+		modal.find('.dropdown-item').removeClass('active')
+		item.addClass('active');
+		modal.find('[name="display"]').val(display);
+		modal.find('[data-toggle="dropdown"]').html(label);
+	});
+
 });
 
 </script>

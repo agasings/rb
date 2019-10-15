@@ -1,9 +1,5 @@
 <section>
 
-
-
-
-
 	<h1 class="h4 my-5 text-center">'<?php echo $keyword ?>' 	<small class="text-muted">포스트 검색결과 <?php echo $NUM ?>개</small></h1>
 
 	<hr>
