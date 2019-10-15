@@ -36,7 +36,7 @@ $lack_card_num = $total_card_num;
     ?>
 
     <div class="col">
-      <div class="card" id="item-<?php echo $_R['uid'] ?>">
+      <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
 
         <a class="text-nowrap text-truncate muted-link position-relative " href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>">
           <img src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180') ?>" alt="" class="card-img-top">

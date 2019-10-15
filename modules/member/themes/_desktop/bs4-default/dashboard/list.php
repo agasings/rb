@@ -184,9 +184,6 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 
 					<div class="input-group input-group-lg">
 					  <input type="text" name="name" class="form-control rounded-0" placeholder="리스트명 입력" required>
-					  <div class="input-group-append">
-					    <span class="input-group-text bg-white rounded-0" id="basic-addon2">0<span class="text-muted">/45</span></span>
-					  </div>
 					</div>
 
 				</form>

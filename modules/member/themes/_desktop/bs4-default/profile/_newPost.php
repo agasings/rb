@@ -7,6 +7,17 @@ $totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
 $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
+
+$postque = 'mbruid='.$_MP['uid'].' and site='.$s;
+
+if ($my['uid']!=$_MP['uid']) {
+	if ($my['uid']) $postque .= ' and display = 2 or display = 4';  // 회원공개 포스트와 전체공개 포스트 출력
+	else $postque .= ' and display = 4'; // 전체공개 포스트만 출력
+}
+
+$_RCD=getDbArray($table['postmember'],$postque,'*','gid','asc',$wdgvar['limit'],1);
+$_NUM = getDbRows($table['postmember'],$postque);
+
 ?>
 
 <section class="widget-post-card-01">
@@ -19,10 +30,10 @@ $lack_card_num = $total_card_num;
     <?php endif?>
   </header>
 
+  <?php if ($_NUM): ?>
   <div class="row gutter-half" data-role="post-list">
 
     <?php
-      $_RCD=getDbArray($table['postmember'],'mbruid='.$_MP['uid'].' and site='.$s,'*','gid','asc',$wdgvar['limit'],1);
       while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
       $i=0;foreach($RCD as $R):$i++;
     ?>
@@ -61,4 +72,10 @@ $lack_card_num = $total_card_num;
     <?php endif?>
 
   </div>  <!-- /.row -->
+  <?php else: ?>
+  <div class="p-5 text-muted text-center">
+    포스트가 없습니다.
+  </div>
+  <?php endif; ?>
+
 </section><!-- /.widget -->

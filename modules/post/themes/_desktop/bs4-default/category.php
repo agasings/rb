@@ -8,7 +8,7 @@
 					<a href="<?php echo RW('m=post') ?>" class="muted-link" title="전체보기">카테고리</a>
 				</div>
 				<div class="card-body">
-					<?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>true,'dispHidden'=>true,'dispCheckbox'=>false,'allOpen'=>true)?>
+					<?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>$my['uid']?true:false,'dispHidden'=>true,'dispCheckbox'=>false,'allOpen'=>true)?>
 					<?php $_treeOptions['link'] = RW('m=post&cat=')?>
 					<?php echo getTreeCategory($_treeOptions,$code,0,0,'')?>
 				</div>
@@ -19,7 +19,7 @@
 
 			<div class="d-flex justify-content-between align-items-center border-bottom border-dark mt-2 pb-2">
 				<h3 class="mb-0">
-					<?php echo $CAT['name']?$CAT['name']:'전체 포스트' ?>
+					<?php echo $CAT['name']?$CAT['name']:'전체 카테고리' ?>
 				</h3>
 				<div class="">
 				</div>
@@ -60,13 +60,12 @@
 
 			<ul class="list-unstyled">
 			<?php foreach($RCD as $R):?>
-			<?php $R['mobile']=isMobileConnect($R['agent'])?>
-
+			<?php $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and auth=1'); ?>
+			<?php $perm_post = $my['admin'] || $_IS_POSTMBR || !$R['hidden'] ? true : false; ?>
 			<li class="media my-4">
 				<?php if ($R['featured_img']): ?>
-
 				<a href="<?php echo getPostLink($R,0) ?>" class="position-relative mr-3">
-					<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+					<img src="<?php echo $perm_post ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="">
 					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
 				</a>
 				<?php endif; ?>
@@ -74,9 +73,10 @@
 				<div class="media-body">
 					<h5 class="mt-0 mb-1">
 						<a class="muted-link" href="<?php echo getPostLink($R,0) ?>">
-							<?php echo $R['subject']?>
+							<?php echo $perm_post?$R['subject']:'[비공개 포스트]'?>
 						</a>
 					</h5>
+					<?php if ($perm_post): ?>
 					<div class="mb-1">
 						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
@@ -105,6 +105,11 @@
 						</span>
 					</div>
 				</div>
+				<?php else: ?>
+					<p class="text-muted py-3">
+						이 포스트에 대한 액세스 권한이 없습니다.
+					</p>
+				<?php endif; ?>
 
 			</li>
 		  <?php endforeach?>

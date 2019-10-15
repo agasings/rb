@@ -28,7 +28,7 @@ $lack_card_num = $total_card_num;
     ?>
 
     <div class="col">
-      <div class="card" id="item-<?php echo $_R['uid'] ?>">
+      <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
 
         <a class="position-relative" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>">
           <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" alt="" class="card-img-top">

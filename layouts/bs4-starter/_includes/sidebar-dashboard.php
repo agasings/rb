@@ -5,7 +5,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
 
 <section class="pt-4 px-3">
   <div class="text-reset text-center">
-    <a href="<?php echo getProfileLink($my['uid'])?>" class="d-inline-block">
+    <a href="<?php echo getProfileLink($my['uid'])?>" class="d-inline-block" target="_blank">
       <img src="<?php echo getAvatarSrc($my['uid'],'60') ?>" width="60" height="60" alt="" class="rounded-circle border">
     </a>
     <span class="d-block f16 mt-2">
@@ -57,6 +57,9 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
       </li>
     </ul>
   </li>
+  <li class="nav-item<?php echo $page=='analytics'?' active':'' ?>">
+    <a class="nav-link" href="<?php echo RW('mod=dashboard&page=analytics')?>">분석</a>
+  </li>
   <li class="nav-item<?php echo $page=='noti'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard&page=noti')?>">알림내역</a>
   </li>
@@ -68,5 +71,8 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
   </li>
   <li class="nav-item<?php echo $page=='order'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard&page=order')?>">구매내역 <span class="badge badge-pill badge-light">준비중</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="<?php echo RW('mod=settings')?>">설정</a>
   </li>
 </ul>

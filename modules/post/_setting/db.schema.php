@@ -91,6 +91,7 @@ depth		TINYINT		DEFAULT '0'		NOT NULL,
 KEY site(site),
 KEY category(category),
 KEY data(data),
+KEY display(display),
 KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'index'],$DB_CONNECT);
@@ -141,12 +142,14 @@ mbruid		INT				DEFAULT '0'		NOT NULL,
 site		    INT				DEFAULT '0'		NOT NULL,
 gid			  INT				DEFAULT '0'		NOT NULL,
 data			INT				DEFAULT '0'		NOT NULL,
+display		  TINYINT			DEFAULT '0'		NOT NULL,
 auth		  TINYINT			DEFAULT '0'		NOT NULL,
 level		  TINYINT			DEFAULT '0'		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY mbruid(mbruid),
 KEY gid(gid),
 KEY data(data),
+KEY display(display),
 KEY auth(auth),
 KEY level(level)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);

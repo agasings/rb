@@ -24,17 +24,17 @@ if ($cid) {
   $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
   $_POSTMBR = getDbData($table[$m.'members'],'mbruid='.$my['uid'].' and data='.$R['uid'],'*');
 
-  if (!$R['uid']||($R['display']>1&&!$my['admin'])) $mod = '_404';
-
 	include_once $g['dir_module'].'mod/_view.php';
 
-  $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=0');
+  $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid']);
 	$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=1');
 
   $_perm = array();
-  $_perm['project'] = $my['admin'] || $_IS_PROJOWN || $_IS_PROJMBR ? true : false;
-  $_perm['owner'] = $my['admin'] || $_IS_PROJOWN || !$IS_STUDENT ? true : false;
-  $_perm['write'] =  $_PROJMBR['auth'];
+  $_perm['member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
+  $_perm['owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
+  $_perm['write'] =  $_POSTMBR['auth'];
+
+  if (!$R['uid']||(!$R['display']&&!$my['admin']&& !$_IS_POSTOWN)) $mod = '_404';
 
 }
 
@@ -54,7 +54,7 @@ switch ($mod) {
 
   case 'list_view' :
     $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
-    if (!$LIST['uid']||($LIST['display']>1&&!$my['admin'])) $mod = '_404'; 
+    if (!$LIST['uid']||($LIST['display']>1&&!$my['admin'])) $mod = '_404';
     include_once $g['dir_module'].'mod/_list.php';
   break;
 

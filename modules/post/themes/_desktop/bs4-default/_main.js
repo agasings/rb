@@ -108,6 +108,7 @@ function writeCheck(f) {
   var subject = form.find('[name="subject"]').val();
   var review = form.find('[name="review"]').val();
   var tag = form.find('[name="tag"]').val();
+  var display = form.find('[name="display"]').val();
 
   if (uid) {
     setTimeout(function(){
@@ -122,7 +123,8 @@ function writeCheck(f) {
         html : html,
         subject : subject,
         review : review,
-        tag : tag
+        tag : tag,
+        display : display
         },function(response,status){
           if(status=='success'){
             var result = $.parseJSON(response);

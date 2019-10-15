@@ -1,12 +1,13 @@
 <section>
 
-	<?php if ($NUM): ?>
+
 
 
 
 	<h1 class="h4 my-5 text-center">'<?php echo $keyword ?>' 	<small class="text-muted">포스트 검색결과 <?php echo $NUM ?>개</small></h1>
 
 	<hr>
+	<?php if ($NUM): ?>
 	<ul class="list-unstyled" data-plugin="markjs">
 	<?php foreach($RCD as $R):?>
 	<?php $R['mobile']=isMobileConnect($R['agent'])?>

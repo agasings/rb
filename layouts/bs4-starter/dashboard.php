@@ -9,19 +9,27 @@ if (!$my['uid']) getLink('/','','','');
 </head>
 <body class="rb-layout-dashboard d-flex flex-column h-100<?php echo $page=='main'?' bg-light':'' ?>" style="padding-top:67px">
 
-	<nav class="navbar fixed-top navbar-expand navbar-light bg-white border-bottom">
+	<nav class="navbar fixed-top navbar-expand navbar-light bg-white border-bottom shadow-sm">
 		<div class="container-fluid">
-			<a class="navbar-brand pl-3" href="<?php  echo RW(0) ?>">
-				<i class="kf kf-bi-06 fa-lg mr-1"></i>
-				<?php echo $d['layout']['header_file']?'<img src="'.$g['url_layout'].'/_var/'.$d['layout']['header_file'].'">':stripslashes($d['layout']['header_title'])?>
-				<strong>대시보드</strong>
-			</a>
+			<span class="pl-3">
+				<a class="navbar-brand mr-1" href="<?php  echo RW(0) ?>">
+					<i class="kf kf-bi-06 fa-lg mr-1"></i>
+				</a>
+				<a class="navbar-brand" href="<?php echo RW('mod=dashboard')?>">
+					<?php echo $d['layout']['header_file']?'<img src="'.$g['url_layout'].'/_var/'.$d['layout']['header_file'].'">':stripslashes($d['layout']['header_title'])?>
+					<strong>대시보드</strong></a>
+			</span>
+
+			<input class="form-control w-50" type="search" placeholder="내 포스트 검색" aria-label="Search">
 
 			<div class="">
 
 				<?php if($d['layout']['header_login']=='true'):?>
 				<ul class="navbar-nav">
 				<?php if ($my['uid']): ?>
+					<li class="nav-item">
+						<a class="nav-link" href="<?php echo RW('m=post&mod=write')?>">새 포스트</a>
+					</li>
 					<li class="nav-item dropdown js-tooltip mr-2" title="알림" id="navbarPopoverNoti">
 						<a class="nav-link notification-indicator" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<span class="badge badge-danger noti-status" data-role="noti-status"><?php echo $my['num_notice']==0?'':$my['num_notice']?></span>

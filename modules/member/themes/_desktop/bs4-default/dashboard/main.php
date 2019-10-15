@@ -8,7 +8,7 @@
           <strong>포스트 현황</strong>
         </header>
 
-        <ul class="list-group list-group-horizontal text-center text-muted">
+        <ul class="list-group list-group-horizontal text-center text-muted shadow-sm">
           <li class="list-group-item flex-fill">
             <small>포스트</small>
             <span class="d-block display-4">

@@ -8,6 +8,7 @@
   <input type="hidden" name="upload" id="upfilesValue" value="<?php echo $R['upload']?>">
   <input type="hidden" name="featured_img" value="<?php echo $R['featured_img'] ?>">
   <input type="hidden" name="html" value="HTML">
+  <input type="hidden" name="display">
 
   <header class="d-flex align-items-center py-3 px-4">
 
@@ -125,67 +126,123 @@
           <div class="form-group">
             <label class="small text-muted">포스트 URL</label>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" value="<?php echo $g['url_root'].getPostLink($R,0) ?>" readonly>
+              <input type="text" class="form-control" value="<?php echo $g['url_root'].getPostLink($R,0) ?>" readonly id="_url_">
               <div class="input-group-append">
-                <button type="button" class="btn btn-white"><i class="fa fa-clone" aria-hidden="true"></i></button>
-                <a class="btn btn-white" href="<?php echo getPostLink($R,0) ?>" target="_blank">
+                <button type="button" class="btn btn-white js-clipboard js-tooltip" title="클립보드에 복사" data-clipboard-target="#_url_">
+                  <i class="fa fa-clone" aria-hidden="true"></i>
+                </button>
+                <a class="btn btn-white" href="<?php echo getPostLink($R,0) ?>" target="_blank" data-toggle="tooltip" title="최종화면">
                   <i class="fa fa-share" aria-hidden="true"></i>
                 </a>
               </div>
             </div>
           </div>
 
-          <span class="d-block mt-4 small text-muted">공유 설정</span>
-          <ul class="list-group list-group-flush f13 mt-1">
-            <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
+          <div data-role="display" class="d-none">
+            <span class="d-block mt-4 small text-muted">공유 설정</span>
+            <ul class="list-group list-group-flush f13 mt-1">
+              <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
 
-              <div class="media">
-                <span class="fa-stack fa-lg mr-2">
-                  <i class="fa fa-square fa-stack-2x"></i>
-                  <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
-                </span>
+                <div class="media">
+                  <span class="fa-stack fa-lg mr-2">
+                    <i class="fa fa-square fa-stack-2x"></i>
+                    <i class="" data-role="icon"></i>
+                  </span>
 
-                <div class="media-body align-self-center">
-                  비공개 - 나에게만 공개
+                  <div class="media-body align-self-center">
+                    <span data-role="heading"></span> <br><span data-role="description"></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="">
-                <button type="button" class="btn btn-link btn-sm">변경...</button>
-              </div>
+                <div class="dropdown">
+                  <button type="button" class="btn btn-link btn-sm text-nowrap" data-toggle="dropdown">
+                    변경...
+                  </button>
 
-            </li>
+                  <div class="dropdown-menu shadow py-0" style="width:260px;line-height: 1.2">
 
-          	<?php foreach($MBR_RCD as $MBR): ?>
-            <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
+                    <div class="list-group list-group-flush">
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="globe" data-display="4">
+                        <div class="media align-items-center">
+                          <i class="fa fa-globe fa-2x mr-3"></i>
+                          <div class="media-body">
+                            <span data-heading>공개</span><br>
+                            <small data-description>모든 사용자가 검색하고 볼 수 있음</small>
+                          </div>
+                        </div>
+                      </button>
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="link" data-display="3">
+                        <div class="media align-items-center">
+                          <i class="fa fa-link fa-2x mr-3" aria-hidden="true"></i>
+                          <div class="media-body">
+                            <span data-heading>미등록</span><br>
+                            <small data-description>링크 있는 사용자만 볼 수 있음.<br>로그인 불필요</small>
+                          </div>
+                        </div>
+                      </button>
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="users" data-display="2">
+                        <div class="media align-items-center">
+                          <i class="fa fa-users fa-2x mr-3" aria-hidden="true"></i>
+                          <div class="media-body">
+                            <span data-heading>회원 공개</span><br>
+                            <small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
+                          </div>
+                        </div>
+                      </button>
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==1?' active':'' ?>" data-icon="user-secret" data-display="1">
+                        <div class="media align-items-center">
+                          <i class="fa fa-user-secret fa-2x mr-3" aria-hidden="true"></i>
+                          <div class="media-body">
+                            <span data-heading>지정회원 공개</span><br>
+                            <small data-description>초대된 회원만 볼수 있음</small>
+                          </div>
+                        </div>
+                      </button>
+                      <button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="lock" data-display="0">
+                        <div class="media align-items-center">
+                          <i class="fa fa-lock fa-2x ml-1 mr-4" aria-hidden="true"></i>
+                          <div class="media-body">
+                            <span data-heading>비공개</span><br>
+                            <small data-description>나만 볼수 있음</small>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
 
-              <div class="media">
-                <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'32') ?>" width="32" height="32" alt="<?php echo $MBR['name'] ?>">
-
-                <div class="media-body align-self-center">
-                  <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
-                  <span class="text-muted"><?php echo $MBR['email'] ?></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="pr-3">
-                <span class="f12 text-muted">소유자</span>
-              </div>
+              </li>
 
-            </li>
-            <?php endforeach?>
+            	<?php foreach($MBR_RCD as $MBR): ?>
+              <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
 
-          </ul>
+                <div class="media">
+                  <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
+
+                  <div class="media-body align-self-center">
+                    <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
+                    <span class="text-muted"><?php echo $MBR['email'] ?></span>
+                  </div>
+                </div>
+
+                <div class="pr-3">
+                  <span class="f12 text-muted">소유자</span>
+                </div>
+
+              </li>
+              <?php endforeach?>
+
+            </ul>
+
+            <div class="text-right mt-2">
+              <button type="button" class="btn btn-white btn-sm" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
+                사용자 초대
+              </button>
+            </div>
+          </div>
 
 
-          <table class="table table-sm border-bottom mt-4 text-center f13">
-            <tbody>
-              <tr>
-                <th scope="row">최초 작성</th>
-                <td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-              </tr>
-            </tbody>
-          </table>
           <?php endif; ?>
 
         </div>
@@ -224,7 +281,6 @@
             </li>
           </ul>
 
-
           <div class="card mb-4">
             <div class="card-header">
               카테고리
@@ -234,6 +290,13 @@
               <?php echo getTreePostCategoryCheck($_treeOptions,$R['uid'],0,0,'')?>
             </div>
           </div>
+
+          <?php if ($cid): ?>
+          <dl class="row mt-5 f13">
+            <dt class="col-3">생성일시 :</dt>
+            <dd class="col-9"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></dd>
+          </dl>
+          <?php endif; ?>
 
         </div>
         <div class="tab-pane" id="link" role="tabpanel" aria-labelledby="link-tab">
@@ -316,33 +379,54 @@
 <div class="modal" id="modal-post-share" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">공유</h5>
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title">공유 설정</h5>
       </div>
       <div class="modal-body">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="hidden"  value="option1" checked>
-          <label class="form-check-label" for="exampleRadios1">
-            공개
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="hidden"  value="option1" <?php if($R['hidden']):?> checked<?php endif?>>
-          <label class="form-check-label" for="exampleRadios1">
-            미등록
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="hidden"  value="option2">
-          <label class="form-check-label" for="exampleRadios2">
-            비공개 - 나만 액세스할 수 있습니다.
-          </label>
+
+        <label class="small text-muted">액세스 권한이 있는 사용자</label>
+        <ul class="list-group list-group-flush f13">
+          <?php foreach($MBR_RCD as $MBR): ?>
+          <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
+
+            <div class="media">
+              <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
+
+              <div class="media-body align-self-center">
+                <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
+                <span class="text-muted"><?php echo $MBR['email'] ?></span>
+              </div>
+            </div>
+
+            <div class="pr-3">
+              <span class="f12 text-muted">소유자</span>
+            </div>
+
+          </li>
+          <?php endforeach?>
+        </ul>
+
+        <div class="form-group mt-5">
+          <label class="small text-muted">초대할 사용자</label>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="닉네임 또는 이메일 주소 입력">
+            <div class="input-group-append">
+              <button class="btn btn-white dropdown-toggle" data-toggle="dropdown" type="button">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">수정가능</a>
+                <a class="dropdown-item" href="#">보기가능</a>
+              </div>
+            </div>
+          </div>
+
         </div>
 
+
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">완료</button>
       </div>
     </div>
   </div>
@@ -353,6 +437,10 @@
 <?php getImport('bootstrap-toc','bootstrap-toc.min','1.0.1','js')?>
 
 <?php getImport('smooth-scroll','smooth-scroll.min','16.1.0','js') ?>
+
+<!-- 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
+<?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
+
 <script>
 
 // 내용 변경 감지
@@ -365,8 +453,37 @@ document.title = '글쓰기 | <?php echo $g['browtitle']?>';
 
 putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
 
+function setPostDisplay(display) {
+  var section = $('[data-role="display"]');
+  var button = section.find('.list-group-item[data-display="'+display+'"]')
+  var input = $('[name="display"]');
+  var display = button.attr('data-display');
+  var icon = button.attr('data-icon');
+  var heading = button.find('[data-heading]').text();
+  var description = button.find('[data-description]').html();
+  section.find('.list-group-item').removeClass('active'); // 상태초기화
+  button.addClass('active');
+  input.val(display);
+  section.find('[data-role="icon"]').removeAttr('class').addClass('fa fa-'+icon+' fa-stack-1x fa-inverse');
+  section.find('[data-role="heading"]').text(heading);
+  section.find('[data-role="description"]').html(description);
+  section.removeClass('d-none')
+}
 
 $(document).ready(function() {
+
+  var clipboard = new ClipboardJS('.js-clipboard');
+
+  clipboard.on('success', function (e) {
+    $(e.trigger)
+      .attr('title', '복사완료!')
+      .tooltip('_fixTitle')
+      .tooltip('show')
+      .attr('title', '클립보드 복사')
+      .tooltip('_fixTitle')
+
+    e.clearSelection()
+  })
 
   // smoothScroll : https://github.com/cferdinandi/smooth-scroll
   var scroll_content = new SmoothScroll('[data-toggle="toc"] a[href*="#"]',{
@@ -460,6 +577,17 @@ $(document).ready(function() {
           }
       });
     }, 200);
+  });
+
+  // 공개상태 설정
+
+  setPostDisplay(<?php echo $R['display'] ?>) // 현재 공개상태 셋팅
+
+  $('[data-role="display"] .dropdown-menu .list-group-item').click(function(){
+    var button = $(this)
+    var display = button.attr('data-display');
+    showSaveButton(true); // 저장버튼 출력
+    setPostDisplay(display) // 공개상태 변경
   });
 
   // 퀵메뉴 단축키 지원
