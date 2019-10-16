@@ -30,7 +30,6 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 			리스트 수정
 		</h3>
 		<div class="">
-			<a href="<?php echo getListLink($LIST,0) ?>" class="btn btn-white" target="_blank">보기</a>
 			<button type="button" class="btn btn-white" data-history="back">이전</button>
 		</div>
 	</div>
@@ -106,7 +105,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 							출력수 : <?php echo $recnum ?>개
 						</a>
 
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
 							<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
 								<?php echo $recnum ?>개
 							</a>
@@ -270,7 +269,6 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 						</div>
 					</li>
 				</ul>
-
 			</div><!-- /.sidebar-item -->
 
 			<div class="sidebar-item mt-4" data-role="tag">
@@ -320,6 +318,24 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 				</div>
 			</div><!-- /.sidebar-item -->
 
+			<div class="sidebar-item mt-5">
+				<div class="form-group">
+					<label class="small text-muted">리스트 URL</label>
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" value="<?php echo $g['url_root'].getListLink($LIST,0) ?>" readonly id="_url_">
+						<div class="input-group-append">
+							<button type="button" class="btn btn-white js-clipboard js-tooltip" title="클립보드에 복사" data-clipboard-target="#_url_">
+								<i class="fa fa-clone" aria-hidden="true"></i>
+							</button>
+							<a class="btn btn-white" href="<?php echo getListLink($LIST,0) ?>" target="_blank" data-toggle="tooltip" title="최종화면">
+								<i class="fa fa-share" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div><!-- /.sidebar-item -->
+
+			</div>
+
 		</div><!-- /.col-3 -->
 	</div><!-- /.row -->
 
@@ -327,6 +343,9 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 <!-- nestable : https://github.com/dbushell/Nestable -->
 <?php getImport('nestable','jquery.nestable',false,'js') ?>
+
+<!-- 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
+<?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 
 <script type="text/javascript">
 
@@ -400,9 +419,20 @@ $(document).ready(function() {
 		      }
 		  });
 		 }, 300);
-
-
 	});
+
+	var clipboard = new ClipboardJS('.js-clipboard');
+
+	clipboard.on('success', function (e) {
+		$(e.trigger)
+			.attr('title', '복사완료!')
+			.tooltip('_fixTitle')
+			.tooltip('show')
+			.attr('title', '클립보드 복사')
+			.tooltip('_fixTitle')
+
+		e.clearSelection()
+	})
 
 	$('[data-role="display"] .dropdown-menu .list-group-item').click(function(){
 		var button = $(this)

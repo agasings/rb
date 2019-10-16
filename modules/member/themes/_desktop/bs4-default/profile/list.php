@@ -49,7 +49,7 @@ $lack_card_num = $total_card_num;
 							정열 : 기본
 						</a>
 
-						<div class="dropdown-menu" style="min-width: 85px;">
+						<div class="dropdown-menu shadow-sm" style="min-width: 85px;">
 							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
 								기본
 							</a>

@@ -45,7 +45,13 @@
       </section>
 
     </div>
-    <div class="col-6 pl-0">
+    <div class="col-6">
+
+      <section>
+        <?php include $g['dir_module_skin'].'_analytics.php';?>
+      </section>
+
+
 
     </div>
 

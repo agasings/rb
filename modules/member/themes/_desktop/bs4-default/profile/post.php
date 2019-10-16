@@ -64,7 +64,7 @@ switch ($sort) {
 						<a class="btn btn-white btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							정열 : <?php echo $sort_txt ?>
 						</a>
-						<div class="dropdown-menu" style="min-width: 100px;">
+						<div class="dropdown-menu shadow-sm" style="min-width: 100px;">
 							<button class="dropdown-item<?php echo $sort=='gid'?' active':'' ?>" type="button" data-sort="gid">
 								최신순
 							</button>

@@ -58,7 +58,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 					상태 : 전체
 				</a>
 
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
 						전체
 						<small>2</small>
@@ -144,7 +144,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
 								관리
 							</button>
-							<div class="dropdown-menu dropdown-menu-right"  style="min-width: 5rem">
+							<div class="dropdown-menu dropdown-menu-right shadow-sm"  style="min-width: 5rem">
 								<a class="dropdown-item" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" >수정</a>
 								<a class="dropdown-item" href="<?php echo $g['post_list_delete'].$R['uid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 								<a class="dropdown-item disabled" href="#">공개</a>

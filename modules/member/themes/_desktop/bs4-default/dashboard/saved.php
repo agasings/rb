@@ -32,7 +32,7 @@ $TPG = getTotalPage($NUM,$recnum);
 					<?php echo $category?$category:'분류 : 전체' ?>
 				</a>
 
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo RW('mod=dashboard&page=saved')?>">
 						전체
 						<small><?php echo number_format(getDbRows($table['s_saved'],'mbruid='.$my['uid']))?></small>

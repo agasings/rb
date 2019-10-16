@@ -116,6 +116,8 @@ if (!$my['uid']) getLink('/','','','');
 
 	</main>
 
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
   <script type="text/javascript">
 
   document.title = '대시보드 · <?php echo $my['nic'] ?> ';

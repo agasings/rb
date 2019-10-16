@@ -41,7 +41,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				<i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>
 				프로필 이동
 			</a>
-			<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">신규 작성</a>
+			<a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">새 포스트</a>
 		</div>
 	</div>
 
@@ -55,11 +55,11 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 					정열 : 최신순
 				</a>
 
-				<div class="dropdown-menu">
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>post">
+				<div class="dropdown-menu shadow-sm">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
 						최신순
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo getProfileLink($_MP['uid']).$para_str ?>post">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
 						조회순
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
@@ -77,7 +77,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 					상태 : 전체
 				</a>
 
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
 						전체
 						<small>2</small>
@@ -175,7 +175,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
 							관리
 						</button>
-						<div class="dropdown-menu dropdown-menu-right" style="min-width: 5rem">
+						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
 							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<a class="dropdown-item disabled" href="#">공개</a>

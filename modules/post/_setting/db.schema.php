@@ -186,5 +186,57 @@ db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'list'],$DB_CONNECT);
 }
 
+//포스트 월별수량
+$_tmp = db_query( "select count(*) from ".$table[$module.'month'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+
+CREATE TABLE ".$table[$module.'month']." (
+date		CHAR(6)			DEFAULT ''		NOT NULL,
+site		INT				DEFAULT '0'		NOT NULL,
+mbruid			INT				DEFAULT '0'		NOT NULL,
+num			INT				DEFAULT '0'		NOT NULL,
+KEY date(date),
+KEY site(site),
+KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table[$module.'month'],$DB_CONNECT);
+}
+//포스트 일별수량
+$_tmp = db_query( "select count(*) from ".$table[$module.'day'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+
+CREATE TABLE ".$table[$module.'day']." (
+date		CHAR(8)			DEFAULT ''		NOT NULL,
+site		INT				DEFAULT '0'		NOT NULL,
+mbruid			INT				DEFAULT '0'		NOT NULL,
+num			INT				DEFAULT '0'		NOT NULL,
+KEY date(date),
+KEY site(site),
+KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table[$module.'day'],$DB_CONNECT);
+}
+
+//확장데이터
+$_tmp = db_query( "select count(*) from ".$table[$module.'xtra'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+
+CREATE TABLE ".$table[$module.'xtra']." (
+parent		INT				DEFAULT '0'		NOT NULL,
+site		INT				DEFAULT '0'		NOT NULL,
+mbruid			INT				DEFAULT '0'		NOT NULL,
+down		TEXT			NOT NULL,
+likes		TEXT			NOT NULL,
+dislikes		TEXT			NOT NULL,
+report		TEXT			NOT NULL,
+KEY parent(parent),
+KEY site(site),
+KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table[$module.'xtra'],$DB_CONNECT);
+}
 
 ?>

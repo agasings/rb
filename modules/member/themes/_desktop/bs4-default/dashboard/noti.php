@@ -52,7 +52,7 @@ $MD = getDbData($table['s_module'],"id='".$module."'",'name');
 				<?php echo $module?$MD['name']:($fromsys=='Y'?'시스템':'전체') ?>
 			</a>
 
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
 				<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $pageHome ?>">
 					전체
 					<small><?php echo number_format(getDbRows($table['s_notice'],'mbruid='.$my['uid']))?></small>
