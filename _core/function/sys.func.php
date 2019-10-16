@@ -298,6 +298,7 @@ function RW($rewrite)
 		if(!$rewrite) return $GLOBALS['g']['r']?$GLOBALS['g']['r']:'/';
 		$rewrite = str_replace('c=','c/',$rewrite);
 		$rewrite = str_replace('m=post&mbrid=','@',$rewrite);
+		// $rewrite = str_replace('m=post&mod=list','list',$rewrite);
 		$rewrite = str_replace('m=post&mod=list_view','list',$rewrite);
 		$rewrite = str_replace('&mod=list_view&listid=','/list/',$rewrite);
 		$rewrite = str_replace('&listid=','/',$rewrite);
@@ -788,6 +789,14 @@ function getUpImageSrc($R){
   return $src;
 }
 
+// 업로드 이미지 재생시간 추출함수
+function getUpImageTime($R){
+  global $g,$table;
+	$F=getUidData($table['s_upload'],trim($R['featured_img']));
+	$time=$F['time'];
+  return $time;
+}
+
 // 미리보기용 이미지 resize 함수 .htaccess 연계됨
 function getPreviewResize($src,$size){
 	if ($src) {
@@ -963,9 +972,9 @@ function IsPostCat($post) {
 
 // 리스트의 첫번째 포스트의 대표이미지 src 추출
 function getListImageSrc($list) {
-  global $table;
+  global $table,$s,$my;
   $m='post';
-  $que='list='.$list;
+  $que='list='.$list.' and site='.$s;
   $LISTX=array();
   $LIST_ARR=getDbArray($table[$m.'list_index'],$que,'*','gid','asc',1,1);
   while ($LT=db_fetch_array($LIST_ARR)) $LISTX[]=$LT;
@@ -973,7 +982,9 @@ function getListImageSrc($list) {
 
 	if($R['featured_img']){
 	 $F=getUidData($table['s_upload'],trim($R['featured_img']));
-	 $src=$F['src'];
+	 $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and auth=1');
+	 $perm_post = $my['admin'] || $_IS_POSTMBR || !$R['hidden'] ? true : false;
+	 $src=$perm_post?$F['src']:'/files/noimage.png';
 	}else{
 	 $img_arr=getImgs($R['content'],'jpg|jpge|gif|png');
 	 $src=$img_arr[0]?$img_arr[0]:'/files/noimage.png';
