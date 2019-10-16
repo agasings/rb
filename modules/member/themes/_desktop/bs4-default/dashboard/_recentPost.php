@@ -15,9 +15,6 @@ $lack_card_num = $total_card_num;
     <strong><?php echo $wdgvar['title']?></strong>
 
     <div class="">
-      <a href="<?php echo RW('m=post&mod=write')?>" class="muted-link small mr-2">
-        신규작성
-      </a>
       <?php if($wdgvar['link']):?>
       <a href="<?php echo $wdgvar['link']?>" class="muted-link small">
         더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>

@@ -61,26 +61,25 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
 						전체
-						<small>2</small>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s))?></small>
 					</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
 						<?php echo $g['displaySet']['label'][4] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=4'))?></small>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
 						<?php echo $g['displaySet']['label'][3] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=3'))?></small>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
 						<?php echo $g['displaySet']['label'][2] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=2'))?></small>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
 						<?php echo $g['displaySet']['label'][0] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=0'))?></small>
 					</a>
-
 				</div>
 			</div>
 

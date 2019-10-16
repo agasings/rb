@@ -7,17 +7,32 @@ $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $postque = 'mbruid='.$my['uid'].' and site='.$s;
-if ($where && $keyword)
-{
-	if (strstr('[name][nic][id][ip]',$where)) $postque .= " and ".$where."='".$keyword."'";
-	else if ($where == 'term') $postque .= " and d_regis like '".$keyword."%'";
-	else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
+
+if ($display) $postque .= ' and display='.$display;
+
+$orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
+
+if ($sort == 'gid' && !$keyword) {
+
+	$NUM = getDbRows($table['postmember'],$postque);
+	$TCD = getDbArray($table['postmember'],$postque,'*',$sort,$orderby,$recnum,$p);
+	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
+
+} else {
+
+	if ($where && $keyword) {
+		if (strstr('[name][nic][id][ip]',$where)) $postque .= " and ".$where."='".$keyword."'";
+		else if ($where == 'term') $postque .= " and d_regis like '".$keyword."%'";
+		else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
+	}
+
+	$NUM = getDbRows($table['postdata'],$postque);
+	$TCD = getDbArray($table['postdata'],$postque,'*',$sort,$orderby,$recnum,$p);
+	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
+
 }
-$TCD = getDbArray($table['postmember'],$postque,'*',$sort,$orderby,$recnum,$p);
 
-while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
 
-$NUM = getDbRows($table['postmember'],$postque);
 $TPG = getTotalPage($NUM,$recnum);
 
 $m = 'post';
@@ -30,7 +45,7 @@ $g['post_modify']= $g['post_write'].'&amp;cid=';
 $g['post_action']= $g['post_list'].'&amp;a=';
 $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 ?>
-
+<?php echo $orderby ?>
 <div class="container">
 	<div class="d-flex justify-content-between align-items-center subhead mt-0">
 		<h3 class="mb-0">
@@ -47,8 +62,15 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 
 	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
-		<div class="form-inline ml-auto">
+		<form name="procForm" action="<?php echo $g['s']?>/" method="get" class="form-inline ml-auto">
 
+		   <input type="hidden" name="r" value="<?php echo $r?>">
+		   <input type="hidden" name="m" value="post">
+		   <input type="hidden" name="front" value="<?php echo $front?>">
+			 <input type="hidden" name="page" value="<?php echo $page?>">
+
+			 <input type="hidden" name="sort" value="">
+			 <input type="hidden" name="display" value="">
 
 			<div class="dropdown mr-2">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,16 +78,16 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				</a>
 
 				<div class="dropdown-menu shadow-sm">
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+					<a class="dropdown-item" href="" data-sort="gid">
 						최신순
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+					<a class="dropdown-item" href="" data-sort="hit">
 						조회순
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+					<a class="dropdown-item" href="#" data-sort="likes">
 						추천순
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+					<a class="dropdown-item" href="#" data-sort="comment">
 						댓글순
 					</a>
 				</div>
@@ -80,28 +102,28 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
 						전체
-						<small>2</small>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s))?></small>
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
 						<?php echo $g['displaySet']['label'][4] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=4'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
 						<?php echo $g['displaySet']['label'][3] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=3'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
 						<?php echo $g['displaySet']['label'][2] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=2'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
 						<?php echo $g['displaySet']['label'][1] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=1'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
 						<?php echo $g['displaySet']['label'][0] ?>
-						<small>0</small>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=0'))?></small>
 					</a>
 
 				</div>
@@ -116,7 +138,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			  </div>
 			</div>
 
-		</div><!-- /.form-inline -->
+		</form><!-- /.form-inline -->
 	</div><!-- /.d-flex -->
 
 	<form name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return submitCheck(this);">
