@@ -1,30 +1,22 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
+$R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
+$_POSTMBR = getDbData($table[$m.'members'],'mbruid='.$my['uid'].' and data='.$R['uid'],'*');
 
-if (!$my['admin'] && !strstr(','.($d['post']['admin']?$d['post']['admin']:'.').',',','.$my['id'].','))
-{
-	if ($d['post']['perm_l_view'] > $my['level'] || strpos('_'.$d['post']['perm_g_view'],'['.$my['sosok'].']'))
-	{
-		$g['main'] = $g['dir_module'].'mod/_permcheck.php';
-		$d['post']['isperm'] = false;
-	}
+$_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid']);
+$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=1');
+
+$_perm['post_member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
+$_perm['post_owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
+$_perm['post_write'] =  $_POSTMBR['auth'];
+
+if (!$R['uid'] || ($R['hidden'] && !$_perm['post_member'] || ($R['display']==2 && !$my['uid']))) {
+	$mod = '_404';
+	$d['post']['isperm'] = false;
 }
 
-if ($R['hidden'])
-{
-	if ($my['uid'] != $R['mbruid'] && $my['uid'] != $R['pw'] && !$my['admin'])
-	{
-		if (!strpos('_'.$_SESSION['module_'.$m.'_pwcheck'],'['.$R['uid'].']'))
-		{
-			$g['main'] = $g['dir_module'].'mod/_pwcheck.php';
-			$d['post']['isperm'] = false;
-		}
-	}
-}
-
-if ($d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']')))
-{
+if ($d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']'))) {
 
 	// 포스트 멤버의 포스트 통합조회수 +1
 	$_WHERE1 = 'data='.$R['uid'].' and auth=1';

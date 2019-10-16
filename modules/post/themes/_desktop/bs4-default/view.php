@@ -80,7 +80,7 @@
 
 	<footer class="d-flex justify-content-between align-items-center my-5 d-print-none">
 		<div class="btn-group">
-			 <?php if($my['admin'] || $my['uid']==$R['mbruid']):?>
+			 <?php if($_perm['post_owner']):?>
 				 <a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-light">수정</a>
 				 <a href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btn btn-light">삭제</a>
 				<?php endif?>
@@ -94,8 +94,10 @@
 </section>
 
 
+<?php if (!$R['dis_comment']): ?>
 <aside class="mt-4">
 	<?php include $g['dir_module_skin'].'_comment.php'?>
 </aside>
+<?php endif; ?>
 
 <?php include $g['dir_module_skin'].'_footer.php'?>

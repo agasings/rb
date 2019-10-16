@@ -54,7 +54,7 @@ $lack_card_num = $total_card_num;
 
 		<?php $i=0;foreach($RCD as $R):$i++?>
 		<?php $MBR = getDbData($table['s_mbrdata'],'memberuid='.$R['mbruid'],'*'); ?>
-		<div class="card">
+		<div class="card mb-3">
 			<a href="<?php echo getListLink($R,0) ?>" class="position-relative">
 				<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" class="img-fluid" alt="">
 				<span class="list_mask">

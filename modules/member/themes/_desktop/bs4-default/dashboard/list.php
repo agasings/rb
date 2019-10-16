@@ -65,15 +65,19 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 					</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						공개
+						<?php echo $g['displaySet']['label'][4] ?>
 						<small>0</small>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						미등록
+						<?php echo $g['displaySet']['label'][3] ?>
 						<small>0</small>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						비공개
+						<?php echo $g['displaySet']['label'][2] ?>
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						<?php echo $g['displaySet']['label'][0] ?>
 						<small>0</small>
 					</a>
 
@@ -120,6 +124,20 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 			      <h5 class="mt-0 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>"><?php echo $R['name']?></a></h5>
 						<span class="text-muted">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time></span>
 						<?php if(getNew($R['d_last'],12)):?><small class="text-danger">new</small><?php endif?>
+						<div class="">
+							<?php if ($R['tag']): ?>
+							<span class="f13 text-muted mr-2">
+								<!-- 태그 -->
+								<?php $_tags=explode(',',$R['tag'])?>
+								<?php $_tagn=count($_tags)?>
+								<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
+								<?php $_tagk=trim($_tags[$i])?>
+								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
+								<?php endfor?>
+							</span>
+							<?php endif; ?>
+							<span class="badge badge-secondary"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
+						</div>
 			    </div>
 					<div class="ml-3">
 						<div class="dropdown">
@@ -191,14 +209,14 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 
 				<div class="dropdown mr-auto">
 				  <button class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    <i class="fa fa-globe fa-fw"></i>
-						전체공개
+				    <i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw"></i>
+						<?php echo $g['displaySet']['label'][4] ?>
 				  </button>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item active" href="#" data-display="4"><i class="fa fa-globe fa-fw"></i> 전체공개</a>
-				    <a class="dropdown-item" href="#" data-display="3"><i class="fa fa-link fa-fw"></i> 미등록</a>
-				    <a class="dropdown-item" href="#" data-display="2"><i class="fa fa-users fa-fw"></i> 회원공개</a>
-						<a class="dropdown-item" href="#" data-display="0"><i class="fa fa-lock fa-fw"></i> 비공개</a>
+				    <a class="dropdown-item active" href="#" data-display="4"><i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][4] ?></a>
+				    <a class="dropdown-item" href="#" data-display="3"><i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][3] ?></a>
+				    <a class="dropdown-item" href="#" data-display="2"><i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][2] ?></a>
+						<a class="dropdown-item" href="#" data-display="0"><i class="fa fa-<?php echo $g['displaySet']['icon'][0] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][0] ?></a>
 				  </div>
 				</div>
 
@@ -251,7 +269,11 @@ $(document).ready(function() {
 
 	modal.on('shown.bs.modal', function () {
 		var modal = $(this);
-	  modal.find('.form-control').val('').trigger('focus')
+		modal.find('.form-control').val('').trigger('focus')
+	})
+
+	modal.find('.dropdown').on('hidden.bs.dropdown', function () {
+		modal.find('.form-control').trigger('focus')
 	})
 
 	modal.find('[data-act="submit"]').click(function() {
@@ -279,6 +301,9 @@ $(document).ready(function() {
 		modal.find('[name="display"]').val(display);
 		modal.find('[data-toggle="dropdown"]').html(label);
 	});
+
+
+
 
 });
 

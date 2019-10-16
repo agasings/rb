@@ -84,15 +84,23 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 					</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						공개
+						<?php echo $g['displaySet']['label'][4] ?>
 						<small>0</small>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						미등록
+						<?php echo $g['displaySet']['label'][3] ?>
 						<small>0</small>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						비공개
+						<?php echo $g['displaySet']['label'][2] ?>
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						<?php echo $g['displaySet']['label'][1] ?>
+						<small>0</small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+						<?php echo $g['displaySet']['label'][0] ?>
 						<small>0</small>
 					</a>
 
@@ -157,6 +165,9 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 							<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
 							<?php endfor?>
 						</span>
+
+						<span class="badge badge-secondary ml-2"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
+
 					</div>
 		    </div>
 				<div class="ml-3 align-self-center">

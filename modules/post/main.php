@@ -8,6 +8,9 @@ include_once $svfile;
 $d['post']['skin'] = $d['post']['skin_total'];
 $d['post']['isperm'] = true;
 
+$g['displaySet']['label'] = array('비공개','지정공개','회원공개','미등록','전체공개');
+$g['displaySet']['icon'] = array('lock','user-secret','users','link','globe');
+
 include_once $g['dir_module'].'_main.php';
 
 $mod = $mod ? $mod : 'category';
@@ -21,22 +24,8 @@ $_perm = array();
 if ($cat) $mod='category';
 
 if ($cid) {
-
   $mod = $mod ? $mod : 'view';
-  $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
-  $_POSTMBR = getDbData($table[$m.'members'],'mbruid='.$my['uid'].' and data='.$R['uid'],'*');
-
 	include_once $g['dir_module'].'mod/_view.php';
-
-  $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid']);
-	$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=1');
-
-  $_perm['post_member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
-  $_perm['post_owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
-  $_perm['post_write'] =  $_POSTMBR['auth'];
-
-  if (!$R['uid']||(!$R['display']&&!$my['admin']&& !$_IS_POSTOWN)) $mod = '_404';
-
 }
 
 switch ($mod) {
@@ -54,13 +43,6 @@ switch ($mod) {
   break;
 
   case 'list_view' :
-
-    $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
-    $_IS_LISTOWN=getDbRows($table[$m.'list'],'mbruid='.$my['uid'].' and uid='.$LIST['uid']);
-    $_perm['list_owner'] = $my['admin'] || $_IS_LISTOWN  ? true : false;
-
-    if (!$LIST['uid'] || (!$LIST['display']&&!$_perm['list_owner']) || ($LIST['display']==2 && !$my['uid'])) $mod = '_404';
-
     include_once $g['dir_module'].'mod/_list.php';
   break;
 
@@ -128,7 +110,6 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $g['dir_module_skin'] = $g['dir_module'].'themes/'.$d['post']['skin_main'].'/';
   $g['url_module_skin'] = $g['url_module'].'/themes/'.$d['post']['skin_main'];
   $g['img_module_skin'] = $g['url_module_skin'].'/images';
-
 }
 
 $g['dir_module_mode'] = $g['dir_module_skin'].$mod;
@@ -136,7 +117,6 @@ $g['url_module_mode'] = $g['url_module_skin'].'/'.$mod;
 
 $g['url_reset'] = $g['s'].'/?r='.$r.'&m='.$m;
 $g['push_location'] = '<li class="active">'.$_HMD['name'].'';
-
 
 if($R['linkedmenu'])
 {

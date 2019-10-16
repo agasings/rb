@@ -18,6 +18,9 @@ $lack_card_num = $total_card_num;
 		<div class="">
 			<a class="btn btn-white"  href="/list">전체 리스트</a>
 			<button class="btn btn-white" data-history="back" type="button">이전</button>
+			<?php if ($_perm['list_owner']): ?>
+			<a class="btn btn-white"  href="<?php echo RW('mod=dashboard&page=list_view&id='.$listid)?>">관리</a>
+			<?php endif; ?>
 		</div>
 	</div>
 
@@ -27,7 +30,7 @@ $lack_card_num = $total_card_num;
 
 		<?php $i=0;foreach($RCD as $R):$i++?>
 		<?php $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and auth=1'); ?>
-		<?php $perm_post = $my['admin'] || $_IS_POSTMBR || !$R['hidden'] ? true : false; ?>
+		<?php $perm_post = ($my['admin'] || $_IS_POSTMBR && $R['hidden']) || ($R['display'] > 2) || ($R['display']==2 && $my['uid']) ? true : false; ?>
 		<div class="card">
 			<?php if ($R['featured_img']): ?>
 			<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>" class="position-relative">

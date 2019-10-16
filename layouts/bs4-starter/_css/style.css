@@ -522,6 +522,10 @@ figure.media oembed iframe {
   -webkit-font-smoothing: antialiased;
 }
 
+.rb-layout-dashboard .sidebar .nav-menu > .nav-item.active > .nav-link {
+  border-left: 4.5px solid #007bff;
+}
+
 .rb-layout-dashboard .sidebar .nav-menu .nav-item.active > .nav-link .fa-plus::before {
   content: "\f068";
 }

@@ -119,15 +119,26 @@ switch ($sort) {
 							</span>
 							<?php endif; ?>
 
-							<span class="ml-2 f13 text-muted">
-								<!-- 태그 -->
-								<?php $_tags=explode(',',$R['tag'])?>
-								<?php $_tagn=count($_tags)?>
-								<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
-								<?php $_tagk=trim($_tags[$i])?>
-								<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
-								<?php endfor?>
-							</span>
+							<div class="">
+								<?php if ($R['tag']): ?>
+								<span class="f13 text-muted mr-1">
+									<!-- 태그 -->
+									<?php $_tags=explode(',',$R['tag'])?>
+									<?php $_tagn=count($_tags)?>
+									<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
+									<?php $_tagk=trim($_tags[$i])?>
+									<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
+									<?php endfor?>
+								</span>
+								<?php endif; ?>
+
+								<?php if ($_IS_PROFILEOWN): ?>
+								<span class="badge badge-secondary"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
+								<?php endif; ?>
+
+							</div>
+
+
 						</div>
 			    </div>
 			  </li>

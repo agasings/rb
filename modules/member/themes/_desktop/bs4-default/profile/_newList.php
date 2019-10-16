@@ -44,6 +44,10 @@ $_NUM = getDbRows($table['postlist'],$listque);
             </a>
           </h6>
           <time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
+          <?php if ($_IS_PROFILEOWN): ?>
+          <span class="badge badge-light"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
+          <?php endif; ?>
+
         </div>
 
       </div><!-- /.card -->

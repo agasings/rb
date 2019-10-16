@@ -110,6 +110,10 @@ function writeCheck(f) {
   var tag = form.find('[name="tag"]').val();
   var display = form.find('[name="display"]').val();
 
+  var dis_rating = form.find('[name="use_rating"]').is(":checked")?0:1;
+  var dis_like = form.find('[name="use_like"]').is(":checked")?0:1;
+  var dis_comment = form.find('[name="use_comment"]').is(":checked")?0:1;
+
   if (uid) {
     setTimeout(function(){
 
@@ -124,7 +128,10 @@ function writeCheck(f) {
         subject : subject,
         review : review,
         tag : tag,
-        display : display
+        display : display,
+        dis_rating : dis_rating,
+        dis_like : dis_like,
+        dis_comment : dis_comment
         },function(response,status){
           if(status=='success'){
             var result = $.parseJSON(response);
@@ -142,6 +149,11 @@ function writeCheck(f) {
     }, 200);
 
   } else {
+
+    form.find('[name="dis_rating"]').val(dis_rating);
+    form.find('[name="dis_like"]').val(dis_like);
+    form.find('[name="dis_comment"]').val(dis_comment);
+    
     setTimeout(function(){
       getIframeForAction(f);
       f.submit()

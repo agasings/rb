@@ -16,6 +16,12 @@ if ($sort == 'gid' && !$keyword  && !$listid) {
 
 } else if ($listid) {
 
+	$LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
+	$_IS_LISTOWN=getDbRows($table[$m.'list'],'mbruid='.$my['uid'].' and uid='.$LIST['uid']);
+	$_perm['list_owner'] = $my['admin'] || $_IS_LISTOWN  ? true : false;
+
+	if (!$LIST['uid'] || (!$LIST['display']&&!$_perm['list_owner']) || ($LIST['display']==2 && !$my['uid'])) $mod = '_404';
+
 	if ($mbrid) {
 		$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
 		$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');

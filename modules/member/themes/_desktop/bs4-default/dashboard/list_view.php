@@ -30,7 +30,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 			리스트 수정
 		</h3>
 		<div class="">
-			<a href="<?php echo getListLink($R,0) ?>" class="btn btn-white" target="_blank">보기</a>
+			<a href="<?php echo getListLink($LIST,0) ?>" class="btn btn-white" target="_blank">보기</a>
 			<button type="button" class="btn btn-white" data-history="back">이전</button>
 		</div>
 	</div>
@@ -219,36 +219,36 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 					<div class="list-group list-group-flush">
 						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="globe" data-display="4">
 							<div class="media align-items-center">
-								<i class="fa fa-globe fa-2x mr-3"></i>
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3"></i>
 								<div class="media-body">
-									<span data-heading>전체공개</span><br>
+									<span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
 									<small data-description>모든 사용자가 검색하고 볼 수 있음</small>
 								</div>
 							</div>
 						</button>
 						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="link" data-display="3">
 							<div class="media align-items-center">
-								<i class="fa fa-link fa-2x mr-3" aria-hidden="true"></i>
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-2x mr-3" aria-hidden="true"></i>
 								<div class="media-body">
-									<span data-heading>미등록</span><br>
+									<span data-heading><?php echo $g['displaySet']['label'][3] ?></span><br>
 									<small data-description>링크 있는 사용자만 볼 수 있음.<br>로그인 불필요</small>
 								</div>
 							</div>
 						</button>
 						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="users" data-display="2">
 							<div class="media align-items-center">
-								<i class="fa fa-users fa-2x mr-3" aria-hidden="true"></i>
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-2x mr-3" aria-hidden="true"></i>
 								<div class="media-body">
-									<span data-heading>회원공개</span><br>
+									<span data-heading><?php echo $g['displaySet']['label'][2] ?></span><br>
 									<small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
 								</div>
 							</div>
 						</button>
 						<button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="lock" data-display="0">
 							<div class="media align-items-center">
-								<i class="fa fa-lock fa-2x ml-1 mr-4" aria-hidden="true"></i>
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][0] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
 								<div class="media-body">
-									<span data-heading>비공개</span><br>
+									<span data-heading><?php echo $g['displaySet']['label'][0] ?></span><br>
 									<small data-description>나만 볼수 있음</small>
 								</div>
 							</div>
@@ -258,7 +258,6 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 				</div>
 				<ul class="list-group list-group-flush f13 mt-1 item-body">
 					<li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
-
 						<div class="media">
 							<span class="fa-stack fa-lg mr-2">
 								<i class="fa fa-square fa-stack-2x"></i>
@@ -269,10 +268,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 								<span data-role="heading"></span> <br><span data-role="description"></span>
 							</div>
 						</div>
-
-
 					</li>
-
 				</ul>
 
 			</div><!-- /.sidebar-item -->

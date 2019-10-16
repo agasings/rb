@@ -85,7 +85,12 @@ $lack_card_num = $total_card_num;
 			      <p class="card-text text-muted f13">
 							<span class="text-muted">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time></span>
 							<?php if(getNew($R['d_last'],12)):?><small class="text-danger">new</small><?php endif?>
+
+							<?php if ($_IS_PROFILEOWN): ?>
+							<span class="badge badge-secondary ml-2 align-top"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
+							<?php endif; ?>
 						</p>
+
 
 			    </div>
 				</div><!-- /.card -->

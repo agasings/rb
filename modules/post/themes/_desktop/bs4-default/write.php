@@ -9,6 +9,9 @@
   <input type="hidden" name="featured_img" value="<?php echo $R['featured_img'] ?>">
   <input type="hidden" name="html" value="HTML">
   <input type="hidden" name="display">
+  <input type="hidden" name="dis_rating">
+  <input type="hidden" name="dis_like">
+  <input type="hidden" name="dis_comment">
 
   <header class="d-flex align-items-center py-3 px-4">
 
@@ -159,50 +162,50 @@
                     변경...
                   </button>
 
-                  <div class="dropdown-menu dropdown-menu-right shadow py-0" style="width:260px;line-height: 1.2">
+                  <div class="dropdown-menu dropdown-menu-right shadow py-0" style="width:322px;line-height: 1.2">
 
                     <div class="list-group list-group-flush">
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="globe" data-display="4">
                         <div class="media align-items-center">
-                          <i class="fa fa-globe fa-2x mr-3"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3"></i>
                           <div class="media-body">
-                            <span data-heading>전체공개</span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
                             <small data-description>모든 사용자가 검색하고 볼 수 있음</small>
                           </div>
                         </div>
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="link" data-display="3">
                         <div class="media align-items-center">
-                          <i class="fa fa-link fa-2x mr-3" aria-hidden="true"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-2x mr-3" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading>미등록</span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][3] ?></span><br>
                             <small data-description>링크 있는 사용자만 볼 수 있음.<br>로그인 불필요</small>
                           </div>
                         </div>
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="users" data-display="2">
                         <div class="media align-items-center">
-                          <i class="fa fa-users fa-2x mr-3" aria-hidden="true"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-2x mr-3" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading>회원공개</span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][2] ?></span><br>
                             <small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
                           </div>
                         </div>
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==1?' active':'' ?>" data-icon="user-secret" data-display="1">
                         <div class="media align-items-center">
-                          <i class="fa fa-user-secret fa-2x ml-1 mr-3" aria-hidden="true"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-2x ml-1 mr-3" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading>지정공개</span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][1] ?></span><br>
                             <small data-description>초대된 회원만 볼수 있음</small>
                           </div>
                         </div>
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="lock" data-display="0">
                         <div class="media align-items-center">
-                          <i class="fa fa-lock fa-2x ml-1 mr-4" aria-hidden="true"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][0] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading>비공개</span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][0] ?></span><br>
                             <small data-description>나만 볼수 있음</small>
                           </div>
                         </div>
@@ -266,22 +269,22 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
               댓글 허용
               <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="dis_comment" value="1" id="dis_comment" checked>
-                <label class="custom-control-label" for="dis_comment"></label>
+                <input type="checkbox" class="custom-control-input" name="use_comment" value="1" id="use_comment"<?php echo $R['dis_comment']?'':' checked' ?>>
+                <label class="custom-control-label" for="use_comment"></label>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               좋아요 허용
               <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="dis_like" value="1" id="dis_like" checked>
-                <label class="custom-control-label" for="dis_like"></label>
+                <input type="checkbox" class="custom-control-input" name="use_like" value="1" id="use_like"<?php echo $R['dis_like']?'':' checked' ?>>
+                <label class="custom-control-label" for="use_like"></label>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               평점 허용
               <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="dis_rating" value="1" id="dis_rating" checked>
-                <label class="custom-control-label" for="dis_rating"></label>
+                <input type="checkbox" class="custom-control-input" name="use_rating" value="1" id="use_rating"<?php echo $R['dis_rating']?'':' checked' ?>>
+                <label class="custom-control-label" for="use_rating"></label>
               </div>
             </li>
           </ul>

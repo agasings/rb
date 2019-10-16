@@ -9,6 +9,9 @@ $_mod	= $_GET['mod'];
 $front	= $front? $front: 'login';
 $page	= $page ? $page : 'main';
 
+$g['displaySet']['label'] = array('비공개','지정공개','회원공개','미등록','전체공개');
+$g['displaySet']['icon'] = array('lock','user-secret','users','link','globe');
+
 // 모바일/데스크탑 분기
 if ($g['mobile'] && $_SESSION['pcmode'] != 'Y') {
 	$_front = '_mobile/'.$front;
@@ -64,11 +67,8 @@ switch ($front) {
 	break;
 
 	case 'settings' :
-
 		$d['member']['sosokmenu'] = $d['member']['sosokmenu_settings'];
-
 		if (!$my['uid']) getLink(RW(0),'','','');
-
 	break;
 
 	case 'dashboard' :
@@ -77,20 +77,16 @@ switch ($front) {
 
 	case 'saved' :
 		$d['member']['sosokmenu'] = $d['member']['sosokmenu_saved'];
-
 		if (!$my['uid']){
 			getLink($g['s'].'/?r='.$r.'&mod=login&referer='.urlencode(RW('mod=saved')),'','','');
 		}
-
 	break;
 
 	case 'noti' :
 		$d['member']['sosokmenu'] = $d['member']['sosokmenu_noti'];
-
 		if (!$my['uid']){
 			getLink($g['s'].'/?r='.$r.'&mod=login&referer='.urlencode(RW('mod=noti')),'','','');
 		}
-
 	break;
 
 }
