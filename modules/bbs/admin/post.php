@@ -1,9 +1,4 @@
 <?php
-//게시물링크
-function getPostLink($arr)
-{
-	return RW('m=bbs&bid='.$arr['bbsid'].'&uid='.$arr['uid'].($GLOBALS['s']!=$arr['site']?'&s='.$arr['site']:''));
-}
 $SITES = getDbArray($table['s_site'],'','*','gid','asc',0,1);
 $SITEN   = db_num_rows($SITES);
 $sort	= $sort ? $sort : 'gid';
@@ -260,7 +255,7 @@ $TPG = getTotalPage($NUM,$recnum);
 							<?php if($R['notice']):?><i class="fa fa-volume-up"></i><?php endif?>
 							<?php if($R['mobile']):?><i class="fa fa-mobile f-lg"></i><?php endif?>
 							<?php if($R['category']):?><span class="badge badge-pill badge-dark"><?php echo $R['category']?></span><?php endif?>
-							<a class="muted-link" href="<?php echo getPostLink($R)?>" target="_blank">
+							<a class="muted-link" href="<?php echo getBbsPostLink($R)?>" target="_blank">
 								<?php echo getStrCut($R['subject'],'30','..')?>
 							</a>
 							<?php if(strstr($R['content'],'.jpg')):?>
