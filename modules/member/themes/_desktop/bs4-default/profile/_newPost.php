@@ -10,14 +10,15 @@ $lack_card_num = $total_card_num;
 
 $postque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
-if ($my['uid']!=$_MP['uid']) {
+if (!$_IS_PROFILEOWN) {
 	if ($my['uid']) $postque .= ' and display = 2 or display = 4';  // 회원공개 포스트와 전체공개 포스트 출력
 	else $postque .= ' and display = 4'; // 전체공개 포스트만 출력
 }
 
 $_RCD=getDbArray($table['postmember'],$postque,'*','gid','asc',$wdgvar['limit'],1);
-$_NUM = getDbRows($table['postmember'],$postque);
+while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
 
+$_NUM = getDbRows($table['postmember'],$postque);
 ?>
 
 <section class="widget-post-card-01">
@@ -33,11 +34,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
   <?php if ($_NUM): ?>
   <div class="row gutter-half" data-role="post-list">
 
-    <?php
-      while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
-      $i=0;foreach($RCD as $R):$i++;
-    ?>
-
+    <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="col">
       <div class="card border-0" id="item-<?php echo $_R['uid'] ?>">
 
@@ -73,7 +70,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
 
   </div>  <!-- /.row -->
   <?php else: ?>
-  <div class="p-5 text-muted text-center">
+  <div class="p-5 text-muted text-center border mb-3">
     포스트가 없습니다.
   </div>
   <?php endif; ?>

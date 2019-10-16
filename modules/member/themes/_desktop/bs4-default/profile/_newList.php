@@ -2,31 +2,32 @@
 $wdgvar['limit'] = 3; //전체 출력수
 $wdgvar['recnum'] =3; //한 열에 출력할 카드 갯수
 $wdgvar['title'] ='최근 리스트';
-$wdgvar['link'] = RW('mod=dashboard&page=list');
 $recnum = $wdgvar['recnum']; // 한 열에 출력할 카드 갯수
 $totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
 $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
+
+$listque = 'mbruid='.$_MP['uid'].' and site='.$s;
+
+if (!$_IS_PROFILEOWN) {
+  if ($my['uid']) $listque .= ' and display = 2 or display = 4';  // 회원공개와 전체공개 포스트 출력
+	else $listque .= ' and display = 4'; // 전체공개 포스트만 출력
+}
+
+$_RCD=getDbArray($table['postlist'],$listque,'*','gid','asc',$wdgvar['limit'],1);
+$_NUM = getDbRows($table['postlist'],$listque);
 ?>
 
 <section class="widget-post-card-01">
   <header class="d-flex justify-content-between align-items-center py-2">
     <strong><?php echo $wdgvar['title']?></strong>
-    <?php if($wdgvar['link']):?>
-    <a href="<?php echo $wdgvar['link']?>" class="muted-link small">
-      더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>
-    </a>
-    <?php endif?>
   </header>
 
+  <?php if ($_NUM): ?>
   <div class="row gutter-half" data-role="post-list">
 
-    <?php
-      $_RCD=getDbArray($table['postlist'],'mbruid='.$_MP['uid'].' and site='.$s,'*','gid','asc',$wdgvar['limit'],1);
-      $i=0;foreach($_RCD as $R):$i++;
-    ?>
-
+    <?php $i=0;foreach($_RCD as $R):$i++;?>
     <div class="col">
       <div class="card border-0" id="item-<?php echo $_R['uid'] ?>">
 
@@ -63,4 +64,9 @@ $lack_card_num = $total_card_num;
     <?php endif?>
 
   </div>  <!-- /.row -->
+  <?php else: ?>
+  <div class="p-5 text-muted text-center border mb-3">
+    리스트가 없습니다.
+  </div>
+  <?php endif; ?>
 </section><!-- /.widget -->

@@ -4,7 +4,7 @@ $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $postque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
-if ($my['uid']!=$_MP['uid']) {
+if (!$_IS_PROFILEOWN) {
 	if ($my['uid']) $postque .= ' and display = 2 or display = 4';  // 회원공개와 전체공개 포스트 출력
 	else $postque .= ' and display = 4'; // 전체공개 포스트만 출력
 }
@@ -79,7 +79,11 @@ switch ($sort) {
 							</button>
 						</div>
 					</div>
-					<a href="<?php echo RW('mod=dashboard&page=post')?>" class="btn btn-white text-danger btn-sm ml-2">관리</a>
+
+					<?php if ($_IS_PROFILEOWN): ?>
+					<a href="<?php echo RW('mod=dashboard&page=post')?>" class="btn btn-white btn-sm ml-2">관리</a>
+					<?php endif; ?>
+
 				</div><!-- /.form-inline -->
 
 			</header>

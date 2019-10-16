@@ -2,15 +2,21 @@
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
-$postque = 'mbruid='.$_MP['uid'].' and site='.$s;
+$listque = 'mbruid='.$_MP['uid'].' and site='.$s;
+
+if (!$_IS_PROFILEOWN) {
+	if ($my['uid']) $listque .= ' and display = 2 or display = 4';  // 회원공개와 전체공개 포스트 출력
+	else $listque .= ' and display = 4'; // 전체공개 포스트만 출력
+}
+
 if ($where && $keyword)
 {
-	if (strstr('[name][nic][id][ip]',$where)) $postque .= " and ".$where."='".$keyword."'";
-	else if ($where == 'term') $postque .= " and d_regis like '".$keyword."%'";
-	else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
+	if (strstr('[name][nic][id][ip]',$where)) $listque .= " and ".$where."='".$keyword."'";
+	else if ($where == 'term') $listque .= " and d_regis like '".$keyword."%'";
+	else $listque .= getSearchSql($where,$keyword,$ikeyword,'or');
 }
-$RCD = getDbArray($table['postlist'],$postque,'*',$sort,$orderby,$recnum,$p);
-$NUM = getDbRows($table['postlist'],$postque);
+$RCD = getDbArray($table['postlist'],$listque,'*',$sort,$orderby,$recnum,$p);
+$NUM = getDbRows($table['postlist'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
 $c_recnum = 3; // 한 열에 출력할 카드 갯수
@@ -56,7 +62,10 @@ $lack_card_num = $total_card_num;
 						</div>
 					</div>
 
+					<?php if ($_IS_PROFILEOWN): ?>
 					<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm">관리</a>
+					<?php endif; ?>
+
 				</div>
 
 			</header>

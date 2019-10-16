@@ -16,6 +16,8 @@ $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
 
+$_perm = array();
+
 if ($cat) $mod='category';
 
 if ($cid) {
@@ -29,10 +31,9 @@ if ($cid) {
   $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid']);
 	$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=1');
 
-  $_perm = array();
-  $_perm['member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
-  $_perm['owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
-  $_perm['write'] =  $_POSTMBR['auth'];
+  $_perm['post_member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
+  $_perm['post_owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
+  $_perm['post_write'] =  $_POSTMBR['auth'];
 
   if (!$R['uid']||(!$R['display']&&!$my['admin']&& !$_IS_POSTOWN)) $mod = '_404';
 
@@ -53,8 +54,13 @@ switch ($mod) {
   break;
 
   case 'list_view' :
+
     $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
-    if (!$LIST['uid']||($LIST['display']>1&&!$my['admin'])) $mod = '_404';
+    $_IS_LISTOWN=getDbRows($table[$m.'list'],'mbruid='.$my['uid'].' and uid='.$LIST['uid']);
+    $_perm['list_owner'] = $my['admin'] || $_IS_LISTOWN  ? true : false;
+
+    if (!$LIST['uid'] || (!$LIST['display']&&!$_perm['list_owner']) || ($LIST['display']==2 && !$my['uid'])) $mod = '_404';
+
     include_once $g['dir_module'].'mod/_list.php';
   break;
 

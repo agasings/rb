@@ -53,11 +53,14 @@ switch ($front) {
 
 			$_MP = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
 			if ($_MP['uid']) {
+				$_IS_PROFILEOWN= $my['uid']==$_MP['uid'];
 				$_MP = array_merge(getDbData($table['s_mbrdata'],"memberuid='".$_MP['uid']."'",'*'),$_MP);
 			} else {
 				$page = '_404';
 			}
 		}
+
+
 	break;
 
 	case 'settings' :
