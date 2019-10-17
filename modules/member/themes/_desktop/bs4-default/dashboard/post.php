@@ -6,14 +6,15 @@ include_once $svfile;
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
-$postque = 'mbruid='.$my['uid'].' and site='.$s;
+$postque = 'site='.$s;
 
 if ($display) $postque .= ' and display='.$display;
 
-$orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
+if ($sort != 'gid') $orderby= 'desc';
 
 if ($sort == 'gid' && !$keyword) {
 
+	$postque .= ' and mbruid='.$my['uid'];
 	$NUM = getDbRows($table['postmember'],$postque);
 	$TCD = getDbArray($table['postmember'],$postque,'*',$sort,$orderby,$recnum,$p);
 	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
@@ -26,12 +27,15 @@ if ($sort == 'gid' && !$keyword) {
 		else $postque .= getSearchSql($where,$keyword,$ikeyword,'or');
 	}
 
-	$NUM = getDbRows($table['postdata'],$postque);
+	$NUM=0;
 	$TCD = getDbArray($table['postdata'],$postque,'*',$sort,$orderby,$recnum,$p);
-	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
+	while($_R = db_fetch_array($TCD)) {
+		if(!getDbRows($table['postmember'],'mbruid='.$my['uid'].' and gid='.$_R['gid'])) continue;
+		$RCD[] = $_R;
+		$NUM++;
+	}
 
 }
-
 
 $TPG = getTotalPage($NUM,$recnum);
 
@@ -45,7 +49,7 @@ $g['post_modify']= $g['post_write'].'&amp;cid=';
 $g['post_action']= $g['post_list'].'&amp;a=';
 $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 ?>
-<?php echo $orderby ?>
+
 <div class="container">
 	<div class="d-flex justify-content-between align-items-center subhead mt-0">
 		<h3 class="mb-0">
@@ -71,6 +75,7 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 
 			 <input type="hidden" name="sort" value="">
 			 <input type="hidden" name="display" value="">
+			 <input type="hidden" name="where" value="subject|review">
 
 			<div class="dropdown mr-2">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,16 +83,16 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 				</a>
 
 				<div class="dropdown-menu shadow-sm">
-					<a class="dropdown-item" href="" data-sort="gid">
+					<a class="dropdown-item<?php echo $sort=='gid'?' active':'' ?>" href="" data-sort="gid">
 						최신순
 					</a>
-					<a class="dropdown-item" href="" data-sort="hit">
+					<a class="dropdown-item<?php echo $sort=='hit'?' active':'' ?>" href="" data-sort="hit">
 						조회순
 					</a>
-					<a class="dropdown-item" href="#" data-sort="likes">
+					<a class="dropdown-item<?php echo $sort=='likes'?' active':'' ?>" href="#" data-sort="likes">
 						추천순
 					</a>
-					<a class="dropdown-item" href="#" data-sort="comment">
+					<a class="dropdown-item<?php echo $sort=='comment'?' active':'' ?>" href="#" data-sort="comment">
 						댓글순
 					</a>
 				</div>
@@ -96,34 +101,49 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 			<label class="sr-only">상태</label>
 			<div class="dropdown">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					상태 : 전체
+					상태 : <?php echo $display?$g['displaySet']['label'][$display]:'전체' ?>
 				</a>
 
 				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
+					<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo !$display?' active':'' ?>" href="/dashboard?page=post">
 						전체
 						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s))?></small>
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
-						<?php echo $g['displaySet']['label'][4] ?>
+					<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==5?' active':'' ?>" href="/dashboard?page=post&display=5">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][5] ?>
+						</span>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=5'))?></small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==4?' active':'' ?>" href="/dashboard?page=post&display=4">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][4] ?>
+						</span>
 						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=4'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
-						<?php echo $g['displaySet']['label'][3] ?>
+					<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==3?' active':'' ?>" href="/dashboard?page=post&display=3">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][3] ?>
+						</span>
 						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=3'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
-						<?php echo $g['displaySet']['label'][2] ?>
+					<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==2?' active':'' ?>" href="/dashboard?page=post&display=2">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][2] ?>
+						</span>
 						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=2'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
-						<?php echo $g['displaySet']['label'][1] ?>
+					<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==1?' active':'' ?>" href="/dashboard?page=post&display=1">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][1] ?>
+						</span>
 						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=1'))?></small>
-					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
-						<?php echo $g['displaySet']['label'][0] ?>
-						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=0'))?></small>
 					</a>
 
 				</div>
@@ -188,11 +208,38 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 							<?php endfor?>
 						</span>
 
-						<span class="badge badge-secondary ml-2"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
-
 					</div>
 		    </div>
-				<div class="ml-3 align-self-center">
+				<div class="ml-3 align-self-center form-inline">
+
+					<div class="dropdown mr-2">
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 7.67rem">
+							<?php echo $g['displaySet']['label'][$R['display']] ?>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
+							<a class="dropdown-item<?php echo $R['display']==5?' active':'' ?>" href="">
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
+								<?php echo $g['displaySet']['label'][5] ?>
+							</a>
+							<a class="dropdown-item<?php echo $R['display']==4?' active':'' ?>" href="">
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
+								<?php echo $g['displaySet']['label'][4] ?>
+							</a>
+							<a class="dropdown-item<?php echo $R['display']==3?' active':'' ?>" href="">
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
+								<?php echo $g['displaySet']['label'][3] ?>
+							</a>
+							<a class="dropdown-item<?php echo $R['display']==2?' active':'' ?>" href="">
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-fw" aria-hidden="true"></i>
+								<?php echo $g['displaySet']['label'][2] ?>
+							</a>
+							<a class="dropdown-item<?php echo $R['display']==1?' active':'' ?>" href="">
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
+								<?php echo $g['displaySet']['label'][1] ?>
+							</a>
+						</div>
+					</div>
+
 					<div class="dropdown">
 						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
 							관리
@@ -200,10 +247,8 @@ $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
 							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
-							<a class="dropdown-item disabled" href="#">공개</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="<?php echo getPostLink($R,1) ?>" target="_blank">보기</a>
-
 						</div>
 					</div>
 				</div>

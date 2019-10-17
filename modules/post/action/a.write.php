@@ -16,7 +16,8 @@ $d_regis	= $date['totime']; // 최초 등록일
 if($uid) $d_modify =$date['totime']; // 수정 등록일
 else $d_modify=''; // 최초에는 수정일 없음
 
-$hidden = !$display || $display==1?1:0;
+$display= $display?$display:1;
+$hidden = $display==1 || $display==2?1:0;
 
 if ($uid) {
 
@@ -62,11 +63,11 @@ if ($uid) {
 	}
 
   //리스트 업데이트
-  $_orign_list_members = getDbArray($table[$m.'list_index'],'data='.$R['uid'],'*','data','asc',0,1);
+  $_orign_list_members = getDbArray($table[$m.'list_index'],'data='.$R['uid'].' and mbruid='.$mbruid,'*','data','asc',0,1);
 
 	while($_olm=db_fetch_array($_orign_list_members)) {
   	if(!strstr($list_members,'['.$_olm['list'].']')) {
-  		getDbDelete($table[$m.'list_index'],'list='.$_olm['list'].' and data='.$R['uid']);
+  		getDbDelete($table[$m.'list_index'],'list='.$_olm['list'].' and data='.$R['uid'].' and mbruid='.$mbruid);
       getDbUpdate($table[$m.'list'],'num=num-1','uid='.$_olm['list']);
   	}
 	}
@@ -80,7 +81,7 @@ if ($uid) {
     } else {
       $maxgid = getDbCnt($table[$m.'list_index'],'max(gid)','');
       $gid = $maxgid ? $maxgid+1 : 1;
-      getDbInsert($table[$m.'list_index'],'site,list,display,data,gid',"'".$s."','".$_lt1."','".$display."','".$R['uid']."','".$gid."'");
+      getDbInsert($table[$m.'list_index'],'site,list,display,data,gid,mbruid',"'".$s."','".$_lt1."','".$display."','".$R['uid']."','".$gid."','".$mbruid."'");
       getDbUpdate($table[$m.'list'],'num=num+1,d_last='.$d_regis,'uid='.$_lt1);
     }
 
@@ -88,7 +89,6 @@ if ($uid) {
 
 } else {
 
-  $display = 0;
 
   $cid	= substr($g['time_srnad'],9,7);
 

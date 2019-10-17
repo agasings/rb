@@ -8,8 +8,8 @@ include_once $svfile;
 $d['post']['skin'] = $d['post']['skin_total'];
 $d['post']['isperm'] = true;
 
-$g['displaySet']['label'] = array('비공개','지정공개','회원공개','미등록','전체공개');
-$g['displaySet']['icon'] = array('lock','user-secret','users','link','globe');
+$g['displaySet']['label'] = array('','비공개','지정공개','미등록','회원공개','전체공개');
+$g['displaySet']['icon'] = array('','lock','user-secret','link','users','globe');
 
 include_once $g['dir_module'].'_main.php';
 

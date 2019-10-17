@@ -992,5 +992,35 @@ function getListImageSrc($list) {
  return $src;
 }
 
+// 포스트의 조회권한 여부
+function getPostPerm($R) {
+  global $table,$my;
+  $m='post';
+	switch ($R['display']) {
+		case '1':
+			if ($my['admin'] || ($R['mbruid']==$my['uid'])) $perm = true;
+			else $perm = false;
+			break;
+		case '2':
+			$_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and auth=1');
+			if ($my['admin'] || $_IS_POSTMBR ) $perm = true;
+			else $perm = false;
+			break;
+		case '3':
+			$perm = true;
+			break;
+		case '4':
+			if ($my['uid']) $perm = true;
+			else $perm = false;
+			break;
+		case '5':
+			$perm = true;
+			break;
+		default:
+			$perm = false;
+			break;
+	}
+ return $perm;
+}
 
 ?>

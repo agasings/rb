@@ -165,47 +165,47 @@
                   <div class="dropdown-menu dropdown-menu-right shadow py-0" style="width:322px;line-height: 1.2">
 
                     <div class="list-group list-group-flush">
-                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="globe" data-display="4">
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==5?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][5] ?>" data-display="5">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-2x mr-3"></i>
                           <div class="media-body">
-                            <span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][5] ?></span><br>
                             <small data-description>모든 사용자가 검색하고 볼 수 있음</small>
                           </div>
                         </div>
                       </button>
-                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="link" data-display="3">
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][4] ?>" data-display="4">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-2x mr-3" aria-hidden="true"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading><?php echo $g['displaySet']['label'][3] ?></span><br>
-                            <small data-description>링크 있는 사용자만 볼 수 있음.<br>로그인 불필요</small>
-                          </div>
-                        </div>
-                      </button>
-                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="users" data-display="2">
-                        <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-2x mr-3" aria-hidden="true"></i>
-                          <div class="media-body">
-                            <span data-heading><?php echo $g['displaySet']['label'][2] ?></span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
                             <small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
                           </div>
                         </div>
                       </button>
-                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==1?' active':'' ?>" data-icon="user-secret" data-display="1">
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][3] ?>" data-display="3">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-2x ml-1 mr-3" aria-hidden="true"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-2x mr-3" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading><?php echo $g['displaySet']['label'][1] ?></span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][3] ?></span><br>
+                            <small data-description>링크 있는 사용자만 볼 수 있음. 로그인 불필요</small>
+                          </div>
+                        </div>
+                      </button>
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][2] ?>" data-display="2">
+                        <div class="media align-items-center">
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-2x ml-1 mr-3" aria-hidden="true"></i>
+                          <div class="media-body">
+                            <span data-heading><?php echo $g['displaySet']['label'][2] ?></span><br>
                             <small data-description>초대된 회원만 볼수 있음</small>
                           </div>
                         </div>
                       </button>
-                      <button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="lock" data-display="0">
+                      <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==1?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][1] ?>" data-display="1">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][0] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
+                          <i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
                           <div class="media-body">
-                            <span data-heading><?php echo $g['displaySet']['label'][0] ?></span><br>
+                            <span data-heading><?php echo $g['displaySet']['label'][1] ?></span><br>
                             <small data-description>나만 볼수 있음</small>
                           </div>
                         </div>
@@ -218,7 +218,7 @@
               </li>
             </ul>
 
-            <div class="d-none" data-role="postmember">
+            <div  data-role="postmember">
               <ul class="list-group list-group-flush f13 mt-1">
 
                 <?php foreach($MBR_RCD as $MBR): ?>
@@ -234,7 +234,40 @@
                   </div>
 
                   <div class="pr-3">
-                    <span class="f12 text-muted">소유자</span>
+                    <span class="f12 text-muted">
+
+
+
+
+                      <?php if ($MBR['memberuid']==$R['mbruid']): ?>
+                      소유자
+                      <?php else: ?>
+
+
+                        <div class="dropdown d-inline-block align-middle ">
+                          <button class="badge badge-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <?php echo $MBR['level']==1?'수정가능':'보기가능' ?>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item<?php echo $MBR['level']==1?' active':'' ?>" href="#">
+                              <i class="fa fa-pencil fa-fw" aria-hidden="true"></i>
+                              수정 가능
+                            </a>
+                            <a class="dropdown-item<?php echo !$MBR['level']?' active':'' ?>" href="#">
+                              <i class="fa fa-eye fa-fw" aria-hidden="true"></i>
+                              보기 가능
+                            </a>
+                          </div>
+                        </div>
+
+                      <?php endif; ?>
+
+                    </span>
+                    <?php if ($MBR['memberuid']!=$R['mbruid']): ?>
+                    <a href="#" class="text-reset ml-2" title="제외" data-act="delete" data-mbruid="<?php echo $MBR['memberuid'] ?>" data-post="<?php echo $R['uid'] ?>">
+                      &times;
+                    </a>
+                  <?php endif; ?>
                   </div>
 
                 </li>
@@ -243,7 +276,7 @@
               </ul>
 
               <div class="text-right mt-2">
-                <button type="button" class="btn btn-white btn-sm" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static" disabled>
+                <button type="button" class="btn btn-white btn-sm" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
                   사용자 초대
                 </button>
               </div>
@@ -385,6 +418,8 @@
 
 <!-- Modal -->
 <div class="modal" id="modal-post-share" tabindex="-1" role="dialog" aria-hidden="true">
+  <input type="hidden" name="data" value="<?php echo $R['uid']?>">
+  <input type="hidden" name="level" value="1">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header border-bottom-0">
@@ -392,39 +427,23 @@
       </div>
       <div class="modal-body">
 
-        <label class="small text-muted">액세스 권한이 있는 사용자</label>
-        <ul class="list-group list-group-flush f13">
-          <?php foreach($MBR_RCD as $MBR): ?>
-          <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
-
-            <div class="media">
-              <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
-
-              <div class="media-body align-self-center">
-                <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
-                <span class="text-muted"><?php echo $MBR['email'] ?></span>
-              </div>
-            </div>
-
-            <div class="pr-3">
-              <span class="f12 text-muted">소유자</span>
-            </div>
-
-          </li>
-          <?php endforeach?>
-        </ul>
-
-        <div class="form-group mt-5">
+        <div class="form-group">
           <label class="small text-muted">초대할 사용자</label>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="닉네임 또는 이메일 주소 입력">
+          <div class="input-group input-group-lg">
+            <input type="text" name="nic" class="form-control rounded-0" placeholder="닉네임 또는 이메일 주소 입력">
             <div class="input-group-append">
-              <button class="btn btn-white dropdown-toggle" data-toggle="dropdown" type="button">
-                <i class="fa fa-pencil" aria-hidden="true"></i>
+              <button class="btn btn-white dropdown-toggle rounded-0" data-toggle="dropdown" type="button">
+                <i class="fa fa-eye" aria-hidden="true"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">수정가능</a>
-                <a class="dropdown-item" href="#">보기가능</a>
+                <a class="dropdown-item" href="#" data-level="1">
+                  <i class="fa fa-pencil fa-fw" aria-hidden="true"></i>
+                  수정가능
+                </a>
+                <a class="dropdown-item active" href="#" data-level="0">
+                  <i class="fa fa-eye fa-fw" aria-hidden="true"></i>
+                  보기가능
+                </a>
               </div>
             </div>
           </div>
@@ -434,7 +453,13 @@
 
       </div>
       <div class="modal-footer border-top-0">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">완료</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" data-act="submit">
+          <span class="not-loading">저장</span>
+          <span class="is-loading">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -470,7 +495,7 @@ function setPostDisplay(display) {
   var description = button.find('[data-description]').html();
 
   section.find('.list-group-item').removeClass('active'); // 상태초기화
-  section.find('[data-role="postmember"]').addClass('d-none');
+  section.find('[data-role="postmember"]').removeClass('d-none');
 
   button.addClass('active');
   input.val(display);
@@ -478,7 +503,7 @@ function setPostDisplay(display) {
   section.find('[data-role="heading"]').text(heading);
   section.find('[data-role="description"]').html(description);
   section.removeClass('d-none')
-  if (display==1) section.find('[data-role="postmember"]').removeClass('d-none');
+  if (display==1) section.find('[data-role="postmember"]').addClass('d-none');
 }
 
 $(document).ready(function() {
@@ -606,6 +631,76 @@ $(document).ready(function() {
       $('[data-role="library"]').addClass('d-none');
       $('[data-role="postsubmit"]').click(); // 저장 (ctl+k)
     }
+  });
+
+  //사용자 초대
+  $('#modal-post-share').on('shown.bs.modal', function () {
+    $(this).find('[name="nic"]').trigger('focus')
+    $(this).find('[data-act="submit"]').attr('disabled', false);
+  })
+
+  $('#modal-post-share').find('[data-act="submit"]').click(function(e){
+    var button = $(this);
+    var modal = $('#modal-post-share');
+
+    var data = modal.find('[name="data"]').val();
+    var level = modal.find('[name="level"]').val();
+    var nic = modal.find('[name="nic"]').val();
+
+    if (!nic) {
+      modal.find('[name="nic"]').focus();
+      return false
+    }
+
+    button.attr('disabled',true);
+
+    setTimeout(function(){
+
+      $.post(rooturl+'/?r='+raccount+'&m=post&a=regis_member',{
+        data : data,
+        level : level,
+        nic : nic
+        },function(response,status){
+          if(status=='success'){
+            location.reload();
+          } else {
+            alert(status);
+          }
+      });
+    }, 200);
+  });
+
+  // 공유목록에서 제외
+  $('[data-role="postmember"]').find('[data-act="delete"]').click(function(e){
+
+    if (confirm('정말로 공유목록에서 제외 하시겠습니까?')) {
+
+      var button = $(this);
+      var list = $('[data-role="postmember"]');
+      var item = button.closest('.list-group-item');
+      var data = button.attr('data-post');
+      var mbruid = button.attr('data-mbruid');
+
+      setTimeout(function(){
+
+        $.post(rooturl+'/?r='+raccount+'&m=post&a=deletemember',{
+          data : data,
+          mbruid : mbruid
+          },function(response,status){
+            if(status=='success'){
+              // var result = $.parseJSON(response);
+              item.remove();
+              $.notify({message: '사용자가 제외되었습니다..'},{type: 'success'});
+
+            } else {
+              alert(status);
+            }
+        });
+      }, 200);
+
+		}
+		return false;
+
   });
 
 });

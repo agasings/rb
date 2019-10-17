@@ -9,8 +9,8 @@ $_mod	= $_GET['mod'];
 $front	= $front? $front: 'login';
 $page	= $page ? $page : 'main';
 
-$g['displaySet']['label'] = array('비공개','지정공개','회원공개','미등록','전체공개');
-$g['displaySet']['icon'] = array('lock','user-secret','users','link','globe');
+$g['displaySet']['label'] = array('','비공개','지정공개','미등록','회원공개','전체공개');
+$g['displaySet']['icon'] = array('','lock','user-secret','link','users','globe');
 
 // 모바일/데스크탑 분기
 if ($g['mobile'] && $_SESSION['pcmode'] != 'Y') {

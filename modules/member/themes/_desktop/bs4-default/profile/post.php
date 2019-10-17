@@ -5,8 +5,8 @@ $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $postque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
 if (!$_IS_PROFILEOWN) {
-	if ($my['uid']) $postque .= ' and display = 2 or display = 4';  // 회원공개와 전체공개 포스트 출력
-	else $postque .= ' and display = 4'; // 전체공개 포스트만 출력
+	if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
+	else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
 }
 
 if ($sort == 'gid' && !$keyword) {
@@ -133,7 +133,7 @@ switch ($sort) {
 								<?php endif; ?>
 
 								<?php if ($_IS_PROFILEOWN): ?>
-								<span class="badge badge-secondary"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
+								<span class="badge badge-secondary"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 								<?php endif; ?>
 
 							</div>

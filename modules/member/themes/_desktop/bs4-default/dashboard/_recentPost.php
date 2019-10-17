@@ -8,6 +8,12 @@ $totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
 $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
+
+$_postque = 'mbruid='.$my['uid'].' and site='.$s.' and auth=1';
+$_NUM = getDbRows($table['postmember'],$_postque);
+$_RCD=getDbArray($table['postmember'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
+while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
+
 ?>
 
 <section class="widget-post-card-01">
@@ -24,14 +30,9 @@ $lack_card_num = $total_card_num;
 
   </header>
 
+  <?php if ($_NUM): ?>
   <div class="row gutter-half" data-role="post-list">
-
-    <?php
-      $_RCD=getDbArray($table['postmember'],'mbruid='.$my['uid'].' and site='.$s,'*','gid','asc',$wdgvar['limit'],1);
-      while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
-      $i=0;foreach($RCD as $R):$i++;
-    ?>
-
+    <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="col">
       <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
 
@@ -66,4 +67,10 @@ $lack_card_num = $total_card_num;
     <?php endif?>
 
   </div>  <!-- /.row -->
+  <?php else: ?>
+  <div class="text-center text-muted small py-5 border">
+    포스트가 없습니다.
+  </div>
+  <?php endif; ?>
+
 </section><!-- /.widget -->

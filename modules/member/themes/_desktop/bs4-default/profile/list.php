@@ -5,8 +5,8 @@ $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $listque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
 if (!$_IS_PROFILEOWN) {
-	if ($my['uid']) $listque .= ' and display = 2 or display = 4';  // 회원공개와 전체공개 포스트 출력
-	else $listque .= ' and display = 4'; // 전체공개 포스트만 출력
+	if ($my['uid']) $listque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
+	else $listque .= ' and display = 5'; // 전체공개 포스트만 출력
 }
 
 if ($where && $keyword)
@@ -87,7 +87,7 @@ $lack_card_num = $total_card_num;
 							<?php if(getNew($R['d_last'],12)):?><small class="text-danger">new</small><?php endif?>
 
 							<?php if ($_IS_PROFILEOWN): ?>
-							<span class="badge badge-secondary ml-2 align-top"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
+							<span class="badge badge-secondary ml-2 align-top"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 							<?php endif; ?>
 						</p>
 

@@ -29,6 +29,11 @@
   border-radius: 0;
 }
 
+.dropdown-item .fa {
+  margin-left: -10px;
+  margin-right: 5px
+}
+
 .input-group .form-control:focus {
   border-color: #ced4da;
   outline: 0;

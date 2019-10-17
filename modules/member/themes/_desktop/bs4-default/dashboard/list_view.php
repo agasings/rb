@@ -138,22 +138,22 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 					<ul class="dd-list list-unstyled" style="margin-top: -1rem">
 
 						<?php $_i=1;foreach($RCD as $R):?>
-						<li class="media mt-4 serial dd-item" data-id="<?php echo $_i?>">
+						<li class="media mt-2 serial dd-item bg-light p-3" data-id="<?php echo $_i?>">
 							<input type="checkbox" name="listmembers[]" value="<?php echo $R['uid']?>" checked class="d-none">
-							<span class="dd-handle px-3  align-self-center">
+							<span class="dd-handle pr-3  align-self-center">
 								<i class="fa fa-arrows" aria-hidden="true"></i>
 							</span>
-							<strong class="counter mr-3 f18  align-self-center"></strong>
 							<a href="<?php echo getPostLink($R,1) ?>" class="position-relative mr-3" target="_blank">
-								<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
+								<img src="<?php echo getPreviewResize(getUpImageSrc($R),'130x72') ?>" alt="">
 								<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
 							</a>
 
 							<div class="media-body">
-								<h5 class="my-1">
+								<h6 class="my-1">
 									<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
-								</h5>
+								</h6>
 								<div class="mb-1">
+									<span class="badge badge-secondary"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 									<ul class="list-inline d-inline-block ml-2 f13 text-muted">
 										<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 										<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
@@ -216,16 +216,25 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 				<div class="dropdown-menu dropdown-menu-right shadow py-0" style="width:300px;line-height: 1.2">
 
 					<div class="list-group list-group-flush">
-						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="globe" data-display="4">
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==5?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][5] ?>" data-display="5">
 							<div class="media align-items-center">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3"></i>
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-2x mr-3"></i>
 								<div class="media-body">
-									<span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
+									<span data-heading><?php echo $g['displaySet']['label'][5] ?></span><br>
 									<small data-description>모든 사용자가 검색하고 볼 수 있음</small>
 								</div>
 							</div>
 						</button>
-						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="link" data-display="3">
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][4] ?>" data-display="4">
+							<div class="media align-items-center">
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3" aria-hidden="true"></i>
+								<div class="media-body">
+									<span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
+									<small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
+								</div>
+							</div>
+						</button>
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][3] ?>" data-display="3">
 							<div class="media align-items-center">
 								<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-2x mr-3" aria-hidden="true"></i>
 								<div class="media-body">
@@ -234,20 +243,11 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 								</div>
 							</div>
 						</button>
-						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="users" data-display="2">
+						<button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][1] ?>" data-display="1">
 							<div class="media align-items-center">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-2x mr-3" aria-hidden="true"></i>
+								<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
 								<div class="media-body">
-									<span data-heading><?php echo $g['displaySet']['label'][2] ?></span><br>
-									<small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
-								</div>
-							</div>
-						</button>
-						<button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="lock" data-display="0">
-							<div class="media align-items-center">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][0] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
-								<div class="media-body">
-									<span data-heading><?php echo $g['displaySet']['label'][0] ?></span><br>
+									<span data-heading><?php echo $g['displaySet']['label'][1] ?></span><br>
 									<small data-description>나만 볼수 있음</small>
 								</div>
 							</div>

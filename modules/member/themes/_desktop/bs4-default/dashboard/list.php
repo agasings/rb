@@ -64,21 +64,33 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s))?></small>
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						<?php echo $g['displaySet']['label'][4] ?>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][5] ?>
+						</span>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=5'))?></small>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][4] ?>
+						</span>
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=4'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						<?php echo $g['displaySet']['label'][3] ?>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][3] ?>
+						</span>
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=3'))?></small>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						<?php echo $g['displaySet']['label'][2] ?>
-						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=2'))?></small>
-					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
-						<?php echo $g['displaySet']['label'][0] ?>
-						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=0'))?></small>
+					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+						<span>
+							<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
+							<?php echo $g['displaySet']['label'][1] ?>
+						</span>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=1'))?></small>
 					</a>
 				</div>
 			</div>
@@ -106,9 +118,9 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 			<ul class="dd-list list-unstyled" style="margin-top: -1rem">
 
 				<?php $_i=1;while($R=db_fetch_array($RCD)):?>
-			  <li class="media align-items-center my-4 serial dd-item" data-id="<?php echo $_i?>">
+			  <li class="media align-items-center my-3 serial dd-item bg-light p-3" data-id="<?php echo $_i?>">
 					<input type="checkbox" name="listmembers[]" value="<?php echo $R['uid']?>" checked class="d-none">
-					<span class="dd-handle px-3">
+					<span class="dd-handle pr-3">
 						<i class="fa fa-arrows" aria-hidden="true"></i>
 					</span>
 					<strong class="counter mr-3 f18"></strong>
@@ -135,10 +147,34 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 								<?php endfor?>
 							</span>
 							<?php endif; ?>
-							<span class="badge badge-secondary"><?php echo $R['display']!=4?$g['displaySet']['label'][$R['display']]:'' ?></span>
 						</div>
 			    </div>
-					<div class="ml-3">
+					<div class="ml-3 align-self-center form-inline">
+
+						<div class="dropdown mr-2">
+							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 7.67rem">
+								<?php echo $g['displaySet']['label'][$R['display']] ?>
+							</button>
+							<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
+								<a class="dropdown-item<?php echo $R['display']==5?' active':'' ?>" href="">
+									<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
+									<?php echo $g['displaySet']['label'][5] ?>
+								</a>
+								<a class="dropdown-item<?php echo $R['display']==4?' active':'' ?>" href="">
+									<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
+									<?php echo $g['displaySet']['label'][4] ?>
+								</a>
+								<a class="dropdown-item<?php echo $R['display']==3?' active':'' ?>" href="">
+									<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
+									<?php echo $g['displaySet']['label'][3] ?>
+								</a>
+								<a class="dropdown-item<?php echo $R['display']==1?' active':'' ?>" href="">
+									<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
+									<?php echo $g['displaySet']['label'][1] ?>
+								</a>
+							</div>
+						</div>
+
 						<div class="dropdown">
 							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
 								관리
@@ -151,6 +187,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 								<a class="dropdown-item" href="<?php echo getListLink($R,0) ?>" target="_blank">보기</a>
 							</div>
 						</div>
+
 					</div>
 			  </li>
 			<?php $_i++;endwhile?>
