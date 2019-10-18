@@ -5,23 +5,24 @@ include_once $svfile;
 
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 201 ? $recnum : 20;
+$recnum	= $recnum && $recnum < 201 ? $recnum : 15;
+$where = 'name|tag';
 $listque	= 'mbruid='.$my['uid'].' and site='.$s;
 
-if ($where && $keyw)
-{
+if ($display) $listque .= ' and display='.$display;
+
+if ($where && $keyword) {
 	if (strstr('[id]',$where)) $listque .= " and ".$where."='".$keyw."'";
-	else $listque .= getSearchSql($where,$keyw,$ikeyword,'or');
+	else $listque .= getSearchSql($where,$keyword,$ikeyword,'or');
 }
 
 $RCD = getDbArray($table['postlist'],$listque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['postlist'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
-if ($c) $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-else $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m=post',array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['bbs']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['post_reset'];
+$g['post_reset']	= RW('mod=dashboard&page=list');
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$where?'where':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['post_list'];
 $g['post_orign'] = $g['post_reset'];
 $g['post_view']	= $g['post_list'].'&amp;uid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
@@ -29,7 +30,6 @@ $g['post_modify']= $g['post_write'].'&amp;uid=';
 $g['post_reply']	= $g['post_write'].'&amp;reply=Y&amp;uid=';
 $g['post_action']= $g['post_list'].'&amp;a=';
 $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
-
 ?>
 
 <div class="container">
@@ -50,61 +50,72 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 
 	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
-		<div class="form-inline ml-auto">
+		<form name="toolbarForm" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page='.$page):$g['s']?>" method="get"  class="form-inline ml-auto">
+
+			<?php if (!$GLOBALS['_HS']['rewrite']): ?>
+			<input type="hidden" name="r" value="<?php echo $r?>">
+			<input type="hidden" name="mod" value="dashboard">
+			<?php endif; ?>
+
+			<input type="hidden" name="page" value="<?php echo $page ?>">
+			<input type="hidden" name="display" value="<?php echo $display?>">
 
 			<label class="mt-1 mr-2 sr-only">상태</label>
-			<div class="dropdown">
+			<div class="dropdown" data-role="display">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					상태 : 전체
+					상태 : <?php echo $display?$g['displaySet']['label'][$display]:'전체' ?>
 				</a>
 
 				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
+					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo !$display?' active':'' ?>" type="button">
 						전체
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s))?></small>
-					</a>
+					</button>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==5?' active':'' ?>" data-value="5" type="button">
 						<span>
 							<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
 							<?php echo $g['displaySet']['label'][5] ?>
 						</span>
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=5'))?></small>
-					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+					</button>
+					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==4?' active':'' ?>" data-value="4" type="button">
 						<span>
 							<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
 							<?php echo $g['displaySet']['label'][4] ?>
 						</span>
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=4'))?></small>
-					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+					</button>
+					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==3?' active':'' ?>" data-value="3" type="button">
 						<span>
 							<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
 							<?php echo $g['displaySet']['label'][3] ?>
 						</span>
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=3'))?></small>
-					</a>
-					<a class="dropdown-item d-flex justify-content-between align-items-center" href="">
+					</button>
+					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==1?' active':'' ?>" data-value="1" type="button">
 						<span>
 							<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
 							<?php echo $g['displaySet']['label'][1] ?>
 						</span>
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=1'))?></small>
-					</a>
+					</button>
 				</div>
 			</div>
 
 			<div class="input-group ml-2">
-			  <input type="text" class="form-control" placeholder="리스트명 검색">
+			  <input type="text" name="keyword" class="form-control" placeholder="리스트명 검색" value="<?php echo $keyword ?>">
 			  <div class="input-group-append">
-			    <button class="btn btn-white text-muted border-left-0" type="button">
+					<button class="btn btn-white text-muted border-left-0" type="submit">
 						<i class="fa fa-search" aria-hidden="true"></i>
 					</button>
+					<?php if ($keyword): ?>
+					<a href="<?php echo RW('mod=dashboard&page='.$page)?>" class="btn btn-white">초기화</a>
+					<?php endif; ?>
 			  </div>
 			</div>
 
-		</div><!-- /.form-inline -->
+		</form><!-- /.form-inline -->
 	</div><!-- /.d-flex -->
 
 	<form id="nestableForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>">
@@ -115,7 +126,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 		<input type="hidden" name="a" value="modifygid">
 
 		<div class="dd" id="nestable-list">
-			<ul class="dd-list list-unstyled" style="margin-top: -1rem">
+			<ul class="dd-list list-unstyled" style="margin-top: -1rem" data-plugin="markjs">
 
 				<?php $_i=1;while($R=db_fetch_array($RCD)):?>
 			  <li class="media align-items-center my-3 serial dd-item bg-light p-3" data-id="<?php echo $_i?>">
@@ -338,8 +349,17 @@ $(document).ready(function() {
 		modal.find('[data-toggle="dropdown"]').html(label);
 	});
 
+	// 툴바
+	$('[name="toolbarForm"] .dropdown-item').click(function(){
+		var form = $('[name="toolbarForm"]');
+		var value = $(this).attr('data-value');
+		var role = $(this).closest('.dropdown').attr('data-role');
+		form.find('[name="'+role+'"]').val(value)
+		form.submit();
+	});
 
-
+	// marks.js
+	$('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
 
 });
 

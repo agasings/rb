@@ -39,8 +39,8 @@ if ($sort == 'gid' && !$keyword) {
 $TPG = getTotalPage($NUM,$recnum);
 
 $m = 'post';
-$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
+$g['post_reset']	= RW('mod=dashboard&page=post');
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$where?'where':'',$keyword?'keyword':''));
 $g['pagelink']	= $g['post_list'];
 $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
@@ -76,16 +76,16 @@ switch ($sort) {
 
 	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
-		<form name="toolbarForm" action="<?php echo $g['s']?>/" method="get" class="form-inline ml-auto">
+		<form name="toolbarForm" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page='.$page):$g['s']?>" method="get" class="form-inline ml-auto">
 
-		   <input type="hidden" name="r" value="<?php echo $r?>">
-		   <input type="hidden" name="mod" value="dashboard">
-			 <input type="hidden" name="page" value="post">
-			 <input type="hidden" name="sort" value="<?php echo $sort?>">
-			 <input type="hidden" name="display" value="<?php echo $display?>">
-			 <input type="hidden" name="recnum" value="<?php echo $recnum?>">
+			<?php if (!$GLOBALS['_HS']['rewrite']): ?>
+			<input type="hidden" name="r" value="<?php echo $r?>">
+			<input type="hidden" name="mod" value="dashboard">
+			<?php endif; ?>
 
-
+			<input type="hidden" name="page" value="<?php echo $page ?>">
+			<input type="hidden" name="sort" value="<?php echo $sort?>">
+			<input type="hidden" name="display" value="<?php echo $display?>">
 
 			<div class="dropdown mr-2" data-role="sort">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -112,7 +112,7 @@ switch ($sort) {
 			</div>
 
 			<label class="sr-only">상태</label>
-			<div class="dropdown"  data-role="display">
+			<div class="dropdown" data-role="display">
 				<a class="btn btn-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					상태 : <?php echo $display?$g['displaySet']['label'][$display]:'전체' ?>
 				</a>
@@ -169,7 +169,7 @@ switch ($sort) {
 						<i class="fa fa-search" aria-hidden="true"></i>
 					</button>
 					<?php if ($keyword): ?>
-					<a href="<?php echo RW('mod=dashboard&page=post')?>" class="btn btn-white">초기화</a>
+					<a href="<?php echo RW('mod=dashboard&page='.$page)?>" class="btn btn-white">초기화</a>
 					<?php endif; ?>
 			  </div>
 			</div>
@@ -182,7 +182,6 @@ switch ($sort) {
 		<input type="hidden" name="m" value="<?php echo $m?>" />
 		<input type="hidden" name="front" value="<?php echo $front?>" />
 		<input type="hidden" name="a" value="" />
-
 
 		<ul class="list-unstyled" style="margin-top: -1rem" data-plugin="markjs">
 			<?php foreach($RCD as $R):?>
@@ -290,7 +289,6 @@ switch ($sort) {
 
 		</ul>
 
-
 		<div class="d-flex justify-content-between my-4">
 			<div class=""></div>
 
@@ -344,13 +342,11 @@ $(document).ready(function() {
 
 	// 툴바
 	$('[name="toolbarForm"] .dropdown-item').click(function(){
-
 		var form = $('[name="toolbarForm"]');
 		var value = $(this).attr('data-value');
 		var role = $(this).closest('.dropdown').attr('data-role');
 		form.find('[name="'+role+'"]').val(value)
 		form.submit();
-
 	});
 
 	// marks.js
