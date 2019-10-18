@@ -993,7 +993,7 @@ function getListImageSrc($list) {
 }
 
 // 포스트의 조회권한 여부
-function getPostPerm($R) {
+function checkPostPerm($R) {
   global $table,$my;
   $m='post';
 	switch ($R['display']) {
@@ -1019,6 +1019,24 @@ function getPostPerm($R) {
 		default:
 			$perm = false;
 			break;
+	}
+ return $perm;
+}
+
+// 포스트의 수정권한 여부
+function checkPostOwner($R) {
+  global $table,$my;
+  $m='post';
+	switch ($R['display']) {
+		case '1':
+			if ($my['admin'] || ($R['mbruid']==$my['uid'])) $perm = true;
+			else $perm = false;
+			break;
+		default:
+			$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and auth=1 and level=1');
+			if ($my['admin'] || $_IS_POSTOWN ) $perm = true;
+			else $perm = false;
+		break;
 	}
  return $perm;
 }

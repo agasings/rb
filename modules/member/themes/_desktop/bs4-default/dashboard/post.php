@@ -5,7 +5,7 @@ include_once $svfile;
 
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 10;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $where = 'subject|review';
 $postque = 'site='.$s;
 
@@ -188,15 +188,18 @@ switch ($sort) {
 			<?php foreach($RCD as $R):?>
 		  <li class="media mt-4">
 
-				<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="position-relative mr-3">
-					<img class="border" src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
-					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
+				<a href="<?php echo checkPostOwner($R)?RW('m=post&mod=write&cid='.$R['cid']):getPostLink($R,1) ?>" class="position-relative mr-3" <?php echo !checkPostOwner($R)?'target="_blank"':'' ?>>
+					<img class="border" src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="">
+					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
 				</a>
 
 		    <div class="media-body">
 		      <h5 class="my-1">
-						<a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="font-weight-light muted-link" ><?php echo $R['subject']?></a>
+						<a href="<?php echo checkPostOwner($R)?RW('m=post&mod=write&cid='.$R['cid']):getPostLink($R,1) ?>" class="font-weight-light muted-link" <?php echo !checkPostOwner($R)?'target="_blank"':'' ?>>
+							<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
+						</a>
 					</h5>
+					<?php if (checkPostPerm($R)): ?>
 					<div class="mb-1">
 						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
@@ -224,11 +227,16 @@ switch ($sort) {
 						</span>
 
 					</div>
+					<?php else: ?>
+						<p class="text-muted py-3">
+							이 포스트에 대한 액세스 권한이 없습니다.
+						</p>
+					<?php endif; ?>
 		    </div>
 				<div class="ml-3 align-self-center form-inline">
 
 					<div class="dropdown mr-2" data-toggle="display" data-uid="<?php echo $R['uid'] ?>">
-						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 7.67rem">
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 7.67rem"<?php echo !checkPostOwner($R)?' disabled':'' ?>>
 							<?php echo $g['displaySet']['label'][$R['display']] ?>
 						</button>
 						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
@@ -256,7 +264,7 @@ switch ($sort) {
 					</div>
 
 					<div class="dropdown">
-						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem">
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 5rem"<?php echo !checkPostOwner($R)?' disabled':'' ?>>
 							관리
 						</button>
 						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">

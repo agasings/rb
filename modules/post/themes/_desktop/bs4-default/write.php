@@ -142,7 +142,7 @@
             </div>
           </div>
 
-          <div data-role="display" class="d-none">
+          <fieldset data-role="display" class="d-none"<?php echo $my['uid']!=$R['mbruid']?' disabled':'' ?>>  
             <span class="d-block mt-4 small text-muted">공유 설정</span>
             <ul class="list-group list-group-flush f13 mt-1 border-bottom">
               <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
@@ -261,9 +261,9 @@
 
                     </span>
                     <?php if ($MBR['memberuid']!=$R['mbruid']): ?>
-                    <a href="#" class="text-reset ml-2" title="제외" data-act="delete" data-mbruid="<?php echo $MBR['memberuid'] ?>" data-post="<?php echo $R['uid'] ?>">
+                    <button class="btn btn-link p-0 text-reset ml-2 align-middle" title="제외" data-act="delete" data-mbruid="<?php echo $MBR['memberuid'] ?>" data-post="<?php echo $R['uid'] ?>">
                       &times;
-                    </a>
+                    </button>
                   <?php endif; ?>
                   </div>
 
@@ -279,7 +279,7 @@
               </div>
             </div><!-- /data-role="postmember" -->
 
-          </div><!-- /data-role="display" -->
+          </fieldset><!-- /data-role="display" -->
 
           <?php endif; ?>
 

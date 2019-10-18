@@ -597,6 +597,11 @@ figure.media oembed iframe {
   background-color: #eff3f6;
 }
 
+.btn-white:disabled {
+  background-color: #eee;
+  color: #999;
+}
+
 .btn-light {
   color: #24292e;
   user-select: none;

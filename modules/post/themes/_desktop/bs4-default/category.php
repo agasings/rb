@@ -63,18 +63,18 @@
 			<li class="media my-4">
 				<?php if ($R['featured_img']): ?>
 				<a href="<?php echo getPostLink($R,0) ?>" class="position-relative mr-3">
-					<img src="<?php echo getPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="">
-					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getPostPerm($R)?getUpImageTime($R):'' ?></time>
+					<img src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="">
+					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
 				</a>
 				<?php endif; ?>
 
 				<div class="media-body">
 					<h5 class="mt-0 mb-1">
 						<a class="muted-link" href="<?php echo getPostLink($R,0) ?>">
-							<?php echo getPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
+							<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
 						</a>
 					</h5>
-					<?php if (getPostPerm($R)): ?>
+					<?php if (checkPostPerm($R)): ?>
 					<div class="mb-1">
 						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>

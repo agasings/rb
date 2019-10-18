@@ -7,7 +7,7 @@ $result['error'] = false;
 $R = getUidData($table[$m.'data'],$uid);
 if (!$R['uid']) getLink('','','존재하지 않는 포스트입니다.','');
 
-if (!getPostPerm($R)) {
+if (!checkPostPerm($R)) {
   getLink('','','잘못된 접근입니다.','');
 }
 

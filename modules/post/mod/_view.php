@@ -1,7 +1,7 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-if (!getPostPerm($R)) {
+if (!checkPostPerm($R)) {
 	$mod = '_404';
 	$d['post']['isperm'] = false;
 }

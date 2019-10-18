@@ -24,7 +24,7 @@ if ($uid) {
   $R = getUidData($table[$m.'data'],$uid);
 	if (!$R['uid']) getLink('','','존재하지 않는 포스트입니다.','');
 
-  if (!getPostPerm($R)) {
+  if (!checkPostPerm($R)) {
     getLink('','','잘못된 접근입니다.','');
   }
 
@@ -163,7 +163,6 @@ if($attachLink) {
 		getDbUpdate($table['s_link'],"module='".$m."',entry='".$NOWUID."' ",'uid='.$val);
 	}
 }
-
 
 // 태그 등록 함수 실행 - lib/action.func.php 참조
 if ($tag || $R['tag']) RegisPostTag($tag,$R,$m,$B['uid'],$reply,$NOWUID);

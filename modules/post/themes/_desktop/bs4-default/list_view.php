@@ -35,17 +35,17 @@ $lack_card_num = $total_card_num;
 		<div class="card">
 			<?php if ($R['featured_img']): ?>
 			<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>" class="position-relative">
-				<img src="<?php echo getPostPerm($R)?getPreviewResize(getUpImageSrc($R),'320x180'):getPreviewResize('/files/noimage.png','320x180') ?>" class="img-fluid" alt="">
-				<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getPostPerm($R)?getUpImageTime($R):'' ?></time>
+				<img src="<?php echo checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'320x180'):getPreviewResize('/files/noimage.png','320x180') ?>" class="img-fluid" alt="">
+				<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
 			</a>
 			<?php endif; ?>
 			<div class="card-body p-3">
 				<h5 class="card-title h6 mb-1 line-clamp-2">
 					<a class="muted-link" href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>">
-						<?php echo getPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
+						<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
 					</a>
 				</h5>
-				<?php if (getPostPerm($R)): ?>
+				<?php if (checkPostPerm($R)): ?>
 				<ul class="list-inline f13 text-muted mb-0">
 					<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 					<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
