@@ -199,3 +199,7 @@
 .rb-post-write [name="subject"]:hover {
   border-color: #ced4da
 }
+
+.rb-post-write fieldset:disabled button {
+  opacity: 0
+}

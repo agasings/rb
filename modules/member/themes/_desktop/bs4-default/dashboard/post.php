@@ -6,7 +6,7 @@ include_once $svfile;
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
-$where = 'subject|review';
+$where = 'subject|review|tag';
 $postque = 'site='.$s;
 
 if ($display) $postque .= ' and display='.$display;
@@ -163,7 +163,7 @@ switch ($sort) {
 			</div>
 
 			<div class="input-group ml-2">
-			  <input type="text" name="keyword" class="form-control" placeholder="제목,요약 검색" value="<?php echo $keyword ?>">
+			  <input type="text" name="keyword" class="form-control" placeholder="제목,요약,태그 검색" value="<?php echo $keyword ?>">
 			  <div class="input-group-append">
 			    <button class="btn btn-white text-muted border-left-0" type="submit">
 						<i class="fa fa-search" aria-hidden="true"></i>
@@ -184,7 +184,7 @@ switch ($sort) {
 		<input type="hidden" name="a" value="" />
 
 
-		<ul class="list-unstyled" style="margin-top: -1rem">
+		<ul class="list-unstyled" style="margin-top: -1rem" data-plugin="markjs">
 			<?php foreach($RCD as $R):?>
 		  <li class="media mt-4">
 
@@ -352,6 +352,9 @@ $(document).ready(function() {
 		form.submit();
 
 	});
+
+	// marks.js
+	$('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
 
 
 });

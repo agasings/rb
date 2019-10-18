@@ -117,6 +117,9 @@ if (!$my['uid']) getLink('/','','','');
 	</main>
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	
+	<!-- markjs js : https://github.com/julmot/mark.js -->
+	<?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
 
   <script type="text/javascript">
 
