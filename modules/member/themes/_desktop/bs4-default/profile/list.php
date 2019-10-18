@@ -112,7 +112,7 @@ $lack_card_num = $total_card_num;
 
 			<?php if(!$NUM):?>
 			<div class="d-flex align-items-center justify-content-center" style="height: 40vh">
-				<div class="text-muted">포스트가 없습니다.</div>
+				<div class="text-muted">리스트가 없습니다.</div>
 			</div>
 			<?php endif?>
 

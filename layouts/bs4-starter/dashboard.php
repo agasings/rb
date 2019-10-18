@@ -28,7 +28,7 @@ if (!$my['uid']) getLink('/','','','');
 				<ul class="navbar-nav">
 				<?php if ($my['uid']): ?>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo RW('m=post&mod=write')?>">새 포스트</a>
+						<a class="nav-link text-primary" href="<?php echo RW('m=post&mod=write')?>">새 포스트</a>
 					</li>
 					<li class="nav-item dropdown js-tooltip mr-2" title="알림" id="navbarPopoverNoti">
 						<a class="nav-link notification-indicator" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

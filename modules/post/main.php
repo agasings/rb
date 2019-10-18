@@ -24,6 +24,28 @@ $_perm = array();
 if ($cat) $mod='category';
 
 if ($cid) {
+
+  $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
+  $_POSTMBR = getDbData($table[$m.'members'],'mbruid='.$my['uid'].' and data='.$R['uid'],'*');
+
+  $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid']);
+  $_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=1');
+
+  $_perm['post_member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
+  $_perm['post_owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
+  $_perm['post_write'] =  $_POSTMBR['auth'];
+
+
+  // 로그인한 사용자가 게시물에 좋아요/싫어요를 했는지 여부 체크
+  $check_like_qry = "mbruid='".$my['uid']."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
+  $check_dislike_qry = "mbruid='".$my['uid']."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";
+  $is_liked = getDbRows($table['s_opinion'],$check_like_qry);
+  $is_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
+
+  // 로그인한 사용자가 게시물을 저장했는지 여부 체크
+  $check_saved_qry = "mbruid='".$my['uid']."' and module='".$m."' and entry='".$R['uid']."'";
+  $is_saved = getDbRows($table['s_saved'],$check_saved_qry);
+
   $mod = $mod ? $mod : 'view';
 	include_once $g['dir_module'].'mod/_view.php';
 }
@@ -51,25 +73,8 @@ switch ($mod) {
   break;
 
   case 'write' :
-  if (!$my['uid']) getLink('/','','','');
-
   // 수정권한 체크
-  if (!$my['admin'] && !strstr(','.($d['post']['admin']?$d['post']['admin']:'.').',',','.$my['id'].','))
-	{
-		if ($d['post']['perm_l_write'] > $my['level'] || strpos('_'.$d['post']['perm_g_write'],'['.$my['mygroup'].']'))
-		{
-			$g['main'] = $g['dir_module'].'mod/_permcheck.php';
-			$d['bbs']['isperm'] = false;
-		}
-		if ($R['uid'] && $reply != 'Y')
-		{
-			if ($my['uid'] != $R['mbruid'])
-			{
-				 if (!strpos('_'.$_SESSION['module_'.$m.'_pwcheck'],'['.$R['uid'].']')) $g['main'] = $g['dir_module'].'mod/_pwcheck.php';
-			}
-		}
-	}
-
+  if ($cid &&!$_perm['post_owner']) getLink('','','접근권한이 없습니다.','-1');
 
   if (!$g['mobile']||$_SESSION['pcmode']=='Y') {
     $layoutArr = explode('/',$d['post']['layout']);

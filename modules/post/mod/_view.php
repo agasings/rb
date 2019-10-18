@@ -1,16 +1,6 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-$R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
-$_POSTMBR = getDbData($table[$m.'members'],'mbruid='.$my['uid'].' and data='.$R['uid'],'*');
-
-$_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid']);
-$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid'].' and level=1');
-
-$_perm['post_member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
-$_perm['post_owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
-$_perm['post_write'] =  $_POSTMBR['auth'];
-
 if (!getPostPerm($R)) {
 	$mod = '_404';
 	$d['post']['isperm'] = false;

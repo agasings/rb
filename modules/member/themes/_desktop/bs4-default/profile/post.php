@@ -38,9 +38,7 @@ switch ($sort) {
 	case 'comment' : $sort_txt='댓글순';break;
 	default        : $sort_txt='최신순';break;
 }
-
 ?>
-
 
 <div class="page-wrapper row">
 	<div class="col-3 page-nav">

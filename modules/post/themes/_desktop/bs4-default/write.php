@@ -6,6 +6,7 @@
   <input type="hidden" name="category_members" value="">
   <input type="hidden" name="list_members" value="">
   <input type="hidden" name="upload" id="upfilesValue" value="<?php echo $R['upload']?>">
+  <input type="hidden" name="member" value="<?php echo $R['member']?>">
   <input type="hidden" name="featured_img" value="<?php echo $R['featured_img'] ?>">
   <input type="hidden" name="html" value="HTML">
   <input type="hidden" name="display">
@@ -223,7 +224,7 @@
 
                 <?php foreach($MBR_RCD as $MBR): ?>
                 <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
-
+                  <input type="hidden" name="postmembers[]" value="[<?php echo $MBR['memberuid'] ?>]">
                   <div class="media">
                     <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
 
@@ -236,13 +237,9 @@
                   <div class="pr-3">
                     <span class="f12 text-muted">
 
-
-
-
                       <?php if ($MBR['memberuid']==$R['mbruid']): ?>
                       소유자
                       <?php else: ?>
-
 
                         <div class="dropdown d-inline-block align-middle ">
                           <button class="badge badge-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -294,27 +291,26 @@
             <?php include $g['dir_module_skin'].'_uploader.php'?>
           </div>
 
-
         </div>
         <div class="tab-pane" id="advan" role="tabpanel" aria-labelledby="link-tab">
 
-          <ul class="list-group mb-4">
+          <ul class="list-group mb-4 text-muted">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              댓글 허용
+              <span><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i> 댓글 사용</span>
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="use_comment" value="1" id="use_comment"<?php echo $R['dis_comment']?'':' checked' ?>>
                 <label class="custom-control-label" for="use_comment"></label>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              좋아요 허용
+              <span><i class="fa fa-heart-o fa-fw" aria-hidden="true"></i> 좋아요 사용</span>
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="use_like" value="1" id="use_like"<?php echo $R['dis_like']?'':' checked' ?>>
                 <label class="custom-control-label" for="use_like"></label>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              평점 허용
+              <span><i class="fa fa-star-half-o fa-fw" aria-hidden="true"></i> 평점 사용</span>
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="use_rating" value="1" id="use_rating"<?php echo $R['dis_rating']?'':' checked' ?>>
                 <label class="custom-control-label" for="use_rating"></label>
@@ -322,10 +318,8 @@
             </li>
           </ul>
 
-          <div class="card mb-4">
-            <div class="card-header">
-              카테고리
-            </div>
+          <strong class="d-block small text-muted pb-2">카테고리</strong>
+          <div class="card mb-2 border-0 border-top" style="margin-left: -1rem;margin-right: -1rem">
             <div class="card-body pt-2 pb-0">
               <?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>true,'dispHidden'=>false,'dispCheckbox'=>true,'allOpen'=>true)?>
               <?php echo getTreePostCategoryCheck($_treeOptions,$R['uid'],0,0,'')?>
@@ -333,10 +327,32 @@
           </div>
 
           <?php if ($cid): ?>
-          <dl class="row mt-5 f13">
-            <dt class="col-3">생성일시 :</dt>
-            <dd class="col-9"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></dd>
-          </dl>
+
+          <label class="small text-muted">수정이력</label>
+
+          <table class="table table-sm text-center text-muted f12 mb-0">
+            <thead>
+              <tr>
+                <th scope="col">수정자</th>
+                <th scope="col">수정일시</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php $array = explode('<s>',$R['log']); ?>
+            <?php foreach ($array as $val): ?>
+            <?php
+            if ($val=='') continue;
+      			$valx = explode('|',$val);
+            ?>
+            <tr>
+              <td><?php echo $valx[0] ?></td>
+              <td><?php echo $valx[1] ?></td>
+            <tr>
+            <?php endforeach; ?>
+            </tbody>
+          </table>
+
+
           <?php endif; ?>
 
         </div>

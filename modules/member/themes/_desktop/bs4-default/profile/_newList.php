@@ -11,8 +11,8 @@ $lack_card_num = $total_card_num;
 $listque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
 if (!$_IS_PROFILEOWN) {
-  if ($my['uid']) $listque .= ' and display = 2 or display = 4';  // 회원공개와 전체공개 포스트 출력
-	else $listque .= ' and display = 4'; // 전체공개 포스트만 출력
+  if ($my['uid']) $listque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
+	else $listque .= ' and display = 5'; // 전체공개 포스트만 출력
 }
 
 $_RCD=getDbArray($table['postlist'],$listque,'*','gid','asc',$wdgvar['limit'],1);

@@ -95,6 +95,16 @@ function writeCheck(f) {
     $('input[name="upload"]').val(new_upfiles);
   }
 
+  // 공유회원 uid 를 members 값에 추가하기
+  var postmembers=$('input[name="postmembers[]"]').map(function(){return $(this).val()}).get();
+  var new_members='';
+  if(postmembers){
+    for(var i=0;i<postmembers.length;i++) {
+      new_members+=postmembers[i];
+    }
+    $('input[name="member"]').val(new_members);
+  }
+
   checkUnload = false;
   $('[data-role="postsubmit"]').attr( 'disabled', true );
 
@@ -102,6 +112,7 @@ function writeCheck(f) {
   var uid = form.find('[name="uid"]').val();
   var category_members = form.find('[name="category_members"]').val();
   var list_members = form.find('[name="list_members"]').val();
+  var member = form.find('[name="member"]').val();
   var upload = form.find('[name="upload"]').val();
   var featured_img = form.find('[name="featured_img"]').val();
   var html = form.find('[name="html"]').val();
@@ -122,6 +133,7 @@ function writeCheck(f) {
         uid : uid,
         category_members : category_members,
         list_members : list_members,
+        member : member,
         upload : upload,
         featured_img : featured_img,
         html : html,
@@ -153,7 +165,7 @@ function writeCheck(f) {
     form.find('[name="dis_rating"]').val(dis_rating);
     form.find('[name="dis_like"]').val(dis_like);
     form.find('[name="dis_comment"]').val(dis_comment);
-    
+
     setTimeout(function(){
       getIframeForAction(f);
       f.submit()
