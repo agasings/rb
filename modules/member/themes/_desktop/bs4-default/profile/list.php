@@ -6,10 +6,8 @@ $listque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
 if ($sort != 'gid') $orderby= 'desc';
 
-if (!$_IS_PROFILEOWN) {
-	if ($my['uid']) $listque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
-	else $listque .= ' and display = 5'; // 전체공개 포스트만 출력
-}
+if ($my['uid']) $listque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
+else $listque .= ' and display = 5'; // 전체공개 포스트만 출력
 
 if ($where && $keyword)
 {

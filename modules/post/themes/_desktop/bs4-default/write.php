@@ -229,7 +229,8 @@
                     <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
 
                     <div class="media-body align-self-center">
-                      <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>     <br>
+                      <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>
+                      <br>
                       <span class="text-muted"><?php echo $MBR['email'] ?></span>
                     </div>
                   </div>
@@ -241,9 +242,11 @@
                       소유자
                       <?php else: ?>
 
+                        <span class="badge badge-pill badge-light"><?php echo $MBR['level']==1?'수정가능':'' ?></span>
+
                         <div class="dropdown d-inline-block align-middle ">
-                          <button class="badge badge-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <?php echo $MBR['level']==1?'수정가능':'보기가능' ?>
+                          <button class="btn btn-link text-reset" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                           </button>
                           <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item<?php echo $MBR['level']==1?' active':'' ?>" href="#">
@@ -254,17 +257,18 @@
                               <i class="fa fa-eye fa-fw" aria-hidden="true"></i>
                               보기 가능
                             </a>
+                            <?php if ($MBR['memberuid']!=$R['mbruid']): ?>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" type="button" data-act="delete" data-mbruid="<?php echo $MBR['memberuid'] ?>" data-post="<?php echo $R['uid'] ?>">
+                              제외
+                            </button>
+                            <?php endif; ?>
                           </div>
                         </div>
 
                       <?php endif; ?>
 
                     </span>
-                    <?php if ($MBR['memberuid']!=$R['mbruid']): ?>
-                    <button class="btn btn-link p-0 text-reset ml-2 align-middle" title="제외" data-act="delete" data-mbruid="<?php echo $MBR['memberuid'] ?>" data-post="<?php echo $R['uid'] ?>">
-                      &times;
-                    </button>
-                  <?php endif; ?>
                   </div>
 
                 </li>

@@ -64,19 +64,24 @@
 		<?php include $g['dir_module_skin'].'_view_attach.php'?>
 	</section>
 
-	<!-- 포스트 소유자멤버 -->
+	<!-- 포스트 멤버 -->
 	<div class="list-group">
-	<?php foreach($MBR_RCD as $MBR): ?>
-	<a href="<?php echo getProfileLink($MBR['memberuid']) ?>" class="list-group-item list-group-item-action media">
-		<img class="rounded-circle mr-3" src="<?php echo getAvatarSrc($MBR['memberuid'],'50') ?>" width="50" height="50" alt="<?php echo $MBR['name'] ?>">
-    <div class="media-body">
-      <h5 class="mt-0 mb-1"><?php echo $MBR[$_HS['nametype']] ?></h5>
-      <small><?php echo $MBR['bio'] ?>.
-    </div>
-	</a>
-	<?php endforeach?>
+		<?php
+			$MEMBERS = getArrayString($R['member']);
+			foreach($MEMBERS['data'] as $_val):
+			$M = getDbData($table['s_mbrdata'],'memberuid='.$_val,'*');
+		?>
+		<?php if ($M['memberuid']): ?>
+		<a href="<?php echo getProfileLink($_val) ?>" class="list-group-item list-group-item-action media">
+			<img class="rounded-circle mr-3" src="<?php echo getAvatarSrc($_val,'50') ?>" width="50" height="50" alt="<?php echo $M['name'] ?>">
+	    <div class="media-body">
+	      <h5 class="mt-0 mb-1"><?php echo $M[$_HS['nametype']] ?></h5>
+	      <small><?php echo $M['bio'] ?>
+	    </div>
+		</a>
+		<?php endif; ?>
+		<?php endforeach?>
 	</div>
-
 
 	<footer class="d-flex justify-content-between align-items-center my-5 d-print-none">
 		<div class="btn-group">
