@@ -315,7 +315,7 @@ $(document).ready(function() {
 	//공개상태 변경 dropdown
 	$('[data-toggle="display"] .dropdown-item').click(function(){
     var button = $(this)
-		var dropdown = button.closest('[data-toggle="sort"]');
+		var dropdown = button.closest('[data-toggle="display"]');
     var display = button.attr('data-display');
 		var uid = dropdown.attr('data-uid');
 		var label = button.attr('data-label');
@@ -334,7 +334,6 @@ $(document).ready(function() {
 					alert(status);
 				}
 		});
-
   });
 
 	// 툴바

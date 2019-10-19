@@ -164,27 +164,27 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 			    </div>
 					<div class="ml-3 align-self-center form-inline">
 
-						<div class="dropdown mr-2">
+						<div class="dropdown mr-2" data-toggle="display" data-uid="<?php echo $R['uid'] ?>">
 							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 7.67rem">
 								<?php echo $g['displaySet']['label'][$R['display']] ?>
 							</button>
 							<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
-								<a class="dropdown-item<?php echo $R['display']==5?' active':'' ?>" href="">
+								<button class="dropdown-item<?php echo $R['display']==5?' active':'' ?>" type="button" data-display="5" data-label="<?php echo $g['displaySet']['label'][5] ?>">
 									<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
 									<?php echo $g['displaySet']['label'][5] ?>
-								</a>
-								<a class="dropdown-item<?php echo $R['display']==4?' active':'' ?>" href="">
+								</button>
+								<button class="dropdown-item<?php echo $R['display']==4?' active':'' ?>" type="button" data-display="4" data-label="<?php echo $g['displaySet']['label'][4] ?>">
 									<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
 									<?php echo $g['displaySet']['label'][4] ?>
-								</a>
-								<a class="dropdown-item<?php echo $R['display']==3?' active':'' ?>" href="">
+								</button>
+								<button class="dropdown-item<?php echo $R['display']==3?' active':'' ?>" type="button" data-display="3" data-label="<?php echo $g['displaySet']['label'][3] ?>">
 									<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
 									<?php echo $g['displaySet']['label'][3] ?>
-								</a>
-								<a class="dropdown-item<?php echo $R['display']==1?' active':'' ?>" href="">
+								</button>
+								<button class="dropdown-item<?php echo $R['display']==1?' active':'' ?>" type="button" data-display="1" data-label="<?php echo $g['displaySet']['label'][1] ?>">
 									<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
 									<?php echo $g['displaySet']['label'][1] ?>
-								</a>
+								</button>
 							</div>
 						</div>
 
@@ -337,6 +337,31 @@ $(document).ready(function() {
 		setTimeout(function(){
 			form.submit()
 		}, 500);
+	});
+
+	//공개상태 변경 dropdown
+	$('[data-toggle="display"] .dropdown-item').click(function(){
+		var button = $(this)
+		var dropdown = button.closest('[data-toggle="display"]');
+		var display = button.attr('data-display');
+		var uid = dropdown.attr('data-uid');
+		var label = button.attr('data-label');
+
+		dropdown.find('.dropdown-item').removeClass('active');
+		button.addClass('active');
+		dropdown.find('.dropdown-toggle').text(label);
+
+		$.post(rooturl+'/?r='+raccount+'&m=post&a=regis_list',{
+			uid : uid,
+			display : display,
+			type : 'display'
+			},function(response,status){
+				if(status=='success'){
+					$.notify({message: '공개상태가 변경되었습니다.'},{type: 'success'});
+				} else {
+					alert(status);
+				}
+		});
 	});
 
 	// 새 리스트 모달 내부 공개범위 설정 dropdown

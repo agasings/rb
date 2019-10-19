@@ -4,10 +4,12 @@ if(!defined('__KIMS__')) exit;
 $result=array();
 $result['error'] = false;
 
+if (!$uid || !$display ) getLink('','','잘못된 접근입니다.','');
+
 $R = getUidData($table[$m.'data'],$uid);
 
 if (!$R['uid']) getLink('','','존재하지 않는 포스트입니다.','');
-if (!checkPostOwner($R)) getLink('','','잘못된 접근입니다.','');
+if (!checkPostOwner($R)) getLink('','','권한이 없습니다.','');
 
 $hidden = $display==1 || $display==2?1:0;
 $d_modify =$date['totime']; // 수정 등록일
