@@ -10,10 +10,8 @@ $lack_card_num = $total_card_num;
 
 $postque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
-if (!$_IS_PROFILEOWN) {
-	if ($my['uid']) $postque .= ' and display > 3';  // 회원공개 포스트와 전체공개 포스트 출력
-	else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
-}
+if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
+else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
 
 $_RCD=getDbArray($table['postmember'],$postque,'*','gid','asc',$wdgvar['limit'],1);
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
@@ -49,9 +47,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
             </a>
           </h6>
           <time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
-					<?php if ($_IS_PROFILEOWN): ?>
-					<span class="badge badge-light"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
-					<?php endif; ?>
+          <span class="badge badge-light"><?php echo  checkPostOwner($R) && $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
         </div>
 
       </div><!-- /.card -->

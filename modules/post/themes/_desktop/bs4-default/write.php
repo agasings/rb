@@ -142,7 +142,7 @@
             </div>
           </div>
 
-          <fieldset data-role="display" class="d-none"<?php echo $my['uid']!=$R['mbruid']?' disabled':'' ?>>  
+          <fieldset data-role="display" class="d-none"<?php echo $my['uid']!=$R['mbruid']?' disabled':'' ?>>
             <span class="d-block mt-4 small text-muted">공유 설정</span>
             <ul class="list-group list-group-flush f13 mt-1 border-bottom">
               <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
@@ -587,8 +587,7 @@ $(document).ready(function() {
   $('[data-role="postsubmit"]').click(function(){
     checkUnload = false; //페이지 이탈시 경고창 미출력
     $('[data-toggle="tooltip"]').tooltip('hide');
-    var f = document.writeForm;
-    writeCheck(f)
+    savePost(document.writeForm)
   });
 
   $('[data-act="list-add-submit"]').click(function(e){
@@ -636,8 +635,9 @@ $(document).ready(function() {
   $('[data-role="display"] .dropdown-menu .list-group-item').click(function(){
     var button = $(this)
     var display = button.attr('data-display');
-    showSaveButton(true); // 저장버튼 출력
     setPostDisplay(display) // 공개상태 변경
+    showSaveButton(true); // 저장버튼 출력
+    $('[data-role="postsubmit"]').click(); // 저장
   });
 
   // 퀵메뉴 단축키 지원
@@ -645,7 +645,7 @@ $(document).ready(function() {
     if ((e.metaKey || e.ctrlKey) && ( String.fromCharCode(e.which).toLowerCase() === 'm') ) {
       $('[data-role="postsubmit"]').removeClass('d-none');
       $('[data-role="library"]').addClass('d-none');
-      $('[data-role="postsubmit"]').click(); // 저장 (ctl+k)
+      $('[data-role="postsubmit"]').click(); // 저장
     }
   });
 

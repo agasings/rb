@@ -24,9 +24,7 @@ if ($uid) {
   $R = getUidData($table[$m.'data'],$uid);
 	if (!$R['uid']) getLink('','','존재하지 않는 포스트입니다.','');
 
-  if (!checkPostPerm($R)) {
-    getLink('','','잘못된 접근입니다.','');
-  }
+  if (!checkPostOwner($R)) getLink('','','잘못된 접근입니다.','');
 
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>'.$R['log'];
   $QVAL1 = "subject='$subject',review='$review',content='$content',tag='$tag',display='$display',hidden='$hidden',";

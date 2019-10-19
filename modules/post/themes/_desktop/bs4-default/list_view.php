@@ -30,8 +30,6 @@ $lack_card_num = $total_card_num;
 
 		<?php $i=0;foreach($RCD as $R):$i++?>
 
-
-
 		<div class="card">
 			<?php if ($R['featured_img']): ?>
 			<a href="<?php echo getPostLink($R,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$listid ?>" class="position-relative">
@@ -55,7 +53,9 @@ $lack_card_num = $total_card_num;
 					<?php echo getDateFormat($R['d_regis'],'Y.m.d')?>
 				</time>
 				<?php if(getNew($R['d_regis'],$d['post']['newtime'])):?><span class="rb-new ml-1"></span><?php endif?>
+				<span class="badge badge-secondary ml-2"><?php echo checkPostOwner($R) && $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 				<?php endif; ?>
+
 			</div><!-- /.card-body -->
 		</div><!-- /.card -->
 

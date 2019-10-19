@@ -36,7 +36,8 @@ if ($sort == 'gid' && !$keyword  && !$listid) {
 
 	if ($where && $keyword) {
 
-		if (!$my['uid']) $_WHERE .= ' and display<>4';
+		if (!$my['uid']) $_WHERE .= ' and display=5';
+		else $_WHERE .= ' and display>3';
 
 		if (strpos('[nic][id][ip]',$where)) $_WHERE .= " and ".$where."='".$keyword."'";
 		else if ($where == 'term') $_WHERE .= " and d_regis like '".$keyword."%'";

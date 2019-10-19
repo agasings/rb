@@ -1,8 +1,10 @@
 <?php
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 15;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 3;
 $listque = 'mbruid='.$_MP['uid'].' and site='.$s;
+
+if ($sort != 'gid') $orderby= 'desc';
 
 if (!$_IS_PROFILEOWN) {
 	if ($my['uid']) $listque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
@@ -25,6 +27,12 @@ $total_card_num = $totalCardDeck*$c_recnum;// 총 출력되야 할 card 갯수(�
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
 
+switch ($sort) {
+	case 'd_regis'     : $sort_txt='생성순';break;
+	case 'd_last'   : $sort_txt='수정순';break;
+	default        : $sort_txt='기본';break;
+}
+
 ?>
 
 <div class="page-wrapper row">
@@ -43,34 +51,58 @@ $lack_card_num = $total_card_num;
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 				</div>
 
-				<div class="">
-					<div class="dropdown d-inline">
+				<form name="listsearchf" action="<?php echo $_HS['rewrite']?'./'.$page:$g['s'].'/' ?>" method="get" class="form-inline">
+
+					<input type="hidden" name="r" value="<?php echo $r?>" />
+					<?php if($_mod):?>
+					<input type="hidden" name="mod" value="<?php echo $_mod?>" />
+					<?php else:?>
+					<input type="hidden" name="m" value="<?php echo $m?>" />
+					<input type="hidden" name="front" value="<?php echo $front?>" />
+					<?php endif?>
+					<input type="hidden" name="page" value="<?php echo $page?>" />
+					<input type="hidden" name="sort" value="<?php echo $sort?>" />
+					<input type="hidden" name="orderby" value="<?php echo $orderby?>" />
+					<input type="hidden" name="recnum" value="<?php echo $recnum?>" />
+					<input type="hidden" name="type" value="<?php echo $type?>" />
+					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
+					<input type="hidden" name="skin" value="<?php echo $skin?>" />
+					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+
+					<div class="dropdown" data-role="sort">
 						<a class="btn btn-white btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							정열 : 기본
+							정열 : <?php echo $sort_txt ?>
 						</a>
 
 						<div class="dropdown-menu shadow-sm" style="min-width: 85px;">
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+							<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $sort=='gid'?' active':'' ?>" type="button" data-value="gid">
 								기본
-							</a>
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+							</button>
+							<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $sort=='d_regis'?' active':'' ?>" type="button" data-value="d_regis">
 								생성순
-							</a>
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="#">
+							</button>
+							<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $sort=='d_last'?' active':'' ?>" type="button" data-value="d_last">
 								수정순
-							</a>
+							</button>
 						</div>
 					</div>
 
-					<?php if ($_IS_PROFILEOWN): ?>
-					<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm">관리</a>
+					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control form-control-sm ml-2" placeholder="제목 또는 태그 검색">
+					<button class="btn btn-white btn-sm ml-1" type="submit">검색</button>
+
+					<?php if ($keyword): ?>
+					<a class="btn btn-light btn-sm ml-1" href="<?php echo getProfileLink($_MP['uid']).$para_str.$page ?>">리셋</a>
 					<?php endif; ?>
 
-				</div>
+					<?php if ($_IS_PROFILEOWN): ?>
+					<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-light btn-sm ml-2 text-danger">관리</a>
+					<?php endif; ?>
+
+				</form>
 
 			</header>
 
-			<div class="card-deck">
+			<div class="card-deck" data-plugin="markjs">
 
 				<?php $i=0;while($R=db_fetch_array($RCD)):$i++?>
 				<div class="card border-0">
@@ -90,8 +122,6 @@ $lack_card_num = $total_card_num;
 							<span class="badge badge-secondary ml-2 align-top"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 							<?php endif; ?>
 						</p>
-
-
 			    </div>
 				</div><!-- /.card -->
 
@@ -116,37 +146,14 @@ $lack_card_num = $total_card_num;
 			</div>
 			<?php endif?>
 
-			<footer class="d-flex justify-content-between align-items-center my-4">
+			<footer class="d-flex justify-content-center align-items-center my-4">
+
+				<?php if ($NUM > $recnum): ?>
 		    <ul class="pagination mb-0">
 					<?php $_N =  '/@'.$mbrid.'?page='.$page.'&' ?>
 	        <?php echo getPageLink(10,$p,$TPG,$_N)?>
 		    </ul>
-
-				<form name="bbssearchf" action="<?php echo $g['s']?>/" class="form-inline">
-					<input type="hidden" name="r" value="<?php echo $r?>" />
-					<?php if($_mod):?>
-					<input type="hidden" name="mod" value="<?php echo $_mod?>" />
-					<?php else:?>
-					<input type="hidden" name="m" value="<?php echo $m?>" />
-					<input type="hidden" name="front" value="<?php echo $front?>" />
-					<?php endif?>
-					<input type="hidden" name="page" value="<?php echo $page?>" />
-					<input type="hidden" name="sort" value="<?php echo $sort?>" />
-					<input type="hidden" name="orderby" value="<?php echo $orderby?>" />
-					<input type="hidden" name="recnum" value="<?php echo $recnum?>" />
-					<input type="hidden" name="type" value="<?php echo $type?>" />
-					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
-					<input type="hidden" name="skin" value="<?php echo $skin?>" />
-					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
-
-					<select name="where" class="form-control custom-select">
-						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
-						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
-					</select>
-
-					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control ml-2">
-					<button class="btn btn-light ml-2" type="submit" name="button">검색</button>
-				</form>
+				<?php endif; ?>
 
 		  </footer>
 
@@ -154,3 +161,24 @@ $lack_card_num = $total_card_num;
 
 	</div><!-- /.page-main -->
 </div><!-- /.page-wrapper -->
+
+<script>
+
+$( document ).ready(function() {
+
+	// 툴바
+	$('[name="listsearchf"] .dropdown-item').click(function(){
+		var form = $('[name="listsearchf"]');
+		var value = $(this).attr('data-value');
+		var role = $(this).closest('.dropdown').attr('data-role');
+		form.find('[name="'+role+'"]').val(value)
+		form.submit();
+	});
+
+	// marks.js
+	$('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
+
+});
+
+
+</script>

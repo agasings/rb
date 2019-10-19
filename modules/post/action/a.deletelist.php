@@ -27,6 +27,6 @@ getDbUpdate($table['s_mbrdata'],'num_list=num_list-1','memberuid='.$R['mbruid'])
 getDbDelete($table[$m.'list'],'uid='.$R['uid']); // 리스트 삭제
 getDbDelete($table[$m.'list_index'],'list='.$R['uid']);//인덱스삭제
 
-setrawcookie('list_action_result', rawurlencode('리스트가 삭제 되었습니다.|danger'));  // 처리여부 cookie 저장
+setrawcookie('list_action_result', rawurlencode('리스트가 삭제 되었습니다.|success'));  // 처리여부 cookie 저장
 getLink(RW('mod=dashboard&page=list') ,'parent.' , $alert , $history);
 ?>

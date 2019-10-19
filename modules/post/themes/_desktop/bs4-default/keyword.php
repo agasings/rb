@@ -12,17 +12,18 @@
 		<?php if ($R['featured_img']): ?>
 
 			<a href="<?php echo getPostLink($R,0) ?>" class="position-relative mr-3">
-				<img src="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" alt="">
-				<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
+				<img src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="">
+				<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
 			</a>
 		<?php endif; ?>
 
 		<div class="media-body">
 			<h5 class="mt-0 mb-1">
 				<a href="<?php echo getPostLink($R,0) ?>">
-					<?php echo $R['subject']?>
+					<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
 				</a>
 			</h5>
+			<?php if (checkPostPerm($R)): ?>
 			<div class="text-muted mb-1"><?php echo $R['review']?></div>
 			<div class="mb-1">
 				<ul class="list-inline d-inline-block ml-2 f13 text-muted">
@@ -45,8 +46,13 @@
 					</a>
 					<?php endfor?>
 				</span>
+				<span class="badge badge-secondary ml-2"><?php echo checkPostOwner($R) && $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 			</div>
-
+			<?php else: ?>
+			<div class="text-muted py-3">
+				이 포스트에 대한 액세스 권한이 없습니다.
+			</div>
+			<?php endif; ?>
 		</div>
 
 	</li>

@@ -23,6 +23,9 @@
 <?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
 <?php getImport('jquery-timeago','locales/jquery.timeago.ko','1.6.7','js')?>
 
+<!-- markjs js : https://github.com/julmot/mark.js -->
+<?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
+
 <!-- 댓글출력시 필요 -->
 <?php if ($g['broswer']!='MSIE 11' && $g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 9'): ?>
   <?php if ($mod!='write'): ?>

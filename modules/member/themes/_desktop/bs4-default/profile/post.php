@@ -1,13 +1,11 @@
 <?php
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 15;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 2;
 $postque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
-if (!$_IS_PROFILEOWN) {
-	if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
-	else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
-}
+if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
+else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
 
 if ($sort == 'gid' && !$keyword) {
 
@@ -51,42 +49,72 @@ switch ($sort) {
 
 		<section>
 
-			<header class="d-flex justify-content-between align-items-center mt-3 mb-2">
+			<header class="d-flex justify-content-between align-items-center my-3">
 				<div>
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 				</div>
 
-				<div class="form-inline">
+				<form name="postsearchf" method="get" action="<?php echo $_HS['rewrite']?'./'.$page:$g['s'].'/' ?>" class="form-inline">
 
-					<div class="dropdown">
+					<?php if ($_HS['rewrite']): ?>
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<?php else: ?>
+					<input type="hidden" name="r" value="<?php echo $r?>">
+					<?php if($_mod):?>
+					<input type="hidden" name="mod" value="<?php echo $_mod?>">
+					<?php else:?>
+					<input type="hidden" name="m" value="<?php echo $m?>">
+					<input type="hidden" name="front" value="<?php echo $front?>">
+					<?php endif?>
+					<input type="hidden" name="page" value="<?php echo $page?>">
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<input type="hidden" name="orderby" value="<?php echo $orderby?>">
+					<input type="hidden" name="recnum" value="<?php echo $recnum?>">
+					<input type="hidden" name="type" value="<?php echo $type?>" />
+					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+					<?php endif; ?>
+
+					<div class="dropdown" data-role="sort">
 						<a class="btn btn-white btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							정열 : <?php echo $sort_txt ?>
 						</a>
 						<div class="dropdown-menu shadow-sm" style="min-width: 100px;">
-							<button class="dropdown-item<?php echo $sort=='gid'?' active':'' ?>" type="button" data-sort="gid">
+							<button class="dropdown-item<?php echo $sort=='gid'?' active':'' ?>" type="button" data-value="gid">
 								최신순
 							</button>
-							<button class="dropdown-item<?php echo $sort=='hit'?' active':'' ?>" type="button" data-sort="hit">
+							<button class="dropdown-item<?php echo $sort=='hit'?' active':'' ?>" type="button" data-value="hit">
 								조회순
 							</button>
-							<button class="dropdown-item<?php echo $sort=='likes'?' active':'' ?>" type="button" data-sort="likes">
+							<button class="dropdown-item<?php echo $sort=='likes'?' active':'' ?>" type="button" data-value="likes">
 								추천순
 							</button>
-							<button class="dropdown-item<?php echo $sort=='comment'?' active':'' ?>" type="button" data-sort="comment">
+							<button class="dropdown-item<?php echo $sort=='comment'?' active':'' ?>" type="button" data-value="comment">
 								댓글순
 							</button>
 						</div>
 					</div>
 
-					<?php if ($_IS_PROFILEOWN): ?>
-					<a href="<?php echo RW('mod=dashboard&page=post')?>" class="btn btn-white btn-sm ml-2">관리</a>
+					<select name="where" class="form-control custom-select custom-select-sm ml-3">
+						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
+						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
+					</select>
+
+					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control form-control-sm ml-1">
+					<button class="btn btn-white btn-sm ml-1" type="submit">검색</button>
+
+					<?php if ($keyword): ?>
+					<a class="btn btn-light btn-sm ml-1" href="<?php echo getProfileLink($_MP['uid']).$para_str.$page ?>">리셋</a>
 					<?php endif; ?>
 
-				</div><!-- /.form-inline -->
+					<?php if ($_IS_PROFILEOWN): ?>
+					<a href="<?php echo RW('mod=dashboard&page='.$page)?>" class="btn btn-white text-danger btn-sm ml-2">관리</a>
+					<?php endif; ?>
+
+				</form><!-- /.form-inline -->
 
 			</header>
 
-			<ul class="list-unstyled" style="margin-top: -1rem">
+			<ul class="list-unstyled" data-plugin="markjs">
 
 				<?php foreach($RCD as $R):?>
 			  <li class="media mt-4">
@@ -130,12 +158,9 @@ switch ($sort) {
 								</span>
 								<?php endif; ?>
 
-								<?php if ($_IS_PROFILEOWN): ?>
-								<span class="badge badge-secondary"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
-								<?php endif; ?>
+								<span class="badge badge-secondary"><?php echo checkPostOwner($R) && $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 
 							</div>
-
 
 						</div>
 			    </div>
@@ -153,12 +178,12 @@ switch ($sort) {
 			</ul>
 
 
-			<div class="d-flex justify-content-between my-4">
+			<div class="d-flex justify-content-between mt-5">
 				<div class=""></div>
 
 				<?php if ($NUM > $recnum): ?>
 				<ul class="pagination mb-0">
-					<?php $_N =  $GLOBALS['_HS']['rewrite']?'./'.$page.'?sort='.$sort.'&':'' ?>
+					<?php $_N =  $_HS['rewrite']?'./'.$page.'?sort='.$sort.'&':'' ?>
 	        <?php echo getPageLink(10,$p,$TPG,$_N)?>
 				</ul>
 				<?php endif; ?>
@@ -166,44 +191,6 @@ switch ($sort) {
 				<div class="">
 				</div>
 			</div>
-
-			<footer class="d-flex justify-content-between align-items-center my-4">
-				<div class=""></div>
-				<form name="postsearchf" action="<?php echo $GLOBALS['_HS']['rewrite']?'./'.$page:$g['s'].'/' ?>" class="form-inline">
-
-					<?php if ($GLOBALS['_HS']['rewrite']): ?>
-					<input type="hidden" name="sort" value="<?php echo $sort?>">
-					<?php else: ?>
-					<input type="hidden" name="r" value="<?php echo $r?>">
-					<?php if($_mod):?>
-					<input type="hidden" name="mod" value="<?php echo $_mod?>">
-					<?php else:?>
-					<input type="hidden" name="m" value="<?php echo $m?>">
-					<input type="hidden" name="front" value="<?php echo $front?>">
-					<?php endif?>
-					<input type="hidden" name="page" value="<?php echo $page?>">
-					<input type="hidden" name="sort" value="<?php echo $sort?>">
-					<input type="hidden" name="orderby" value="<?php echo $orderby?>">
-					<input type="hidden" name="recnum" value="<?php echo $recnum?>">
-					<input type="hidden" name="type" value="<?php echo $type?>" />
-					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
-					<?php endif; ?>
-
-
-					<select name="where" class="form-control custom-select">
-						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
-						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
-					</select>
-
-					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control ml-2">
-					<button class="btn btn-light ml-2" type="submit">검색</button>
-
-					<?php if ($keyword): ?>
-					<a class="btn btn-light ml-1" href="<?php echo getProfileLink($_MP['uid']).$para_str.$page ?>">리셋</a>
-					<?php endif; ?>
-				</form>
-				<div class=""></div>
-		  </footer>
 
 		</section>
 
@@ -215,14 +202,17 @@ switch ($sort) {
 
 $( document ).ready(function() {
 
-	$('[data-sort]').click(function(){
-		var sort =  $(this).attr('data-sort');
-		var form =  $('[name="postsearchf"]')
-
-		$('[name="where"],[name="keyword"]').remove();
-		form.find('[name="sort"]').val(sort)
+	// 툴바
+	$('[name="postsearchf"] .dropdown-item').click(function(){
+		var form = $('[name="postsearchf"]');
+		var value = $(this).attr('data-value');
+		var role = $(this).closest('.dropdown').attr('data-role');
+		form.find('[name="'+role+'"]').val(value)
 		form.submit();
 	});
+
+	// marks.js
+	$('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
 
 });
 

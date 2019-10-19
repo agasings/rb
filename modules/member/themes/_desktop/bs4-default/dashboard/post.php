@@ -39,9 +39,9 @@ if ($sort == 'gid' && !$keyword) {
 $TPG = getTotalPage($NUM,$recnum);
 
 $m = 'post';
-$g['post_reset']	= RW('mod=dashboard&page=post');
+$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($skin?'skin':'',$iframe?'iframe':''));
 $g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['post_list'];
+$g['pagelink']	= RW('mod=dashboard&page='.$page).$g['post_list'];
 $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
 $g['post_modify']= $g['post_write'].'&amp;cid=';
@@ -312,7 +312,7 @@ putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
 
 $(document).ready(function() {
 
-	//정렬 dropdown
+	//공개상태 변경 dropdown
 	$('[data-toggle="display"] .dropdown-item').click(function(){
     var button = $(this)
 		var dropdown = button.closest('[data-toggle="sort"]');
@@ -326,13 +326,10 @@ $(document).ready(function() {
 
 		$.post(rooturl+'/?r='+raccount+'&m=post&a=change_display',{
 			uid : uid,
-			display : display,
-			type : 'post'
+			display : display
 			},function(response,status){
 				if(status=='success'){
 					$.notify({message: '공개상태가 변경되었습니다.'},{type: 'success'});
-
-
 				} else {
 					alert(status);
 				}
@@ -351,7 +348,6 @@ $(document).ready(function() {
 
 	// marks.js
 	$('[data-plugin="markjs"]').mark("<?php echo $keyword ?>");
-
 
 });
 

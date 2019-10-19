@@ -23,7 +23,7 @@ function showSaveButton(changed) {
   }
 }
 
-function writeCheck(f) {
+function savePost(f) {
 
   if (submitFlag == true) {
 		alert('포스트를 등록하고 있습니다. 잠시만 기다려 주세요.');

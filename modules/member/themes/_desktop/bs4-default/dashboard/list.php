@@ -20,9 +20,10 @@ $RCD = getDbArray($table['postlist'],$listque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['postlist'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$g['post_reset']	= RW('mod=dashboard&page=list');
+$m = 'post';
+$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($skin?'skin':'',$iframe?'iframe':''));
 $g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['post_list'];
+$g['pagelink']	= RW('mod=dashboard&page='.$page).$g['post_list'];
 $g['post_orign'] = $g['post_reset'];
 $g['post_view']	= $g['post_list'].'&amp;uid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
@@ -50,6 +51,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 
 	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
+
 		<form name="toolbarForm" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page='.$page):$g['s']?>" method="get"  class="form-inline ml-auto">
 
 			<?php if (!$GLOBALS['_HS']['rewrite']): ?>
@@ -104,7 +106,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 			</div>
 
 			<div class="input-group ml-2">
-			  <input type="text" name="keyword" class="form-control" placeholder="리스트명 검색" value="<?php echo $keyword ?>">
+			  <input type="text" name="keyword" class="form-control" placeholder="이름,태그 검색" value="<?php echo $keyword ?>">
 			  <div class="input-group-append">
 					<button class="btn btn-white text-muted border-left-0" type="submit">
 						<i class="fa fa-search" aria-hidden="true"></i>
@@ -193,7 +195,6 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 							<div class="dropdown-menu dropdown-menu-right shadow-sm"  style="min-width: 5rem">
 								<a class="dropdown-item" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" >수정</a>
 								<a class="dropdown-item" href="<?php echo $g['post_list_delete'].$R['uid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
-								<a class="dropdown-item disabled" href="#">공개</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="<?php echo getListLink($R,0) ?>" target="_blank">보기</a>
 							</div>
