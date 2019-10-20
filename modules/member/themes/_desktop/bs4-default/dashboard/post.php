@@ -76,9 +76,9 @@ switch ($sort) {
 
 	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
-		<form name="toolbarForm" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page='.$page):$g['s']?>" method="get" class="form-inline ml-auto">
+		<form name="toolbarForm" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page='.$page):$g['s'].'/'?>" method="get" class="form-inline ml-auto">
 
-			<?php if (!$GLOBALS['_HS']['rewrite']): ?>
+			<?php if (!$_HS['rewrite']): ?>
 			<input type="hidden" name="r" value="<?php echo $r?>">
 			<input type="hidden" name="mod" value="dashboard">
 			<?php endif; ?>

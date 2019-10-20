@@ -27,10 +27,12 @@
 			</ul>
 
 			<?php if($d['layout']['header_search']=='true'):?>
-			<form class="form-inline my-2 my-lg-0 mr-3" action="<?php echo $g['s']?>/" role="search">
+			<form class="form-inline my-2 my-lg-0 mr-3" action="<?php echo $_HS['rewrite']? RW('m=search'):$g['s'].'/'?>" role="search">
+				<?php if (!$_HS['rewrite']): ?>
 				<input type="hidden" name="r" value="<?php echo $r ?>">
 				<input type="hidden" name="m" value="search">
-	      <input class="form-control mr-sm-2" type="search" placeholder="통합검색" aria-label="Search" name="keyword" value="<?php echo $_keyword ?>" >
+				<?php endif; ?>
+	      <input class="form-control mr-sm-2" type="search" placeholder="통합검색" aria-label="Search" name="q" value="<?php echo $q ?>" autocomplete="off">
 	    </form>
 			<?php endif?>
 

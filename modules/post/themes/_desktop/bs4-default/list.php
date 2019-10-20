@@ -53,14 +53,13 @@ $lack_card_num = $total_card_num;
 	<div class="card-deck">
 
 		<?php $i=0;foreach($RCD as $R):$i++?>
-		<?php $MBR = getDbData($table['s_mbrdata'],'memberuid='.$R['mbruid'],'*'); ?>
 		<div class="card mb-3">
 			<a href="<?php echo getListLink($R,0) ?>" class="position-relative">
 				<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" class="img-fluid" alt="">
 				<span class="list_mask">
 					<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
 				</span>
-				<img class="list_avatar border" src="<?php echo getAvatarSrc($R['mbruid'],'50') ?>" width="50" height="50" alt="<?php echo $MBR['name'] ?>">
+				<img class="list_avatar border" src="<?php echo getAvatarSrc($R['mbruid'],'50') ?>" width="50" height="50" alt="">
 			</a>
 
 			<div class="card-body pt-5 p-3">

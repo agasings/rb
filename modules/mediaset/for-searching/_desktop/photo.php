@@ -45,7 +45,7 @@ $_ResultArray['num'][$_key] = getDbRows($table['테이블명'],$sqlque); // 검�
 
 <?php
 $sqlque	= 'uid';
-$sqlque .= getSearchSql('name|alt|caption',$keyword,'','or'); // 파일명과 캡션 검색
+$sqlque .= getSearchSql('name|alt|caption',$q,'','or'); // 파일명과 캡션 검색
 
 if($_iscallpage):
 $RCD = getDbArray($table['s_upload'],$sqlque,'*','uid',$orderby,$d['search']['num'.($swhere=='all'?1:2)],$p);

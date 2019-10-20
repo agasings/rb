@@ -28,8 +28,8 @@ $g['img_module_skin'] = $g['url_module_skin'].'/images';
 $g['dir_module_mode'] = $g['dir_module_skin'].'main';
 $g['url_module_mode'] = $g['url_module_skin'].'/main';
 
-$g['url_reset']	= $g['s'].'/?r='.$r.'&amp;m='.$m;
-$g['url_where']	= $g['url_reset'].($sort?'&amp;sort='.$sort:'').($orderby?'&amp;sort='.$orderby:'').($keyword?'&amp;keyword='.urlencode($keyword):'').'&amp;swhere=';
+$g['url_reset']	= $_HS['rewrite']? RW('m=search'):$g['s'].'/?r='.$r.'&amp;m='.$m;
+$g['url_where']	= $g['url_reset'].($q?($_HS['rewrite']?'?':'&amp;').'q='.urlencode($q):'').($sort?'&amp;sort='.$sort:'').($orderby?'&amp;sort='.$orderby:'').'&amp;swhere=';
 
 $g['push_location'] = '<li class="active">'.$_HMD['name'].'</li>';
 

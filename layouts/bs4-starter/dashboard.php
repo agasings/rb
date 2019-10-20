@@ -20,7 +20,14 @@ if (!$my['uid']) getLink('/','','','');
 					<strong>대시보드</strong></a>
 			</span>
 
-			<input class="form-control w-50" type="search" placeholder="내 포스트 검색" aria-label="Search">
+			<form name="PostSearchForm" class="w-50" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page=post'):$g['s'].'/'?>"role="form" data-role="searchform">
+				<?php if (!$_HS['rewrite']): ?>
+				<input type="hidden" name="r" value="<?php echo $r?>">
+				<input type="hidden" name="mod" value="dashboard">
+				<?php endif; ?>
+				<input type="hidden" name="page" value="post">
+				<input class="form-control" name="keyword" type="search" placeholder="내 포스트 검색" aria-label="Search" data-plugin="autocomplete" value="<?php echo $keyword ?>">
+			</form>
 
 			<div class="">
 
@@ -116,21 +123,54 @@ if (!$my['uid']) getLink('/','','','');
 
 	</main>
 
+
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-	
+
+	<!-- jQuery-Autocomplete : https://github.com/devbridge/jQuery-Autocomplete -->
+	<?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>
+
   <script type="text/javascript">
 
   document.title = '대시보드 · <?php echo $my['nic'] ?> ';
 
-  $('body').on('click','[data-act="newNoti"]',function(){
-    var new_noti = getAjaxData('<?php echo $g['s']?>/?r=<?php echo $r?>&m=notification&a=notice_check&noticedata=Y');
-    $("#rb-alert-desk .alert").alert('close')
-    $("#rb-noti-timeline").prepend(new_noti)
-    $(".navbar").find('.mail-status').removeClass('unread')
-    $(".blankslate").addClass('d-none')
-    document.title = '킴스큐';
-    });
+	$( document ).ready(function() {
 
+	  $('body').on('click','[data-act="newNoti"]',function(){
+	    var new_noti = getAjaxData('<?php echo $g['s']?>/?r=<?php echo $r?>&m=notification&a=notice_check&noticedata=Y');
+	    $("#rb-alert-desk .alert").alert('close')
+	    $("#rb-noti-timeline").prepend(new_noti)
+	    $(".navbar").find('.mail-status').removeClass('unread')
+	    $(".blankslate").addClass('d-none')
+	    document.title = '킴스큐';
+	    });
+
+			$('[data-plugin="autocomplete"]').autocomplete({
+				width : 625,
+				lookup: function (query, done) {
+
+					 $.getJSON(rooturl+"/?m=post&a=search_data", {q: query}, function(res){
+							 var sg_post = [];
+							 var data_arr = res.postlist.split(',');//console.log(data.usernames);
+							 $.each(data_arr,function(key,post){
+								 var postData = post.split('|');
+								 var subject = postData[0];
+								 var cid = postData[1];
+								 sg_post.push({"value":subject,"data":cid});
+							 });
+							 var result = {
+								 suggestions: sg_post
+							 };
+								done(result);
+					 });
+			 },
+					onSelect: function (suggestion) {
+						if ($('[data-plugin="autocomplete"]').val().length >= 1) {
+							location.href = suggestion.data;
+						}
+					}
+			});
+
+		});
   </script>
 
 	<?php include $g['dir_layout'].'/_includes/component.php' ?>

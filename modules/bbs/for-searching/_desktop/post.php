@@ -39,7 +39,7 @@ $_ResultArray['num'][$_key] = getDbRows($table['테이블명'],$sqlque); // 검�
 
 <?php
 $sqlque	= 'uid';
-$sqlque .= getSearchSql('subject|content|tag',$keyword,'','or'); // 게시물 제목과 내용 검색
+$sqlque .= getSearchSql('subject|tag',$q,'','or'); // 게시물 제목과 내용 검색
 $orderby = 'desc';
 
 if($_iscallpage):

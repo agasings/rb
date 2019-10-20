@@ -5,7 +5,7 @@
 </head>
 <body class="rb-layout-full">
 
-	<main role="main" class="container-fluid">
+	<main role="main">
 		<?php include __KIMS_CONTENT__ ?>
 	</main><!-- /.container -->
 
