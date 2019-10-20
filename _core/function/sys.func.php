@@ -302,6 +302,7 @@ function RW($rewrite)
 		$rewrite = str_replace('m=post&mod=list_view','list',$rewrite);
 		$rewrite = str_replace('&mod=list_view&listid=','/list/',$rewrite);
 		$rewrite = str_replace('&listid=','/',$rewrite);
+		$rewrite = str_replace('m=search','search',$rewrite);
 		$rewrite = str_replace('m=post','post',$rewrite);
 		$rewrite = str_replace('&mod=write','/write',$rewrite);
 		$rewrite = str_replace('&mod=keyword&','/search?',$rewrite);
@@ -763,7 +764,7 @@ function getCoverSrc($mbruid,$width,$height){
 	$name=$_array[0];
 	$ext=$_array[1];
 	if ($M['cover']) $result=$g['s'].'/cover/'.$name.'_'.$width.'x'.$height.'.'.$ext;
-	else $result=$g['s'].'/files/cover/0.jpg';
+	else $result=$g['s'].'/files/cover/0_'.$width.'x'.$height.'.jpg';
 	return $result;
 }
 
