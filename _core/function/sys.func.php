@@ -752,7 +752,7 @@ function getAvatarSrc($mbruid,$size){
 	$ext=$_array[1];
 	$size=$size.'x'.$size;
 	if ($M['photo']) $result=$g['s'].'/avatar/'.$name.'_'.$size.'.'.$ext;
-	else $result=$g['s'].'/files/avatar/0.svg';
+	else $result=$g['s'].'/files/avatar/no_avatar.png';
 	return $result;
 }
 
