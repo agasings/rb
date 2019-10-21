@@ -170,12 +170,11 @@ if ($R['upload'])
 //태그삭제
 if ($R['tag'])
 {
-	$_tagdate = substr($R['d_regis'],0,8);
 	$_tagarr1 = explode(',',$R['tag']);
 	foreach($_tagarr1 as $_t)
 	{
 		if(!$_t) continue;
-		$_TAG = getDbData($table['s_tag'],"site=".$R['site']." and date='".$_tagdate."' and keyword='".$_t."'",'*');
+		$_TAG = getDbData($table['s_tag'],"site=".$R['site']." and keyword='".$_t."'",'*');
 		if($_TAG['uid'])
 		{
 			if($_TAG['hit']>1) getDbUpdate($table['s_tag'],'hit=hit-1','uid='.$_TAG['uid']);
