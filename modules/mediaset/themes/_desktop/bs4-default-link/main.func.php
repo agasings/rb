@@ -34,8 +34,13 @@ function getAttachPlatform($R,$mod,$featured_img_uid) {
       $thumbnail_url_parse = parse_url($R['src']);
       $thumbnail_url_arr = explode('//',$R['src']);
 
-      if ($R['provider']=='Google Maps') $thumbnail = $R['src'];
-      else $thumbnail = '/thumb'.($thumbnail_url_parse['scheme']=='https'?'-ssl':'').'/50x50/u/'.$thumbnail_url_arr[1];
+      if ($R['provider']=='Google Maps') {
+        $thumbnail = $R['src'];
+      } else if (strpos($R['src'], '?') !== false) {
+        $thumbnail = '/_core/opensrc/timthumb/thumb.php?src='.$R['src'].'&w=50&h=50&s=1';
+      } else {
+        $thumbnail = '/thumb'.($thumbnail_url_parse['scheme']=='https'?'-ssl':'').'/50x50/u/'.$thumbnail_url_arr[1];
+      }
 
       $insert_text='<video class=mejs-player img-responsive img-fluid  style=max-width:100% preload=none><source src=https://www.youtube.com/embed/'.$R['src'].' type=video/youtube></video>';
       $html='';
@@ -50,7 +55,7 @@ function getAttachPlatform($R,$mod,$featured_img_uid) {
                   $html.='<span class="badge badge-pill badge-warning '.($R['uid']==$featured_img_uid?'':'d-none').'" data-role="attachList-label-featured" data-id="'.$R['uid'].'">대표</span> ';
                   $html.='<span class="badge badge-pill badge-secondary '.(!$R['hidden']?'d-none':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
                   $html.='
-                   <a href="'.$R['linkurl'].'" target="_blank" class="title d-inline" data-role="attachList-list-name-'.$R['uid'].'" >'.($R['caption']?$R['caption']:$R['description']).'</a>
+                   <a href="'.$R['linkurl'].'" target="_blank" class="title d-inline" data-role="attachList-list-name-'.$R['uid'].'" >'.($R['caption']?getStrCut($R['caption'],45,'..'):getStrCut($R['description'],45,'..')).'</a>
                    <div class="meta"><span class="badge badge-pill badge-light">'.$R['provider'].'</span> <span class="badge badge-pill badge-light" data-role="attachList-list-time-'.$R['uid'].'">'.$R['time'].'</span></div>';
 
                    $html.='

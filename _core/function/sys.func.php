@@ -836,7 +836,14 @@ function getPreviewResize($src,$size){
 					$size='2048x1367';
 					break;
 			}
-			$result = '/thumb'.($thumbnail_url_parse['scheme']=='https'?'-ssl':'').'/'.$size.'/u/'.$thumbnail_url_arr[1];
+			if (strpos($src, 'maps.google.com') !== false) {
+				$result = $src;
+			} else if (strpos($src, '?') !== false) {
+				$_size = explode('x',$size);
+				$result = '/_core/opensrc/timthumb/thumb.php?src='.$src.'&w='.$_size[0].'&h='.$_size[1].'&s=1';
+			} else {
+				$result = '/thumb'.($thumbnail_url_parse['scheme']=='https'?'-ssl':'').'/'.$size.'/u/'.$thumbnail_url_arr[1];
+			}
 		} else {
 			$_array=explode('.',$src);
 		  $name=$_array[0];

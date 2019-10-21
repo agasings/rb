@@ -10,25 +10,25 @@
         <ul class="list-group list-group-horizontal text-center text-muted shadow-sm">
           <li class="list-group-item flex-fill">
             <small>포스트</small>
-            <span class="d-block display-4">
+            <span class="d-block h1 my-2">
               <?php echo number_format($my['num_post']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
             <small>리스트</small>
-            <span class="d-block display-4">
+            <span class="d-block h1 my-2">
               <?php echo number_format($my['num_list']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
             <small>총 조회</small>
-            <span class="d-block display-4">
+            <span class="d-block h1 my-2">
               <?php echo number_format($my['hit_post']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
             <small>총 좋아요</small>
-            <span class="d-block display-4">
+            <span class="d-block h1 my-2">
               <?php echo number_format($my['likes_post']) ?>
             </span>
           </li>

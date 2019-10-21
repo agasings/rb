@@ -18,7 +18,6 @@ $(document).ready(function() {
   });
 
   var check_url = $('#check_url');
-  var iframe_api_key = 'ad515293314b53d30d0e94';
 
   check_url.find(".btn").click(function(){
     var container = '#attach_link'
@@ -31,10 +30,23 @@ $(document).ready(function() {
       return false
     }
 
+    var link_url_parse = $('<a>', {href: url});
+
+    //네이버 블로그 URL의 실제 URL 변환
+    if ((link_url_parse.prop('hostname')=='blog.naver.com' || link_url_parse.prop('hostname')=='m.blog.naver.com' ) && link_url_parse.prop('pathname')) {
+      var nblog_path_arr = link_url_parse.prop('pathname').split("/");
+      var nblog_id = nblog_path_arr[1];
+      var nblog_pid = nblog_path_arr[2];
+      if (nblog_pid) {
+        var url =  'https://blog.naver.com/PostView.nhn?blogId='+nblog_id+'&logNo='+nblog_pid;
+      } else {
+        var url = 'https://blog.naver.com/PostList.nhn?blogId='+nblog_id;
+      }
+    }
+
     fieldset.attr('disabled',true)
 
-  	$.get('https://iframe.ly/api/oembed',{
-  			api_key : iframe_api_key,
+  	$.get('//embed.kimsq.com/oembed',{
   			url: url
   	}).done(function(response) {
         var type = response.type;
@@ -58,8 +70,7 @@ $(document).ready(function() {
 
         if (type=='video') {
 
-          $.get('https://iframe.ly/api/iframely',{
-        			api_key : iframe_api_key,
+          $.get('//embed.kimsq.com/iframely',{
         			url: url
         	}).done(function(response) {
               var duration = response.meta.duration;

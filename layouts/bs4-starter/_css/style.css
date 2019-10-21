@@ -628,6 +628,7 @@ figure.media oembed iframe {
   vertical-align: middle;
   cursor: pointer;
 }
+
 .btn-white:hover {
   border-color: #999;
   background-color: #eff3f6;
@@ -636,6 +637,12 @@ figure.media oembed iframe {
 .btn-white:disabled {
   background-color: #eee;
   color: #999;
+}
+
+.btn-white.active {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
 }
 
 .btn-light {
