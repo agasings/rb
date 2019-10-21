@@ -1,5 +1,5 @@
 <?php
-$wdgvar['limit'] = 3; //전체 출력수
+$wdgvar['limit'] = 9; //전체 출력수
 $wdgvar['recnum'] =3; //한 열에 출력할 카드 갯수
 $wdgvar['title'] ='최근 포스트';
 $wdgvar['link'] = RW('mod=dashboard&page=post');
@@ -35,9 +35,9 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
 
-      <a class="text-nowrap text-truncate muted-link position-relative " href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>">
+      <a class="text-nowrap text-truncate muted-link position-relative " href="<?php echo getPostLink($R,1) ?>" target="_blank">
         <img src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" class="card-img-top">
-        <time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
+        <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
       </a>
       <div class="card-body p-3">
         <h6 class="card-title mb-0 line-clamp-2">

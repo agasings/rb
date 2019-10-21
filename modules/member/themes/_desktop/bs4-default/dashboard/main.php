@@ -1,6 +1,5 @@
 <div class="p-3">
   <div class="row">
-
     <div class="col-6">
 
       <section class="">
@@ -36,25 +35,29 @@
         </ul>
       </section>
 
-      <section class="mt-4">
-        <?php include $g['dir_module_skin'].'_recentPost.php';?>
+      <section class="mt-3">
+        <?php include $g['dir_module_skin'].'_best.php';?>
       </section>
 
       <section class="mt-4">
         <?php include $g['dir_module_skin'].'_recentList.php';?>
       </section>
 
+
     </div>
     <div class="col-6">
 
       <section>
-        <?php include $g['dir_module_skin'].'_analytics.php';?>
+        <?php include $g['dir_module_skin'].'_chart.php';?>
       </section>
 
-
+      <section class="mt-3">
+        <?php include $g['dir_module_skin'].'_recentPost.php';?>
+      </section>
 
     </div>
-
   </div><!-- /.row -->
 
 </div>
+
+<?php include $g['dir_module_skin'].'_component.php';?>

@@ -240,7 +240,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
       </div>
       <div class="modal-body">
 
-				<form id="listAddForm" role="form" action="<?php echo $g['s']?>/" method="post" >
+				<form id="listAddForm" role="form" action="<?php echo $g['s']?>/" method="post">
 					<input type="hidden" name="r" value="<?php echo $r?>">
 					<input type="hidden" name="m" value="post">
 					<input type="hidden" name="a" value="regis_list">

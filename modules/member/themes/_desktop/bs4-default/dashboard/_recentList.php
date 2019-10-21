@@ -1,5 +1,5 @@
 <?php
-$wdgvar['limit'] = 3; //전체 출력수
+$wdgvar['limit'] = 6; //전체 출력수
 $wdgvar['recnum'] =3; //한 열에 출력할 카드 갯수
 $wdgvar['title'] ='최근 리스트';
 $wdgvar['link'] = RW('mod=dashboard&page=list');

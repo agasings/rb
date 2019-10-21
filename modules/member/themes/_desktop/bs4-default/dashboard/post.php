@@ -187,13 +187,13 @@ switch ($sort) {
 			<?php foreach($RCD as $R):?>
 		  <li class="media mt-4">
 
-				<a href="<?php echo checkPostOwner($R)?RW('m=post&mod=write&cid='.$R['cid']):getPostLink($R,1) ?>" class="position-relative mr-3" <?php echo !checkPostOwner($R)?'target="_blank"':'' ?>>
+				<a href="<?php echo getPostLink($R,1)?>" class="position-relative mr-3" target="_blank">
 					<img class="border" src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="">
 					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
 				</a>
 
 		    <div class="media-body">
-		      <h5 class="my-1">
+		      <h5 class="my-1 line-clamp-2">
 						<a href="<?php echo checkPostOwner($R)?RW('m=post&mod=write&cid='.$R['cid']):getPostLink($R,1) ?>" class="font-weight-light muted-link" <?php echo !checkPostOwner($R)?'target="_blank"':'' ?>>
 							<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
 						</a>

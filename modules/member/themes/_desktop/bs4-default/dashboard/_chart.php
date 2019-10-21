@@ -1,5 +1,5 @@
 <header class="d-flex justify-content-between align-items-center py-2">
-	<strong>통계분석</strong>
+	<strong>활동추이</strong>
 	<div class="mr-2">
 		<a href="/dashboard?page=analytics" class="muted-link small">
 			더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -11,19 +11,28 @@
 	<div class="card-header d-flex justify-content-between align-items-end">
 		<ul class="nav nav-tabs card-header-tabs">
 			<li class="nav-item">
-				<a class="nav-link active" href="#">조회수</a>
+				<a class="nav-link active" data-toggle="tab" href="#chart-hit">조회수 전체</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">좋아요</a>
+				<a class="nav-link" data-toggle="tab" href="#chart-likes">좋아요 전체</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" tabindex="-1" aria-disabled="true">구독자</a>
+				<a class="nav-link" data-toggle="tab" href="#chart-follower">구독자</a>
 			</li>
 		</ul>
-
-		<small class="text-muted" data-toggle="tooltip" title="10.01~10.07">최근 일주일</small>
+		<small class="text-muted" data-toggle="tooltip" title="<?php echo date('m/d',mktime(0,0,0,substr($date['today'],4,2),substr($date['today'],6,2)-7,substr($date['today'],0,4)))?>~<?php echo getDateFormat($date['today'],'m/d')?>">최근 일주일</small>
 	</div>
-	<canvas class="card-body" id="myChart"></canvas>
+	<div class="tab-content card-body">
+		<div class="tab-pane show active" id="chart-hit" role="tabpanel">
+			<canvas class="card-body" id="myChart"></canvas>
+		</div>
+		<div class="tab-pane" id="chart-likes" role="tabpanel">
+			총 좋아요 추이
+		</div>
+		<div class="tab-pane" id="chart-follower" role="tabpanel">
+			총 팔로워 추이
+		</div>
+	</div>
 </div>
 
 <script>
