@@ -74,6 +74,8 @@
 
 <script>
 
+document.title = '#<?php echo $keyword?> 태그모음  | <?php echo $g['browtitle']?>';
+
 $( document ).ready(function() {
 
 	// marks.js

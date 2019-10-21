@@ -197,8 +197,9 @@ $_tmp = ("
 CREATE TABLE ".$table[$module.'month']." (
 date		CHAR(6)			DEFAULT ''		NOT NULL,
 site		INT				DEFAULT '0'		NOT NULL,
-mbruid			INT				DEFAULT '0'		NOT NULL,
-num			INT				DEFAULT '0'		NOT NULL,
+data			INT				DEFAULT '0'		NOT NULL,
+hit			INT				DEFAULT '0'		NOT NULL,
+likes			INT				DEFAULT '0'		NOT NULL,
 KEY date(date),
 KEY site(site),
 KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
@@ -213,8 +214,9 @@ $_tmp = ("
 CREATE TABLE ".$table[$module.'day']." (
 date		CHAR(8)			DEFAULT ''		NOT NULL,
 site		INT				DEFAULT '0'		NOT NULL,
-mbruid			INT				DEFAULT '0'		NOT NULL,
-num			INT				DEFAULT '0'		NOT NULL,
+data			INT				DEFAULT '0'		NOT NULL,
+hit			INT				DEFAULT '0'		NOT NULL,
+likes			INT				DEFAULT '0'		NOT NULL,
 KEY date(date),
 KEY site(site),
 KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");

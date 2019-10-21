@@ -32,7 +32,6 @@ if ($cid) {
   $_perm['post_owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
   $_perm['post_write'] =  $_POSTMBR['auth'];
 
-
   // 로그인한 사용자가 게시물에 좋아요/싫어요를 했는지 여부 체크
   $check_like_qry = "mbruid='".$my['uid']."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
   $check_dislike_qry = "mbruid='".$my['uid']."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";

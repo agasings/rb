@@ -24,6 +24,20 @@ $lack_card_num = $total_card_num;
 		</div>
 	</div>
 
+	<!-- 태그 -->
+	<?php if ($LIST['tag']): ?>
+	<div class="my-4">
+		<?php $_tags=explode(',',$LIST['tag'])?>
+		<?php $_tagn=count($_tags)?>
+		<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
+		<?php $_tagk=trim($_tags[$i])?>
+		<a class="badge badge-light rounded-0 f15 font-weight-light bg-light border-0 py-2" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>">
+		#<?php echo $_tagk?>
+		</a>
+		<?php endfor?>
+	</div>
+	<?php endif; ?>
+
 	<?php if ($NUM): ?>
 
 	<div class="card-deck">
@@ -84,3 +98,7 @@ $lack_card_num = $total_card_num;
 	<?php endif; ?>
 
 </section>
+
+<script>
+	document.title = '<?php echo $LIST['name'] ?>  | <?php echo $g['browtitle']?>';
+</script>

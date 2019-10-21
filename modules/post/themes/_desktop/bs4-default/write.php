@@ -142,8 +142,43 @@
             </div>
           </div>
 
+          <section class="my-4">
+            <div class="d-flex justify-content-between">
+              <label class="small text-muted">통계분석</label>
+              <a href="#modal-post-analytics" class="muted-link small mr-3" data-toggle="modal" data-backdrop="static">
+                더보기
+              </a>
+            </div>
+            <ul class="list-group list-group-horizontal text-center text-muted">
+              <li class="list-group-item flex-fill">
+                <small>조회</small>
+                <span class="d-block h2 mb-0">
+                  <?php echo number_format($R['hit']) ?>
+                </span>
+              </li>
+              <li class="list-group-item flex-fill">
+                <small>좋아요</small>
+                <span class="d-block h2 mb-0">
+                  <?php echo number_format($R['likes']) ?>
+                </span>
+              </li>
+              <li class="list-group-item flex-fill">
+                <small>댓글</small>
+                <span class="d-block h2 mb-0">
+                  <?php echo number_format($R['comment']) ?>
+                </span>
+              </li>
+              <li class="list-group-item flex-fill">
+                <small>평점</small>
+                <span class="d-block h2 mb-0">
+                  <?php echo number_format($R['likes_post']) ?>
+                </span>
+              </li>
+            </ul>
+          </section>
+
           <fieldset data-role="display" class="d-none"<?php echo $my['uid']!=$R['mbruid']?' disabled':'' ?>>
-            <span class="d-block mt-4 small text-muted">공유 설정</span>
+            <span class="d-block mt-2 small text-muted">공유 설정</span>
             <ul class="list-group list-group-flush f13 mt-1 border-bottom">
               <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
 
@@ -285,6 +320,7 @@
 
           </fieldset><!-- /data-role="display" -->
 
+
           <?php endif; ?>
 
         </div>
@@ -332,30 +368,28 @@
 
           <?php if ($cid): ?>
 
-          <label class="small text-muted">수정이력</label>
+          <section class="mt-4">
+            <div class="d-flex justify-content-between">
+              <label class="small text-muted">수정이력</label>
+              <a href="#modal-post-log" class="muted-link small mr-3" data-toggle="modal" data-backdrop="static">
+                더보기
+              </a>
+            </div>
 
-          <table class="table table-sm text-center text-muted f12 mb-0">
-            <thead>
-              <tr>
-                <th scope="col">수정자</th>
-                <th scope="col">수정일시</th>
-              </tr>
-            </thead>
-            <tbody>
-            <?php $array = explode('<s>',$R['log']); ?>
-            <?php foreach ($array as $val): ?>
-            <?php
-            if ($val=='') continue;
-      			$valx = explode('|',$val);
-            ?>
-            <tr>
-              <td><?php echo $valx[0] ?></td>
-              <td><?php echo $valx[1] ?></td>
-            <tr>
-            <?php endforeach; ?>
-            </tbody>
-          </table>
+            <table class="table table-sm table-bordered f13 text-muted text-center">
+              <tbody>
+                <tr>
+                  <th scope="row">최초 작성</th>
+                  <td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
+                </tr>
+                <tr>
+                  <th scope="row">마지막 수정</th>
+                  <td><?php echo getDateFormat($R['d_modify'],'Y.m.d H:i')?></td>
+                </tr>
+              </tbody>
+            </table>
 
+          </section>
 
           <?php endif; ?>
 
@@ -436,7 +470,7 @@
 
 </form>
 
-<!-- Modal -->
+<!-- Modal: 공유 사용자 초대 -->
 <div class="modal" id="modal-post-share" tabindex="-1" role="dialog" aria-hidden="true">
   <input type="hidden" name="data" value="<?php echo $R['uid']?>">
   <input type="hidden" name="level" value="1">
@@ -484,6 +518,64 @@
     </div>
   </div>
 </div>
+
+<!-- modal : 포스트 통계 -->
+<div class="modal" tabindex="-1" role="dialog" id="modal-post-analytics">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">포스트 통계</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="height: 80vh">
+					준비중
+				</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal : 포스트 수정이력 -->
+<div class="modal" tabindex="-1" role="dialog" id="modal-post-log">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">수정이력</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="">
+        <table class="table text-center text-muted mb-0">
+          <thead>
+            <tr>
+              <th scope="col">수정자</th>
+              <th scope="col">수정일시</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php $array = explode('<s>',$R['log']); ?>
+          <?php foreach ($array as $val): ?>
+          <?php
+          if ($val=='') continue;
+          $valx = explode('|',$val);
+          ?>
+          <tr>
+            <td><?php echo $valx[0] ?></td>
+            <td><?php echo $valx[1] ?></td>
+          <tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- bootstrap-toc : https://github.com/afeld/bootstrap-toc -->
 <?php getImport('bootstrap-toc','bootstrap-toc','1.0.1','css')?>

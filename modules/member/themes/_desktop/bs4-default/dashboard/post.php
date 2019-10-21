@@ -271,6 +271,9 @@ switch ($sort) {
 							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="<?php echo getPostLink($R,1) ?>" target="_blank">보기</a>
+							<a class="dropdown-item" href="#modal-post-analytics" data-toggle="modal" data-backdrop="static" data-uid="<?php echo $R['uid'] ?>">
+								통계
+							</a>
 						</div>
 					</div>
 				</div>
@@ -305,6 +308,8 @@ switch ($sort) {
 
 	</form>
 </div>
+
+<?php include $g['dir_module_skin'].'_component.php';?>
 
 <script type="text/javascript">
 

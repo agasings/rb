@@ -46,8 +46,23 @@
 						  <div class="dropdown-menu dropdown-menu-right">
 						    <h6 class="dropdown-header"><?php echo $my['nic'] ?> 님</h6>
 								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="<?php echo RW('m=post&mod=write')?>">
+									새 포스트
+								</a>
+						    <div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="<?php echo RW('mod=dashboard')?>">
+									대시보드
+								</a>
+								<div class="dropdown-divider"></div>
+						    <a class="dropdown-item" href="<?php echo getProfileLink($my['uid'])?>">
+									프로필
+								</a>
+						    <div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="<?php echo RW('mod=settings')?>">
+									설정
+								</a>
 								<button class="dropdown-item" type="button" data-act="logout" role="button">
-									<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> 로그아웃
+									로그아웃
 								</button>
 								<?php if ($my['admin']): ?>
 								<div class="dropdown-divider"></div>
@@ -57,10 +72,10 @@
 						</li>
 						<?php else: ?>
 						<li class="nav-item">
-							<a class="nav-link" href="#modal-join" data-toggle="modal" data-backdrop="static">회원가입</a>
+							<a class="nav-link text-reset" href="#modal-join" data-toggle="modal" data-backdrop="static">회원가입</a>
 						</li>
-						<li class="nav-item position-relative" id="navbarPopoverLogin">
-							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="드롭다운형 로그인">
+						<li class="nav-item position-relative">
+							<a class="nav-link text-reset" href="#modal-login" data-toggle="modal" data-backdrop="static" title="모달형 로그인">
 								로그인
 							</a>
 						</li>
@@ -169,7 +184,7 @@
 			</main>
 			<aside class="col-4 py-4">
 
-				<section data-role="section-item">
+				<section data-role="section-item" class="d-none">
 					<header >
 						<strong>실시간 검색어</strong>
 					</header>
@@ -298,9 +313,9 @@ $(function () {
 	var search_result_total = <?php echo $swhere=='all'?$total:$_ResultArray['num'][$swhere]?>;
 	if(search_result_total==0){
 		$("#search_no_result").removeClass("d-none");
-		$('[name="RbSearchForm"]').find('[name="q"]').focus().putCursorAtEnd()
 	}
 	$('#rb_sresult_num_all').text(search_result_total)
+	$('[name="RbSearchForm"]').find('[name="q"]').focus().putCursorAtEnd()
 
 	<?php if(!$_ResultArray['spage']):?>
 	if(getId('rb-sortbar')) getId('rb-sortbar').className = 'd-none';

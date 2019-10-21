@@ -137,17 +137,32 @@ while($I2=db_fetch_array($IDX2)) {
 	getDbUpdate($table[$m.'list'],'num=num-1','uid='.$I2['list']);
 }
 
-// 포스트 멤버의 회원포스트 수량 -1 , 통합조회수 조정
-$_WHERE1 = 'data='.$R['uid'].' and auth=1';
-$_RCD1 = getDbSelect($table[$m.'member'],$_WHERE1,'*');
-while($R1=db_fetch_array($_RCD1)) {
-  getDbUpdate($table['s_mbrdata'],'num_post=num_post-1,hit_post=hit_post-'.$R['hit'],'memberuid='.$R1['mbruid']);
-}
-
 getDbDelete($table[$m.'data'],'uid='.$R['uid']); //데이터삭제
 getDbDelete($table[$m.'index'],'data='.$R['uid']);//인덱스삭제
 getDbDelete($table[$m.'member'],'data='.$R['uid']);//멤버삭제
 getDbDelete($table[$m.'list_index'],'data='.$R['uid']);//리스트 인덱스삭제
+
+//회원의 등록수량 조절
+getDbUpdate($table['s_mbrdata'],'num_post=num_post-1,hit_post=hit_post-'.$R['hit'].',likes_post=likes_post-'.$R['likes'],'memberuid='.$R['mbruid']);
+getDbUpdate($table['s_mbrmonth'],'post_num=post_num-1',"date='".substr($R['d_regis'],0,6)."' and site=".$R['site'].' and mbruid='.$R['mbruid']);  // 회원의 월별통계 수량갱신
+getDbUpdate($table['s_mbrday'],'post_num=post_num-1',"date='".substr($R['d_regis'],0,8)."' and site=".$R['site'].' and mbruid='.$R['mbruid']);  //회원의 일별 수량갱신
+
+//회원의 월총수량 조절 (조회수,추천수)
+$_MONTH = getDbSelect($table[$m.'month'],'data='.$R['uid'],'*');
+while ($_M=db_fetch_array($_MONTH)) {
+	getDbUpdate($table['s_mbrmonth'],'post_hit=post_hit-'.$_M['hit'].',post_likes=post_likes-'.$_M['likes'],"date='".$_M['date']."' and site=".$R['site'].' and mbruid='.$R['mbruid']);
+}
+
+//회원의 일총수량 조절 (조회수,추천수)
+$_DAY = getDbSelect($table[$m.'day'],'data='.$R['uid'],'*');
+while ($_D=db_fetch_array($_DAY)) {
+	getDbUpdate($table['s_mbrday'],'post_hit=post_hit-'.$_D['hit'].',post_likes=post_likes-'.$_D['likes'],"date='".$_D['date']."' and site=".$R['site'].' and mbruid='.$R['mbruid']);
+}
+
+//포스트의 수량 삭제 (조회수,추천수)
+getDbDelete($table[$m.'month'],'data='.$R['uid']); //월 데이터삭제
+getDbDelete($table[$m.'day'],'data='.$R['uid']); //일 데이터삭제
+
 
 if ($R['point1']&&$R['mbruid'])
 {

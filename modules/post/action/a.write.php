@@ -109,8 +109,17 @@ if ($uid) {
   $QVAL2 = "'$mbruid','$s','$gid','$LASTUID','$display','1','1','$d_regis'";
   getDbInsert($table[$m.'member'],$QKEY2,$QVAL2);
 
-  // 회원포스트 수량 +1
-  getDbUpdate($table['s_mbrdata'],'num_post=num_post+1','memberuid='.$my['uid']);
+  if(!getDbRows($table['s_mbrmonth'],"date='".$date['month']."' and site=".$s.' and mbruid='.$mbruid)) {
+    getDbInsert($table['s_mbrmonth'],'date,site,mbruid,post_num',"'".$date['month']."','".$s."','".$mbruid."','0'");
+  }
+
+  if(!getDbRows($table['s_mbrday'],"date='".$date['today']."' and site=".$s.' and mbruid='.$mbruid)) {
+    getDbInsert($table['s_mbrday'],'date,site,mbruid,post_num',"'".$date['today']."','".$s."','".$mbruid."','0'");
+  }
+
+  getDbUpdate($table['s_mbrdata'],'num_post=num_post+1','memberuid='.$my['uid']); // 회원포스트 수량 +1
+  getDbUpdate($table['s_mbrmonth'],'post_num=post_num+1',"date='".$date['month']."' and site=".$s.' and mbruid='.$mbruid); //회원별 월별 수량등록
+  getDbUpdate($table['s_mbrday'],'post_num=post_num+1',"date='".$date['today']."' and site=".$s.' and mbruid='.$mbruid); //회원별 일별 수량등록
 
   $_category_members = array();
 	$_category_members = getArrayString($category_members);

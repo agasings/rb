@@ -351,6 +351,46 @@ db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_mbrdata'],$DB_CONNECT);
 }
 
+//회원 월별활동
+$_tmp = db_query( "select count(*) from ".$table['s_mbrmonth'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+
+CREATE TABLE ".$table['s_mbrmonth']." (
+date		CHAR(6)			DEFAULT ''		NOT NULL,
+site		INT				DEFAULT '0'		NOT NULL,
+mbruid			INT				DEFAULT '0'		NOT NULL,
+post_num			INT				DEFAULT '0'		NOT NULL,
+post_hit			INT				DEFAULT '0'		NOT NULL,
+post_likes			INT				DEFAULT '0'		NOT NULL,
+follower			INT				DEFAULT '0'		NOT NULL,
+KEY date(date),
+KEY site(site),
+KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table['s_mbrmonth'],$DB_CONNECT);
+}
+
+//회원 일별활동
+$_tmp = db_query( "select count(*) from ".$table['s_mbrday'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+
+CREATE TABLE ".$table['s_mbrday']." (
+date		CHAR(8)			DEFAULT ''		NOT NULL,
+site		INT				DEFAULT '0'		NOT NULL,
+mbruid			INT				DEFAULT '0'		NOT NULL,
+post_num			INT				DEFAULT '0'		NOT NULL,
+post_hit			INT				DEFAULT '0'		NOT NULL,
+post_likes			INT				DEFAULT '0'		NOT NULL,
+follower			INT				DEFAULT '0'		NOT NULL,
+KEY date(date),
+KEY site(site),
+KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table['s_mbrday'],$DB_CONNECT);
+}
+
 //접속카운트
 $_tmp = db_query( "select count(*) from ".$table['s_counter'], $DB_CONNECT );
 if ( !$_tmp ) {

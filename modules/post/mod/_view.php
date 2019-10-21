@@ -8,14 +8,31 @@ if (!checkPostPerm($R)) {
 
 if ($d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']'))) {
 
-	// 포스트 멤버의 포스트 통합조회수 +1
-	$_WHERE1 = 'data='.$R['uid'].' and auth=1';
-	$_RCD1 = getDbSelect($table[$m.'member'],$_WHERE1,'*');
-	while($R1=db_fetch_array($_RCD1)) {
-	  getDbUpdate($table['s_mbrdata'],'hit_post=hit_post+1','memberuid='.$R1['mbruid']);
+	getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);
+	getDbUpdate($table['s_mbrdata'],'hit_post=hit_post+1','memberuid='.$R['mbruid']);
+
+	if(!getDbRows($table['s_mbrmonth'],"date='".$date['month']."' and site=".$s.' and mbruid='.$R['mbruid'])) {
+    getDbInsert($table['s_mbrmonth'],'date,site,mbruid',"'".$date['month']."','".$s."','".$R['mbruid']."'");
+  }
+
+  if(!getDbRows($table['s_mbrday'],"date='".$date['today']."' and site=".$s.' and mbruid='.$R['mbruid'])) {
+    getDbInsert($table['s_mbrday'],'date,site,mbruid',"'".$date['today']."','".$s."','".$R['mbruid']."'");
+  }
+
+	if(!getDbRows($table[$m.'month'],"date='".$date['month']."' and site=".$s.' and data='.$R['uid'])) {
+		getDbInsert($table[$m.'month'],'date,site,data',"'".$date['month']."','".$s."','".$R['uid']."'");
 	}
 
-	getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);
+	if(!getDbRows($table[$m.'day'],"date='".$date['today']."' and site=".$s.' and data='.$R['uid'])) {
+		getDbInsert($table[$m.'day'],'date,site,data',"'".$date['today']."','".$s."','".$R['uid']."'");
+	}
+
+	getDbUpdate($table['s_mbrmonth'],'post_hit=post_hit+1',"date='".$date['month']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 월별 조회수 갱신
+	getDbUpdate($table['s_mbrday'],'post_hit=post_hit+1',"date='".$date['today']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 일별조회수 갱신
+
+	getDbUpdate($table[$m.'month'],'hit=hit+1',"date='".$date['month']."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
+	getDbUpdate($table[$m.'day'],'hit=hit+1',"date='".$date['today']."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
+
 	$_SESSION['module_'.$m.'_view'] .= '['.$R['uid'].']';
 }
 
@@ -50,13 +67,6 @@ if ($d['post']['isperm'] && $R['upload'])
 	$d['upload']['count'] = $d['_pload']['count'];
 }
 
-if ($mbrid) {
-	$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
-	$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
-}
-
-$LIST=getDbData($table[$m.'list'],"id='".$list."'",'*');
-
 // 메타 이미지 세팅 = 해당 포스트의 대표 이미지를 메타 이미지로 적용한다.
 if($R['featured_img']){
    $FI=getUidData($table['s_upload'],$R['featured_img']);
@@ -65,6 +75,16 @@ if($R['featured_img']){
 }
 
 $mod = $mod ? $mod : 'view';
+
+if ($mbrid) {
+	$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
+	$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
+}
+
+//최초등록자
+$M1 = getDbData($table['s_mbrdata'],'memberuid='.$R['mbruid'],'*');
+
+$LIST=getDbData($table[$m.'list'],"id='".$list."'",'*');
 
 //포스트 멤버
 $_POSTMBR_RCD = getDbArray($table[$m.'member'],'data='.$R['uid'].' and auth=1','*','d_regis','asc',0,1);

@@ -129,3 +129,7 @@
 	</div><!-- /.row -->
 
 </section>
+
+<script>
+	document.title = '<?php echo $CAT['name']?$CAT['name']:'전체 카테고리' ?>  | <?php echo $g['browtitle']?>';
+</script>
