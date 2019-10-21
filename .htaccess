@@ -39,6 +39,8 @@ RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(noti)/?$ ./index.php?mod=noti&%1 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(saved)/?$ ./index.php?mod=saved&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^(search)/?$ ./index.php?m=search&%1 [L]
 
 #사이트코드 확장
 RewriteRule ^([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1 [L]
