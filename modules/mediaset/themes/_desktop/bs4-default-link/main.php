@@ -18,7 +18,7 @@ include $g['dir_attach_theme'].'/header.php';
 
 
   <div class="rb-attach mb-3 dd" id="nestable-link">
-    <ol class="list-group rb-attach-file bg-faded dd-list" data-role="attach-preview-link"> <!-- 일반파일 리스트  -->
+    <ol class="list-group rb-attach-link rb-attach-featured bg-faded dd-list" data-role="attach-preview-link"> <!-- 일반파일 리스트  -->
       <?php if($parent_data['uid']):?>
         <?php echo getAttachPlatformList($parent_data,'upload','file')?>
       <?php endif?>

@@ -6,7 +6,7 @@ include $g['dir_attach_theme'].'/header.php';
 </div>
 
 <div class="rb-attach mb-3 dd" id="nestable-photo">
-  <ol class="list-group rb-attach-photo mb-2 bg-faded dd-list" data-role="attach-preview-photo"><!-- 포토/이미지  리스트  -->
+  <ol class="list-group rb-attach-photo rb-attach-featured mb-2 bg-faded dd-list" data-role="attach-preview-photo"><!-- 포토/이미지  리스트  -->
     <?php if($parent_data['uid']):?>
     <?php echo getAttachFileList($parent_data,'upload','photo',$editor_type)?>
     <?php endif?>
