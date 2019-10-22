@@ -1,11 +1,3 @@
-<?php
-$_bestque = 'site='.$s;
-$_bestque .= ' and date >= '.date('Ymd',mktime(0,0,0,substr($date['today'],4,2),substr($date['today'],6,2)-7,substr($date['today'],0,4)));  //일주일전
-$_NUM = getDbRows($table['postday'],$_bestque);
-$_RCD=getDbArray($table['postday'],$_bestque,'*','hit','desc',$_NUM,1);
-while($_R = db_fetch_array($_RCD)) $RCD_BEST[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
-?>
-
 <div class="card shadow-sm" id="widget-post-best">
 	<div class="card-header d-flex justify-content-between align-items-end">
 		<ul class="nav nav-tabs card-header-tabs">
@@ -81,11 +73,11 @@ function getWidgetPostbest(target,sort) {
 	$(target).find('[role="list"]').html('');
 	$(target).find('[role="loader"]').removeClass('d-none');
 
-	$.post(rooturl+'/?r='+raccount+'&m=post&a=get_postList',{
+	$.post(rooturl+'/?r='+raccount+'&m=post&a=get_postBest',{
 		sort : sort,
 		markup_file : 'dashboard-media',
-		query : '<?php echo 'site='.$s.' and date >= '.date('Ymd',mktime(0,0,0,substr($date['today'],4,2),substr($date['today'],6,2)-7,substr($date['today'],0,4))) ?>',  //일주일전
-		limit : 5
+		d_start : '<?php echo 'site='.$s.' and date >= '.date("Ymd", strtotime("-1 week")); ?>',  //일주일전
+		limit : 10
 		},function(response,status){
 			if(status=='success'){
 				var result = $.parseJSON(response);
@@ -115,7 +107,5 @@ $( document ).ready(function() {
 	getWidgetPostbest('#bset-hit','hit');
 
 });
-
-
 
 </script>

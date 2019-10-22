@@ -56,8 +56,9 @@ $_RCD=getDbArray($table['postlist'],$_listque,'*','gid','asc',$wdgvar['limit'],1
     <?php endforeach?>
 
     <?php if($lack_card_num ):?>
-      <?php for($j=0;$j<$lack_card_num;$j++):?>
+      <?php for($j=0;$j<$lack_card_num;$j++):$i++;?>
        <div class="card border-0" style="background-color: transparent"></div>
+       <?php if(!($i%$recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
       <?php endfor?>
     <?php endif?>
 

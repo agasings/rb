@@ -13,7 +13,6 @@ $_postque = 'mbruid='.$my['uid'].' and site='.$s.' and auth=1';
 $_NUM = getDbRows($table['postmember'],$_postque);
 $_RCD=getDbArray($table['postmember'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
-
 ?>
 
 <section class="widget-post-card-01">
@@ -32,9 +31,9 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
 
   <?php if ($_NUM): ?>
   <div class="card-deck" data-role="post-list">
+
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
-
       <a class="text-nowrap text-truncate muted-link position-relative " href="<?php echo getPostLink($R,1) ?>" target="_blank">
         <img src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" class="card-img-top" style="height: 100px">
         <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
@@ -46,8 +45,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
           </a>
         </h6>
         <small class="text-muted small" >업데이트 : <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time></small>
-      </div>
-
+      </div><!-- /.card-body -->
     </div><!-- /.card -->
 
     <?php
@@ -59,12 +57,13 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
     <?php endforeach?>
 
     <?php if($lack_card_num ):?>
-      <?php for($j=0;$j<$lack_card_num;$j++):?>
+      <?php for($j=0;$j<$lack_card_num;$j++):$i++;?>
        <div class="card border-0" style="background-color: transparent"></div>
+       <?php if(!($i%$recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
       <?php endfor?>
     <?php endif?>
 
-  </div>  <!-- /.row -->
+  </div><!-- /.card-deck -->
   <?php else: ?>
   <div class="text-center text-muted small py-5 border">
     포스트가 없습니다.

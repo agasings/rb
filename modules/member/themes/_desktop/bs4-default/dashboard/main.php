@@ -36,13 +36,12 @@
       </section>
 
       <section class="mt-3">
-        <?php include $g['dir_module_skin'].'_best.php';?>
+        <?php include $g['dir_module_skin'].'_recentPost.php';?>
       </section>
 
       <section class="mt-4">
         <?php include $g['dir_module_skin'].'_recentList.php';?>
       </section>
-
 
     </div>
     <div class="col-6">
@@ -52,7 +51,7 @@
       </section>
 
       <section class="mt-3">
-        <?php include $g['dir_module_skin'].'_recentPost.php';?>
+        <?php include $g['dir_module_skin'].'_best.php';?>
       </section>
 
     </div>

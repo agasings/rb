@@ -202,6 +202,10 @@ hit			INT				DEFAULT '0'		NOT NULL,
 likes			INT				DEFAULT '0'		NOT NULL,
 comment			INT				DEFAULT '0'		NOT NULL,
 KEY date(date),
+KEY data(data),
+KEY hit(hit),
+KEY likes(likes),
+KEY comment(comment),
 KEY site(site),
 KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
@@ -220,6 +224,10 @@ hit			INT				DEFAULT '0'		NOT NULL,
 likes			INT				DEFAULT '0'		NOT NULL,
 comment			INT				DEFAULT '0'		NOT NULL,
 KEY date(date),
+KEY data(data),
+KEY hit(hit),
+KEY likes(likes),
+KEY comment(comment),
 KEY site(site),
 KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
