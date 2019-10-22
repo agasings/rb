@@ -73,7 +73,7 @@ $RCD	= getDbSelect($table['s_tag'],$_WHERE1.' group by keyword order by '.$sort.
 	<div class="mt-4">
 		<?php $j=0;while($G=db_fetch_array($RCD)):$j++?>
 
-		<a class="btn btn-outline-primary" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=search&amp;keyword=<?php echo urlencode($G['keyword'])?>" target="_blank" title="<?php echo $G['keyword']?>">
+		<a class="btn btn-outline-primary" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=search&amp;q=<?php echo urlencode($G['keyword'])?>" target="_blank" title="<?php echo $G['keyword']?>">
 			<span class="num"><?php echo $j?>.</span>
 			<?php echo getStrCut($G['keyword'],6,'..')?>
 			<span class="badge badge-dark"><?php echo $G['hit']?>건</span>
