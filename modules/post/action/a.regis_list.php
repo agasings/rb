@@ -40,14 +40,16 @@ if ($uid) {
     {
     	$_tagarr1 = array();
     	$_tagarr2 = explode(',',$tag);
+      $_tagdate = $date['today'];
 
     	if ($R['uid'])
     	{
+        $_tagdate = substr($R['d_regis'],0,8);
     		$_tagarr1 = explode(',',$R['tag']);
     		foreach($_tagarr1 as $_t)
     		{
     			if(!$_t || in_array($_t,$_tagarr2)) continue;
-    			$_TAG = getDbData($table['s_tag'],"site=".$R['site']." and keyword='".$_t."'",'*');
+          $_TAG = getDbData($table['s_tag'],"site=".$R['site']." and date='".$_tagdate."' and keyword='".$_t."'",'*');
     			if($_TAG['uid'])
     			{
     				if($_TAG['hit']>1) getDbUpdate($table['s_tag'],'hit=hit-1','uid='.$_TAG['uid']);
@@ -59,9 +61,9 @@ if ($uid) {
     	foreach($_tagarr2 as $_t)
     	{
     		if(!$_t || in_array($_t,$_tagarr1)) continue;
-    		$_TAG = getDbData($table['s_tag'],'site='.$s." and keyword='".$_t."'",'*');
+    		$_TAG = getDbData($table['s_tag'],'site='.$s." and date='".$_tagdate."' and keyword='".$_t."'",'*');
     		if($_TAG['uid']) getDbUpdate($table['s_tag'],'hit=hit+1','uid='.$_TAG['uid']);
-    		else getDbInsert($table['s_tag'],'site,keyword,hit',"'".$s."','".$_t."','1'");
+    		else getDbInsert($table['s_tag'],'site,date,keyword,hit',"'".$s."','".$_tagdate."','".$_t."','1'");
     	}
     }
 

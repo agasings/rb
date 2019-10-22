@@ -713,9 +713,11 @@ $_tmp = ("
 CREATE TABLE ".$table['s_tag']." (
 uid			INT				PRIMARY KEY		NOT NULL AUTO_INCREMENT,
 site		INT				DEFAULT '0'		NOT NULL,
+date		CHAR(8)			DEFAULT ''		NOT NULL,
 keyword		VARCHAR(50)		DEFAULT ''		NOT NULL,
 hit			INT				DEFAULT '0'		NOT NULL,
 KEY site(site),
+KEY date(date),
 KEY hit(hit),
 KEY keyword(keyword)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
