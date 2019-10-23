@@ -53,7 +53,7 @@ switch ($sort) {
 	case 'gid'      : $sort_txt='등록순';break;
 	case 'd_modify' : $sort_txt='최신순';break;
 	case 'hit'      : $sort_txt='조회순';break;
-	case 'likes'    : $sort_txt='추천순';break;
+	case 'likes'    : $sort_txt='좋아요순';break;
 	case 'comment'  : $sort_txt='댓글순';break;
 	default         : $sort_txt='기본';break;
 }
@@ -103,7 +103,7 @@ switch ($sort) {
 						조회순
 					</button>
 					<button class="dropdown-item<?php echo $sort=='likes'?' active':'' ?>" type="button" data-value="likes">
-						추천순
+						좋아요순
 					</button>
 					<button class="dropdown-item<?php echo $sort=='comment'?' active':'' ?>" type="button" data-value="comment">
 						댓글순

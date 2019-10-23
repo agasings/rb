@@ -391,6 +391,11 @@
 
           </section>
 
+
+          <a class="btn btn-block btn btn-outline-danger my-4" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">
+            포스트 삭제
+          </a>
+
           <?php endif; ?>
 
         </div>

@@ -147,8 +147,7 @@
 	<footer class="d-flex justify-content-between align-items-center my-5 d-print-none">
 		<div class="btn-group">
 			 <?php if($_perm['post_owner']):?>
-				 <a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-white">수정</a>
-				 <a href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btn btn-white">삭제</a>
+				 <a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-white text-danger">관리</a>
 				<?php endif?>
 		 </div>
 		 <div class="">
