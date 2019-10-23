@@ -24,13 +24,21 @@
 					  <div class="dropdown-menu dropdown-menu-right">
 					    <h6 class="dropdown-header"><?php echo $my['nic'] ?> 님</h6>
 							<div class="dropdown-divider"></div>
-							<h6 class="dropdown-header">포스트</h6>
-							<a class="dropdown-item" href="/post/new">
-								<i class="fa fa-pencil fa-fw" aria-hidden="true"></i> 새 포스트
+							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write')?>">
+								새 포스트
 							</a>
-
+							<a class="dropdown-item" href="<?php echo RW('mod=dashboard')?>">
+								대시보드
+							</a>
+					    <a class="dropdown-item" href="<?php echo getProfileLink($my['uid'])?>">
+								프로필
+							</a>
+					    <div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo RW('mod=settings')?>">
+								설정
+							</a>
 							<button class="dropdown-item" type="button" data-act="logout" role="button">
-								<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> 로그아웃
+								로그아웃
 							</button>
 							<?php if ($my['admin']): ?>
 							<div class="dropdown-divider"></div>
@@ -43,7 +51,7 @@
 						<a class="nav-link" href="#modal-join" data-toggle="modal" data-backdrop="static">회원가입</a>
 					</li>
 					<li class="nav-item position-relative" id="navbarPopoverLogin">
-						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="드롭다운형 로그인">
+						<a class="nav-link dropdown-toggle" href="#modal-login" data-toggle="modal" aria-haspopup="true" aria-expanded="false" title="모달형 로그인">
 							로그인
 						</a>
 					</li>
