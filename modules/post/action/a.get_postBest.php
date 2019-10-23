@@ -51,8 +51,6 @@ $i=1;foreach ($_RCD as $R) {
 }
 
 $result['list'] = $list;
-$result['num'] = $i;
-
 echo json_encode($result);
 exit;
 ?>

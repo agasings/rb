@@ -82,13 +82,13 @@ function getWidgetPostbest(target,sort) {
 			if(status=='success'){
 				var result = $.parseJSON(response);
 				var list=result.list;
-				var num=result.num;
 
-				if (num) {
+				if (list) {
 					$(target).find('[role="list"]').html(list)
 					$(target).find('[role="loader"]').addClass('d-none');
 					$(target).find('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화
 				} else {
+					$(target).find('[role="loader"]').addClass('d-none');
 					$(target).find('[role="none"]').removeClass('d-none');
 				}
 			} else {

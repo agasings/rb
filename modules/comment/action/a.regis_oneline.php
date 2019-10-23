@@ -5,7 +5,7 @@ require_once $g['dir_module'].'includes/module.class.php';
 include $g['dir_module'].'var/var.php';
 include $g['dir_module'].'var/noti/_'.$a.'.php';  // 알림메시지 양식
 
-function getPostLink($arr)
+function _getPostLink($arr)
 {
 	$sync_arr=explode('|',$arr['sync']);
 	$B = getUidData($sync_arr[0],$sync_arr[2]);
@@ -124,7 +124,7 @@ if (!$my['uid'] || !$R['uid']){
 			//알림내용에 양식 적용(/modules/comment/var/noti/regis_oneline.php)
 			$noti_title = $d['comment']['noti_title'];
 			$noti_body = $d['comment']['noti_body'];
-			$noti_referer = getPostLink($row);
+			$noti_referer = _getPostLink($row);
 			$noti_button = $d['comment']['noti_button'];
 			$noti_tag = '';
 

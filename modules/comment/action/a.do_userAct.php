@@ -52,7 +52,7 @@ if($act=='like'){
     $result['check_qry'] = $check_qry;
     $result['update_table'] = $update_table;
 }else if($act=='delete'){
-    if($type=='comment') $del_msg = $comment->deleteComment($uid);
+    if($type=='comment')  $del_msg = $comment->deleteComment($uid);
     else if($type=='oneline') $del_msg = $comment->deleteOneline($parent,$uid);
 
     if($del_msg=='OK') $result['msg'] = $del_msg;

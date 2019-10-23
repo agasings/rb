@@ -1,5 +1,5 @@
 <header class="d-flex justify-content-between align-items-center py-2">
-	<strong>포스트 전체추이</strong>
+	<strong>포스트 통합추이</strong>
 	<div class="mr-2">
 		<a href="/dashboard?page=analytics" class="muted-link small">
 			더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>

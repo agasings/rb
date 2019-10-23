@@ -306,6 +306,7 @@ class Comment extends Comment_base{
         $R = getUidData($this->commentTable,$uid);
         $sync_arr = explode('|',$R['sync']); // parent_table|parent|parentmbr
         $parent_table = $sync_arr[0]; // 댓글 부모 테이블
+        $parent_module = $sync_arr[1];
         $parent_uid = $sync_arr[2]; // 댓글 부모 PK
 
         $result='';
@@ -336,6 +337,12 @@ class Comment extends Comment_base{
             	getDbInsert($table['s_point'],'my_mbruid,by_mbruid,price,content,d_regis',"'".$R['mbruid']."','0','-".$R['point']."','댓글삭제(".getStrCut($R['subject'],15,'').")환원','".$date['totime']."'");
             	getDbUpdate($table['s_mbrdata'],'point=point-'.$R['point'],'memberuid='.$R['mbruid']);
             }
+
+            //  연동모듈 댓글통계 반영
+            getDbUpdate($table['s_mbrmonth'],'post_comment=post_comment-1',"date='".substr($R['d_regis'],0,6)."' and site=".$R['site'].' and mbruid='.$R['parentmbr']); //부모글 등록자 월별 조회수 갱신
+            getDbUpdate($table['s_mbrday'],'post_comment=post_comment-1',"date='".substr($R['d_regis'],0,8)."' and site=".$R['site'].' and mbruid='.$R['parentmbr']); //부모글 등록자 일별조회수 갱신
+            getDbUpdate($table[$parent_module.'month'],'comment=comment-1',"date='".substr($R['d_regis'],0,6)."' and site=".$R['site'].' and data='.$parent_uid); //연동모듈 월별 조회수 갱신
+            getDbUpdate($table[$parent_module.'day'],'comment=comment-1',"date='".substr($R['d_regis'],0,8)."' and site=".$R['site'].' and data='.$parent_uid);  //연동모듈 일별 조회수 갱신
 
             $result='OK';
         }

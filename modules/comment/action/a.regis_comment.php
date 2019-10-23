@@ -166,6 +166,30 @@ if (!$sess_code){
     $LASTUID = getDbCnt($comment->commentTable,'min(uid)','');
     $row = getUidData($comment->commentTable,$LASTUID);
 
+
+		//  연동모듈 댓글통계 반영
+		if(!getDbRows($table['s_mbrmonth'],"date='".$date['month']."' and site=".$s.' and mbruid='.$row['parentmbr'])) {
+		  getDbInsert($table['s_mbrmonth'],'date,site,mbruid',"'".$date['month']."','".$s."','".$row['parentmbr']."'");
+		}
+
+		if(!getDbRows($table['s_mbrday'],"date='".$date['today']."' and site=".$s.' and mbruid='.$row['parentmbr'])) {
+		  getDbInsert($table['s_mbrday'],'date,site,mbruid',"'".$date['today']."','".$s."','".$row['parentmbr']."'");
+		}
+
+		if(!getDbRows($table[$parent_prefix.'month'],"date='".$date['month']."' and site=".$s.' and data='.$parent_uid)) {
+		  getDbInsert($table[$parent_prefix.'month'],'date,site,data',"'".$date['month']."','".$s."','".$parent_uid."'");
+		}
+
+		if(!getDbRows($table[$parent_prefix.'day'],"date='".$date['today']."' and site=".$s.' and data='.$parent_uid)) {
+		  getDbInsert($table[$parent_prefix.'day'],'date,site,data',"'".$date['today']."','".$s."','".$parent_uid."'");
+		}
+
+		getDbUpdate($table['s_mbrmonth'],'post_comment=post_comment+1',"date='".$date['month']."' and site=".$s.' and mbruid='.$row['parentmbr']); //부모글 등록자 월별 조회수 갱신
+		getDbUpdate($table['s_mbrday'],'post_comment=post_comment+1',"date='".$date['today']."' and site=".$s.' and mbruid='.$row['parentmbr']); //부모글 등록자 일별조회수 갱신
+		getDbUpdate($table[$parent_prefix.'month'],'comment=comment+1',"date='".$date['month']."' and site=".$s.' and data='.$parent_uid); //연동모듈 월별 조회수 갱신
+		getDbUpdate($table[$parent_prefix.'day'],'comment=comment+1',"date='".$date['today']."' and site=".$s.' and data='.$parent_uid);  //연동모듈 일별 조회수 갱신
+
+
 		// 댓글의 부모글 등록자에게 알림전송
 		if ($row['parentmbr'] != $my['uid'] ) {
 

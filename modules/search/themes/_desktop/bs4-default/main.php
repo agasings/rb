@@ -13,7 +13,6 @@
 		<input type="hidden" name="orderby" value="<?php echo $orderby?>">
 
 		<div class="container">
-
 			<div class="row align-items-center">
 
 				<div class="col-8 pr-0">
@@ -184,26 +183,39 @@
 			</main>
 			<aside class="col-4 py-4">
 
-				<section data-role="section-item" class="d-none">
-					<header >
-						<strong>실시간 검색어</strong>
+				<?php
+				$recnum	= 10;
+				$sort	= $sort		? $sort		: 'hit';
+				$orderby= $orderby	? $orderby	: 'desc';
+				$query = 'site='.$s.' and ';
+				$_WHERE1= $query.'date >= '.date('Ymd', strtotime('-1 month'));
+				$_WHERE2= 'keyword,sum(hit) as hit';
+				$RCD	= getDbSelect($table['s_tag'],$_WHERE1.' group by keyword order by '.$sort.' '.$orderby.' limit 0,'.$recnum,$_WHERE2);
+				?>
+
+				<section data-role="section-item">
+					<header class="d-flex justify-content-between">
+						<strong>기간별 주요 키워드 </strong>
+						<small class="text-muted"><?php echo date("m/d", strtotime("-1 month")).'~'. date("m/d", strtotime("now"))?></small>
 					</header>
-					<div class="row mt-3 f13">
-						<div class="col-6">
-							<i>1</i>
-							<a href="#" class="text-reset">미세먼지</a>
-						</div>
-						<div class="col-6">
-							<span>2</span>
-							<a href="#" class="text-reset">미세먼지</a>
-						</div>
-						<div class="col-6">
-							<span>3</span>
-							<a href="#" class="text-reset">미세먼지</a>
-						</div>
-						<div class="col-6">
-							<span>4</span>
-							<a href="#" class="text-reset">미세먼지</a>
+
+					<div class="container mt-2">
+						<div class="row">
+							<?php $j=0;while($G=db_fetch_array($RCD)):$j++?>
+
+							<div class="col-6 bg-light py-1 mb-1">
+								<a class="text-reset d-block f13" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=search&amp;q=<?php echo urlencode($G['keyword'])?>" title="<?php echo $G['keyword']?>">
+									<span class="badge badge-light mr-2"><?php echo $j?>.</span>
+									<?php echo getStrCut($G['keyword'],6,'..')?>
+									<small class="text-muted"><?php echo $G['hit']?>건</small>
+								</a>
+							</div>
+
+
+							<?php endwhile?>
+							<?php if(!$j):?>
+								<div class="nodata">지정된 기간내에 기록된 키워드가 없습니다.</div>
+							<?php endif?>
 						</div>
 					</div>
 

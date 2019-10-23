@@ -75,13 +75,14 @@ if ($opinion=='like') {
 	$opinion_type = '좋아요';
 	if($is_liked){ // 좋아요를 했던 경우
 		$opinion_act = '취소';
+    $OP = getDbData($table['s_opinion'],$check_like_qry,'*');
 		getDbDelete($table['s_opinion'],$check_like_qry);
 		getDbUpdate($table[$m.'data'],'likes=likes-1','uid='.$uid);
 		getDbUpdate($table['s_mbrdata'],'likes_post=likes_post-1','memberuid='.$R['mbruid']);
-		getDbUpdate($table['s_mbrmonth'],'post_likes=post_likes-1',"date='".$date['month']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 월별 조회수 갱신
-		getDbUpdate($table['s_mbrday'],'post_likes=post_likes-1',"date='".$date['today']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 일별조회수 갱신
-		getDbUpdate($table[$m.'month'],'likes=likes-1',"date='".$date['month']."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
-		getDbUpdate($table[$m.'day'],'likes=likes-1',"date='".$date['today']."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
+		getDbUpdate($table['s_mbrmonth'],'post_likes=post_likes-1',"date='".substr($OP['d_regis'],0,6)."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 월별 조회수 갱신
+		getDbUpdate($table['s_mbrday'],'post_likes=post_likes-1',"date='".substr($OP['d_regis'],0,8)."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 일별조회수 갱신
+		getDbUpdate($table[$m.'month'],'likes=likes-1',"date='".substr($OP['d_regis'],0,6)."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
+		getDbUpdate($table[$m.'day'],'likes=likes-1',"date='".substr($OP['d_regis'],0,8)."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
 
 	}else{ // 좋아요 안한 경우 추가
 		$opinion_act = '추가';
@@ -116,13 +117,14 @@ if ($opinion=='dislike') {
 		getDbInsert($table['s_opinion'],$QKEY,$QVAL);
 		getDbUpdate($table[$m.'data'],'dislikes=dislikes+1','uid='.$uid);
 		if ($is_liked) {
+      $OP = getDbData($table['s_opinion'],$check_like_qry,'*');
 			getDbDelete($table['s_opinion'],$check_like_qry);
 			getDbUpdate($table[$m.'data'],'likes=likes-1','uid='.$uid);
 			getDbUpdate($table['s_mbrdata'],'likes_post=likes_post-1','memberuid='.$R['mbruid']);
-			getDbUpdate($table['s_mbrmonth'],'post_likes=post_likes-1',"date='".$date['month']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 월별 조회수 갱신
-			getDbUpdate($table['s_mbrday'],'post_likes=post_likes-1',"date='".$date['today']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 일별조회수 갱신
-			getDbUpdate($table[$m.'month'],'likes=likes-1',"date='".$date['month']."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
-			getDbUpdate($table[$m.'day'],'likes=likes-1',"date='".$date['today']."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
+			getDbUpdate($table['s_mbrmonth'],'post_likes=post_likes-1',"date='".substr($OP['d_regis'],0,6)."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 월별 조회수 갱신
+			getDbUpdate($table['s_mbrday'],'post_likes=post_likes-1',"date='".substr($OP['d_regis'],0,8)."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 일별조회수 갱신
+			getDbUpdate($table[$m.'month'],'likes=likes-1',"date='".substr($OP['d_regis'],0,6)."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
+			getDbUpdate($table[$m.'day'],'likes=likes-1',"date='".substr($OP['d_regis'],0,8)."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
 		}
 	}
 }

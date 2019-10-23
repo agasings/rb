@@ -17,7 +17,7 @@ $_RCD=getDbArray($table['postlist'],$_listque,'*','gid','asc',$wdgvar['limit'],1
 <section class="widget-post-card-01">
   <header class="d-flex justify-content-between align-items-center py-2">
     <strong><?php echo $wdgvar['title']?></strong>
-    <?php if($wdgvar['link']):?>
+    <?php if($wdgvar['link'] && $_NUM):?>
     <a href="<?php echo $wdgvar['link']?>" class="muted-link small">
       더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>
     </a>

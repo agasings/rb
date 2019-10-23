@@ -36,16 +36,16 @@
 
       <nav class="bg-light" style="margin-top: -5px;">
         <div class="nav nav-tabs nav-fill" role="tablist">
-          <a class="nav-item nav-link active rounded-0 border-left-0" data-toggle="tab" href="#" role="tab">요약</a>
-          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#" role="tab">조회수</a>
-          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#" role="tab">좋아요</a>
-          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#" role="tab">댓글</a>
-          <a class="nav-item nav-link rounded-0 border-right-0" data-toggle="tab" href="#" role="tab">유입경로</a>
+          <a class="nav-item nav-link active rounded-0 border-left-0" data-toggle="tab" href="#post-summary" role="tab">요약</a>
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-hit" role="tab">조회수</a>
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-likes" role="tab">좋아요</a>
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-comment" role="tab">댓글</a>
+          <a class="nav-item nav-link rounded-0 border-right-0" data-toggle="tab" href="#post-referer" role="tab">유입경로</a>
         </div>
       </nav>
       <div class="modal-body">
 
-        <div data-role="loader">
+        <div data-role="loader" class="d-none">
           <div class="d-flex justify-content-center align-items-center"  style="height:385px">
             <div class="spinner-border" role="status">
               <span class="sr-only">Loading...</span>
@@ -63,7 +63,32 @@
             <a class="dropdown-item" href="#">월별보기</a>
           </div>
         </div>
-        <canvas style="height: 450px" id="post-analytics"></canvas>
+
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="post-summary" role="tabpanel">
+
+            <canvas style="height: 450px"></canvas>
+
+          </div>
+          <div class="tab-pane" id="post-hit" role="tabpanel">
+
+            <canvas style="height: 450px"></canvas>
+
+          </div>
+          <div class="tab-pane" id="post-likes" role="tabpanel">
+
+
+          </div>
+          <div class="tab-pane" id="post-comment" role="tabpanel">
+
+
+          </div>
+          <div class="tab-pane" id="post-referer" role="tabpanel">
+            <canvas style="height: 450px" id="canvas-referer"></canvas>
+          </div>
+        </div>
+
 
       </div>
 
@@ -81,7 +106,7 @@ function setPostTrendChart(uid,mod) {
 	if (mod=='comment') var chartSet = ['댓글 추이','#f8d7da','#721c24'];
 	if (mod=='follower') var chartSet = ['구독자 추이','#ffeeba','#856404'];
 
-	var _ele = $('#post-analytics');
+	var _ele = $('#post-hit').find('canvas');
 	_ele.addClass('d-none');
 	$('[data-role="loader"]').removeClass('d-none');
 
@@ -118,6 +143,8 @@ function setPostTrendChart(uid,mod) {
 	});
 }
 
+
+
 $( document ).ready(function() {
 
   $('#modal-post-analytics').on('shown.bs.modal', function (e) {
@@ -131,6 +158,37 @@ $( document ).ready(function() {
 
   })
 
+
+
+  var myDoughnutChart_ele = $('#post-summary').find('canvas');
+
+  var myDoughnutChart_data = {
+      datasets: [{
+          data: [10, 20, 30],
+      }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: [
+          'Red',
+          'Yellow',
+          'Blue'
+      ]
+  };
+
+  var myDoughnutChart = new Chart(myDoughnutChart_ele, {
+      type: 'doughnut',
+      data: myDoughnutChart_data,
+      // options: options
+  });
+
+
 });
+
+
+
+
+
+
+
 
 </script>

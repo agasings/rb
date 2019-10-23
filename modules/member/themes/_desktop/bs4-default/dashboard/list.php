@@ -234,23 +234,20 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 <!-- Modal -->
 <div class="modal" id="modal-list-new" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document" style="width: 560px">
-    <div class="modal-content">
+		<form class="modal-content" id="listAddForm" role="form" action="<?php echo $g['s']?>/" method="post" onsubmit="return listCheck(this);">
       <div class="modal-header border-bottom-0">
         <h5 class="modal-title" id="exampleModalLongTitle">새 리스트</h5>
       </div>
       <div class="modal-body">
 
-				<form id="listAddForm" role="form" action="<?php echo $g['s']?>/" method="post">
-					<input type="hidden" name="r" value="<?php echo $r?>">
-					<input type="hidden" name="m" value="post">
-					<input type="hidden" name="a" value="regis_list">
-					<input type="hidden" name="display" value="4">
+				<input type="hidden" name="r" value="<?php echo $r?>">
+				<input type="hidden" name="m" value="post">
+				<input type="hidden" name="a" value="regis_list">
+				<input type="hidden" name="display" value="4">
 
-					<div class="input-group input-group-lg">
-					  <input type="text" name="name" class="form-control rounded-0" placeholder="리스트명 입력" required>
-					</div>
-
-				</form>
+				<div class="input-group input-group-lg">
+				  <input type="text" name="name" class="form-control rounded-0" placeholder="리스트명 입력" required>
+				</div>
 
       </div>
       <div class="modal-footer bg-light">
@@ -270,7 +267,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 
 				<div class="">
 					<button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" data-act="submit">
+					<button type="submit" class="btn btn-primary">
 						<span class="not-loading">
 							저장
 						</span>
@@ -279,7 +276,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 				</div>
 
       </div>
-    </div>
+    </form>
   </div>
 </div>
 
@@ -296,6 +293,19 @@ var form = $('#listAddForm');
 var modal = $('#modal-list-new');
 
 putCookieAlert('list_action_result') // 실행결과 알림 메시지 출력
+
+function listCheck(f) {
+	var name = modal.find('[name="name"]')
+	if (!name.val()) {
+		name.addClass('is-invalid').focus();
+		return false
+	}
+	modal.find('[type="submit"]').attr('disabled',true)
+	getIframeForAction(f);
+	setTimeout(function(){
+		form.submit()
+	}, 500);
+};
 
 $(document).ready(function() {
 
@@ -323,21 +333,6 @@ $(document).ready(function() {
 	modal.find('.dropdown').on('hidden.bs.dropdown', function () {
 		modal.find('.form-control').trigger('focus')
 	})
-
-	modal.find('[data-act="submit"]').click(function() {
-
-		var name = modal.find('[name="name"]')
-		if (!name.val()) {
-			name.addClass('is-invalid').focus();
-			return false
-		}
-
-		$(this).attr('disabled',true)
-		getIframeForAction(f);
-		setTimeout(function(){
-			form.submit()
-		}, 500);
-	});
 
 	//공개상태 변경 dropdown
 	$('[data-toggle="display"] .dropdown-item').click(function(){
