@@ -36,8 +36,6 @@ getImport('ckeditor5','decoupled-document/build/translations/ko','12.2.0','js');
   var attach_module_theme = '_desktop/bs4-default-attach';// attach 모듈 테마
 </script>
 
-<script src="<?php echo $g['s'] ?>/plugins/ckeditor5/_main.js" ></script>
-
 <script>
 
 
@@ -78,11 +76,6 @@ DecoupledEditor
 			'mediaEmbed'
 			],
     extraPlugins: [rbUploadAdapterPlugin],
-		// autosave: {
-		// 		save( editor ) {
-		// 				return saveData( editor.getData() );
-		// 		}
-		// },
     mediaEmbed: {
         extraProviders: [
             {
@@ -136,11 +129,13 @@ DecoupledEditor
 	} )
   .then( newEditor => {
 		editor = newEditor;
+
     $('[data-role="loader"]').addClass('d-none') //로더 제거
 		$('[data-role="editor"]').removeClass('d-none')
 		const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
 		toolbarContainer.appendChild( editor.ui.view.toolbar.element );
 		editor.editing.view.focus();
+
 
     $('.document-editor__editable-container').on('scroll', function(){
       var height = $(this).scrollTop();
