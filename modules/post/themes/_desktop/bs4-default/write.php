@@ -177,6 +177,12 @@
             </ul>
           </section>
 
+          <?php if ($R['mbruid']!=$my['uid']): ?>
+          <div class="alert alert-info" role="alert">
+            공유 포스트 입니다.
+          </div>
+          <?php endif; ?>
+
           <fieldset data-role="display" class="d-none"<?php echo $my['uid']!=$R['mbruid']?' disabled':'' ?>>
             <span class="d-block mt-2 small text-muted">공유 설정</span>
             <ul class="list-group list-group-flush f13 mt-1 border-bottom">
@@ -264,7 +270,7 @@
                     <img class="rounded ml-1 mr-2" src="<?php echo getAvatarSrc($MBR['memberuid'],'31') ?>" width="31" height="31" alt="<?php echo $MBR['name'] ?>">
 
                     <div class="media-body align-self-center">
-                      <?php echo $MBR[$_HS['nametype']] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>
+                      <?php echo $MBR['nic'] ?>님 <?php echo $my['uid']==$MBR['memberuid']?'(나)':'' ?>
                       <br>
                       <span class="text-muted"><?php echo $MBR['email'] ?></span>
                     </div>
@@ -319,7 +325,6 @@
             </div><!-- /data-role="postmember" -->
 
           </fieldset><!-- /data-role="display" -->
-
 
           <?php endif; ?>
 

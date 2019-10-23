@@ -196,6 +196,7 @@ switch ($sort) {
 				<a href="<?php echo getPostLink($R,1)?>" class="position-relative mr-3" target="_blank">
 					<img class="border" src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" width="180">
 					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
+					<span class="badge badge-info rounded-0 position-absolute f14" style="left:1px;top:1px"><?php echo $R['mbruid']!=$my['uid']?'공유':'' ?></span>
 				</a>
 
 		    <div class="media-body">

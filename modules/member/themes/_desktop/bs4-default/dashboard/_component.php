@@ -104,7 +104,7 @@
       </nav>
       <div class="modal-body">
 
-        <div data-role="loader" class="d-none">
+        <div data-role="_loader" class="d-none">
           <div class="d-flex justify-content-center align-items-center"  style="height:385px">
             <div class="spinner-border" role="status">
               <span class="sr-only">Loading...</span>
@@ -291,9 +291,9 @@ $( document ).ready(function() {
 
       // These labels appear in the legend and in the tooltips when hovering different arcs
       labels: [
-          'Red',
-          'Yellow',
-          'Blue'
+          '유튜브',
+          '인스타그램',
+          '카카오톡'
       ]
   };
 
