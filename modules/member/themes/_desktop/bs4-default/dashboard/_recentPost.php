@@ -37,7 +37,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
       <a class="text-nowrap text-truncate muted-link position-relative " href="<?php echo getPostLink($R,1) ?>" target="_blank">
         <img src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" class="card-img-top" style="height: 100px">
         <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
-        <span class="badge badge-info rounded-0 position-absolute f14" style="left:0px;top:0px"><?php echo $R['mbruid']!=$my['uid']?'공유':'' ?></span>
+        <span class="badge badge-primary rounded-0 position-absolute" style="left:0px;top:0px"><?php echo $R['mbruid']!=$my['uid']?'공유':'' ?></span>
       </a>
       <div class="card-body p-3">
         <h6 class="card-title mb-0 line-clamp-2">
@@ -67,7 +67,6 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
   </div><!-- /.card-deck -->
   <?php else: ?>
   <div class="text-center text-muted small py-5 border">
-    <p>포스트가 없습니다.</p>
     <a href="<?php echo RW('m=post&mod=write')?>" class="btn btn-primary">
       포스트 작성하기
     </a>

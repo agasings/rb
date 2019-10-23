@@ -18,7 +18,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
       <a class="nav-link d-flex justify-content-between py-1 px-2 f13 text-reset" href="<?php echo RW('mod=dashboard&page=point')?>">
         <span>포인트</span>
         <span>
-          <strong class="text-danger"><?php echo number_format($my['point'])?> </strong> P
+          <strong class="text-primary"><?php echo number_format($my['point'])?> </strong> P
           <i class="fa fa-angle-right text-muted ml-2" aria-hidden="true"></i>
         </span>
       </a>

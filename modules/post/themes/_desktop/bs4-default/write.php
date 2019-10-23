@@ -178,7 +178,7 @@
           </section>
 
           <?php if ($R['mbruid']!=$my['uid']): ?>
-          <div class="alert alert-info" role="alert">
+          <div class="alert alert-info f12 py-2" role="alert">
             공유 포스트 입니다.
           </div>
           <?php endif; ?>
