@@ -20,7 +20,7 @@
 				<a class="nav-link" data-toggle="tab" href="#chart-comment" data-mod="comment">댓글</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#chart-follower" data-mod="follower">구독자</a>
+				<a class="nav-link" data-toggle="tab" href="#chart-referer" data-mod="referer">외부유입</a>
 			</li>
 		</ul>
 		<small class="text-muted" data-toggle="tooltip" title="<?php echo date("m/d", strtotime("-1 week")).'~'. date("m/d", strtotime("now"))  ?>">
@@ -44,7 +44,7 @@
 		<div class="tab-pane" id="chart-comment" role="tabpanel">
 			<canvas class="d-none"></canvas>
 		</div>
-		<div class="tab-pane" id="chart-follower" role="tabpanel">
+		<div class="tab-pane" id="chart-referer" role="tabpanel">
 			<canvas class="d-none"></canvas>
 		</div>
 	</div>
@@ -57,7 +57,7 @@ function setWidgetPostLineChart(ele,mod) {
 	if (mod=='hit') var chartSet = ['조회수 추이','#cce5ff','#004085']; //label ,backgroundColor,borderColor
 	if (mod=='likes') var chartSet = ['좋아요 추이','#d4edda','#155724'];
 	if (mod=='comment') var chartSet = ['댓글 추이','#f8d7da','#721c24'];
-	if (mod=='follower') var chartSet = ['구독자 추이','#ffeeba','#856404'];
+	if (mod=='referer') var chartSet = ['유입경로 추이','#ffeeba','#856404'];
 
 	var _ele = $(ele).find('canvas');
 	_ele.addClass('d-none');
@@ -72,15 +72,30 @@ function setWidgetPostLineChart(ele,mod) {
 				var chartLabel=result.label;
 				var chartData=result.data;
 
-				var data = {
-					labels: chartLabel,
-					datasets: [{
-							label: chartSet[0],
-							backgroundColor: chartSet[1],
-							borderColor: chartSet[2],
-							data: chartData
-					}]
-				};
+				if (mod=='referer') {
+					var data = {
+						labels: chartLabel,
+						datasets: [{
+								label: chartSet[0],
+								backgroundColor: chartSet[1],
+								borderColor: chartSet[2],
+								data: chartData
+						}]
+					};
+				} else {
+
+					var data = {
+						labels: chartLabel,
+						datasets: [{
+								label: chartSet[0],
+								backgroundColor: chartSet[1],
+								borderColor: chartSet[2],
+								data: chartData
+						}]
+					};
+
+				}
+
 				var chart = new Chart(_ele, {
 					type: 'line',
 					data: data,
