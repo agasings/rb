@@ -206,8 +206,7 @@ KEY data(data),
 KEY hit(hit),
 KEY likes(likes),
 KEY comment(comment),
-KEY site(site),
-KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+KEY site(site)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'month'],$DB_CONNECT);
 }
@@ -228,8 +227,7 @@ KEY data(data),
 KEY hit(hit),
 KEY likes(likes),
 KEY comment(comment),
-KEY site(site),
-KEY mbruid(mbruid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+KEY site(site)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'day'],$DB_CONNECT);
 }
