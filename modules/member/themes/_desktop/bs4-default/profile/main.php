@@ -19,37 +19,6 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$_MP['level'],'*');
 
 		<?php include $g['dir_module_skin'].'_newList.php';?>
 
-		<header class="d-flex justify-content-between align-items-center py-2">
-			<strong>포스트 현황</strong>
-		</header>
-
-		<ul class="list-group list-group-horizontal text-center">
-		  <li class="list-group-item flex-fill">
-				<small class="text-muted">포스트</small>
-				<span class="d-block display-4">
-					<?php echo number_format($_MP['num_post']) ?>
-				</span>
-			</li>
-			<li class="list-group-item flex-fill">
-				<small class="text-muted">리스트</small>
-				<span class="d-block display-4">
-					<?php echo number_format($_MP['num_list']) ?>
-				</span>
-			</li>
-			<li class="list-group-item flex-fill">
-				<small class="text-muted">조회</small>
-				<span class="d-block display-4">
-					<?php echo number_format($_MP['hit_post']) ?>
-				</span>
-			</li>
-			<li class="list-group-item flex-fill">
-				<small class="text-muted">좋아요</small>
-				<span class="d-block display-4">
-					<?php echo number_format($_MP['likes_post']) ?>
-				</span>
-			</li>
-		</ul>
-
 		<div class="row mt-3">
 			<div class="col-6">
 				<h2 class="f16 p-2 font-weight-normal mt-4 mb-0">

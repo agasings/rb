@@ -185,7 +185,13 @@ switch ($sort) {
 
 		<ul class="list-unstyled" style="margin-top: -1rem" data-plugin="markjs">
 			<?php foreach($RCD as $R):?>
-		  <li class="media mt-4">
+		  <li class="media mt-4"
+				data-role="item"
+				data-featured_img="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>"
+				data-hit="<?php echo $R['hit']?>"
+				data-likes="<?php echo $R['likes']?>"
+				data-comment="<?php echo $R['comment']?>"
+				data-subject="<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>">
 
 				<a href="<?php echo getPostLink($R,1)?>" class="position-relative mr-3" target="_blank">
 					<img class="border" src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" width="180">
@@ -204,7 +210,7 @@ switch ($sort) {
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 							<li class="list-inline-item">
 								<?php if ($R['likes']): ?>
-								<a class="text-reset" href="#modal-post-likeslist" data-toggle="modal" data-uid="<?php echo $R['uid']?>">
+								<a class="text-reset" href="#modal-post-opinion" data-toggle="modal" data-uid="<?php echo $R['uid']?>" data-opinion="like">
 									좋아요 <?php echo $R['likes']?>
 								</a>
 								<?php else: ?>
@@ -276,7 +282,12 @@ switch ($sort) {
 						</button>
 						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
 							<a class="dropdown-item" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" >수정</a>
-							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
+
+							<?php if ($R['mbruid']==$my['uid']): ?>
+							<a class="dropdown-item" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">
+								삭제
+							</a>
+							<?php endif; ?>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="<?php echo getPostLink($R,1) ?>" target="_blank">보기</a>
 							<a class="dropdown-item" href="#modal-post-analytics" data-toggle="modal" data-backdrop="static" data-uid="<?php echo $R['uid'] ?>">

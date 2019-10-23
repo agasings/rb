@@ -13,11 +13,12 @@ $M = getDbData($table['s_mbrdata'],'nic="'.$nic.'"','*');
 $mbruid =  $M['memberuid'];
 $d_regis	= $date['totime'];
 $gid = $R['gid'];
+$display = $R['display'];
 
 if(getDbRows($table[$m.'member'],'data='.$data.' and mbruid='.$mbruid)) getLink('reload','parent.','포스트에 이미 존재합니다.','');
 
-$QKEY = "mbruid,site,gid,data,auth,level,d_regis";
-$QVAL = "'$mbruid','$s','$gid','$data','1','$level','$d_regis'";
+$QKEY = "mbruid,site,gid,data,display,auth,level,d_regis";
+$QVAL = "'$mbruid','$s','$gid','$data','$display','1','$level','$d_regis'";
 getDbInsert($table[$m.'member'],$QKEY,$QVAL);
 getDbUpdate($table['s_mbrdata'],'num_post=num_post+1','memberuid='.$mbruid);  //추가회원 포스트수 조정
 

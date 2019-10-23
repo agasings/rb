@@ -391,10 +391,11 @@
 
           </section>
 
-
+          <?php if ($R['mbruid']==$my['uid']): ?>
           <a class="btn btn-block btn btn-outline-danger my-4" href="<?php echo $g['post_delete'].$R['cid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');">
             포스트 삭제
           </a>
+          <?php endif; ?>
 
           <?php endif; ?>
 
@@ -489,7 +490,7 @@
         <div class="form-group">
           <label class="small text-muted">초대할 사용자</label>
           <div class="input-group input-group-lg">
-            <input type="text" name="nic" class="form-control rounded-0" placeholder="닉네임 또는 이메일 주소 입력">
+            <input type="text" name="nic" class="form-control rounded-0" placeholder="닉네임 입력">
             <div class="input-group-append">
               <button class="btn btn-white dropdown-toggle rounded-0" data-toggle="dropdown" type="button">
                 <i class="fa fa-eye" aria-hidden="true"></i>

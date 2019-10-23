@@ -1,4 +1,10 @@
-<li class="list-group-item media align-items-center serial">
+<li class="list-group-item media align-items-center serial"
+  data-role="item"
+  data-subject="{$subject}"
+  data-hit="{$hit}"
+  data-likes="{$likes}"
+  data-comment="{$comment}"
+  data-featured_img="{$featured_img}">
   <div class="pr-3 text-muted counter"></div>
   <a href="{$link}" class="position-relative mr-3" target="_blank">
     <img class="border" src="{$featured_img}" alt="" style="width:100px">
@@ -13,7 +19,11 @@
     <div class="mb-1">
       <ul class="list-inline d-inline-block f12 text-muted">
         <li class="list-inline-item">조회 {$hit}</li>
-        <li class="list-inline-item">좋아요 {$likes}</li>
+        <li class="list-inline-item">
+          <a href="#modal-post-opinion" data-toggle="modal" data-backdrop="static" data-uid="{$uid}" data-opinion="like" class="text-reset">
+            좋아요 {$likes}
+          </a>
+        </li>
         <li class="list-inline-item">댓글 {$comment}</li>
         <li class="list-inline-item">
           <time data-plugin="timeago" datetime="{$d_modify}"></time>
