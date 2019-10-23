@@ -68,7 +68,7 @@
 </ul>
 
 <?php if ($my['uid']): ?>
-<ul class="vcard-details border-top border-gray-light py-2 list-unstyled mb-0">
+<ul class="vcard-details  border-gray-light py-2 list-unstyled mb-0">
   <li class="pt-1 text-truncate">
     ㆍ나이/성별 : <?php if($_MP['birth1']):?><?php echo getAge($_MP['birth1'])?>세<?php else:?><span>미등록</span><?php endif?> (<?php if($_MP['sex']):?><?php echo $_MP['sex']==1?'남성':'여성'?><?php else:?><span>미등록</span><?php endif?>)
   </li>
