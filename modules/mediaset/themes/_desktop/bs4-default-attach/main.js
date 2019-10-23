@@ -178,8 +178,6 @@
                     });
                }else if(act=='insert'){
 
-                      console.log('본문삽입')
-
                       var agent = navigator.userAgent.toLowerCase();
                       var src=$(this).data('origin');
                       var type=$(this).attr('data-type');

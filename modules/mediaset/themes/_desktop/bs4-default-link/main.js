@@ -12,8 +12,8 @@ var updateShowHide=function(uid,showhide){
       }
 }
 
-$(document).on('click','[data-attach-act]',function(e){
-      var act=$(this).attr('data-attach-act');
+$(document).on('click','[data-link-act]',function(e){
+      var act=$(this).attr('data-link-act');
       var uid=$(this).attr('data-id');
       var type=$(this).attr('data-type'); // file or photo
       var module =  'mediaset';
@@ -130,7 +130,7 @@ $(document).on('click','[data-attach-act]',function(e){
             $('[data-role="attachList-label-featured"]').each(function(){
                 $(this).addClass('d-none');
                 // 삭제 메뉴에 대표이미지 표시 지우기
-                $('[data-attach-act="delete"]').attr('data-featured','');
+                $('[data-link-act="delete"]').attr('data-featured','');
                 if($(this).data('id')==uid){
                     $(this).removeClass('d-none');
                     // 삭제 메뉴에 대표이미지 표시

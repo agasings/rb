@@ -64,12 +64,12 @@ function getAttachPlatform($R,$mod,$featured_img_uid) {
        									$html.='<input type="hidden" name="attachfiles[]" value="['.$R['uid'].']"/>';
        									 $html.='
                           <button type="button" class="btn btn-light" data-act="linkInsert" data-provider="'.$R['provider'].'"  data-url="'.$R['linkurl'].'" data-title="'.$R['caption'].'" data-id="'.$R['uid'].'"  data-role="attachList-menu-edit-'.$R['uid'].'" role="button">삽입</button>
-       			 						 <button type="button" class="btn btn-light" data-attach-act="delete" data-id="'.$R['uid'].'" data-role="attachList-menu-delete-'.$R['uid'].'" data-featured="" data-type="'.($R['type']==8?'youtube':'file').'" role="button">삭제</button>';
+       			 						 <button type="button" class="btn btn-light" data-link-act="delete" data-id="'.$R['uid'].'" data-role="attachList-menu-delete-'.$R['uid'].'" data-featured="" data-type="'.($R['type']==8?'youtube':'file').'" role="button">삭제</button>';
        									$html.='
        									<div class="btn-group"><button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" role="button"></button>
        									<div class="dropdown-menu dropdown-menu-right" role="menu">
-       										<button type="button" class="dropdown-item" data-attach-act="featured-img" data-type="'.$type.'" data-id="'.$R['uid'].'">대표이미지 설정</button>
-       										<button type="button" class="dropdown-item" data-attach-act="showhide" data-role="attachList-menu-showhide-'.$R['uid'].'" data-id="'.$R['uid'].'" data-content="'.($R['hidden']?'show':'hide').'" >'.($R['hidden']?'보이기':'숨기기').'</button>
+       										<button type="button" class="dropdown-item" data-link-act="featured-img" data-type="'.$type.'" data-id="'.$R['uid'].'">대표이미지 설정</button>
+       										<button type="button" class="dropdown-item" data-link-act="showhide" data-role="attachList-menu-showhide-'.$R['uid'].'" data-id="'.$R['uid'].'" data-content="'.($R['hidden']?'show':'hide').'" >'.($R['hidden']?'보이기':'숨기기').'</button>
        									 </div>
      									 </div>
 
