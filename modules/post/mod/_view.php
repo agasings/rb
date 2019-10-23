@@ -89,5 +89,4 @@ $LIST=getDbData($table[$m.'list'],"id='".$list."'",'*');
 //포스트 멤버
 $_POSTMBR_RCD = getDbArray($table[$m.'member'],'data='.$R['uid'].' and auth=1','*','d_regis','asc',0,1);
 while($_POSTMBR_R = db_fetch_array($_POSTMBR_RCD)) $MBR_RCD[] = getDbData($table['s_mbrdata'],'memberuid='.$_POSTMBR_R['mbruid'],'*');
-
 ?>

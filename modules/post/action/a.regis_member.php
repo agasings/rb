@@ -24,6 +24,7 @@ getDbUpdate($table['s_mbrdata'],'num_post=num_post+1','memberuid='.$mbruid);  //
 
 $result=array();
 $result['error'] = false;
+$result['mbruid'] = $mbruid;
 
 setrawcookie('post_action_result', rawurlencode('공유목록에 추가되었습니다.|success'));  // 처리여부 cookie 저장
 echo json_encode($result);

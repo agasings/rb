@@ -674,7 +674,7 @@ $(document).ready(function() {
 
   $('.rb-post-write').find('.form-control, .form-check-input, .custom-control-input').change(function(){
     showSaveButton(true); // 저장버튼 출력
-    checkUnload = true //페이지 이탈시 경고창 출력
+    $('[data-role="postsubmit"]').click(); // 저장
   });
 
   editor.model.document.on( 'change:data', () => {
@@ -785,7 +785,14 @@ $(document).ready(function() {
         nic : nic
         },function(response,status){
           if(status=='success'){
-            location.reload();
+            var result = $.parseJSON(response);
+            var mbruid=result.mbruid;
+            var html = '<input type="hidden" name="postmembers[]" value="['+mbruid+']">';
+            $('#modal-post-share').modal('hide');
+            $('[data-role="postmember"]').append(html);
+            showSaveButton(true); // 저장버튼 출력
+            $('[data-role="postsubmit"]').click(); // 저장
+            setTimeout(function(){ location.reload(); }, 400);
           } else {
             alert(status);
           }
@@ -813,8 +820,8 @@ $(document).ready(function() {
             if(status=='success'){
               // var result = $.parseJSON(response);
               item.remove();
-              $.notify({message: '사용자가 제외되었습니다..'},{type: 'success'});
-
+              showSaveButton(true); // 저장버튼 출력
+              $('[data-role="postsubmit"]').click(); // 저장
             } else {
               alert(status);
             }

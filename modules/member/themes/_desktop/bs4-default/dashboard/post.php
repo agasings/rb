@@ -254,6 +254,7 @@ switch ($sort) {
 							<?php echo $g['displaySet']['label'][$R['display']] ?>
 						</button>
 						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
+							<h6 class="dropdown-header">공개설정 변경</h6>
 							<button class="dropdown-item<?php echo $R['display']==5?' active':'' ?>" type="button" data-display="5" data-label="<?php echo $g['displaySet']['label'][5] ?>">
 								<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
 								<?php echo $g['displaySet']['label'][5] ?>
