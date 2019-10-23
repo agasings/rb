@@ -6,6 +6,10 @@ if (!$my['uid']) getLink('/','','','');
 <html lang="<?php echo $lang['xlayout']['lang']?>" class="h-100">
 <head>
 <?php include $g['dir_layout'].'/_includes/_import.head.php' ?>
+
+<!-- Chart.js : https://github.com/chartjs/Chart.js/  -->
+<?php getImport('Chart.js','Chart','2.8.0','css') ?>
+
 </head>
 <body class="rb-layout-dashboard d-flex flex-column h-100<?php echo $page=='main'?' bg-light':'' ?>" style="padding-top:67px">
 
@@ -123,8 +127,8 @@ if (!$my['uid']) getLink('/','','','');
 
 	</main>
 
-
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<!-- Chart.js : https://github.com/chartjs/Chart.js/  -->
+	<?php getImport('Chart.js','Chart.bundle.min','2.8.0','js') ?>
 
 	<!-- jQuery-Autocomplete : https://github.com/devbridge/jQuery-Autocomplete -->
 	<?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>
