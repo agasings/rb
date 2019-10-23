@@ -202,7 +202,15 @@ switch ($sort) {
 					<div class="mb-1">
 						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
-							<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
+							<li class="list-inline-item">
+								<?php if ($R['likes']): ?>
+								<a class="text-reset" href="#modal-post-likeslist" data-toggle="modal" data-uid="<?php echo $R['uid']?>">
+									좋아요 <?php echo $R['likes']?>
+								</a>
+								<?php else: ?>
+								좋아요 <?php echo $R['likes']?>
+								<?php endif; ?>
+							</li>
 							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 							<li class="list-inline-item">
 								<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time>

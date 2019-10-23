@@ -7,7 +7,7 @@ $sort	= $sort		? $sort		: 'hit';
 $orderby= $orderby	? $orderby	: 'desc';
 $query = 'site='.$s.' and ';
 
-$_WHERE1= $query.'date >= '.$d_start;
+$_WHERE1= $query.'date >= '.$d_start.' and '.$sort.'>0';
 
 if ($sort=='hit') $_WHERE2= 'data,sum(hit) as hit';
 if ($sort=='likes') $_WHERE2= 'data,sum(likes) as likes';
@@ -42,6 +42,10 @@ $i=1;foreach ($_RCD as $R) {
   $TMPL['featured_img'] = checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'100x56'):getPreviewResize('/files/noimage.png','100x56');
   $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
+
+  if ($sort=='hit') $TMPL['num']=$R['hit']?'조회 '.$R['hit']:'';
+  if ($sort=='likes') $TMPL['num']=$R['likes']?'좋아요 '.$R['likes']:'';
+  if ($sort=='comment') $TMPL['num']=$R['comment']?'댓글 '.$R['comment']:'';
 
   $skin=new skin($markup_file);
   $list.=$skin->make();

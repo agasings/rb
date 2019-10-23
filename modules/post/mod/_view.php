@@ -6,7 +6,7 @@ if (!checkPostPerm($R)) {
 	$d['post']['isperm'] = false;
 }
 
-if ($d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']'))) {
+if ($mod=='view' && $d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']'))) {
 
 	getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);
 	getDbUpdate($table['s_mbrdata'],'hit_post=hit_post+1','memberuid='.$R['mbruid']);
