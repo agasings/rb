@@ -251,7 +251,7 @@ $TPG = getTotalPage($NUM,$recnum);
 							<small class="text-muted"><?php echo $B['name'] ?></small>
 						</td>
 						<td class="text-left">
-							<a class="muted-link" href="<?php echo getBbsPostLink($R)?>" target="_blank">
+							<a class="muted-link" href="<?php echo getPostLink($R,0) ?>" target="_blank">
 								<?php echo getStrCut($R['subject'],'30','..')?>
 							</a>
 							<?php if(strstr($R['content'],'.jpg')):?>

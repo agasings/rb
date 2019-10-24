@@ -274,7 +274,7 @@ $SITEN   = db_num_rows($SITES);
 					<tr>
 						<td><input type="checkbox" name="bbs_members[]" value="<?php echo $R['uid']?>" class="rb-email-user" onclick="checkboxCheck();"/></td>
 						<td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
-						<td><a href="<?php echo RW('m='.$module.'&bid='.$R['id'])?>" target="_blank"><?php echo $R['id']?></a></td>
+						<td><a href="<?php echo getListLink($R,0) ?>" target="_blank"><?php echo $R['id']?></a></td>
 						<td><input class="form-control" type="text" name="name_<?php echo $R['uid']?>" value="<?php echo $R['name']?>" data-toggle="popover" data-content="<?php echo $sbj_tooltip?>"></td>
 						<td>
 							<span class="badge badge-pill badge-dark"><?php echo number_format($R['num_r'])?></span>
