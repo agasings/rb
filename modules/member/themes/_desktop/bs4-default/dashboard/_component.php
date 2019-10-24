@@ -99,7 +99,7 @@
           <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-hit" role="tab">조회수</a>
           <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-likes" role="tab">좋아요</a>
           <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-comment" role="tab">댓글</a>
-          <a class="nav-item nav-link rounded-0 border-right-0" data-toggle="tab" href="#post-referer" role="tab">유입경로</a>
+          <a class="nav-item nav-link rounded-0 border-right-0" data-toggle="tab" href="#post-referer" role="tab">유입추이</a>
         </div>
       </nav>
       <div class="modal-body">
@@ -251,8 +251,6 @@ $( document ).ready(function() {
 
 			 });
 		 }, 300);
-
-
   })
 
 
@@ -277,40 +275,8 @@ $( document ).ready(function() {
 
     setPostTrendChart(uid,mod);
 
-
   })
 
-
-
-  var myDoughnutChart_ele = $('#post-summary').find('canvas');
-
-  var myDoughnutChart_data = {
-      datasets: [{
-          data: [10, 20, 30],
-      }],
-
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-      labels: [
-          '유튜브',
-          '인스타그램',
-          '카카오톡'
-      ]
-  };
-
-  var myDoughnutChart = new Chart(myDoughnutChart_ele, {
-      type: 'doughnut',
-      data: myDoughnutChart_data,
-      // options: options
-  });
-
-
 });
-
-
-
-
-
-
-
 
 </script>
