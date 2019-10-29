@@ -23,6 +23,14 @@ if ($cat) $mod='category';
 if ($cid) {
 
   $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
+
+  $g['browtitle'] = strip_tags($R['subject']).' - '.$_HS['name'];
+  $g['meta_tit'] = strip_tags($R['subject']).' - '.$_HS['name'];
+  $g['meta_sbj'] = str_replace('"','\'',$R['subject']);
+  $g['meta_key'] = $R['tag'] ?$R['tag'] : str_replace('"','\'',$R['subject']);
+  $g['meta_des'] = getStrCut(getStripTags($R['review']),150,'');
+  $g['meta_img'] = getPreviewResize(getUpImageSrc($R),'z');
+
   $_POSTMBR = getDbData($table[$m.'members'],'mbruid='.$my['uid'].' and data='.$R['uid'],'*');
 
   $_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$R['uid']);
