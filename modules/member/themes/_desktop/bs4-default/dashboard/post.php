@@ -117,47 +117,23 @@ switch ($sort) {
 					상태 : <?php echo $display?$g['displaySet']['label'][$display]:'전체' ?>
 				</a>
 
-				<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
+				<div class="dropdown-menu shadow-sm">
 					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo !$display?' active':'' ?>" type="button">
 						전체
 						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s))?></small>
 					</button>
 					<div class="dropdown-divider"></div>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==5?' active':'' ?>" type="button" data-value="5">
+
+					<?php $displaySet=explode('||',$d['displaySet'])?>
+					<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
+					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==$i?' active':'' ?>" type="button" data-value="<?php echo $i ?>">
 						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][5] ?>
+							<i class="fa fa-<?php echo $dis[1]?> fa-fw" aria-hidden="true"></i>
+							<?php echo $dis[0]?>
 						</span>
-						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=5'))?></small>
+						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display='.$i))?></small>
 					</button>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==4?' active':'' ?>" type="button" data-value="4">
-						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][4] ?>
-						</span>
-						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=4'))?></small>
-					</button>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==3?' active':'' ?>" type="button" data-value="3">
-						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][3] ?>
-						</span>
-						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=3'))?></small>
-					</button>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==2?' active':'' ?>" type="button" data-value="2">
-						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][2] ?>
-						</span>
-						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=2'))?></small>
-					</button>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==1?' active':'' ?>" type="button" data-value="1">
-						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][1] ?>
-						</span>
-						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display=1'))?></small>
-					</button>
+					<?php $i++;endforeach?>
 
 				</div>
 			</div>
@@ -255,26 +231,13 @@ switch ($sort) {
 						</button>
 						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
 							<h6 class="dropdown-header">공개설정 변경</h6>
-							<button class="dropdown-item<?php echo $R['display']==5?' active':'' ?>" type="button" data-display="5" data-label="<?php echo $g['displaySet']['label'][5] ?>">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
-								<?php echo $g['displaySet']['label'][5] ?>
+							<?php $displaySet=explode('||',$d['displaySet'])?>
+							<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
+							<button class="dropdown-item<?php echo $R['display']==$i?' active':'' ?>" type="button" data-display="<?php echo $i?>" data-label="<?php echo $dis[0]?>">
+								<i class="fa fa-<?php echo $dis[1]?> fa-fw" aria-hidden="true"></i>
+								<?php echo $dis[0]?>
 							</button>
-							<button class="dropdown-item<?php echo $R['display']==4?' active':'' ?>" type="button" data-display="4" data-label="<?php echo $g['displaySet']['label'][4] ?>">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
-								<?php echo $g['displaySet']['label'][4] ?>
-							</button>
-							<button class="dropdown-item<?php echo $R['display']==3?' active':'' ?>" type="button" data-display="3" data-label="<?php echo $g['displaySet']['label'][3] ?>">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
-								<?php echo $g['displaySet']['label'][3] ?>
-							</button>
-							<button class="dropdown-item<?php echo $R['display']==2?' active':'' ?>" type="button" data-display="2" data-label="<?php echo $g['displaySet']['label'][2] ?>">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-fw" aria-hidden="true"></i>
-								<?php echo $g['displaySet']['label'][2] ?>
-							</button>
-							<button class="dropdown-item<?php echo $R['display']==1?' active':'' ?>" type="button" data-display="1" data-label="<?php echo $g['displaySet']['label'][1] ?>">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
-								<?php echo $g['displaySet']['label'][1] ?>
-							</button>
+							<?php $i++;endforeach?>
 						</div>
 					</div>
 

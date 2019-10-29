@@ -1,5 +1,5 @@
 <header class="d-flex justify-content-between align-items-center py-2">
-	<strong>포스트 통합추이</strong>
+	<strong>전체 포스트 추이</strong>
 	<div class="mr-2">
 		<a href="/dashboard?page=analytics" class="muted-link small">
 			더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -59,8 +59,8 @@ function setWidgetPostLineChart(ele,mod) {
 	if (mod=='comment') var chartSet = ['댓글 추이','#f8d7da','#721c24'];
 	if (mod=='referer') var chartSet = ['유입경로 추이','#ffeeba','#856404'];
 
-	var _ele = $(ele).find('canvas');
-	_ele.addClass('d-none');
+	var ctx = $(ele).find('canvas');
+	ctx.addClass('d-none');
 	$('[data-chart="loader"]').removeClass('d-none');
 
 	$.post(rooturl+'/?r='+raccount+'&m=member&a=get_mbrTrend',{
@@ -69,39 +69,17 @@ function setWidgetPostLineChart(ele,mod) {
 		},function(response,status){
 			if(status=='success'){
 				var result = $.parseJSON(response);
-				var chartLabel=result.label;
-				var chartData=result.data;
+				var type=result.type;
+        var data=result.data;
+        var options=result.options;
 
-				if (mod=='referer') {
-					var data = {
-						labels: chartLabel,
-						datasets: [{
-								label: chartSet[0],
-								backgroundColor: chartSet[1],
-								borderColor: chartSet[2],
-								data: chartData
-						}]
-					};
-				} else {
-
-					var data = {
-						labels: chartLabel,
-						datasets: [{
-								label: chartSet[0],
-								backgroundColor: chartSet[1],
-								borderColor: chartSet[2],
-								data: chartData
-						}]
-					};
-
-				}
-
-				var chart = new Chart(_ele, {
-					type: 'line',
+				var mbrChart = new Chart(ctx, {
+					type: type,
 					data: data,
-					options: {}
+					options: options
 				});
-				_ele.removeClass('d-none');
+
+				ctx.removeClass('d-none');
 				$('[data-chart="loader"]').addClass('d-none');
 
 			} else {

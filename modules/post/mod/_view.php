@@ -27,11 +27,16 @@ if ($mod=='view' && $d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('
 		getDbInsert($table[$m.'day'],'date,site,data',"'".$date['today']."','".$s."','".$R['uid']."'");
 	}
 
+	$device = isMobileConnect($_SERVER['HTTP_USER_AGENT'])?'mobile':'desktop';
+	$side = strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'])?'inside':'outside';
+
 	getDbUpdate($table['s_mbrmonth'],'post_hit=post_hit+1',"date='".$date['month']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 월별 조회수 갱신
 	getDbUpdate($table['s_mbrday'],'post_hit=post_hit+1',"date='".$date['today']."' and site=".$s.' and mbruid='.$R['mbruid']); //회원별 일별조회수 갱신
 
-	getDbUpdate($table[$m.'month'],'hit=hit+1',"date='".$date['month']."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
-	getDbUpdate($table[$m.'day'],'hit=hit+1',"date='".$date['today']."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
+	if ($ref) $_QVAL = ','.$ref.'='.$ref.'+1';
+
+	getDbUpdate($table[$m.'month'],'hit=hit+1,'.$device.'='.$device.'+1,'.$side.'='.$side.'+1'.$_QVAL,"date='".$date['month']."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
+	getDbUpdate($table[$m.'day'],'hit=hit+1,'.$device.'='.$device.'+1,'.$side.'='.$side.'+1'.$_QVAL,"date='".$date['today']."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
 
 	$_SESSION['module_'.$m.'_view'] .= '['.$R['uid'].']';
 }
@@ -65,13 +70,6 @@ if ($d['post']['isperm'] && $R['upload'])
 		// getDbUpdate($table[$m.'data'],"upload='".$R['upload']."'",'uid='.$R['uid']);
 	}
 	$d['upload']['count'] = $d['_pload']['count'];
-}
-
-// 메타 이미지 세팅 = 해당 포스트의 대표 이미지를 메타 이미지로 적용한다.
-if($R['featured_img']){
-   $FI=getUidData($table['s_upload'],$R['featured_img']);
-   //$featured_img=getPreviewResize($FI['tmpname'],'q'); // 동적 사이즈 조정
-   $g['meta_img']=$g['url_root'].$FI['url'].$FI['folder'].'/'.$featured_img;
 }
 
 $mod = $mod ? $mod : 'view';

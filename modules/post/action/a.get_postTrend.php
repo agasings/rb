@@ -25,7 +25,7 @@ if ($mod=='device') {
 	while(true) {
 		if ($unit=='month') {
 			$_new_date = date("Y/m", strtotime($new_date. '+1 month'));
-			$new_date = date("Ym", strtotime($new_date. '+1 month'));
+			$new_date = date("Ymd", strtotime($new_date. '+1 month'));
 		} else {
 			$_new_date = date("m/d", strtotime($new_date. '+1 day'));
 			$new_date = date("Ymd", strtotime($new_date. '+1 day'));
@@ -33,7 +33,13 @@ if ($mod=='device') {
 		$_R = getDbData($table[$m.$unit],'date ='.$new_date.' and data='.$R['uid'],'*');
 		$mobile+=$_R['mobile'];
 		$desktop+=$_R['desktop'];
-		if($new_date == date(($unit=='month'?'Ym':'Ymd'), strtotime("now"))) break;
+
+		if ($unit=='month') {
+		  if(substr($new_date,0,6) == date('Ym', strtotime("now"))) break;
+		} else {
+		  if($new_date == date('Ymd', strtotime("now"))) break;
+		}
+
 	}
 
 	$data['labels'] =  array ('모바일','데스크탑');
@@ -57,7 +63,7 @@ if ($mod=='side') {
 	while(true) {
 		if ($unit=='month') {
 			$_new_date = date("Y/m", strtotime($new_date. '+1 month'));
-			$new_date = date("Ym", strtotime($new_date. '+1 month'));
+			$new_date = date("Ymd", strtotime($new_date. '+1 month'));
 		} else {
 			$_new_date = date("m/d", strtotime($new_date. '+1 day'));
 			$new_date = date("Ymd", strtotime($new_date. '+1 day'));
@@ -65,7 +71,11 @@ if ($mod=='side') {
 		$_R = getDbData($table[$m.$unit],'date ='.$new_date.' and data='.$R['uid'],'*');
 		$outside+=$_R['outside'];
 		$inside+=$_R['inside'];
-		if($new_date == date(($unit=='month'?'Ym':'Ymd'), strtotime("now"))) break;
+		if ($unit=='month') {
+		  if(substr($new_date,0,6) == date('Ym', strtotime("now"))) break;
+		} else {
+		  if($new_date == date('Ymd', strtotime("now"))) break;
+		}
 	}
 
 	$data['labels'] =  array ('외부 및 직접접속','내부');
@@ -88,7 +98,7 @@ if ($mod=='referer') {
 	while(true) {
 		if ($unit=='month') {
 			$_new_date = date("Y/m", strtotime($new_date. '+1 month'));
-			$new_date = date("Ym", strtotime($new_date. '+1 month'));
+			$new_date = date("Ymd", strtotime($new_date. '+1 month'));
 		} else {
 			$_new_date = date("m/d", strtotime($new_date. '+1 day'));
 			$new_date = date("Ymd", strtotime($new_date. '+1 day'));
@@ -103,7 +113,11 @@ if ($mod=='referer') {
 		$fb+=$_R['fb'];
 		$tt+=$_R['tt'];
 		$nb+=$_R['nb'];
-		if($new_date == date(($unit=='month'?'Ym':'Ymd'), strtotime("now"))) break;
+		if ($unit=='month') {
+		  if(substr($new_date,0,6) == date('Ym', strtotime("now"))) break;
+		} else {
+		  if($new_date == date('Ymd', strtotime("now"))) break;
+		}
 	}
 
 	$etc = $R['hit']-($yt+$kt+$ks+$bd+$ig+$fb+$tt+$nb)-$inside;
@@ -139,13 +153,11 @@ if ($mod=='hit' || $mod=='likes' || $mod=='comment') {
 	while(true) {
 		if ($unit=='month') {
 			$_new_date = date("Y/m", strtotime($new_date. '+1 month'));
-			$new_date = date("Ym", strtotime($new_date. '+1 month'));
+			$new_date = date("Ymd", strtotime($new_date. '+1 month'));
 		} else {
 			$_new_date = date("m/d", strtotime($new_date. '+1 day'));
 			$new_date = date("Ymd", strtotime($new_date. '+1 day'));
 		}
-
-
 
 		$_R = getDbData($table[$m.$unit],'date ='.$new_date.' and data='.$R['uid'],'*');
 		array_push($labelsArray, $_new_date);
@@ -158,7 +170,11 @@ if ($mod=='hit' || $mod=='likes' || $mod=='comment') {
 		array_push($datafbArray,  $_R['fb']?$_R['fb']:0);$fb+=$_R['fb'];
 		array_push($datattArray,  $_R['tt']?$_R['tt']:0);$tt+=$_R['tt'];
 		array_push($datanbArray,  $_R['nb']?$_R['nb']:0);$nb+=$_R['nb'];
-		if($new_date == date(($unit=='month'?'Ym':'Ymd'), strtotime("now"))) break;
+		if ($unit=='month') {
+		  if(substr($new_date,0,6) == date('Ym', strtotime("now"))) break;
+		} else {
+		  if($new_date == date('Ymd', strtotime("now"))) break;
+		}
 	}
 
 	$type='line';

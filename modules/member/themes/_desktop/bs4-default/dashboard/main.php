@@ -32,13 +32,13 @@
             </span>
           </li>
           <li class="list-group-item flex-fill">
-            <small>총 조회</small>
+            <small>누적 조회수</small>
             <span class="d-block h1 my-2">
               <?php echo number_format($my['hit_post']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
-            <small>총 좋아요</small>
+            <small>누적 좋아요수</small>
             <span class="d-block h1 my-2">
               <?php echo number_format($my['likes_post']) ?>
             </span>

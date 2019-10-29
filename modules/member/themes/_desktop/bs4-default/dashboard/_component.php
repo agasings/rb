@@ -66,7 +66,7 @@
 
 <!-- modal : 포스트 통계 -->
 <div class="modal" tabindex="-1" role="dialog" id="modal-post-analytics">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header border-bottom-0 bg-light">
 
@@ -87,7 +87,6 @@
             </div>
           </div>
         </div>
-
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -95,60 +94,76 @@
 
       <nav class="bg-light" style="margin-top: -5px;">
         <div class="nav nav-tabs nav-fill" role="tablist">
-          <a class="nav-item nav-link active rounded-0 border-left-0" data-toggle="tab" href="#post-summary" role="tab">요약</a>
-          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-hit" role="tab">조회수</a>
-          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-likes" role="tab">좋아요</a>
-          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-comment" role="tab">댓글</a>
-          <a class="nav-item nav-link rounded-0 border-right-0" data-toggle="tab" href="#post-referer" role="tab">유입추이</a>
+          <a class="nav-item nav-link active rounded-0 border-left-0" data-toggle="tab" href="#chart-post-hit" data-mod="hit" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
+            유입추이
+          </a>
+          <a class="nav-item nav-link rounded-0 " data-toggle="tab" href="#chart-post-referer" data-mod="referer" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
+            유입경로
+          </a>
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#chart-post-device" data-mod="device" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
+            디바이스별
+          </a>
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#chart-post-side" data-mod="side" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
+            외부유입
+          </a>
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#chart-post-likes" data-mod="likes" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
+            좋아요
+          </a>
+          <a class="nav-item nav-link rounded-0 border-right-0" data-toggle="tab" href="#chart-post-comment" data-mod="comment" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
+            댓글
+          </a>
         </div>
       </nav>
-      <div class="modal-body">
+      <div class="modal-body" style="min-height: 420px">
 
-        <div data-role="_loader" class="d-none">
+        <div data-role="loader">
           <div class="d-flex justify-content-center align-items-center"  style="height:385px">
-            <div class="spinner-border" role="status">
+            <div class="spinner-border text-muted" role="status">
               <span class="sr-only">Loading...</span>
             </div>
           </div>
         </div>
 
-        <div class="dropdown">
-          <button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            지난 1주일
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">지난 한달</a>
-            <a class="dropdown-item" href="#">지난달</a>
-            <a class="dropdown-item" href="#">월별보기</a>
-          </div>
-        </div>
-
 
         <div class="tab-content">
-          <div class="tab-pane active" id="post-summary" role="tabpanel">
-
-            <canvas style="height: 450px"></canvas>
-
-          </div>
-          <div class="tab-pane" id="post-hit" role="tabpanel">
-
-            <canvas style="height: 450px"></canvas>
-
-          </div>
-          <div class="tab-pane" id="post-likes" role="tabpanel">
+          <div class="tab-pane active" id="chart-post-hit" role="tabpanel"></div>
+          <div class="tab-pane" id="chart-post-referer" role="tabpanel"></div>
+          <div class="tab-pane" id="chart-post-device" role="tabpanel"></div>
+          <div class="tab-pane" id="chart-post-side" role="tabpanel"></div>
+          <div class="tab-pane" id="chart-post-likes" role="tabpanel"></div>
+          <div class="tab-pane" id="chart-post-comment" role="tabpanel"></div>
+        </div>
+      </div>
 
 
-          </div>
-          <div class="tab-pane" id="post-comment" role="tabpanel">
+      <div class="modal-footer bg-light">
 
+        <div class="mr-auto">
 
-          </div>
-          <div class="tab-pane" id="post-referer" role="tabpanel">
-            <canvas style="height: 450px" id="canvas-referer"></canvas>
-          </div>
+          <select class="form-control custom-select mr-2" data-toggle="term" data-mod="hit" style="width: 150px">
+            <option selected value="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-d_start="<?php echo date("Y.m.d", strtotime("-1 week")); ?>" data-unit="day">
+              최근 1주
+            </option>
+            <option value="<?php echo date("Ymd", strtotime("-2 week")); ?>" data-d_start="<?php echo date("Y.m.d", strtotime("-2 week")); ?>" data-unit="day">
+              최근 2주
+            </option>
+            <option value="<?php echo date("Ymd", strtotime("-3 week")); ?>" data-d_start="<?php echo date("Y.m.d", strtotime("-3 week")); ?>" data-unit="day">
+              최근 3주
+            </option>
+            <option value="<?php echo date("Ymd", strtotime("-1 month")); ?>" data-d_start="<?php echo date("Y.m.d", strtotime("-1 month")); ?>" data-unit="day">
+              최근 1달
+            </option>
+            <option value="<?php echo date("Ymd", strtotime("-1 year")); ?>" data-d_start="<?php echo date("Y.m", strtotime("-1 year")); ?>.01" data-unit="month">
+              최근 1년
+            </option>
+          </select>
+
         </div>
 
-
+        <span data-role="term">
+          <span data-role="d_start"><?php echo date("Y.m.d", strtotime("-1 week")); ?></span>
+          ~
+          <?php echo date("Y.m.d", strtotime("now")) ?></span>
       </div>
 
     </div>
@@ -158,43 +173,28 @@
 
 <script>
 
-function setPostTrendChart(uid,mod) {
+function setPostTrendChart(ctx,uid,mod,unit,start) {
 
-	if (mod=='hit') var chartSet = ['조회수 추이','#cce5ff','#004085']; //label ,backgroundColor,borderColor
-	if (mod=='likes') var chartSet = ['좋아요 추이','#d4edda','#155724'];
-	if (mod=='comment') var chartSet = ['댓글 추이','#f8d7da','#721c24'];
-	if (mod=='follower') var chartSet = ['구독자 추이','#ffeeba','#856404'];
-
-	var _ele = $('#post-hit').find('canvas');
-	_ele.addClass('d-none');
-
+	ctx.addClass('d-none');
 	$('[data-role="loader"]').removeClass('d-none');
 
 	$.post(rooturl+'/?r='+raccount+'&m=post&a=get_postTrend',{
     uid : uid,
 		mod : mod,
-		d_start : '<?php echo date('Ymd',mktime(0,0,0,substr($date['today'],4,2),substr($date['today'],6,2)-7,substr($date['today'],0,4))) ?>'  //일주일전
+    unit : unit,
+		d_start : start
 		},function(response,status){
 			if(status=='success'){
 				var result = $.parseJSON(response);
-				var chartLabel=result.label;
-				var chartData=result.data;
-
-				var data = {
-					labels: chartLabel,
-					datasets: [{
-							label: chartSet[0],
-							backgroundColor: chartSet[1],
-							borderColor: chartSet[2],
-							data: chartData
-					}]
-				};
-				var chart = new Chart(_ele, {
-					type: 'line',
+        var type=result.type;
+        var data=result.data;
+        var options=result.options;
+				var postChart = new Chart(ctx, {
+					type: type,
 					data: data,
-					options: {}
+					options: options
 				});
-				_ele.removeClass('d-none');
+				ctx.removeClass('d-none');
 				$('[data-role="loader"]').addClass('d-none');
 
 			} else {
@@ -204,9 +204,7 @@ function setPostTrendChart(uid,mod) {
 }
 
 
-
 $( document ).ready(function() {
-
 
   $('#modal-post-opinion').on('shown.bs.modal', function (e) {
     var modal = $(this);
@@ -253,7 +251,6 @@ $( document ).ready(function() {
 		 }, 300);
   })
 
-
   $('#modal-post-analytics').on('shown.bs.modal', function (e) {
     var modal = $(this);
     var button = $(e.relatedTarget);
@@ -263,19 +260,65 @@ $( document ).ready(function() {
     var item = button.closest('[data-role="item"]');
     var subject = item.attr('data-subject');
     var featured_img = item.attr('data-featured_img');
-    var hit = item.attr('data-hit');
-    var likes = item.attr('data-likes');
-    var comment = item.attr('data-comment');
 
+    modal.find('.tab-pane').html('<canvas style="height: 450px"></canvas>')
+    var ctx = $('#chart-post-hit').find('canvas');
+    modal.attr('data-uid',uid);
     modal.find('[data-role="subject"]').text(subject);
     modal.find('[data-role="featured_img"]').attr('src',featured_img);
-    modal.find('[data-role="hit"]').text(hit);
-    modal.find('[data-role="likes"]').text(likes);
-    modal.find('[data-role="comment"]').text(comment);
 
-    setPostTrendChart(uid,mod);
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postData',{
+      uid : uid
+  		},function(response,status){
+  			if(status=='success'){
+  				var result = $.parseJSON(response);
+          var hit=result.hit;
+          var likes=result.likes;
+          var comment=result.comment;
+          modal.find('[data-role="hit"]').text(hit);
+          modal.find('[data-role="likes"]').text(likes);
+          modal.find('[data-role="comment"]').text(comment);
 
+  			} else {
+  				alert(status);
+  			}
+  	});
+
+    setPostTrendChart(ctx,uid,mod,'day',<?php echo date("Ymd", strtotime("-1 week")); ?>);
+    modal.find('.nav-tabs .nav-link:first-child').tab('show');
   })
+
+  $('#modal-post-analytics').on('hidden.bs.modal', function (e) {
+    var modal = $(this);
+    modal.find('.tab-pane canvas').remove()
+    modal.find('[data-toggle="term"] option:first').prop("selected", true);
+  })
+
+  $('#modal-post-analytics').find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    var modal = $('#modal-post-analytics')
+    var tab = $(e.target).attr('href');
+    var uid = modal.attr('data-uid');
+    var start = $(e.target).attr('data-start');
+    var mod = $(e.target).attr('data-mod');
+    var unit = $(e.target).attr('data-unit');
+    var ctx = $('#chart-post-'+mod).find('canvas');
+    modal.find('[data-toggle="term"]').attr('data-mod',mod);
+    setPostTrendChart(ctx,uid,mod,unit,start);
+  })
+
+  $('#modal-post-analytics').find('[data-toggle="term"]').change(function(){
+    var modal = $('#modal-post-analytics');
+    var uid = modal.attr('data-uid');
+    var start = $(this).val();
+    var mod = $(this).attr('data-mod');
+    var unit = $(this).find(':selected').attr('data-unit');
+    var d_start = $(this).find(':selected').attr('data-d_start');
+    var ctx = $('#chart-post-'+mod).find('canvas');
+    setPostTrendChart(ctx,uid,mod,unit,start);
+    modal.find('a[data-toggle="tab"]').attr('data-start',start)
+    modal.find('[data-role="d_start"]').text(d_start)
+  });
+
 
 });
 
