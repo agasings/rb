@@ -61,8 +61,8 @@
 
           <div class="form-group">
             <label class="sr-only">요약설명</label>
-            <textarea class="form-control" rows="3" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
-            <small class="form-text text-muted">100자 이내로 등록할 수 있으며 태그를 사용할 수 있습니다.</small>
+            <textarea class="form-control" rows="2" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
+            <small class="form-text text-muted">100자 이내로 요약설명을 입력하세요.</small>
           </div>
 
           <div class="form-group mt-4">
@@ -142,35 +142,42 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label class="small text-muted">컨텐츠 포맷</label>
+            <select name="format" class="form-control custom-select">
+              <option value="1"<?php echo $R['format']==1?' selected':'' ?>>문서형</option>
+              <option value="2"<?php echo $R['format']==2?' selected':'' ?>>비디오형</option>
+              <option value="3"<?php echo $R['format']==3?' selected':'' ?>>포토갤러리형</option>
+              <option value="4"<?php echo $R['format']==4?' selected':'' ?>>카드형</option>
+            </select>
+          </div>
+
           <section class="my-4">
             <div class="d-flex justify-content-between">
               <label class="small text-muted">통계분석</label>
-              <a href="#modal-post-analytics" class="muted-link small mr-3" data-toggle="modal" data-backdrop="static">
-                더보기
-              </a>
             </div>
             <ul class="list-group list-group-horizontal text-center text-muted">
-              <li class="list-group-item flex-fill">
+              <li class="list-group-item flex-fill py-2">
                 <small>조회</small>
-                <span class="d-block h2 mb-0">
+                <span class="d-block h3 mb-0">
                   <?php echo number_format($R['hit']) ?>
                 </span>
               </li>
-              <li class="list-group-item flex-fill">
+              <li class="list-group-item flex-fill py-2">
                 <small>좋아요</small>
-                <span class="d-block h2 mb-0">
+                <span class="d-block h3 mb-0">
                   <?php echo number_format($R['likes']) ?>
                 </span>
               </li>
-              <li class="list-group-item flex-fill">
+              <li class="list-group-item flex-fill py-2">
                 <small>댓글</small>
-                <span class="d-block h2 mb-0">
+                <span class="d-block h3 mb-0">
                   <?php echo number_format($R['comment']) ?>
                 </span>
               </li>
-              <li class="list-group-item flex-fill">
+              <li class="list-group-item flex-fill py-2">
                 <small>평점</small>
-                <span class="d-block h2 mb-0">
+                <span class="d-block h3 mb-0">
                   <?php echo number_format($R['likes_post']) ?>
                 </span>
               </li>
@@ -529,26 +536,6 @@
     </div>
   </div>
 </div>
-
-<!-- modal : 포스트 통계 -->
-<div class="modal" tabindex="-1" role="dialog" id="modal-post-analytics">
-  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">포스트 통계</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div style="height: 80vh">
-					준비중
-				</div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <!-- modal : 포스트 수정이력 -->
 <div class="modal" tabindex="-1" role="dialog" id="modal-post-log">

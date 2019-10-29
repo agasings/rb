@@ -13,8 +13,10 @@ $d_regis	= $date['totime']; // 최초 등록일
 if($uid) $d_modify =$date['totime']; // 수정 등록일
 else $d_modify=''; // 최초에는 수정일 없음
 
+$format= $format?$format:1;
 $display= $display?$display:1;
 $hidden = $display==1 || $display==2?1:0;
+
 
 if ($uid) {
 
@@ -27,7 +29,7 @@ if ($uid) {
   if (!checkPostOwner($R)) getLink('','','잘못된 접근입니다.','');
 
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>'.$R['log'];
-  $QVAL1 = "subject='$subject',review='$review',content='$content',tag='$tag',display='$display',hidden='$hidden',";
+  $QVAL1 = "subject='$subject',review='$review',content='$content',tag='$tag',display='$display',hidden='$hidden',format='$format',";
   $QVAL1 .="d_modify='$d_modify',member='$member',upload='$upload',log='$log',featured_img='$featured_img',linkedmenu='$linkedmenu',dis_comment='$dis_comment',dis_like='$dis_like',dis_rating='$dis_rating'";
   getDbUpdate($table[$m.'data'],$QVAL1,'uid='.$R['uid']);
 
