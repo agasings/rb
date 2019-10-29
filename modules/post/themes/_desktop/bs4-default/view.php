@@ -1,7 +1,7 @@
 <?php
-$format_array = array('','doc','video','photo','card');  // 문서형,비디오형,포토갤러리형,카드형
 include $g['dir_module_skin'].'_header.php';
-include $g['dir_module_skin'].'view_'.$format_array[$R['format']].'.php';
+$formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
+include $g['dir_module_skin'].'view_'.$formats[$R['format']].'.php';
 include $g['dir_module_skin'].'_footer.php'
 ?>
 

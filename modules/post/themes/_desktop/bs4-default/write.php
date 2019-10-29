@@ -144,11 +144,12 @@
 
           <div class="form-group">
             <label class="small text-muted">컨텐츠 포맷</label>
+            <?php $formats = explode(',', $d['theme']['format']);array_unshift($formats,''); ?>
             <select name="format" class="form-control custom-select">
-              <option value="1"<?php echo $R['format']==1?' selected':'' ?>>문서형</option>
-              <option value="2"<?php echo $R['format']==2?' selected':'' ?>>비디오형</option>
-              <option value="3"<?php echo $R['format']==3?' selected':'' ?>>포토갤러리형</option>
-              <option value="4"<?php echo $R['format']==4?' selected':'' ?>>카드형</option>
+              <option value="1"<?php echo $R['format']==1?' selected':'' ?>><?php echo $formats[1] ?></option>
+              <option value="2"<?php echo $R['format']==2?' selected':'' ?>><?php echo $formats[2] ?></option>
+              <option value="3"<?php echo $R['format']==3?' selected':'' ?>><?php echo $formats[3] ?></option>
+              <option value="4"<?php echo $R['format']==4?' selected':'' ?>><?php echo $formats[4] ?></option>
             </select>
           </div>
 

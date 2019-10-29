@@ -88,7 +88,7 @@ switch ($mod) {
   break;
 }
 
-// include_once $g['path_module'].$m.'/themes/'.$d['post']['skin'].'/_var.php';
+include_once $g['path_module'].$m.'/themes/'.$d['post']['skin'].'/_var.php';
 
 if ($c) $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
 else $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
