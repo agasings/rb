@@ -1,6 +1,6 @@
 <!-- modal : 포스트 좋아요/싫어요 목록 -->
 <div class="modal" tabindex="-1" role="dialog" id="modal-post-opinion">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header border-bottom-0 bg-light">
 
@@ -37,7 +37,7 @@
           </a>
         </div>
       </nav>
-      <div class="modal-body p-0">
+      <div class="modal-body p-0" style="min-height: 300px">
 
         <div data-role="loader" class="d-none">
           <div class="d-flex justify-content-center align-items-center"  style="height:150px">

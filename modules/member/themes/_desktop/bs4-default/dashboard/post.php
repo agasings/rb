@@ -293,7 +293,7 @@ switch ($sort) {
 	</form>
 </div>
 
-<?php include $g['dir_module_skin'].'_component.php';?>
+<?php include $g['path_module'].'post/mod/_component.desktop.php';?>
 
 <script type="text/javascript">
 

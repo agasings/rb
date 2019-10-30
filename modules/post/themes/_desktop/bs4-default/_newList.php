@@ -12,7 +12,7 @@ $_NUM = getDbRows($table['postlist'],$listque);
 
 <section class="widget-post-card-01">
   <header class="d-flex justify-content-between align-items-center py-2">
-    <strong><?php echo $wdgvar['title']?></strong>
+    <span><?php echo $wdgvar['title']?></span>
   </header>
 
   <?php if ($_NUM): ?>
@@ -36,7 +36,6 @@ $_NUM = getDbRows($table['postlist'],$listque);
           <ul class="list-inline d-inline-block f13 text-muted">
             <li class="list-inline-item">
               <time data-plugin="timeago" datetime="<?php echo getDateFormat($LIST['d_regis'],'c')?>"></time>
-              <?php if(getNew($LIST['d_regis'],12)):?><small class="text-danger">new</small><?php endif?>
             </li>
           </ul>
 

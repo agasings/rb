@@ -2,8 +2,17 @@
 include $g['dir_module_skin'].'_header.php';
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
 include $g['dir_module_skin'].'view_'.$formats[$R['format']].'.php';
-include $g['dir_module_skin'].'_footer.php'
+include $g['dir_module_skin'].'_footer.php';
+
+if ($_perm['post_owner']) {
+	include $g['path_module'].'post/mod/_component.desktop.php';
+	getImport('Chart.js','Chart.bundle.min','2.8.0','js');
+}
+
 ?>
+
+
+
 
 <script>
 

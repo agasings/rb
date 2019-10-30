@@ -686,3 +686,7 @@
     content: '▲';
     font-size: 14px;
 }
+
+.rb-article figure {
+  margin: 0 0 2rem;
+}

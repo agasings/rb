@@ -107,6 +107,14 @@
   display: none
 }
 
+/* 보기 */
+.serial {
+  counter-increment: Serial;
+}
+.serial .counter:before {
+  content: counter(Serial);
+}
+
 /* 쓰기 */
 .rb-post-write header {
   position: fixed;
@@ -202,4 +210,17 @@
 
 .rb-post-write fieldset:disabled button {
   opacity: 0
+}
+
+/* 관리 */
+.modal .nav-tabs .nav-link {
+  border: 1px solid transparent;
+  color: #999;
+  background-color: transparent;
+}
+.modal .nav-tabs .nav-item.show .nav-link,
+.modal .nav-tabs .nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
 }

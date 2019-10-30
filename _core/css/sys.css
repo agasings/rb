@@ -1535,6 +1535,12 @@ anger {
   to {background-color: white;}
 }
 
+.mirror {
+	-moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+	-webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+	-o-transform:matrix(-1, 0, 0, 1, 0, 0);
+}
+
 /* 플러그인 보정 */
 .pswp {
   display: none;

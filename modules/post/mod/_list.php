@@ -26,7 +26,6 @@ if ($sort == 'gid' && !$keyword  && !$listid) {
 		$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
 		$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
 	}
-	$LIST  = getDbData($table[$m.'list'],"id='".$listid."'",'*');
 	$_WHERE .= ' and list="'.$LIST['uid'].'"';
 	$TCD = getDbArray($table[$m.'list_index'],$_WHERE,'*','gid','asc',$recnum,$p);
 	$NUM = getDbRows($table[$m.'list_index'],$_WHERE);

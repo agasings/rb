@@ -44,6 +44,7 @@
 <!-- 시스템 폰트 -->
 <?php getImport('font-awesome','css/font-awesome','4.7.0','css')?>
 <?php getImport('font-kimsq','css/font-kimsq',false,'css')?>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- anchorjs : https://github.com/bryanbraun/anchorjs -->
 <?php getImport('anchorjs','anchor.min','4.2.0','js')?>

@@ -1,6 +1,6 @@
 <?php
-$wdgvar['limit'] = 5; //전체 출력수
-$wdgvar['title'] = $M1[$_HS['nametype']].'님의 컨텐츠';
+$wdgvar['limit'] = 3; //전체 출력수
+$wdgvar['title'] = $M1[$_HS['nametype']].'님의 포스트';
 $postque = 'mbruid='.$M1['memberuid'].' and site='.$s.' and data <>'.$R['uid'];
 
 if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
@@ -14,7 +14,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
 
 <section class="widget-post-card-01">
   <header class="d-flex justify-content-between align-items-center pb-2">
-    <strong><?php echo $wdgvar['title']?></strong>
+    <span><?php echo $wdgvar['title']?></span>
     <?php if($wdgvar['link']):?>
     <a href="<?php echo $wdgvar['link']?>" class="muted-link small">
       더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -42,7 +42,6 @@ $_NUM = getDbRows($table['postmember'],$postque);
               <li class="list-inline-item">조회수 <?php echo $POST['hit']?>회 </li>
               <li class="list-inline-item">
                 <time data-plugin="timeago" datetime="<?php echo getDateFormat($POST['d_regis'],'c')?>"></time>
-                <?php if(getNew($POST['d_regis'],12)):?><small class="text-danger">new</small><?php endif?>
               </li>
             </ul>
 
