@@ -61,7 +61,7 @@
 
           <div class="form-group">
             <label class="sr-only">요약설명</label>
-            <textarea class="form-control" rows="2" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
+            <textarea class="form-control" rows="3" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
             <small class="form-text text-muted">100자 이내로 요약설명을 입력하세요.</small>
           </div>
 
@@ -148,8 +148,6 @@
             <select name="format" class="form-control custom-select">
               <option value="1"<?php echo $R['format']==1?' selected':'' ?>><?php echo $formats[1] ?></option>
               <option value="2"<?php echo $R['format']==2?' selected':'' ?>><?php echo $formats[2] ?></option>
-              <option value="3"<?php echo $R['format']==3?' selected':'' ?>><?php echo $formats[3] ?></option>
-              <option value="4"<?php echo $R['format']==4?' selected':'' ?>><?php echo $formats[4] ?></option>
             </select>
           </div>
 
