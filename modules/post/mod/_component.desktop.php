@@ -1,6 +1,6 @@
 <!-- modal : 포스트 좋아요/싫어요 목록 -->
 <div class="modal" tabindex="-1" role="dialog" id="modal-post-opinion">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="width: 400px">
     <div class="modal-content">
       <div class="modal-header border-bottom-0 bg-light">
 

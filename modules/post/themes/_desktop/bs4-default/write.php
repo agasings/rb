@@ -362,17 +362,17 @@
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>저장 허용</span>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="use_listadd" value="1" id="use_listadd"<?php echo $R['dis_listadd']?'':' checked' ?>>
+                <label class="custom-control-label" for="use_listadd"></label>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>평점 사용</span>
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="use_rating" value="1" id="use_rating"<?php echo $R['dis_rating']?'':' checked' ?>>
                 <label class="custom-control-label" for="use_rating"></label>
-              </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>리스트 저장 허용</span>
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="use_listadd" value="1" id="use_listadd"<?php echo $R['dis_listadd']?'':' checked' ?>>
-                <label class="custom-control-label" for="use_listadd"></label>
               </div>
             </li>
           </ul>
@@ -401,10 +401,12 @@
                   <th scope="row">최초 작성</th>
                   <td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
                 </tr>
+                <?php if ($R['d_modify']): ?>
                 <tr>
                   <th scope="row">마지막 수정</th>
                   <td><?php echo getDateFormat($R['d_modify'],'Y.m.d H:i')?></td>
                 </tr>
+                <?php endif; ?>
               </tbody>
             </table>
 

@@ -12,6 +12,7 @@ if ($_perm['post_owner']) {
 
 ?>
 
+
 <script>
 
 putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
@@ -30,3 +31,5 @@ $( document ).ready(function() {
 });
 
 </script>
+
+<?php echo $_SERVER['REQUEST_URI'] ?>

@@ -32,23 +32,18 @@
 			<div class="d-flex justify-content-between align-items-center">
 
 				<div class="mt-1 text-muted">
-
-					<span>
-						조회수 <?php echo number_format($R['hit'])?>회
-					</span>
-
+					<span>조회수 <?php echo number_format($R['hit'])?>회</span>
 					<span class="badge badge-light align-middle border border-success text-success mr-1"><?php echo $g['projectSet']['type'][$R['type']] ?></span>
 					<time class="mr-1">
 						•<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'Y-m-d H:i') ?>
 					</time>
-
 				</div>
 				<div class="">
 
 					<!-- 좋아요 or 싫어요 -->
 			    <?php if (!$R['dis_like']): ?>
 					<span class="dropdown">
-				    <button type="button" class="btn btn-link muted-link px-2<?php if($is_liked):?> active<?php endif?>"
+				    <button type="button" class="btn btn-link muted-link px-2 text-decoration-none<?php if($is_liked):?> active<?php endif?>"
 							data-toggle="<?php echo $my['uid']?'actionIframe':'dropdown'?>"
 				      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=like&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
 				      data-role="btn_post_like">
@@ -70,7 +65,7 @@
 					</span>
 
 					<span class="dropdown">
-				    <button type="button" class="btn btn-link muted-link px-2<?php if($is_disliked):?> active<?php endif?>"
+				    <button type="button" class="btn btn-link muted-link px-2 text-decoration-none<?php if($is_disliked):?> active<?php endif?>"
 				      data-toggle="<?php echo $my['uid']?'actionIframe':'dropdown'?>"
 				      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
 				      data-role="btn_post_dislike">
@@ -93,7 +88,7 @@
 			    <?php endif; ?>
 
 					<?php if (!$R['dis_share']): ?>
-					<button type="button" class="btn btn-link muted-link px-2"
+					<button type="button" class="btn btn-link muted-link px-2 text-decoration-none"
 						data-toggle="modal" data-target="#modal-post-share">
 						<i class="material-icons align-text-bottom mirror">reply</i>
 						<span class="f13 text-muted">공유</span>
@@ -102,7 +97,7 @@
 
 					<?php if (!$R['dis_listadd']): ?>
 					<span class="dropdown" data-role="listadd">
-						<button type="button" class="btn btn-link muted-link px-2"
+						<button type="button" class="btn btn-link muted-link px-2 text-decoration-none"
 							data-toggle="<?php echo $my['uid']?'modal':'dropdown'?>"
 							data-target="<?php echo $my['uid']?'#modal-post-listadd':''?>"
 							data-uid="<?php echo $R['uid']?>">
@@ -129,12 +124,11 @@
 					<a href="#" class="muted-link"> <?php echo $R['rating']/$R['num_rating']?></a></span>
 					<?php endif; ?>
 
-
 					<div class="dropdown d-inline">
 					  <button class="btn btn-link muted-link px-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					    <i class="material-icons">more_horiz</i>
 					  </button>
-					  <div class="dropdown-menu">
+					  <div class="dropdown-menu dropdown-menu-right shadow">
 					    <a class="dropdown-item" href="#modal-post-report" data-toggle="modal" data-uid="<?php echo $R['uid']?>">
 								신고하기
 							</a>
