@@ -126,7 +126,7 @@ switch ($sort) {
 
 			    <div class="media-body">
 			      <h5 class="my-1 font-weight-light line-clamp-2">
-							<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" ><?php echo $R['subject']?></a>
+							<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" ><?php echo stripslashes($R['subject'])?></a>
 						</h5>
 						<div class="mb-1">
 							<ul class="list-inline d-inline-block f13 text-muted">

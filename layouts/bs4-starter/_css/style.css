@@ -738,6 +738,9 @@ figure.media oembed iframe {
  z-index: 1090;
 }
 
+[data-notify="container"] {
+  text-align: center;
+}
 
  /**
   * 9 - Theme 테마

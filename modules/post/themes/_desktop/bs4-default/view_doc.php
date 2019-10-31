@@ -2,7 +2,7 @@
 
 	<div class="col-8">
 
-		<h2 class="h3"><?php echo $R['subject'] ?></h2>
+		<h2 class="h3"><?php echo stripslashes($R['subject']) ?></h2>
 
 		<div class="page-meta f13">
 	    <div class="page-meta-body">
@@ -22,7 +22,6 @@
 					<span class="ml-2">· 댓글 : <a class="muted-link" href="#comments"><?php echo $R['comment']?></a></span>
 					<?php endif; ?>
 
-
 	        <span class="ml-2">
 	          조회 : <?php echo $R['hit']?>
 	        </span>
@@ -39,6 +38,10 @@
 	      </div>
 	    </div><!-- /.page-meta-body -->
 	  </div>
+
+		<blockquote class="blockquote mt-4">
+			<?php echo $R['review'] ?>
+		</blockquote>
 
 		<!-- 본문 -->
 		<article class="py-4 rb-article">
@@ -202,7 +205,7 @@
 
 		        <div class="media-body">
 		          <h5 class="f13 my-1 font-weight-light line-clamp-2">
-		            <?php echo $_L['subject']?>
+		            <?php echo stripslashes($_L['subject'])?>
 		          </h5>
 							<ul class="list-inline d-inline-block f13">
 								<li class="list-inline-item">

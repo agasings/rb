@@ -20,7 +20,7 @@
 		<div class="media-body">
 			<h5 class="mt-0 mb-1">
 				<a href="<?php echo getPostLink($R,0) ?>">
-					<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
+					<?php echo checkPostPerm($R)?stripslashes($R['subject']):'[비공개 포스트]'?>
 				</a>
 			</h5>
 			<?php if (checkPostPerm($R)): ?>

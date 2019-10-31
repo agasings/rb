@@ -21,10 +21,10 @@ if ($_isFollowing)
 	$rcvmember = $mbruid ;
 	$sendmodule = $M['id'];
 	$sendmember = $my['uid'] ;
-	$message = "회원님의 팔로우 취소했습니다";
+	$message = "구독을 취소했습니다";
 	$referer = '';
 	$target = '_self';
-	putNotice($rcvmember,$sendmodule,$sendmember,$message,$referer,$target);
+	putNotice($rcvmember,$sendmodule,$sendmember,$title,$message,$referer,$button,$tag,$skip_email,$skip_push);
 
 
 }
@@ -35,10 +35,10 @@ else {
 	$rcvmember = $mbruid ;
 	$sendmodule = $M['id'];
 	$sendmember = $my['uid'] ;
-	$message = "회원님의 팔로우를 시작했습니다.";
+	$message = "구독을 시작했습니다.";
 	$referer = '';
 	$target = '_self';
-	putNotice($rcvmember,$sendmodule,$sendmember,$message,$referer,$target);
+	putNotice($rcvmember,$sendmodule,$sendmember,$title,$message,$referer,$button,$tag,$skip_email,$skip_push);
 
 }
 ?>
@@ -47,9 +47,9 @@ else {
 window.parent.$.notify({
 
 	<?php if ($_isFollowing): ?>
-	message: "팔로우가 취소 되었습니다."
+	message: "구독이 취소 되었습니다."
 	<?php else:?>
-	message: "팔로우 되었습니다."
+	message: "구독이 시작 되었습니다."
 	<?php endif; ?>
 
 },{
@@ -59,7 +59,7 @@ window.parent.$.notify({
 	},
 	allow_dismiss: false,
 	offset: 20,
-	type: "success",
+	type: "default",
 	timer: 100,
 	delay: 1500,
 	animate: {

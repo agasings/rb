@@ -24,10 +24,10 @@ if ($cid) {
 
   $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
 
-  $g['browtitle'] = strip_tags($R['subject']).' - '.$_HS['name'];
-  $g['meta_tit'] = strip_tags($R['subject']).' - '.$_HS['name'];
-  $g['meta_sbj'] = str_replace('"','\'',$R['subject']);
-  $g['meta_key'] = $R['tag'] ?$R['tag'] : str_replace('"','\'',$R['subject']);
+  $g['browtitle'] = strip_tags(stripslashes($R['subject'])).' - '.$_HS['name'];
+  $g['meta_tit'] = strip_tags(stripslashes($R['subject'])).' - '.$_HS['name'];
+  $g['meta_sbj'] = str_replace('"','\'',stripslashes($R['subject']));
+  $g['meta_key'] = $R['tag'] ?$R['tag'] : str_replace('"','\'',stripslashes($R['subject']));
   $g['meta_des'] = getStrCut(getStripTags($R['review']),150,'');
   $g['meta_img'] = getPreviewResize(getUpImageSrc($R),'z');
 

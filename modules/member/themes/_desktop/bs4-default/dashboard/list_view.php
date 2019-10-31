@@ -150,7 +150,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 							<div class="media-body">
 								<h6 class="my-1">
-									<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" target="_blank"><?php echo $R['subject']?></a>
+									<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" target="_blank"><?php echo stripslashes($R['subject'])?></a>
 								</h6>
 								<div class="mb-1">
 									<span class="badge badge-secondary"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>

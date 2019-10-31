@@ -114,6 +114,14 @@
 .serial .counter:before {
   content: counter(Serial);
 }
+[data-role="follow"].active {
+  background-color: #e0e0e0 !important;
+  color: #696969 !important;
+  border: none !important
+}
+[data-role="follow"].active::after {
+  content: '중'
+}
 
 /* 쓰기 */
 .rb-post-write header {

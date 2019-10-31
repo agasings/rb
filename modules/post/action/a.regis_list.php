@@ -6,7 +6,7 @@ if (!$my['uid']) getLink('reload','parent.','정상적인 접근이 아닙니다
 $mbruid =  $my['uid'];
 $last_log	= $date['totime'];
 $id   = $id ? trim($id) : substr($g['time_srnad'],9,7);;
-$name = trim($name);
+$name = addslashes(htmlspecialchars(trim($name))); 
 
 if ($uid) {
   $R = getUidData($table[$m.'list'],$uid);

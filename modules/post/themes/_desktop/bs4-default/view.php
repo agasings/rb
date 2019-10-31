@@ -3,16 +3,14 @@ include $g['dir_module_skin'].'_header.php';
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
 include $g['dir_module_skin'].'view_'.$formats[$R['format']].'.php';
 include $g['dir_module_skin'].'_footer.php';
+include $g['dir_module_skin'].'component.php';
 
 if ($_perm['post_owner']) {
-	include $g['path_module'].'post/mod/_component.desktop.php';
+	include_once $g['dir_module'].'mod/_component.desktop.php';
 	getImport('Chart.js','Chart.bundle.min','2.8.0','js');
 }
 
 ?>
-
-
-
 
 <script>
 
@@ -24,7 +22,7 @@ $( document ).ready(function() {
 	  window.print()
 	});
 
-	$('[data-toggle="actionIframe"]').click(function() {
+	$('[data-toggle="actionIframe"] , [data-act="actionIframe"]').click(function() {
 	  getIframeForAction('');
 	  frames.__iframe_for_action__.location.href = $(this).attr("data-url");
 	});

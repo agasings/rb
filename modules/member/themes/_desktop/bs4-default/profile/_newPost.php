@@ -43,7 +43,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
         <div class="card-body py-3 px-0">
           <h6 class="card-title mb-0 line-clamp-2">
             <a class="muted-link" href="<?php echo getPostLink($R,1) ?>">
-              <?php echo getStrCut($R['subject'],100,'..')?>
+              <?php echo getStrCut(stripslashes($R['subject']),100,'..')?>
             </a>
           </h6>
           <time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>

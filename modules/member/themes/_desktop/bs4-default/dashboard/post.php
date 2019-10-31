@@ -178,7 +178,7 @@ switch ($sort) {
 		    <div class="media-body">
 		      <h5 class="my-1 line-clamp-2">
 						<a href="<?php echo checkPostOwner($R)?RW('m=post&mod=write&cid='.$R['cid']):getPostLink($R,1) ?>" class="font-weight-light muted-link" <?php echo !checkPostOwner($R)?'target="_blank"':'' ?>>
-							<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>
+							<?php echo checkPostPerm($R)?stripslashes($R['subject']):'[비공개 포스트]'?>
 						</a>
 					</h5>
 					<?php if (checkPostPerm($R)): ?>

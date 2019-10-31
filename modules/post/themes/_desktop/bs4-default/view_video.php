@@ -2,15 +2,31 @@
 
 	<div class="col-8">
 
-		<oembed url="<?php echo getFeaturedimgMeta($R,'linkurl') ?>">
-			<div class="bg-black d-flex align-items-center justify-content-center text-muted" style="height: 360px">
-				<div class="spinner-border" role="status">
-				  <span class="sr-only">Loading...</span>
+		<div class="mb-4">
+			<oembed url="<?php echo getFeaturedimgMeta($R,'linkurl') ?>">
+				<div class="bg-black d-flex align-items-center justify-content-center text-muted" style="height: 360px">
+					<div class="spinner-border" role="status">
+					  <span class="sr-only">Loading...</span>
+					</div>
 				</div>
-			</div>
-		</oembed>
+			</oembed>
+		</div>
 
-		<h2 class="mt-4 h5"><?php echo $R['subject'] ?></h2>
+		<!-- 태그 -->
+		<?php if ($R['tag']): ?>
+		<div>
+			<?php $_tags=explode(',',$R['tag'])?>
+			<?php $_tagn=count($_tags)?>
+			<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
+			<?php $_tagk=trim($_tags[$i])?>
+			<a class="badge bg-white rounded-0 f13 font-weight-light border-0" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>">
+			#<?php echo $_tagk?>
+			</a>
+			<?php endfor?>
+		</div>
+		<?php endif; ?>
+
+		<h2 class="h5"><?php echo stripslashes($R['subject']) ?></h2>
 
 		<div class="page-meta border-bottom pb-1 mb-4">
 			<div class="d-flex justify-content-between align-items-center">
@@ -31,44 +47,99 @@
 
 					<!-- 좋아요 or 싫어요 -->
 			    <?php if (!$R['dis_like']): ?>
-			    <button type="button" class="btn btn-link muted-link px-2<?php if($is_liked):?> active<?php endif?>"
-			      data-toggle="actionIframe"
-			      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=like&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-			      data-role="btn_post_like">
-			      <i class="material-icons align-text-bottom">thumb_up</i>
-			      <span data-role='likes_<?php echo $R['uid']?>' class="ml-1 f13 text-muted"><?php echo $R['likes']?$R['likes']:'좋아요'?></span>
-			    </button>
+					<span class="dropdown">
+				    <button type="button" class="btn btn-link muted-link px-2<?php if($is_liked):?> active<?php endif?>"
+							data-toggle="<?php echo $my['uid']?'actionIframe':'dropdown'?>"
+				      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=like&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
+				      data-role="btn_post_like">
+				      <i class="material-icons align-text-bottom">thumb_up</i>
+				      <span data-role='likes_<?php echo $R['uid']?>' class="ml-1 f13 text-muted"><?php echo $R['likes']?$R['likes']:'좋아요'?></span>
+				    </button>
+						<div class="dropdown-menu shadow" style="min-width: 300px;">
+							<div class="py-3 px-4">
+								<h6>포스트가 마음에 드시나요?</h6>
+								<p class="f13 text-muted mb-0">로그인하여 의견을 알려주세요.</p>
+							</div>
+							<div class="dropdown-divider"></div>
+							<div class="px-3">
+								<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modal-login">
+									로그인
+								</button>
+							</div>
+						</div>
+					</span>
 
-			    <button type="button" class="btn btn-link muted-link px-2<?php if($is_disliked):?> active<?php endif?>"
-			      data-toggle="actionIframe"
-			      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-			      data-role="btn_post_dislike">
-			      <i class="material-icons align-text-bottom">thumb_down</i>
-			      <span data-role='dislikes_<?php echo $R['uid']?>' class="ml-1 f13 text-muted"><?php echo $R['dislikes']?$R['dislikes']:'싫어요'?></span>
-			    </button>
+					<span class="dropdown">
+				    <button type="button" class="btn btn-link muted-link px-2<?php if($is_disliked):?> active<?php endif?>"
+				      data-toggle="<?php echo $my['uid']?'actionIframe':'dropdown'?>"
+				      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
+				      data-role="btn_post_dislike">
+				      <i class="material-icons align-text-bottom">thumb_down</i>
+				      <span data-role='dislikes_<?php echo $R['uid']?>' class="ml-1 f13 text-muted"><?php echo $R['dislikes']?$R['dislikes']:'싫어요'?></span>
+				    </button>
+						<div class="dropdown-menu shadow" style="min-width: 300px;">
+							<div class="py-3 px-4">
+								<h6>포스트가 마음에 안 드시나요?</h6>
+								<p class="f13 text-muted mb-0">로그인하여 의견을 알려주세요.</p>
+							</div>
+							<div class="dropdown-divider"></div>
+							<div class="px-3">
+								<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modal-login">
+									로그인
+								</button>
+							</div>
+						</div>
+					</span>
 			    <?php endif; ?>
 
-					<button type="button" class="btn btn-link muted-link px-2<?php if($is_disliked):?> active<?php endif?>"
-						data-toggle="actionIframe"
-						data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-						data-role="btn_post_dislike">
+					<?php if (!$R['dis_share']): ?>
+					<button type="button" class="btn btn-link muted-link px-2"
+						data-toggle="modal" data-target="#modal-post-share">
 						<i class="material-icons align-text-bottom mirror">reply</i>
 						<span class="f13 text-muted">공유</span>
 					</button>
+					<?php endif; ?>
 
-					<button type="button" class="btn btn-link muted-link px-2<?php if($is_disliked):?> active<?php endif?>"
-						data-toggle="actionIframe"
-						data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-						data-role="btn_post_dislike">
-						<i class="material-icons align-text-bottom">playlist_add</i>
-						<span class="f13 text-muted">저장</span>
-					</button>
+					<?php if (!$R['dis_listadd']): ?>
+					<span class="dropdown" data-role="listadd">
+						<button type="button" class="btn btn-link muted-link px-2"
+							data-toggle="<?php echo $my['uid']?'modal':'dropdown'?>"
+							data-target="<?php echo $my['uid']?'#modal-post-listadd':''?>"
+							data-uid="<?php echo $R['uid']?>">
+							<i class="material-icons align-text-bottom">playlist_add</i>
+							<span class="f13 text-muted">저장</span>
+						</button>
+						<div class="dropdown-menu shadow" style="min-width: 300px;">
+							<div class="py-3 px-4">
+								<h6>나중에 다시 보고 싶으신가요?</h6>
+								<p class="f13 text-muted mb-0">로그인하여 포스트를 리스트에 추가하세요.</p>
+							</div>
+							<div class="dropdown-divider"></div>
+							<div class="px-3">
+								<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modal-login">
+									로그인
+								</button>
+							</div>
+						</div>
+					</span>
+					<?php endif; ?>
 
 					<?php if ($R['num_rating'] && !$R['disabled_rating']): ?>
 					<span class="ml-2" data-toggle="tooltip" title="참여: <?php echo $R['num_rating'] ?>명 , 평점 <?php echo $R['rating']/$R['num_rating']?>" role="button">· <i class="fa fa-star-o" aria-hidden="true"></i>
 					<a href="#" class="muted-link"> <?php echo $R['rating']/$R['num_rating']?></a></span>
 					<?php endif; ?>
 
+
+					<div class="dropdown d-inline">
+					  <button class="btn btn-link muted-link px-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    <i class="material-icons">more_horiz</i>
+					  </button>
+					  <div class="dropdown-menu">
+					    <a class="dropdown-item" href="#modal-post-report" data-toggle="modal" data-uid="<?php echo $R['uid']?>">
+								신고하기
+							</a>
+					  </div>
+					</div>
 
 
 				</div>
@@ -109,25 +180,43 @@
 								 분석
 							 </button>
 		 					 <a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-primary">수정</a>
+							 <?php else: ?>
+
+							 <?php if ($my['uid']): ?>
+							 <?php if($my['uid']!=$_MP['uid']):?>
+							 <button type="button" class="btn btn-primary<?php echo $_isFollowing ?' active':''?>"
+								data-act="actionIframe"
+								data-toggle="button"
+								data-role="follow"
+								data-url="<?php echo $g['s'].'/?r='.$r.'&amp;m=member&amp;a=profile_follow&amp;mbruid='.$M1['memberuid']?>">
+								 구독
+							 </button>
+							 <?php endif?>
+							 <?php else: ?>
+							 <span class="dropdown">
+								 <button type="button" class="btn btn-primary" data-toggle="dropdown">
+									 구독
+								 </button>
+								 <div class="dropdown-menu dropdown-menu-right shadow" style="min-width: 350px;">
+									 <div class="py-3 px-4">
+										 <h6><?php echo $M1[$_HS['nametype']] ?>님의 포스트를 구독하시겠습니까?</h6>
+										 <p class="f13 text-muted mb-0">구독하려면 로그인하세요.</p>
+									 </div>
+									 <div class="dropdown-divider"></div>
+									 <div class="px-3 text-right">
+										 <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modal-login">
+											 로그인
+										 </button>
+									 </div>
+								 </div>
+							 </span>
+							 <?php endif; ?>
+
 		 					<?php endif?>
+
+
 						</div>
 					</div><!-- /.flex -->
-
-
-					<!-- 태그 -->
-					<?php if ($R['tag']): ?>
-					<div class="mb-2">
-					  <?php $_tags=explode(',',$R['tag'])?>
-					  <?php $_tagn=count($_tags)?>
-					  <?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
-					  <?php $_tagk=trim($_tags[$i])?>
-					  <a class="badge badge-light rounded-0 f15 font-weight-light bg-light border-0 py-2" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>">
-					  #<?php echo $_tagk?>
-					  </a>
-					  <?php endfor?>
-					</div>
-					<?php endif; ?>
-
 
 					<!-- 본문 -->
 					<article class="rb-article" data-plugin="shorten">
@@ -198,7 +287,7 @@
 
 		        <div class="media-body">
 		          <h5 class="f13 my-1 font-weight-light line-clamp-2">
-		            <?php echo $_L['subject']?>
+		            <?php echo stripslashes($_L['subject'])?>
 		          </h5>
 							<ul class="list-inline d-inline-block f13">
 								<li class="list-inline-item">

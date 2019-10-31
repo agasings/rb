@@ -42,7 +42,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
       <div class="card-body p-3">
         <h6 class="card-title mb-0 line-clamp-2">
           <a class="muted-link" href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>">
-            <?php echo checkPostPerm($R)?getStrCut($R['subject'],100,'..'):'[비공개 포스트]'?>
+            <?php echo checkPostPerm($R)?getStrCut(stripslashes($R['subject']),100,'..'):'[비공개 포스트]'?>
           </a>
         </h6>
         <small class="text-muted small" >업데이트 : <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time></small>

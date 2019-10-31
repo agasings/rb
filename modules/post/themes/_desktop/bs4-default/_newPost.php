@@ -35,7 +35,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
 
         <div class="media-body">
           <h5 class="h6 my-1 font-weight-light line-clamp-3">
-            <a href="<?php echo getPostLink($POST,1) ?>" class="text-reset" ><?php echo $POST['subject']?></a>
+            <a href="<?php echo getPostLink($POST,1) ?>" class="text-reset" ><?php echo stripslashes($POST['subject'])?></a>
           </h5>
           <div class="mb-1">
             <ul class="list-inline d-inline-block f13 text-muted">
@@ -53,7 +53,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
   </ul>
   <?php else: ?>
   <div class="p-5 text-muted text-center border mb-3">
-    영상이 없습니다.
+    내역이 없습니다.
   </div>
   <?php endif; ?>
 

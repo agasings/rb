@@ -22,7 +22,7 @@
 
     <div class="form-group mb-0" style="width:71.5%">
       <label class="sr-only">제목</label>
-      <input type="text" name="subject" value="<?php echo $R['subject']?>" class="form-control form-control-lg" <?php echo !$cid?' autofocus':'' ?> placeholder="제목없는 포스트">
+      <input type="text" name="subject" value="<?php echo stripslashes($R['subject'])?>" class="form-control form-control-lg" <?php echo !$cid?' autofocus':'' ?> placeholder="제목없는 포스트">
     </div>
   </header>
 
@@ -591,7 +591,7 @@ var changed_meta = false;  //부가정보 수정여부
 var changed_content =  false;  // 본문수정 여부
 var checkUnload = false;  // 페이지 이탈시 경고창 출력여부 (기본값 : 출력안함)
 
-document.title = '글쓰기 | <?php echo $g['browtitle']?>';
+document.title = '글쓰기 ';
 
 putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
 
