@@ -177,3 +177,26 @@
 .list-header.edit .list-header-show {
   display: none
 }
+
+/* list-section */
+.list-section .list-section-edit {
+  display: none;
+}
+.list-section.open .list-section-edit {
+  display: block;
+}
+.list-section.open .list-section-show {
+  display: none;
+}
+.list-section [data-role="empty-section"] {
+  display: none
+}
+.list-section [data-role="has-section"] {
+   display: block
+ }
+.list-section.empty [data-role="empty-section"] {
+ display: block
+}
+.list-section.empty [data-role="has-section"] {
+ display: none
+}

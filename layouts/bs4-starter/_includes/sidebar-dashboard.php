@@ -37,8 +37,6 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
 
 </section>
 
-
-
 <ul class="nav nav-menu flex-column border-bottom">
   <li class="nav-item<?php echo $page=='main'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard')?>">대시보드</a>
@@ -57,9 +55,6 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
       </li>
     </ul>
   </li>
-  <li class="nav-item<?php echo $page=='analytics'?' active':'' ?>">
-    <a class="nav-link" href="<?php echo RW('mod=dashboard&page=analytics')?>">분석</a>
-  </li>
   <li class="nav-item<?php echo $page=='noti'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard&page=noti')?>">알림내역</a>
   </li>
@@ -69,7 +64,7 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$my['level'],'*');
   <li class="nav-item<?php echo $page=='point'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard&page=point')?>">포인트내역</a>
   </li>
-  <li class="nav-item<?php echo $page=='order'?' active':'' ?>">
+  <li class="nav-item d-none<?php echo $page=='order'?' active':'' ?>">
     <a class="nav-link" href="<?php echo RW('mod=dashboard&page=order')?>">구매내역 <span class="badge badge-pill badge-light">준비중</span></a>
   </li>
   <li class="nav-item">

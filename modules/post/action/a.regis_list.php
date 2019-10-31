@@ -21,6 +21,18 @@ if ($uid) {
     getLink('reload','parent.','','');
   }
 
+  if ($type=='review') {
+    $result=array();
+    $result['error'] = false;
+    $review = str_replace(array("\r", "\n"), '', $content);
+  	$QVAL = "review='$review',d_last='$last_log'";
+  	getDbUpdate($table[$m.'list'],$QVAL,'uid='.$R['uid']);
+  	$_list = getUidData($table[$m.'list'],$R['uid']);
+  	$result['content'] = getContents($_list['review'],'TEXT');
+  	echo json_encode($result);
+  	exit;
+  }
+
   if ($type=='display') {
     $result=array();
     $result['error'] = false;

@@ -65,7 +65,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 								</div>
 
-								<span class="text-muted">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($LIST['d_last'],'c')?>"></time></span>
+								<span class="text-muted font-weight-light f13">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($LIST['d_last'],'c')?>"></time></span>
 							</div>
 
 							<div class="list-header-edit">
@@ -88,15 +88,57 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 								</form>
 							</div><!-- /.list-header-edit -->
 						</div>
-
-
 				  </div>
 				</div>
 
 			</div>
 
+			<!-- 간단설명 -->
+			<section id="list-review" class="list-section mb-2<?php echo $LIST['review']?'':' empty' ?>">
+				<header class="pb-2 mb-3 border-bottom d-flex justify-content-between align-items-end">
+					<span class="font-weight-light text-muted f13">한줄소개</span>
+					<button type="button" class="badge badge-light js-edit" data-role="has-section" data-toggle="tooltip" title="한줄소개 수정">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+					</button>
+					<div class="list-section-edit">
+						<button type="button" class="btn btn-light btn-sm" data-act="section-edit" data-submit="review" data-msg="리스트 한줄소개">
+							<span class="not-loading">저장</span>
+							<span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i> 저장중 ...</span>
+						</button>
+						<button type="button" class="btn btn-link btn-sm muted-link js-cancle">취소</button>
+					</div>
+				</header>
+				<div class="list-section-show">
+					<div data-role="has-section">
+						<blockquote data-role="list-article" class="font-weight-light f14">
+							<?php echo nl2br($LIST['review']) ?>
+						</blockquote>
+					</div>
 
-			<div class="d-flex align-items-center border-top pt-4 pb-3" role="filter">
+					<div class="notice f14 text-muted list-section-show" data-role="empty-section">
+						<blockquote class="font-italic text-muted font-weight-light">
+							이 리스트의 내용을 알수 있는 하나의 문장을 작성해보세요.
+							<button type="button" class="btn btn-link btn-sm js-edit" role="button">
+								작성하기
+							</button>
+						</blockquote>
+					</div>
+
+				</div><!-- /.project-review-show -->
+
+				<div class="list-section-edit">
+
+					<div class="notice">
+						<blockquote class="font-italic text-muted font-weight-light mb-2">
+							이 리스트의 내용을 알수 있는 하나의 문장을 작성해보세요.
+						</blockquote>
+					</div>
+					<textarea class="form-control" name="review" rows="2" placeholder="내용 입력"><?php echo $LIST['review']?></textarea>
+				</div>
+			</section>
+
+
+			<div class="d-flex align-items-center pt-4 pb-3" role="filter">
 				<div class="form-inline">
 
 					<label class="mt-1 mr-2 sr-only">상태</label>
@@ -478,6 +520,78 @@ $(document).ready(function() {
 			f.submit();
 		}, 200);
   });
+
+
+
+
+
+
+	// 프로젝트 섹션 수정
+  $('.list-section .js-edit').click(function(){
+    var section = $(this).closest('.list-section')
+    $('[data-role="empty-section"]').removeClass('animated fadeIn delay-1')
+    $('.list-section').removeClass('open') // 전체 초기화
+
+    $(this).parents('.list-section').find('.js-edit').addClass('d-none');
+    $(this).parents('.list-section').addClass('open');
+    $(this).parents('.list-section').find('textarea').focus().putCursorAtEnd() ;
+    autosize.update($('textarea'));
+    document.title = '수정중 ·  '+ title;
+  });
+
+  $('.list-section .js-cancle').click(function(){
+    $('.list-section').removeClass('open')
+    $(this).parents('.list-section').find('.js-edit').removeClass('d-none');
+    document.title = title;
+  });
+
+  // 본문입력 textarea 자동 높이 조정
+	autosize($('textarea'));
+
+// 섹션 수정
+$('.list-section-edit').find('[data-act="section-edit"]').click(function(){
+  var section = $(this).closest('.list-section')
+  var type = $(this).attr('data-submit')
+  var msg = $(this).attr('data-msg')
+  var content = section.find('textarea').val()
+  var button = $(this)
+  var article = section.find('[data-role="list-article"]')
+  var empty = section.find('[data-role="empty-section"]')
+  button.attr('disabled',true)
+
+  setTimeout(function(){
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=regis_list',{
+      content : content,
+      type : 'review',
+      uid : <?php echo $LIST['uid']?>
+      },function(response,status){
+        if(status=='success'){
+          var result = $.parseJSON(response);
+          var content=result.content;
+          section.removeClass('open')
+          section.find('.js-edit').removeClass('d-none');
+          if (content) {
+            section.removeClass('empty')
+            article.html(content).addClass('animated fadeIn delay-1')
+          } else {
+            article.html('')
+            section.addClass('empty')
+            empty.addClass('animated fadeIn delay-1')
+          }
+          document.title = title;
+          button.attr('disabled',false)
+          $.notify({message: msg+'가 수정되었습니다.'},{type: 'success'})
+
+        }else{
+          alert(status);
+        }
+    });
+  }, 300);
+});
+
+
+
+
 
 
 });

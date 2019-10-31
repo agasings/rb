@@ -1,7 +1,7 @@
 <header class="d-flex justify-content-between align-items-center py-2">
 	<strong>전체 포스트 추이</strong>
 	<div class="mr-2">
-		<a href="/dashboard?page=analytics" class="muted-link small">
+		<a href="/dashboard?page=analytics" class="muted-link small d-none">
 			더보기 <i class="fa fa-angle-right" aria-hidden="true"></i>
 		</a>
 	</div>
