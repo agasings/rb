@@ -11,6 +11,7 @@ $_WHERE1= $query.'date >= '.$d_start.' and '.$sort.'>0';
 
 if ($sort=='hit') $_WHERE2= 'data,sum(hit) as hit';
 if ($sort=='likes') $_WHERE2= 'data,sum(likes) as likes';
+if ($sort=='dislikes') $_WHERE2= 'data,sum(dislikes) as dislikes';
 if ($sort=='comment') $_WHERE2= 'data,sum(comment) as comment';
 
 $RCD	= getDbSelect($table[$m.'day'],$_WHERE1.' group by data order by '.$sort.' '.$orderby.' limit 0,'.$recnum,$_WHERE2);
@@ -46,6 +47,7 @@ $i=1;foreach ($_RCD as $R) {
 
   if ($sort=='hit') $TMPL['num']=$R['hit']?'조회 '.$R['hit']:'';
   if ($sort=='likes') $TMPL['num']=$R['likes']?'좋아요 '.$R['likes']:'';
+  if ($sort=='dislikes') $TMPL['num']=$R['dislikes']?'싫어요 '.$R['dislikes']:'';
   if ($sort=='comment') $TMPL['num']=$R['comment']?'댓글 '.$R['comment']:'';
 
   $skin=new skin($markup_file);

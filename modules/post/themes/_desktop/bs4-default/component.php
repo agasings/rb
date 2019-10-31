@@ -108,16 +108,12 @@ $( document ).ready(function() {
 
   });
 
-
-
   $('#modal-post-report').on('show.bs.modal', function (e) {
     if (!memberid) {
       alert('로그인 해주세요.');
       return false;
     }
   })
-
-
 
 });
 

@@ -8,6 +8,9 @@
 				<a class="nav-link" data-toggle="tab" href="#bset-likes" data-sort="likes">좋아요순</a>
 			</li>
 			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#bset-dislikes" data-sort="dislikes">싫어요순</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#bset-comment" data-sort="comment">댓글순</a>
 			</li>
 		</ul>
@@ -31,6 +34,21 @@
 			</div>
 		</div>
 	  <div class="tab-pane" id="bset-likes" role="tabpanel">
+			<ul class="list-group list-group-flush" role="list"></ul>
+			<div role="loader">
+				<div class="d-flex justify-content-center align-items-center"  style="height:432px">
+					<div class="spinner-border" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+				</div>
+			</div>
+			<div role="none" class="d-none">
+				<div class="d-flex justify-content-center align-items-center"  style="height:432px">
+					<span class="text-muted">포스트가 없습니다.</span>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="bset-dislikes" role="tabpanel">
 			<ul class="list-group list-group-flush" role="list"></ul>
 			<div role="loader">
 				<div class="d-flex justify-content-center align-items-center"  style="height:432px">
