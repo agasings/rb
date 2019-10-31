@@ -227,9 +227,23 @@ $( document ).ready(function() {
     modal.attr('data-uid',uid);
     modal.find('[data-role="subject"]').text(subject);
     modal.find('[data-role="featured_img"]').attr('src',featured_img);
-    modal.find('[data-role="hit"]').text(hit);
-    modal.find('[data-role="likes"]').text(likes);
-    modal.find('[data-role="comment"]').text(comment);
+
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postData',{
+      uid : uid
+  		},function(response,status){
+  			if(status=='success'){
+  				var result = $.parseJSON(response);
+          var hit=result.hit;
+          var likes=result.likes;
+          var comment=result.comment;
+          modal.find('[data-role="hit"]').text(hit);
+          modal.find('[data-role="likes"]').text(likes);
+          modal.find('[data-role="comment"]').text(comment);
+
+  			} else {
+  				alert(status);
+  			}
+  	});
 
 		setTimeout(function(){
       $.post(rooturl+'/?r='+raccount+'&m=post&a=get_opinionList',{
@@ -242,7 +256,7 @@ $( document ).ready(function() {
 				 var num=result.num;
          var num_dislike=result.num_dislike;
          modal.find('[data-role="loader"]').addClass('d-none');
-         modal.find('[data-role="dislike-num"]').text(num_dislike);
+         if (num_dislike) modal.find('[data-role="dislike-num"]').text(num_dislike);
 
 				 if (num) {
 					 modal.find('[data-role="like"] [data-role="list"]').html(list);
