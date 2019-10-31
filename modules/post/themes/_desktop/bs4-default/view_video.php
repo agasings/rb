@@ -31,7 +31,7 @@
 		<div class="page-meta border-bottom pb-1 mb-4">
 			<div class="d-flex justify-content-between align-items-center">
 
-				<div class="text-muted">
+				<div class="mt-1 text-muted">
 
 					<span>
 						조회수 <?php echo number_format($R['hit'])?>회
@@ -141,7 +141,6 @@
 					  </div>
 					</div>
 
-
 				</div>
 			</div><!-- /.page-meta-body -->
 		</div>
@@ -157,8 +156,16 @@
 
 					<div class="d-flex justify-content-between">
 						<div class="mb-2">
-							<h6 class="mb-1"><?php echo $M1[$_HS['nametype']] ?></h6>
-							<p class="mb-0 text-muted"><?php echo $M1['email'] ?></p>
+							<h6 class="mb-1">
+								<a href="<?php echo getProfileLink($R['mbruid']) ?>" class="text-reset text-decoration-none"><?php echo $M1[$_HS['nametype']] ?></a>
+							</h6>
+							<p class="mb-0 text-muted f12">
+								<?php if ($M1['num_follower']): ?>
+								구독자 <?php echo number_format($M1['num_follower'])?>명
+								<?php else: ?>
+								구독자 없음
+								<?php endif; ?>
+							</p>
 						</div>
 						<div data-role="item" data-featured_img="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" data-subject="<?php echo $R['subject'] ?>">
 							<?php if($_perm['post_owner']):?>

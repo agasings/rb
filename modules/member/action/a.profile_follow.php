@@ -16,6 +16,7 @@ $_isFollowing = getDbRows($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mb
 if ($_isFollowing)
 {
 	getDbDelete($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mbruid='.$mbruid);
+	getDbUpdate($table['s_mbrdata'],'num_follower=num_follower-1','memberuid='.$mbruid);
 
 	// 알림 메시지 전송
 	$rcvmember = $mbruid ;
@@ -30,6 +31,7 @@ if ($_isFollowing)
 }
 else {
 	getDbInsert($table['s_friend'],'rel,my_mbruid,by_mbruid,category,d_regis',"'0','".$my['uid']."','".$mbruid."','','".$date['totime']."'");
+	getDbUpdate($table['s_mbrdata'],'num_follower=num_follower+1','memberuid='.$mbruid);
 
 	// 알림 메시지 전송
 	$rcvmember = $mbruid ;

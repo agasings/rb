@@ -40,7 +40,7 @@
       <div class="modal-body p-0" style="min-height: 300px">
 
         <div data-role="loader" class="d-none">
-          <div class="d-flex justify-content-center align-items-center"  style="height:150px">
+          <div class="d-flex justify-content-center align-items-center"  style="height:300px">
             <div class="spinner-border" role="status">
               <span class="sr-only">Loading...</span>
             </div>
@@ -52,9 +52,7 @@
             <div class="list-group list-group-flush" data-role="list"></div>
           </div>
           <div class="tab-pane" id="post-dislikesList" role="tabpanel" data-role="dislike">
-            <div class="p-5 text-muted text-center">
-              준비중입니다.
-            </div>
+            <div class="list-group list-group-flush" data-role="list"></div>
           </div>
         </div>
 
@@ -222,7 +220,11 @@ $( document ).ready(function() {
     modal.find('[data-role="loader"]').removeClass('d-none');
     modal.find('[data-role="like"] [data-role="list"]').html(''); //초기화
     modal.find('[data-role="like-num"]').text('');
+    modal.find('[data-role="dislike"] [data-role="list"]').html('');
+    modal.find('[data-role="dislike-num"]').text('');
+    modal.find('.nav-tabs .nav-link:first-child').tab('show');
 
+    modal.attr('data-uid',uid);
     modal.find('[data-role="subject"]').text(subject);
     modal.find('[data-role="featured_img"]').attr('src',featured_img);
     modal.find('[data-role="hit"]').text(hit);
@@ -238,7 +240,9 @@ $( document ).ready(function() {
 				 var _uid=result.uid;
 				 var list=result.list;
 				 var num=result.num;
+         var num_dislike=result.num_dislike;
          modal.find('[data-role="loader"]').addClass('d-none');
+         modal.find('[data-role="dislike-num"]').text(num_dislike);
 
 				 if (num) {
 					 modal.find('[data-role="like"] [data-role="list"]').html(list);
@@ -250,6 +254,42 @@ $( document ).ready(function() {
 			 });
 		 }, 300);
   })
+
+  //싫어요 탭 선택시
+  $('#modal-post-opinion').find('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    var modal = $('#modal-post-opinion');
+    var uid = modal.attr('data-uid');
+    var tab = e.target;
+    var target = $(tab).attr('href');
+    if (target=='#post-dislikesList') {
+
+      modal.find('[data-role="loader"]').removeClass('d-none');
+      modal.find('[data-role="dislike"] [data-role="list"]').html(''); //초기화
+
+      setTimeout(function(){
+        $.post(rooturl+'/?r='+raccount+'&m=post&a=get_opinionList',{
+             uid : uid,
+             opinion : 'dislike'
+          },function(response){
+           var result = $.parseJSON(response);
+           var _uid=result.uid;
+           var list=result.list;
+           var num=result.num;
+           modal.find('[data-role="loader"]').addClass('d-none');
+
+           if (num) {
+             modal.find('[data-role="dislike"] [data-role="list"]').html(list);
+             modal.find('[data-role="dislike-num"]').text(num);
+           } else {
+            modal.find('[data-role="dislike"] [data-role="list"]').html('<div class="py-5 text-center text-muted">자료가 없습니다.</div>');
+           }
+
+         });
+       }, 100);
+
+    }
+  })
+
 
   $('#modal-post-analytics').on('shown.bs.modal', function (e) {
     var modal = $(this);
