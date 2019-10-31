@@ -230,8 +230,7 @@ switch ($sort) {
 						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 8.3rem"<?php echo !checkPostOwner($R)?' disabled':'' ?>>
 							<?php echo $g['displaySet']['label'][$R['display']] ?>
 						</button>
-						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 4rem">
-							<h6 class="dropdown-header">공개설정 변경</h6>
+						<div class="dropdown-menu dropdown-menu-right shadow" style="min-width: 8.3rem">
 							<?php $displaySet=explode('||',$d['displaySet'])?>
 							<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
 							<button class="dropdown-item<?php echo $R['display']==$i?' active':'' ?>" type="button" data-display="<?php echo $i?>" data-label="<?php echo $dis[0]?>">
