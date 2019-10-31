@@ -216,39 +216,39 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 				<div class="dropdown-menu dropdown-menu-right shadow py-0" style="width:300px;line-height: 1.2">
 
 					<div class="list-group list-group-flush">
-						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==5?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][5] ?>" data-display="5">
+						<button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][1] ?>" data-display="1">
 							<div class="media align-items-center">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-2x mr-3"></i>
+								<i class="material-icons mr-3 f28" aria-hidden="true"><?php echo $g['displaySet']['icon'][1]?></i>
 								<div class="media-body">
-									<span data-heading><?php echo $g['displaySet']['label'][5] ?></span><br>
-									<small data-description>모든 사용자가 검색하고 볼 수 있음</small>
-								</div>
-							</div>
-						</button>
-						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][4] ?>" data-display="4">
-							<div class="media align-items-center">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3" aria-hidden="true"></i>
-								<div class="media-body">
-									<span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
-									<small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
+									<span data-heading><?php echo $g['displaySet']['label'][1] ?></span><br>
+									<small data-description>나만 볼수 있음</small>
 								</div>
 							</div>
 						</button>
 						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][3] ?>" data-display="3">
 							<div class="media align-items-center">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-2x mr-3" aria-hidden="true"></i>
+								<i class="material-icons mr-3 f28" aria-hidden="true"><?php echo $g['displaySet']['icon'][3]?></i>
 								<div class="media-body">
 									<span data-heading><?php echo $g['displaySet']['label'][3] ?></span><br>
 									<small data-description>링크 있는 사용자만 볼 수 있음.<br>로그인 불필요</small>
 								</div>
 							</div>
 						</button>
-						<button type="button" class="list-group-item list-group-item-action<?php echo !$R['display']?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][1] ?>" data-display="1">
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][4] ?>" data-display="4">
 							<div class="media align-items-center">
-								<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
+								<i class="material-icons mr-3 f28" aria-hidden="true"><?php echo $g['displaySet']['icon'][4]?></i>
 								<div class="media-body">
-									<span data-heading><?php echo $g['displaySet']['label'][1] ?></span><br>
-									<small data-description>나만 볼수 있음</small>
+									<span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
+									<small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
+								</div>
+							</div>
+						</button>
+						<button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==5?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][5] ?>" data-display="5">
+							<div class="media align-items-center">
+								<i class="material-icons mr-3 f28" aria-hidden="true"><?php echo $g['displaySet']['icon'][5]?></i>
+								<div class="media-body">
+									<span data-heading><?php echo $g['displaySet']['label'][5] ?></span><br>
+									<small data-description>모든 사용자가 검색하고 볼 수 있음</small>
 								</div>
 							</div>
 						</button>
@@ -257,14 +257,10 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 				</div>
 				<ul class="list-group list-group-flush f13 mt-1 item-body">
 					<li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
-						<div class="media">
-							<span class="fa-stack fa-lg mr-2">
-								<i class="fa fa-square fa-stack-2x"></i>
-								<i class="" data-role="icon"></i>
-							</span>
-
+						<div class="media text-muted">
+							<i class="material-icons mr-3 f48" aria-hidden="true" data-role="icon"></i>
 							<div class="media-body align-self-center">
-								<span data-role="heading"></span> <br><span data-role="description"></span>
+								<span data-role="heading"></span> <br><span class="f12" data-role="description"></span>
 							</div>
 						</div>
 					</li>
@@ -359,7 +355,7 @@ function setPostDisplay(display) {
   var description = button.find('[data-description]').html();
   section.find('.list-group-item').removeClass('active'); // 상태초기화
   button.addClass('active');
-  section.find('[data-role="icon"]').removeAttr('class').addClass('fa fa-'+icon+' fa-stack-1x fa-inverse');
+  section.find('[data-role="icon"]').text(icon);
   section.find('[data-role="heading"]').text(heading);
   section.find('[data-role="description"]').html(description);
   section.removeClass('d-none')

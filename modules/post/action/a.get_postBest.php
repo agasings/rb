@@ -35,6 +35,7 @@ $list='';
 $i=1;foreach ($_RCD as $R) {
   if (!strpos('_'.$R['member'],'['.$my['uid'].']')) continue;
   $TMPL['link']=getPostLink($R,1);
+  $TMPL['edit_link']=RW('m=post&mod=write&cid='.$R['cid']);
   $TMPL['subject']=htmlspecialchars(stripslashes($R['subject']));
   $TMPL['uid']=$R['uid'];
   $TMPL['hit']=$R['hit'];

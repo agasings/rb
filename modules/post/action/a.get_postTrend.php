@@ -274,7 +274,7 @@ if ($mod=='hit' || $mod=='likes' || $mod=='dislikes' || $mod=='comment') {
 
 		$options['scales']['xAxes'] = array (array('display'=>true,'scaleLabel' => array ('display'=>true,'labelString'=>'기간')));
 		$options['scales']['yAxes'] = array (array('display'=>true,'scaleLabel' => array ('display'=>true,'labelString'=>'외부 유입수')));
-		$options['tooltips'] =  array ('mode'=>'index');
+		// $options['tooltips'] =  array ('mode'=>'index');
 
 	}
 

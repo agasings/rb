@@ -74,34 +74,18 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s))?></small>
 					</button>
 					<div class="dropdown-divider"></div>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==5?' active':'' ?>" data-value="5" type="button">
+
+					<?php $displaySet=explode('||',$d['displaySet'])?>
+					<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
+					<button class="dropdown-item justify-content-between align-items-center<?php echo $display==$i?' active':' d-flex' ?><?php echo $dis[0]=='일부공개'?' d-none':'' ?>" type="button" data-value="<?php echo $i ?>">
 						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][5] ?>
+							<i class="material-icons mr-1 f18 align-middle" aria-hidden="true"><?php echo $dis[1]?></i>
+							<?php echo $dis[0]?>
 						</span>
-						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=5'))?></small>
+						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display='.$i))?></small>
 					</button>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==4?' active':'' ?>" data-value="4" type="button">
-						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][4] ?>
-						</span>
-						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=4'))?></small>
-					</button>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==3?' active':'' ?>" data-value="3" type="button">
-						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][3] ?>
-						</span>
-						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=3'))?></small>
-					</button>
-					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==1?' active':'' ?>" data-value="1" type="button">
-						<span>
-							<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
-							<?php echo $g['displaySet']['label'][1] ?>
-						</span>
-						<small><?php echo number_format(getDbRows($table['postlist'],'mbruid='.$my['uid'].' and site='.$s.' and display=1'))?></small>
-					</button>
+					<?php $i++;endforeach?>
+
 				</div>
 			</div>
 
@@ -165,26 +149,17 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 					<div class="ml-3 align-self-center form-inline">
 
 						<div class="dropdown mr-2" data-toggle="display" data-uid="<?php echo $R['uid'] ?>">
-							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 7.67rem">
+							<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 6.8rem">
 								<?php echo $g['displaySet']['label'][$R['display']] ?>
 							</button>
-							<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
-								<button class="dropdown-item<?php echo $R['display']==5?' active':'' ?>" type="button" data-display="5" data-label="<?php echo $g['displaySet']['label'][5] ?>">
-									<i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-fw" aria-hidden="true"></i>
-									<?php echo $g['displaySet']['label'][5] ?>
+							<div class="dropdown-menu dropdown-menu-right shadow-sm f13" style="min-width: 5.5rem">
+								<?php $displaySet=explode('||',$d['displaySet'])?>
+								<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
+								<button class="dropdown-item<?php echo $R['display']==$i?' active':'' ?><?php echo $dis[0]=='일부공개'?' d-none':'' ?> px-3" type="button" data-display="<?php echo $i ?>" data-label="<?php echo $dis[0]?>">
+									<i class="material-icons mr-1 f16 align-middle" aria-hidden="true"><?php echo $dis[1]?></i>
+									<?php echo $dis[0]?>
 								</button>
-								<button class="dropdown-item<?php echo $R['display']==4?' active':'' ?>" type="button" data-display="4" data-label="<?php echo $g['displaySet']['label'][4] ?>">
-									<i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw" aria-hidden="true"></i>
-									<?php echo $g['displaySet']['label'][4] ?>
-								</button>
-								<button class="dropdown-item<?php echo $R['display']==3?' active':'' ?>" type="button" data-display="3" data-label="<?php echo $g['displaySet']['label'][3] ?>">
-									<i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw" aria-hidden="true"></i>
-									<?php echo $g['displaySet']['label'][3] ?>
-								</button>
-								<button class="dropdown-item<?php echo $R['display']==1?' active':'' ?>" type="button" data-display="1" data-label="<?php echo $g['displaySet']['label'][1] ?>">
-									<i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-fw" aria-hidden="true"></i>
-									<?php echo $g['displaySet']['label'][1] ?>
-								</button>
+								<?php $i++;endforeach?>
 							</div>
 						</div>
 
@@ -254,14 +229,16 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 
 				<div class="dropdown mr-auto">
 				  <button class="btn btn-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    <i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw"></i>
-						<?php echo $g['displaySet']['label'][4] ?>
+				    <i class="material-icons mr-1 f16 align-middle" aria-hidden="true"><?php echo $g['displaySet']['icon'][1]?></i>
+						<?php echo $g['displaySet']['label'][1] ?>
 				  </button>
-				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item active" href="#" data-display="4"><i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][4] ?></a>
-				    <a class="dropdown-item" href="#" data-display="3"><i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][3] ?></a>
-				    <a class="dropdown-item" href="#" data-display="2"><i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][2] ?></a>
-						<a class="dropdown-item" href="#" data-display="0"><i class="fa fa-<?php echo $g['displaySet']['icon'][0] ?> fa-fw"></i> <?php echo $g['displaySet']['label'][0] ?></a>
+				  <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
+						<?php $displaySet=explode('||',$d['displaySet'])?>
+						<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
+						<a class="dropdown-item<?php echo $dis[0]=='일부공개'?' d-none':'' ?><?php echo $dis[0]=='비공개'?' active':'' ?>" href="#" data-display="<?php echo $i ?>">
+							<i class="material-icons mr-1 f16 align-middle" aria-hidden="true"><?php echo $dis[1]?></i> <?php echo $dis[0]?>
+						</a>
+						<?php $i++;endforeach?>
 				  </div>
 				</div>
 

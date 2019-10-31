@@ -74,6 +74,15 @@
 .no-underline {
   text-decoration: none !important
 }
+.f48 {
+  font-size: 48px !important
+}
+.f32 {
+  font-size: 32px !important
+}
+.f28 {
+  font-size: 28px !important
+}
 .f18 {
   font-size: 18px !important
 }

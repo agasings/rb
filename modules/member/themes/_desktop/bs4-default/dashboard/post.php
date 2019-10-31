@@ -128,7 +128,7 @@ switch ($sort) {
 					<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
 					<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $display==$i?' active':'' ?>" type="button" data-value="<?php echo $i ?>">
 						<span>
-							<i class="fa fa-<?php echo $dis[1]?> fa-fw" aria-hidden="true"></i>
+							<i class="material-icons mr-1 f18 align-middle" aria-hidden="true"><?php echo $dis[1]?></i>
 							<?php echo $dis[0]?>
 						</span>
 						<small><?php echo number_format(getDbRows($table['postmember'],'mbruid='.$my['uid'].' and site='.$s.' and display='.$i))?></small>
@@ -227,15 +227,15 @@ switch ($sort) {
 				<div class="ml-3 align-self-center form-inline">
 
 					<div class="dropdown mr-2" data-toggle="display" data-uid="<?php echo $R['uid'] ?>">
-						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 7.67rem"<?php echo !checkPostOwner($R)?' disabled':'' ?>>
+						<button class="btn btn-white btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 8.3rem"<?php echo !checkPostOwner($R)?' disabled':'' ?>>
 							<?php echo $g['displaySet']['label'][$R['display']] ?>
 						</button>
-						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 5rem">
+						<div class="dropdown-menu dropdown-menu-right shadow-sm" style="min-width: 4rem">
 							<h6 class="dropdown-header">공개설정 변경</h6>
 							<?php $displaySet=explode('||',$d['displaySet'])?>
 							<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
 							<button class="dropdown-item<?php echo $R['display']==$i?' active':'' ?>" type="button" data-display="<?php echo $i?>" data-label="<?php echo $dis[0]?>">
-								<i class="fa fa-<?php echo $dis[1]?> fa-fw" aria-hidden="true"></i>
+								<i class="material-icons mr-1 f18 align-middle" aria-hidden="true"><?php echo $dis[1]?></i>
 								<?php echo $dis[0]?>
 							</button>
 							<?php $i++;endforeach?>

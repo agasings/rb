@@ -82,7 +82,7 @@
                 리스트 선택
                 <div class="mr-4"><span class="badge badge-primary" data-role="list_num"></span></div>
               </button>
-              <div class="dropdown-menu shadow pt-0" style="width: 320px">
+              <div class="dropdown-menu shadow pt-0" style="width: 308px">
 
                 <div class="dropdown-body p-3" style="max-height: 300px;overflow:auto">
 
@@ -93,10 +93,12 @@
                   ?>
                   <?php foreach($_RCD as $_R):?>
                   <?php $is_list =  getDbRows($table[$m.'list_index'],'data='.$R['uid'].' and list='.$_R['uid'])  ?>
-
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" id="listRadio<?php echo $_R['uid'] ?>" name="postlist_members[]" value="<?php echo $_R['uid'] ?>" class="custom-control-input" <?php echo $is_list?' checked':'' ?>>
-                    <label class="custom-control-label" for="listRadio<?php echo $_R['uid'] ?>"><?php echo $_R['name'] ?></label>
+                  <div class="d-flex justify-content-between align-items-center py-1">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" id="listRadio<?php echo $_R['uid'] ?>" name="postlist_members[]" value="<?php echo $_R['uid'] ?>" class="custom-control-input" <?php echo $is_list?' checked':'' ?>>
+                      <label class="custom-control-label" for="listRadio<?php echo $_R['uid'] ?>"><?php echo $_R['name'] ?></label>
+                    </div>
+                    <i class="material-icons f18 text-muted mr-2" data-toggle="tooltip" title="<?php echo $g['displaySet']['label'][$_R['display']] ?>"><?php echo $g['displaySet']['icon'][$_R['display']] ?></i>
                   </div>
                   <?php endforeach?>
 
@@ -107,8 +109,8 @@
                 </div><!-- /.dropdown-body -->
 
                 <div class="dropdown-footer px-2">
-                  <button type="button" class="btn btn-white btn-block mt-3" data-role="list-add-button">+ 리스트 추가</button>
-                  <div class="input-group mt-3 d-none" data-role="list-add-input">
+                  <button type="button" class="btn btn-white btn-block" data-role="list-add-button">+ 리스트 추가</button>
+                  <div class="input-group d-none" data-role="list-add-input">
                     <input type="text" class="form-control" placeholder="리스트명 입력" name="list_name">
                     <div class="input-group-append">
                       <button class="btn btn-white" type="button" data-act="list-add-submit">
@@ -171,38 +173,6 @@
             </select>
           </div>
 
-          <section class="my-4">
-            <div class="d-flex justify-content-between">
-              <label class="small text-muted">통계분석</label>
-            </div>
-            <ul class="list-group list-group-horizontal text-center text-muted">
-              <li class="list-group-item flex-fill py-2">
-                <small>조회</small>
-                <span class="d-block h3 mb-0">
-                  <?php echo number_format($R['hit']) ?>
-                </span>
-              </li>
-              <li class="list-group-item flex-fill py-2">
-                <small>좋아요</small>
-                <span class="d-block h3 mb-0">
-                  <?php echo number_format($R['likes']) ?>
-                </span>
-              </li>
-              <li class="list-group-item flex-fill py-2">
-                <small>댓글</small>
-                <span class="d-block h3 mb-0">
-                  <?php echo number_format($R['comment']) ?>
-                </span>
-              </li>
-              <li class="list-group-item flex-fill py-2">
-                <small>평점</small>
-                <span class="d-block h3 mb-0">
-                  <?php echo number_format($R['likes_post']) ?>
-                </span>
-              </li>
-            </ul>
-          </section>
-
           <?php if ($R['mbruid']!=$my['uid']): ?>
           <div class="alert alert-info f12 py-2" role="alert">
             공유 포스트 입니다.
@@ -214,14 +184,10 @@
             <ul class="list-group list-group-flush f13 mt-1 border-bottom">
               <li class="list-group-item d-flex w-100 justify-content-between align-items-center px-0">
 
-                <div class="media">
-                  <span class="fa-stack fa-lg mr-2">
-                    <i class="fa fa-square fa-stack-2x"></i>
-                    <i class="" data-role="icon"></i>
-                  </span>
-
+                <div class="media text-muted">
+                  <i class="material-icons f28 ml-1 mr-3 align-self-center" data-role="icon"></i>
                   <div class="media-body align-self-center">
-                    <span data-role="heading"></span> <br><span data-role="description"></span>
+                    <span data-role="heading"></span> <br><span class="f12 text-muted" data-role="description"></span>
                   </div>
                 </div>
 
@@ -235,7 +201,7 @@
                     <div class="list-group list-group-flush">
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==5?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][5] ?>" data-display="5">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][5] ?> fa-2x mr-3"></i>
+                          <i class="material-icons mr-3 f28"><?php echo $g['displaySet']['icon'][5] ?></i>
                           <div class="media-body">
                             <span data-heading><?php echo $g['displaySet']['label'][5] ?></span><br>
                             <small data-description>모든 사용자가 검색하고 볼 수 있음</small>
@@ -244,7 +210,7 @@
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==4?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][4] ?>" data-display="4">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][4] ?> fa-2x mr-3" aria-hidden="true"></i>
+                          <i class="material-icons mr-3 f28"><?php echo $g['displaySet']['icon'][4] ?></i>
                           <div class="media-body">
                             <span data-heading><?php echo $g['displaySet']['label'][4] ?></span><br>
                             <small data-description>사이트 회원만 볼수 있음. 로그인 필요</small>
@@ -253,7 +219,7 @@
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==3?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][3] ?>" data-display="3">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][3] ?> fa-2x mr-3" aria-hidden="true"></i>
+                          <i class="material-icons mr-3 f28"><?php echo $g['displaySet']['icon'][3] ?></i>
                           <div class="media-body">
                             <span data-heading><?php echo $g['displaySet']['label'][3] ?></span><br>
                             <small data-description>링크 있는 사용자만 볼 수 있음. 로그인 불필요</small>
@@ -262,16 +228,16 @@
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==2?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][2] ?>" data-display="2">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][2] ?> fa-2x ml-1 mr-3" aria-hidden="true"></i>
+                          <i class="material-icons mr-3 f28"><?php echo $g['displaySet']['icon'][2] ?></i>
                           <div class="media-body">
                             <span data-heading><?php echo $g['displaySet']['label'][2] ?></span><br>
-                            <small data-description>초대된 회원만 볼수 있음</small>
+                            <small data-description>지정된 회원만 볼수 있음</small>
                           </div>
                         </div>
                       </button>
                       <button type="button" class="list-group-item list-group-item-action<?php echo $R['display']==1?' active':'' ?>" data-icon="<?php echo $g['displaySet']['icon'][1] ?>" data-display="1">
                         <div class="media align-items-center">
-                          <i class="fa fa-<?php echo $g['displaySet']['icon'][1] ?> fa-2x ml-1 mr-4" aria-hidden="true"></i>
+                          <i class="material-icons mr-3 f28"><?php echo $g['displaySet']['icon'][1] ?></i>
                           <div class="media-body">
                             <span data-heading><?php echo $g['displaySet']['label'][1] ?></span><br>
                             <small data-description>나만 볼수 있음</small>
@@ -351,6 +317,36 @@
             </div><!-- /data-role="postmember" -->
 
           </fieldset><!-- /data-role="display" -->
+
+
+          <section class="mt-4 mb-2">
+            <ul class="list-group list-group-horizontal text-center text-muted">
+              <li class="list-group-item flex-fill py-2">
+                <small>조회</small>
+                <span class="d-block h3 mb-0">
+                  <?php echo number_format($R['hit']) ?>
+                </span>
+              </li>
+              <li class="list-group-item flex-fill py-2">
+                <small>좋아요</small>
+                <span class="d-block h3 mb-0">
+                  <?php echo number_format($R['likes']) ?>
+                </span>
+              </li>
+              <li class="list-group-item flex-fill py-2">
+                <small>댓글</small>
+                <span class="d-block h3 mb-0">
+                  <?php echo number_format($R['comment']) ?>
+                </span>
+              </li>
+              <li class="list-group-item flex-fill py-2">
+                <small>평점</small>
+                <span class="d-block h3 mb-0">
+                  <?php echo number_format($R['likes_post']) ?>
+                </span>
+              </li>
+            </ul>
+          </section>
 
           <?php endif; ?>
 
@@ -637,7 +633,7 @@ function setPostDisplay(display) {
 
   button.addClass('active');
   input.val(display);
-  section.find('[data-role="icon"]').removeAttr('class').addClass('fa fa-'+icon+' fa-stack-1x fa-inverse');
+  section.find('[data-role="icon"]').text(icon);
   section.find('[data-role="heading"]').text(heading);
   section.find('[data-role="description"]').html(description);
   section.removeClass('d-none')
@@ -735,16 +731,19 @@ $(document).ready(function() {
           if(status=='success'){
             var result = $.parseJSON(response);
             var uid=result.uid;
-            var item = '<div class="custom-control custom-checkbox">'+
+            var icon=result.icon;
+            var label=result.label;
+            var item = '<div class="d-flex justify-content-between align-items-center py-1"><div class="custom-control custom-checkbox">'+
                           '<input type="checkbox" id="listRadio'+uid+'" name="postlist_members[]" value="'+uid+'" class="custom-control-input" checked>'+
                           '<label class="custom-control-label" for="listRadio'+uid+'">'+name+'</label>'+
-                        '</div>';
+                        '</div><i class="material-icons f18 text-muted mr-2" data-toggle="tooltip" title="" data-original-title="'+label+'">'+icon+'</i></div>';
             button.attr( 'disabled', false );
             input.val('');
             $('[data-role="list-add-button"]').removeClass('d-none');
             $('[data-role="list-add-input"]').addClass('d-none')
             list.find('.dropdown-body').append(item);
             checked_num.text(checked_num_val+1);
+            list.find('[data-toggle="tooltip"]').tooltip();
           } else {
             alert(status);
           }
@@ -856,7 +855,6 @@ $(document).ready(function() {
     var label = item.text();
     selector.find('[data-toggle="dropdown"]').text(label)
     selector.find('[type="text"]').val(url+'?ref='+ref)
-    selector.find('[data-role="landing"]').attr('href',url+'?ref='+ref)
     selector.find('.js-tooltip').click();
   });
 

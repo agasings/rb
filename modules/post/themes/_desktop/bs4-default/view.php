@@ -31,5 +31,3 @@ $( document ).ready(function() {
 });
 
 </script>
-
-<?php echo $_SERVER['REQUEST_URI'] ?>

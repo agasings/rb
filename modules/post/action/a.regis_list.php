@@ -6,7 +6,7 @@ if (!$my['uid']) getLink('reload','parent.','정상적인 접근이 아닙니다
 $mbruid =  $my['uid'];
 $last_log	= $date['totime'];
 $id   = $id ? trim($id) : substr($g['time_srnad'],9,7);;
-$name = addslashes(htmlspecialchars(trim($name))); 
+$name = addslashes(htmlspecialchars(trim($name)));
 
 if ($uid) {
   $R = getUidData($table[$m.'list'],$uid);
@@ -79,7 +79,7 @@ if ($uid) {
   if(getDbRows($table[$m.'list'],"id='".$id."'")) getLink('reload','parent.','이미 같은 아이디의 리스트가 존재합니다.','');
   if(getDbRows($table[$m.'list'],"name='".$name."' and mbruid=".$mbruid)) getLink('reload','parent.','이미 같은 이름의 리스트가 존재합니다.','');
 
-  $display = $display?$display:4;
+  $display = $display?$display:1;
   $maxgid = getDbCnt($table[$m.'list'],'max(gid)','');
   $gid = $maxgid ? $maxgid+1 : 1;
 
@@ -92,9 +92,12 @@ if ($uid) {
 
   if ($send_mod == 'ajax') {
 
+    $_R = getUidData($table[$m.'list'],$LASTUID);
     $result=array();
     $result['error'] = false;
     $result['uid'] = $LASTUID;
+    $result['icon'] = $g['displaySet']['icon'][$_R['display']];
+    $result['label'] = $g['displaySet']['label'][$_R['display']];
     echo json_encode($result);
   	exit;
 
