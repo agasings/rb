@@ -33,7 +33,7 @@ $_link_url = $link_url[0] ;
       <button class="btn btn-white dropdown-toggle text-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         선택
       </button>
-      <div class="dropdown-menu" data-url="<?php echo $_link_url?>">
+      <div class="dropdown-menu shadow" data-url="<?php echo $_link_url?>">
         <a class="dropdown-item" href="#" data-ref="kt">카카오톡</a>
         <a class="dropdown-item" href="#" data-ref="yt">유튜브</a>
         <a class="dropdown-item" href="#" data-ref="fb">페이스북</a>
@@ -44,7 +44,7 @@ $_link_url = $link_url[0] ;
         <div role="separator" class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" data-ref="em">이메일</a>
         <a class="dropdown-item" href="#" data-ref="sm">SMS</a>
-        <a class="dropdown-item" href="#">기타</a>
+        <a class="dropdown-item" href="#" data-ref="et">기타</a>
       </div>
     </div>
     <input type="text" class="form-control" readonly value="<?php echo $_link_url?>" id="_url_">

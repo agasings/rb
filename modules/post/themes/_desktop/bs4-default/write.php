@@ -128,19 +128,38 @@
 
           </div>
 
-          <div class="form-group">
+          <div class="form-group mb-3">
             <label class="small text-muted">포스트 URL</label>
-            <div class="input-group mb-3">
+            <div class="input-group" data-role="ref_selector">
+              <div class="input-group-prepend">
+                <button class="btn btn-white dropdown-toggle text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  선택
+                </button>
+                <div class="dropdown-menu shadow" data-url="<?php echo $g['url_root'].getPostLink($R,0) ?>">
+                  <a class="dropdown-item" href="#" data-ref="kt">카카오톡</a>
+                  <a class="dropdown-item" href="#" data-ref="yt">유튜브</a>
+                  <a class="dropdown-item" href="#" data-ref="fb">페이스북</a>
+                  <a class="dropdown-item" href="#" data-ref="ig">인스타그램</a>
+                  <a class="dropdown-item" href="#" data-ref="nb">네이버 블로그</a>
+                  <a class="dropdown-item" href="#" data-ref="ks">카카오스토리</a>
+                  <a class="dropdown-item" href="#" data-ref="tt">트위터</a>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" data-ref="em">이메일</a>
+                  <a class="dropdown-item" href="#" data-ref="sm">SMS</a>
+                  <a class="dropdown-item" href="#" data-ref="et">기타</a>
+                </div>
+              </div>
               <input type="text" class="form-control" value="<?php echo $g['url_root'].getPostLink($R,0) ?>" readonly id="_url_">
               <div class="input-group-append">
                 <button type="button" class="btn btn-white js-clipboard js-tooltip" title="클립보드에 복사" data-clipboard-target="#_url_">
                   <i class="fa fa-clone" aria-hidden="true"></i>
                 </button>
-                <a class="btn btn-white" href="<?php echo getPostLink($R,0) ?>" target="_blank" data-toggle="tooltip" title="최종화면">
+                <a class="btn btn-white" href="<?php echo getPostLink($R,0) ?>" target="_blank" data-toggle="tooltip" title="최종화면" data-role="landing">
                   <i class="fa fa-share" aria-hidden="true"></i>
                 </a>
               </div>
             </div>
+            <small class="form-text text-muted mt-2 pl-1">통계분석을 위해 외부공유시 매체별 전용URL 사용해주세요.</small>
           </div>
 
           <div class="form-group">
@@ -827,6 +846,18 @@ $(document).ready(function() {
 		}
 		return false;
 
+  });
+
+  $('[data-role="ref_selector"]').find('.dropdown-item').click(function(){
+    var item = $(this)
+    var selector = $('[data-role="ref_selector"]')
+    var ref = item.attr('data-ref');
+    var url = selector.find('.dropdown-menu').attr('data-url');
+    var label = item.text();
+    selector.find('[data-toggle="dropdown"]').text(label)
+    selector.find('[type="text"]').val(url+'?ref='+ref)
+    selector.find('[data-role="landing"]').attr('href',url+'?ref='+ref)
+    selector.find('.js-tooltip').click();
   });
 
 });

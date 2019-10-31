@@ -161,7 +161,7 @@
 								<?php endif; ?>
 							</p>
 						</div>
-						<div data-role="item" data-featured_img="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" data-subject="<?php echo $R['subject'] ?>">
+						<div data-role="item" data-featured_img="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" data-subject="<?php echo stripslashes($R['subject'])?>">
 							<?php if($_perm['post_owner']):?>
 
 							<?php if ($R['likes'] || $R['dislikes']): ?>

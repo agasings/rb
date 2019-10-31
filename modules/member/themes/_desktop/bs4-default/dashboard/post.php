@@ -167,7 +167,7 @@ switch ($sort) {
 				data-hit="<?php echo $R['hit']?>"
 				data-likes="<?php echo $R['likes']?>"
 				data-comment="<?php echo $R['comment']?>"
-				data-subject="<?php echo checkPostPerm($R)?$R['subject']:'[비공개 포스트]'?>">
+				data-subject="<?php echo checkPostPerm($R)?stripslashes($R['subject']):'[비공개 포스트]'?>">
 
 				<a href="<?php echo getPostLink($R,1)?>" class="position-relative mr-3" target="_blank">
 					<img class="border" src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" width="180">
