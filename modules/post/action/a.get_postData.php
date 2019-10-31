@@ -24,6 +24,7 @@ $result['goods'] = $linkedshopArr['data'][0];
 $result['article'] = getContents($R['content'],'HTML');
 $result['hit'] = $R['hit'];
 $result['likes'] = $R['likes'];
+$result['dislikes'] = $R['dislikes'];
 $result['comment'] = $R['comment'];
 
 $markup_file = $markup_file?$markup_file:'view';

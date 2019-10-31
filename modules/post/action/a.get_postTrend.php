@@ -136,7 +136,7 @@ if ($mod=='referer') {
 }
 
 
-if ($mod=='hit' || $mod=='likes' || $mod=='comment') {
+if ($mod=='hit' || $mod=='likes' || $mod=='dislikes' || $mod=='comment') {
 
 	$labelsArray = array ();
 	$dataArray = array ();
@@ -289,12 +289,23 @@ if ($mod=='hit' || $mod=='likes' || $mod=='comment') {
 		);
 	}
 
+	if ($mod=='dislikes') {
+		$data['datasets']= array (
+			array (
+				'label' => '싫어요 추이',
+				'backgroundColor' => array('#f8d7da'),
+				'borderColor' => array('#721c24'),
+				'data' => $dataArray
+			)
+		);
+	}
+
 	if ($mod=='comment') {
 		$data['datasets']= array (
 			array (
 				'label' => '댓글 추이',
-				'backgroundColor' => array('#f8d7da'),
-				'borderColor' => array('#721c24'),
+				'backgroundColor' => array('#fff3cd'),
+				'borderColor' => array('#856404'),
 				'data' => $dataArray
 			)
 		);

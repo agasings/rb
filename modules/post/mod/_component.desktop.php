@@ -29,10 +29,10 @@
 
       <nav class="bg-light" style="margin-top: -5px;">
         <div class="nav nav-tabs nav-fill" role="tablist">
-          <a class="nav-item nav-link active rounded-0 border-left-0" data-toggle="tab" href="#post-likesList" role="tab">
+          <a class="nav-item nav-link active rounded-0 border-left-0" data-toggle="tab" href="#post-likesList" role="tab" data-opinion="like">
             좋아요 <span class="badge" data-role="like-num"></span>
           </a>
-          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-dislikesList" role="tab">
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#post-dislikesList" role="tab" data-opinion="dislike">
             싫어요  <span class="badge" data-role="dislike-num"></span>
           </a>
         </div>
@@ -80,6 +80,7 @@
               <ul class="list-inline d-inline-block f13 text-muted mb-0">
                 <li class="list-inline-item">조회 <span data-role="hit"></span></li>
                 <li class="list-inline-item">좋아요 <span data-role="likes"></span></li>
+                <li class="list-inline-item">싫어요 <span data-role="dislikes"></span></li>
                 <li class="list-inline-item">댓글 <span data-role="comment"></span></li>
               </ul>
             </div>
@@ -107,6 +108,9 @@
           <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#chart-post-likes" data-mod="likes" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
             좋아요
           </a>
+          <a class="nav-item nav-link rounded-0" data-toggle="tab" href="#chart-post-dislikes" data-mod="dislikes" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
+            싫어요
+          </a>
           <a class="nav-item nav-link rounded-0 border-right-0" data-toggle="tab" href="#chart-post-comment" data-mod="comment" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>" data-unit="day" role="tab">
             댓글
           </a>
@@ -129,6 +133,7 @@
           <div class="tab-pane" id="chart-post-device" role="tabpanel"></div>
           <div class="tab-pane" id="chart-post-side" role="tabpanel"></div>
           <div class="tab-pane" id="chart-post-likes" role="tabpanel"></div>
+          <div class="tab-pane" id="chart-post-dislikes" role="tabpanel"></div>
           <div class="tab-pane" id="chart-post-comment" role="tabpanel"></div>
         </div>
       </div>
@@ -222,7 +227,9 @@ $( document ).ready(function() {
     modal.find('[data-role="like-num"]').text('');
     modal.find('[data-role="dislike"] [data-role="list"]').html('');
     modal.find('[data-role="dislike-num"]').text('');
-    modal.find('.nav-tabs .nav-link:first-child').tab('show');
+
+    if (opinion=='like') modal.find('.nav-tabs .nav-link:first-child').tab('show');
+    else modal.find('.nav-tabs .nav-link[data-opinion="dislike"]').tab('show');
 
     modal.attr('data-uid',uid);
     modal.find('[data-role="subject"]').text(subject);
@@ -254,54 +261,54 @@ $( document ).ready(function() {
 				 var _uid=result.uid;
 				 var list=result.list;
 				 var num=result.num;
+         var num_like=result.num_like;
          var num_dislike=result.num_dislike;
          modal.find('[data-role="loader"]').addClass('d-none');
+         if (num_like) modal.find('[data-role="like-num"]').text(num_like);
          if (num_dislike) modal.find('[data-role="dislike-num"]').text(num_dislike);
 
 				 if (num) {
-					 modal.find('[data-role="like"] [data-role="list"]').html(list);
-           modal.find('[data-role="like-num"]').text(num);
+					 modal.find('[data-role="'+opinion+'"] [data-role="list"]').html(list);
 				 } else {
-				 	modal.find('[data-role="like"] [data-role="list"]').html('<div class="py-5 text-center text-muted">자료가 없습니다.</div>');
+				 	modal.find('[data-role="'+opinion+'"] [data-role="list"]').html('<div class="py-5 text-center text-muted">자료가 없습니다.</div>');
 				 }
 
 			 });
 		 }, 300);
   })
 
-  //싫어요 탭 선택시
+  //좋아요/싫어요 탭 선택시
   $('#modal-post-opinion').find('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
     var modal = $('#modal-post-opinion');
     var uid = modal.attr('data-uid');
     var tab = e.target;
-    var target = $(tab).attr('href');
-    if (target=='#post-dislikesList') {
+    var opinion = $(tab).attr('data-opinion');
 
-      modal.find('[data-role="loader"]').removeClass('d-none');
-      modal.find('[data-role="dislike"] [data-role="list"]').html(''); //초기화
+    modal.find('[data-role="loader"]').removeClass('d-none');
+    modal.find('[data-role="'+opinion+'"] [data-role="list"]').html(''); //초기화
 
-      setTimeout(function(){
-        $.post(rooturl+'/?r='+raccount+'&m=post&a=get_opinionList',{
-             uid : uid,
-             opinion : 'dislike'
-          },function(response){
-           var result = $.parseJSON(response);
-           var _uid=result.uid;
-           var list=result.list;
-           var num=result.num;
-           modal.find('[data-role="loader"]').addClass('d-none');
+    setTimeout(function(){
+      $.post(rooturl+'/?r='+raccount+'&m=post&a=get_opinionList',{
+           uid : uid,
+           opinion : opinion
+        },function(response){
+         var result = $.parseJSON(response);
+         var _uid=result.uid;
+         var list=result.list;
+         var num=result.num;
+         modal.find('[data-role="loader"]').addClass('d-none');
 
-           if (num) {
-             modal.find('[data-role="dislike"] [data-role="list"]').html(list);
-             modal.find('[data-role="dislike-num"]').text(num);
-           } else {
-            modal.find('[data-role="dislike"] [data-role="list"]').html('<div class="py-5 text-center text-muted">자료가 없습니다.</div>');
-           }
+         if (num) {
+           modal.find('[data-role="'+opinion+'"] [data-role="list"]').html(list);
+           modal.find('[data-role="'+opinion+'-num"]').text(num);
+         } else {
+          modal.find('[data-role="'+opinion+'"] [data-role="list"]').html('<div class="py-5 text-center text-muted">자료가 없습니다.</div>');
+         }
 
-         });
-       }, 100);
+       });
+     }, 100);
 
-    }
+
   })
 
 
@@ -328,9 +335,11 @@ $( document ).ready(function() {
   				var result = $.parseJSON(response);
           var hit=result.hit;
           var likes=result.likes;
+          var dislikes=result.dislikes;
           var comment=result.comment;
           modal.find('[data-role="hit"]').text(hit);
           modal.find('[data-role="likes"]').text(likes);
+          modal.find('[data-role="dislikes"]').text(dislikes);
           modal.find('[data-role="comment"]').text(comment);
 
   			} else {

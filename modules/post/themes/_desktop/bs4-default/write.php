@@ -13,6 +13,7 @@
   <input type="hidden" name="dis_rating">
   <input type="hidden" name="dis_like">
   <input type="hidden" name="dis_comment">
+  <input type="hidden" name="dis_listadd">
 
   <header class="d-flex align-items-center py-3 px-4">
 
@@ -347,24 +348,31 @@
 
           <ul class="list-group mb-4 text-muted">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i> 댓글 사용</span>
+              <span>댓글 사용</span>
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="use_comment" value="1" id="use_comment"<?php echo $R['dis_comment']?'':' checked' ?>>
                 <label class="custom-control-label" for="use_comment"></label>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fa fa-heart-o fa-fw" aria-hidden="true"></i> 좋아요 사용</span>
+              <span>좋아요 사용</span>
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="use_like" value="1" id="use_like"<?php echo $R['dis_like']?'':' checked' ?>>
                 <label class="custom-control-label" for="use_like"></label>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fa fa-star-half-o fa-fw" aria-hidden="true"></i> 평점 사용</span>
+              <span>평점 사용</span>
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="use_rating" value="1" id="use_rating"<?php echo $R['dis_rating']?'':' checked' ?>>
                 <label class="custom-control-label" for="use_rating"></label>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>리스트 저장 허용</span>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="use_listadd" value="1" id="use_listadd"<?php echo $R['dis_listadd']?'':' checked' ?>>
+                <label class="custom-control-label" for="use_listadd"></label>
               </div>
             </li>
           </ul>

@@ -21,6 +21,11 @@
             좋아요 {$likes}
           </a>
         </li>
+        <li class="list-inline-item">
+          <a href="#modal-post-opinion" data-toggle="modal" data-backdrop="static" data-uid="{$uid}" data-opinion="dislike" class="text-reset">
+            싫어요 {$dislikes}
+          </a>
+        </li>
         <li class="list-inline-item">댓글 {$comment}</li>
         <li class="list-inline-item">
           <time data-plugin="timeago" datetime="{$d_modify}"></time>

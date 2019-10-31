@@ -286,7 +286,7 @@
 				<a href="<?php echo getPostLink($_L,$mbrid?1:0).($GLOBALS['_HS']['rewrite']?'?':'&').'list='.$list ?>"
 					class="list-group-item list-group-item-action p-1 pr-3 serial<?php echo $_L['cid']==$cid?' active':' bg-light' ?>">
 					<div class="media">
-						<span class="align-self-center pr-2 pl-1 f12 counter"></span>
+						<span class="align-self-center pr-2 pl-1 f12 counter" style="width:20px"></span>
 						<span class="position-relative mr-2">
 		          <img class="" src="<?php echo getPreviewResize(getUpImageSrc($_L),'100x56') ?>" alt="">
 		          <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo getUpImageTime($_L) ?></time>

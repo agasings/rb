@@ -186,13 +186,14 @@ switch ($sort) {
 						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
 							<li class="list-inline-item">
-								<?php if ($R['likes']): ?>
 								<a class="text-reset" href="#modal-post-opinion" data-toggle="modal" data-uid="<?php echo $R['uid']?>" data-opinion="like">
 									좋아요 <?php echo $R['likes']?>
 								</a>
-								<?php else: ?>
-								좋아요 <?php echo $R['likes']?>
-								<?php endif; ?>
+							</li>
+							<li class="list-inline-item">
+								<a class="text-reset" href="#modal-post-opinion" data-toggle="modal" data-uid="<?php echo $R['uid']?>" data-opinion="dislike">
+									싫어요 <?php echo $R['dislikes']?>
+								</a>
 							</li>
 							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 							<li class="list-inline-item">

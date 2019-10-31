@@ -21,26 +21,32 @@
         <ul class="list-group list-group-horizontal text-center text-muted shadow-sm">
           <li class="list-group-item flex-fill">
             <small>포스트</small>
-            <span class="d-block h1 my-2">
+            <span class="d-block h2 my-2">
               <?php echo number_format($my['num_post']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
             <small>리스트</small>
-            <span class="d-block h1 my-2">
+            <span class="d-block h2 my-2">
               <?php echo number_format($my['num_list']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
             <small>누적 조회수</small>
-            <span class="d-block h1 my-2">
+            <span class="d-block h2 my-2">
               <?php echo number_format($my['hit_post']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
             <small>누적 좋아요수</small>
-            <span class="d-block h1 my-2">
+            <span class="d-block h2 my-2">
               <?php echo number_format($my['likes_post']) ?>
+            </span>
+          </li>
+          <li class="list-group-item flex-fill">
+            <small>누적 싫어요수</small>
+            <span class="d-block h2 my-2">
+              <?php echo number_format($my['dislikes_post']) ?>
             </span>
           </li>
         </ul>

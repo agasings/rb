@@ -17,6 +17,9 @@
 				<a class="nav-link" data-toggle="tab" href="#chart-likes" data-mod="likes">좋아요</a>
 			</li>
 			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#chart-dislikes" data-mod="dislikes">싫어요</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#chart-comment" data-mod="comment">댓글</a>
 			</li>
 			<li class="nav-item">
@@ -41,6 +44,9 @@
 		<div class="tab-pane" id="chart-likes" role="tabpanel">
 			<canvas class="d-none"></canvas>
 		</div>
+		<div class="tab-pane" id="chart-dislikes" role="tabpanel">
+			<canvas class="d-none"></canvas>
+		</div>
 		<div class="tab-pane" id="chart-comment" role="tabpanel">
 			<canvas class="d-none"></canvas>
 		</div>
@@ -56,6 +62,7 @@ function setWidgetPostLineChart(ele,mod) {
 
 	if (mod=='hit') var chartSet = ['조회수 추이','#cce5ff','#004085']; //label ,backgroundColor,borderColor
 	if (mod=='likes') var chartSet = ['좋아요 추이','#d4edda','#155724'];
+	if (mod=='dislikes') var chartSet = ['싫어요 추이','#d4edda','#155724'];
 	if (mod=='comment') var chartSet = ['댓글 추이','#f8d7da','#721c24'];
 	if (mod=='referer') var chartSet = ['유입경로 추이','#ffeeba','#856404'];
 

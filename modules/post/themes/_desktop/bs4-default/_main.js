@@ -127,6 +127,7 @@ function savePost(f) {
   var dis_rating = form.find('[name="use_rating"]').is(":checked")?0:1;
   var dis_like = form.find('[name="use_like"]').is(":checked")?0:1;
   var dis_comment = form.find('[name="use_comment"]').is(":checked")?0:1;
+  var dis_listadd = form.find('[name="use_listadd"]').is(":checked")?0:1;
 
   if (uid) {
     setTimeout(function(){
@@ -147,7 +148,8 @@ function savePost(f) {
         display : display,
         dis_rating : dis_rating,
         dis_like : dis_like,
-        dis_comment : dis_comment
+        dis_comment : dis_comment,
+        dis_listadd : dis_listadd
         },function(response,status){
           if(status=='success'){
             var result = $.parseJSON(response);
@@ -166,9 +168,10 @@ function savePost(f) {
 
   } else {
 
-    form.find('[name="dis_rating"]').val(dis_rating);
+    form.find('[name="dis_rating"]').val(1);  //평점 사용안함
     form.find('[name="dis_like"]').val(dis_like);
     form.find('[name="dis_comment"]').val(dis_comment);
+    form.find('[name="dis_listadd"]').val(dis_listadd);
 
     setTimeout(function(){
       getIframeForAction(f);

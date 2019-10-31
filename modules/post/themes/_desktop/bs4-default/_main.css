@@ -114,6 +114,10 @@
 .serial .counter:before {
   content: counter(Serial);
 }
+.serial.active .counter:before {
+    content: '▶';
+}
+
 [data-role="follow"].active {
   background-color: #e0e0e0 !important;
   color: #696969 !important;

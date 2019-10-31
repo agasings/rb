@@ -6,6 +6,8 @@ $listque = 'mbruid='.$M1['memberuid'].' and site='.$s;
 if ($my['uid']) $listque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
 else $listque .= ' and display = 5'; // 전체공개 포스트만 출력
 
+if ($list) $listque .= ' and id <>'.$list;
+
 $_RCD=getDbArray($table['postlist'],$listque,'*','gid','asc',$wdgvar['limit'],1);
 $_NUM = getDbRows($table['postlist'],$listque);
 ?>

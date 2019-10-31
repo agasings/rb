@@ -30,7 +30,7 @@ if ($uid) {
 
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>'.$R['log'];
   $QVAL1 = "subject='$subject',review='$review',content='$content',tag='$tag',display='$display',hidden='$hidden',format='$format',";
-  $QVAL1 .="d_modify='$d_modify',member='$member',upload='$upload',log='$log',featured_img='$featured_img',linkedmenu='$linkedmenu',dis_comment='$dis_comment',dis_like='$dis_like',dis_rating='$dis_rating'";
+  $QVAL1 .="d_modify='$d_modify',member='$member',upload='$upload',log='$log',featured_img='$featured_img',linkedmenu='$linkedmenu',dis_comment='$dis_comment',dis_like='$dis_like',dis_rating='$dis_rating',dis_listadd='$dis_listadd'";
   getDbUpdate($table[$m.'data'],$QVAL1,'uid='.$R['uid']);
 
   //포스트 공유설정 업데이트
@@ -101,9 +101,9 @@ if ($uid) {
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>';
 
   $QKEY1 = "site,gid,mbruid,cid,subject,review,content,tag,html,";
-  $QKEY1.= "hit,comment,oneline,d_regis,d_modify,d_comment,member,upload,log,display,hidden,featured_img,format,dis_comment,dis_like,dis_rating";
+  $QKEY1.= "hit,comment,oneline,d_regis,d_modify,d_comment,member,upload,log,display,hidden,featured_img,format,dis_comment,dis_like,dis_rating,dis_listadd";
   $QVAL1 = "'$s','$gid','$mbruid','$cid','$subject','$review','$content','$tag','$html',";
-  $QVAL1.= "'0','0','0','$d_regis','','','$member','$upload','$log','$display','$hidden','$featured_img','$format','$dis_comment','$dis_like','$dis_rating'";
+  $QVAL1.= "'0','0','0','$d_regis','','','$member','$upload','$log','$display','$hidden','$featured_img','$format','$dis_comment','$dis_like','$dis_rating','$dis_listadd'";
   getDbInsert($table[$m.'data'],$QKEY1,$QVAL1);
 
   $LASTUID = getDbCnt($table[$m.'data'],'max(uid)','');
