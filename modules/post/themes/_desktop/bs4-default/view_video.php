@@ -265,12 +265,12 @@
 		  <div class="card-body px-2 pt-2 pb-1">
 
 				<a href="<?php echo getListLink($LIST,$mbrid?1:0) ?>" class="media text-reset text-decoration-none">
-					<i class="material-icons mr-1 text-muted" style="font-size: 34px;">playlist_play</i>
+					<i class="material-icons mr-1 text-muted" style="font-size: 42px;">playlist_play</i>
 					<div class="media-body">
-						<h5 class="h6 mb-0">
+						<h5 class="h6 mb-0 pb-0 pt-1">
 							<?php echo $LIST['name'] ?>
 						</h5>
-				    <small class="text-muted"><?php echo $MBR['name'] ?></small>
+				    <small class="text-muted line-clamp-1"><?php echo $LIST['review']?$LIST['review']:getProfileInfo($LIST['mbruid'],'name') ?></small>
 					</div>
 				</a><!-- /.media -->
 

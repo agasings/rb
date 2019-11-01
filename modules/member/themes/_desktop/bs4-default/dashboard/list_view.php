@@ -248,8 +248,25 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 		</div><!-- /.col-9 -->
 		<div class="col-4 border-left">
 
-			<div class="sidebar-item mt-3 d-none" data-role="display">
-				<button class="btn btn-link btn-block text-left px-0 text-reset" type="button" data-toggle="dropdown">
+			<div class="sidebar-item mt-3">
+				<div class="form-group">
+					<label class="small text-muted">리스트 URL</label>
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" value="<?php echo $g['url_root'].getListLink($LIST,0) ?>" readonly id="_url_">
+						<div class="input-group-append">
+							<button type="button" class="btn btn-white js-clipboard js-tooltip" title="클립보드에 복사" data-clipboard-target="#_url_">
+								<i class="fa fa-clone" aria-hidden="true"></i>
+							</button>
+							<a class="btn btn-white" href="<?php echo getListLink($LIST,0) ?>" target="_blank" data-toggle="tooltip" title="최종화면">
+								<i class="fa fa-share" aria-hidden="true"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div><!-- /.sidebar-item -->
+
+			<div class="sidebar-item mt-3" data-role="display">
+				<button class="btn btn-link btn-block text-left px-0 text-reset text-decoration-none" type="button" data-toggle="dropdown">
 					<span class="d-flex justify-content-between small text-muted">
 						공개상태
 						<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
@@ -311,7 +328,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 			<div class="sidebar-item mt-4" data-role="tag">
 
-				<button class="btn btn-link btn-block text-left px-0 text-reset" type="button" data-toggle="dropdown">
+				<button class="btn btn-link btn-block text-left px-0 text-reset text-decoration-none" type="button" data-toggle="dropdown">
 					<div class="d-flex justify-content-between small text-muted">
 						태그
 						<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
@@ -355,24 +372,6 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 					<?php endif?>
 				</div>
 			</div><!-- /.sidebar-item -->
-
-			<div class="sidebar-item mt-5">
-				<div class="form-group">
-					<label class="small text-muted">리스트 URL</label>
-					<div class="input-group mb-3">
-						<input type="text" class="form-control" value="<?php echo $g['url_root'].getListLink($LIST,0) ?>" readonly id="_url_">
-						<div class="input-group-append">
-							<button type="button" class="btn btn-white js-clipboard js-tooltip" title="클립보드에 복사" data-clipboard-target="#_url_">
-								<i class="fa fa-clone" aria-hidden="true"></i>
-							</button>
-							<a class="btn btn-white" href="<?php echo getListLink($LIST,0) ?>" target="_blank" data-toggle="tooltip" title="최종화면">
-								<i class="fa fa-share" aria-hidden="true"></i>
-							</a>
-						</div>
-					</div>
-				</div><!-- /.sidebar-item -->
-
-			</div>
 
 		</div><!-- /.col-3 -->
 	</div><!-- /.row -->

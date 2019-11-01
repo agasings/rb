@@ -24,6 +24,10 @@ $lack_card_num = $total_card_num;
 		</div>
 	</div>
 
+	<p>
+		<?php echo $LIST['review'] ?>
+	</p>
+
 	<!-- 태그 -->
 	<?php if ($LIST['tag']): ?>
 	<div class="my-4">
