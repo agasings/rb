@@ -1189,4 +1189,25 @@ db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table['s_notice'],$DB_CONNECT);
 }
 
+//피드테이블
+$_tmp = db_query( "select count(*) from ".$table['s_feed'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+CREATE TABLE ".$table['s_feed']." (
+uid			BIGINT			PRIMARY KEY		NOT NULL AUTO_INCREMENT,
+site		    INT				DEFAULT '0'		NOT NULL,
+mbruid		INT				DEFAULT '0'		NOT NULL,
+module	VARCHAR(30)		DEFAULT ''		NOT NULL,
+category	VARCHAR(50)		DEFAULT ''		NOT NULL,
+entry  		INT				DEFAULT '0'		NOT NULL,
+display		  TINYINT			DEFAULT '0'		NOT NULL,
+url			VARCHAR(250)	DEFAULT ''		NOT NULL,
+d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
+KEY mbruid(mbruid),
+KEY display(display),
+KEY d_regis(d_regis)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table['s_feed'],$DB_CONNECT);
+}
+
 ?>

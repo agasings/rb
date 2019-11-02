@@ -88,6 +88,46 @@ if ($uid) {
 
   }
 
+
+  // 피드 인덱스 추가
+  if ($display==2 || $display>3) {
+
+    $_FCD = getDbArray($table['s_friend'],'by_mbruid='.$my['uid'],'my_mbruid','uid','asc',0,1);
+    while ($_F=db_fetch_array($_FCD)) {
+      $mbruid		= $_F['my_mbruid'];
+      $module 	= $m;
+      $category	= '';
+      $entry		= $R['uid'];
+      $d_regis	= $date['totime'];
+
+      $check_feed_qry = "mbruid='".$mbruid."' and module='".$module."' and entry='".$entry."'";
+      $is_feed = getDbRows($table['s_feed'],$check_feed_qry);
+
+      if (!$is_feed){
+        $_QKEY = 'site,mbruid,module,category,entry,d_regis';
+      	$_QVAL = "'$s','$mbruid','$module','$category','$entry','$d_regis'";
+      	getDbInsert($table['s_feed'],$_QKEY,$_QVAL);
+      }
+    }
+
+    //피드 구데이터 삭제 (인덱스 용량 5000건 제한 )
+    $_REFCNT = getDbRows($table['s_feed'],'');
+    if ($_REFCNT > 5000) {
+      $_REFOVER = getDbArray($table['s_feed'],'','*','uid','asc',($_REFCNT - 4001),1);
+      while($_REFK=db_fetch_array($_REFOVER)) {
+        getDbDelete($table['s_feed'],'uid='.$_REFK['uid']); // 구 데이터삭제
+      }
+    }
+
+    if ($_REFCNT == 1000) {
+      db_query("OPTIMIZE TABLE ".$table['s_feed'],$DB_CONNECT);
+    }
+
+  }
+
+  getDbUpdate($table['s_feed'],'display='.$display,'module="'.$m.'" and entry='.$R['uid']); //피드 인덱스 업데이트
+
+
 } else {
 
   $member= $$member?$member:'['.$mbruid.']';

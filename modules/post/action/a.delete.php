@@ -170,6 +170,17 @@ if ($R['point1']&&$R['mbruid'])
 	getDbUpdate($table['s_mbrdata'],'point=point-'.$R['point1'],'memberuid='.$R['mbruid']);
 }
 
+// 피드 인덱스 삭제
+$_FCD = getDbArray($table['s_friend'],'by_mbruid='.$my['uid'],'my_mbruid','uid','asc',0,1);
+while ($_F=db_fetch_array($_FCD)) {
+  $mbruid		= $_F['my_mbruid'];
+  $module 	= $m;
+  $entry		= $R['uid'];
+  $check_feed_qry = "mbruid='".$mbruid."' and module='".$module."' and entry='".$entry."'";
+  $is_feed = getDbRows($table['s_feed'],$check_feed_qry);
+  if ($is_feed) getDbDelete($table['s_feed'],$check_feed_qry);
+}
+
 setrawcookie('post_action_result', rawurlencode('포스트가 삭제 되었습니다.|success'));  // 처리여부 cookie 저장
 getLink(RW('mod=dashboard&page=post') ,'parent.' , $alert , $history);
 ?>
