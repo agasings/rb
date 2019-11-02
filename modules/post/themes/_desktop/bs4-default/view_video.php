@@ -142,7 +142,7 @@
 
 		<div class="d-flex justify-content-between">
 
-			<div class="media w-100">
+			<div class="media w-100" data-mbruid="<?php echo $R['mbruid'] ?>">
 				<a href="<?php echo getProfileLink($R['mbruid']) ?>" class="mr-3">
 			  	<img src="<?php echo getAvatarSrc($R['mbruid'],'48') ?>" class="rounded-circle" width="48" height="48" alt="<?php echo $M1[$_HS['nametype']] ?>의 프로필">
 				</a>
@@ -155,13 +155,18 @@
 							</h6>
 							<p class="mb-0 text-muted f12">
 								<?php if ($M1['num_follower']): ?>
-								구독자 <?php echo number_format($M1['num_follower'])?>명
+								<a class="text-reset text-decoration-none" href="<?php echo getProfileLink($R['mbruid'])?>/follower">
+									구독자
+									<span data-role="num_follower"><?php echo number_format($M1['num_follower'])?></span>
+									명
+								</a>
 								<?php else: ?>
-								구독자 없음
+								구독자 <span data-role="num_follower">없음</span>
 								<?php endif; ?>
 							</p>
 						</div>
 						<div data-role="item" data-featured_img="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>" data-subject="<?php echo stripslashes($R['subject'])?>">
+
 							<?php if($_perm['post_owner']):?>
 
 							<?php if ($R['likes'] || $R['dislikes']): ?>
@@ -180,11 +185,11 @@
 								data-uid="<?php echo $R['uid'] ?>">
 								 분석
 							 </button>
-		 					 <a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-primary">수정</a>
-							 <?php else: ?>
+		 					 <a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-outline-primary">수정</a>
+							 <?php endif?>
 
 							 <?php if ($my['uid']): ?>
-							 <?php if($my['uid']!=$_MP['uid']):?>
+							 <?php if($my['uid']!=$R['mbruid']):?>
 							 <button type="button" class="btn btn-primary<?php echo $_isFollowing ?' active':''?>"
 								data-act="actionIframe"
 								data-toggle="button"
@@ -213,7 +218,7 @@
 							 </span>
 							 <?php endif; ?>
 
-		 					<?php endif?>
+
 
 
 						</div>

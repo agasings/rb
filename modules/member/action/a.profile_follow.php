@@ -15,7 +15,10 @@ $_isFollowing = getDbRows($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mb
 
 if ($_isFollowing)
 {
+
+	$R = getDbData($table['s_friend'],'my_mbruid='.$mbruid.' and by_mbruid='.$my['uid'],'*');
 	getDbDelete($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mbruid='.$mbruid);
+	getDbUpdate($table['s_friend'],'rel=0','uid='.$R['uid']);
 	getDbUpdate($table['s_mbrdata'],'num_follower=num_follower-1','memberuid='.$mbruid);
 
 	// 알림 메시지 전송
@@ -27,10 +30,18 @@ if ($_isFollowing)
 	$target = '_self';
 	putNotice($rcvmember,$sendmodule,$sendmember,$title,$message,$referer,$button,$tag,$skip_email,$skip_push);
 
-
 }
 else {
-	getDbInsert($table['s_friend'],'rel,my_mbruid,by_mbruid,category,d_regis',"'0','".$my['uid']."','".$mbruid."','','".$date['totime']."'");
+
+	$R = getDbData($table['s_friend'],'my_mbruid='.$mbruid.' and by_mbruid='.$my['uid'],'*');
+
+	if ($R['uid']) {
+		getDbInsert($table['s_friend'],'rel,my_mbruid,by_mbruid,category,d_regis',"'1','".$my['uid']."','".$mbruid."','','".$date['totime']."'");
+		getDbUpdate($table['s_friend'],'rel=1','uid='.$R['uid']);
+	} else {
+		getDbInsert($table['s_friend'],'rel,my_mbruid,by_mbruid,category,d_regis',"'0','".$my['uid']."','".$mbruid."','','".$date['totime']."'");
+	}
+
 	getDbUpdate($table['s_mbrdata'],'num_follower=num_follower+1','memberuid='.$mbruid);
 
 	// 알림 메시지 전송
@@ -43,7 +54,12 @@ else {
 	putNotice($rcvmember,$sendmodule,$sendmember,$title,$message,$referer,$button,$tag,$skip_email,$skip_push);
 
 }
+
+$M1 = getDbData($table['s_mbrdata'],'memberuid='.$mbruid,'*');
+$num_follower = $M1['num_follower'];
 ?>
+
+
 <script>
 
 window.parent.$.notify({
@@ -69,6 +85,8 @@ window.parent.$.notify({
 		exit: "animated fadeOutDown"
 	}
 });
+
+window.parent.$('[data-mbruid="<?php echo $mbruid ?>"]').find('[data-role="num_follower"]').text(<?php echo $num_follower ?>);
 
 </script>
 <?php
