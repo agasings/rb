@@ -8,9 +8,7 @@ $orderby= $orderby ? $orderby : 'desc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $postque = 'site='.$s;
 
-$postque .= ' and display>3';
-
-// if ($sort != 'gid') $orderby= 'desc';
+$postque .= ' and (display=2 and hidden=0) or display>3';
 
 $postque .= ' and mbruid='.$my['uid'];
 $NUM = getDbRows($table['s_feed'],$postque);
@@ -50,11 +48,11 @@ $TPG = getTotalPage($NUM,$recnum);
 			<?php foreach($RCD as $R):?>
 		  <li class="media mt-4"
 				data-role="item"
-				data-featured_img="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>"
+				data-featured_img="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>"
 				data-hit="<?php echo $R['hit']?>"
 				data-likes="<?php echo $R['likes']?>"
 				data-comment="<?php echo $R['comment']?>"
-				data-subject="<?php echo checkPostPerm($R)?stripslashes($R['subject']):'[비공개 포스트]'?>">
+				data-subject="<?php echo stripslashes($R['subject'])?>">
 
 				<a href="<?php echo getPostLink($R,1)?>" class="position-relative mr-3" target="_blank">
 					<img class="border" src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" width="180">
@@ -63,8 +61,8 @@ $TPG = getTotalPage($NUM,$recnum);
 
 		    <div class="media-body">
 		      <h5 class="my-1 line-clamp-2">
-						<a href="<?php echo checkPostOwner($R)?RW('m=post&mod=write&cid='.$R['cid']):getPostLink($R,1) ?>" class="font-weight-light muted-link" <?php echo !checkPostOwner($R)?'target="_blank"':'' ?>>
-							<?php echo checkPostPerm($R)?stripslashes($R['subject']):'[비공개 포스트]'?>
+						<a href="<?php echo getPostLink($R,1)?>" class="font-weight-light muted-link" <?php echo !checkPostOwner($R)?'target="_blank"':'' ?>>
+							<?php echo stripslashes($R['subject'])?>
 						</a>
 					</h5>
 
@@ -72,7 +70,6 @@ $TPG = getTotalPage($NUM,$recnum);
 					<p class="text-muted f13"><?php echo $R['review'] ?></p>
 					<?php endif; ?>
 
-					<?php if (checkPostPerm($R)): ?>
 					<div class="mb-1">
 						<ul class="list-inline d-inline-block f13 text-muted">
 							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
@@ -109,11 +106,6 @@ $TPG = getTotalPage($NUM,$recnum);
 						</span>
 
 					</div>
-					<?php else: ?>
-						<p class="text-muted py-3">
-							이 포스트에 대한 액세스 권한이 없습니다.
-						</p>
-					<?php endif; ?>
 		    </div>
 		  </li>
 			<?php endforeach?>

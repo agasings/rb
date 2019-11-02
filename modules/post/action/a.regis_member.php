@@ -22,6 +22,31 @@ $QVAL = "'$mbruid','$s','$gid','$data','$display','1','$level','$d_regis'";
 getDbInsert($table[$m.'member'],$QKEY,$QVAL);
 getDbUpdate($table['s_mbrdata'],'num_post=num_post+1','memberuid='.$mbruid);  //추가회원 포스트수 조정
 
+// 피드 인덱스 추가
+if ($display>1) {
+
+  $_FCD = getDbArray($table['s_friend'],'by_mbruid='.$my['uid'],'my_mbruid','uid','asc',0,1);
+  while ($_F=db_fetch_array($_FCD)) {
+    $mbruid		= $_F['my_mbruid'];
+    $module 	= $m;
+    $category	= '';
+    $entry		= $R['uid'];
+    $d_regis	= $date['totime'];
+
+    $check_feed_qry = "mbruid='".$mbruid."' and module='".$module."' and entry='".$entry."'";
+    $is_feed = getDbRows($table['s_feed'],$check_feed_qry);
+
+    if (!$is_feed){
+      $_QKEY = 'site,mbruid,module,category,entry,d_regis';
+    	$_QVAL = "'$s','$mbruid','$module','$category','$entry','$d_regis'";
+    	getDbInsert($table['s_feed'],$_QKEY,$_QVAL);
+    } else {
+      getDbUpdate($table['s_feed'],'hidden=0',$check_feed_qry); //피드 인덱스 업데이트
+    }
+  }
+
+}
+
 $result=array();
 $result['error'] = false;
 $result['mbruid'] = $mbruid;

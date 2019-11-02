@@ -90,7 +90,7 @@ if ($uid) {
 
 
   // 피드 인덱스 추가
-  if ($display==2 || $display>3) {
+  if ($display>3) {
 
     $_FCD = getDbArray($table['s_friend'],'by_mbruid='.$my['uid'],'my_mbruid','uid','asc',0,1);
     while ($_F=db_fetch_array($_FCD)) {

@@ -18,6 +18,8 @@ while($_olm=db_fetch_array($_orign_list_members)) {
   getDbUpdate($table[$m.'list'],'num=num-1,d_last='.$d_regis,'uid='.$_olm['list']);
 }
 
+getDbUpdate($table['s_feed'],'hidden=1','module="'.$m.'" and entry='.$data.' and mbruid='.$mbruid); //피드 인덱스 업데이트
+
 $result=array();
 $result['error'] = false;
 
