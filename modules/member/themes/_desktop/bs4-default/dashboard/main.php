@@ -26,9 +26,9 @@
             </span>
           </li>
           <li class="list-group-item flex-fill">
-            <small>리스트</small>
+            <small>구독자</small>
             <span class="d-block h2 my-2">
-              <?php echo number_format($my['num_list']) ?>
+              <?php echo number_format($my['num_follower']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
@@ -38,13 +38,13 @@
             </span>
           </li>
           <li class="list-group-item flex-fill">
-            <small>누적 좋아요수</small>
+            <small>누적 좋아요</small>
             <span class="d-block h2 my-2">
               <?php echo number_format($my['likes_post']) ?>
             </span>
           </li>
           <li class="list-group-item flex-fill">
-            <small>누적 싫어요수</small>
+            <small>누적 싫어요</small>
             <span class="d-block h2 my-2">
               <?php echo number_format($my['dislikes_post']) ?>
             </span>
