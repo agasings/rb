@@ -70,7 +70,7 @@ include_once $g['dir_module_skin'].'_widget.php';
 			<div class="media-body">
 				<h5>
 					<a class="link_title" href="<?php echo getPostLink($_R,0) ?>" target="_blank">
-						<?php echo getStrCut($_R['subject'],40,'..')?>
+						<?php echo getStrCut(stripslashes($_R['subject']),40,'..')?>
 					</a>
 					<time data-plugin="timeago" class="ml-2" datetime="<?php echo getDateFormat($_R['d_regis'],'c')?>"></time>
 				</h5>

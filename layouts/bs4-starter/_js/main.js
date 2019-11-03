@@ -11,6 +11,8 @@ var noti_sort = 'uid';
 var noti_orderby = 'desc';
 var noti_recnum = '10';
 
+$('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화
+
 $(document).ready(function() {
 
 	// navbar dropdown 로그인 - 실행
@@ -98,7 +100,6 @@ $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip()  // 툴팁 플러그인 초기화
 	$('.js-tooltip').tooltip();
 
-	$('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화
   $('[data-plugin="mediaelement"]').mediaelementplayer(); // 동영상, 오디오 플레이어 초기화 http://www.mediaelementjs.com/
   initPhotoSwipeFromDOM('[data-plugin="photoswipe"]'); // 포토갤러리 초기화
 

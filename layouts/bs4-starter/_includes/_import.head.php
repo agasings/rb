@@ -60,3 +60,7 @@
 
 <!-- 레이아웃 본문 컨텐츠 스타일(선택) -->
 <link href="<?php echo $g['url_layout']?>/_css/article.css" rel="stylesheet">
+
+<!-- timeago : 상대시간 표기 -->
+<?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
+<?php getImport('jquery-timeago','locales/jquery.timeago.ko','1.6.7','js')?>

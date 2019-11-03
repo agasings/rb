@@ -67,9 +67,7 @@ $lack_card_num = $total_card_num;
 					<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 					<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 				</ul>
-				<time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>">
-					<?php echo getDateFormat($R['d_regis'],'Y.m.d')?>
-				</time>
+				<time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
 				<?php if(getNew($R['d_regis'],$d['post']['newtime'])):?><span class="rb-new ml-1"></span><?php endif?>
 				<span class="badge badge-secondary ml-2"><?php echo checkPostOwner($R) && $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 				<?php endif; ?>
