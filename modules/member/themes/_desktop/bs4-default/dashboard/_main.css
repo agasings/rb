@@ -200,3 +200,19 @@
 .list-section.empty [data-role="has-section"] {
  display: none
 }
+
+[data-role="follow"].active {
+  background-color: #e0e0e0 !important;
+  color: #696969 !important;
+  border: none !important
+}
+[data-role="follow"].active::after {
+  content: '중'
+}
+
+
+.btn.btn-white.active {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}

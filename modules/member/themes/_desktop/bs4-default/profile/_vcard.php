@@ -37,11 +37,6 @@
 <?php endif?>
 
 <ul class="vcard-details border-top border-gray-light mt-3 pt-2 list-unstyled">
-  <?php if ($_MP['location']): ?>
-  <li aria-label="Home location" class="vcard-detail pt-1 text-truncate">
-    <i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i> <?php if($_MP['location']):?> <?php echo $_MP['location']?><?php endif?>
-  </li>
-  <?php endif; ?>
 
   <li aria-label="Email" class="vcard-detail pt-1 text-truncate">
     <?php if ($my['uid']): ?>
@@ -86,11 +81,3 @@
   </li>
 </ul>
 <?php endif; ?>
-
-<script type="text/javascript">
-$('[data-act="actionIframe"]').click(function() {
-  getIframeForAction('');
-  frames.__iframe_for_action__.location.href = $(this).attr("data-url");
-});
-
-</script>

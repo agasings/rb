@@ -5,7 +5,7 @@ include_once $svfile;
 
 $sort	= $sort ? $sort : 'uid';
 $orderby= $orderby ? $orderby : 'desc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 20;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 1;
 $postque = 'site='.$s;
 
 $postque .= ' and (display=2 and hidden=0) or display>3';
@@ -27,14 +27,18 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
 			피드
 		</h3>
 		<div class="">
-			<a href="<?php echo getProfileLink($my['uid']) ?><?php echo $_HS['rewrite']?'/':'&page=' ?>following" class="btn btn-white">
+			<a href="<?php echo RW('mod=dashboard&page=follower&type=following')?>" class="btn btn-white">
 				구독 관리
 			</a>
-			<a href="<?php echo RW('mod=dashboard&page=feed&vtype=card')?>" class="btn btn-white py-0<?php echo $_SESSION['feed_vtype']=='card'?' active':'' ?>">
-				<i class="material-icons">view_module</i>
+			<a href="<?php echo RW('mod=dashboard&page=feed&vtype=card')?>" class="btn btn-white py-1<?php echo $_SESSION['feed_vtype']=='card'?' active':'' ?>">
+				<div class="d-flex justify-content-center align-content-between">
+					<i class="material-icons">view_module</i>
+				</div>
 			</a>
-			<a href="<?php echo RW('mod=dashboard&page=feed&vtype=media')?>" class="btn btn-white py-0<?php echo $_SESSION['feed_vtype']=='media'?' active':'' ?>">
-				<i class="material-icons">view_list</i>
+			<a href="<?php echo RW('mod=dashboard&page=feed&vtype=media')?>" class="btn btn-white py-1<?php echo $_SESSION['feed_vtype']=='media'?' active':'' ?>">
+				<div class="d-flex justify-content-center align-content-between">
+					<i class="material-icons">view_list</i>
+				</div>
 			</a>
 		</div>
 	</div>
@@ -46,7 +50,7 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
 	<?php if ($vtype=='media'): ?>
 	<ul class="list-unstyled" style="margin-top: -1rem">
 		<?php foreach($RCD as $R):?>
-		<li class="mt-4 d-flex justify-content-between"
+		<li class="mt-4 d-flex justify-content-between align-items-center"
 			data-role="item"
 			data-featured_img="<?php echo getPreviewResize(getUpImageSrc($R),'180x100') ?>"
 			data-hit="<?php echo $R['hit']?>"
@@ -54,7 +58,7 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
 			data-comment="<?php echo $R['comment']?>"
 			data-subject="<?php echo stripslashes($R['subject'])?>">
 
-			<div class="media">
+			<div class="media w-75">
 				<a href="<?php echo getPostLink($R,1)?>" class="position-relative mr-3" target="_blank">
 					<img class="border" src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" width="180">
 					<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
@@ -65,26 +69,10 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
 							<?php echo stripslashes($R['subject'])?>
 						</a>
 					</h5>
-
-					<?php if ($R['review']): ?>
-					<p class="text-muted f13 mb-1"><?php echo $R['review'] ?></p>
-					<?php endif; ?>
-
 					<div class="mb-1">
 						<ul class="list-inline d-inline-block f13 text-muted">
-							<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
-							<li class="list-inline-item">
-								<a class="text-reset" href="#modal-post-opinion" data-toggle="modal" data-uid="<?php echo $R['uid']?>" data-opinion="like">
-									좋아요 <?php echo $R['likes']?>
-								</a>
-							</li>
-							<li class="list-inline-item">
-								<a class="text-reset" href="#modal-post-opinion" data-toggle="modal" data-uid="<?php echo $R['uid']?>" data-opinion="dislike">
-									싫어요 <?php echo $R['dislikes']?>
-								</a>
-							</li>
-							<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
-							<li class="list-inline-item">
+							<li class="list-inline-item">조회수 <?php echo $R['hit']?>회 </li>
+							<li class="list-inline-item">• 업데이트 :
 								<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time>
 							</li>
 						</ul>
@@ -95,27 +83,21 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
 						</span>
 						<?php endif; ?>
 
-						<span class="ml-2 f13 text-muted">
-							<!-- 태그 -->
-							<?php $_tags=explode(',',$R['tag'])?>
-							<?php $_tagn=count($_tags)?>
-							<?php $i=0;for($i = 0; $i < $_tagn; $i++):?>
-							<?php $_tagk=trim($_tags[$i])?>
-							<a class="badge badge-light" href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo urlencode($_tagk)?>"><?php echo $_tagk?></a>
-							<?php endfor?>
-						</span>
+						<?php if ($R['review']): ?>
+						<p class="text-muted f13 mt-2 mb-1 line-clamp-2"><?php echo $R['review'] ?></p>
+						<?php endif; ?>
 
 					</div>
 				</div>
 			</div><!-- /.media -->
-
-			<a href="<?php echo getProfileLink($R['mbruid']) ?>" class="media align-items-center mb-2 text-decoration-none text-reset">
-				<img src="<?php echo getAvatarSrc($R['mbruid'],'32') ?>" class="mr-2 rounded-circle" width="32" height="32" alt="<?php echo $M1[$_HS['nametype']] ?>의 프로필">
-				<div class="media-body">
-					<?php echo getProfileInfo($R['mbruid'],$_HS['nametype']) ?>
-				</div>
-			</a>
-
+			<div class="">
+				<a href="<?php echo getProfileLink($R['mbruid']) ?>" class="media align-items-center mb-2 text-decoration-none text-reset">
+					<img src="<?php echo getAvatarSrc($R['mbruid'],'32') ?>" class="mr-2 rounded-circle" width="32" height="32" alt="<?php echo $M1[$_HS['nametype']] ?>의 프로필">
+					<div class="media-body">
+						<?php echo getProfileInfo($R['mbruid'],$_HS['nametype']) ?>
+					</div>
+				</a>
+			</div>
 		</li>
 		<?php endforeach?>
 	</ul>
@@ -143,7 +125,8 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
             <?php echo checkPostPerm($R)?getStrCut(stripslashes($R['subject']),100,'..'):'[비공개 포스트]'?>
           </a>
         </h6>
-        <small class="text-muted small" >업데이트 : <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time></small>
+
+        <small class="text-muted small" ><?php echo getProfileInfo($R['mbruid'],$_HS['nametype']) ?> • 업데이트 : <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time></small>
       </div><!-- /.card-body -->
     </div><!-- /.card -->
 
@@ -189,13 +172,3 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
 </div>
 
 <?php include $g['path_module'].'post/mod/_component.desktop.php';?>
-
-<script type="text/javascript">
-
-$(document).ready(function() {
-
-
-
-});
-
-</script>

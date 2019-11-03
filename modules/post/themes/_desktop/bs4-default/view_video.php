@@ -218,9 +218,6 @@
 							 </span>
 							 <?php endif; ?>
 
-
-
-
 						</div>
 					</div><!-- /.flex -->
 

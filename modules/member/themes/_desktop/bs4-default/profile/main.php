@@ -92,20 +92,8 @@ $levelname= getDbData($table['s_mbrlevel'],'uid='.$_MP['level'],'*');
 					<?php endif?>
 				</ul>
 
-
-
-
-
-
-
-
 			</div><!-- /.col-6 -->
 		</div><!-- /.row -->
-
-
-
-
-
 
 	</div><!-- /.page-main -->
 </div><!-- /.page-wrapper -->
