@@ -147,7 +147,7 @@ $layout = 'bs4-starter/default.php';
 $m_layout = 'rc-starter/default.php';
 
 $QKEY = "gid,id,name,label,title,titlefix,icon,layout,startpage,m_layout,m_startpage,lang,open,dtd,nametype,timecal,rewrite,buffer,usescode,headercode,footercode";
-$QVAL = "'0','".$siteid."','$sitename','$sitename','{subject} | {site}','0','','$layout','','$m_layout','','','1','','name','0','$rewrite','0','0','',''";
+$QVAL = "'0','".$siteid."','$sitename','$sitename','{subject} | {site}','0','','$layout','','$m_layout','','','1','','nic','0','$rewrite','0','0','',''";
 getDbInsert($table['s_site'],$QKEY,$QVAL);
 db_query("OPTIMIZE TABLE ".$table['s_site'],$DB_CONNECT);
 $S = getDbData($table['s_site'],"id='".$siteid."'",'*');
