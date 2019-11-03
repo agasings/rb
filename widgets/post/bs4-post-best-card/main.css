@@ -1,19 +1,9 @@
-.widget-best-card .rank-icon {
-  position: absolute;
-  top: 0;
-  left: 0;
+.widget-post-best-card .rank-icon {
   font-weight: bold;
-  background-color: #555;
-  color: white;
-  min-width: 20px;
   text-align: center;
 }
 
-.widget-best-card .rank-icon.active {
-  background-color: #35C5F0;
-}
-
-.widget-best-card .card.card-mask .position-relative::before {
+.widget-post-best-card .card.card-mask .position-relative::before {
   position: absolute;
   content: ' ';
   left: 0;
@@ -23,6 +13,6 @@
   background-color: rgba(0, 0, 0, 0.25);
 }
 
-.widget-best-card .card.card-mask .position-relative:hover::before {
+.widget-post-best-card .card.card-mask .position-relative:hover::before {
   background-color: rgba(0, 0, 0, 0);
 }

@@ -17,7 +17,7 @@ $_RCD	= getDbSelect($table['postday'],$_WHERE1.' group by data order by '.$wdgva
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
 ?>
 
-<section class="widget widget-best-card mb-4">
+<section class="widget widget-post-best-card mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
     <div class="">
 
@@ -45,7 +45,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
     <div class="card shadow-sm card-mask">
       <a href="<?php echo getPostLink($R,1) ?>" class="position-relative">
         <img src="<?php echo getPreviewResize(getUpImageSrc($R),'235x130') ?>" class="card-img-top" alt="...">
-        <span class="position-absolute rank-icon active"><?php echo $i ?></span>
+        <span class="position-absolute badge badge-primary f15 px-2 rounded-0 rank-icon" style="left:0;top:0"><?php echo $i ?></span>
       </a>
       <div class="card-body pb-0 f14">
         <a href="<?php echo getPostLink($R,1) ?>" class="text-reset text-decoration-none line-clamp-2 mb-1"><?php echo$R['subject'] ?></a>

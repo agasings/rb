@@ -19,12 +19,12 @@ $_RCD	= getDbSelect($table['s_mbrday'],$_WHERE1.' group by mbruid order by '.$wd
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['s_mbrdata'],'memberuid='.$_R['mbruid'],'*');
 ?>
 
-<section class="widget mb-5">
+<section class="widget widget-profile-best-card mb-5">
   <header class="d-flex justify-content-between align-items-center mb-2">
     <div class="">
 
       <div class="media align-items-center">
-        <i class="material-icons mr-2">account_circle</i>
+        <i class="material-icons mr-2">emoji_events</i>
         <div class="media-body">
           <h5 class="my-0">
             <?php echo $wdgvar['title']?>
@@ -45,7 +45,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['s_mbrdata'],'membe
     <div class="card shadow-sm card-mask">
       <a href="<?php echo getProfileLink($R['memberuid']) ?>" class="position-relative">
         <img src="<?php echo getCoverSrc($R['memberuid'],600,350) ?>" class="card-img-top" alt="...">
-        <span class="rank-icon active"><?php echo $i ?></span>
+        <span class="position-absolute badge badge-primary f15 px-2 rounded-0 rank-icon" style="left:0;top:0"><?php echo $i ?></span>
         <span class="position-absolute" data-role="avatar">
           <img src="<?php echo getAvatarSrc($R['memberuid'],'64') ?>" class="rounded-circle mr-3 shadow-sm" alt="...">
         </span>
