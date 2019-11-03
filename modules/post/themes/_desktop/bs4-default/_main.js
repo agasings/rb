@@ -38,16 +38,14 @@ function savePost(f) {
 
   var editorData = editor.getData();
 
-  // if (editorData == '')
-  // {
-  //   alert('내용을 입력해 주세요.       ');
-  //   editor.editing.view.focus();
-  //   return false;
-  // } else {
-  //   $('[name="content"]').val(editorData)
-  // }
-
-  $('[name="content"]').val(editorData)
+  if (editorData == '')
+  {
+    alert('내용을 입력해 주세요.       ');
+    editor.editing.view.focus();
+    return false;
+  } else {
+    $('[name="content"]').val(editorData)
+  }
 
   // 카테고리 체크
 	var cat_sel=$('input[name="tree_members[]"]');

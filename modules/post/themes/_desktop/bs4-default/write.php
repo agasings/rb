@@ -23,7 +23,7 @@
 
     <div class="form-group mb-0" style="width:71.5%">
       <label class="sr-only">제목</label>
-      <input type="text" name="subject" value="<?php echo stripslashes($R['subject'])?>" class="form-control form-control-lg" <?php echo !$cid?' autofocus':'' ?> placeholder="제목없는 포스트">
+      <input type="text" name="subject" value="<?php echo stripslashes($R['subject'])?>" class="form-control form-control-lg" placeholder="제목없는 포스트">
     </div>
   </header>
 
@@ -231,7 +231,7 @@
                           <i class="material-icons mr-3 f28"><?php echo $g['displaySet']['icon'][2] ?></i>
                           <div class="media-body">
                             <span data-heading><?php echo $g['displaySet']['label'][2] ?></span><br>
-                            <small data-description>지정된 회원만 볼수 있음</small>
+                            <small data-description>지정된 친구만 볼수 있음</small>
                           </div>
                         </div>
                       </button>
@@ -311,7 +311,7 @@
 
               <div class="text-right mt-2">
                 <button type="button" class="btn btn-white btn-sm" data-toggle="modal" data-target="#modal-post-share" data-backdrop="static">
-                  사용자 초대
+                  친구 지정
                 </button>
               </div>
             </div><!-- /data-role="postmember" -->
@@ -506,8 +506,6 @@
         <?php endif; ?>
       </div>
     </div>
-
-
   </div>
 
 </form>

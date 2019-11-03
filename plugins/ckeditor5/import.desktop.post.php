@@ -136,7 +136,6 @@ DecoupledEditor
 		toolbarContainer.appendChild( editor.ui.view.toolbar.element );
 		editor.editing.view.focus();
 
-
     $('.document-editor__editable-container').on('scroll', function(){
       var height = $(this).scrollTop();
       if(height > 50) {
