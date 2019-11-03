@@ -42,10 +42,10 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['s_mbrdata'],'membe
   <div class="card-deck">
 
     <?php $i=0;foreach($RCD as $R):$i++;?>
-    <div class="card shadow-sm card-mask serial">
+    <div class="card shadow-sm card-mask">
       <a href="<?php echo getProfileLink($R['memberuid']) ?>" class="position-relative">
         <img src="<?php echo getCoverSrc($R['memberuid'],600,350) ?>" class="card-img-top" alt="...">
-        <span class="rank-icon active"><span class="counter"></span></span>
+        <span class="rank-icon active"><?php echo $i ?></span>
         <span class="position-absolute" data-role="avatar">
           <img src="<?php echo getAvatarSrc($R['memberuid'],'64') ?>" class="rounded-circle mr-3 shadow-sm" alt="...">
         </span>

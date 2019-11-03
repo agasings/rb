@@ -24,7 +24,7 @@
 }
 
 .widget .card.card-mask .position-relative:hover::before {
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .widget .card .position-relative [data-role="avatar"] {

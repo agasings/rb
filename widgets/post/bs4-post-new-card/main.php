@@ -5,40 +5,36 @@ $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈�
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
 
-$LIST=getDbData($table['postlist'],"id='".$wdgvar['listid']."'",'*');
+$_postque = 'site='.$s.' and auth=1 and display=5';
+if ($my['uid'])  $_postque .= ' or display=4';
 
-$_postque = 'site='.$s.' and list="'.$LIST['uid'].'"';
-$_NUM = getDbRows($table['postlist_index'],$_postque);
-$_RCD=getDbArray($table['postlist_index'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
-while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
+$_NUM = getDbRows($table['postmember'],$_postque);
+$_RCD=getDbArray($table['postmember'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
+while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
 ?>
 
-<section class="mb-5">
+<section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
     <div class="">
 
       <div class="media align-items-center">
-        <a href="<?php echo getProfileLink($LIST['mbruid']) ?>" class="mr-3">
-          <img src="<?php echo getAvatarSrc($LIST['mbruid'],'32') ?>" class="rounded-circle" alt="...">
-        </a>
         <div class="media-body">
           <h5 class="my-0">
-            <a href="<?php echo getListLink($LIST,1) ?>" class="text-decoration-none text-reset">
-              <?php echo $LIST['name'] ?>
-            </a>
-            <a href="<?php echo getProfileLink($LIST['mbruid']) ?>" class="ml-2 text-decoration-none text-muted f13">
-              <?php echo getProfileInfo($LIST['mbruid'],'nic') ?>
-            </a>
+            <?php echo $wdgvar['title']?>
+            <small class="ml-2 text-muted f13"><?php echo $wdgvar['subtitle']?></small>
           </h5>
         </div>
       </div>
 
     </div>
     <div class="">
-      <a href="<?php echo getListLink($LIST,1) ?>" class="btn btn-white btn-sm">더보기</a>
+      <?php if($wdgvar['link'] && $_NUM):?>
+      <a href="<?php echo $wdgvar['link']?>" class="btn btn-white btn-sm">더보기</a>
+      <?php endif?>
     </div>
   </header>
 
+  <?php if ($_NUM): ?>
   <div class="card-deck">
 
     <?php $i=0;foreach($RCD as $R):$i++;?>
@@ -47,12 +43,15 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
         <img src="<?php echo getPreviewResize(getUpImageSrc($R),'235x130') ?>" class="card-img-top" alt="...">
         <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
       </a>
-      <div class="card-body">
+      <div class="card-body py-3">
         <p class="card-text line-clamp-2 mb-2">
           <a class="text-reset text-decoration-none" href="<?php echo getPostLink($R,1) ?>">
             <?php echo getStrCut(stripslashes($R['subject']),100,'..') ?>
           </a>
         </p>
+        <a href="<?php echo getProfileLink($R['mbruid']) ?>" class="d-block f14 text-muted text-decoration-none">
+          <?php echo getProfileInfo($R['mbruid'],$_HS['nametype']) ?>
+        </a>
         <ul class="list-inline d-inline-block f13 text-muted mb-0">
           <li class="list-inline-item">조회수 <?php echo $R['hit']?>회</li>
           <li class="list-inline-item">
@@ -61,6 +60,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
         </ul>
       </div>
     </div>
+
     <?php
       $print_card_num++; // 카드 출력될 때마 1씩 증가
       $lack_card_num = $total_card_num - $print_card_num;
@@ -77,5 +77,10 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
     <?php endif?>
 
   </div><!-- /.card-deck -->
+  <?php else: ?>
+  <div class="text-center text-muted small py-5 border">
+    표시할 포스트가 없습니다.
+  </div>
+  <?php endif; ?>
 
 </section>

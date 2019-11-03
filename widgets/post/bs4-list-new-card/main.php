@@ -13,7 +13,7 @@ $RCD = getDbArray($table['postlist'],$_WHERE,'*','d_last','desc',$wdgvar['limit'
 $NUM = getDbRows($table['postlist'],$_WHERE);
 ?>
 
-<section class="mb-5">
+<section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
     <div class="">
 

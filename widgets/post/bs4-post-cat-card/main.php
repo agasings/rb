@@ -18,7 +18,7 @@ $_RCD=getDbArray($table['postindex'],$_postque,'*','gid','asc',$wdgvar['limit'],
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
 ?>
 
-<section class="mb-5">
+<section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
     <div class="">
 
