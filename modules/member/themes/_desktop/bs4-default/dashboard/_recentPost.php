@@ -34,7 +34,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
 
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
-      <a class="text-nowrap text-truncate muted-link position-relative " href="<?php echo getPostLink($R,1) ?>" target="_blank">
+      <a class="position-relative" href="<?php echo getPostLink($R,1) ?>" target="_blank">
         <img src="<?php echo checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'180x100'):getPreviewResize('/files/noimage.png','180x100') ?>" alt="" class="card-img-top" style="height: 100px">
         <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo checkPostPerm($R)?getUpImageTime($R):'' ?></time>
         <span class="badge badge-primary rounded-0 position-absolute" style="left:0px;top:0px"><?php echo $R['mbruid']!=$my['uid']?'공유':'' ?></span>

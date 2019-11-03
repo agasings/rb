@@ -15,7 +15,7 @@ if (!$my['uid']) getLink('/','','','');
 
 	<nav class="navbar fixed-top navbar-expand navbar-light bg-white border-bottom shadow-sm">
 		<div class="container-fluid">
-			<span class="pl-3">
+			<span class="">
 				<a class="navbar-brand mr-1" href="<?php  echo RW(0) ?>">
 					<i class="kf kf-bi-06 fa-lg mr-1"></i>
 				</a>
@@ -24,7 +24,7 @@ if (!$my['uid']) getLink('/','','','');
 					<strong>대시보드</strong></a>
 			</span>
 
-			<form name="PostSearchForm" class="w-50" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page=post'):$g['s'].'/'?>"role="form" data-role="searchform">
+			<form name="PostSearchForm" class="mr-auto ml-3 w-50" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page=post'):$g['s'].'/'?>"role="form" data-role="searchform">
 				<?php if (!$_HS['rewrite']): ?>
 				<input type="hidden" name="r" value="<?php echo $r?>">
 				<input type="hidden" name="mod" value="dashboard">

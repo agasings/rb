@@ -1,0 +1,50 @@
+.widget .rank-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  background-color: #555;
+  color: white;
+  min-width: 20px;
+  text-align: center;
+}
+
+.widget .rank-icon.active {
+  background-color: #35C5F0;
+}
+
+.widget .card.card-mask .position-relative::before {
+  position: absolute;
+  content: ' ';
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.widget .card.card-mask .position-relative:hover::before {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.widget .card .position-relative [data-role="avatar"] {
+  bottom:0;
+  left: 50%;
+  margin-left:-32px;
+  margin-bottom: -15px
+}
+
+.widget .card-footer .text-muted {
+  color: #909090 !important
+}
+
+.widget .card-footer .material-icons {
+  font-size: 20px
+}
+
+.widget .serial {
+  counter-increment: Serial;
+}
+.widget .serial .counter:before {
+  content: counter(Serial);
+}

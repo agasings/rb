@@ -216,8 +216,15 @@ if ( $g['mobile']!='ipad' && $g['mobile']!='iphone') {
 }
 
 // 포스트 공개관련
-$g['displaySet']['label'] = array('','비공개','일부공개','미등록','회원공개','전체공개');
-$g['displaySet']['icon'] = array('','lock','user-secret','link','users','globe');
+$d['displaySet'] = "||비공개,lock||일부공개,how_to_reg||미등록,insert_link||회원공개,people_alt||전체공개,public";
+$g['displaySet']['label'] = [];
+$g['displaySet']['icon'] = [];
+$displaySet=explode('||',$d['displaySet']);
+foreach ($displaySet as $displayLine) {
+	$dis=explode(',',$displayLine);
+	array_push($g['displaySet']['label'], $dis[0]);
+	array_push($g['displaySet']['icon'], $dis[1]);
+}
 
 //소셜로그인 세션 존재유무
 if(isset($_SESSION['SL']['naver'])||isset($_SESSION['SL']['kakao'])||isset($_SESSION['SL']['facebook'])||isset($_SESSION['SL']['google'])||isset($_SESSION['SL']['instagram'])||isset($_SESSION['SL']['twitter'])){

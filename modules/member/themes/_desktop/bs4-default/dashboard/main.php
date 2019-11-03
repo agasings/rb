@@ -21,15 +21,15 @@
         <ul class="list-group list-group-horizontal text-center text-muted shadow-sm">
           <li class="list-group-item flex-fill">
             <small>포스트</small>
-            <span class="d-block h2 my-2">
+            <a href="<?php echo RW('mod=dashboard&page=post')?>" class="d-block h2 my-2 text-reset text-decoration-none">
               <?php echo number_format($my['num_post']) ?>
-            </span>
+            </a>
           </li>
           <li class="list-group-item flex-fill">
             <small>구독자</small>
-            <span class="d-block h2 my-2">
+            <a href="<?php echo RW('mod=dashboard&page=follower')?>" class="d-block h2 my-2 text-reset text-decoration-none">
               <?php echo number_format($my['num_follower']) ?>
-            </span>
+            </a>
           </li>
           <li class="list-group-item flex-fill">
             <small>누적 조회수</small>
