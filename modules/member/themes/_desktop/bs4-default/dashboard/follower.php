@@ -49,9 +49,8 @@ $TPG = getTotalPage($NUM,$recnum);
 		</div>
 	</div>
 
-	<div class="d-flex justify-content-between align-items-center border-top border-dark pt-4 pb-3" role="filter">
-		<div><span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 명</span></div>
-		<span class="text-muted f13"></span>
+	<div class="d-flex justify-content-between align-items-center border-top border-dark pb-3" role="filter">
+
 	</div><!-- /.d-flex -->
 
 	<ul class="list-inline mt-3">
