@@ -14,11 +14,12 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
 
 <section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
-    <div class="">
 
+    <?php if ($LIST['uid']): ?>
+    <div class="">
       <div class="media align-items-center">
         <a href="<?php echo getProfileLink($LIST['mbruid']) ?>" class="mr-3">
-          <img src="<?php echo getAvatarSrc($LIST['mbruid'],'32') ?>" class="rounded-circle" alt="...">
+          <img src="<?php echo getAvatarSrc($LIST['mbruid'],'32') ?>" class="rounded-circle" alt="..." style="width:32px">
         </a>
         <div class="media-body">
           <h5 class="my-0">
@@ -36,6 +37,12 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
     <div class="">
       <a href="<?php echo getListLink($LIST,1) ?>" class="btn btn-white btn-sm">더보기</a>
     </div>
+    <?php else: ?>
+    <div class="text-center text-muted">
+      리스트 아이디를 확인해주세요.
+    </div>
+    <?php endif; ?>
+
   </header>
 
   <div class="card-deck">
