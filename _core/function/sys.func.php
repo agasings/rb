@@ -776,6 +776,14 @@ function getProfileLink($mbruid) {
 	return $result;
 }
 
+// 회원정보 추출
+function getProfileInfo($mbruid,$info){
+  global $g,$table;
+	$M = getDbData($table['s_mbrdata'],'memberuid='.$mbruid,'*');
+	$result=$M[$info];
+  return $result;
+}
+
 // 업로드 이미지 src 추출함수
 function getUpImageSrc($R){
   global $g,$table;
