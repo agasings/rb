@@ -1,7 +1,7 @@
 <?php
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 2;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $postque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
 if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
@@ -183,8 +183,12 @@ switch ($sort) {
 
 				<?php if ($NUM > $recnum): ?>
 				<ul class="pagination mb-0">
-					<?php $_N =  $_HS['rewrite']?'./'.$page.'?sort='.$sort.'&':'' ?>
-	        <?php echo getPageLink(10,$p,$TPG,$_N)?>
+					<?php
+						$para_str1 = $_HS['rewrite']?'/':'&page=';
+						$para_str2 = $_HS['rewrite']?'?':'&';
+						$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
+						echo getPageLink(10,$p,$TPG,$_N)
+					 ?>
 				</ul>
 				<?php endif; ?>
 

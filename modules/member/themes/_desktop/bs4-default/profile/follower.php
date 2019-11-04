@@ -91,10 +91,16 @@ $TPG = getTotalPage($NUM,$recnum);
 
 		<?php else:?>
 		<nav aria-label="Page navigation" class="mt-4">
+			<?php if ($NUM > $recnum): ?>
 			<ul class="pagination justify-content-center">
-				<?php $_N =  './'.$mbrid.'?page=follower&' ?>
-        <?php echo getPageLink(10,$p,$TPG,$_N)?>
+				<?php
+					$para_str1 = $_HS['rewrite']?'/':'&page=';
+					$para_str2 = $_HS['rewrite']?'?':'&';
+					$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
+					echo getPageLink(10,$p,$TPG,$_N)
+				 ?>
 			</ul>
+			<?php endif; ?>
 		</nav>
 		<?php endif?>
 

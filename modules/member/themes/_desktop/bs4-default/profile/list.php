@@ -1,7 +1,7 @@
 <?php
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 3;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 12;
 $listque = 'mbruid='.$_MP['uid'].' and site='.$s;
 
 if ($sort != 'gid') $orderby= 'desc';
@@ -148,8 +148,12 @@ switch ($sort) {
 
 				<?php if ($NUM > $recnum): ?>
 		    <ul class="pagination mb-0">
-					<?php $_N =  '/@'.$mbrid.'?page='.$page.'&' ?>
-	        <?php echo getPageLink(10,$p,$TPG,$_N)?>
+					<?php
+						$para_str1 = $_HS['rewrite']?'/':'&page=';
+						$para_str2 = $_HS['rewrite']?'?':'&';
+						$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
+						echo getPageLink(10,$p,$TPG,$_N)
+					 ?>
 		    </ul>
 				<?php endif; ?>
 

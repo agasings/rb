@@ -113,10 +113,16 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 			</table>
 
 			<footer class="d-flex justify-content-between align-items-center my-4">
+				<?php if ($NUM > $recnum): ?>
 		    <ul class="pagination mb-0">
-					<?php $_N =  '/@'.$mbrid.'?page='.$page.'&' ?>
-	        <?php echo getPageLink(10,$p,$TPG,$_N)?>
+					<?php
+						$para_str1 = $_HS['rewrite']?'/':'&page=';
+						$para_str2 = $_HS['rewrite']?'?':'&';
+						$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
+						echo getPageLink(10,$p,$TPG,$_N)
+					 ?>
 		    </ul>
+				<?php endif; ?>
 
 				<form name="bbssearchf" action="<?php echo $g['s']?>/" class="form-inline">
 					<input type="hidden" name="r" value="<?php echo $r?>" />
@@ -134,7 +140,7 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
 					<input type="hidden" name="skin" value="<?php echo $skin?>" />
 					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
-					
+
 					<select name="where" class="form-control">
 						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
