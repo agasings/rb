@@ -243,7 +243,7 @@ $col_xs = $d['theme']['xs_item']?' col-xs-'.$col_xs_num:'';
       <a class="btn btn-light" href="<?php echo $g['bbs_list']?>">새로고침</a>
     </div>
     <ul class="pagination mb-0">
-      <?php echo getPageLink($d['theme']['pagenum'],$p,$TPG)?>
+      <?php echo getPageLink($d['theme']['pagenum'],$p,$TPG,'')?>
     </ul>
     <?php if($B['uid']):?>
     <a class="btn btn-light" href="<?php echo $g['bbs_write']?>"><i class="fa fa-pencil"></i> 글쓰기</a>
