@@ -316,13 +316,6 @@ $catcode = '';
                 <div class="col-md-10 col-lg-9">
                   <select name="skin_mobile" class="form-control custom-select">
                     <option value="">포스트 대표테마</option>
-                    <?php $tdir = $g['path_module'].$module.'/themes/_mobile/'?>
-                    <?php $dirs = opendir($tdir)?>
-                    <?php while(false !== ($skin = readdir($dirs))):?>
-                      <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
-                      <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($CINFO['skin_mobile']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
-                    <?php endwhile?>
-                    <?php closedir($dirs)?>
                   </select>
                 </div>
               </div>
