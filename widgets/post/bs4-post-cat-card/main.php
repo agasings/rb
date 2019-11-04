@@ -19,8 +19,9 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
 
 <section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
-    <div class="">
 
+    <?php if ($CAT['uid']): ?>
+    <div class="">
       <div class="media align-items-center">
         <i class="material-icons mr-2">folder</i>
         <div class="media-body">
@@ -36,6 +37,12 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
     <div class="">
       <a href="#" class="btn btn-white btn-sm">더보기</a>
     </div>
+    <?php else: ?>
+    <div class="text-center text-danger">
+      카테고리 아이디를 확인해주세요.
+    </div>
+    <?php endif; ?>
+
   </header>
 
   <div class="card-deck">

@@ -38,7 +38,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
       <a href="<?php echo getListLink($LIST,1) ?>" class="btn btn-white btn-sm">더보기</a>
     </div>
     <?php else: ?>
-    <div class="text-center text-muted">
+    <div class="text-center text-danger">
       리스트 아이디를 확인해주세요.
     </div>
     <?php endif; ?>

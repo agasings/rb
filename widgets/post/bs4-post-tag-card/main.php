@@ -20,8 +20,9 @@ while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
 
 <section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
-    <div class="">
 
+    <?php if ($wdgvar['tag']): ?>
+    <div class="">
       <div class="media align-items-center">
         <i class="material-icons mr-2">flag</i>
         <div class="media-body">
@@ -36,6 +37,11 @@ while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
     <div class="">
       <a href="<?php echo RW('m=post&mod=keyword&') ?>keyword=<?php echo $wdgvar['tag'] ?>" class="btn btn-white btn-sm">더보기</a>
     </div>
+    <?php else: ?>
+    <div class="text-center text-danger">
+      태그를 설정해 주세요.
+    </div>
+    <?php endif; ?>
   </header>
 
   <div class="card-deck">
