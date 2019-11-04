@@ -47,7 +47,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['s_mbrdata'],'membe
         <img src="<?php echo getCoverSrc($R['memberuid'],600,350) ?>" class="card-img-top" alt="...">
         <span class="position-absolute badge badge-primary f15 px-2 rounded-0 rank-icon" style="left:0;top:0"><?php echo $i ?></span>
         <span class="position-absolute" data-role="avatar">
-          <img src="<?php echo getAvatarSrc($R['memberuid'],'64') ?>" class="rounded-circle mr-3 shadow-sm" alt="...">
+          <img src="<?php echo getAvatarSrc($R['memberuid'],'64') ?>" class="rounded-circle mr-3 shadow-sm" alt="..." style="width:64px">
         </span>
       </a>
       <div class="card-body pb-2 text-muted f14">
