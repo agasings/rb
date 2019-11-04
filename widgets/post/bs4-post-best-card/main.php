@@ -88,6 +88,12 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
       <?php endfor?>
     <?php endif?>
 
+    <?php if(!db_num_rows($_RCD)):?>
+      <div class="card text-center text-muted p-5">
+        자료가 없습니다.
+      </div>
+    <?php endif?>
+
   </div><!-- /.card-deck -->
 
 </section>

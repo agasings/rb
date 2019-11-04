@@ -8,7 +8,6 @@ $lack_card_num = $total_card_num;
 $_postque = 'site='.$s.' and auth=1 and display=5';
 if ($my['uid'])  $_postque .= ' or display=4';
 
-$_NUM = getDbRows($table['postmember'],$_postque);
 $_RCD=getDbArray($table['postmember'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
 ?>
@@ -34,7 +33,6 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
     </div>
   </header>
 
-  <?php if ($_NUM): ?>
   <div class="card-deck">
 
     <?php $i=0;foreach($RCD as $R):$i++;?>
@@ -76,11 +74,12 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
       <?php endfor?>
     <?php endif?>
 
+    <?php if(!db_num_rows($_RCD)):?>
+    <div class="card text-center text-muted p-5">
+      자료가 없습니다.
+    </div>
+    <?php endif?>
+
   </div><!-- /.card-deck -->
-  <?php else: ?>
-  <div class="text-center text-muted small py-5 border">
-    표시할 포스트가 없습니다.
-  </div>
-  <?php endif; ?>
 
 </section>

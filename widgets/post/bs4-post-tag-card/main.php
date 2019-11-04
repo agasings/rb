@@ -15,10 +15,8 @@ else $_WHERE .= ' and display>3';
 $_WHERE .= getSearchSql($where,$wdgvar['tag'],$ikeyword,'or');
 
 $TCD = getDbArray($table['postdata'],$_WHERE,'*',$sort,$orderby,$wdgvar['limit'],1);
-$NUM = getDbRows($table['postdata'],$_WHERE);
 while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
 ?>
-
 
 <section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
@@ -97,6 +95,12 @@ while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
        <div class="card border-0" style="background-color: transparent"></div>
        <?php if(!($i%$recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
       <?php endfor?>
+    <?php endif?>
+
+    <?php if(!db_num_rows($TCD)):?>
+    <div class="card text-center text-muted p-5">
+      자료가 없습니다.
+    </div>
     <?php endif?>
 
   </div><!-- /.card-deck -->

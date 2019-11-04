@@ -10,7 +10,6 @@ if ($my['uid']) $_WHERE .= ' and display > 3';  // 회원공개와 전체공개 
 else $_WHERE .= ' and display = 5'; // 전체공개 리스트만 출력
 
 $RCD = getDbArray($table['postlist'],$_WHERE,'*','d_last','desc',$wdgvar['limit'],1);
-$NUM = getDbRows($table['postlist'],$_WHERE);
 ?>
 
 <section class="widget mb-4">
@@ -34,7 +33,6 @@ $NUM = getDbRows($table['postlist'],$_WHERE);
     </div>
   </header>
 
-  <?php if ($NUM): ?>
   <div class="card-deck">
 
     <?php $i=0;foreach($RCD as $R):$i++;?>
@@ -88,13 +86,12 @@ $NUM = getDbRows($table['postlist'],$_WHERE);
       <?php endfor?>
     <?php endif?>
 
-  </div><!-- /.card-deck -->
-  <?php else: ?>
-
-    <div class="text-center text-muted p-5">
-      최신 리스트가 없습니다.
+    <?php if(!db_num_rows($RCD)):?>
+    <div class="card text-center text-muted p-5">
+      자료가 없습니다.
     </div>
+    <?php endif?>
 
-  <?php endif; ?>
+  </div><!-- /.card-deck -->
 
 </section>
