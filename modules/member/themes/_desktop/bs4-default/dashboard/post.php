@@ -41,7 +41,7 @@ $TPG = getTotalPage($NUM,$recnum);
 $m = 'post';
 $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($skin?'skin':'',$iframe?'iframe':''));
 $g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= RW('mod=dashboard&page='.$page).$g['post_list'];
+$g['pagelink']	= RW('mod=dashboard&page='.$page);
 $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
 $g['post_modify']= $g['post_write'].'&amp;cid=';
