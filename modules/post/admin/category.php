@@ -292,18 +292,7 @@ $catcode = '';
                 <label class="col-md-2 col-form-label text-center"><span class="badge badge-dark">모바일</span></label>
                 <div class="col-md-10 col-lg-9">
                   <select name="layout_mobile" class="form-control custom-select">
-                    <option value="">포스트 대표레이아웃</option>
-                    <?php $dirs = opendir($g['path_layout'])?>
-                    <?php while(false !== ($tpl = readdir($dirs))):?>
-                      <?php if($tpl=='.' || $tpl == '..' || $tpl == '_blank' || is_file($g['path_layout'].$tpl))continue?>
-                      <?php $dirs1 = opendir($g['path_layout'].$tpl)?>
-                      <?php while(false !== ($tpl1 = readdir($dirs1))):?>
-                        <?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
-                        <option value="<?php echo $tpl?>/<?php echo $tpl1?>"<?php if($CINFO['layout_mobile']==$tpl.'/'.$tpl1):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($g['path_layout'].$tpl)?>(<?php echo str_replace('.php','',$tpl1)?>)</option>
-                      <?php endwhile?>
-                      <?php closedir($dirs1)?>
-                    <?php endwhile?>
-                    <?php closedir($dirs)?>
+
                   </select>
                 </div>
               </div>
