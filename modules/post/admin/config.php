@@ -221,25 +221,7 @@ include_once $_tmpvfile;
 							 <div class="col-lg-10 col-xl-9">
 
 								 <select name="m_layout" class="form-control custom-select" id="" tabindex="-1">
-									 <?php if ($_HS['m_layout']): ?>
-									 <option value="0">사이트 레이아웃</option>
-									 <?php else: ?>
-									 <option value="0">&nbsp;사용안함 (기본 레이아웃 적용)</option>
-									 <?php endif; ?>
-									 <option disabled>--------------------</option>
-									 <?php $dirs = opendir($g['path_layout'])?>
-									 <?php while(false !== ($tpl = readdir($dirs))):?>
-									 <?php if($tpl=='.' || $tpl == '..' || $tpl == '_blank' || is_file($g['path_layout'].$tpl))continue?>
-									 <?php $dirs1 = opendir($g['path_layout'].$tpl)?>
-										 <optgroup label="<?php echo getFolderName($g['path_layout'].$tpl)?>">
-											 <?php while(false !== ($tpl1 = readdir($dirs1))):?>
-											 <?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
-												<option value="<?php echo $tpl?>/<?php echo $tpl1?>"<?php if($d['post']['m_layout']==$tpl.'/'.$tpl1):?> selected="selected"<?php endif?>><?php echo $tpl?> &gt; <?php echo str_replace('.php','',$tpl1)?></option>
-											 <?php endwhile?>
-										</optgroup>
-									 <?php closedir($dirs1)?>
-									 <?php endwhile?>
-									 <?php closedir($dirs)?>
+
 								 </select>
 
 							 </div>
@@ -296,26 +278,7 @@ include_once $_tmpvfile;
 						   </label>
 						  <div class="col-md-10 col-xl-9">
 						    <select name="skin_mobile" class="form-control custom-select">
-						      <option value="">모바일 테마 사용안함</option>
-						      <option value="" disabled>--------------------------------</option>
-						      <optgroup label="모바일">
-						        <?php $tdir = $g['path_module'].$module.'/themes/_mobile/'?>
-						        <?php $dirs = opendir($tdir)?>
-						        <?php while(false !== ($skin = readdir($dirs))):?>
-						        <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
-						        <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['skin_mobile']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
-						        <?php endwhile?>
-						        <?php closedir($dirs)?>
-						      </optgroup>
-						      <optgroup label="데스크탑">
-						        <?php $tdir = $g['path_module'].$module.'/themes/_desktop/'?>
-						        <?php $dirs = opendir($tdir)?>
-						        <?php while(false !== ($skin = readdir($dirs))):?>
-						        <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
-						        <option value="_desktop/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['skin_mobile']=='_desktop/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
-						        <?php endwhile?>
-						        <?php closedir($dirs)?>
-						      </optgroup>
+
 						    </select>
 						    <small class="form-text text-muted">
 						      선택하지 않으면 데스크탑 대표테마로 설정됩니다.
@@ -328,26 +291,7 @@ include_once $_tmpvfile;
 						   </label>
 						  <div class="col-md-10 col-xl-9">
 						    <select name="skin_total" class="form-control custom-select">
-						      <option value="">통합보드 사용안함</option>
-						      <option value="" disabled>--------------------------------</option>
-						      <optgroup label="데스크탑">
-						        <?php $tdir = $g['path_module'].$module.'/themes/_desktop/'?>
-						        <?php $dirs = opendir($tdir)?>
-						        <?php while(false !== ($skin = readdir($dirs))):?>
-						        <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
-						        <option value="_desktop/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['skin_main']=='_desktop/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
-						        <?php endwhile?>
-						        <?php closedir($dirs)?>
-						      </optgroup>
-						      <optgroup label="모바일">
-						        <?php $tdir = $g['path_module'].$module.'/themes/_mobile/'?>
-						        <?php $dirs = opendir($tdir)?>
-						        <?php while(false !== ($skin = readdir($dirs))):?>
-						        <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
-						        <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['skin_main']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
-						        <?php endwhile?>
-						        <?php closedir($dirs)?>
-						      </optgroup>
+
 						    </select>
 						    <small class="form-text text-muted">
 						      통합보드란 모든 포스트의 전체 게시물을 하나의 포스트으로 출력해 주는 서비스입니다.<br>
