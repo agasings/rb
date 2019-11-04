@@ -48,46 +48,40 @@
 			<?php echo getContents($R['content'],$R['html'])?>
 		</article>
 
-		<section class="mt-5">
+		<section class="mt-4">
 			<?php include $g['dir_module_skin'].'_view_attach.php'?>
 		</section>
 
+		<div class="my-4 text-center d-print-none">
+			<!-- 스크탭-->
+			<button type="button" class="btn btn-white <?php if($is_saved):?> active<?php endif?>"
+				data-toggle="button"
+				data-act="actionIframe"
+				data-url="<?php echo $g['post_action']?>saved&amp;uid=<?php echo $R['uid']?>"
+				data-role="btn_post_saved">
+				<i class="material-icons align-middle">bookmark_border</i> 저장
+			</button>
 
-		<div class="d-flex my-4 justify-content-between d-print-none">
-			<div class="my-4 text-center d-print-none">
-				<!-- 스크탭-->
-				<button type="button" class="btn btn-white <?php if($is_saved):?> active<?php endif?>"
-					data-toggle="actionIframe"
-					data-url="<?php echo $g['post_action']?>saved&amp;uid=<?php echo $R['uid']?>"
-					data-role="btn_post_saved">
-					<i class="fa fa-bookmark-o"></i> 저장
-				</button>
+			<!-- 좋아요 or 싫어요 -->
+			<?php if (!$R['dis_like']): ?>
+			<button type="button" class="btn btn-white<?php if($is_liked):?> active<?php endif?>"
+				data-toggle="button"
+				data-act="actionIframe"
+				data-url="<?php echo $g['post_action']?>opinion&amp;opinion=like&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
+				data-role="btn_post_like">
+				<i class="material-icons align-middle">thumb_up</i> <strong></strong>
+				<span data-role='likes_<?php echo $R['uid']?>' class="badge badge-inverted"><?php echo $R['likes']?></span>
+			</button>
 
-				<!-- 좋아요 or 싫어요 -->
-				<?php if (!$R['dis_like']): ?>
-				<button type="button" class="btn btn-white<?php if($is_liked):?> active<?php endif?>"
-					data-toggle="actionIframe"
-					data-url="<?php echo $g['post_action']?>opinion&amp;opinion=like&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-					data-role="btn_post_like">
-					<i class="fa fa fa-heart-o fa-fw" aria-hidden="true"></i> <strong></strong>
-					<span data-role='likes_<?php echo $R['uid']?>' class="badge badge-inverted"><?php echo $R['likes']?></span>
-				</button>
-
-				<button type="button" class="btn btn btn-white<?php if($is_disliked):?> active<?php endif?>"
-					data-toggle="actionIframe"
-					data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
-					data-role="btn_post_dislike">
-					<i class="fa fa-thumbs-o-down fa-fw" aria-hidden="true"></i> <strong></strong>
-					<span data-role='dislikes_<?php echo $R['uid']?>' class="badge badge-inverted"><?php echo $R['dislikes']?></span>
-				</button>
-				<?php endif; ?>
-			</div>
-
-
-			<!-- 링크 공유 -->
-			<div class="my-4 d-print-none text-center">
-				<?php include $g['dir_module_skin'].'_linkshare.php'?>
-			</div>
+			<button type="button" class="btn btn btn-white<?php if($is_disliked):?> active<?php endif?>"
+				data-toggle="button"
+				data-act="actionIframe"
+				data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
+				data-role="btn_post_dislike">
+				<i class="material-icons align-middle">thumb_down</i> <strong></strong>
+				<span data-role='dislikes_<?php echo $R['uid']?>' class="badge badge-inverted"><?php echo $R['dislikes']?></span>
+			</button>
+			<?php endif; ?>
 		</div>
 
 		<!-- 태그 -->
@@ -113,24 +107,9 @@
 			</a>
 		</div>
 
-		<!-- 포스트 멤버 -->
-		<div class="list-group">
-			<?php
-				$MEMBERS = getArrayString($R['member']);
-				foreach($MEMBERS['data'] as $_val):
-				$_M = getDbData($table['s_mbrdata'],'memberuid='.$_val,'*');
-			?>
-			<?php if ($_M['memberuid']): ?>
-			<?php if($_M['memberuid']==$R['mbruid']) continue; ?>
-			<a href="<?php echo getProfileLink($_val) ?>" class="list-group-item list-group-item-action media">
-				<img class="rounded-circle mr-3" src="<?php echo getAvatarSrc($_val,'50') ?>" width="50" height="50" alt="<?php echo $_M['name'] ?>">
-		    <div class="media-body">
-		      <h5 class="mt-0 mb-1"><?php echo $_M[$_HS['nametype']] ?></h5>
-		      <small><?php echo $_M['bio'] ?>
-		    </div>
-			</a>
-			<?php endif; ?>
-			<?php endforeach?>
+		<!-- 링크 공유 -->
+		<div class="my-4 d-print-none text-center">
+			<?php include $g['dir_module_skin'].'_linkshare.php'?>
 		</div>
 
 		<footer class="d-flex justify-content-between align-items-center my-5 d-print-none">
@@ -162,6 +141,12 @@
 			 </div>
 
 		</footer>
+
+		<?php if (!$R['dis_comment']): ?>
+		<aside class="border-top mt-4 pt-4">
+			<?php include $g['dir_module_skin'].'_comment.php'?>
+		</aside>
+		<?php endif; ?>
 
 
 	</div><!-- /.col -->
