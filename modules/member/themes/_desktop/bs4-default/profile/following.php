@@ -9,8 +9,12 @@ if ($where && $keyword) $mbrque .= getSearchSql($where,$keyword,$ikeyword,'or');
 $RCD = getDbArray($table['s_friend'],$mbrque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_friend'],$mbrque);
 $TPG = getTotalPage($NUM,$recnum);
-?>
 
+$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
+$g['page_list']	= $g['page_reset'].getLinkFilter2('',array());
+$g['pagelink']	= $g['page_list'];
+$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
+?>
 
 <div class="page-wrapper row">
 	<div class="col-3 page-nav">
@@ -93,12 +97,7 @@ $TPG = getTotalPage($NUM,$recnum);
 		<nav aria-label="Page navigation" class="mt-4">
 			<?php if ($NUM > $recnum): ?>
 			<ul class="pagination justify-content-center">
-				<?php
-					$para_str1 = $_HS['rewrite']?'/':'&page=';
-					$para_str2 = $_HS['rewrite']?'?':'&';
-					$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
-					echo getPageLink(10,$p,$TPG,$_N)
-				 ?>
+				<?php echo getPageLink(10,$p,$TPG,$_N)?>
 			</ul>
 			<?php endif; ?>
 		</nav>
