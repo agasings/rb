@@ -49,7 +49,7 @@ $TPG = getTotalPage($NUM,$recnum);
 			<option value="+">+</option>
 			<option value="-">-</option>
 			</select>
-			<input type="text" name="price" size="5" class="input" /><?php echo $type=='point'?'P':'원'?> | 지급사유 : 
+			<input type="text" name="price" size="5" class="input" /><?php echo $type=='point'?'P':'원'?> | 지급사유 :
 			<input type="text" name="comment" size="35" class="input" />
 			<input type="submit" class="btngray" value="지급(차감)" />
 			</form>
@@ -76,14 +76,14 @@ $TPG = getTotalPage($NUM,$recnum);
 	<input type="hidden" name="a" value="" />
 
 	<table summary="포인트 리스트입니다.">
-	<caption>포인트</caption> 
-	<colgroup> 
-	<col width="30"> 
-	<col width="50"> 
-	<col width="80"> 
-	<col> 
-	<col width="90"> 
-	</colgroup> 
+	<caption>포인트</caption>
+	<colgroup>
+	<col width="30">
+	<col width="50">
+	<col width="80">
+	<col>
+	<col width="90">
+	</colgroup>
 	<thead>
 	<tr>
 	<th scope="col" class="side1"><img src="<?php echo $g['img_core']?>/_public/ico_check_01.gif" class="hand" alt="" onclick="chkFlag('members[]');" /></th>
@@ -94,7 +94,7 @@ $TPG = getTotalPage($NUM,$recnum);
 		<option value="">-----</option>
 		<option value="1"<?php if($price=='1'):?> selected="selected"<?php endif?>>획득</option>
 		<option value="2"<?php if($price=='2'):?> selected="selected"<?php endif?>>사용</option>
-		</select>	
+		</select>
 	</th>
 	<th scope="col">내역</th>
 	<th scope="col" class="side2">날짜</th>
@@ -112,8 +112,8 @@ $TPG = getTotalPage($NUM,$recnum);
 		<?php if(getNew($R['d_regis'],24)):?><span class="new">new</span><?php endif?>
 	</td>
 	<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-	</tr> 
-	<?php endwhile?> 
+	</tr>
+	<?php endwhile?>
 
 	<?php if(!$NUM):?>
 	<tr>
@@ -122,15 +122,15 @@ $TPG = getTotalPage($NUM,$recnum);
 	<td class="cat">-</td>
 	<td class="sbj1">내역이 없습니다.</td>
 	<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
-	</tr> 
+	</tr>
 	<?php endif?>
 
 	</tbody>
 	</table>
-	
+
 
 	<div class="pagebox01">
-	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'<?php echo $g['img_core']?>/page/default');</script>
+	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 	</div>
 
 	<input type="text" name="category" id="iCategory" value="" class="input none" />
@@ -139,7 +139,7 @@ $TPG = getTotalPage($NUM,$recnum);
 	<input type="button" value="삭제" class="btnblue" onclick="actCheck('point_delete');" />
 
 	</form>
-	
+
 
 </div>
 
@@ -180,7 +180,7 @@ function actCheck(act)
 	{
 		if(l[i].checked == true)
 		{
-			j++;	
+			j++;
 		}
 	}
 	if (!j)
@@ -188,7 +188,7 @@ function actCheck(act)
 		alert('선택된 항목이 없습니다.      ');
 		return false;
 	}
-	
+
 	if(confirm('정말로 실행하시겠습니까?    '))
 	{
 		f.a.value = act;

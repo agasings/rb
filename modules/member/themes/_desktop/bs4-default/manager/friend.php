@@ -63,14 +63,14 @@ $_NUM['friend'] = getDbRows($table['s_friend'],'my_mbruid='.$M['memberuid'].' an
 
 
 	<table summary="친구 리스트입니다.">
-	<caption>친구</caption> 
-	<colgroup> 
-	<col width="50"> 
-	<col> 
-	<col width="60"> 
-	<col width="100"> 
-	<col width="90"> 
-	</colgroup> 
+	<caption>친구</caption>
+	<colgroup>
+	<col width="50">
+	<col>
+	<col width="60">
+	<col width="100">
+	<col width="90">
+	</colgroup>
 	<thead>
 	<tr>
 	<th scope="col" class="side1">번호</th>
@@ -94,8 +94,8 @@ $_NUM['friend'] = getDbRows($table['s_friend'],'my_mbruid='.$M['memberuid'].' an
 	<td class="cat"><?php echo $R['rel']?'맞팔':($type=='follower'?'팔로워':'팔로잉')?></td>
 	<td class="cat"><?php echo $R['category']&&$type!='follower'?$R['category']:'-'?></td>
 	<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-	</tr> 
-	<?php endwhile?> 
+	</tr>
+	<?php endwhile?>
 
 	<?php if(!$NUM):?>
 	<tr>
@@ -112,17 +112,17 @@ $_NUM['friend'] = getDbRows($table['s_friend'],'my_mbruid='.$M['memberuid'].' an
 	<td>-</td>
 	<td>-</td>
 	<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
-	</tr> 
+	</tr>
 	<?php endif?>
 
 	</tbody>
 	</table>
-	
+
 
 	<div class="pagebox01">
-	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'<?php echo $g['img_core']?>/page/default');</script>
+	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 	</div>
-	
+
 
 </div>
 

@@ -54,15 +54,15 @@ $TPG = getTotalPage($NUM,$recnum);
 	<input type="hidden" name="a" value="" />
 
 	<table summary="쪽지 리스트입니다.">
-	<caption>쪽지</caption> 
-	<colgroup> 
-	<col width="30"> 
-	<col width="50"> 
-	<col width="80"> 
-	<col width="20"> 
-	<col> 
-	<col width="90"> 
-	</colgroup> 
+	<caption>쪽지</caption>
+	<colgroup>
+	<col width="30">
+	<col width="50">
+	<col width="80">
+	<col width="20">
+	<col>
+	<col width="90">
+	</colgroup>
 	<thead>
 	<tr>
 	<th scope="col" class="side1"><img src="<?php echo $g['img_core']?>/_public/ico_check_01.gif" class="hand" alt="" onclick="chkFlag('members[]');" /></th>
@@ -88,8 +88,8 @@ $TPG = getTotalPage($NUM,$recnum);
 		<?php if(getNew($R['d_regis'],24)):?><span class="new">new</span><?php endif?>
 	</td>
 	<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-	</tr> 
-	<?php endwhile?> 
+	</tr>
+	<?php endwhile?>
 
 	<?php if(!$NUM):?>
 	<tr>
@@ -99,17 +99,17 @@ $TPG = getTotalPage($NUM,$recnum);
 	<td><img src="<?php echo $g['img_core']?>/_public/ico_paper.gif" alt="" /></td>
 	<td class="sbj1">쪽지가 없습니다.</td>
 	<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
-	</tr> 
+	</tr>
 	<?php endif?>
 
 	</tbody>
 	</table>
-	
+
 
 	<div class="pagebox01">
-	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'<?php echo $g['img_core']?>/page/default');</script>
+	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 	</div>
-	
+
 	<?php if($inbox < 3):?>
 	<input type="button" value="삭제" class="btngray" onclick="actCheck('paper_delete');" />
 	<?php if($inbox!=2):?>
@@ -118,7 +118,7 @@ $TPG = getTotalPage($NUM,$recnum);
 	<?php endif?>
 
 	</form>
-	
+
 
 </div>
 
@@ -137,14 +137,14 @@ function qTilePop(obj)
 	obj.title = '';
 	skn.innerHTML = content;
 }
-function get_mouse(e) 
+function get_mouse(e)
 {
     var x = myagent != 'ie' ? e.pageX : event.x + (document.documentElement.clientLeft || document.body.clientLeft);
     var y = myagent != 'ie' ? e.pageY : event.y + (document.documentElement.clientTop || document.body.clientTop);
     skn.style.left = (x - 0) + 'px';
     skn.style.top  = (y + 20) + 'px';
 }
-function qTilePopKill(obj) 
+function qTilePopKill(obj)
 {
 	obj.title = itt;
 	itt = '';
@@ -170,7 +170,7 @@ function actCheck(act)
 	{
 		if(l[i].checked == true)
 		{
-			j++;	
+			j++;
 		}
 	}
 	if (!j)
@@ -178,7 +178,7 @@ function actCheck(act)
 		alert('선택된 항목이 없습니다.      ');
 		return false;
 	}
-	
+
 	if(confirm('정말로 실행하시겠습니까?    '))
 	{
 		f.a.value = act;

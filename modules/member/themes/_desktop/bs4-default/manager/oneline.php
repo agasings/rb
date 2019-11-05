@@ -27,7 +27,7 @@ $TPG = getTotalPage($NUM,$recnum);
 		<div class="article">
 			<?php echo number_format($NUM)?>개(<?php echo $p?>/<?php echo $TPG?>페이지)
 		</div>
-		
+
 		<div class="category">
 			<select name="account" class="account" onchange="goHref('<?php echo str_replace('&amp;','&',$g['url_reset'])?>&page=<?php echo $page?>&account='+this.value);">
 			<option value="">&nbsp;+ 전체사이트</option>
@@ -51,13 +51,13 @@ $TPG = getTotalPage($NUM,$recnum);
 
 
 	<table summary="한줄의견리스트 입니다.">
-	<caption>한줄의견리스트</caption> 
-	<colgroup> 
-	<col width="30"> 
-	<col width="50"> 
-	<col> 
-	<col width="90"> 
-	</colgroup> 
+	<caption>한줄의견리스트</caption>
+	<colgroup>
+	<col width="30">
+	<col width="50">
+	<col>
+	<col width="90">
+	</colgroup>
 	<thead>
 	<tr>
 	<th scope="col" class="side1"><img src="<?php echo $g['img_core']?>/_public/ico_check_01.gif" class="hand" alt="" onclick="chkFlag('oneline_members[]');" /></th>
@@ -80,8 +80,8 @@ $TPG = getTotalPage($NUM,$recnum);
 		<?php if(getNew($R['d_regis'],24)):?><span class="new">new</span><?php endif?>
 	</td>
 	<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-	</tr> 
-	<?php endwhile?> 
+	</tr>
+	<?php endwhile?>
 
 	<?php if(!$NUM):?>
 	<tr>
@@ -89,7 +89,7 @@ $TPG = getTotalPage($NUM,$recnum);
 	<td>1</td>
 	<td class="sbj1">한줄의견이 없습니다.</td>
 	<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
-	</tr> 
+	</tr>
 	<?php endif?>
 
 	</tbody>
@@ -97,7 +97,7 @@ $TPG = getTotalPage($NUM,$recnum);
 
 
 	<div class="pagebox01">
-	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'<?php echo $g['img_core']?>/page/default');</script>
+	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 	</div>
 
 
@@ -125,7 +125,7 @@ $TPG = getTotalPage($NUM,$recnum);
 		<select name="where">
 		<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>내용</option>
 		</select>
-		
+
 		<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="input" />
 		<input type="submit" value=" 검색 " class="btngray" />
 		</form>
@@ -148,7 +148,7 @@ function actCheck(act)
 	{
 		if(l[i].checked == true)
 		{
-			j++;	
+			j++;
 		}
 	}
 	if (!j)
@@ -156,7 +156,7 @@ function actCheck(act)
 		alert('선택된 한줄의견이 없습니다.      ');
 		return false;
 	}
-	
+
 	if(confirm('정말로 삭제하시겠습니까?    '))
 	{
 		f.a.value = act;

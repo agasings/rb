@@ -1,7 +1,7 @@
 <?php
 $sort	= $sort ? $sort : 'uid';
 $orderby= $orderby ? $orderby : 'desc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 20;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 
 $sqlque = 'mbruid='.$my['uid'];
 if ($category) $sqlque .= " and category='".$category."'";
@@ -12,6 +12,10 @@ if ($where && $keyword)
 $RCD = getDbArray($table['s_saved'],$sqlque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_saved'],$sqlque);
 $TPG = getTotalPage($NUM,$recnum);
+
+$g['page_reset']	= RW('mod=dashboard&page='.$page);
+$g['page_list']	= $g['page_reset'].getLinkFilter('',array($category?'category':''));
+$g['pagelink']	= $g['page_list'];
 
 ?>
 

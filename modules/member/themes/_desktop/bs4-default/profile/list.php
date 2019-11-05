@@ -3,6 +3,7 @@ $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 12;
 $listque = 'mbruid='.$_MP['uid'].' and site='.$s;
+$where = 'name|tag';
 
 if ($sort != 'gid') $orderby= 'desc';
 
@@ -27,10 +28,14 @@ $lack_card_num = $total_card_num;
 
 switch ($sort) {
 	case 'd_regis'     : $sort_txt='생성순';break;
-	case 'd_last'   : $sort_txt='수정순';break;
+	case 'd_last'   : $sort_txt='최신순';break;
 	default        : $sort_txt='기본';break;
 }
 
+$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
+$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['page_list'];
+$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 ?>
 
 <div class="page-wrapper row">
@@ -49,23 +54,25 @@ switch ($sort) {
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 				</div>
 
-				<form name="listsearchf" action="<?php echo $_HS['rewrite']?'./'.$page:$g['s'].'/' ?>" method="get" class="form-inline">
+				<form name="listsearchf" action="<?php echo $g['page_reset'] ?>" method="get" class="form-inline">
 
-					<input type="hidden" name="r" value="<?php echo $r?>" />
+					<?php if ($_HS['rewrite']): ?>
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<?php else: ?>
+					<input type="hidden" name="r" value="<?php echo $r?>">
 					<?php if($_mod):?>
-					<input type="hidden" name="mod" value="<?php echo $_mod?>" />
+					<input type="hidden" name="mod" value="<?php echo $_mod?>">
 					<?php else:?>
-					<input type="hidden" name="m" value="<?php echo $m?>" />
-					<input type="hidden" name="front" value="<?php echo $front?>" />
+					<input type="hidden" name="m" value="<?php echo $m?>">
+					<input type="hidden" name="front" value="<?php echo $front?>">
 					<?php endif?>
-					<input type="hidden" name="page" value="<?php echo $page?>" />
-					<input type="hidden" name="sort" value="<?php echo $sort?>" />
-					<input type="hidden" name="orderby" value="<?php echo $orderby?>" />
-					<input type="hidden" name="recnum" value="<?php echo $recnum?>" />
+					<input type="hidden" name="page" value="<?php echo $page?>">
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<input type="hidden" name="orderby" value="<?php echo $orderby?>">
+					<input type="hidden" name="recnum" value="<?php echo $recnum?>">
 					<input type="hidden" name="type" value="<?php echo $type?>" />
-					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
-					<input type="hidden" name="skin" value="<?php echo $skin?>" />
 					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+					<?php endif; ?>
 
 					<div class="dropdown" data-role="sort">
 						<a class="btn btn-white btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -89,7 +96,7 @@ switch ($sort) {
 					<button class="btn btn-white btn-sm ml-1" type="submit">검색</button>
 
 					<?php if ($keyword): ?>
-					<a class="btn btn-light btn-sm ml-1" href="<?php echo getProfileLink($_MP['uid']).$para_str.$page ?>">리셋</a>
+					<a class="btn btn-light btn-sm ml-1" href="<?php echo $g['page_reset'] ?>">리셋</a>
 					<?php endif; ?>
 
 					<?php if ($_IS_PROFILEOWN): ?>
@@ -111,7 +118,11 @@ switch ($sort) {
 						</span>
 					</a>
 					<div class="card-body px-0 pt-2 pb-4">
-			      <h5 class="card-title h6 mb-1"><a class="muted-link" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>"><?php echo $R['name']?></a></h5>
+			      <h5 class="card-title h6 mb-1">
+							<a class="text-decoration-none text-reset" href="<?php echo getListLink($R,1)?>">
+								<?php echo $R['name']?>
+							</a>
+						</h5>
 			      <p class="card-text text-muted f13">
 							<span class="text-muted">업데이트: <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>"></time></span>
 							<?php if(getNew($R['d_last'],12)):?><small class="text-danger">new</small><?php endif?>
@@ -148,12 +159,7 @@ switch ($sort) {
 
 				<?php if ($NUM > $recnum): ?>
 		    <ul class="pagination mb-0">
-					<?php
-						$para_str1 = $_HS['rewrite']?'/':'&page=';
-						$para_str2 = $_HS['rewrite']?'?':'&';
-						$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
-						echo getPageLink(10,$p,$TPG,$_N)
-					 ?>
+					<?php echo getPageLink(10,$p,$TPG,$_N)?>
 		    </ul>
 				<?php endif; ?>
 

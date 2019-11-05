@@ -6,7 +6,7 @@ include_once $svfile;
 $type = $type ? $type : 'follower';
 $sort	= 'uid';
 $orderby= 'desc';
-$recnum	= 15;
+$recnum	= 30;
 
 $postque	= 'my_mbruid='.$my['uid'];
 
@@ -25,6 +25,10 @@ if ($where && $keyword) $postque .= getSearchSql($where,$keyword,$ikeyword,'or')
 $RCD = getDbArray($table['s_friend'],$postque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_friend'],$postque);
 $TPG = getTotalPage($NUM,$recnum);
+
+$g['page_reset']	= RW('mod=dashboard&page='.$page);
+$g['page_list']	= $g['page_reset'].getLinkFilter('',array($type?'type':''));
+$g['pagelink']	= $g['page_list'];
 
 ?>
 

@@ -16,11 +16,11 @@ while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'uid='.$
 $NUM = getDbRows($table['postlist_index'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m=post',array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['bbs']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['post_reset'];
-$g['post_orign'] = $g['post_reset'];
-$g['post_action']= $g['post_list'].'&amp;a=';
+$g['post_reset']	= RW('mod=dashboard&page='.$page.'&id='.$id);
+$g['post_base']	= $g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m=post';
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array('recnum'));
+$g['pagelink']	= $g['post_list'];
+$g['post_action']= $g['post_base'].'&amp;a=';
 $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 ?>
 
@@ -38,7 +38,6 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 	<div class="row">
 
 		<div class="col-8">
-
 
 			<div class="py-4">
 
@@ -148,18 +147,21 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 						</a>
 
 						<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti">
+							<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $g['post_reset'] ?>">
 								<?php echo $recnum ?>개
 							</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+							<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $recnum==20?' active':'' ?>" href="<?php echo $g['post_reset'] ?>&recnum=20">
 								20개
 							</a>
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+							<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $recnum==30?' active':'' ?>" href="<?php echo $g['post_reset'] ?>&recnum=30">
 								30개
 							</a>
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="/dashboard?page=noti&amp;fromsys=Y">
+							<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $recnum==40?' active':'' ?>" href="<?php echo $g['post_reset'] ?>&recnum=40">
 								40개
+							</a>
+							<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $recnum==50?' active':'' ?>" href="<?php echo $g['post_reset'] ?>&recnum=50">
+								50개
 							</a>
 
 						</div>
@@ -192,7 +194,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 							<div class="media-body">
 								<h6 class="my-1">
-									<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" target="_blank"><?php echo stripslashes($R['subject'])?></a>
+									<a href="<?php echo getPostLink($R,1) ?>" class="text-reset text-decoration-none" target="_blank"><?php echo stripslashes($R['subject'])?></a>
 								</h6>
 								<div class="mb-1">
 									<span class="badge badge-secondary"><?php echo $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>

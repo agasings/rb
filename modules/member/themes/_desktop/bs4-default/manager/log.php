@@ -78,14 +78,14 @@ $TPG = getTotalPage($NUM,$recnum);
 	</div>
 
 	<table summary="접속기록 리스트입니다.">
-	<caption>접속기록</caption> 
-	<colgroup> 
-	<col width="70"> 
-	<col width="150"> 
-	<col> 
-	<col width="120"> 
-	<col width="110"> 
-	</colgroup> 
+	<caption>접속기록</caption>
+	<colgroup>
+	<col width="70">
+	<col width="150">
+	<col>
+	<col width="120">
+	<col width="110">
+	</colgroup>
 	<thead>
 	<tr>
 	<th scope="col" class="side1">번호</th>
@@ -106,26 +106,26 @@ $TPG = getTotalPage($NUM,$recnum);
 	<td class="agent">
 		<?php if($_browse=='Mobile'):?>
 		<img src="<?php echo $g['img_core']?>/_public/ico_mobile.gif" class="imgpos" alt="모바일" title="모바일(<?php echo isMobileConnect($R['agent'])?>)접속" />
-		<?php endif?>		
+		<?php endif?>
 		<?php echo strtoupper($_browse)?>
 	</td>
 	<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-	</tr> 
-	<?php endwhile?> 
+	</tr>
+	<?php endwhile?>
 
 	<?php if(!$NUM):?>
 	<tr>
 	<td>1</td>
 	<td class="sbj1" colspan="5">접속기록이 없습니다.</td>
-	</tr> 
+	</tr>
 	<?php endif?>
 
 	</tbody>
 	</table>
-	
+
 
 	<div class="pagebox01">
-	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'<?php echo $g['img_core']?>/page/default');</script>
+	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 	</div>
 
 	<div class="searchform">
@@ -144,12 +144,12 @@ $TPG = getTotalPage($NUM,$recnum);
 		<option value="ip"<?php if($where=='ip'):?> selected="selected"<?php endif?>>아이피</option>
 		<option value="referer"<?php if($where=='referer'):?> selected="selected"<?php endif?>>접속경로</option>
 		</select>
-		
+
 		<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="input" />
 		<input type="submit" value="검색" class="btngray" />
 		<input type="button" value="리셋" class="btngray" onclick="goHref('<?php echo $g['url_page']?>');" />
 	</div>
-	
+
 	</form>
 
 
@@ -170,7 +170,7 @@ function dropDate(date1,date2)
 	f.year1.value = date1.substring(0,4);
 	f.month1.value = date1.substring(4,6);
 	f.day1.value = date1.substring(6,8);
-	
+
 	f.year2.value = date2.substring(0,4);
 	f.month2.value = date2.substring(4,6);
 	f.day2.value = date2.substring(6,8);

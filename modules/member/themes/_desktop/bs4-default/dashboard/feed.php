@@ -5,8 +5,14 @@ include_once $svfile;
 
 $sort	= $sort ? $sort : 'uid';
 $orderby= $orderby ? $orderby : 'desc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 1;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 16;
 $postque = 'site='.$s;
+
+$_line =4; //한 열에 출력할 카드 갯수
+$totalCardRow=ceil($recnum/$_line); // row 갯수
+$total_card_num = $totalCardRow*$_line;// 총 출력되야 할 card 갯수(빈카드 포함)
+$print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
+$lack_card_num = $total_card_num;
 
 $postque .= ' and (display=2 and hidden=0) or display>3';
 
@@ -19,6 +25,11 @@ $TPG = getTotalPage($NUM,$recnum);
 
 $vtype	= $vtype ? $vtype : $_SESSION['feed_vtype'];
 $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
+
+$g['page_reset']	= RW('mod=dashboard&page='.$page);
+$g['page_list']	= $g['page_reset'].getLinkFilter('',array($vtype?'vtype':''));
+$g['pagelink']	= $g['page_list'];
+
 ?>
 
 <div class="container">
@@ -102,14 +113,6 @@ $_SESSION['feed_vtype'] = $vtype ? $vtype : 'card';
 		<?php endforeach?>
 	</ul>
 	<?php else: ?>
-
-	<?php
-		$_line =4; //한 열에 출력할 카드 갯수
-		$totalCardRow=ceil($recnum/$_line); // row 갯수
-		$total_card_num = $totalCardRow*$_line;// 총 출력되야 할 card 갯수(빈카드 포함)
-		$print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
-		$lack_card_num = $total_card_num;
-	?>
 
 	<div class="card-deck" data-role="post-list">
 

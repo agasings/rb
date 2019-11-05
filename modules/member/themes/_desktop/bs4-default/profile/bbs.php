@@ -13,13 +13,10 @@ $RCD = getDbArray($table['bbsdata'],$bbsque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['bbsdata'],$bbsque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$m = 'bbs';
-if ($c) $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-else $g['bbs_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['bbs_list']	= $g['bbs_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['bbs']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['bbs_list'];
-$g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
-
+$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
+$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['page_list'];
+$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 ?>
 
 <div class="page-wrapper row">
@@ -113,41 +110,43 @@ $g['bbs_view']	= $g['bbs_list'].'&amp;uid=';
 			</table>
 
 			<footer class="d-flex justify-content-between align-items-center my-4">
-				<?php if ($NUM > $recnum): ?>
-		    <ul class="pagination mb-0">
-					<?php
-						$para_str1 = $_HS['rewrite']?'/':'&page=';
-						$para_str2 = $_HS['rewrite']?'?':'&';
-						$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
-						echo getPageLink(10,$p,$TPG,$_N)
-					 ?>
-		    </ul>
-				<?php endif; ?>
+				<div class="">
+					<?php if ($NUM > $recnum): ?>
+					<ul class="pagination mb-0">
+						<?php echo getPageLink(10,$p,$TPG,$_N)?>
+					</ul>
+					<?php endif; ?>
+				</div>
 
-				<form name="bbssearchf" action="<?php echo $g['s']?>/" class="form-inline">
-					<input type="hidden" name="r" value="<?php echo $r?>" />
+				<form name="bbssearchf" action="<?php echo$g['page_reset']?>" class="form-inline">
+					<?php if ($_HS['rewrite']): ?>
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<?php else: ?>
+					<input type="hidden" name="r" value="<?php echo $r?>">
 					<?php if($_mod):?>
-					<input type="hidden" name="mod" value="<?php echo $_mod?>" />
+					<input type="hidden" name="mod" value="<?php echo $_mod?>">
 					<?php else:?>
-					<input type="hidden" name="m" value="<?php echo $m?>" />
-					<input type="hidden" name="front" value="<?php echo $front?>" />
+					<input type="hidden" name="m" value="<?php echo $m?>">
+					<input type="hidden" name="front" value="<?php echo $front?>">
 					<?php endif?>
-					<input type="hidden" name="page" value="<?php echo $page?>" />
-					<input type="hidden" name="sort" value="<?php echo $sort?>" />
-					<input type="hidden" name="orderby" value="<?php echo $orderby?>" />
-					<input type="hidden" name="recnum" value="<?php echo $recnum?>" />
+					<input type="hidden" name="page" value="<?php echo $page?>">
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<input type="hidden" name="orderby" value="<?php echo $orderby?>">
+					<input type="hidden" name="recnum" value="<?php echo $recnum?>">
 					<input type="hidden" name="type" value="<?php echo $type?>" />
-					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
-					<input type="hidden" name="skin" value="<?php echo $skin?>" />
 					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+					<?php endif; ?>
 
-					<select name="where" class="form-control">
+					<select name="where" class="form-control custom-select ml-1">
 						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
 					</select>
 
 					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control ml-2">
 					<button class="btn btn-light ml-2" type="submit" name="button">검색</button>
+					<?php if ($keyword): ?>
+					<a class="btn btn-light ml-1" href="<?php echo $g['page_reset']?>">리셋</a>
+					<?php endif; ?>
 				</form>
 
 		  </footer>

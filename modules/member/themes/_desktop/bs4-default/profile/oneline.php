@@ -10,8 +10,10 @@ function getOnelineLink($arr)
 }
 $sort	= $sort ? $sort : 'uid';
 $orderby= $orderby ? $orderby : 'desc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 20;
+$recnum	= $recnum && $recnum < 200 ? $recnum : 15;
 $bbsque = 'mbruid='.$_MP['uid'].' and site='.$s;
+$where = 'content';
+
 if ($where && $keyword)
 {
 	if (strstr('[name][nic][id][ip]',$where)) $bbsque .= " and ".$where."='".$keyword."'";
@@ -21,6 +23,11 @@ if ($where && $keyword)
 $RCD = getDbArray($table['s_oneline'],$bbsque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_oneline'],$bbsque);
 $TPG = getTotalPage($NUM,$recnum);
+
+$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
+$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($keyword?'keyword':''));
+$g['pagelink']	= $g['page_list'];
+$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 
 ?>
 
@@ -45,7 +52,7 @@ $TPG = getTotalPage($NUM,$recnum);
 
 			<table class="table text-center">
 				<colgroup>
-					<col width="50">
+					<col width="80">
 					<col>
 					<col width="120">
 				</colgroup>
@@ -59,17 +66,10 @@ $TPG = getTotalPage($NUM,$recnum);
 			<tbody>
 
 			<?php while($R=db_fetch_array($RCD)):?>
-			<?php $R['mobile']=isMobileConnect($R['agent'])?>
 			<tr>
 				<td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
 				<td class="text-left">
-					<?php if($R['mobile']):?><i class="fa fa-mobile fa-lg"></i><?php endif?>
-					<a href="<?php echo getOnelineLink($R)?>" target="_blank" class="muted-link"><?php echo $R['content']?></a>
-					<?php if(strstr($R['content'],'.jpg')):?>
-					<span class="badge badge-light" data-toggle="tooltip" title="사진">
-						<i class="fa fa-camera-retro fa-lg"></i>
-					</span>
-					<?php endif?>
+					<a href="<?php echo getOnelineLink($R)?>" target="_blank" class="muted-link"><?php echo strip_tags($R['content'])?></a>
           <?php if($R['hidden']):?><span class="badge badge-light" data-toggle="tooltip" title="비밀글"><i class="fa fa-lock fa-lg"></i></span><?php endif?>
 					<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 				</td>
@@ -92,41 +92,38 @@ $TPG = getTotalPage($NUM,$recnum);
 
 
 			<footer class="d-flex justify-content-between align-items-center my-4">
-				<?php if ($NUM > $recnum): ?>
-		    <ul class="pagination mb-0">
-					<?php
-						$para_str1 = $_HS['rewrite']?'/':'&page=';
-						$para_str2 = $_HS['rewrite']?'?':'&';
-						$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
-						echo getPageLink(10,$p,$TPG,$_N)
-					 ?>
-		    </ul>
-				<?php endif; ?>
+				<div class="">
+					<?php if ($NUM > $recnum): ?>
+					<ul class="pagination mb-0">
+						<?php echo getPageLink(5,$p,$TPG,$_N)?>
+					</ul>
+					<?php endif; ?>
+				</div>
 
-				<form name="bbssearchf" action="<?php echo $g['s']?>/" class="form-inline">
-					<input type="hidden" name="r" value="<?php echo $r?>" />
+				<form name="bbssearchf" action="<?php echo$g['page_reset']?>" class="form-inline">
+					<?php if ($_HS['rewrite']): ?>
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<?php else: ?>
+					<input type="hidden" name="r" value="<?php echo $r?>">
 					<?php if($_mod):?>
-					<input type="hidden" name="mod" value="<?php echo $_mod?>" />
+					<input type="hidden" name="mod" value="<?php echo $_mod?>">
 					<?php else:?>
-					<input type="hidden" name="m" value="<?php echo $m?>" />
-					<input type="hidden" name="front" value="<?php echo $front?>" />
+					<input type="hidden" name="m" value="<?php echo $m?>">
+					<input type="hidden" name="front" value="<?php echo $front?>">
 					<?php endif?>
-					<input type="hidden" name="page" value="<?php echo $page?>" />
-					<input type="hidden" name="sort" value="<?php echo $sort?>" />
-					<input type="hidden" name="orderby" value="<?php echo $orderby?>" />
-					<input type="hidden" name="recnum" value="<?php echo $recnum?>" />
+					<input type="hidden" name="page" value="<?php echo $page?>">
+					<input type="hidden" name="sort" value="<?php echo $sort?>">
+					<input type="hidden" name="orderby" value="<?php echo $orderby?>">
+					<input type="hidden" name="recnum" value="<?php echo $recnum?>">
 					<input type="hidden" name="type" value="<?php echo $type?>" />
-					<input type="hidden" name="iframe" value="<?php echo $iframe?>" />
-					<input type="hidden" name="skin" value="<?php echo $skin?>" />
-
-					<select name="where" class="form-control">
-						<option value="subject"<?php if($where=='subject'):?> selected="selected"<?php endif?>>제목</option>
-						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
-					</select>
+					<input type="hidden" name="mbrid" value="<?php echo $_MP['id']?>">
+					<?php endif; ?>
 
 					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control ml-2">
-					<button class="btn btn-light ml-2" type="submit" name="button">검색</button>
-
+					<button class="btn btn-light ml-2" type="submit">검색</button>
+					<?php if ($keyword): ?>
+					<a class="btn btn-light ml-1" href="<?php echo $g['page_reset']?>">리셋</a>
+					<?php endif; ?>
 				</form>
 
 		  </footer>

@@ -159,7 +159,7 @@ function filterNum(str)
 	return str.replace(/^\$|,/g, "");
 }
 //페이징처리
-function getPageLink(lnum,p,tpage,img)
+function getPageLink(lnum,p,tpage)
 {
 	var wp = '';
 	var g_q  = p > 1 ? '<li class="page-item"><a class="page-link" href="'+getPageGo(1,wp)+'" data-toggle="tooltip" title="First Page"><i class="fa fa-angle-double-left"></i></a></li>' : '<li class="page-item disabled"><a class="page-link"  href="#." data-toggle="tooltip" title="First page"><i class="fa fa-angle-double-left"></i></a></li>';

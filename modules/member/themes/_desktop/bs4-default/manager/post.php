@@ -28,7 +28,7 @@ $TPG = getTotalPage($NUM,$recnum);
 			<?php echo number_format($NUM)?>개(<?php echo $p?>/<?php echo $TPG?>페이지)
 			<a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=bbs&amp;mbruid=<?php echo $M['memberuid']?>&amp;mod=rss" target="_blank"><img src="<?php echo $g['img_core']?>/_public/ico_rss.gif" alt="rss" /></a>
 		</div>
-		
+
 		<div class="category">
 			<select name="account" class="account" onchange="goHref('<?php echo str_replace('&amp;','&',$g['url_reset'])?>&page=<?php echo $page?>&bid=<?php echo $bid?>&account='+this.value);">
 			<option value="">&nbsp;+ 전체사이트</option>
@@ -68,15 +68,15 @@ $TPG = getTotalPage($NUM,$recnum);
 
 
 	<table summary="<?php echo $B['name']?$B['name']:'전체'?> 게시물리스트 입니다.">
-	<caption><?php echo $B['name']?$B['name']:'전체게시물'?></caption> 
-	<colgroup> 
-	<col width="30"> 
-	<col width="50"> 
+	<caption><?php echo $B['name']?$B['name']:'전체게시물'?></caption>
+	<colgroup>
+	<col width="30">
+	<col width="50">
 	<col width="80">
-	<col> 
-	<col width="70"> 
-	<col width="90"> 
-	</colgroup> 
+	<col>
+	<col width="70">
+	<col width="90">
+	</colgroup>
 	<thead>
 	<tr>
 	<th scope="col" class="side1"><img src="<?php echo $g['img_core']?>/_public/ico_check_01.gif" class="hand" alt="" onclick="chkFlag('post_members[]');" /></th>
@@ -114,8 +114,8 @@ $TPG = getTotalPage($NUM,$recnum);
 	</td>
 	<td class="hit b"><?php echo $R['hit']?></td>
 	<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-	</tr> 
-	<?php endwhile?> 
+	</tr>
+	<?php endwhile?>
 
 	<?php if(!$NUM):?>
 	<tr>
@@ -125,14 +125,14 @@ $TPG = getTotalPage($NUM,$recnum);
 	<td class="sbj1">게시물이 없습니다.</td>
 	<td class="hit b">-</td>
 	<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
-	</tr> 
+	</tr>
 	<?php endif?>
 
 	</tbody>
 	</table>
 
 	<div class="pagebox01">
-	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'<?php echo $g['img_core']?>/page/default');</script>
+	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 	</div>
 
 	<input type="button" value="선택/해제" class="btngray" onclick="chkFlag('post_members[]');" />
@@ -158,7 +158,7 @@ $TPG = getTotalPage($NUM,$recnum);
 		<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 		<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
 		</select>
-		
+
 		<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="input" />
 		<input type="submit" value=" 검색 " class="btngray" />
 		</form>
@@ -182,7 +182,7 @@ function actCheck(act)
 	{
 		if(l[i].checked == true)
 		{
-			j++;	
+			j++;
 		}
 	}
 	if (!j)

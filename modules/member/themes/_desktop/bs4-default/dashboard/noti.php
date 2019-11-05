@@ -12,14 +12,16 @@ $RCD = getDbArray($table['s_notice'],$sqlque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_notice'],$sqlque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$pageHome = RW('mod=dashboard&page=noti');;
-$pageLink = RW('mod=dashboard&page=noti');
+$g['page_reset']	= RW('mod=dashboard&page='.$page);
+$g['page_list']	= $g['page_reset'].getLinkFilter('',array($module?'module':''));
+$g['pagelink']	= $g['page_list'];
 
 //모든 알림 읽음처리
 getDbUpdate($table['s_notice'],"d_read='".$date['totime']."'",$sqlque);
 getDbUpdate($table['s_mbrdata'],'num_notice=0','memberuid='.$my['uid']);
 
 $MD = getDbData($table['s_module'],"id='".$module."'",'name');
+
 ?>
 
 <div class="container">
@@ -53,12 +55,12 @@ $MD = getDbData($table['s_module'],"id='".$module."'",'name');
 			</a>
 
 			<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $pageHome ?>">
+				<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $g['page_reset']?>">
 					전체
 					<small><?php echo number_format(getDbRows($table['s_notice'],'mbruid='.$my['uid']))?></small>
 				</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $pageHome ?>&fromsys=Y">
+				<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $g['page_reset'] ?>&fromsys=Y">
 					시스템
 					<small><?php echo number_format(getDbRows($table['s_notice'],'mbruid='.$my['uid'].' and  frommbr=0'))?></small>
 				</a>
@@ -66,7 +68,7 @@ $MD = getDbData($table['s_module'],"id='".$module."'",'name');
 				<?php $_MODULES=getDbArray($table['s_module'],'','*','gid','asc',0,1)?>
 			  <?php while($_MD=db_fetch_array($_MODULES)):?>
 			  <a class="dropdown-item <?php echo $module==$_MD['id']?' active ':'' ?><?php if(strstr($d['ntfc']['cut_modules'],'['.$_MD['id'].']')):?>d-none<?php else: ?>d-flex justify-content-between align-items-center<?php endif?>"
-			      href="<?php echo $pageHome ?>&module=<?php echo $_MD['id']?>"  id="module_members_<?php echo $_MD['id']?>">
+			      href="<?php echo $g['page_reset']?>&module=<?php echo $_MD['id']?>"  id="module_members_<?php echo $_MD['id']?>">
 			    <?php echo $_MD['name']?>
 			    <small class="ml-auto"><?php echo number_format(getDbRows($table['s_notice'],'mbruid='.$my['uid'].' and  frommodule="'.$_MD['id'].'"'))?></small>
 			  </a>
@@ -76,9 +78,6 @@ $MD = getDbData($table['s_module'],"id='".$module."'",'name');
 		</div>
 	</div><!-- /.form-inline -->
 </div><!-- /.flex -->
-
-
-
 
 
 	<form name="listForm" action="<?php echo $g['s']?>/" method="post">
@@ -197,7 +196,7 @@ $MD = getDbData($table['s_module'],"id='".$module."'",'name');
 
 		<?php if($NUM > $recnum):?>
 		<ul class="pagination mb-0">
-			<?php echo getPageLink(10,$p,$TPG,$pageLink)?>
+			<?php echo getPageLink(10,$p,$TPG,'')?>
 		</ul>
 		<?php endif?>
 

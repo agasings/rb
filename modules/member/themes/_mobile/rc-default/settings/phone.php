@@ -31,7 +31,7 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 <?php if ($TPG > 1): ?>
 <footer class="bar bar-standard bar-footer bar-light bg-white p-x-0">
 	<div class="">
-		<?php echo getPageLink_RC($d['theme']['pagenum'],$p,$TPG,'1')?>
+		<?php echo getPageLink($d['theme']['pagenum'],$p,$TPG,'')?>
 	</div>
 </footer>
 <?php endif; ?>

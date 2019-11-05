@@ -48,14 +48,14 @@ $TPG = getTotalPage($NUM,$recnum);
 	<input type="hidden" name="a" value="" />
 
 	<table summary="스크랩 리스트입니다.">
-	<caption>스크랩</caption> 
-	<colgroup> 
-	<col width="30"> 
-	<col width="50"> 
-	<col width="100"> 
-	<col> 
-	<col width="90"> 
-	</colgroup> 
+	<caption>스크랩</caption>
+	<colgroup>
+	<col width="30">
+	<col width="50">
+	<col width="100">
+	<col>
+	<col width="90">
+	</colgroup>
 	<thead>
 	<tr>
 	<th scope="col" class="side1"><img src="<?php echo $g['img_core']?>/_public/ico_check_01.gif" class="hand" alt="" onclick="chkFlag('members[]');" /></th>
@@ -77,8 +77,8 @@ $TPG = getTotalPage($NUM,$recnum);
 		<?php if(getNew($R['d_regis'],24)):?><span class="new">new</span><?php endif?>
 	</td>
 	<td><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></td>
-	</tr> 
-	<?php endwhile?> 
+	</tr>
+	<?php endwhile?>
 
 	<?php if(!$NUM):?>
 	<tr>
@@ -87,15 +87,15 @@ $TPG = getTotalPage($NUM,$recnum);
 	<td class="cat">알림</td>
 	<td class="sbj1">스크랩자료가 없습니다.</td>
 	<td><?php echo getDateFormat($date['totime'],'Y.m.d H:i')?></td>
-	</tr> 
+	</tr>
 	<?php endif?>
 
 	</tbody>
 	</table>
-	
+
 
 	<div class="pagebox01">
-	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'<?php echo $g['img_core']?>/page/default');</script>
+	<script type="text/javascript">getPageLink(10,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 	</div>
 
 	<input type="text" name="category" id="iCategory" value="" class="input none" />
@@ -103,7 +103,7 @@ $TPG = getTotalPage($NUM,$recnum);
 	<input type="button" value="삭제" class="btngray" onclick="actCheck('scrap_delete');" />
 
 	</form>
-	
+
 
 </div>
 
@@ -129,7 +129,7 @@ function actCheck(act)
 	{
 		if(l[i].checked == true)
 		{
-			j++;	
+			j++;
 		}
 	}
 	if (!j)
@@ -155,7 +155,7 @@ function actCheck(act)
 			return false;
 		}
 	}
-	
+
 	if(confirm('정말로 실행하시겠습니까?    '))
 	{
 		f.a.value = act;

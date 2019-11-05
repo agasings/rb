@@ -15,8 +15,9 @@ $RCD = getDbArray($table['s_'.$vtype],$sqlque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_'.$vtype],$sqlque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$PageLink = './point?';
-if ($type) $PageLink .= 'type='.$type.'&amp;';
+$g['page_reset']	= RW('mod=dashboard&page='.$page);
+$g['page_list']	= $g['page_reset'].getLinkFilter('',array($type?'type':''));
+$g['pagelink']	= $g['page_list'];
 
 ?>
 
@@ -36,11 +37,9 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 		<div class="form-inline ml-auto">
 
 			<label class="sr-only">상태</label>
-			<form  name="hideForm" action="<?php echo $g['s']?>/" method="get">
-				<input type="hidden" name="r" value="<?php echo $r?>">
-				<input type="hidden" name="m" value="<?php echo $m?>">
-				<input type="hidden" name="front" value="<?php echo $front?>">
+			<form name="hideForm" action="<?php echo $g['page_reset']?>" method="get">
 				<input type="hidden" name="page" value="<?php echo $page?>">
+
 				<select name="type" class="form-control custom-select" onchange="this.form.submit();">
 					<option value="">구분 : 전체</option>
 					<option value="1"<?php if($type=='1'):?> selected="selected"<?php endif?>>획득</option>
@@ -107,7 +106,7 @@ if ($type) $PageLink .= 'type='.$type.'&amp;';
 
 			<?php if ($NUM > $recnum): ?>
 			<ul class="pagination">
-				<?php echo getPageLink(10,$p,$TPG,$PageLink)?>
+				<?php echo getPageLink(10,$p,$TPG,'')?>
 			</ul>
 			<?php endif; ?>
 		</nav>

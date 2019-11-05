@@ -30,6 +30,11 @@ if ($sort == 'gid' && !$keyword) {
 
 $TPG = getTotalPage($NUM,$recnum);
 
+$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
+$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$where?'where':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['page_list'];
+$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
+
 switch ($sort) {
 	case 'hit'     : $sort_txt='조회순';break;
 	case 'likes'   : $sort_txt='추천순';break;
@@ -45,6 +50,7 @@ switch ($sort) {
 	</div>
 
 	<div class="col-9 page-main">
+
 		<?php include $g['dir_module_skin'].'_nav.php';?>
 
 		<section>
@@ -54,7 +60,7 @@ switch ($sort) {
 					<?php echo number_format($NUM)?>개 <small class="text-muted">(<?php echo $p?>/<?php echo $TPG?>페이지)</small>
 				</div>
 
-				<form name="postsearchf" method="get" action="<?php echo $_HS['rewrite']?'./'.$page:$g['s'].'/' ?>" class="form-inline">
+				<form name="postsearchf" method="get" action="<?php echo $g['page_reset'] ?>" class="form-inline">
 
 					<?php if ($_HS['rewrite']): ?>
 					<input type="hidden" name="sort" value="<?php echo $sort?>">
@@ -94,7 +100,7 @@ switch ($sort) {
 						</div>
 					</div>
 
-					<select name="where" class="form-control custom-select custom-select-sm ml-3">
+					<select name="where" class="form-control custom-select custom-select-sm ml-1">
 						<option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 						<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
 					</select>
@@ -103,7 +109,7 @@ switch ($sort) {
 					<button class="btn btn-white btn-sm ml-1" type="submit">검색</button>
 
 					<?php if ($keyword): ?>
-					<a class="btn btn-light btn-sm ml-1" href="<?php echo getProfileLink($_MP['uid']).$para_str.$page ?>">리셋</a>
+					<a class="btn btn-light btn-sm ml-1" href="<?php echo $g['page_reset']?>">리셋</a>
 					<?php endif; ?>
 
 					<?php if ($_IS_PROFILEOWN): ?>
@@ -126,7 +132,7 @@ switch ($sort) {
 
 			    <div class="media-body">
 			      <h5 class="my-1 font-weight-light line-clamp-2">
-							<a href="<?php echo getPostLink($R,1) ?>" class="muted-link" ><?php echo stripslashes($R['subject'])?></a>
+							<a href="<?php echo getPostLink($R,1) ?>" class="text-reset text-decoration-none" ><?php echo stripslashes($R['subject'])?></a>
 						</h5>
 						<div class="mb-1">
 							<ul class="list-inline d-inline-block f13 text-muted">
@@ -183,12 +189,7 @@ switch ($sort) {
 
 				<?php if ($NUM > $recnum): ?>
 				<ul class="pagination mb-0">
-					<?php
-						$para_str1 = $_HS['rewrite']?'/':'&page=';
-						$para_str2 = $_HS['rewrite']?'?':'&';
-						$_N = getProfileLink($_MP['uid']).$para_str1.$page.$para_str2;
-						echo getPageLink(10,$p,$TPG,$_N)
-					 ?>
+					<?php echo getPageLink(10,$p,$TPG,$_N)?>
 				</ul>
 				<?php endif; ?>
 
@@ -200,7 +201,6 @@ switch ($sort) {
 
 	</div><!-- /.page-main -->
 </div><!-- /.page-wrapper -->
-
 
 <script>
 

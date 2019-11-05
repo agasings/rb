@@ -21,9 +21,9 @@ $NUM = getDbRows($table['postlist'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
 $m = 'post';
-$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($skin?'skin':'',$iframe?'iframe':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= RW('mod=dashboard&page='.$page).$g['post_list'];
+$g['post_reset']	= RW('mod=dashboard&page='.$page);
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['post_list'];
 $g['post_orign'] = $g['post_reset'];
 $g['post_view']	= $g['post_list'].'&amp;uid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
@@ -52,7 +52,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
 
-		<form name="toolbarForm" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page='.$page):$g['s'].'/'?>" method="get"  class="form-inline ml-auto">
+		<form name="toolbarForm" action="<?php echo $g['post_reset'] ?>" method="get"  class="form-inline ml-auto">
 
 			<?php if (!$_HS['rewrite']): ?>
 			<input type="hidden" name="r" value="<?php echo $r?>">

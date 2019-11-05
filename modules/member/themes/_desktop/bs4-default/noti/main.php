@@ -157,7 +157,7 @@ getDbUpdate($table['s_mbrdata'],'num_notice=0','memberuid='.$my['uid']);
 				<?php if($NUM):?>
 				<div class="d-flex justify-content-center my-4">
 					<ul class="pagination mb-0">
-						<?php echo getPageLink(10,$p,$TPG,$pageLink)?>
+						<?php echo getPageLink(10,$p,$TPG,'')?>
 					</ul>
 				</div>
 				<?php endif?>
