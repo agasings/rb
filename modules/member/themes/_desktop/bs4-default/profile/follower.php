@@ -2,18 +2,12 @@
 $sort	= 'uid';
 $orderby= 'desc';
 $recnum	= 15;
-
 $mbrque	= 'by_mbruid='.$_MP['uid'];
 
 if ($where && $keyword) $mbrque .= getSearchSql($where,$keyword,$ikeyword,'or');
 $RCD = getDbArray($table['s_friend'],$mbrque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_friend'],$mbrque);
 $TPG = getTotalPage($NUM,$recnum);
-
-$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
-$g['page_list']	= $g['page_reset'].getLinkFilter2('',array());
-$g['pagelink']	= $g['page_list'];
-$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 ?>
 
 <div class="page-wrapper row">

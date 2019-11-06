@@ -31,11 +31,6 @@ switch ($sort) {
 	case 'd_last'   : $sort_txt='최신순';break;
 	default        : $sort_txt='기본';break;
 }
-
-$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
-$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['page_list'];
-$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 ?>
 
 <div class="page-wrapper row">
@@ -87,7 +82,7 @@ $_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 								생성순
 							</button>
 							<button class="dropdown-item d-flex justify-content-between align-items-center<?php echo $sort=='d_last'?' active':'' ?>" type="button" data-value="d_last">
-								수정순
+								최신순
 							</button>
 						</div>
 					</div>

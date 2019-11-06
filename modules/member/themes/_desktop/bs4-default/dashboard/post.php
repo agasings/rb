@@ -38,16 +38,15 @@ if ($sort == 'gid' && !$keyword) {
 
 $TPG = getTotalPage($NUM,$recnum);
 
-$m = 'post';
-$g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($skin?'skin':'',$iframe?'iframe':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= RW('mod=dashboard&page='.$page);
+$g['post_base']	 = $g['s'].'/?r='.$r.'&amp;'.'m=post';
+$g['post_reset']	= RW('mod=dashboard&page='.$page);
+$g['post_list']	= $g['post_reset'].getLinkFilter('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$keyword?'keyword':''));
+$g['pagelink']	= $g['post_list'];
 $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
 $g['post_modify']= $g['post_write'].'&amp;cid=';
-$g['post_action']= $g['post_list'].'&amp;a=';
+$g['post_action']= $g['post_base'].'&amp;a=';
 $g['post_delete']= $g['post_action'].'delete&amp;cid=';
-
 
 switch ($sort) {
 	case 'gid'      : $sort_txt='등록순';break;
@@ -76,7 +75,7 @@ switch ($sort) {
 
 	<div class="d-flex align-items-center border-top border-dark pt-4 pb-3" role="filter">
 		<span class="f18">전체 <span class="text-primary"><?php echo number_format($NUM)?></span> 개</span>
-		<form name="toolbarForm" action="<?php echo $_HS['rewrite']? RW('mod=dashboard&page='.$page):$g['s'].'/'?>" method="get" class="form-inline ml-auto">
+		<form name="toolbarForm" action="<?php echo $g['post_reset'] ?>" method="get" class="form-inline ml-auto">
 
 			<?php if (!$_HS['rewrite']): ?>
 			<input type="hidden" name="r" value="<?php echo $r?>">
@@ -145,7 +144,7 @@ switch ($sort) {
 						<i class="fa fa-search" aria-hidden="true"></i>
 					</button>
 					<?php if ($keyword): ?>
-					<a href="<?php echo RW('mod=dashboard&page='.$page)?>" class="btn btn-white">초기화</a>
+					<a href="<?php echo $g['post_reset']?>" class="btn btn-white">초기화</a>
 					<?php endif; ?>
 			  </div>
 			</div>
@@ -201,9 +200,9 @@ switch ($sort) {
 							</li>
 						</ul>
 
-						<?php if (IsPostCat($R['uid'])): ?>
+						<?php if ($R['category']): ?>
 						<span class="ml-2 f13 text-muted">
-							<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
+							<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat('post',$R['category']) ?>
 						</span>
 						<?php endif; ?>
 

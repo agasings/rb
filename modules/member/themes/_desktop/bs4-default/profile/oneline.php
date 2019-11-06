@@ -24,11 +24,6 @@ $RCD = getDbArray($table['s_oneline'],$bbsque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_oneline'],$bbsque);
 $TPG = getTotalPage($NUM,$recnum);
 
-$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
-$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($keyword?'keyword':''));
-$g['pagelink']	= $g['page_list'];
-$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
-
 ?>
 
 <div class="page-wrapper row">

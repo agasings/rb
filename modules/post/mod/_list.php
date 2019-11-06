@@ -31,18 +31,16 @@ if ($sort == 'gid' && !$keyword  && !$listid) {
 
 } else {
 
+	if (!$my['uid']) $_WHERE .= ' and display<>4';
+
 	if ($where && $keyword) {
-
-		if (!$my['uid']) $_WHERE .= ' and display=5';
-		else $_WHERE .= ' and display>3';
-
 		if (strpos('[nic][id][ip]',$where)) $_WHERE .= " and ".$where."='".$keyword."'";
 		else if ($where == 'term') $_WHERE .= " and d_regis like '".$keyword."%'";
 		else $_WHERE .= getSearchSql($where,$keyword,$ikeyword,'or');
 	}
 
-	if ($cat) $_WHERE .= getSearchSql('category','['.$cat.']',$ikeyword,'or');
-
+	if ($cat) $_WHERE .= ' and ('.getPostCategoryCodeToSql2($table[$m.'category'],$cat).')';
+	$orderby = $sort == 'gid'?'asc':'desc';
 	$TCD = getDbArray($table[$m.'data'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
 	$NUM = getDbRows($table[$m.'data'],$_WHERE);
 	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;

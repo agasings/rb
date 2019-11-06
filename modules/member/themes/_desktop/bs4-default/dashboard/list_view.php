@@ -147,10 +147,6 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 						</a>
 
 						<div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuLink">
-							<a class="dropdown-item d-flex justify-content-between align-items-center" href="<?php echo $g['post_reset'] ?>">
-								<?php echo $recnum ?>개
-							</a>
-							<div class="dropdown-divider"></div>
 							<a class="dropdown-item d-flex justify-content-between align-items-center<?php echo $recnum==20?' active':'' ?>" href="<?php echo $g['post_reset'] ?>&recnum=20">
 								20개
 							</a>

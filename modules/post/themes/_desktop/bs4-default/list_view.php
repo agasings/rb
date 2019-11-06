@@ -74,22 +74,21 @@ $lack_card_num = $total_card_num;
 
 			</div><!-- /.card-body -->
 		</div><!-- /.card -->
-
 		<?php
-			$print_card_num++; // 카드 출력될 때마 1씩 증가
-			$lack_card_num = $total_card_num - $print_card_num;
-		 ?>
+      $print_card_num++; // 카드 출력될 때마 1씩 증가
+      $lack_card_num = $total_card_num - $print_card_num;
+     ?>
 
-		<?php if(!($i%$c_recnum)):?></div><div class="card-deck"><?php endif?>
-		<?php endforeach?>
+    <?php if(!($i%$c_recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
+    <?php endforeach?>
 
-		<?php if($lack_card_num ):?>
-		<?php for($j=0;$j<$lack_card_num;$j++):?>
-		 <div class="card border-0"></div>
-		<?php endfor?>
-		<?php endif?>
+    <?php if($lack_card_num ):?>
+      <?php for($j=0;$j<$lack_card_num;$j++):$i++;?>
+       <div class="card border-0" style="background-color: transparent"></div>
+       <?php if(!($i%$c_recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
+      <?php endfor?>
+    <?php endif?>
 	</div><!-- /.card-deck -->
-
 
 	<?php else: ?>
 
@@ -98,6 +97,19 @@ $lack_card_num = $total_card_num;
 		</div>
 
 	<?php endif; ?>
+
+	<footer class="d-flex justify-content-between mt-5">
+		<div class=""></div>
+
+		<?php if ($NUM > $recnum): ?>
+		<ul class="pagination mb-0">
+			<?php echo getPageLink(10,$p,$TPG,$_N)?>
+		</ul>
+		<?php endif; ?>
+
+		<div class="">
+		</div>
+	</footer>
 
 </section>
 

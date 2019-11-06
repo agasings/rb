@@ -13,7 +13,6 @@ if ($sort == 'gid' && !$keyword) {
 	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
 	$NUM = getDbRows($table['postmember'],$postque);
 
-
 } else {
 
 	if ($where && $keyword) {
@@ -30,12 +29,8 @@ if ($sort == 'gid' && !$keyword) {
 
 $TPG = getTotalPage($NUM,$recnum);
 
-$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
-$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$where?'where':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['page_list'];
-$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
-
 switch ($sort) {
+	case 'gid' : $sort_txt='생성순';break;
 	case 'hit'     : $sort_txt='조회순';break;
 	case 'likes'   : $sort_txt='추천순';break;
 	case 'comment' : $sort_txt='댓글순';break;
@@ -86,6 +81,9 @@ switch ($sort) {
 						</a>
 						<div class="dropdown-menu shadow-sm" style="min-width: 100px;">
 							<button class="dropdown-item<?php echo $sort=='gid'?' active':'' ?>" type="button" data-value="gid">
+								생성순
+							</button>
+							<button class="dropdown-item<?php echo $sort=='d_modify'?' active':'' ?>" type="button" data-value="d_modify">
 								최신순
 							</button>
 							<button class="dropdown-item<?php echo $sort=='hit'?' active':'' ?>" type="button" data-value="hit">
@@ -140,14 +138,14 @@ switch ($sort) {
 								<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
 								<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 								<li class="list-inline-item">
-									<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
+									<time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time>
 									<?php if(getNew($R['d_regis'],12)):?><small class="text-danger">new</small><?php endif?>
 								</li>
 							</ul>
 
-							<?php if (IsPostCat($R['uid'])): ?>
+							<?php if ($R['category']): ?>
 							<span class="ml-2 f13 text-muted">
-								<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
+								<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat('post',$R['category']) ?>
 							</span>
 							<?php endif; ?>
 
@@ -183,8 +181,7 @@ switch ($sort) {
 
 			</ul>
 
-
-			<div class="d-flex justify-content-between mt-5">
+			<footer class="d-flex justify-content-between mt-5">
 				<div class=""></div>
 
 				<?php if ($NUM > $recnum): ?>
@@ -195,7 +192,7 @@ switch ($sort) {
 
 				<div class="">
 				</div>
-			</div>
+			</footer>
 
 		</section>
 

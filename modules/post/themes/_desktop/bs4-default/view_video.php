@@ -227,9 +227,9 @@
 					<article class="rb-article" data-plugin="shorten">
 						<?php echo getContents($R['content'],$R['html'])?>
 
-						<?php if (IsPostCat($R['uid'])): ?>
+						<?php if ($R['category']): ?>
             <span class="ml-2 f13 text-muted">
-              <i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
+              <i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($m,$R['category']) ?>
             </span>
             <?php endif; ?>
 

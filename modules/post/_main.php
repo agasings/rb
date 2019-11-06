@@ -63,6 +63,17 @@ function getPostCategoryCodeToSql($table,$cat)
 	}
 	return substr($sql,0,strlen($sql)-4);
 }
+function getPostCategoryCodeToSql2($table,$cat)
+{
+	$R=getDbData($table,'id="'.$cat.'"','*');
+	if ($R['uid']) $sql .= 'category like "%['.$R['uid'].']%" or ';
+	if ($R['is_child'])
+	{
+		$RDATA=getDbSelect($table,'parent='.$R['uid'],'uid,is_child');
+		while($C=db_fetch_array($RDATA)) $sql .= getPostCategoryCodeToSqlY($table,$C['uid'],$C['is_child']);
+	}
+	return substr($sql,0,strlen($sql)-4);
+}
 //카테고리코드->SQL
 function getPostCategoryCodeToSqlX($table,$cat,$is_child)
 {
@@ -71,6 +82,16 @@ function getPostCategoryCodeToSqlX($table,$cat,$is_child)
 	{
 		$RDATA=getDbSelect($table,'parent='.$cat,'uid,is_child');
 		while($C=db_fetch_array($RDATA)) $sql .= getPostCategoryCodeToSqlX($table,$C['uid'],$C['is_child']);
+	}
+	return $sql;
+}
+function getPostCategoryCodeToSqlY($table,$cat,$is_child)
+{
+	$sql = 'category like "%['.$cat.']%" or ';
+	if ($is_child)
+	{
+		$RDATA=getDbSelect($table,'parent='.$cat,'uid,is_child');
+		while($C=db_fetch_array($RDATA)) $sql .= getPostCategoryCodeToSqlY($table,$C['uid'],$C['is_child']);
 	}
 	return $sql;
 }

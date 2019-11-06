@@ -20,11 +20,6 @@ if ($where && $keyword)
 $RCD = getDbArray($table['s_comment'],$bbsque,'*',$sort,$orderby,$recnum,$p);
 $NUM = getDbRows($table['s_comment'],$bbsque);
 $TPG = getTotalPage($NUM,$recnum);
-
-$g['page_reset']	= getProfileLink($_MP['uid']).($_HS['rewrite']?'/':'&page=').$page;
-$g['page_list']	= $g['page_reset'].getLinkFilter2('',array($sort!='uid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':''));
-$g['pagelink']	= $g['page_list'];
-$_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 ?>
 
 <div class="page-wrapper row">
@@ -134,7 +129,7 @@ $_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 					</select>
 
 					<input type="text" name="keyword" size="30" value="<?php echo $_keyword?>" class="form-control ml-2">
-					<button class="btn btn-light ml-2" type="submit" name="button">검색</button>
+					<button class="btn btn-light ml-2" type="submit">검색</button>
 					<?php if ($keyword): ?>
 					<a class="btn btn-light ml-1" href="<?php echo $g['page_reset']?>">리셋</a>
 					<?php endif; ?>
@@ -143,10 +138,6 @@ $_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
 		  </footer>
 
 		</section>
-
-
-
-
 
 	</div><!-- /.page-main -->
 </div><!-- /.page-wrapper -->

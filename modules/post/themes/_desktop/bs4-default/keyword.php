@@ -33,7 +33,7 @@
 					<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
 				</ul>
 				<span class="ml-2 f13 text-muted">
-					<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
+					<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($m,$R['category']) ?>
 				</span>
 				<span class="ml-2 f13 text-muted">
 					<!-- 태그 -->
@@ -66,6 +66,19 @@
 		</div>
 
 	<?php endif; ?>
+
+	<footer class="d-flex justify-content-between mt-5">
+		<div class=""></div>
+
+		<?php if ($NUM > $recnum): ?>
+		<ul class="pagination mb-0">
+			<?php echo getPageLink(10,$p,$TPG,'')?>
+		</ul>
+		<?php endif; ?>
+
+		<div class="">
+		</div>
+	</footer>
 
 </section>
 

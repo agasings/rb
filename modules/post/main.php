@@ -11,10 +11,10 @@ $d['post']['isperm'] = true;
 include_once $g['dir_module'].'_main.php';
 
 $mod = $mod ? $mod : 'category';
-
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
+// $recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
+$recnum	= 15;
 
 $_perm = array();
 
@@ -54,22 +54,53 @@ if ($cid) {
 	include_once $g['dir_module'].'mod/_view.php';
 }
 
+if ($c) {
+  $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
+  if ($_HS['rewrite']) $g['post_reset']	= getLinkFilter2(($_HS['usescode']?'/'.$r:'').RW('c='.$c),array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
+} else {
+  $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
+  if ($_HS['rewrite'])  $g['post_reset']= $g['r'].'/post';
+}
+
+$g['post_list']	= $g['post_reset'].getLinkFilter2('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':'','code'));
+
 switch ($mod) {
   case 'category' :
     include_once $g['dir_module'].'mod/_list.php';
     $CAT  = getDbData($table[$m.'category'],"id='".$cat."'",'*');
+
+    if ($_HS['rewrite']) {
+      if ($cat) $g['post_reset']= $g['r'].'/post/category/'.$cat;
+      else $g['post_reset']= $g['r'].'/post';
+    }
+
+  	$g['post_list']	= $g['post_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':'',$code?'code':''));
+    $g['pagelink']	= $g['post_list'];
+    $_N	= !$_GET['sort'] && !$_GET['where'] && !$_GET['keyword'] && !$_GET['code']?$g['post_list'].'?':'';
   break;
 
   case 'keyword' :
+    if (!$keyword) getLink('','','키워드를 입력해주세요.','-1');
     include_once $g['dir_module'].'mod/_list.php';
+    if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/post/search';
+    $g['post_list']	= $g['post_reset'].getLinkFilter2('',array('keyword'));
+    $g['pagelink']	= $g['post_list'];
   break;
 
   case 'list' :
     include_once $g['dir_module'].'mod/_alllist.php';
+    if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/list';
+    $g['post_list']	= $g['post_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':'','code'));
+    $g['pagelink']	= $g['post_list'];
+    $_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
   break;
 
   case 'list_view' :
     include_once $g['dir_module'].'mod/_list.php';
+    if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/list/'.$listid;
+    $g['post_list']	= $g['post_reset'].getLinkFilter2('',array());
+    $g['pagelink']	= $g['post_list'];
+    $_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
   break;
 
   case 'view' :
@@ -90,9 +121,6 @@ switch ($mod) {
 
 include_once $g['path_module'].$m.'/themes/'.$d['post']['skin'].'/_var.php';
 
-if ($c) $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'c='.$c,array($skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-else $g['post_reset']	= getLinkFilter($g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m='.$m,array($bid?'bid':'',$skin?'skin':'',$iframe?'iframe':'',$cat?'cat':''));
-$g['post_list']	= $g['post_reset'].getLinkFilter('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':''));
 $g['pagelink']	= $g['post_list'];
 $g['post_orign'] = $g['post_reset'];
 $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
@@ -102,12 +130,6 @@ $g['post_action']= $g['post_list'].'&amp;a=';
 $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 $g['post_print'] = $g['post_reset'].'&amp;iframe=Y&amp;print=Y&amp;cid=';
 
-if ($_HS['rewrite'] && $sort == 'gid' && $orderby == 'asc' && $recnum == $d['post']['recnum'] && $p==1 && !$skin && !$type && !$iframe) {
-	$g['post_reset']= $g['r'].'/post';
-	$g['post_list'] = $g['post_reset'];
-	$g['post_view'] = $g['post_list'].'/';
-	$g['post_write']= $g['post_list'].'/write';
-}
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 	$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['post']['m_layout'];

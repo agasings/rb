@@ -88,9 +88,9 @@ $g['pagelink']	= $g['page_list'];
 							</li>
 						</ul>
 
-						<?php if (IsPostCat($R['uid'])): ?>
+						<?php if ($R['category']): ?>
 						<span class="ml-2 f13 text-muted">
-							<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat($R['uid']) ?>
+							<i class="fa fa-folder-o mr-1" aria-hidden="true"></i> <?php echo getAllPostCat('post',$R['category']) ?>
 						</span>
 						<?php endif; ?>
 
