@@ -254,6 +254,7 @@ CREATE TABLE ".$table[$module.'day']." (
 date		CHAR(8)			DEFAULT ''		NOT NULL,
 site		INT				DEFAULT '0'		NOT NULL,
 data			INT				DEFAULT '0'		NOT NULL,
+display		  TINYINT			DEFAULT '0'		NOT NULL,
 hit			INT				DEFAULT '0'		NOT NULL,
 likes			INT				DEFAULT '0'		NOT NULL,
 dislikes			INT				DEFAULT '0'		NOT NULL,

@@ -59,6 +59,7 @@ getDbUpdate($table[$m.'member'],'display='.$display,'data='.$R['uid']); //멤버
 getDbUpdate($table[$m.'category_index'],'display='.$display,'data='.$R['uid']); //카테고리 인덱스 업데이트
 getDbUpdate($table[$m.'list_index'],'display='.$display,'data='.$R['uid']); //리스트 인덱스 업데이트
 getDbUpdate($table['s_feed'],'display='.$display,'module="'.$m.'" and entry='.$R['uid']); //피드 인덱스 업데이트
+getDbUpdate($table[$m.'day'],'display='.$display,'data='.$R['uid']); // 일별현황 업데이트 (인기 포스트 추출목적)
 
 echo json_encode($result);
 exit;

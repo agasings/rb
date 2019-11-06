@@ -36,6 +36,7 @@ if ($uid) {
   //포스트 공유설정 업데이트
   getDbUpdate($table[$m.'index'],'display='.$display,'gid='.$R['gid']);
   getDbUpdate($table[$m.'member'],'display='.$display,'data='.$R['uid']);
+  getDbUpdate($table[$m.'day'],'display='.$display,'data='.$R['uid']); // 일별현황 업데이트 (인기 포스트 추출목적)
 
   //카테고리 업데이트
   $_orign_category_members = getDbArray($table[$m.'category_index'],'data='.$R['uid'],'*','data','asc',0,1);

@@ -6,8 +6,11 @@ $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈�
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
 
-$query = 'site='.$s.' and ';
-$_WHERE1= $query.'date >= '.date("Ymd", strtotime($wdgvar['term'])).' and '.$wdgvar['sort'].'>0';
+$query = 'site='.$s;
+if ($my['uid']) $query .= ' and display>3';
+else $query .= ' and display=5';
+
+$_WHERE1= $query.' and date >= '.date("Ymd", strtotime($wdgvar['term'])).' and '.$wdgvar['sort'].'>0';
 
 if ($wdgvar['sort']=='hit') $_WHERE2= 'data,sum(hit) as hit';
 if ($wdgvar['sort']=='likes') $_WHERE2= 'data,sum(likes) as likes';
