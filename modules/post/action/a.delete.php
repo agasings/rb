@@ -143,7 +143,7 @@ getDbDelete($table[$m.'member'],'data='.$R['uid']);//멤버삭제
 getDbDelete($table[$m.'list_index'],'data='.$R['uid']);//리스트 인덱스삭제
 
 //회원의 등록수량 조절
-getDbUpdate($table['s_mbrdata'],'num_post=num_post-1,hit_post=hit_post-'.$R['hit'].',likes_post=likes_post-'.$R['likes'],'memberuid='.$R['mbruid']);
+getDbUpdate($table['s_mbrdata'],'num_post=num_post-1,hit_post=hit_post-'.$R['hit'].',likes_post=likes_post-'.$R['likes'].',dislikes_post=dislikes_post-'.$R['dislikes'],'memberuid='.$R['mbruid']);
 getDbUpdate($table['s_mbrmonth'],'post_num=post_num-1',"date='".substr($R['d_regis'],0,6)."' and site=".$R['site'].' and mbruid='.$R['mbruid']);  // 회원의 월별통계 수량갱신
 getDbUpdate($table['s_mbrday'],'post_num=post_num-1',"date='".substr($R['d_regis'],0,8)."' and site=".$R['site'].' and mbruid='.$R['mbruid']);  //회원의 일별 수량갱신
 
