@@ -43,7 +43,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 
 				<div class="media">
 					<span class="position-relative mr-3">
-						<img src="<?php echo getPreviewResize(getListImageSrc($LIST['uid']),'180x100') ?>" class="" alt="...">
+						<img src="<?php echo getPreviewResize(getListImageSrc($LIST['uid']),'300x168') ?>" class="" alt="..." style="width:180px">
 						<span class="list_mask">
 							<span class="txt"><?php echo $LIST['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
 						</span>
@@ -184,7 +184,7 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 								<i class="fa fa-arrows" aria-hidden="true"></i>
 							</span>
 							<a href="<?php echo getPostLink($R,1) ?>" class="position-relative mr-3" target="_blank">
-								<img src="<?php echo getPreviewResize(getUpImageSrc($R),'130x72') ?>" alt="">
+								<img src="<?php echo getPreviewResize(getUpImageSrc($R),'130x73') ?>" alt="">
 								<time class="badge badge-dark rounded-0 position-absolute f14" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
 							</a>
 

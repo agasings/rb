@@ -50,7 +50,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm">
       <a class="position-relative" href="<?php echo getPostLink($R,1) ?>">
-        <img src="<?php echo getPreviewResize(getUpImageSrc($R),'235x130') ?>" class="card-img-top" alt="...">
+        <img src="<?php echo getPreviewResize(getUpImageSrc($R),'400x225') ?>" class="card-img-top" alt="...">
         <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
       </a>
       <div class="card-body">

@@ -17,7 +17,6 @@ $format= $format?$format:1;
 $display= $display?$display:1;
 $hidden = $display==1 || $display==2?1:0;
 
-
 if ($uid) {
 
   $result=array();

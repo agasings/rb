@@ -123,7 +123,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 					</span>
 					<strong class="counter mr-3 f18"></strong>
 					<a href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>" class="position-relative mr-3">
-						<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'180x100') ?>" alt="">
+						<img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'300x168') ?>" alt="" style="width:180px">
 						<span class="list_mask">
 							<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
 						</span>

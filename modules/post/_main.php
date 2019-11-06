@@ -124,7 +124,7 @@ function getTreePostCategoryCheck($conf,$uid,$depth,$parent,$tmpcode) {
 	while($C=db_fetch_array($CD))
 	{
 
-		$tcheck= getDbRows($table['postindex'],'data='.$uid.' and category='.$C['uid']);
+		$tcheck= getDbRows($table['postcategory_index'],'data='.$uid.' and category='.$C['uid']);
 
 		$tree.= '<li>';
 		if ($C['is_child'])

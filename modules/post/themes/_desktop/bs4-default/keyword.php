@@ -28,7 +28,7 @@
 			<div class="mb-1">
 				<ul class="list-inline d-inline-block ml-2 f13 text-muted">
 					<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
-					<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
+					<li class="list-inline-item">좋아요 <?php echo $R['likes']?> </li>
 					<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 					<li class="list-inline-item"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></li>
 				</ul>

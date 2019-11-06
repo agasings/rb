@@ -42,7 +42,7 @@ $i=1;foreach ($_RCD as $R) {
   $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
   $TMPL['likes']=$R['likes'];
   $TMPL['dislikes']=$R['dislikes'];
-  $TMPL['featured_img'] = checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'100x56'):getPreviewResize('/files/noimage.png','100x56');
+  $TMPL['featured_img'] = checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'300x168'):getPreviewResize('/files/noimage.png','300x168');
   $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
 

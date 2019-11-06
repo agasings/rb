@@ -64,7 +64,7 @@ $lack_card_num = $total_card_num;
 				<?php if (checkPostPerm($R)): ?>
 				<ul class="list-inline f13 text-muted mb-0">
 					<li class="list-inline-item">조회 <?php echo $R['hit']?> </li>
-					<li class="list-inline-item">추천 <?php echo $R['likes']?> </li>
+					<li class="list-inline-item">좋아요 <?php echo $R['likes']?> </li>
 					<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 				</ul>
 				<time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>

@@ -16,7 +16,7 @@ switch ($sort) {
 
 			<div class="card">
 				<div class="card-header">
-					<a href="<?php echo RW('m=post') ?>" class="muted-link" title="전체보기">카테고리</a>
+					<a href="<?php echo RW('m=post&mod=category') ?>" class="muted-link" title="전체보기">카테고리</a>
 				</div>
 				<div class="card-body">
 					<?php $_treeOptions=array('site'=>$s,'table'=>$table[$m.'category'],'dispNum'=>$my['uid']?true:false,'dispHidden'=>true,'dispCheckbox'=>false,'allOpen'=>true)?>
@@ -114,7 +114,7 @@ switch ($sort) {
 
 					<div class="media-body">
 						<h5 class="mt-0 mb-1">
-							<a class="muted-link" href="<?php echo getPostLink($R,0) ?>">
+							<a class="text-decoration-none text-reset" href="<?php echo getPostLink($R,0) ?>">
 								<?php echo checkPostPerm($R)?stripslashes($R['subject']):'[비공개 포스트]'?>
 							</a>
 						</h5>

@@ -10,7 +10,7 @@ $d['post']['isperm'] = true;
 
 include_once $g['dir_module'].'_main.php';
 
-$mod = $mod ? $mod : 'category';
+$mod = $mod ? $mod : 'post';
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby && strpos('[asc][desc]',$orderby) ? $orderby : 'asc';
 // $recnum	= $recnum && $recnum < 200 ? $recnum : $d['post']['recnum'];
@@ -66,7 +66,7 @@ if ($c) {
 
 switch ($mod) {
   case 'category' :
-    include_once $g['dir_module'].'mod/_list.php';
+    include_once $g['dir_module'].'mod/_category.php';
     $CAT  = getDbData($table[$m.'category'],"id='".$cat."'",'*');
 
     if ($_HS['rewrite']) {
@@ -79,16 +79,24 @@ switch ($mod) {
     $_N	= !$_GET['sort'] && !$_GET['where'] && !$_GET['keyword'] && !$_GET['code']?$g['post_list'].'?':'';
   break;
 
+  case 'post' :
+    include_once $g['dir_module'].'mod/_post.php';
+    if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/post';
+    $g['post_list']	= $g['post_reset'].getLinkFilter2('',array('sort',$orderby!='asc'?'orderby':'',$keyword?'keyword':''));
+    $g['pagelink']	= $g['post_list'];
+    $_N	= !$_GET['sort'] && !$_GET['where'] && !$_GET['keyword']?$g['post_list'].'?':'';
+  break;
+
   case 'keyword' :
     if (!$keyword) getLink('','','키워드를 입력해주세요.','-1');
-    include_once $g['dir_module'].'mod/_list.php';
+    include_once $g['dir_module'].'mod/_category.php';
     if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/post/search';
     $g['post_list']	= $g['post_reset'].getLinkFilter2('',array('keyword'));
     $g['pagelink']	= $g['post_list'];
   break;
 
   case 'list' :
-    include_once $g['dir_module'].'mod/_alllist.php';
+    include_once $g['dir_module'].'mod/_list.php';
     if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/list';
     $g['post_list']	= $g['post_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':'','code'));
     $g['pagelink']	= $g['post_list'];

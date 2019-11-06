@@ -1,19 +1,12 @@
 <?php
+
 $_WHERE = 'site='.$s;
-$where = $where?$where:'subject|tag|review';
+$recnum = 16;  // 4의 배수로 지정 (예: 8,12,16,20..)
+$where = 'name|tag';
 
-if ($sort == 'gid' && !$keyword  && !$listid) {
+if ($listid) {
 
-	if (!$my['uid']) $_WHERE .= ' and display<>4';
-
-	if ($cat)  $_WHERE .= ' and ('.getPostCategoryCodeToSql($table[$m.'category'],$cat).')';
-	$TCD = getDbArray($table[$m.'index'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
-	$NUM = getDbRows($table[$m.'index'],$_WHERE);
-	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table[$m.'data'],'uid='.$_R['data'],'*');
-
-} else if ($listid) {
-
-	$LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
+  $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
 	$_IS_LISTOWN=getDbRows($table[$m.'list'],'mbruid='.$my['uid'].' and uid='.$LIST['uid']);
 	$_perm['list_owner'] = $my['admin'] || $_IS_LISTOWN  ? true : false;
 
@@ -23,29 +16,23 @@ if ($sort == 'gid' && !$keyword  && !$listid) {
 		$M = getDbData($table['s_mbrid'],"id='".$mbrid."'",'*');
 		$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
 	}
+
 	$_WHERE .= ' and list="'.$LIST['uid'].'"';
-	$recnum = 16;  // 4의 배수로 지정 (예: 8,12,16,20..)
 	$TCD = getDbArray($table[$m.'list_index'],$_WHERE,'*','gid','asc',$recnum,$p);
 	$NUM = getDbRows($table[$m.'list_index'],$_WHERE);
 	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table[$m.'data'],'uid='.$_R['data'],'*');
 
 } else {
 
-	if (!$my['uid']) $_WHERE .= ' and display<>4';
+  if ($my['uid']) $_WHERE .= ' and display > 3';  // 회원공개와 전체공개 리스트 출력
+  else $_WHERE .= ' and display = 5'; // 전체공개 리스트만 출력
 
-	if ($where && $keyword) {
-		if (strpos('[nic][id][ip]',$where)) $_WHERE .= " and ".$where."='".$keyword."'";
-		else if ($where == 'term') $_WHERE .= " and d_regis like '".$keyword."%'";
-		else $_WHERE .= getSearchSql($where,$keyword,$ikeyword,'or');
-	}
+  if ($keyword) $_WHERE .= getSearchSql($where,$keyword,$ikeyword,'or');
+  $sort = $sort?$sort:'d_regis';
+  $RCD = getDbArray($table[$m.'list'],$_WHERE,'*',$sort,'desc',$recnum,$p);
+  $NUM = getDbRows($table[$m.'list'],$_WHERE);
+  $TPG = getTotalPage($NUM,$recnum);
 
-	if ($cat) $_WHERE .= ' and ('.getPostCategoryCodeToSql2($table[$m.'category'],$cat).')';
-	$orderby = $sort == 'gid'?'asc':'desc';
-	$TCD = getDbArray($table[$m.'data'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
-	$NUM = getDbRows($table[$m.'data'],$_WHERE);
-	while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
 }
-
-$TPG = getTotalPage($NUM,$recnum);
 
 ?>

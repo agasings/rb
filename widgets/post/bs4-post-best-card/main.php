@@ -36,9 +36,6 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
 
     </div>
     <div class="">
-      <?php if($wdgvar['link']):?>
-      <a href="<?php echo $wdgvar['link']?>" class="btn btn-white btn-sm">더보기</a>
-      <?php endif?>
     </div>
   </header>
 
@@ -47,7 +44,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm card-mask">
       <a href="<?php echo getPostLink($R,1) ?>" class="position-relative">
-        <img src="<?php echo getPreviewResize(getUpImageSrc($R),'235x130') ?>" class="card-img-top" alt="...">
+        <img src="<?php echo getPreviewResize(getUpImageSrc($R),'400x225') ?>" class="card-img-top" alt="...">
         <span class="position-absolute badge badge-primary f15 px-2 rounded-0 rank-icon" style="left:0;top:0"><?php echo $i ?></span>
         <time class="badge badge-dark rounded-0 position-absolute f14 font-weight-light" style="right:0;bottom:0"><?php echo getUpImageTime($R) ?></time>
       </a>

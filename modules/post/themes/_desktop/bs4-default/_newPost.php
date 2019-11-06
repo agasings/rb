@@ -29,7 +29,7 @@ $_NUM = getDbRows($table['postmember'],$postque);
       <li class="media mb-2">
 
         <a href="<?php echo getPostLink($POST,1) ?>" class="position-relative mr-2">
-          <img class="" src="<?php echo getPreviewResize(getUpImageSrc($POST),'160x90') ?>" alt="">
+          <img class="" src="<?php echo getPreviewResize(getUpImageSrc($POST),'160x90') ?>" alt="" >
           <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo getUpImageTime($POST) ?></time>
         </a>
 

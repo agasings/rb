@@ -18,6 +18,7 @@ RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/([0-9_]+)/?$ ./index.php?m=post&mod=view&cid=$2&%1 [L]
 RewriteRule ^(post)/(write)/?$ ./index.php?m=post&mod=write [L]
 RewriteRule ^(post)/(write)/([0-9_]+)/?$ ./index.php?m=post&mod=write&cid=$3 [L]
+RewriteRule ^(post)/(category)/?$ ./index.php?m=post&mod=category [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/(category)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&cat=$3&%1 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$

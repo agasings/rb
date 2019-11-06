@@ -31,7 +31,7 @@ $_RCD=getDbArray($table['postlist'],$_listque,'*','gid','asc',$wdgvar['limit'],1
     <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
 
       <a class="position-relative" href="<?php echo RW('mod=dashboard&page=list_view&id='.$R['id'])?>">
-        <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" alt="" class="card-img-top">
+        <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'300x168') ?>" alt="" class="card-img-top">
         <span class="list_mask">
           <span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
         </span>

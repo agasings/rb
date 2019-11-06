@@ -38,7 +38,7 @@ $RCD = getDbArray($table['postlist'],$_WHERE,'*','d_last','desc',$wdgvar['limit'
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm">
       <a class="position-relative" href="<?php echo getListLink($R,1) ?>">
-        <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'320x180') ?>" class="card-img-top" alt="...">
+        <img src="<?php echo getPreviewResize(getListImageSrc($R['uid']),'400x225') ?>" class="card-img-top" alt="...">
         <span class="list_mask">
 					<span class="txt"><?php echo $R['num']?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
 				</span>
