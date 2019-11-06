@@ -62,7 +62,7 @@ if ($c) {
   if ($_HS['rewrite'])  $g['post_reset']= $g['r'].'/post';
 }
 
-$g['post_list']	= $g['post_reset'].getLinkFilter2('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':'','code'));
+//$g['post_list']	= $g['post_reset'].getLinkFilter2('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':'','code'));
 
 switch ($mod) {
   case 'category' :
