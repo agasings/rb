@@ -83,12 +83,28 @@ db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'list_index'],$DB_CONNECT);
 }
 
-//카테고리 인덱스
+//데이타 인덱스
 $_tmp = db_query( "select count(*) from ".$table[$module.'index'], $DB_CONNECT );
 if ( !$_tmp ) {
 $_tmp = ("
 
 CREATE TABLE ".$table[$module.'index']." (
+site		  INT				DEFAULT '0'		NOT NULL,
+display		TINYINT		DEFAULT '0'		NOT NULL,
+gid			  INT				DEFAULT '0'		NOT NULL,
+KEY site(site),
+KEY display(display),
+KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table[$module.'index'],$DB_CONNECT);
+}
+
+//카테고리 인덱스
+$_tmp = db_query( "select count(*) from ".$table[$module.'category_index'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+
+CREATE TABLE ".$table[$module.'category_index']." (
 site		  INT				DEFAULT '0'		NOT NULL,
 category	INT				DEFAULT '0'		NOT NULL,
 display		TINYINT		DEFAULT '0'		NOT NULL,
@@ -101,7 +117,7 @@ KEY data(data),
 KEY display(display),
 KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
-db_query("OPTIMIZE TABLE ".$table[$module.'index'],$DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table[$module.'category_index'],$DB_CONNECT);
 }
 
 //카테고리

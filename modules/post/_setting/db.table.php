@@ -1,5 +1,6 @@
 <?php
-$table[$module.'index'] = $DB['head'].'_'.$module.'_index'; //인덱스
+$table[$module.'index'] = $DB['head'].'_'.$module.'_index'; //데이타 인덱스
+$table[$module.'category_index'] = $DB['head'].'_'.$module.'_category_index'; //카테고리 인덱스
 $table[$module.'data'] = $DB['head'].'_'.$module.'_data'; //데이터
 $table[$module.'category'] = $DB['head'].'_'.$module.'_category'; //카테고리
 $table[$module.'member'] = $DB['head'].'_'.$module.'_member'; //멤버

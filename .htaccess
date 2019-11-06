@@ -8,10 +8,12 @@ RewriteRule ^(admin)/?$ ./index.php?m=$1&pickmodule=site&panel=Y [L]
 RewriteRule ^(logout)/?$ ./index.php?a=logout [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(p)/([a-zA-Z0-9_\-]+)/?$ ./index.php?mod=$2&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(c)/([a-zA-Z0-9_\-\/]+)/?$ ./index.php?c=$2&%1 [L]
 RewriteRule ^([0-9]+)/?$ ./index.php?m=bbs&uid=$1 [L]
 
-RewriteRule ^(post)/?$ ./index.php?m=post [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^(post)/?$ ./index.php?m=post&%1 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/([0-9_]+)/?$ ./index.php?m=post&mod=view&cid=$2&%1 [L]
 RewriteRule ^(post)/(write)/?$ ./index.php?m=post&mod=write [L]
@@ -20,8 +22,10 @@ RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/(category)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&cat=$3&%1 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(post)/(search)/?$ ./index.php?m=post&mod=keyword&%1 [L]
-RewriteRule ^(list)/?$ ./index.php?m=post&mod=list [L]
-RewriteRule ^(list)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&mod=list_view&listid=$2 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^(list)/?$ ./index.php?m=post&mod=list&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^(list)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=post&mod=list_view&listid=$2&%1 [L]
 
 RewriteRule ^(b)/?$ ./index.php?m=bbs [L]
 RewriteRule ^(b)/([a-zA-Z0-9_\-]+)/?$ ./index.php?m=bbs&bid=$2 [L]

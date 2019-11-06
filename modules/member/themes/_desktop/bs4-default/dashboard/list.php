@@ -21,6 +21,7 @@ $NUM = getDbRows($table['postlist'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
 
 $m = 'post';
+$g['post_base']	 = $g['s'].'/?r='.$r.'&amp;'.'m=post';
 $g['post_reset']	= RW('mod=dashboard&page='.$page);
 $g['post_list']	= $g['post_reset'].getLinkFilter('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$display?'display':'',$keyword?'keyword':''));
 $g['pagelink']	= $g['post_list'];
@@ -29,7 +30,7 @@ $g['post_view']	= $g['post_list'].'&amp;uid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
 $g['post_modify']= $g['post_write'].'&amp;uid=';
 $g['post_reply']	= $g['post_write'].'&amp;reply=Y&amp;uid=';
-$g['post_action']= $g['post_list'].'&amp;a=';
+$g['post_action']= $g['post_base'].'&amp;a=';
 $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 ?>
 

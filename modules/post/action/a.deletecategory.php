@@ -10,7 +10,7 @@ if ($subQue){	$DAT = getDbSelect($table[$m.'category'],$subQue,'*');
   while($R=db_fetch_array($DAT))	{
 
     getDbDelete($table[$m.'category'],'uid='.$R['uid']); // 카테고리 삭제
-    getDbDelete($table[$m.'index'],'category='.$R['uid']); //인덱스삭제
+    getDbDelete($table[$m.'category_index'],'category='.$R['uid']); //인덱스삭제
 
     $_xfile = $g['dir_module'].'var/code/'.sprintf('%05d',$R['uid']);
     @unlink($_xfile.'.header.php');
