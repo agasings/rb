@@ -218,7 +218,7 @@
 
 
 <!-- jquery.shorten : https://github.com/viralpatel/jquery.shorten -->
-<?php getImport('jquery.shorten','jquery.shorten.min','1.1.0','js')?>
+<?php getImport('jquery.shorten','jquery.shorten.min','1.0','js')?>
 
 <script>
 $('[data-plugin="shorten"]').shorten({
