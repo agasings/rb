@@ -1,7 +1,4 @@
 <?php
-$sort	= $sort ? $sort : 'gid';
-$orderby= $orderby ? $orderby : 'asc';
-$recnum	= $recnum && $recnum < 200 ? $recnum : 20;
 $_WHERE = 'site='.$s;
 $where = $where?$where:'subject|tag|review';
 
@@ -27,6 +24,7 @@ if ($sort == 'gid' && !$keyword  && !$listid) {
 		$MBR = getDbData($table['s_mbrdata'],'memberuid='.$M['uid'],'*');
 	}
 	$_WHERE .= ' and list="'.$LIST['uid'].'"';
+	$recnum = 16;  // 4의 배수로 지정 (예: 8,12,16,20..)
 	$TCD = getDbArray($table[$m.'list_index'],$_WHERE,'*','gid','asc',$recnum,$p);
 	$NUM = getDbRows($table[$m.'list_index'],$_WHERE);
 	while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table[$m.'data'],'uid='.$_R['data'],'*');
@@ -42,6 +40,8 @@ if ($sort == 'gid' && !$keyword  && !$listid) {
 		else if ($where == 'term') $_WHERE .= " and d_regis like '".$keyword."%'";
 		else $_WHERE .= getSearchSql($where,$keyword,$ikeyword,'or');
 	}
+
+	if ($cat) $_WHERE .= getSearchSql('category','['.$cat.']',$ikeyword,'or');
 
 	$TCD = getDbArray($table[$m.'data'],$_WHERE,'*',$sort,$orderby,$recnum,$p);
 	$NUM = getDbRows($table[$m.'data'],$_WHERE);
