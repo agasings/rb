@@ -121,12 +121,13 @@ switch ($mod) {
 
 include_once $g['path_module'].$m.'/themes/'.$d['post']['skin'].'/_var.php';
 
+$g['post_base']	 = $g['s'].'/?r='.$r.'&amp;'.'m=post';
 $g['pagelink']	= $g['post_list'];
 $g['post_orign'] = $g['post_reset'];
 $g['post_view']	= $g['post_list'].'&amp;mod=view&amp;cid=';
 $g['post_write'] = $g['post_list'].'&amp;mod=write';
 $g['post_modify']= $g['post_write'].'&amp;cid=';
-$g['post_action']= $g['post_list'].'&amp;a=';
+$g['post_action']= $g['post_base'].'&amp;a=';
 $g['post_delete']= $g['post_action'].'delete&amp;cid=';
 $g['post_print'] = $g['post_reset'].'&amp;iframe=Y&amp;print=Y&amp;cid=';
 
