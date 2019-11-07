@@ -81,7 +81,7 @@
                 리스트 선택
                 <div class="mr-4"><span class="badge badge-primary" data-role="list_num"></span></div>
               </button>
-              <div class="dropdown-menu shadow pt-0" style="width: 308px">
+              <div class="dropdown-menu shadow pt-0" style="width: 320px">
 
                 <div class="dropdown-body p-3" style="max-height: 300px;overflow:auto">
 
