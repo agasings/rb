@@ -35,7 +35,7 @@ $fileExt  = $fileExt == 'jpeg' ? 'jpg' : $fileExt;
 $src = $thumbnail_url;
 if($uid){
 
-      $QVAL1 = "caption='$title',description='$description',time='$time',embed='$embed' ";
+      $QVAL1 = "caption='$title',description='$description',time='$time',tag='$tag' ";
       getDbUpdate($table['s_upload'],$QVAL1,'uid='.$uid);
 
       $NOWUID=$uid;
@@ -44,8 +44,8 @@ if($uid){
   $mingid = getDbCnt($table['s_upload'],'min(gid)','');
   $gid = $mingid ? $mingid - 1 : 100000000;
 
-  $QKEY = "gid,pid,parent,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,host,folder,name,tmpname,size,width,height,caption,description,src,provider,author,down,d_regis,d_update,linkurl,time,duration,embed";
-  $QVAL = "'$gid','$gid','$parent','$hidden','$tmpcode','$s','$mbruid','0','$type','$fileExt','$fserver','$thumbnail_host','$folder','$name','$tmpname','$size','$width','$height','$caption','$description','$src','$provider','$author','$down','$d_regis','$d_update','$linkurl','$time','$duration','$embed'";
+  $QKEY = "gid,pid,parent,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,host,folder,name,tmpname,size,width,height,caption,description,src,provider,author,down,d_regis,d_update,linkurl,time,duration,tag";
+  $QVAL = "'$gid','$gid','$parent','$hidden','$tmpcode','$s','$mbruid','0','$type','$fileExt','$fserver','$thumbnail_host','$folder','$name','$tmpname','$size','$width','$height','$caption','$description','$src','$provider','$author','$down','$d_regis','$d_update','$linkurl','$time','$duration','$tag'";
      getDbInsert($table['s_upload'],$QKEY,$QVAL);
      $NOWUID= getDbCnt($table['s_upload'],'max(uid)','');
 }
