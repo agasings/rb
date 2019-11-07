@@ -28,10 +28,10 @@ function getSearchSql($w,$k,$ik,$h)
 	return LIB_getSearchSql($w,$k,$ik,$h);
 }
 //페이징
-function getPageLink($lnum,$p,$tpage,$link)
+function getPageLink($lnum,$p,$tpage,$_N)
 {
 	include_once $GLOBALS['g']['path_core'].'function/lib/page.lib.php';
-	return LIB_getPageLink($lnum,$p,$tpage,$link);
+	return LIB_getPageLink($lnum,$p,$tpage,$_N);
 }
 //문자열끊기
 function getStrCut($long_str,$cutting_len,$cutting_str)
@@ -43,6 +43,18 @@ function getStrCut($long_str,$cutting_len,$cutting_str)
 function getLinkFilter($default,$arr)
 {
 	foreach($arr as $val) if ($GLOBALS[$val]) $default .= '&amp;'.$val.'='.urlencode($GLOBALS[$val]);
+	return $default;
+}
+function getLinkFilter2($default,$arr)
+{
+	$i = 0;
+	foreach($arr as $val) {
+		if ($GLOBALS[$val]) {
+			$i++;
+			$default .= ($i==1 && $GLOBALS['_HS']['rewrite'] ?'?':'&amp;').$val.'='.$GLOBALS[$val];
+		}
+
+	}
 	return $default;
 }
 //총페이지수
@@ -305,6 +317,7 @@ function RW($rewrite)
 		$rewrite = str_replace('m=search','search',$rewrite);
 		$rewrite = str_replace('m=post','post',$rewrite);
 		$rewrite = str_replace('&mod=write','/write',$rewrite);
+		$rewrite = str_replace('&mod=category','/category',$rewrite);
 		$rewrite = str_replace('&mod=keyword&','/search?',$rewrite);
 		$rewrite = str_replace('&mod=view&cid=','/post/',$rewrite);
 		$rewrite = str_replace('mod=dashboard','dashboard',$rewrite);
@@ -961,15 +974,12 @@ function getConnectUrl($s,$id,$secret,$callBack,$type){
 }
 
 // 포스트의 모든 카테고리 출력
-function getAllPostCat($post) {
+function getAllPostCat($m,$str) {
   global $table;
-
-  $m='post';
-  $catque='data='.$post;
-  $RCD=getDbArray($table[$m.'index'],$catque,'*','gid','desc','',1);
-  $CatName='';
-  while ($R=db_fetch_array($RCD)){
-    $C=getUidData($table[$m.'category'],$R['category']);
+	$cats  = getArrayString($str);
+	$CatName = '';
+  foreach($cats['data'] as $val) {
+    $C=getUidData($table[$m.'category'],$val);
 		$code=$C['parent']?$C['parent'].'/'.$C['uid']:$C['uid'];
     $CatName.= '<a href="'.RW('m=post&cat='.$C['id'].'&code=').$code.'" class="muted-link">'.$C['name'].'</a>, ';
   }
@@ -1055,6 +1065,41 @@ function checkPostOwner($R) {
 		break;
 	}
  return $perm;
+}
+
+// 리퍼러 변환
+function checkReferer($ref) {
+
+	switch ($ref) {
+		case 'yt':  // yotube
+ 			$referer = 'https://youtube.com';
+			break;
+		case 'kt':  // kakaotalk
+			$referer = 'https://www.kakaocorp.com/service/KakaoTalk';
+			break;
+		case 'ks': //kakaostory
+			$referer = 'https://story.kakao.com';
+			break;
+		case 'bd':  //band
+			$referer = 'https://band.us';
+			break;
+		case 'ig':  //instagram
+			$referer = 'https://www.instagram.com';
+			break;
+		case 'fb':  //facebook
+			$referer = 'https://www.facebook.com';
+			break;
+		case 'tt':  // twitter
+			$referer = 'https://www.twitter.com';
+			break;
+		case 'nb':  // naver blog
+			$referer = 'https://section.blog.naver.com/';
+			break;
+		default:
+			$referer = '';
+			break;
+	}
+ return $referer;
 }
 
 ?>
