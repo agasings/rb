@@ -5,10 +5,10 @@ $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈�
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
 
-$_postque = 'site='.$s.' and auth=1 and display=5';
+$_postque = 'site='.$s.' and display=5';
 if ($my['uid'])  $_postque .= ' or display=4';
 
-$_RCD=getDbArray($table['postmember'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
+$_RCD=getDbArray($table['postindex'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
 ?>
 
@@ -27,7 +27,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
 
     </div>
     <div class="">
-      <?php if($wdgvar['link'] && $_NUM):?>
+      <?php if($wdgvar['link']):?>
       <a href="<?php echo $wdgvar['link']?>" class="btn btn-white btn-sm">더보기</a>
       <?php endif?>
     </div>
@@ -38,7 +38,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm">
       <a class="position-relative" href="<?php echo getPostLink($R,1) ?>">
-        <img src="<?php echo getPreviewResize(getUpImageSrc($R),'235x130') ?>" class="card-img-top" alt="...">
+        <img src="<?php echo getPreviewResize(getUpImageSrc($R),'400x225') ?>" class="card-img-top" alt="...">
         <time class="badge badge-dark rounded-0 position-absolute" style="right:1px;bottom:1px"><?php echo getUpImageTime($R) ?></time>
       </a>
       <div class="card-body py-3">

@@ -14,11 +14,11 @@ include_once $_tmpvfile;
 				메뉴
 			</div>
 			<div class="list-group" id="list-tab" role="tablist">
-				<a class="list-group-item d-flex justify-content-between align-items-center list-group-item-action active" data-toggle="list" href="#basic" role="tab" onclick="sessionSetting('post_config_nav','theme','','');" aria-selected="false">
+				<a class="list-group-item d-flex justify-content-between align-items-center list-group-item-action<?php if(!$_SESSION['post_config_nav'] || $_SESSION['post_config_nav']=='basic'):?> active<?php endif?>" data-toggle="list" href="#basic" role="tab" onclick="sessionSetting('post_config_nav','basic','','');" aria-selected="false">
 					일반
 				</a>
 
-	      <a class="list-group-item d-flex justify-content-between align-items-center list-group-item-action" data-toggle="list" href="#theme" role="tab" onclick="sessionSetting('post_config_nav','signup-config','','');" aria-selected="true">
+	      <a class="list-group-item d-flex justify-content-between align-items-center list-group-item-action<?php if($_SESSION['post_config_nav']=='theme'):?> active<?php endif?>" data-toggle="list" href="#theme" role="tab" onclick="sessionSetting('post_config_nav','theme','','');" aria-selected="true">
 					레이아웃/테마
 				</a>
 	    </div>
@@ -29,37 +29,13 @@ include_once $_tmpvfile;
 
 		<div class="tab-content">
 
-			<div class="tab-pane fade show active" id="basic">
+			<div class="tab-pane <?php if(!$_SESSION['post_config_nav'] || $_SESSION['post_config_nav']=='basic'):?> show active<?php endif?>" id="basic" >
 
 				<div class="card rounded-0 mb-0">
 					<div class="card-header">
 						일반 설정
 					</div>
 					<div class="card-body">
-
-						<div class="form-group row">
-						   <label class="col-md-2 col-form-label text-md-right">카테고리 필수</label>
-						   <div class="col-md-10 col-xl-9">
-
-						     <div class="custom-control custom-checkbox">
-						       <input type="checkbox" class="custom-control-input" id="rss" name="rss" value="1"  <?php if($d['post']['rss']):?> checked<?php endif?>>
-						       <label class="custom-control-label" for="rss">RSS발행을 허용합니다. <small>(개별포스트별 RSS발행은 개별포스트 설정을 따름)</small></label>
-						     </div>
-
-						   </div>
-						</div>
-
-						<div class="form-group row">
-							 <label class="col-md-2 col-form-label text-md-right">제목 필수</label>
-							 <div class="col-md-10 col-xl-9">
-
-								 <div class="custom-control custom-checkbox">
-									 <input type="checkbox" class="custom-control-input" id="rss" name="rss" value="1"  <?php if($d['post']['rss']):?> checked<?php endif?>>
-									 <label class="custom-control-label" for="rss">RSS발행을 허용합니다. <small>(개별포스트별 RSS발행은 개별포스트 설정을 따름)</small></label>
-								 </div>
-
-							 </div>
-						</div>
 
 						<div class="form-group row">
 						   <label class="col-md-2 col-form-label text-md-right">평가 제한</label>
@@ -91,24 +67,29 @@ include_once $_tmpvfile;
 
 						<div class="form-group row">
 							 <label class="col-md-2 col-form-label text-md-right">목록 출력수</label>
-							 <div class="col-md-4 col-xl-3">
+							 <div class="col-md-4">
 								 <div class="input-group">
-									 <input type="text" name="recnum" value="<?php echo $d['post']['recnum']?$d['post']['recnum']:20?>" class="form-control">
+									 <div class="input-group-prepend">
+											<span class="input-group-text">페이지당</span>
+										</div>
+									 <input type="text" name="recnum" value="<?php echo $d['post']['recnum']?$d['post']['recnum']:20?>" class="form-control text-center">
 									 <div class="input-group-append">
 										 <span class="input-group-text">개</span>
 									 </div>
 								 </div>
-								 <small class="form-text text-muted">한페이지에 출력할 게시물의 수</small>
+								 <small class="form-text text-muted">한페이지에 출력할 포스트의 수</small>
 							 </div>
-							 <label class="col-md-2 col-form-label text-md-right">제목 끊기</label>
-							 <div class="col-md-4 col-xl-4">
+							 <div class="col-md-4">
 								 <div class="input-group">
-									 <input type="text" name="sbjcut" value="<?php echo $d['post']['sbjcut']?$d['post']['sbjcut']:40?>" class="form-control">
+									 <div class="input-group-prepend">
+											<span class="input-group-text">라인당</span>
+										</div>
+									 <input type="text" name="rownum" value="<?php echo $d['post']['rownum']?$d['post']['rownum']:'4'?>" class="form-control text-center">
 									 <div class="input-group-append">
-										 <span class="input-group-text">자</span>
+										 <span class="input-group-text">개</span>
 									 </div>
 								 </div>
-								 <small class="form-text text-muted">제목이 길 경우 보여줄 글자 수 </small>
+								 <small class="form-text text-muted">한줄에 표시할 카드의 수, 카드형 레이아웃에 해당</small>
 							 </div>
 						</div>
 
@@ -171,7 +152,7 @@ include_once $_tmpvfile;
 						         <input type="radio" id="badword_action_2" class="custom-control-input" name="badword_action" value="2"<?php if($d['post']['badword_action']==2):?> checked<?php endif?>>
 						         <label class="custom-control-label" for="badword_action_2">
 						           제한단어를 다음의 문자로 치환하여 등록함
-						           <input type="text" name="badword_escape" value="<?php echo $d['post']['badword_escape']?>" maxlength="1" class="d-inline form-control form-control-sm">
+						           <input type="text" name="badword_escape" value="<?php echo $d['post']['badword_escape']?>" maxlength="1" class="d-inline form-control form-control-sm mt-2">
 						         </label>
 						       </div>
 
@@ -182,7 +163,7 @@ include_once $_tmpvfile;
 
 			</div><!-- /.tab-pane -->
 
-			<div class="tab-pane fade" id="theme">
+			<div class="tab-pane <?php if($_SESSION['post_config_nav']=='theme'):?> show active<?php endif?>" id="theme">
 
 				<div class="card rounded-0 mb-0">
 					<div class="card-header">
@@ -221,7 +202,25 @@ include_once $_tmpvfile;
 							 <div class="col-lg-10 col-xl-9">
 
 								 <select name="m_layout" class="form-control custom-select" id="" tabindex="-1">
-
+									 <?php if ($_HS['m_layout']): ?>
+									 <option value="0">사이트 레이아웃</option>
+									 <?php else: ?>
+									 <option value="0">&nbsp;사용안함 (기본 레이아웃 적용)</option>
+									 <?php endif; ?>
+									 <option disabled>--------------------</option>
+									 <?php $dirs = opendir($g['path_layout'])?>
+									 <?php while(false !== ($tpl = readdir($dirs))):?>
+									 <?php if($tpl=='.' || $tpl == '..' || $tpl == '_blank' || is_file($g['path_layout'].$tpl))continue?>
+									 <?php $dirs1 = opendir($g['path_layout'].$tpl)?>
+										 <optgroup label="<?php echo getFolderName($g['path_layout'].$tpl)?>">
+											 <?php while(false !== ($tpl1 = readdir($dirs1))):?>
+											 <?php if(!strstr($tpl1,'.php') || $tpl1=='_main.php')continue?>
+												<option value="<?php echo $tpl?>/<?php echo $tpl1?>"<?php if($d['post']['m_layout']==$tpl.'/'.$tpl1):?> selected="selected"<?php endif?>><?php echo $tpl?> &gt; <?php echo str_replace('.php','',$tpl1)?></option>
+											 <?php endwhile?>
+										</optgroup>
+									 <?php closedir($dirs1)?>
+									 <?php endwhile?>
+									 <?php closedir($dirs)?>
 								 </select>
 
 							 </div>
@@ -256,7 +255,13 @@ include_once $_tmpvfile;
 						        <?php closedir($dirs)?>
 						      </optgroup>
 						      <optgroup label="모바일">
-
+						        <?php $tdir = $g['path_module'].$module.'/themes/_mobile/'?>
+						        <?php $dirs = opendir($tdir)?>
+						        <?php while(false !== ($skin = readdir($dirs))):?>
+						        <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
+						        <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['skin_main']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
+						        <?php endwhile?>
+						        <?php closedir($dirs)?>
 						      </optgroup>
 
 						    </select>
@@ -272,191 +277,33 @@ include_once $_tmpvfile;
 						   </label>
 						  <div class="col-md-10 col-xl-9">
 						    <select name="skin_mobile" class="form-control custom-select">
-
-						    </select>
-						    <small class="form-text text-muted">
-						      선택하지 않으면 데스크탑 대표테마로 설정됩니다.
-						    </small>
-						 </div> <!-- .col-sm-10  -->
-						</div> <!-- .form-group  -->
-						<div class="form-group row">
-						   <label class="col-md-2 col-form-label text-md-right">
-						     피드 테마
-						   </label>
-						  <div class="col-md-10 col-xl-9">
-						    <select name="skin_total" class="form-control custom-select">
-
-						    </select>
-						    <small class="form-text text-muted">
-						      통합보드란 모든 포스트의 전체 게시물을 하나의 포스트으로 출력해 주는 서비스입니다.<br>
-						      사용하시려면 통합보드용 테마를 지정해 주세요.<br>
-						      통합보드의 호출은 <code><a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>" target="_blank"><?php echo $g['r']?>/?m=<?php echo $module?></a></code> 입니다.
-						    </small>
-
-						 </div> <!-- .col-sm-10  -->
-						</div> <!-- .form-group  -->
-
-						<hr>
-						<div class="form-group row">
-						   <label class="col-md-2 col-form-label text-md-right">
-						     <i class="fa fa-pencil-square-o  fa-fw" aria-hidden="true"></i> 대표 에디터
-						   </label>
-						  <div class="col-md-10 col-xl-9">
-						    <select name="editor_main" class="form-control custom-select">
-						      <?php $dirs = opendir($g['path_plugin'])?>
-						      <?php while(false !== ($tpl = readdir($dirs))):?>
-						      <?php if(!is_file($g['path_plugin'].$tpl.'/import.desktop.php'))continue?>
-						      <option value="<?php echo $tpl?>"<?php if($d['post']['editor_main']==$tpl):?> selected<?php endif?>>
-						        ㆍ<?php echo getFolderName($g['path_plugin'].$tpl)?> (<?php echo $tpl?>)
-						      </option>
-						      <?php endwhile?>
-						      <?php closedir($dirs)?>
-						    </select>
-						 </div> <!-- .col-sm-10  -->
-						</div> <!-- .form-group  -->
-						<div class="form-group row">
-						   <label class="col-md-2 col-form-label text-md-right">
-						     <span class="badge badge-dark">모바일 대표테마</span>
-						   </label>
-						  <div class="col-md-10 col-xl-9">
-						    <input type="hidden" name="editor_mobile" value="">
-						    <input type="text" readonly class="form-control-plaintext" value="모바일 기본형">
-						 </div> <!-- .col-sm-10  -->
-						</div> <!-- .form-group  -->
-
-						<hr>
-						<div class="form-group row">
-						   <label class="col-md-2 col-form-label text-md-right">
-						     <i class="fa fa-paperclip fa-fw" aria-hidden="true"></i> 파일첨부 대표 테마
-						   </label>
-						  <div class="col-md-10 col-xl-9">
-						    <select name="attach_main" class="form-control custom-select">
-						      <option value="">사용안함</option>
-						      <option value="" disabled>--------------------------------</option>
-						      <optgroup label="데스크탑">
-						        <?php $mdir = $g['path_module'].'mediaset/themes/_desktop/'?>
-						        <?php $dirs = opendir($mdir)?>
-						        <?php while(false !== ($skin = readdir($dirs))):?>
-						        <?php if($skin=='.' || $skin == '..' || is_file($mdir.$skin))continue?>
-						        <option value="_desktop/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['attach_main']=='_desktop/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($mdir.$skin)?>(<?php echo $skin?>)</option>
-						        <?php endwhile?>
-						        <?php closedir($dirs)?>
-						       </optgroup>
-						       <optgroup label="모바일">
-						         <?php $mdir = $g['path_module'].'mediaset/themes/_mobile/'?>
-						         <?php $dirs = opendir($mdir)?>
-						         <?php while(false !== ($skin = readdir($dirs))):?>
-						         <?php if($skin=='.' || $skin == '..' || is_file($mdir.$skin))continue?>
-						         <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['attach_main']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($mdir.$skin)?>(<?php echo $skin?>)</option>
-						         <?php endwhile?>
-						         <?php closedir($dirs)?>
-						        </optgroup>
-						    </select>
-						    <small class="form-text text-muted">
-						      지정된 대표테마는 포스트설정시 별도의 테마지정없이 자동으로 적용됩니다.
-						      가장 많이 사용하는 테마를 지정해 주세요.
-						    </small>
-						 </div> <!-- .col-sm-10  -->
-						</div> <!-- .form-group  -->
-						<div class="form-group row">
-						   <label class="col-md-2 col-form-label text-md-right">
-						     <span class="badge badge-dark">모바일 대표테마</span>
-						   </label>
-						  <div class="col-md-10 col-xl-9">
-						    <select name="attach_mobile" class="form-control custom-select">
-						      <option value="">사용안함</option>
+						      <option value="">모바일 테마 사용안함</option>
 						      <option value="" disabled>--------------------------------</option>
 						      <optgroup label="모바일">
-						        <?php $mmdir = $g['path_module'].'mediaset/themes/_mobile/'?>
-						        <?php $dirs = opendir($mmdir)?>
+						        <?php $tdir = $g['path_module'].$module.'/themes/_mobile/'?>
+						        <?php $dirs = opendir($tdir)?>
 						        <?php while(false !== ($skin = readdir($dirs))):?>
-						        <?php if($skin=='.' || $skin == '..' || is_file($mmdir.$skin))continue?>
-						        <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['attach_mobile']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($mmdir.$skin)?>(<?php echo $skin?>)</option>
+						        <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
+						        <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['skin_mobile']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
 						        <?php endwhile?>
 						        <?php closedir($dirs)?>
-						       </optgroup>
-						       <optgroup label="데스크탑">
-						         <?php $mmdir = $g['path_module'].'mediaset/themes/_desktop/'?>
-						         <?php $dirs = opendir($mmdir)?>
-						         <?php while(false !== ($skin = readdir($dirs))):?>
-						         <?php if($skin=='.' || $skin == '..' || is_file($mmdir.$skin))continue?>
-						         <option value="_desktop/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['attach_mobile']=='_desktop/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($mmdir.$skin)?>(<?php echo $skin?>)</option>
-						         <?php endwhile?>
-						         <?php closedir($dirs)?>
-						        </optgroup>
+						      </optgroup>
+						      <optgroup label="데스크탑">
+						        <?php $tdir = $g['path_module'].$module.'/themes/_desktop/'?>
+						        <?php $dirs = opendir($tdir)?>
+						        <?php while(false !== ($skin = readdir($dirs))):?>
+						        <?php if($skin=='.' || $skin == '..' || is_file($tdir.$skin))continue?>
+						        <option value="_desktop/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['skin_mobile']=='_desktop/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($tdir.$skin)?>(<?php echo $skin?>)</option>
+						        <?php endwhile?>
+						        <?php closedir($dirs)?>
+						      </optgroup>
 						    </select>
 						    <small class="form-text text-muted">
 						      선택하지 않으면 데스크탑 대표테마로 설정됩니다.
 						    </small>
 						 </div> <!-- .col-sm-10  -->
 						</div> <!-- .form-group  -->
-						<hr>
 
-						<div class="form-group row">
-						  <label class="col-md-2 col-form-label text-md-right">
-						    <i class="fa fa-comments-o fa-fw" aria-hidden="true"></i> 댓글 대표 테마
-						  </label>
-						 <div class="col-md-10 col-xl-9">
-						   <select name="comment_main" class="form-control custom-select">
-						     <option value="">사용안함</option>
-						     <option value="" disabled>--------------------------------</option>
-						     <optgroup label="데스크탑">
-						       <?php $cdir = $g['path_module'].'comment/themes/_desktop/'?>
-						       <?php $dirs = opendir($cdir)?>
-						       <?php while(false !== ($skin = readdir($dirs))):?>
-						       <?php if($skin=='.' || $skin == '..' || is_file($cdir.$skin))continue?>
-						       <option value="_desktop/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['comment_main']=='_desktop/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($cdir.$skin)?>(<?php echo $skin?>)</option>
-						       <?php endwhile?>
-						       <?php closedir($dirs)?>
-						     </optgroup>
-						     <optgroup label="모바일">
-						       <?php $cdir = $g['path_module'].'comment/themes/_mobile/'?>
-						       <?php $dirs = opendir($cdir)?>
-						       <?php while(false !== ($skin = readdir($dirs))):?>
-						       <?php if($skin=='.' || $skin == '..' || is_file($cdir.$skin))continue?>
-						       <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['comment_main']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($cdir.$skin)?>(<?php echo $skin?>)</option>
-						       <?php endwhile?>
-						       <?php closedir($dirs)?>
-						     </optgroup>
-						   </select>
-						   <small class="form-text text-muted">
-						     지정된 대표테마는 포스트설정시 별도의 테마지정없이 자동으로 적용됩니다.
-						     가장 많이 사용하는 테마를 지정해 주세요.
-						   </small>
-						</div> <!-- .col-sm-10  -->
-						</div> <!-- .form-group  -->
-						<div class="form-group row">
-						  <label class="col-md-2 col-form-label text-md-right">
-						    <span class="badge badge-dark">모바일 대표테마</span>
-						  </label>
-						 <div class="col-md-10 col-xl-9">
-						   <select name="comment_mobile" class="form-control custom-select">
-						     <option value="">사용안함</option>
-						     <option value="" disabled>--------------------------------</option>
-						     <optgroup label="모바일">
-						       <?php $cmdir = $g['path_module'].'comment/themes/_mobile/'?>
-						       <?php $dirs = opendir($cmdir)?>
-						       <?php while(false !== ($skin = readdir($dirs))):?>
-						       <?php if($skin=='.' || $skin == '..' || is_file($cmdir.$skin))continue?>
-						       <option value="_mobile/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['comment_mobile']=='_mobile/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($cmdir.$skin)?>(<?php echo $skin?>)</option>
-						       <?php endwhile?>
-						       <?php closedir($dirs)?>
-						     </optgroup>
-						     <optgroup label="데스크탑">
-						       <?php $cmdir = $g['path_module'].'comment/themes/_desktop/'?>
-						       <?php $dirs = opendir($cmdir)?>
-						       <?php while(false !== ($skin = readdir($dirs))):?>
-						       <?php if($skin=='.' || $skin == '..' || is_file($cmdir.$skin))continue?>
-						       <option value="_desktop/<?php echo $skin?>" title="<?php echo $skin?>"<?php if($d['post']['comment_mobile']=='_desktop/'.$skin):?> selected="selected"<?php endif?>>ㆍ<?php echo getFolderName($cmdir.$skin)?>(<?php echo $skin?>)</option>
-						       <?php endwhile?>
-						       <?php closedir($dirs)?>
-						     </optgroup>
-						   </select>
-						   <small class="form-text text-muted">
-						     선택하지 않으면 데스크탑 대표테마로 설정됩니다.
-						   </small>
-						</div> <!-- .col-sm-10  -->
-						</div> <!-- .form-group  -->
 
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->

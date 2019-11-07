@@ -9,7 +9,7 @@ $account = $SD['uid'];
 if($account) $_WHERE .=' and site='.$account;
 if ($d_start) $_WHERE .= ' and d_regis > '.str_replace('/','',$d_start).'000000';
 if ($d_finish) $_WHERE .= ' and d_regis < '.str_replace('/','',$d_finish).'240000';
-if ($bid) $_WHERE .= ' and bbs='.$bid;
+if ($display) $_WHERE .= ' and display='.$display;
 if ($category) $_WHERE .= " and category ='".$category."'";
 if ($hidden) $_WHERE .= ' and hidden=1';
 if ($where && $keyw)
@@ -26,7 +26,7 @@ $TPG = getTotalPage($NUM,$recnum);
 
 	<nav class="col-sm-4 col-md-4 col-xl-3 d-none d-sm-block sidebar sidebar-right">
 
-		<form name="procForm" action="<?php echo $g['s']?>/" method="get">
+		<form name="procForm" action="<?php echo $g['s']?>/" method="get" autocomplete="off">
 			 <input type="hidden" name="r" value="<?php echo $r?>">
 			 <input type="hidden" name="m" value="<?php echo $m?>">
 			 <input type="hidden" name="module" value="<?php echo $module?>">
@@ -42,42 +42,6 @@ $TPG = getTotalPage($NUM,$recnum);
 
 			    <div id="collapse-filter" class="collapse<?php if($_SESSION['bbs_post_collapse']=='filter'):?> show<?php endif?>" role="tabpanel" data-parent="#accordion">
 			      <div class="card-body">
-
-							<select name="bid" class="form-control custom-select mb-2" onchange="this.form.submit();">
-								<option value="">사이트 전체 게시판</option>
-								<?php $_BBSLIST = getDbArray($table[$module.'list'],'site='.$account,'*','gid','asc',0,1)?>
-								<?php while($_B=db_fetch_array($_BBSLIST)):?>
-								<option value="<?php echo $_B['uid']?>"<?php if($_B['uid']==$bid):?> selected="selected"<?php endif?>>ㆍ<?php echo $_B['name']?>(<?php echo $_B['id']?> - <?php echo number_format($_B['num_r'])?>)</option>
-								<?php endwhile?>
-								<?php if(!db_num_rows($_BBSLIST)):?>
-								<option value="">등록된 게시판이 없습니다.</option>
-								<?php endif?>
-							</select>
-
-							<select name="category" onchange="this.form.submit();" class="form-control custom-select mb-2">
-								<?php $getCate=db_query("select * from rb_bbs_data where bbs='".$bid."' and category<>'' group by category",$DB_CONNECT)?>
-								<option value="0">전체 카테고리</option>
-								<?php while($ct=db_fetch_array($getCate)):?>
-								<option value="<?php echo $ct['category']?>" <?php if($category==$ct['category']):?> selected="selected"<?php endif?>><?php echo $ct['category']?></option>
-								<?php endwhile?>
-								<?php if(!db_num_rows($getCate)):?>
-								<option value="">등록된 카테고리가 없습니다.</option>
-								<?php endif?>
-						 </select>
-
-						 <div class="mb-2">
-
-							 <div class="custom-control custom-checkbox custom-control-inline">
-							   <input type="checkbox" class="custom-control-input" id="notice" name="notice" value="Y"<?php if($notice=='Y'):?> checked<?php endif?> onclick="this.form.submit();">
-							   <label class="custom-control-label" for="notice">공지글</label>
-							 </div>
-
-							 <div class="custom-control custom-checkbox custom-control-inline">
-							   <input type="checkbox" class="custom-control-input" id="hidden" name="hidden" value="Y"<?php if($hidden=='Y'):?> checked<?php endif?> onclick="this.form.submit();">
-							   <label class="custom-control-label" for="hidden">비밀글</label>
-							 </div>
-
-						 </div>
 
 						 <div class="input-daterange input-group input-group-sm mb-2" id="datepicker">
 							 <input type="text" class="form-control" name="d_start" placeholder="시작일 선택" value="<?php echo $d_start?>">
@@ -137,7 +101,7 @@ $TPG = getTotalPage($NUM,$recnum);
 										<input type="radio" value="likes" name="sort"<?php if($sort=='likes'):?> checked<?php endif?>> 좋아요
 									</label>
 									<label class="btn btn-light<?php if($sort=='dislikes'):?> active<?php endif?>" onclick="btnFormSubmit(this);">
-										<input type="radio" value="dislikes" name="sort"<?php if($sort=='dislikes'):?> checked<?php endif?>> 비좋아요
+										<input type="radio" value="dislikes" name="sort"<?php if($sort=='dislikes'):?> checked<?php endif?>> 싫어요
 									</label>
 									<label class="btn btn-light<?php if($sort=='report'):?> active<?php endif?>" onclick="btnFormSubmit(this);">
 										<input type="radio" value="report" name="sort"<?php if($sort=='report'):?> checked<?php endif?>> 신고
@@ -170,9 +134,7 @@ $TPG = getTotalPage($NUM,$recnum);
 							<select name="where" class="form-control custom-select mb-2">
 								 <option value="subject|tag"<?php if($where=='subject|tag'):?> selected="selected"<?php endif?>>제목+태그</option>
 								<option value="content"<?php if($where=='content'):?> selected="selected"<?php endif?>>본문</option>
-								<option value="name"<?php if($where=='name'):?> selected="selected"<?php endif?>>이름</option>
-								<option value="nic"<?php if($where=='nic'):?> selected="selected"<?php endif?>>닉네임</option>
-								<option value="id"<?php if($where=='id'):?> selected="selected"<?php endif?>>아이디</option>
+								<option value="nic"<?php if($where=='review'):?> selected="selected"<?php endif?>>리뷰</option>
 								<option value="ip"<?php if($where=='ip'):?> selected="selected"<?php endif?>>아이피</option>
 							</select>
 							<input type="text" name="keyw" value="<?php echo stripslashes($keyw)?>" class="form-control mb-2">
@@ -228,14 +190,14 @@ $TPG = getTotalPage($NUM,$recnum);
 						<tr>
 							<th><label data-tooltip="tooltip" title="선택"><input type="checkbox" class="checkAll-post-user"></label></th>
 							<th>번호</th>
-							<th>게시판</th>
+							<th>상태</th>
 							<th>제목</th>
-							<th>이름</th>
+							<th>등록자</th>
 							<th>조회</th>
-							<th>다운</th>
 							<th>좋아요</th>
+							<th>댓글</th>
 							<th>신고</th>
-							<th>날짜</th>
+							<th>생성일시</th>
 						</tr>
 					</thead>
 		      <tbody class="text-muted">
@@ -248,7 +210,7 @@ $TPG = getTotalPage($NUM,$recnum);
 						    <small class="text-muted"><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></small>
 						</td>
 						<td>
-							<small class="text-muted"><?php echo $B['name'] ?></small>
+							<small class="text-muted"><?php echo $R['display'] ?></small>
 						</td>
 						<td class="text-left">
 							<a class="muted-link" href="<?php echo getPostLink($R,0) ?>" target="_blank">
@@ -273,11 +235,11 @@ $TPG = getTotalPage($NUM,$recnum);
 							</a>
 						</td>
 						<?php else:?>
-						<td><?php echo $R[$_HS['nametype']]?></td>
+						<td><?php echo getProfileInfo($R['mbruid'],$_HS['nametype'])?></td>
 						<?php endif?>
 						<td><strong><?php echo $R['hit']?></strong></td>
-						<td><?php echo $R['down']?></td>
 						<td><?php echo $R['likes']?></td>
+						<td><?php echo $R['comment']?></td>
 						<td><?php echo $R['report']?></td>
 						<td>
 							<small class="text-muted"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></small>
