@@ -393,6 +393,7 @@
             </div>
           </ul>
 
+          <?php if (getDbRows($table[$m.'category'],'site='.$s.' and reject=0 and hidden=0')): ?>
           <strong class="d-block small text-muted pb-2">카테고리</strong>
           <div class="card mb-2 border-0 border-top" style="margin-left: -1rem;margin-right: -1rem">
             <div class="card-body pt-2 pb-0">
@@ -400,6 +401,7 @@
               <?php echo getTreePostCategoryCheck($_treeOptions,$R['uid'],0,0,'')?>
             </div>
           </div>
+          <?php endif; ?>
 
           <?php if ($cid): ?>
 
