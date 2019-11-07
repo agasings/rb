@@ -12,6 +12,8 @@ $content	= trim($content);
 $d_regis	= $date['totime']; // 최초 등록일
 if($uid) $d_modify =$date['totime']; // 수정 등록일
 else $d_modify=''; // 최초에는 수정일 없음
+$ip			= $_SERVER['REMOTE_ADDR'];
+$agent		= $_SERVER['HTTP_USER_AGENT'];
 
 $format= $format?$format:1;
 $display= $display?$display:1;
@@ -142,9 +144,9 @@ if ($uid) {
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>';
 
   $QKEY1 = "site,gid,mbruid,cid,subject,review,content,tag,html,";
-  $QKEY1.= "hit,comment,oneline,d_regis,d_modify,d_comment,member,upload,log,display,hidden,featured_img,format,dis_comment,dis_like,dis_rating,dis_listadd";
+  $QKEY1.= "hit,comment,oneline,d_regis,d_modify,d_comment,member,upload,log,display,hidden,featured_img,format,dis_comment,dis_like,dis_rating,dis_listadd,ip,agent";
   $QVAL1 = "'$s','$gid','$mbruid','$cid','$subject','$review','$content','$tag','$html',";
-  $QVAL1.= "'0','0','0','$d_regis','','','$member','$upload','$log','$display','$hidden','$featured_img','$format','$dis_comment','$dis_like','$dis_rating','$dis_listadd'";
+  $QVAL1.= "'0','0','0','$d_regis','','','$member','$upload','$log','$display','$hidden','$featured_img','$format','$dis_comment','$dis_like','$dis_rating','$dis_listadd','$ip','$agent'";
   getDbInsert($table[$m.'data'],$QKEY1,$QVAL1);
   getDbInsert($table[$m.'index'],'site,display,gid',"'$s','$display','$gid'");
 
