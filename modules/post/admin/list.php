@@ -4,23 +4,19 @@ $bbs_time=$d['bbs']['time']; // 아래 $d 배열과 충돌을 피하기 위해�
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'desc';
 $recnum	= $recnum && $recnum < 301 ? $recnum : 30;
-$bbsque	= 'uid';
+$listque	= 'uid';
 $account = $SD['uid'];
-if ($account) $bbsque .= ' and site='.$account;
+if ($account) $listque .= ' and site='.$account;
 
 if ($where && $keyw)
 {
-	if (strstr('[id]',$where)) $bbsque .= " and ".$where."='".$keyw."'";
-	else $bbsque .= getSearchSql($where,$keyw,$ikeyword,'or');
+	if (strstr('[id]',$where)) $listque .= " and ".$where."='".$keyw."'";
+	else $listque .= getSearchSql($where,$keyw,$ikeyword,'or');
 }
 
-$RCD = getDbArray($table[$module.'list'],$bbsque,'*',$sort,$orderby,$recnum,$p);
-$NUM = getDbRows($table[$module.'list'],$bbsque);
+$RCD = getDbArray($table[$module.'list'],$listque,'*',$sort,$orderby,$recnum,$p);
+$NUM = getDbRows($table[$module.'list'],$listque);
 $TPG = getTotalPage($NUM,$recnum);
-
-$_LEVELNAME = array('l0'=>'전체허용');
-$_LEVELDATA=getDbArray($table['s_mbrlevel'],'','*','uid','asc',0,1);
-while($_L=db_fetch_array($_LEVELDATA)) $_LEVELNAME['l'.$_L['uid']] = $_L['name'].' 이상';
 
 $SITES = getDbArray($table['s_site'],'','*','gid','asc',0,1);
 $SITEN   = db_num_rows($SITES);
@@ -148,9 +144,6 @@ $SITEN   = db_num_rows($SITES);
 		<?php if($NUM):?>
 		<div class="p-2">
 			<a href="<?php echo $g['adm_href']?>" class="btn btn-light btn-block">검색조건 초기화</a>
-			<a href="<?php echo $g['adm_href']?>&amp;front=main_detail"  class="btn btn-outline-primary btn-block">
-				<i class="fa fa-plus"></i> 새 리스트 만들기
-			</a>
 		</div>
 		<?php endif?>
 
@@ -201,12 +194,6 @@ $SITEN   = db_num_rows($SITES);
 				<button type="submit" class="btn btn-light">검색</button>
 				<button type="button" class="btn btn-light" onclick="location.href='<?php echo $g['adm_href']?>';">리셋</button>
 
-				<?php if ($NUM): ?>
-				<a href="<?php echo $g['adm_href']?>&amp;front=main_detail"  class="btn btn-outline-primary ml-auto">
-					<i class="fa fa-plus"></i> 새 리스트 만들기
-				</a>
-				<?php endif; ?>
-
 			</form>
 
 
@@ -227,57 +214,26 @@ $SITEN   = db_num_rows($SITES);
 				<table class="table table-striped text-center mb-0">
 					<thead class="small text-muted">
 						<tr>
-							<th class="py-0"><label data-tooltip="tooltip" title="선택"><input type="checkbox" class="checkAll-email-user"></label></th>
 							<th>번호</th>
 							<th>아이디</th>
 							<th>리스트명</th>
 							<th>게시물</th>
-							<th>최근게시</th>
-							<th>분류</th>
-							<th>연결</th>
-							<th>레이아웃</th>
-							<th>접근권한</th>
-							<th>포인트</th>
+							<th>업데이트</th>
+							<th>상태</th>
+							<th>등록자</th>
 							<th>관리</th>
 						</tr>
 					</thead>
 
 					<?php while($R=db_fetch_array($RCD)):?>
 					<?php $L=getOverTime($date['totime'],$R['d_last'])?>
-					<?php $d=array();include $g['path_module'].$module.'/var/var.'.$R['id'].'.php';?>
-					<?php
-						 $sbj_tooltip.='최신글제외 : '.($d['bbs']['display']?'Yes':'No').'<br />';
-						 $sbj_tooltip.='쿼리생략 : '.($d['bbs']['hidelist']?'Yes':'No').'<br />';
-						 $sbj_tooltip.='RSS발행 : '.($d['bbs']['rss']?'Yes':'No').'<br />';
-						 $sbj_tooltip.='조회수증가 : '.($d['bbs']['hitcount']?'계속증가':'1회만증가(세션적용)').'<br />';
-						 $sbj_tooltip.='게시물출력수 : '.$d['bbs']['recnum'].'개<br />';
-						 $sbj_tooltip.='제목끊기 : '.$d['bbs']['sbjcut'].'자<br />';
-						 $sbj_tooltip.='새글유지 : '.$d['bbs']['newtime'].'시간<br />';
-						 $sbj_tooltip.='추가관리자 : '.($d['bbs']['admin']?$d['bbs']['admin']:'없음').'<br />';
-
-						 $lay_tooltip .='레이아웃 : '.($d['bbs']['layout']?'':'사이트 대표레이아웃').'<br />';
-						 $lay_tooltip .='리스트테마(desktop) : '.($d['bbs']['skin']?getFolderName($g['path_module'].$module.'/theme/'.$d['bbs']['skin']).'('.basename($d['bbs']['skin']).')':'대표테마').'<br />';
-						 $lay_tooltip .='리스트테마(mobile) : '.($d['bbs']['m_skin']?getFolderName($g['path_module'].$module.'/theme/'.$d['bbs']['m_skin']).'('.basename($d['bbs']['m_skin']).')':'대표테마').'<br />';
-						 $lay_tooltip .='댓글테마(desktop) : '.($d['bbs']['cskin']?getFolderName( $g['path_module'].'comment/theme/'.$d['bbs']['cskin']).'('.basename($d['bbs']['cskin']).')':'대표테마').'<br />';
-						 $lay_tooltip .='댓글테마(mobile) : '.($d['bbs']['c_mskin']?getFolderName($g['path_module'].'comment/theme/'.$d['bbs']['c_mskin']).'('.basename($d['bbs']['c_mskin']).')':'대표테마').'<br />';
-
-						 $perm_tooltip .='목록 : '.$_LEVELNAME['l'.$d['bbs']['perm_l_list']].'<br />';
-						 $perm_tooltip .='열람 : '.$_LEVELNAME['l'.$d['bbs']['perm_l_view']].'<br />';
-						 $perm_tooltip .='쓰기 : '.$_LEVELNAME['l'.$d['bbs']['perm_l_write']].'<br />';
-						 $perm_tooltip .='다운 : '.$_LEVELNAME['l'.$d['bbs']['perm_l_down']].'<br />';
-
-						 $point_tooltip .='등록 : '.number_format($d['bbs']['point1']).'P 지급<br />';
-						 $point_tooltip .='열람 : '.number_format($d['bbs']['point2']).'P 차감<br />';
-						 $point_tooltip .='다운 : '.number_format($d['bbs']['point3']).'P 차감';
-					?>
 
 					<tr>
-						<td><input type="checkbox" name="bbs_members[]" value="<?php echo $R['uid']?>" class="rb-email-user" onclick="checkboxCheck();"/></td>
 						<td><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></td>
 						<td><a href="<?php echo getListLink($R,0) ?>" target="_blank"><?php echo $R['id']?></a></td>
-						<td><input class="form-control" type="text" name="name_<?php echo $R['uid']?>" value="<?php echo $R['name']?>" data-toggle="popover" data-content="<?php echo $sbj_tooltip?>"></td>
+						<td><span class="text-white"><?php echo $R['name']?></span></td>
 						<td>
-							<span class="badge badge-pill badge-dark"><?php echo number_format($R['num_r'])?></span>
+							<span class="badge badge-pill badge-dark"><?php echo number_format($R['num'])?></span>
 							</td>
 						<td>
 							<time class="small text-muted" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_last'],'c')?>">
@@ -286,17 +242,15 @@ $SITEN   = db_num_rows($SITES);
 							<?php if(getNew($R['d_last'],24)):?> <small class="text-danger">N</small><?php endif?>
 						</td>
 						<td>
-							<span class="badge badge-pill badge-dark"><?php echo $R['category']?'Y':'N'?></span>
+							<span class="badge badge-pill badge-dark"><?php echo $g['displaySet']['label'][$R['display']]?></span>
 						</td>
+
 						<td>
-							<span class="badge badge-pill badge-dark"><?php echo $d['bbs']['sosokmenu']?'<span>Y</span>':'N'?></span>
+							<span class="badge badge-pill badge-dark"><?php echo getProfileInfo($R['mbruid'],$_HS['nametype'])?></span>
 						</td>
-						<td><span data-toggle="popover" data-content="<?php echo $lay_tooltip?>" class="badge badge-pill badge-dark"><?php echo $d['bbs']['layout']?'<i>Y</i>':'N'?> / <?php echo $d['bbs']['skin']?'<i>Y</i>':'N'?> / <?php echo $d['bbs']['c_skin']?'<i>Y</i>':'N'?></span></td>
-						<td><span data-toggle="popover" data-content="<?php echo $perm_tooltip?>" class="badge badge-pill badge-dark"><?php echo $d['bbs']['perm_l_list']?> / <?php echo $d['bbs']['perm_l_view']?> / <?php echo $d['bbs']['perm_l_write']?></span></td>
-						<td><span data-toggle="popover" data-content="<?php echo $point_tooltip?>" class="badge badge-pill badge-dark"><?php echo number_format($d['bbs']['point1'])?> / <?php echo number_format($d['bbs']['point2'])?> / <?php echo number_format($d['bbs']['point3'])?></span></td>
+
 						<td>
-							<a class="btn btn-light" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;a=deletebbs&amp;uid=<?php echo $R['uid']?>" onclick="return hrefCheck(this,true,'삭제하시면 모든 게시물이 지워지며 복구할 수 없습니다.\n정말로 삭제하시겠습니까?');" class="del">삭제</a>
-							<a class="btn btn-light" href="<?php echo $g['adm_href']?>&amp;front=main_detail&amp;uid=<?php echo $R['uid']?>&amp;account=<?php echo $account?>">설정</a>
+							<a class="btn btn-light" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;a=deletelist&amp;uid=<?php echo $R['uid']?>&amp;usertype=admin" onclick="return hrefCheck(this,true,'정말로 삭제하시겠습니까?');" class="del">삭제</a>
 						</td>
 					</tr>
 					<?php endwhile?>
@@ -351,7 +305,7 @@ $(function () {
 		trigger: 'hover'
 	})
 
-	putCookieAlert('result_bbs_main') // 실행결과 알림 메시지 출력
+	putCookieAlert('list_action_result') // 실행결과 알림 메시지 출력
 
 })
 

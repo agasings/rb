@@ -188,7 +188,6 @@ $TPG = getTotalPage($NUM,$recnum);
 				<table class="table table-sm table-striped text-center mb-0">
 					<thead class="small text-muted">
 						<tr>
-							<th><label data-tooltip="tooltip" title="선택"><input type="checkbox" class="checkAll-post-user"></label></th>
 							<th>번호</th>
 							<th>상태</th>
 							<th>제목</th>
@@ -198,34 +197,23 @@ $TPG = getTotalPage($NUM,$recnum);
 							<th>댓글</th>
 							<th>신고</th>
 							<th>생성일시</th>
+							<th>관리</th>
 						</tr>
 					</thead>
 		      <tbody class="text-muted">
 					<?php while($R=db_fetch_array($RCD)):?>
 					<?php $R['mobile']=isMobileConnect($R['agent'])?>
-					<?php $B = getUidData($table[$module.'list'],$R['bbs']); ?>
 					<tr>
-						<td><input type="checkbox" name="post_members[]" value="<?php echo $R['uid']?>" class="rb-post-user" onclick="checkboxCheck();"/></td>
 						<td>
 						    <small class="text-muted"><?php echo $NUM-((($p-1)*$recnum)+$_rec++)?></small>
 						</td>
 						<td>
-							<small class="text-muted"><?php echo $R['display'] ?></small>
+							<small class="text-muted"><span class="badge badge-pill badge-dark"><?php echo $g['displaySet']['label'][$R['display']]?></span></small>
 						</td>
 						<td class="text-left">
 							<a class="muted-link" href="<?php echo getPostLink($R,0) ?>" target="_blank">
 								<?php echo getStrCut($R['subject'],'30','..')?>
 							</a>
-							<?php if(strstr($R['content'],'.jpg')):?>
-								<span class="badge badge-dark" data-toggle="tooltip" title="사진"><i class="fa fa-camera-retro fa-lg"></i></span>
-								<?php endif?>
-							<?php if($R['upload']):?>
-	            <span class="badge badge-dark" data-toggle="tooltip" title="첨부파일">
-	              <i class="fa fa-paperclip fa-lg"></i>
-	            </span>
-	            <?php endif?>
-							<?php if($R['hidden']):?><i class="fa fa-lock fa-lg"></i><?php endif?>
-							<?php if($R['comment']):?><span class="badge badge-pill badge-dark"><?php echo $R['comment']?><?php if($R['oneline']):?>+<?php echo $R['oneline']?><?php endif?></span><?php endif?>
 							<?php if(getNew($R['d_regis'],24)):?><small class="text-danger">new</small><?php endif?>
 						</td>
 						<?php if($R['id']):?>
@@ -239,10 +227,15 @@ $TPG = getTotalPage($NUM,$recnum);
 						<?php endif?>
 						<td><strong><?php echo $R['hit']?></strong></td>
 						<td><?php echo $R['likes']?></td>
-						<td><?php echo $R['comment']?></td>
+						<td><?php echo $R['comment']?><?php if($R['oneline']):?>+<?php echo $R['oneline']?><?php endif?></td>
 						<td><?php echo $R['report']?></td>
 						<td>
 							<small class="text-muted"><?php echo getDateFormat($R['d_regis'],'Y.m.d H:i')?></small>
+						</td>
+						<td>
+							<a class="btn btn-light btn-sm" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $module?>&amp;a=delete&amp;cid=<?php echo $R['cid']?>&amp;usertype=admin" onclick="return hrefCheck(this,true,'정말로 삭제하시겠습니까?');" class="del">
+								삭제
+							</a>
 						</td>
 					</tr>
 			     <?php endwhile?>
@@ -250,16 +243,16 @@ $TPG = getTotalPage($NUM,$recnum);
 				</table>
 			</div><!-- /.table-responsive -->
 
-			<div class="card-footer d-flex justify-content-between">
+			<div class="card-footer d-flex justify-content-between py-5">
 				<div>
-					<button type="button" onclick="chkFlag('post_members[]');checkboxCheck();" class="btn btn-light btn-sm">선택/해제 </button>
-					<button type="button" onclick="actCheck('multi_delete');" class="btn btn-light btn-sm rb-action-btn" disabled>삭제</button>
-					<button type="button" onclick="actCheck('multi_copy');" class="btn btn-light btn-sm rb-action-btn" disabled >복사</button>
-					<button type="button" onclick="actCheck('multi_move');" class="btn btn-light btn-sm rb-action-btn" disabled >이동</button>
+
 				</div>
 				<ul class="pagination mb-0">
 					<script>getPageLink(5,<?php echo $p?>,<?php echo $TPG?>,'');</script>
 				</ul>
+				<div class="">
+
+				</div>
 			</div>
 
 
@@ -287,7 +280,7 @@ $TPG = getTotalPage($NUM,$recnum);
 
 <script>
 
-putCookieAlert('bbs_post_result') // 실행결과 알림 메시지 출력
+putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
 
 $('.input-daterange').datepicker({
 	format: "yyyy/mm/dd",

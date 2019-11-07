@@ -219,7 +219,7 @@ $g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 				<input type="hidden" name="r" value="<?php echo $r?>">
 				<input type="hidden" name="m" value="post">
 				<input type="hidden" name="a" value="regis_list">
-				<input type="hidden" name="display" value="4">
+				<input type="hidden" name="display" value="1">
 
 				<div class="input-group input-group-lg">
 				  <input type="text" name="name" class="form-control rounded-0" placeholder="리스트명 입력" required>

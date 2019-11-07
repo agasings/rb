@@ -5,12 +5,16 @@ $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
 
 if (!$R['uid']) getLink('','','삭제되었거나 존재하지 않는 포스트 입니다.','');
 
+if ($my['uid'] != $R['mbruid'] && !$my['admin']) {
+	getLink('','','잘못된 접속입니다.','');
+}
+
 include_once $g['dir_module'].'var/var.php';
 
 include_once $g['path_module'].'mediaset/var/var.php';
 
 
-if ($d['bbs']['commentdel'])
+if ($d['post']['commentdel'])
 {
 	if($R['comment'])
 	{
@@ -183,5 +187,7 @@ while ($_F=db_fetch_array($_FCD)) {
 }
 
 setrawcookie('post_action_result', rawurlencode('포스트가 삭제 되었습니다.|success'));  // 처리여부 cookie 저장
-getLink(RW('mod=dashboard&page=post') ,'parent.' , $alert , $history);
+
+if ($usertype=='admin') getLink('reload','parent.' , $alert , $history);
+else getLink(RW('mod=dashboard&page=post') ,'parent.' , $alert , $history);
 ?>

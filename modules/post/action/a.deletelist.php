@@ -5,9 +5,12 @@ $R = getUidData($table[$m.'list'],$uid);
 
 if (!$R['uid']) getLink('','','삭제되었거나 존재하지 않는 리스트 입니다.','');
 
+if ($my['uid'] != $R['mbruid'] && !$my['admin']) {
+	getLink('','','잘못된 접속입니다.','');
+}
+
 //태그삭제
-if ($R['tag'])
-{
+if ($R['tag']) {
 	$_tagarr1 = explode(',',$R['tag']);
 	foreach($_tagarr1 as $_t)
 	{
@@ -26,5 +29,7 @@ getDbDelete($table[$m.'list'],'uid='.$R['uid']); // 리스트 삭제
 getDbDelete($table[$m.'list_index'],'list='.$R['uid']);//인덱스삭제
 
 setrawcookie('list_action_result', rawurlencode('리스트가 삭제 되었습니다.|success'));  // 처리여부 cookie 저장
-getLink(RW('mod=dashboard&page=list') ,'parent.' , $alert , $history);
+
+if ($usertype=='admin') getLink('reload','parent.' , $alert , $history);
+else getLink(RW('mod=dashboard&page=list') ,'parent.' , $alert , $history);
 ?>

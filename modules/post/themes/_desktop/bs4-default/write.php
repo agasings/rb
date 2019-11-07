@@ -77,7 +77,7 @@
             <label class="sr-only">리스트</label>
 
             <div class="dropdown dropdown-filter" data-role="list-selector">
-              <button class="btn btn-white btn-block dropdown-toggle d-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-white btn-block dropdown-toggle d-flex justify-content-between align-items-center" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 리스트 선택
                 <div class="mr-4"><span class="badge badge-primary" data-role="list_num"></span></div>
               </button>
@@ -102,7 +102,7 @@
                   <?php endforeach?>
 
                   <?php if(!$NUM):?>
-                  <div class="text-center text-muted p-5">리스트가 없습니다.</div>
+                  <div class="text-center text-muted p-5" data-role="none">리스트가 없습니다.</div>
                   <?php endif?>
 
                 </div><!-- /.dropdown-body -->
@@ -360,7 +360,7 @@
         </div>
         <div class="tab-pane" id="advan" role="tabpanel" aria-labelledby="link-tab">
 
-          <ul class="list-group mb-4 text-muted">
+          <ul class="list-group mb-4 text-muted" data-role="advanopt">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>댓글 사용</span>
               <div class="custom-control custom-switch">
@@ -680,7 +680,7 @@ $(document).ready(function() {
     listCheckedNum()
   });
 
-  $('.rb-post-write').find('.form-control, .form-check-input, .custom-control-input').change(function(){
+  $('.rb-post-write').find('.form-control, .form-check-input,[data-role="advanopt"] .custom-control-input').change(function(){
     showSaveButton(true); // 저장버튼 출력
     $('[data-role="postsubmit"]').click(); // 저장
   });
@@ -705,7 +705,14 @@ $(document).ready(function() {
     savePost(document.writeForm)
   });
 
+  $('[data-role="list-selector"]').on('hidden.bs.dropdown', function () {
+    showSaveButton(true); // 저장버튼 출력
+    checkUnload = true; //페이지 이탈시 경고창 출력
+  })
+
   $('[data-act="list-add-submit"]').click(function(e){
+    e.preventDefault();
+    e.stopPropagation();
     var button = $(this)
     var input = $('[name="list_name"]');
     var list = $('[data-role="list-selector"]');
@@ -736,8 +743,9 @@ $(document).ready(function() {
                         '</div><i class="material-icons f18 text-muted mr-2" data-toggle="tooltip" title="" data-original-title="'+label+'">'+icon+'</i></div>';
             button.attr( 'disabled', false );
             input.val('');
-            $('[data-role="list-add-button"]').removeClass('d-none');
-            $('[data-role="list-add-input"]').addClass('d-none')
+            list.find('[data-role="none"]').addClass('d-none');
+            list.find('[data-role="list-add-button"]').removeClass('d-none');
+            list.find('[data-role="list-add-input"]').addClass('d-none')
             list.find('.dropdown-body').append(item);
             checked_num.text(checked_num_val+1);
             list.find('[data-toggle="tooltip"]').tooltip();

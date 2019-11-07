@@ -135,7 +135,7 @@ $catcode = '';
             <small class="text-muted">
               <?php if($is_regismode):?>
                 복수의 카테고리을 한번에 등록하시려면 카테고리명을 콤마(,)로 구분해 주세요.<br />
-                보기)남성의류,여성의류,아동복
+                보기)정치경제,문화예술,비즈니스
               <?php else:?>
                 속성을 변경하려면 설정값을 변경한 후 [속성변경] 버튼을 클릭해주세요.<br />
                 카테고리을 삭제하면 소속된 하위카테고리까지 모두 삭제됩니다.
@@ -204,15 +204,15 @@ $catcode = '';
       						<input class="form-control" placeholder="미등록시 자동생성 됩니다." type="text" name="id" value="<?php echo $CINFO['id']?>" maxlength="20">
       						<button type="button" class="btn btn-link text-muted mt-2 pl-0" data-toggle="collapse" data-target="#guide_menucode">
       							<i class="fa fa-question-circle fa-fw"></i>
-      							메뉴를 잘 표현할 수 있는 단어로 입력해 주세요.
+      							카테고리를 잘 표현할 수 있는 단어로 입력해 주세요.
       						</button>
 
       						<div id="guide_menucode" class="collapse">
       							<small>
       								<ul class="form-text text-muted pl-3 mt-2">
       									<li>영문대소문자/숫자/_/- 조합으로 등록할 수 있습니다.</li>
-      									<li>보기) 메뉴호출주소 : <code><?php echo RW('c=<span class="b">CODE</span>')?></code></li>
-      									<li>메뉴코드는 중복될 수 없습니다.</li>
+      									<li>보기) 호출주소 : <code><?php echo RW('category=CODE')?></code></li>
+      									<li>코드는 중복될 수 없습니다.</li>
       								</ul>
       							</small>
       						</div>
@@ -259,7 +259,7 @@ $catcode = '';
                 </div>
               </div>
               <div class="form-group form-row">
-                <label class="col-md-2 col-form-label text-center">상품출력</label>
+                <label class="col-md-2 col-form-label text-center">포스트 출력</label>
                 <div class="col-md-10 col-lg-9">
                   <div class="input-group w-25">
                     <input type="text" name="recnum" value="<?php echo $CINFO['recnum']?$CINFO['recnum']:20?>" size="3" class="form-control">
@@ -395,16 +395,20 @@ $catcode = '';
                   </div>
                 </div>
               <?php endif?>
-              <div class="mt-3">
-                <?php if($is_fcategory && $CINFO['is_child']):?>
-                  <div class="sbcopybox shift">
-                    <input type="checkbox" name="subcopy" id="cubcopy" value="1" checked="checked" /><label for="subcopy">이 설정(숨김처리,레이아웃)을 하위카테고리에도 일괄적용합니다.</label>
+              <div class="form-group row my-4">
+                <div class="col-2"></div>
+                <div class="col-10">
+                  <?php if($is_fcategory && $CINFO['is_child']):?>
+                  <div class="custom-control custom-checkbox mb-4">
+                    <input type="checkbox" class="custom-control-input" name="subcopy" id="cubcopy" value="1" checked="checked">
+                    <label class="custom-control-label" for="cubcopy">이 설정(숨김처리,레이아웃)을 하위카테고리에도 일괄적용합니다.</label>
                   </div>
-                <?php endif?>
-                <input type="button" class="btn btn-light" value="카테고리 보기" onclick="window.open('<?php echo $g['s']?>/?r=<?php echo $r?>&m=<?php echo $module?><?php if($CINFO['uid']):?>&cat=<?php echo $CINFO['uid']?><?php endif?>');" />
-                <?php if($vtype=='sub'):?><input type="button" class="btn btn-light" value="등록취소" onclick="history.back();" /><?php endif?>
-                <input type="submit" class="btn btn-primary" value="<?php echo $is_fcategory?'카테고리속성 변경':'신규카테고리 등록'?>" />
-                <div class="clear"></div>
+                  <?php endif?>
+
+                  <?php if($vtype=='sub'):?><input type="button" class="btn btn-light" value="등록취소" onclick="history.back();" /><?php endif?>
+                  <input type="submit" class="btn btn-primary" value="<?php echo $is_fcategory?'카테고리속성 변경':'신규카테고리 등록'?>" />
+                </div>
+
               </div>
             </form>
           </div>

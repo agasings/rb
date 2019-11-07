@@ -60,12 +60,12 @@ if ($c) {
   if ($_HS['rewrite'])  $g['post_reset']= $g['r'].'/post';
 }
 
-//$g['post_list']	= $g['post_reset'].getLinkFilter2('',array($p>1?'p':'',$sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$recnum!=$d['post']['recnum']?'recnum':'',$type?'type':'',$where?'where':'',$keyword?'keyword':'','code'));
-
 switch ($mod) {
   case 'category' :
     include_once $g['dir_module'].'mod/_category.php';
     $CAT  = getDbData($table[$m.'category'],"id='".$cat."'",'*');
+
+    if (!$CAT['uid']||($CAT['reject']&&!$my['admin'])) $mod = '_404';
 
     if ($_HS['rewrite']) {
       if ($cat) $g['post_reset']= $g['r'].'/post/category/'.$cat;
