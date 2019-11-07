@@ -46,6 +46,8 @@ RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(saved)/?$ ./index.php?mod=saved&%1 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^(search)/?$ ./index.php?m=search&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^(feed)/?$ ./index.php?mod=feed&%1 [L]
 
 #사이트코드 확장
 RewriteRule ^([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1 [L]
@@ -53,9 +55,15 @@ RewriteRule ^([a-zA-Z0-9_\-]+)/(admin)/?$ ./index.php?r=$1&m=$2&mdule=$2 [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^([a-zA-Z0-9_\-]+)/(p)/([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1&mod=$3&%1 [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(c)/([a-zA-Z0-9_\-\/]+)/?$ ./index.php?r=$1&c=$3&%1 [L]
-RewriteRule ^([a-zA-Z0-9_\-]+)/([0-9]+)/?$ ./index.php?r=$1&m=bbs&uid=$2 [L]
-RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/?$ ./index.php?r=$1&m=post [L]
-RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(category)/([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1&m=post&cat=$4 [L]
+
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/?$ ./index.php?r=$1&m=post&%1 [L]
+RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(category)/?$ ./index.php?r=$1&m=post&mod=category [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(category)/([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1&m=post&cat=$4&%1 [L]
+RewriteCond %{QUERY_STRING} ^(.*)$
+RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/([0-9_]+)/?$ ./index.php?r=$1&m=post&mod=view&cid=$3&%1 [L]
+RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(write)/?$ ./index.php?r=$1&m=post&mod=write [L]
 RewriteCond %{QUERY_STRING} ^(.*)$
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(search)/?$ ./index.php?m=post&mod=keyword&%1 [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/write/?$ ./index.php?r=$1&m=post&mod=write [L]
@@ -70,11 +78,6 @@ RewriteRule ^([a-zA-Z0-9_\-]+)/(b)/([a-zA-Z0-9_\-]+)/write/?$ ./index.php?r=$1&m
 RewriteRule ^([a-zA-Z0-9_\-]+)/(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/s([0-9]+)/?$ ./index.php?r=$1&m=bbs&bid=$3&uid=$4&s=$5 [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/([0-9]+)/?$ ./index.php?r=$1&m=bbs&bid=$3&uid=$4&CMT=$5#CMT [L]
 RewriteRule ^([a-zA-Z0-9_\-]+)/(b)/([a-zA-Z0-9_\-]+)/([0-9]+)/([0-9]+)/s([0-9]+)/?$ ./index.php?r=$1&m=bbs&bid=$3&uid=$4&CMT=$5&s=$6#CMT [L]
-
-RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/([0-9_]+)/?$ ./index.php?r=$1&m=post&mod=view&cid=$3 [L]
-RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(write)/?$ ./index.php?r=$1&m=post&mod=write [L]
-RewriteCond %{QUERY_STRING} ^(.*)$
-RewriteRule ^([a-zA-Z0-9_\-]+)/(post)/(category)/([a-zA-Z0-9_\-]+)/?$ ./index.php?r=$1&m=post&cat=$4&%1 [L]
 
 #외부연결 콜백
 RewriteCond %{QUERY_STRING} ^(.*)$
