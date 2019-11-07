@@ -333,15 +333,15 @@
                 </span>
               </li>
               <li class="list-group-item flex-fill py-2">
-                <small>댓글</small>
+                <small>싫어요</small>
                 <span class="d-block h3 mb-0">
-                  <?php echo number_format($R['comment']) ?>
+                  <?php echo number_format($R['dislikes']) ?>
                 </span>
               </li>
               <li class="list-group-item flex-fill py-2">
-                <small>평점</small>
+                <small>댓글</small>
                 <span class="d-block h3 mb-0">
-                  <?php echo number_format($R['likes_post']) ?>
+                  <?php echo number_format($R['comment']) ?>
                 </span>
               </li>
             </ul>
@@ -382,13 +382,15 @@
                 <label class="custom-control-label" for="use_listadd"></label>
               </div>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>평점 사용</span>
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="use_rating" value="1" id="use_rating"<?php echo $R['dis_rating']?'':' checked' ?>>
-                <label class="custom-control-label" for="use_rating"></label>
-              </div>
-            </li>
+            <div class="d-none">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>평점 사용</span>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" name="use_rating" value="1" id="use_rating"<?php echo $R['dis_rating']?'':' checked' ?>>
+                  <label class="custom-control-label" for="use_rating"></label>
+                </div>
+              </li>
+            </div>
           </ul>
 
           <strong class="d-block small text-muted pb-2">카테고리</strong>
