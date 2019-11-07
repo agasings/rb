@@ -96,6 +96,7 @@ $(document).ready(function() {
                     if(!result.error){
                         $(container).find('[data-role="attach-preview-link"]').prepend(result.list);
                         $.notify("추가 되었습니다.");
+                        $('[data-role="postsubmit"]').click(); // 포스트 저장
                     }
               });
 

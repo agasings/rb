@@ -192,6 +192,12 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.nav-tabs .nav-link.disabled {
+  color: #ccc;
+  background-color: rgba(0,0,0,.03);
+}
+
 .document-editor {
   position: absolute;
   top: 103px;

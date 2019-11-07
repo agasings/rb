@@ -44,18 +44,17 @@
           <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">기본</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="home-tab" data-toggle="tab" href="#advan" role="tab" aria-controls="info" aria-selected="true">고급</a>
+          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="home-tab" data-toggle="tab" href="#advan" role="tab" aria-controls="info" aria-selected="true">고급</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="attach-tab" data-toggle="tab" href="#attach" role="tab" aria-controls="attach" aria-selected="false">첨부</a>
+          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="attach-tab" data-toggle="tab" href="#attach" role="tab" aria-controls="attach" aria-selected="false">첨부</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">링크</a>
+          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="profile-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">링크</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#index" role="tab" aria-controls="index" aria-selected="false">목차</a>
+          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="contact-tab" data-toggle="tab" href="#index" role="tab" aria-controls="index" aria-selected="false">목차</a>
         </li>
-
       </ul>
       <div class="tab-content p-3">
         <div class="tab-pane show active" id="basic" role="tabpanel" aria-labelledby="home-basic">
