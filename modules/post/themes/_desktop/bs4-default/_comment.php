@@ -21,7 +21,7 @@
              (댓글, 한줄의견 추가/삭제시 합계 업데이트시 필요)
 */
 
- $comment_theme =  $d['post']['c_skin']?$d['post']['c_skin']: ($d['theme']['comment_theme']?$d['theme']['comment_theme']:$d['post']['comment_main']);
+ $comment_theme =  '_desktop/bs4-default';  // 댓글 테마
 
 ?>
 

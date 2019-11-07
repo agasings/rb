@@ -40,7 +40,7 @@ function savePost(f) {
 
   if (editorData == '')
   {
-    alert('내용을 입력해 주세요.       ');
+    $.notify({message: '내용을 입력해 주세요.'},{type: 'danger'});
     editor.editing.view.focus();
     return false;
   } else {
