@@ -23,7 +23,7 @@
 
     <div class="form-group mb-0" style="width:71.5%">
       <label class="sr-only">제목</label>
-      <input type="text" name="subject" value="<?php echo stripslashes($R['subject'])?>" class="form-control form-control-lg" placeholder="제목없는 포스트">
+      <input type="text" name="subject" value="<?php echo stripslashes($R['subject'])?>" class="form-control form-control-lg meta" placeholder="제목없는 포스트">
     </div>
   </header>
 
@@ -61,13 +61,13 @@
 
           <div class="form-group">
             <label class="sr-only">요약설명</label>
-            <textarea class="form-control" rows="3" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
+            <textarea class="form-control meta" rows="3" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
             <small class="form-text text-muted">100자 이내로 요약설명을 입력하세요.</small>
           </div>
 
           <div class="form-group mt-4">
             <label class="sr-only">태그</label>
-            <textarea class="form-control" rows="2" name="tag" placeholder="태그를 입력하세요"><?php echo $R['tag']?></textarea>
+            <textarea class="form-control meta" rows="2" name="tag" placeholder="태그를 입력하세요"><?php echo $R['tag']?></textarea>
             <small class="form-text text-muted">콤마(,)로 구분하여 입력해 주세요.</small>
           </div>
 
@@ -166,7 +166,7 @@
           <div class="form-group">
             <label class="small text-muted">컨텐츠 포맷</label>
             <?php $formats = explode(',', $d['theme']['format']);array_unshift($formats,''); ?>
-            <select name="format" class="form-control custom-select">
+            <select name="format" class="form-control custom-select meta">
               <option value="1"<?php echo $R['format']==1?' selected':'' ?>><?php echo $formats[1] ?></option>
               <option value="2"<?php echo $R['format']==2?' selected':'' ?>><?php echo $formats[2] ?></option>
             </select>
@@ -680,7 +680,7 @@ $(document).ready(function() {
     listCheckedNum()
   });
 
-  $('.rb-post-write').find('.form-control, .form-check-input,[data-role="advanopt"] .custom-control-input').change(function(){
+  $('.rb-post-write').find('.meta.form-control, .form-check-input,[data-role="advanopt"] .custom-control-input').change(function(){
     showSaveButton(true); // 저장버튼 출력
     $('[data-role="postsubmit"]').click(); // 저장
   });
