@@ -1,7 +1,6 @@
 <?php
 
 $_WHERE = 'site='.$s;
-$recnum = 16;  // 4의 배수로 지정 (예: 8,12,16,20..)
 $where = 'name|tag';
 
 if ($listid) {

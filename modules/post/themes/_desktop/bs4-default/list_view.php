@@ -1,5 +1,5 @@
 <?php
-$c_recnum = 4; // 한 열에 출력할 카드 갯수
+$c_recnum = $d['post']['rownum']; // 한 열에 출력할 카드 갯수
 $totalCardDeck=ceil($NUM/$c_recnum); // card-deck 갯수 ($NUM 은 해당 데이타의 총 card 갯수 getDbRows 이용)
 $total_card_num = $totalCardDeck*$c_recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)

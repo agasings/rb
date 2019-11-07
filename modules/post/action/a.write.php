@@ -1,7 +1,10 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-// include_once $g['dir_module'].'lib/tree.func.php';
+$g['postVarForSite'] = $g['path_var'].'site/'.$r.'/post.var.php';
+$_tmpvfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['dir_module'].'var/var.php';
+include_once $_tmpvfile;
+
 include_once $g['dir_module'].'lib/action.func.php';
 
 $mbruid		= $author ? $author : $my['uid'];
@@ -18,6 +21,30 @@ $agent		= $_SERVER['HTTP_USER_AGENT'];
 $format= $format?$format:1;
 $display= $display?$display:1;
 $hidden = $display==1 || $display==2?1:0;
+
+if ($d['post']['badword_action'])
+{
+	$badwordarr = explode(',' , $d['post']['badword']);
+	$badwordlen = count($badwordarr);
+	for($i = 0; $i < $badwordlen; $i++)
+	{
+		if(!$badwordarr[$i]) continue;
+
+		if(strstr($subject,$badwordarr[$i]) || strstr($content,$badwordarr[$i]))
+		{
+			if ($d['post']['badword_action'] == 1)
+			{
+				getLink('','','등록이 제한된 단어를 사용하셨습니다.','');
+			}
+			else {
+				$badescape = strCopy($badwordarr[$i],$d['post']['badword_escape']);
+				$content = str_replace($badwordarr[$i],$badescape,$content);
+				$subject = str_replace($badwordarr[$i],$badescape,$subject);
+			}
+		}
+	}
+}
+
 
 if ($uid) {
 

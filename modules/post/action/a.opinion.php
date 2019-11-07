@@ -6,7 +6,10 @@ $R = getUidData($table[$m.'data'],$uid);
 if (!$my['uid']) getLink('','','로그인 해주세요.','');
 if (!$R['uid']) getLink('','','존재하지 않는 포스트 입니다.','');
 
-include_once $g['dir_module'].'var/var.php';
+$g['postVarForSite'] = $g['path_var'].'site/'.$r.'/post.var.php';
+$_tmpvfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['dir_module'].'var/var.php';
+include_once $_tmpvfile;
+
 
 if(!getDbRows($table['s_mbrmonth'],"date='".$date['month']."' and site=".$s.' and mbruid='.$R['mbruid'])) {
   getDbInsert($table['s_mbrmonth'],'date,site,mbruid',"'".$date['month']."','".$s."','".$R['mbruid']."'");
@@ -59,6 +62,7 @@ if ($send=='ajax') {
 	  exit;
 	}
 	if (!$R['uid']) exit;
+
 	if ($d['post']['denylikemy'] && ($R['mbruid']==$my['uid'])) getLink('','','자신 글은 평가할 수 없습니다.','');
 }
 
