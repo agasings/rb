@@ -5,7 +5,6 @@ $g['postVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
 $svfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['dir_module'].'var/var.php';
 include_once $svfile;
 
-$d['post']['skin'] = $d['post']['skin_total'];
 $d['post']['isperm'] = true;
 
 include_once $g['dir_module'].'_main.php';
@@ -124,6 +123,15 @@ switch ($mod) {
   }
 
   break;
+}
+
+$_HM['layout'] = $_HM['layout'] ? $_HM['layout'] : $d['post']['layout'];
+$d['post']['skin']     = $d['post']['skin'] ? $d['post']['skin'] : $d['post']['skin_main'];
+$d['post']['m_skin']   = $d['post']['m_skin'] ? $d['post']['m_skin'] : $d['post']['skin_mobile'];
+
+if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
+	$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['post']['m_layout'];
+	$d['post']['skin'] = $d['post']['m_skin'] ? $d['post']['m_skin'] : ($d['post']['skin_mobile']?$d['post']['skin_mobile']:$d['post']['skin_main']);
 }
 
 include_once $g['path_module'].$m.'/themes/'.$d['post']['skin'].'/_var.php';
