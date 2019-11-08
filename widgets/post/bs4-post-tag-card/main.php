@@ -27,7 +27,11 @@ while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
         <i class="material-icons mr-2">flag</i>
         <div class="media-body">
           <h5 class="my-0">
+            <?php if ($wdgvar['tag']): ?>
             #<?php echo $wdgvar['tag'] ?>
+            <?php else: ?>
+            <span class="text-danger">키워드를 설정해 주세요.</span>
+            <?php endif; ?>
             <small class="ml-2 text-muted f13"><?php echo $wdgvar['subtitle'] ?></small>
           </h5>
         </div>
