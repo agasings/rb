@@ -44,7 +44,7 @@
 			    <?php if (!$R['dis_like']): ?>
 					<span class="dropdown">
 				    <button type="button" class="btn btn-link muted-link px-2 text-decoration-none<?php if($is_liked):?> active<?php endif?>"
-							data-toggle="button"
+							data-toggle="<?php echo $my['uid']?'button':'dropdown' ?>"
 							data-act="<?php echo $my['uid']?'actionIframe':'dropdown'?>"
 				      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=like&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
 				      data-role="btn_post_like">
@@ -67,7 +67,7 @@
 
 					<span class="dropdown">
 				    <button type="button" class="btn btn-link muted-link px-2 text-decoration-none<?php if($is_disliked):?> active<?php endif?>"
-							data-toggle="button"
+							data-toggle="<?php echo $my['uid']?'button':'dropdown' ?>"
 				      data-act="<?php echo $my['uid']?'actionIframe':'dropdown'?>"
 				      data-url="<?php echo $g['post_action']?>opinion&amp;opinion=dislike&amp;uid=<?php echo $R['uid']?>&amp;effect=heartbeat"
 				      data-role="btn_post_dislike">

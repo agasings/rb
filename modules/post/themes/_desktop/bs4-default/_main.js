@@ -40,7 +40,7 @@ function savePost(f) {
 
   if (editorData == '')
   {
-    $.notify({message: '내용 입력후 저장해 주세요.'},{type: 'primary'});
+    $.notify({message: '본문 입력후 저장해 주세요.'},{type: 'primary'});
     editor.editing.view.focus();
     return false;
   } else {
