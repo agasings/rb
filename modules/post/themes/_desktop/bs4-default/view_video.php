@@ -190,36 +190,27 @@
 		 					 <a href="<?php echo RW('m=post&mod=write&cid='.$R['cid']) ?>" class="btn btn-outline-primary">수정</a>
 							 <?php endif?>
 
-							 <?php if ($my['uid']): ?>
 							 <?php if($my['uid']!=$R['mbruid']):?>
 							 <button type="button" class="btn btn-primary<?php echo $_isFollowing ?' active':''?>"
-								data-act="actionIframe"
-								data-toggle="button"
+								data-act="<?php echo $my['uid']?'actionIframe':'' ?>"
+								data-toggle="<?php echo $my['uid']?'button':'dropdown' ?>"
 								data-role="follow"
 								data-url="<?php echo $g['s'].'/?r='.$r.'&amp;m=member&amp;a=profile_follow&amp;mbruid='.$M1['memberuid']?>">
 								 구독
 							 </button>
-							 <?php endif?>
-							 <?php else: ?>
-							 <span class="dropdown">
-								 <button type="button" class="btn btn-primary" data-toggle="dropdown">
-									 구독
-								 </button>
-								 <div class="dropdown-menu dropdown-menu-right shadow" style="min-width: 350px;">
-									 <div class="py-3 px-4">
-										 <h6><?php echo $M1[$_HS['nametype']] ?>님의 포스트를 구독하시겠습니까?</h6>
-										 <p class="f13 text-muted mb-0">구독하려면 로그인하세요.</p>
-									 </div>
-									 <div class="dropdown-divider"></div>
-									 <div class="px-3 text-right">
-										 <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modal-login">
-											 로그인
-										 </button>
-									 </div>
+							 <div class="dropdown-menu dropdown-menu-right shadow" style="min-width: 350px;">
+								 <div class="py-3 px-4">
+									 <h6><?php echo $M1[$_HS['nametype']] ?>님의 포스트를 구독하시겠습니까?</h6>
+									 <p class="f13 text-muted mb-0">구독하려면 로그인하세요.</p>
 								 </div>
-							 </span>
-							 <?php endif; ?>
-
+								 <div class="dropdown-divider"></div>
+								 <div class="px-3 text-right">
+									 <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modal-login">
+										 로그인
+									 </button>
+								 </div>
+							 </div>
+							 <?php endif?>
 						</div>
 					</div><!-- /.flex -->
 
