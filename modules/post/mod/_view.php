@@ -36,7 +36,7 @@ if ($mod=='view' && $d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('
 	if ($ref) $_QVAL = ','.$ref.'='.$ref.'+1';
 
 	getDbUpdate($table[$m.'month'],'hit=hit+1,'.$device.'='.$device.'+1,'.$side.'='.$side.'+1'.$_QVAL,"date='".$date['month']."' and site=".$s.' and data='.$R['uid']); //포스트별 월별 조회수 갱신
-	getDbUpdate($table[$m.'day'],'hit=hit+1,'.$device.'='.$device.'+1,'.$side.'='.$side.'+1'.$_QVAL,"date='".$date['today']."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
+	getDbUpdate($table[$m.'day'],'hit=hit+1,display='.$R['display'].','.$device.'='.$device.'+1,'.$side.'='.$side.'+1'.$_QVAL,"date='".$date['today']."' and site=".$s.' and data='.$R['uid']);  //포스트별 일별 조회수 갱신
 
 	$_SESSION['module_'.$m.'_view'] .= '['.$R['uid'].']';
 }
