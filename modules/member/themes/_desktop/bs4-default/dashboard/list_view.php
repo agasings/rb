@@ -21,6 +21,7 @@ $g['post_base']	= $g['s'].'/?'.($_HS['usescode']?'r='.$r.'&amp;':'').'m=post';
 $g['post_list']	= $g['post_reset'].getLinkFilter('',array('recnum'));
 $g['pagelink']	= $g['post_list'];
 $g['post_action']= $g['post_base'].'&amp;a=';
+$g['post_list_delete']= $g['post_action'].'deletelist&amp;uid=';
 $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 ?>
 
@@ -30,7 +31,10 @@ $g['listindex_delete']= $g['post_action'].'deletelistindex&amp;uid=';
 			리스트 수정
 		</h3>
 		<div class="">
-			<button type="button" class="btn btn-white" data-history="back">이전</button>
+			<a href="<?php echo $g['post_list_delete'].$LIST['uid']?>" target="_action_frame_<?php echo $m?>" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btn btn-white">
+				삭제
+			</a>
+			<a href="<?php echo RW('mod=dashboard&page=list')?>" class="btn btn-white">목록</a>
 		</div>
 	</div>
 
