@@ -52,20 +52,14 @@ $RCD = getDbArray($table['s_upload'],$sqlque,'*','uid',$orderby,$d['search']['nu
 ?>
 
 
-<div class="card-body" itemscope itemtype="http://schema.org/ImageGallery"  id="rb-search-photo">
+<div class="" itemscope itemtype="http://schema.org/ImageGallery"  id="rb-search-photo">
 	<?php while($_R=db_fetch_array($RCD)):?>
 
-	<?php
-    $img='';
-		$img=$_R['url'].$_R['folder'].'/'.$_R['tmpname']; // sys.func.php 파일 참조
-		$img_data=array('src'=>$img,'width'=>'','height'=>'150','qulity'=>'100','filter'=>'','align'=>'');
-	?>
-
-	<figure class="float-left mr-3" data-plugin="photoswipe" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-		<a href="<?php echo $img ?>" itemprop="contentUrl" data-size="<?php echo $_R['width'] ? $_R['width'] : 200; ?>x<?php echo $_R['height'] ? $_R['height'] : 200; ?>" data-author="뉴스">
-			<img src="<?php echo getTimThumb($img_data)?>" alt="<?php echo $_R['caption'] ?>" itemprop="thumbnail">
+	<figure class="mr-3" data-plugin="photoswipe" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+		<a href="<?php echo $_R['src'] ?>" itemprop="contentUrl" data-size="<?php echo $_R['width'] ? $_R['width'] : 200; ?>x<?php echo $_R['height'] ? $_R['height'] : 200; ?>" data-author="뉴스">
+			<img src="<?php echo getPreviewResize($_R['src'],'150x100')?>" alt="<?php echo $_R['caption'] ?>" itemprop="thumbnail">
 		</a>
-		<figcaption itemprop="caption description" class="mt-2"><?php echo $_R['caption'] ?></figcaption>
+		<figcaption itemprop="caption description" class="mt-2 d-none"><?php echo $_R['caption'] ?></figcaption>
 	</figure>
 	<?php endwhile?>
 </div>
