@@ -404,7 +404,6 @@
           <?php endif; ?>
 
           <?php if ($cid): ?>
-
           <section class="mt-4">
             <div class="d-flex justify-content-between">
               <label class="small text-muted">수정이력</label>
@@ -616,8 +615,6 @@ var content = editor.getData();
 var changed_meta = false;  //부가정보 수정여부
 var changed_content =  false;  // 본문수정 여부
 var checkUnload = false;  // 페이지 이탈시 경고창 출력여부 (기본값 : 출력안함)
-
-document.title = '글쓰기 ';
 
 putCookieAlert('post_action_result') // 실행결과 알림 메시지 출력
 
