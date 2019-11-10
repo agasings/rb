@@ -22,7 +22,7 @@ if ($cid) {
 
   $R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
 
-  $g['browtitle'] = strip_tags(stripslashes($R['subject'])).' - '.$_HS['name'];
+  $g['browtitle'] = strip_tags(stripslashes(getStrCut($R['subject'],10,''))).' - '.$_HS['name'];
   $g['meta_tit'] = strip_tags(stripslashes($R['subject'])).' - '.$_HS['name'];
   $g['meta_sbj'] = str_replace('"','\'',stripslashes($R['subject']));
   $g['meta_key'] = $R['tag'] ?$R['tag'] : str_replace('"','\'',stripslashes($R['subject']));
@@ -62,16 +62,14 @@ if ($c) {
 
 switch ($mod) {
   case 'category' :
-    include_once $g['dir_module'].'mod/_category.php';
     $CAT  = getDbData($table[$m.'category'],"id='".$cat."'",'*');
-
-    if (!$CAT['uid']||($CAT['reject']&&!$my['admin'])) $mod = '_404';
-
+    include_once $g['dir_module'].'mod/_category.php';
+    if ( $cat && (!$CAT['uid']||($CAT['reject']&&!$my['admin']))) $mod = '_404';
     if ($_HS['rewrite']) {
       if ($cat) $g['post_reset']= $g['r'].'/post/category/'.$cat;
       else $g['post_reset']= $g['r'].'/post';
     }
-
+    $g['browtitle'] =  ($CAT['name']?$CAT['name']:'전체 카테고리').' - '.$_HS['name'];
   	$g['post_list']	= $g['post_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':'',$code?'code':''));
     $g['pagelink']	= $g['post_list'];
     $_N	= !$_GET['sort'] && !$_GET['where'] && !$_GET['keyword'] && !$_GET['code']?$g['post_list'].'?':'';
@@ -80,6 +78,7 @@ switch ($mod) {
   case 'post' :
     include_once $g['dir_module'].'mod/_post.php';
     if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/post';
+    $g['browtitle'] = '전체 포스트 - '.$_HS['name'];
     $g['post_list']	= $g['post_reset'].getLinkFilter2('',array('sort',$orderby!='asc'?'orderby':'',$keyword?'keyword':''));
     $g['pagelink']	= $g['post_list'];
     $_N	= !$_GET['sort'] && !$_GET['where'] && !$_GET['keyword']?$g['post_list'].'?':'';
@@ -89,6 +88,7 @@ switch ($mod) {
     if (!$keyword) getLink('','','키워드를 입력해주세요.','-1');
     include_once $g['dir_module'].'mod/_category.php';
     if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/post/search';
+    $g['browtitle'] = '#'.$keyword.' - '.$_HS['name'];
     $g['post_list']	= $g['post_reset'].getLinkFilter2('',array('keyword'));
     $g['pagelink']	= $g['post_list'];
   break;
@@ -96,32 +96,37 @@ switch ($mod) {
   case 'list' :
     include_once $g['dir_module'].'mod/_list.php';
     if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/list';
+    $g['browtitle'] = '전체 리스트 - '.$_HS['name'];
     $g['post_list']	= $g['post_reset'].getLinkFilter2('',array($sort!='gid'?'sort':'',$orderby!='asc'?'orderby':'',$keyword?'keyword':'','code'));
     $g['pagelink']	= $g['post_list'];
     $_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
   break;
 
   case 'list_view' :
+    $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
     include_once $g['dir_module'].'mod/_list.php';
     if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/list/'.$listid;
+    $g['browtitle'] = $LIST['name'].' - '.$_HS['name'];
     $g['post_list']	= $g['post_reset'].getLinkFilter2('',array());
     $g['pagelink']	= $g['post_list'];
     $_N	= $_HS['rewrite'] && !$_GET['sort']?$g['page_list'].'?':'';
   break;
 
   case 'view' :
+    if (!checkPostPerm($R)) {
+    	$mod = '_404';
+    	$d['post']['isperm'] = false;
+    }
     include_once $g['dir_module'].'mod/_view.php';
   break;
 
   case 'write' :
-  // 수정권한 체크
-  if ($cid &&!$_perm['post_owner']) getLink('','','접근권한이 없습니다.','-1');
-
-  if (!$g['mobile']||$_SESSION['pcmode']=='Y') {
-    $layoutArr = explode('/',$d['post']['layout']);
-    $d['post']['layout'] = $layoutArr[0].'/blank.php';
-  }
-
+    if ($cid &&!$_perm['post_owner']) getLink('','','접근권한이 없습니다.','-1'); // 수정권한 체크
+    if (!$g['mobile']||$_SESSION['pcmode']=='Y') {
+      $layoutArr = explode('/',$d['post']['layout']);
+      $d['post']['layout'] = $layoutArr[0].'/blank.php';
+    }
+    $g['browtitle'] = '글쓰기 - '.$_HS['name'];
   break;
 }
 

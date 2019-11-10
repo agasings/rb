@@ -1,11 +1,6 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-if (!checkPostPerm($R)) {
-	$mod = '_404';
-	$d['post']['isperm'] = false;
-}
-
 if ($mod=='view' && $d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']'))) {
 
 	getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);

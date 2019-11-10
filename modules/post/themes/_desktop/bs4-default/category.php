@@ -6,7 +6,6 @@ switch ($sort) {
 	case 'likes'   : $sort_txt='좋아요순';break;
 	case 'comment'   : $sort_txt='댓글순';break;
 }
-
 ?>
 
 <section>
@@ -185,7 +184,6 @@ switch ($sort) {
 </section>
 
 <script>
-	document.title = '<?php echo $CAT['name']?$CAT['name']:'전체 카테고리' ?>  | <?php echo $g['browtitle']?>';
 
 	$( document ).ready(function() {
 

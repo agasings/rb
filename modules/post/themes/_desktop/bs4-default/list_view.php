@@ -112,7 +112,3 @@ $lack_card_num = $total_card_num;
 	</footer>
 
 </section>
-
-<script>
-	document.title = '<?php echo $LIST['name'] ?>  | <?php echo $g['browtitle']?>';
-</script>
