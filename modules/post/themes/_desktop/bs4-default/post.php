@@ -116,7 +116,7 @@ switch ($sort) {
 						<li class="list-inline-item">댓글 <?php echo $R['comment']?> </li>
 					</ul>
 					<time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_regis'],'c')?>"></time>
-					<?php if(getNew($R['d_regis'],$d['post']['newtime'])):?><span class="rb-new ml-1"></span><?php endif?>
+					<?php if(getNew($R['d_regis'],$d['post']['newtime'])):?><i class="material-icons align-middle">fiber_new</i><?php endif?>
 					<span class="badge badge-secondary ml-2"><?php echo checkPostOwner($R) && $R['display']!=5?$g['displaySet']['label'][$R['display']]:'' ?></span>
 					<?php endif; ?>
 
