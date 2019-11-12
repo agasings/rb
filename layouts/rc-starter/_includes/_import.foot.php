@@ -23,6 +23,9 @@
 <!-- markjs js : https://github.com/julmot/mark.js -->
 <?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
 
+<!-- jquery.shorten : https://github.com/viralpatel/jquery.shorten -->
+<?php getImport('jquery.shorten','jquery.shorten.min','1.0','js')?>
+
 <!-- 댓글출력시 필요 -->
 <?php if ($mod!='write'): ?>
 <?php getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');  ?>

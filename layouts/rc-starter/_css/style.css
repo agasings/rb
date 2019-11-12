@@ -302,6 +302,34 @@ figure.media {
   align-content: stretch;
 }
 
+/* 포스트 리스트 마스크 */
+.list_mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70px;
+  height: 100%;
+  background: rgba(0,0,0,.8);
+}
+.list_mask .txt {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  margin-top: -25px;
+  font-size: 20px;
+  line-height: 32px;
+  color: #fff;
+  text-align: center;
+}
+.list_avatar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-bottom: -25px;
+  margin-left: -25px;
+  border-radius: 50%
+}
+
 /**
  * 6 - Drawer 드로어(사이드 메뉴)
  * ----------------------------------------------------------------------------

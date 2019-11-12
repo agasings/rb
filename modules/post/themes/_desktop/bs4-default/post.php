@@ -142,7 +142,7 @@ switch ($sort) {
 	<?php else: ?>
 
 		<div class="p-5 text-center text-muted">
-			등록된 리스트가 없습니다.
+			등록된 포스트가 없습니다.
 		</div>
 
 	<?php endif; ?>
