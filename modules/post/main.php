@@ -106,6 +106,7 @@ switch ($mod) {
     $LIST=getDbData($table[$m.'list'],"id='".$listid."'",'*');
     include_once $g['dir_module'].'mod/_list.php';
     if ($_HS['rewrite']) $g['post_reset']= $g['r'].'/list/'.$listid;
+    $g['meta_img'] = getPreviewResize(getListImageSrc($LIST['uid']),'z');
     $g['browtitle'] = $LIST['name'].' - '.$_HS['name'];
     $g['post_list']	= $g['post_reset'].getLinkFilter2('',array());
     $g['pagelink']	= $g['post_list'];
