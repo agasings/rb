@@ -1,8 +1,16 @@
 <li class="table-view-cell border-bottom-0" data-role="item" data-uid="{$uid}">
 
-  <div data-toggle="page" data-target="#page-post-view-{$format}" data-start="#page-post-listview">
+  <div data-toggle="page"
+    data-target="#page-post-view-{$format}"
+    data-start="#page-post-listview"
+    data-list="{$list}"
+    data-provider="{$provider}"
+    data-featured="{$featured_640}"
+    data-videoid="{$videoId}"
+    data-uid="{$uid}" data-url="/post/{$cid}?list={$list}">
+
     <span class="media-object pull-left position-relative">
-      <img src="{$featured_img}" class="img-fluid border" alt="" style="width:160px">
+      <img src="{$featured_480}" class="img-fluid border" alt="" style="width:160px">
       <time class="badge badge-default bg-black rounded-0 position-absolute f13" style="top:auto;left:auto;right:1px;bottom:1px">{$time}</time>
     </span>
 

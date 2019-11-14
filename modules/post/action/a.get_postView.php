@@ -32,6 +32,7 @@ if ($list) {
   $listPost = '';
 
   foreach ($LCD as $_L) {
+    $TMPL['L_active']=$_L['uid']==$uid?'table-view-active':'';
     $TMPL['L_uid']=$_L['uid'];
     $TMPL['L_subject']=stripslashes($_L['subject']);
     $TMPL['L_featured_img'] = getPreviewResize(getUpImageSrc($_L),'240x134');
@@ -50,7 +51,7 @@ $TMPL['list_num'] = $LIST['num'];
 
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $TMPL['MBR_nic'] = getProfileInfo($R['mbruid'],'nic');
-$TMPL['subject'] = stripslashes(htmlspecialchars($R['subject']));
+$TMPL['subject'] = stripslashes($R['subject']);
 $TMPL['content'] = getContents($R['content'],'HTML');
 $TMPL['hit'] = $R['hit'];
 $TMPL['likes'] = $R['likes'];

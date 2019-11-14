@@ -26,7 +26,7 @@ $list='';
 
 foreach ($RCD as $R) {
   $TMPL['link']=getPostLink($R,1);
-  $TMPL['subject']=stripslashes(htmlspecialchars($R['subject']));
+  $TMPL['subject']=stripslashes($R['subject']);
   $TMPL['format'] = $formats[$R['format']];
   $TMPL['uid']=$R['uid'];
   $TMPL['cid']=$R['cid'];

@@ -9,7 +9,6 @@ $provider = getFeaturedimgMeta($R,'provider');
 $videoId = getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
 ?>
 
-
 <script src="<?php echo $g['url_module_skin'] ?>/_js/view.js<?php echo $g['wcache']?>" ></script>
 
 <script>

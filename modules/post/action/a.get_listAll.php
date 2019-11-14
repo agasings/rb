@@ -21,7 +21,7 @@ $result['error'] = false;
 $list='';
 
 foreach ($RCD as $R) {
-  $TMPL['name']=stripslashes(htmlspecialchars($R['name']));
+  $TMPL['name']=stripslashes($R['name']);
   $TMPL['uid']=$R['uid'];
   $TMPL['id']=$R['id'];
   $TMPL['num']=$R['num'];

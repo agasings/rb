@@ -29,13 +29,18 @@ $list='';
 $TMPL['avatar'] = getAvatarSrc($LIST['mbruid'],'48');
 $TMPL['name'] = $LIST['name'];
 $TMPL['num']=$LIST['num'];
+$TMPL['list']=$LIST['id'];
 
 foreach ($RCD as $R) {
   $TMPL['subject']=checkPostPerm($R)?stripslashes($R['subject']):'[비공개 포스트]';
   $TMPL['uid']=$R['uid'];
+  $TMPL['cid']=$R['cid'];
   $TMPL['format'] = $formats[$R['format']];
   $TMPL['time']=checkPostPerm($R)?getUpImageTime($R):'';
-  $TMPL['featured_img'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'480x270'):getPreviewResize('/files/noimage.png','480x270');
+  $TMPL['provider']=getFeaturedimgMeta($R,'provider');
+  $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
+  $TMPL['featured_480'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'480x270'):getPreviewResize('/files/noimage.png','480x270');
+  $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
   $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
   $skin_list=new skin('listview-row');

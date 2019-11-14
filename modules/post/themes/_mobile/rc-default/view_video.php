@@ -6,19 +6,16 @@
 	  </span>
 	</header>
 
-	<div class="bar bar-standard bar-header-secondary px-0 bar-dark bg-black border-bottom-0 bar-media">
+	<div class="bar bar-standard bar-header-secondary px-0 bar-dark bg-black border-bottom-0 bar-media shadow-sm">
 	  <img src="/_core/images/black-1024x576.png" class="img-fluid" alt="" data-role="featured">
 	  <div class="modia-loader"></div>
 	  <div class="embed-responsive bg-black" data-role="video">
 	    <oembed url="" id="view-player"></oembed>
 	  </div>
-
 		<div data-role="listCollapse"></div>
 	</div>
 
 	<article class="content post-section">
 		<div data-role="box">
 	</article>
-
-	</div>
 </section>
