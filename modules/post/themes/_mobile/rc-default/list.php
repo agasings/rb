@@ -1,4 +1,3 @@
-<?php $recnum = 3 ?>
 <header class="bar bar-nav bar-light bg-white px-0">
 	<a class="icon material-icons pull-left px-3" role="button" data-href="<?php echo RW(0)?>" data-text="홈으로 이동">house</a>
 	<a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
@@ -8,34 +7,35 @@
   </a>
 </header>
 
-<section class="content bg-faded">
-	<div data-role="list"></div>
+<section class="content">
+	<ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list"></ul>
 </section>
 
-<script src="<?php echo $g['url_module_skin'] ?>/_js/post.js<?php echo $g['wcache']?>" ></script>
+<script src="<?php echo $g['url_module_skin'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
 
 <script>
 
 	var settings={
-		wrapper : $(document).find('[data-role="list"]'),
-		markup    : 'post-row',  // 테마 > _html > post-card-full.html
+		wrapper : $('[data-role="list"]'),
+		start : '#page-main',
+		markup    : 'list-row',  // 테마 > _html > list-tableview.html
 		totalNUM  : '<?php echo $NUM?>',
     recnum    : <?php echo $recnum ?>,
 		totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
 		sort      : '<?php echo $sort ?>',
 		orderby   : '<?php echo $orderby ?>',
-		none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+		none : '<div class="p-5 text-xs-center text-muted">등록된 리스트가 없습니다.</div>'
 	}
 
-	getPostAll(settings);
+	getPostListAll(settings);
 
 	//목록 다시 불러오기
 	$('[data-toggle="reload"]').click(function(){
-		$('[data-role="list"]').html('');
+		$('[data-role="list"]').empty();
 		$('.infinitescroll-end').remove();
-		// $('.content [data-role="list"]').infinitescroll('destroy');
-		// $('.content').html('<div data-role="list"></div>')
-		getPostAll(settings);
+
+		console.log(settings.recnum)
+	  getPostListAll(settings);
 	});
 
 </script>

@@ -14,8 +14,7 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 $result=array();
 $result['error'] = false;
 
-$uid = $_POST['uid']; // 제품 고유번호
-
+$uid = $_POST['uid']; // 포스트 고유번호
 
 $R = getUidData($table[$m.'data'],$uid);
 $linkedshopArr = getArrayString($R['linkedshop']);

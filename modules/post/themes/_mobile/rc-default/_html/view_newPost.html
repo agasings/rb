@@ -1,0 +1,26 @@
+<li class="table-view-cell table-view-cell-full border-bottom-0" data-uid="{$newpost_uid}">
+  <a href="">
+    <div href="" class="position-relative mr-2 media-object pull-left">
+      <img class="border" src="{$newpost_featured_img}" alt="" style="width: 160px">
+      <time class="badge badge-default rounded-0 position-absolute" style="top:auto;left:auto;right:1px;bottom:1px">{$newpost_time}</time>
+    </div>
+
+    <div class="media-body">
+      <h5 class="h6 my-1 font-weight-light line-clamp-3">
+        {$newpost_subject}
+      </h5>
+      <div class="mb-1">
+        <ul class="list-inline d-inline-block f13 text-muted">
+          <li class="list-inline-item">조회수 {$newpost_hit}회 </li>
+          <li class="list-inline-item">
+            <time data-plugin="timeago" datetime="{$newpost_d_modify}"></time>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </a>
+  <span class="badge badge-default badge-inverted">
+    <a href="#popup-post-listmore" data-toggle="popup" data-uid="{$newpost_uid}" class="icon material-icons text-muted f18">more_vert</a>
+  </span>
+</li>

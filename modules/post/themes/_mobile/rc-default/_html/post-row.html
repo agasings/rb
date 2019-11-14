@@ -1,5 +1,13 @@
-<div class="card card-full border-bottom mb-2" data-uid="{$uid}">
-	<div class="position-relative embed-responsive embed-responsive-16by9 bg-faded" data-toggle="modal" data-target="#modal-post-view">
+<div class="card card-full border-bottom mb-2" data-role="item" data-uid="{$uid}">
+	<div class="position-relative embed-responsive embed-responsive-16by9 bg-faded"
+		data-toggle="page"
+		data-target="#page-post-view-{$format}"
+		data-start="#page-post-allpost"
+		data-uid="{$uid}"
+		data-featured="{$featured_img}"
+		data-provider="{$provider}"
+		data-videoId="{$videoId}"
+		data-url="/post/{$cid}">
 		<img class="card-img-top img-fluid" src="{$featured_img}" alt="" data-role="featured">
 		<time class="badge badge-default bg-black rounded-0 position-absolute f14" style="right:1px;bottom:1px" data-role="time">{$time}</time>
 	</div>
@@ -12,7 +20,7 @@
 		  <div class="media-body" data-toggle="modal" data-target="#modal-post-view">
 				<div class="f15 line-clamp-2" style="line-height: 1.2">{$subject}</div>
 				<ul class="list-inline f13 text-muted mt-1 mb-0">
-					<li class="list-inline-item" data-role="nic"></li>
+					<li class="list-inline-item">{$nic}</li>
 					<li class="list-inline-item">조회수 {$hit}회 </li>
 					<li class="list-inline-item">댓글 {$comment} </li>
 					<li class="list-inline-item"><time data-plugin="timeago" datetime="{$d_modify}"></time></li>

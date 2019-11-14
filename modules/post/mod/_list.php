@@ -4,7 +4,7 @@ $_WHERE = 'site='.$s;
 $where = 'name|tag';
 
 if ($listid) {
-  
+
 	$_IS_LISTOWN=getDbRows($table[$m.'list'],'mbruid='.$my['uid'].' and uid='.$LIST['uid']);
 	$_perm['list_owner'] = $my['admin'] || $_IS_LISTOWN  ? true : false;
 
