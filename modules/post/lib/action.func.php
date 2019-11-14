@@ -1,5 +1,23 @@
 <?php
 
+// 게시물 태그추출 함수
+function getPostTag($tag){
+  global $g,$r;
+  $_tags=explode(',',$tag);
+  $_tagn=count($_tags);
+  $html='';
+  $post_list = $g['url_root'].'/?r='.$r.'&m=post&bid=';
+  $i=0;
+  for($i = 0; $i < $_tagn; $i++):;
+    $_tagk=trim($_tags[$i]);
+    $html.='<span data-toggle="tag" data-tag='.$_tagk.'" class="badge badge-primary badge-inverted f13">#';
+    $html.=$_tagk;
+    $html.='</span>';
+  endfor;
+  return $html;
+}
+
+
 /*
 댓글 삭제 함수
 $d : 설정 파일 내역 배열, $m : 모듈명 $B : 블로그 uid

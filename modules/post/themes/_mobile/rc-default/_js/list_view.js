@@ -29,7 +29,7 @@ function getPostListview(settings) {
 
         wrapper.loader('hide');
         wrapper.html(box)
-
+        wrapper.find('[data-plugin="timeago"]').timeago();
 
         //무한 스크롤
         wrapper.closest('.content').infinitescroll({

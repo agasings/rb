@@ -10,19 +10,32 @@ function getPostView(settings) {
   var provider = settings.provider;
   var videoId = settings.videoId;
   var ctheme = '_mobile/rc-default';
-  var header_height = wrapper.find('.bar-nav').height()
-  var img_height = wrapper.find('.bar-media [data-role="featured"]').height()
+
+  // 기본 마크업 초기화
+  base_html = $('#'+(mod=='view'?'page':mod)+'-post-'+markup_file).html();
+  wrapper.empty().html(base_html);
+
+  var header_height = wrapper.find('.bar-nav').height();
+  var img_height = wrapper.find('.bar-media [data-role="featured"]').height();
   var height = header_height + img_height;
   var window_height = $(window).height();
   var content_height = window_height - height;
 
-  wrapper.find('.embed-responsive').addClass('d-none');
-  wrapper.find('[data-role="featured"]').attr('src',featured?featured:'/_core/images/black-1024x576.png')
-  wrapper.find('.bar-standard').css('height',img_height+'px')
-  wrapper.find('.bar-standard .embed-responsive').css('height',img_height+'px')
-  wrapper.find('.content').css('padding-top',height+'px')
+  if (markup_file=='view_doc') {
+    header_height = header_height + wrapper.find('.bar-header-secondary [data-role="list"]').height();
+    if (!list) wrapper.find('.bar-header-secondary').addClass('d-none');
+    else wrapper.find('.bar-header-secondary').removeClass('d-none');
+  }
 
-  setTimeout(function(){ wrapper.find('.modia-loader').loader(); }, 250);
+  if (markup_file=='view_video') {
+    wrapper.find('.embed-responsive').addClass('d-none');
+    wrapper.find('[data-role="featured"]').attr('src',featured?featured:'/_core/images/black-1024x576.png')
+    wrapper.find('.bar-standard').css('height',img_height+'px')
+    wrapper.find('.bar-standard .embed-responsive').css('height',img_height+'px')
+    setTimeout(function(){ wrapper.find('.modia-loader').loader(); }, 250);
+  }
+
+  wrapper.find('.content').css('padding-top',height+'px')
 
   $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postView',{
     uid : uid,
@@ -34,7 +47,6 @@ function getPostView(settings) {
         var article=result.article;
         var linkurl=result.linkurl;
         var listCollapse=result.listCollapse;
-        console.log(linkurl)
 
         wrapper.find('oembed').attr('url',linkurl);
 
@@ -61,7 +73,6 @@ function getPostView(settings) {
 
         } else {
           Iframely('oembed[url]') // oembed 미디어 변환
-
           setTimeout(function(){
             wrapper.find('.bar-media [data-role="featured"]').addClass('d-none')
             wrapper.find('.embed-responsive').removeClass('d-none');
@@ -70,6 +81,8 @@ function getPostView(settings) {
         }
 
         wrapper.find('[data-role="box"]').html(article);
+
+        if (markup_file!='view_video') Iframely('oembed[url]') // oembed 미디어 변환
 
         if (listCollapse) {
           wrapper.find('[data-role="listCollapse"]').html(listCollapse);
@@ -125,10 +138,17 @@ function getPostView(settings) {
         var _featured = button.attr('data-featured');
         var _provider = button.attr('data-provider');
         var _videoId = button.attr('data-videoId');
+        var _list = button.attr('data-list');
+        var _markup = button.attr('data-markup');
 
-        wrapper.find('oembed').empty().removeAttr('url');
-        wrapper.find('[data-role="featured"]').removeClass('d-none');
-        wrapper.find('[data-role="listCollapse"]').empty();
+        if (markup_file!=_markup) {
+          html = $('#'+(mod=='view'?'page':mod)+'-post-'+_markup).html();
+          wrapper.empty().html(html);
+        } else {
+          wrapper.find('oembed').empty().removeAttr('url');
+          wrapper.find('[data-role="featured"]').removeClass('d-none');
+          wrapper.find('[data-role="listCollapse"]').empty();
+        }
 
         setTimeout(function(){
           wrapper.find('[data-role="box"]').loader({ position: 'inside' });
@@ -143,12 +163,12 @@ function getPostView(settings) {
         getPostView({
           mod : mod,
           uid : _uid,
-          // list : list,
+          list : _list,
           featured : _featured,
           provider : _provider,
           videoId : _videoId,
           wrapper : wrapper,
-          markup    : markup_file,  // 테마 > _html >
+          markup    : _markup,  // 테마 > _html >
         });
 
 

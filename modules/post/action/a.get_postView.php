@@ -11,6 +11,10 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['post']['skin_main'];
 }
 
+include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
+
+$formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
+
 $result=array();
 $result['error'] = false;
 
@@ -27,6 +31,7 @@ if ($list) {
 
   $TMPL['list_name'] = $LIST['name'];
   $TMPL['list_num'] = $LIST['num'];
+  $TMPL['list_id'] = $LIST['id'];
   $TMPL['list_mbrnic'] = getProfileInfo($LIST['mbruid'],'nic');
 
   $listPost = '';
@@ -34,9 +39,15 @@ if ($list) {
   foreach ($LCD as $_L) {
     $TMPL['L_active']=$_L['uid']==$uid?'table-view-active':'';
     $TMPL['L_uid']=$_L['uid'];
+    $TMPL['L_cid']=$_L['cid'];
+    $TMPL['L_markup']='view_'.$formats[$_L['format']];
     $TMPL['L_subject']=stripslashes($_L['subject']);
-    $TMPL['L_featured_img'] = getPreviewResize(getUpImageSrc($_L),'240x134');
+    $TMPL['L_featured_240'] = getPreviewResize(getUpImageSrc($_L),'240x134');
+    $TMPL['L_featured_640'] = getPreviewResize(getUpImageSrc($_L),'640x360');
     $TMPL['L_time'] = getUpImageTime($_L);
+    $TMPL['L_provider']=getFeaturedimgMeta($_L,'provider');
+    $TMPL['L_videoId']=getFeaturedimgMeta($_L,'provider')=='YouTube'?getFeaturedimgMeta($_L,'name'):'';
+
     $skin_listPost=new skin('view_listPost');
     $listPost.=$skin_listPost->make();
   }
@@ -57,6 +68,7 @@ $TMPL['hit'] = $R['hit'];
 $TMPL['likes'] = $R['likes'];
 $TMPL['dislikes'] = $R['dislikes'];
 $TMPL['comment'] = $R['comment'];
+$TMPL['tag'] = $R['tag']?getPostTag($R['tag']):'';
 
 //최근 포스트
 $postque = 'mbruid='.$R['mbruid'].' and site='.$s.' and data <>'.$R['uid'];
@@ -71,6 +83,7 @@ if ($_NUM) {
   foreach ($RCD as $POST) {
     $TMPL['newpost_uid']=$POST['uid'];
     $TMPL['newpost_cid']=$POST['cid'];
+    $TMPL['newpost_markup']='view_'.$formats[$POST['format']];
     $TMPL['newpost_subject']=stripslashes($POST['subject']);
     $TMPL['newpost_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
     $TMPL['newpost_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');

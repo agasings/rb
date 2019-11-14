@@ -1,12 +1,14 @@
-function getPostAll(settings) {
+function getPostKeyword(settings) {
 
   var wrapper = settings.wrapper;
+  var keyword=settings.keyword; // keyword
   var sort=settings.sort; // sort
   var orderby=settings.orderby; // orderby
   var recnum=settings.recnum; // recnum
   var totalPage = settings.totalPage;
   var totalNUM = settings.totalNUM;
   var markup_file = settings.markup;
+  var start = settings.start;
   var none = settings.none;
   var currentPage =1; // 처음엔 무조건 1, 아래 더보기 진행되면서 +1 증가
   var prevNUM = currentPage * recnum;
@@ -14,11 +16,13 @@ function getPostAll(settings) {
 
   wrapper.loader();
 
-  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postAll',{
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postKeyword',{
     sort : sort,
+    keyword : keyword,
     recnum : recnum,
     p : currentPage,
-    markup_file : markup_file
+    markup_file : markup_file,
+    start : start
     },function(response,status){
       if(status=='success'){
         var result = $.parseJSON(response);
@@ -28,7 +32,7 @@ function getPostAll(settings) {
         wrapper.loader('hide');
         if (num) wrapper.html(list)
         else wrapper.html(none)
-        
+
         wrapper.find('[data-plugin="timeago"]').timeago();
 
         //무한 스크롤
@@ -36,11 +40,13 @@ function getPostAll(settings) {
           dataSource: function(helpers, callback){
             var nextPage = parseInt(currentPage)+1;
             if (totalPage>currentPage) {
-              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postAll',{
+              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postKeyword',{
                   sort: sort,
+                  keyword : keyword,
                   recnum : recnum,
                   markup_file : markup_file,
-                  p : nextPage
+                  p : nextPage,
+                  start : start
               },function(response) {
                   var result = $.parseJSON(response);
                   var error = result.error;
