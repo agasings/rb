@@ -113,6 +113,9 @@ strong {
 .text-black {
   color: #000 !important
 }
+.text-reset {
+  color: inherit!important;
+}
 .rounded-2 {
   border-radius: 6px !important
 }
@@ -1586,6 +1589,10 @@ anger {
   border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.075);
 }
 
+.table-view-sm .table-view-cell {
+  padding: 0.3rem 4.0625rem 0.3rem 0.5375rem;
+}
+
 .table-view-cell:last-child {
   border-bottom: 0;
 }
@@ -1597,6 +1604,10 @@ anger {
   margin: -0.6875rem -4.0625rem -0.6875rem -0.9375rem;
   overflow: hidden;
   color: inherit;
+}
+
+.table-view-sm .table-view-cell > a:not(.btn) {
+  margin: -0.3rem -4.0625rem -0.3rem -0.5375rem;
 }
 
 .table-view-cell > a:not(.btn):active {

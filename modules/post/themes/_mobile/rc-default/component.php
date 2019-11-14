@@ -1,3 +1,112 @@
+<div class="page right" id="page-post-allpost">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back">전체 포스트</span>
+  </header>
+  <main role="main" class="content bg-faded">
+    <div data-role="list"></div>
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-alllist">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back">전체 리스트</span>
+  </header>
+  <main role="main" class="content">
+    <ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list"></ul>
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-listview">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+  	<a class="icon material-icons pull-right px-3 mirror" role="button" data-toggle="popup" data-target="#popup-link-share" data-url>reply</a>
+    <span class="title title-left" data-history="back">리스트 보기</span>
+  </header>
+  <main role="main" class="content">
+    <div data-role="box"></div>
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-category">
+  <header class="bar bar-nav bar-light bg-faded px-0">
+    <button class="btn btn-link btn-nav pull-left p-x-1" data-history="back">
+      <i class="material-icons">arrow_back</i>
+    </button>
+
+    <h1 class="title title-left" data-role="title" data-history="back">
+     분류
+   </h1>
+  </header>
+  <div class="bar bar-standard bar-header-secondary bar-light bg-faded p-x-0">
+    <span class="bg_shadow shadow_before"></span>
+    <span class="bg_shadow shadow_after"></span>
+    <div class="swiper-container-thumbs">
+      <nav class="swiper-wrapper"></nav>
+    </div>
+  </div>
+  <main role="main" class="content bg-faded">
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-keyword">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon pull-right material-icons px-3" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back" data-role="title">키워드 보기</span>
+  </header>
+  <main role="main" class="content">
+    <ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list"></ul>
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-view_doc">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
+  	<a class="icon material-icons pull-right px-3 mirror" role="button" data-toggle="popup" data-target="#popup-link-share" data-url>reply</a>
+    <span class="title title-left" data-history="back">포스트 보기</span>
+  </header>
+  <div class="bar bar-standard bar-header-secondary bar-light bg-faded px-0" data-role="listCollapse">
+  </div>
+  <main role="main" class="content post-section">
+    <div data-role="box"></div>
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-view_video">
+  <header class="bar bar-standard px-0 bar-dark bg-black border-bottom-0 bar-media shadow-sm">
+	  <img src="/_core/images/black-1024x576.png" class="img-fluid" alt="" data-role="featured" style="opacity: .5;">
+	  <div class="modia-loader"></div>
+	  <div class="embed-responsive embed-responsive-16by9 bg-black" data-role="video">
+	    <oembed id="page-player"></oembed>
+	  </div>
+    <div data-role="listCollapse" class="bg-black text-white"></div>
+	</header>
+	<main class="content post-section">
+		<div data-role="box"></div>
+	</main>
+</div><!-- /.page -->
+
+<div class="modal" id="modal-post-view_video">
+	<header class="bar bar-standard px-0 bar-dark bg-black border-bottom-0 bar-media shadow-sm">
+	  <img src="/_core/images/black-1024x576.png" class="img-fluid" alt="" data-role="featured" style="opacity: .5;">
+	  <div class="modia-loader"></div>
+	  <div class="embed-responsive embed-responsive-16by9 bg-black" data-role="video">
+	    <oembed id="modal-player"></oembed>
+	  </div>
+    <div data-role="listCollapse"></div>
+	</header>
+	<article class="content post-section">
+		<div data-role="box"></div>
+	</article>
+</div><!-- /.page -->
+
+
 <div id="modal-post-allpost" class="modal fast">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -123,209 +232,4 @@
 <script src="/modules/post/themes/_mobile/rc-default/_js/list_view.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/_mobile/rc-default/_js/view.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/_mobile/rc-default/_js/keyword.js<?php echo $g['wcache']?>" ></script>
-<script>
-
-
-
-$('#modal-post-allpost').on('show.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  var wrapper = modal.find('[data-role="list"]');
-  wrapper.html('');
-
-  var settings={
-    wrapper : wrapper,
-    markup    : 'post-row',  // 테마 > _html > post-card-full.html
-    totalNUM  : '<?php echo $NUM?>',
-    recnum    : '',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
-    sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
-  }
-
-  getPostAll(settings);
-
-})
-
-$('#modal-post-alllist').on('show.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  var wrapper = modal.find('[data-role="list"]');
-  wrapper.html('');
-
-  var settings={
-    wrapper : wrapper,
-    markup    : 'list-row',  // 테마 > _html > post-card-full.html
-    totalNUM  : '<?php echo $NUM?>',
-    recnum    : '',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
-    sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
-  }
-
-  getPostListAll(settings);
-
-})
-
-$('#modal-post-listview').on('show.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  var wrapper = modal.find('[data-role="box"]');
-  var listid = button.attr('data-id');
-  wrapper.html('');
-
-  getPostListview({
-    listid : listid,
-    wrapper : wrapper,
-    markup    : 'listview-box',  // 테마 > _html > list-tableview.html
-    totalNUM  : '<?php echo $NUM?>',
-    recnum    : '<?php echo $recnum ?>',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
-    sort      : '<?php echo $sort ?>',
-    orderby   : '<?php echo $orderby ?>',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
-  });
-
-})
-
-$('#page-post-keyword').on('show.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  var keyword = button.attr('data-keyword');
-  var wrapper = page.find('[data-role="list"]');
-  wrapper.html('');
-
-  var settings={
-    wrapper : wrapper,
-    start : '#page-post-keyword',
-    markup    : 'keyword-row',  // 테마 > _html > post-card-full.html
-    keyword : keyword,
-    totalNUM  : '<?php echo $NUM?>',
-    recnum    : '',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
-    sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
-  }
-
-  getPostKeyword(settings);
-
-})
-
-$('#modal-post-view_video').on('shown.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  var mod = 'modal';
-  var uid = button.attr('data-uid');
-  var list = button.attr('data-list');
-  var featured = button.attr('data-featured');
-  var provider = button.attr('data-provider');
-  var videoId = button.attr('data-videoId');
-  getPostView({
-    mod : mod,
-    uid : uid,
-    list : list,
-    featured : featured,
-    provider : provider,
-    videoId : videoId,
-    wrapper : modal,
-    markup    : 'view_video',  // 테마 > _html >
-  });
-})
-
-$('#modal-post-view_video').on('hidden.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  modal.find('oembed').empty().removeAttr('url');
-  modal.find('[data-role="featured"]').removeClass('d-none');
-  modal.find('[data-role="listCollapse"]').empty();
-  modal.find('[data-role="box"]').empty();
-
-  player = new YT.Player('modal-player');
-  player.destroy()
-
-  modal.find('.embed-responsive').append($('<oembed/>', {
-    id: 'modal-player'
-  }));
-})
-
-$('#page-post-view_video').on('shown.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  var mod = 'page';
-  var uid = button.attr('data-uid');
-  var list = button.attr('data-list');
-  var featured = button.attr('data-featured');
-  var provider = button.attr('data-provider');
-  var videoId = button.attr('data-videoId');
-
-  getPostView({
-    mod : mod,
-    uid : uid,
-    list : list,
-    featured : featured,
-    provider : provider,
-    videoId : videoId,
-    wrapper : page,
-    markup    : 'view_video',  // 테마 > _html >
-  });
-})
-
-$('#page-post-view_doc').on('shown.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  var mod = 'page';
-  var uid = button.attr('data-uid');
-  var list = button.attr('data-list');
-  var featured = button.attr('data-featured');
-  var provider = button.attr('data-provider');
-  var videoId = button.attr('data-videoId');
-
-  getPostView({
-    mod : mod,
-    uid : uid,
-    list : list,
-    featured : featured,
-    provider : provider,
-    videoId : videoId,
-    wrapper : page,
-    markup    : 'view_doc',  // 테마 > _html >
-  });
-})
-
-$('#page-post-view_video').on('hidden.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  page.find('oembed').empty().removeAttr('url');
-  page.find('[data-role="featured"]').removeClass('d-none');
-  page.find('[data-role="listCollapse"]').empty();
-  page.find('[data-role="box"]').empty();
-
-  player = new YT.Player('page-player');
-  player.destroy()
-
-  page.find('.embed-responsive').append($('<oembed/>', {
-    id: 'page-player'
-  }));
-
-})
-
-$('#page-post-view_doc').on('hidden.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  page.find('oembed').empty().removeAttr('url');
-  page.find('[data-role="featured"]').removeClass('d-none');
-  page.find('[data-role="listCollapse"]').empty();
-  page.find('[data-role="box"]').empty();
-
-  player = new YT.Player('page-player');
-  player.destroy()
-
-  page.find('.embed-responsive').append($('<oembed/>', {
-    id: 'page-player'
-  }));
-
-})
-
-
-
-</script>
+<script src="/modules/post/themes/_mobile/rc-default/_js/component.js<?php echo $g['wcache']?>" ></script>

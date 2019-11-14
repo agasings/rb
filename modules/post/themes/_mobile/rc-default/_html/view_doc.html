@@ -1,17 +1,25 @@
 <div class="content-padded">
-  <strong data-role="title" class="h5">
+  <h5 data-role="title" class="h5">
     {$subject}
-  </strong>
-  <small class="d-block text-muted">
-    조회수 {$hit}회
-  </small>
+  </h5>
+
+  <ul class="list-inline f13 text-muted mt-1 mb-0">
+    <li class="list-inline-item">{$nic}</li>
+    <li class="list-inline-item">조회수 {$hit}회 </li>
+    <li class="list-inline-item">{$d_regis}</li>
+  </ul>
+
 </div>
 
 <div class="rb-article content-padded">
   {$content}
 </div>
 
-<div class="d-flex text-xs-center px-3">
+<div class="content-padded">
+  {$tag}
+</div>
+
+<div class="d-flex text-xs-center px-3 border-top pt-2">
   <div class="flex-fill">
     <button type="button" class="btn btn-link text-muted px-3"
       data-send="ajax"
@@ -80,7 +88,7 @@
     <a href="" class="text-reset media" data-mbruid="{$mbruid}">
       <img src="{$avatar}" class="mr-3 rounded-circle" width="34" height="34" alt="{$M1_nic}의 프로필">
       <div class="media-body">
-        <div class="f16" style="line-height: 1.2;">{$MBR_nic}</div>
+        <div class="f16" style="line-height: 1.2;">{$nic}</div>
         <p class="mb-0 text-muted f12">
             구독자
             <span data-role="num_follower">{$num_follower}</span>

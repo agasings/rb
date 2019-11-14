@@ -61,7 +61,7 @@ $TMPL['list_name'] = $LIST['name'];
 $TMPL['list_num'] = $LIST['num'];
 
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
-$TMPL['MBR_nic'] = getProfileInfo($R['mbruid'],'nic');
+$TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
 $TMPL['subject'] = stripslashes($R['subject']);
 $TMPL['content'] = getContents($R['content'],'HTML');
 $TMPL['hit'] = $R['hit'];
@@ -69,6 +69,8 @@ $TMPL['likes'] = $R['likes'];
 $TMPL['dislikes'] = $R['dislikes'];
 $TMPL['comment'] = $R['comment'];
 $TMPL['tag'] = $R['tag']?getPostTag($R['tag']):'';
+$TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d H:i');
+$TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
 
 //최근 포스트
 $postque = 'mbruid='.$R['mbruid'].' and site='.$s.' and data <>'.$R['uid'];

@@ -190,6 +190,12 @@ $g['memberVarForSite'] = $g['path_var'].'site/'.$r.'/member.var.php'; // 사이�
 $_member_varfile = file_exists($g['memberVarForSite']) ? $g['memberVarForSite'] : $g['path_module'].'member/var/var.php';
 include_once $_member_varfile; // 변수파일 인클루드
 
+//사이트별 포스트설정 변수
+$g['postVarForSite'] = $g['path_var'].'site/'.$r.'/post.var.php';
+$_post_varfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['path_module'].'post/var/var.php';
+include_once $_post_varfile;
+
+
 // 회원가입을 위한 이메일/휴대폰 본인인증 후 관련세션 존재유무
 if (isset($_SESSION['JOIN']['email']) || isset($_SESSION['JOIN']['phone'])) {
 	$call_modal_join_site=1;  //  인증후,가입 모달 호출

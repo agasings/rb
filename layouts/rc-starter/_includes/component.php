@@ -13,6 +13,7 @@
 10. 시트 : 푸시알림 권한요청
 11. 시트 : 첨부파일 설정
 12. 팝업 : 첨부파일 업로드 성공
+12. 포스트 모듈
 
 -->
 
@@ -50,7 +51,7 @@
 </div>
 
 <!-- 5. 일반모달 : 통합검색 -->
-<div id="modal-search" class="modal zoom">
+<div id="modal-search" class="modal fast">
 	<header class="bar bar-nav bg-white p-2">
 	  <form class="input-group input-group-lg border border-primary" action="<?php echo $g['s']?>/" id="modal-search-form">
 			<input type="hidden" name="r" value="<?php echo $r?>">
@@ -369,3 +370,6 @@ if ($m=='bbs') {
     </div>
   </div>
 </div>
+
+<!-- 13. 포스트 -->
+<?php include_once $g['path_module'].'post/themes/'.$d['post']['skin_mobile'].'/component.php';  ?>
