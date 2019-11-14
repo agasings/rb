@@ -224,7 +224,7 @@ $('#modal-post-view-video').on('hidden.rc.modal', function(event) {
   }));
 })
 
-$('#page-post-view-video').on('show.rc.page', function(event) {
+$('#page-post-view-video').on('shown.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var mod = 'page';
@@ -262,7 +262,6 @@ $('#page-post-view-video').on('hidden.rc.page', function(event) {
   }));
 
 })
-
 
 
 

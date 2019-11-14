@@ -70,8 +70,12 @@ $newPost = '';
 if ($_NUM) {
   foreach ($RCD as $POST) {
     $TMPL['newpost_uid']=$POST['uid'];
+    $TMPL['newpost_cid']=$POST['cid'];
     $TMPL['newpost_subject']=stripslashes($POST['subject']);
-    $TMPL['newpost_featured_img'] = getPreviewResize(getUpImageSrc($POST),'320x180');
+    $TMPL['newpost_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
+    $TMPL['newpost_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
+    $TMPL['newpost_provider']=getFeaturedimgMeta($POST,'provider');
+    $TMPL['newpost_videoId']=getFeaturedimgMeta($POST,'provider')=='YouTube'?getFeaturedimgMeta($POST,'name'):'';
     $TMPL['newpost_hit']=$POST['hit'];
     $TMPL['newpost_d_modify'] = getDateFormat($POST['d_modify']?$POST['d_modify']:$POST['d_regis'],'c');
     $TMPL['newpost_nic'] = getProfileInfo($POST['mbruid'],'nic');

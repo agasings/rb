@@ -118,6 +118,44 @@ function getPostView(settings) {
       } else {
         alert(status);
       }
+
+      wrapper.off('click').on('click','[data-toggle="view"]',function(){
+        var button = $(this);
+        var _uid = button.attr('data-uid');
+        var _featured = button.attr('data-featured');
+        var _provider = button.attr('data-provider');
+        var _videoId = button.attr('data-videoId');
+
+        wrapper.find('oembed').empty().removeAttr('url');
+        wrapper.find('[data-role="featured"]').removeClass('d-none');
+        wrapper.find('[data-role="listCollapse"]').empty();
+
+        setTimeout(function(){
+          wrapper.find('[data-role="box"]').loader({ position: 'inside' });
+        }, 150);
+
+        if (provider=='YouTube') player.destroy()
+
+        wrapper.find('.embed-responsive').append($('<oembed/>', {
+          id: mod+'-player'
+        }));
+
+        getPostView({
+          mod : mod,
+          uid : _uid,
+          // list : list,
+          featured : _featured,
+          provider : _provider,
+          videoId : _videoId,
+          wrapper : wrapper,
+          markup    : markup_file,  // 테마 > _html >
+        });
+
+
+      });
+
+
+
   });
 
 }
