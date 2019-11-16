@@ -26,31 +26,45 @@
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
   	<a class="icon material-icons pull-right px-3 mirror" role="button" data-toggle="popup" data-target="#popup-link-share" data-url>reply</a>
-    <span class="title title-left" data-history="back">리스트 보기</span>
+    <span class="title title-left" data-history="back" data-role="title">리스트 보기</span>
   </header>
-  <main role="main" class="content">
-    <div data-role="box"></div>
-  </main>
+  <section class="content">
+  	<div data-role="box"></div>
+  </section>
 </div><!-- /.page -->
 
 <div class="page right" id="page-post-category">
   <header class="bar bar-nav bar-light bg-faded px-0">
-    <button class="btn btn-link btn-nav pull-left p-x-1" data-history="back">
-      <i class="material-icons">arrow_back</i>
-    </button>
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <span class="title title-left" data-history="back" data-role="title"></span>
+  </header>
+  <main role="main" class="content">
+  	<?php getWidget('post/rc-post-cat-collapse',array('smenu'=>'0','limit'=>'4','collid'=>'tree-post','dispfmenu'=>'1','collapse'=>'1'))?>
+  </main>
+</div><!-- /.page -->
 
-    <h1 class="title title-left" data-role="title" data-history="back">
-     분류
-   </h1>
+<div class="page right" id="page-post-category-view">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back" >
+      <span data-role="title"></span>
+    </span>
   </header>
   <div class="bar bar-standard bar-header-secondary bar-light bg-faded p-x-0">
-    <span class="bg_shadow shadow_before"></span>
-    <span class="bg_shadow shadow_after"></span>
-    <div class="swiper-container-thumbs">
-      <nav class="swiper-wrapper"></nav>
-    </div>
+  <span class="bg_shadow shadow_before"></span>
+  <span class="bg_shadow shadow_after"></span>
+  <div class="swiper-container-thumbs">
+    <nav class="swiper-wrapper"></nav>
   </div>
-  <main role="main" class="content bg-faded">
+</div>
+  <main role="main" class="content">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+      </div><!-- /.swiper-wrapper -->
+    </div><!-- /.swiper-container -->
+  	<ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list"></ul>
   </main>
 </div><!-- /.page -->
 
@@ -65,46 +79,12 @@
   </main>
 </div><!-- /.page -->
 
-<div class="page right" id="page-post-view_doc">
-  <header class="bar bar-nav bar-light bg-white px-0">
-    <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-  	<a class="icon material-icons pull-right px-3 mirror" role="button" data-toggle="popup" data-target="#popup-link-share" data-url>reply</a>
-    <span class="title title-left" data-history="back">포스트 보기</span>
-  </header>
-  <div class="bar bar-standard bar-header-secondary bar-light bg-faded px-0" data-role="listCollapse">
-  </div>
-  <main role="main" class="content post-section">
-    <div data-role="box"></div>
-  </main>
+<div class="page right" id="page-post-view">
 </div><!-- /.page -->
 
-<div class="page right" id="page-post-view_video">
-  <header class="bar bar-standard px-0 bar-dark bg-black border-bottom-0 bar-media shadow-sm">
-	  <img src="/_core/images/black-1024x576.png" class="img-fluid" alt="" data-role="featured" style="opacity: .5;">
-	  <div class="modia-loader"></div>
-	  <div class="embed-responsive embed-responsive-16by9 bg-black" data-role="video">
-	    <oembed id="page-player"></oembed>
-	  </div>
-    <div data-role="listCollapse" class="bg-black text-white"></div>
-	</header>
-	<main class="content post-section">
-		<div data-role="box"></div>
-	</main>
-</div><!-- /.page -->
 
-<div class="modal" id="modal-post-view_video">
-	<header class="bar bar-standard px-0 bar-dark bg-black border-bottom-0 bar-media shadow-sm">
-	  <img src="/_core/images/black-1024x576.png" class="img-fluid" alt="" data-role="featured" style="opacity: .5;">
-	  <div class="modia-loader"></div>
-	  <div class="embed-responsive embed-responsive-16by9 bg-black" data-role="video">
-	    <oembed id="modal-player"></oembed>
-	  </div>
-    <div data-role="listCollapse"></div>
-	</header>
-	<article class="content post-section">
-		<div data-role="box"></div>
-	</article>
-</div><!-- /.page -->
+<div class="modal" id="modal-post-view">
+</div><!-- /.modal -->
 
 
 <div id="modal-post-allpost" class="modal fast">
@@ -227,9 +207,10 @@
 
 </div>
 
-<script src="/modules/post/themes/_mobile/rc-default/_js/post.js<?php echo $g['wcache']?>" ></script>
-<script src="/modules/post/themes/_mobile/rc-default/_js/list.js<?php echo $g['wcache']?>" ></script>
-<script src="/modules/post/themes/_mobile/rc-default/_js/list_view.js<?php echo $g['wcache']?>" ></script>
-<script src="/modules/post/themes/_mobile/rc-default/_js/view.js<?php echo $g['wcache']?>" ></script>
-<script src="/modules/post/themes/_mobile/rc-default/_js/keyword.js<?php echo $g['wcache']?>" ></script>
-<script src="/modules/post/themes/_mobile/rc-default/_js/component.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/post.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list_view.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/view.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/keyword.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/category.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>

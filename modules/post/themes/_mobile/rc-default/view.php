@@ -13,23 +13,17 @@ $videoId = getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'n
 
 <script>
 
-// youtube API
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 $( document ).ready(function() {
 
 	getPostView({
+		mod : 'landing',
 		uid : '<?php echo $R['uid'] ?>',
-		mod : 'view',
 		list : '<?php echo $list ?>',
 		wrapper : $('[data-role="view"]'),
 		featured : '<?php echo $featured_img ?>',
 		provider : '<?php echo $provider ?>',
 		videoId : '<?php echo $videoId ?>',
-		markup    : 'view_<?php echo $formats[$R['format']] ?>',  // 테마 > _html >
+		format    : '<?php echo $formats[$R['format']] ?>',  // 테마 > _html >
 	});
 
 });

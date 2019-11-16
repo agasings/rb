@@ -37,6 +37,8 @@ var broswer = '<?php echo $g['broswer'] ?>';
 var deviceKind = '<?php echo $g['mobile'] ?>';
 var deviceType = '<?php echo $g['deviceType'] ?>';
 var kakao_jskey = '<?php echo $d['connect']['jskey_k'] ?>';
+var post_skin_main =   '<?php echo $d['post']['skin_main']  ?>';
+var post_skin_mobile = '<?php echo $d['post']['skin_mobile'] ?>';
 </script>
 
 <!-- is-loading : https://github.com/hekigan/is-loading-->

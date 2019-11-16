@@ -1,14 +1,12 @@
-<div class="bg-faded mb-2 border-bottom">
-  <div class="p-4">
-    <h5>
-      <img src="{$avatar}" width="30" height="30" alt="" class="mr-1 rounded-circle">
-      <span class="align-middle">{$name}</span>
-    </h5>
-    <p>{$review}</p>
+<div class="ad_section bg-black position-relative mb-3" style="background-image: url({$cover});">
+  <div class="text-xs-center text-white position-relative p-2">
+    <strong class="h4 d-block">{$name}</strong>
+    <div class="mb-1"><small>{$review}</small></div>
   </div>
+  <img src="{$avatar}" width="48" height="48" alt="" class="mr-1 rounded-circle shadow position-absolute" style="bottom:-24px;left:50%;margin-left:-24px">
 </div>
 
 <span class="text-muted f14 content-padded">포스트 {$num}개 </span>
 <ul class="table-view table-view-sm mt-0 border-top-0 border-bottom-0">
-{$row}
+  {$row}
 </ul>

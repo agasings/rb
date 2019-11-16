@@ -40,14 +40,13 @@ if ($list) {
     $TMPL['L_active']=$_L['uid']==$uid?'table-view-active':'';
     $TMPL['L_uid']=$_L['uid'];
     $TMPL['L_cid']=$_L['cid'];
-    $TMPL['L_markup']='view_'.$formats[$_L['format']];
     $TMPL['L_subject']=stripslashes($_L['subject']);
     $TMPL['L_featured_240'] = getPreviewResize(getUpImageSrc($_L),'240x134');
     $TMPL['L_featured_640'] = getPreviewResize(getUpImageSrc($_L),'640x360');
     $TMPL['L_time'] = getUpImageTime($_L);
     $TMPL['L_provider']=getFeaturedimgMeta($_L,'provider');
     $TMPL['L_videoId']=getFeaturedimgMeta($_L,'provider')=='YouTube'?getFeaturedimgMeta($_L,'name'):'';
-
+    $TMPL['L_format']=$formats[$_L['format']];
     $skin_listPost=new skin('view_listPost');
     $listPost.=$skin_listPost->make();
   }
@@ -85,7 +84,7 @@ if ($_NUM) {
   foreach ($RCD as $POST) {
     $TMPL['newpost_uid']=$POST['uid'];
     $TMPL['newpost_cid']=$POST['cid'];
-    $TMPL['newpost_markup']='view_'.$formats[$POST['format']];
+    $TMPL['newpost_format']=$formats[$POST['format']];
     $TMPL['newpost_subject']=stripslashes($POST['subject']);
     $TMPL['newpost_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
     $TMPL['newpost_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
@@ -102,7 +101,7 @@ if ($_NUM) {
 
 $TMPL['newPost'] = $newPost;
 
-$markup_file = $markup_file?$markup_file:'view_doc';
+$markup_file = $markup_file?$markup_file:'view_doc_content';
 $skin=new skin($markup_file);
 
 $result['linkurl']=getFeaturedimgMeta($R,'linkurl');

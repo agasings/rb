@@ -82,117 +82,233 @@ $('#page-post-keyword').on('show.rc.page', function(event) {
 
 })
 
-$('#modal-post-view_video').on('shown.rc.modal', function(event) {
+$('#page-post-category-view').on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var category = button.attr('data-category');
+  var wrapper = page.find('[data-role="list"]');
+
+
+
+
+
+  var swiper_shop_category_thumbs = document.querySelector('#page-post-category-view .bar-standard .swiper-container-thumbs').swiper;
+  var swiper_shop_category_body = document.querySelector('#page-post-category-view .content .swiper-container').swiper;
+
+  if (swiper_shop_category_thumbs) swiper_shop_category_thumbs.destroy(true,true);
+  if (swiper_shop_category_body) swiper_shop_category_body.destroy(true,true);
+
+  var button = $(event.relatedTarget)
+  var intial_index = button.data('index')
+  var category_parent = button.data('parent')
+  var category = button.data('category')
+
+  // 초기화
+  page.find('.bar-standard').removeClass('d-none')
+  page.find('.bar-standard .swiper-wrapper').html('')
+  page.find('.content .swiper-wrapper').html('');
+
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=set_swiperCategory',{
+       parent : category_parent,
+       markup_file : 'category'
+    },function(response){
+
+     var result = $.parseJSON(response);
+     var nav_links=result.nav_links;
+     var num=result.num;
+     var swiper_slides=result.swiper_slides;
+     page.find('.bar-standard .swiper-wrapper').html(nav_links)
+     page.find('.content .swiper-wrapper').html(swiper_slides)
+
+     if (!num) page.find('.bar-standard').addClass('d-none')
+
+     page.find('.content').loader({
+      text:       "불러오는중...",
+      position:   "overlay",
+    });
+
+    var item = page.find('.bar-standard .nav-link')
+
+    var slidesPerView = num>3?4:3
+
+    var swiper_shop_category_thumbs = new Swiper('#page-post-category-view .bar-standard .swiper-container-thumbs', {
+      slidesPerView: slidesPerView,
+      freeMode: true,
+      freeModeSticky : true,
+      watchSlidesVisibility: true,
+      // watchSlidesProgress: true,
+      slidesOffsetAfter	: 0,
+      initialSlide: intial_index,
+      navigation: {
+        nextEl: '.shadow_after',
+        prevEl: '.shadow_before',
+      },
+      slidesOffsetBefore: 0,
+      slidesOffsetAfter : 0
+    });
+
+    var swiper_shop_category_body = new Swiper('#page-post-category-view .content .swiper-container', {
+      spaceBetween: 10,
+      autoHeight: true,
+      initialSlide: intial_index,
+      navigation: {
+        nextEl: '.shadow_after',
+        prevEl: '.shadow_before',
+      },
+      thumbs: {
+        swiper: swiper_shop_category_thumbs,
+        slideThumbActiveClass: 'active',
+        slidesPerView: slidesPerView,
+        freeMode: true,
+        freeModeSticky : true,
+        watchSlidesVisibility: true,
+        // watchSlidesProgress: true,
+        slidesOffsetBefore: 0,
+        slidesOffsetAfter : 0
+      },
+      on: {
+        init: function () {
+          console.log('swiper 초기화 완료');
+          var intial_slide = page.find('.content .swiper-slide:eq('+intial_index+')')
+
+          $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_goodsList',{
+               cat : category,
+               markup_file : 'category_cols'
+            },function(response){
+
+             var result = $.parseJSON(response);
+             var list=result.list;
+
+             setTimeout(function(){
+               page.find('.content').loader("hide");
+               intial_slide.html(list);
+             }, 100);
+          });
+        },
+      },
+    });
+
+    swiper_shop_category_body.on('slideChange', function () {
+      console.log('slide changed');
+
+      var active_index = swiper_shop_category_body.activeIndex
+      var active_slide = page.find('.content .swiper-slide:eq('+active_index+')')
+      var category = active_slide.data('category')
+      var title = active_slide.data('title')
+
+      console.log('category:'+category)
+
+      active_slide.html('');
+      page.find('.content').loader({
+        text:       "불러오는중...",
+        position:   "overlay",
+      });
+
+      $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_goodsList',{
+           cat : category,
+           markup_file : 'category_cols'
+        },function(response){
+
+         var result = $.parseJSON(response);
+         var list=result.list;
+
+         active_slide.html(list);
+         page.find('.content').scrollTop(0);
+         page.find('.content').loader("hide");
+         setTimeout(function(){
+           swiper_shop_category_body.updateAutoHeight();
+         }, 100);
+
+      })
+    })
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  var settings={
+    wrapper : wrapper,
+    start : '#page-post-category-view',
+    markup    : 'category-row',  // 테마 > _html > post-card-full.html
+    category : category,
+    totalNUM  : '',
+    recnum    : 10,
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  }
+
+  getPostCategory(settings);
+
+})
+
+$('#page-post-view').on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var format = button.attr('data-format');
+  var uid = button.attr('data-uid');
+  var list = button.attr('data-list');
+  var featured = button.attr('data-featured');
+  var provider = button.attr('data-provider');
+  var videoId = button.attr('data-videoId');
+
+  getPostView({
+    format : format,
+    uid : uid,
+    list : list,
+    featured : featured,
+    provider : provider,
+    videoId : videoId,
+    wrapper : page
+  });
+})
+
+$('#page-post-view').on('hidden.rc.page', function(event) {
+  var page = $(this);
+  page.empty()
+})
+
+$('#modal-post-view').on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var modal = $(this);
-  var mod = 'modal';
+  var format = button.attr('data-format');
   var uid = button.attr('data-uid');
   var list = button.attr('data-list');
   var featured = button.attr('data-featured');
   var provider = button.attr('data-provider');
   var videoId = button.attr('data-videoId');
+
   getPostView({
-    mod : mod,
+    format : format,
     uid : uid,
     list : list,
     featured : featured,
     provider : provider,
     videoId : videoId,
-    wrapper : modal,
-    markup    : 'view_video',  // 테마 > _html >
+    wrapper : modal
   });
 })
 
-$('#modal-post-view_video').on('hidden.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
+$('#modal-post-view').on('hidden.rc.modal', function(event) {
   var modal = $(this);
-  modal.find('oembed').empty().removeAttr('url');
-  modal.find('[data-role="featured"]').removeClass('d-none');
-  modal.find('[data-role="listCollapse"]').empty();
-  modal.find('[data-role="box"]').empty();
-
-  player = new YT.Player('modal-player');
-  player.destroy()
-
-  modal.find('.embed-responsive').append($('<oembed/>', {
-    id: 'modal-player'
-  }));
-})
-
-$('#page-post-view_video').on('shown.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  var mod = 'page';
-  var uid = button.attr('data-uid');
-  var list = button.attr('data-list');
-  var featured = button.attr('data-featured');
-  var provider = button.attr('data-provider');
-  var videoId = button.attr('data-videoId');
-
-  getPostView({
-    mod : mod,
-    uid : uid,
-    list : list,
-    featured : featured,
-    provider : provider,
-    videoId : videoId,
-    wrapper : page,
-    markup    : 'view_video',  // 테마 > _html >
-  });
-})
-
-$('#page-post-view_doc').on('shown.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  var mod = 'page';
-  var uid = button.attr('data-uid');
-  var list = button.attr('data-list');
-  var featured = button.attr('data-featured');
-  var provider = button.attr('data-provider');
-  var videoId = button.attr('data-videoId');
-
-  getPostView({
-    mod : mod,
-    uid : uid,
-    list : list,
-    featured : featured,
-    provider : provider,
-    videoId : videoId,
-    wrapper : page,
-    markup    : 'view_doc',  // 테마 > _html >
-  });
-})
-
-$('#page-post-view_video').on('hidden.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  page.find('oembed').empty().removeAttr('url');
-  page.find('[data-role="featured"]').removeClass('d-none');
-  page.find('[data-role="listCollapse"]').empty();
-  page.find('[data-role="box"]').empty();
-
-  player = new YT.Player('page-player');
-  player.destroy()
-
-  page.find('.embed-responsive').append($('<oembed/>', {
-    id: 'page-player'
-  }));
-
-})
-
-$('#page-post-view_doc').on('hidden.rc.page', function(event) {
-  var button = $(event.relatedTarget);
-  var page = $(this);
-  page.find('oembed').empty().removeAttr('url');
-  page.find('[data-role="featured"]').removeClass('d-none');
-  page.find('[data-role="listCollapse"]').empty();
-  page.find('[data-role="box"]').empty();
-
-  player = new YT.Player('page-player');
-  player.destroy()
-
-  page.find('.embed-responsive').append($('<oembed/>', {
-    id: 'page-player'
-  }));
-
+  modal.empty()
 })

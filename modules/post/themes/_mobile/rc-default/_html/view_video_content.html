@@ -1,0 +1,139 @@
+<div class="content-padded mb-0" data-role="tag">
+  {$tag}
+</div>
+
+<button class="d-flex justify-content-between px-0 collapsed text-reset w-100" data-toggle="collapse" data-target="#collapseContent">
+  <div class="content-padded my-1 text-xs-left">
+    <strong data-role="title" class="h5 mb-0 line-clamp-2">
+      {$subject}
+    </strong>
+    <small class="d-block text-muted">
+      조회수 {$hit}회
+    </small>
+  </div>
+  <div class="pr-3">
+    <i class="fa fa-caret-up text-muted" aria-hidden="true"></i>
+  </div>
+</button>
+
+<div class="d-flex text-xs-center px-3">
+  <div class="flex-fill">
+    <button type="button" class="btn btn-link text-muted px-3"
+      data-send="ajax"
+      data-act="opinion"
+      data-uid="{$uid}"
+      data-opinion="like"
+      data-effect="heartbeat"
+      data-role="btn_post_like">
+      <i class="material-icons d-block mb-1">thumb_up</i>
+      <small data-role='likes_{$uid}'>0</small>
+    </button>
+  </div>
+  <div class="flex-fill">
+    <button type="button" class="btn btn-link text-muted px-3"
+      data-send="ajax"
+      data-act="opinion"
+      data-uid="{$uid}"
+      data-opinion="dislike"
+      data-effect="heartbeat"
+      data-role="btn_post_like">
+      <i class="material-icons d-block mb-1">thumb_down</i>
+      <small data-role='dislikes_{$uid}'>0</small>
+    </button>
+  </div>
+  <div class="flex-fill">
+    <button type="button" class="btn btn-link text-muted px-3"
+      data-send="ajax"
+      data-act="opinion"
+      data-uid="{$uid}"
+      data-opinion="dislike"
+      data-effect="heartbeat"
+      data-role="btn_post_like">
+      <i class="material-icons d-block mb-1 mirror" style="font-size: 30px;margin-top:-6px">reply</i>
+      <small data-role='dislikes_{$uid}'>공유</small>
+    </button>
+  </div>
+  <div class="flex-fill">
+    <button type="button" class="btn btn-link text-muted px-3"
+      data-send="ajax"
+      data-act="opinion"
+      data-uid="{$uid}"
+      data-opinion="dislike"
+      data-effect="heartbeat"
+      data-role="btn_post_like">
+      <i class="material-icons d-block mb-1" style="font-size: 26px;">library_add</i>
+      <small data-role='dislikes_{$uid}'>저장</small>
+    </button>
+  </div>
+  <div class="flex-fill">
+    <button type="button" class="btn btn-link text-muted px-3"
+      data-send="ajax"
+      data-act="opinion"
+      data-uid="{$uid}"
+      data-opinion="dislike"
+      data-effect="heartbeat"
+      data-role="btn_post_like">
+      <i class="material-icons d-block mb-1" style="font-size: 30px;margin-top:-2px">flag</i>
+      <small data-role='dislikes_{$uid}'>신고</small>
+    </button>
+  </div>
+</div>
+
+<div class="border-top border-bottom">
+  <div class="d-flex justify-content-between align-items-center content-padded">
+
+    <a href="" class="text-reset media" data-mbruid="{$mbruid}">
+      <img src="{$avatar}" class="mr-3 rounded-circle" width="34" height="34" alt="{$M1_nic}의 프로필">
+      <div class="media-body">
+        <div class="f16" style="line-height: 1.2;">{$nic}</div>
+        <p class="mb-0 text-muted f12">
+            구독자
+            <span data-role="num_follower">{$num_follower}</span>
+        </p>
+      </div>
+    </a><!-- /.media -->
+
+    <div data-role="item" data-featured_img="{$avatar}" data-subject="{$subject}">
+
+      <button type="button" class="btn btn btn-outline-primary"
+       data-target="#modal-post-opinion"
+       data-opinion="like"
+       data-toggle="modal"
+       data-uid="{$uid}">
+        좋아요 내역
+      </button>
+
+       <button type="button" class="btn btn btn-outline-primary"
+        data-target="#modal-post-analytics"
+        data-toggle="modal"
+        data-uid="{$uid}">
+         분석
+       </button>
+       <a href="" class="btn btn-outline-primary">수정</a>
+
+       <button type="button" class="btn btn-primary active"
+        data-act=""
+        data-toggle="button"
+        data-role="follow"
+        data-url="">
+         구독
+       </button>
+    </div>
+
+  </div><!-- /.d-flex -->
+</div>
+
+<!-- 본문 -->
+<article class="collapse border-bottom" id="collapseContent">
+  <div class="f15 text-muted content-padded" data-plugin="shorten">
+    {$content}
+  </div>
+</article>
+
+<ul class="table-view table-view-sm border-top-0 mt-2" data-role="newPost">
+  {$newPost}
+</ul>
+
+<aside class="mt-4">
+  <div data-role="comment" class="content-padded"></div>
+</aside>
