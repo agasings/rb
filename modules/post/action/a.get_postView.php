@@ -19,7 +19,6 @@ include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
 
 $result=array();
-$result['error'] = false;
 
 $uid = $_POST['uid']; // 포스트 고유번호
 $R = getUidData($table[$m.'data'],$uid);
@@ -47,10 +46,10 @@ if ($list) {
     $TMPL['L_active']=$_L['uid']==$uid?'table-view-active':'';
     $TMPL['L_uid']=$_L['uid'];
     $TMPL['L_cid']=$_L['cid'];
-    $TMPL['L_subject']=stripslashes($_L['subject']);
-    $TMPL['L_featured_240'] = getPreviewResize(getUpImageSrc($_L),'240x134');
-    $TMPL['L_featured_640'] = getPreviewResize(getUpImageSrc($_L),'640x360');
-    $TMPL['L_time'] = getUpImageTime($_L);
+    $TMPL['L_subject']=checkPostPerm($_L)?stripslashes($_L['subject']):'[비공개 포스트]';
+    $TMPL['L_featured_240'] = checkPostPerm($_L)?getPreviewResize(getUpImageSrc($_L),'240x134'):getPreviewResize('/files/noimage.png','240x134');
+    $TMPL['L_featured_640'] = checkPostPerm($_L)?getPreviewResize(getUpImageSrc($_L),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+    $TMPL['L_time'] = checkPostPerm($_L)?getUpImageTime($_L):'';
     $TMPL['L_provider']=getFeaturedimgMeta($_L,'provider');
     $TMPL['L_videoId']=getFeaturedimgMeta($_L,'provider')=='YouTube'?getFeaturedimgMeta($_L,'name'):'';
     $TMPL['L_format']=$formats[$_L['format']];
@@ -108,10 +107,17 @@ if ($_NUM) {
 
 $TMPL['newPost'] = $newPost;
 
+if (!checkPostPerm($R)){
+  $markup_file = '_404';
+  $result['isperm']  = false;
+} else {
+  $result['isperm']  = true;
+  $result['linkurl']=getFeaturedimgMeta($R,'linkurl');
+}
+
 $markup_file = $markup_file?$markup_file:'view_doc_content';
 $skin=new skin($markup_file);
-
-$result['linkurl']=getFeaturedimgMeta($R,'linkurl');
+$result['error'] = false;
 $result['article']=$skin->make();
 echo json_encode($result);
 exit;

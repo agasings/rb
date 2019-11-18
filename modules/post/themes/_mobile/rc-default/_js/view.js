@@ -62,6 +62,7 @@ function getPostView(settings) {
      },function(response,status){
         if(status=='success'){
           var result = $.parseJSON(response);
+          var isperm=result.isperm;
           var article=result.article;
           var linkurl=result.linkurl;
           var listCollapse=result.listCollapse;
@@ -132,9 +133,11 @@ function getPostView(settings) {
 
           get_Rb_Comment(p_module,p_table,uid,ctheme);
 
-        } else {
-          alert(status);
-        }
+          } else {
+            alert(status);
+          }
+
+          if (!isperm) wrapper.find('.bar-standard .embed-responsive').empty().removeAttr('style')
 
     });
 

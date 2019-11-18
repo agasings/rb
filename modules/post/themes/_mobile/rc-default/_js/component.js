@@ -1,65 +1,16 @@
-$('#modal-post-allpost').on('show.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  var wrapper = modal.find('[data-role="list"]');
-  wrapper.html('');
+var page_post_keyword =  $('#page-post-keyword'); //키워드 보기
+var page_post_category_view =  $('#page-post-category-view'); //카테고리 보기
+var page_post_mypost =  $('#page-post-mypost'); //내 포스트 관리
+var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
+var page_post_view =  $('#page-post-view'); //포스트 보기
 
-  var settings={
-    wrapper : wrapper,
-    markup    : 'post-row',  // 테마 > _html > post-card-full.html
-    totalNUM  : '<?php echo $NUM?>',
-    recnum    : '',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
-    sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
-  }
+var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
+var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
+var modal_post_listview =  $('#modal-post-listview'); //리스트 보기
+var modal_post_view =  $('#modal-post-view'); //포스트 보기
 
-  getPostAll(settings);
 
-})
-
-$('#modal-post-alllist').on('show.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  var wrapper = modal.find('[data-role="list"]');
-  wrapper.html('');
-
-  var settings={
-    wrapper : wrapper,
-    markup    : 'list-row',  // 테마 > _html > post-card-full.html
-    totalNUM  : '<?php echo $NUM?>',
-    recnum    : '',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
-    sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
-  }
-
-  getPostListAll(settings);
-
-})
-
-$('#modal-post-listview').on('show.rc.modal', function(event) {
-  var button = $(event.relatedTarget);
-  var modal = $(this);
-  var wrapper = modal.find('[data-role="box"]');
-  var listid = button.attr('data-id');
-  wrapper.html('');
-
-  getPostListview({
-    listid : listid,
-    wrapper : wrapper,
-    markup    : 'listview-box',  // 테마 > _html > list-tableview.html
-    totalNUM  : '<?php echo $NUM?>',
-    recnum    : '<?php echo $recnum ?>',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
-    sort      : '<?php echo $sort ?>',
-    orderby   : '<?php echo $orderby ?>',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
-  });
-
-})
-
-$('#page-post-keyword').on('show.rc.page', function(event) {
+page_post_keyword.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var keyword = button.attr('data-keyword');
@@ -82,7 +33,7 @@ $('#page-post-keyword').on('show.rc.page', function(event) {
 
 })
 
-$('#page-post-category-view').on('show.rc.page', function(event) {
+page_post_category_view.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var category = button.attr('data-category');
@@ -225,26 +176,6 @@ $('#page-post-category-view').on('show.rc.page', function(event) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   var settings={
     wrapper : wrapper,
     start : '#page-post-category-view',
@@ -261,8 +192,7 @@ $('#page-post-category-view').on('show.rc.page', function(event) {
 
 })
 
-
-$('#page-post-mypost').on('show.rc.page', function(event) {
+page_post_mypost.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var id = page.attr('id');
@@ -284,7 +214,7 @@ $('#page-post-mypost').on('show.rc.page', function(event) {
 
 })
 
-$('#page-post-mylist').on('show.rc.page', function(event) {
+page_post_mylist.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var id = page.attr('id');
@@ -306,7 +236,7 @@ $('#page-post-mylist').on('show.rc.page', function(event) {
 
 })
 
-$('#page-post-view').on('show.rc.page', function(event) {
+page_post_view.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var format = button.attr('data-format');
@@ -327,12 +257,73 @@ $('#page-post-view').on('show.rc.page', function(event) {
   });
 })
 
-$('#page-post-view').on('hidden.rc.page', function(event) {
+page_post_view.on('hidden.rc.page', function(event) {
   var page = $(this);
   page.empty()
 })
 
-$('#modal-post-view').on('show.rc.modal', function(event) {
+modal_post_allpost.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  var wrapper = modal.find('[data-role="list"]');
+  wrapper.html('');
+
+  var settings={
+    wrapper : wrapper,
+    markup    : 'post-row',  // 테마 > _html > post-card-full.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  }
+
+  getPostAll(settings);
+
+})
+
+modal_post_alllist.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  var wrapper = modal.find('[data-role="list"]');
+  wrapper.html('');
+
+  var settings={
+    wrapper : wrapper,
+    markup    : 'list-row',  // 테마 > _html > list-row.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  }
+
+  getPostListAll(settings);
+
+})
+
+modal_post_listview.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  var wrapper = modal.find('[data-role="box"]');
+  var listid = button.attr('data-id');
+  wrapper.html('');
+
+  getPostListview({
+    listid : listid,
+    wrapper : wrapper,
+    markup    : 'listview-box',  // 테마 > _html > list-tableview.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : '',
+    orderby   : '',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  });
+
+})
+
+modal_post_view.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var modal = $(this);
   var format = button.attr('data-format');
@@ -353,7 +344,7 @@ $('#modal-post-view').on('show.rc.modal', function(event) {
   });
 })
 
-$('#modal-post-view').on('hidden.rc.modal', function(event) {
+modal_post_view.on('hidden.rc.modal', function(event) {
   var modal = $(this);
   modal.empty()
 })

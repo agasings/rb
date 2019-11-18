@@ -1,9 +1,18 @@
-<div class="page right" id="page-profile">
-  <header class="bar bar-nav bar-light bg-white px-0">
-    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <span class="title title-left" data-history="back">내 프로필</span>
+<!--
+회원 모듈 프로필 포론트 컴포넌트 모음
+
+1. 페이지 : 프로필 메인
+
+-->
+
+<div id="modal-member-profile" class="modal fast">
+  <header class="bar bar-nav bar-light bg-white">
+    <a class="icon icon-close pull-right" data-history="back" role="button"></a>
+    <h1 class="title">프로필</h1>
   </header>
-  <main role="main" class="content">
-    <ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list"></ul>
-  </main>
-</div><!-- /.page -->
+  <div class="content">
+    <p class="content-padded">
+      The contents of my modal go here.
+    </p>
+  </div>
+</div>

@@ -1,3 +1,22 @@
+<!--
+포스트 모듈 컴포넌트 모음
+
+1. 일반모달 : 회원가입
+2. 일반모달 : 로그인
+3. 시트 : 알림
+4. 팝업   : 로그아웃
+5. 일반모달 : 통합검색
+6. 일반모달 : 게시물 보기
+7. 일반모달 : 게시물 쓰기
+8. 포토모달 : 갤러리형
+9. 팝업 : 링크공유
+10. 시트 : 푸시알림 권한요청
+11. 시트 : 첨부파일 설정
+12. 팝업 : 첨부파일 업로드 성공
+12. 포스트 모듈
+
+-->
+
 <div class="page right" id="page-post-allpost">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -185,28 +204,31 @@
 </div>
 
 
-<div id="modal-member-profile" class="modal fast">
-  <header class="bar bar-nav bar-light bg-white">
-    <a class="icon icon-close pull-right" data-history="back" role="button"></a>
-    <h1 class="title">프로필</h1>
-  </header>
-  <div class="content">
-    <p class="content-padded">
-      The contents of my modal go here.
-    </p>
-  </div>
-</div>
-
 <!-- Popup -->
-<div id="popup-post-listmore" class="popup zoom">
+<div id="popup-post-optionMore" class="popup zoom">
   <div class="popup-content">
-    <header class="bar bar-nav">
-      <a class="icon icon-close pull-right" data-history="back" role="button"></a>
-      <h1 class="title">Popup</h1>
-    </header>
-    <div class="content">
-      <p class="content-padded">The contents of my popup go here.</p>
-    </div>
+    <ul class="table-view table-view-full text-xs-center rounded-0">
+      <li class="table-view-cell">
+        <a class="" data-toggle="postSaved">
+          나중에 볼 동영상에 저장
+        </a>
+      </li>
+      <li class="table-view-cell" data-toggle="listAdd">
+        <a class="">
+          재생목록에 저장
+        </a>
+      </li>
+      <li class="table-view-cell" data-toggle="linkShare">
+        <a class="">
+          공유
+        </a>
+      </li>
+      <li class="table-view-cell" data-toggle="postReport">
+        <a class="">
+          신고
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
 
