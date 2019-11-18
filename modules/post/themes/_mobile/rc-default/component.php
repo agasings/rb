@@ -1,22 +1,26 @@
 <!--
 포스트 모듈 컴포넌트 모음
 
-1. 일반모달 : 회원가입
-2. 일반모달 : 로그인
-3. 시트 : 알림
-4. 팝업   : 로그아웃
-5. 일반모달 : 통합검색
-6. 일반모달 : 게시물 보기
-7. 일반모달 : 게시물 쓰기
-8. 포토모달 : 갤러리형
-9. 팝업 : 링크공유
-10. 시트 : 푸시알림 권한요청
-11. 시트 : 첨부파일 설정
-12. 팝업 : 첨부파일 업로드 성공
-12. 포스트 모듈
-
+1. 페이지 : 전체 포스트
+2. 페이지 : 전체 리스트
+3. 페이지 : 리스트 보기
+4. 페이지   : 전체 카테고리
+5. 페이지 : 특정 카테고리 보기
+6. 페이지 : 키워드 보기
+7. 페이지 : 내 포스트 관리
+8. 페이지 : 내 리스트 관리
+9. 페이지 : 나중에 볼 동영상
+10. 페이지 : 포스트 보기
+11. 모달 : 포스트 보기
+12. 모달 : 전체 포스트
+13. 모달 : 전체 리스트
+14. 모달 : 리스트 보기
+15. 모달 : 포스트 검색 (임시)
+16. 팝업 : 포스트 옵션 더보기
+17. 시트 : 포스트 필터
 -->
 
+<!-- 1. 페이지 : 전체포스트 -->
 <div class="page right" id="page-post-allpost">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -29,6 +33,7 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 2. 페이지 : 전체 리스트 -->
 <div class="page right" id="page-post-alllist">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -41,6 +46,7 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 3. 페이지 : 리스트 보기 -->
 <div class="page right" id="page-post-listview">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -52,6 +58,7 @@
   </section>
 </div><!-- /.page -->
 
+<!-- 4. 페이지   : 전체 카테고리 -->
 <div class="page right" id="page-post-category">
   <header class="bar bar-nav bar-light bg-faded px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -62,6 +69,7 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 5. 페이지 : 특정 카테고리 보기 -->
 <div class="page right" id="page-post-category-view">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -87,6 +95,7 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 6. 페이지 : 키워드 보기 -->
 <div class="page right" id="page-post-keyword">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -98,6 +107,7 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 7. 페이지 : 내 포스트 관리 -->
 <div class="page right" id="page-post-mypost">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -110,6 +120,7 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 8. 페이지 : 내 리스트 관리 -->
 <div class="page right" id="page-post-mylist">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -122,6 +133,7 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 9. 페이지 : 나중에 볼 동영상 -->
 <div class="page right" id="page-post-saved">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -134,17 +146,16 @@
   </main>
 </div><!-- /.page -->
 
+<!-- 10. 페이지 : 포스트 보기 -->
 <div class="page right" id="page-post-view">
 </div><!-- /.page -->
 
 
-<!-- 모달 시작 -->
-
-
+<!-- 11. 모달 : 포스트 보기 -->
 <div class="modal" id="modal-post-view">
 </div><!-- /.modal -->
 
-
+<!-- 12. 모달 : 전체 포스트 -->
 <div id="modal-post-allpost" class="modal fast">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -157,6 +168,7 @@
   </section>
 </div>
 
+<!-- 13. 모달 : 전체 리스트 -->
 <div id="modal-post-alllist" class="modal">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -169,6 +181,7 @@
   </section>
 </div>
 
+<!-- 14. 모달 : 리스트 보기 -->
 <div id="modal-post-listview" class="modal zoom">
   <header class="bar bar-nav bar-light bg-white px-0">
   	<a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
@@ -179,18 +192,7 @@
   </section>
 </div>
 
-<div id="modal-post-listview" class="modal zoom">
-  <header class="bar bar-nav bar-light bg-white">
-    <a class="icon icon-close pull-right" data-history="back" role="button"></a>
-    <h1 class="title">리스트 뷰</h1>
-  </header>
-  <div class="content">
-    <p class="content-padded">
-      The contents of my modal go here.
-    </p>
-  </div>
-</div>
-
+<!-- 15. 모달 : 포스트 검색 -->
 <div id="modal-post-search" class="modal fast">
   <header class="bar bar-nav bar-light bg-white">
     <a class="icon icon-close pull-right" data-history="back" role="button"></a>
@@ -203,8 +205,7 @@
   </div>
 </div>
 
-
-<!-- Popup -->
+<!-- 16. 팝업 : 포스트 옵션 더보기 -->
 <div id="popup-post-optionMore" class="popup zoom">
   <div class="popup-content">
     <ul class="table-view table-view-full text-xs-center rounded-0">
@@ -232,21 +233,7 @@
   </div>
 </div>
 
-<!-- Popup -->
-<div id="popup-post-filter" class="popup zoom">
-  <div class="popup-content">
-    <header class="bar bar-nav">
-      <a class="icon icon-close pull-right" data-history="back" role="button"></a>
-      <h1 class="title">필터</h1>
-    </header>
-    <div class="content">
-      <p class="content-padded">The contents of my popup go here.</p>
-    </div>
-  </div>
-</div>
-
-
-<!-- Sheet 시작 -->
+<!-- 17. 시트 : 포스트 필터 -->
 <div id="sheet-post-filter" class="sheet shadow">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
@@ -268,6 +255,7 @@
 
 </div>
 
+
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/post.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list_view.js<?php echo $g['wcache']?>" ></script>
@@ -279,5 +267,6 @@
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mypost.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mylist.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/saved.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/feed.js<?php echo $g['wcache']?>" ></script>
 
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>
