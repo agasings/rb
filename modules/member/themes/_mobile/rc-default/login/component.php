@@ -6,11 +6,11 @@
 -->
 
 <!-- 1. 일반모달 : 로그인-->
-<div id="modal-login" class="modal zoom">
+<div id="modal-login" class="modal">
 
 	<div class="page center" id="page-login-main">
 		<header class="bar bar-nav bar-light bg-faded p-x-0">
-			<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
+			<a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
 			<h1 class="title">로그인</h1>
 		</header>
 		<nav class="bar bar-tab bar-light bg-faded">

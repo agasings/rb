@@ -1,4 +1,4 @@
-function getPostAll(settings) {
+function getPostSaved(settings) {
   var start = settings.start;
   var wrapper = settings.wrapper;
   var sort=settings.sort; // sort
@@ -14,7 +14,7 @@ function getPostAll(settings) {
 
   wrapper.loader();
 
-  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postAll',{
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_myList',{
     start: start,
     sort : sort,
     recnum : recnum,
@@ -37,7 +37,7 @@ function getPostAll(settings) {
           dataSource: function(helpers, callback){
             var nextPage = parseInt(currentPage)+1;
             if (totalPage>currentPage) {
-              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postAll',{
+              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_myList',{
                   start: start,
                   sort: sort,
                   recnum : recnum,

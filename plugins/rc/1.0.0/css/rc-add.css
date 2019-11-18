@@ -1343,7 +1343,7 @@
 }
 
 .bar-tab .tab-item .icon.material-icons {
-  top: .2rem;
+  top: .15rem;
 }
 .bar-tab .tab-item .icon.material-icons ~ .tab-label {
   margin-top: -.2rem;

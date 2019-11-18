@@ -261,6 +261,51 @@ $('#page-post-category-view').on('show.rc.page', function(event) {
 
 })
 
+
+$('#page-post-mypost').on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var id = page.attr('id');
+  var wrapper = page.find('[data-role="list"]');
+  wrapper.html('');
+
+  var settings={
+    wrapper : wrapper,
+    start : '#'+id,
+    markup    : 'post-mediaList',  // 테마 > _html > post-mediaList.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  }
+
+  getMyPost(settings);
+
+})
+
+$('#page-post-mylist').on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var id = page.attr('id');
+  var wrapper = page.find('[data-role="list"]');
+  wrapper.html('');
+
+  var settings={
+    wrapper : wrapper,
+    start : '#'+id,
+    markup    : 'list-mediaList',  // 테마 > _html > list-mediaList.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 리스트가 없습니다.</div>'
+  }
+
+  getMyList(settings);
+
+})
+
 $('#page-post-view').on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);

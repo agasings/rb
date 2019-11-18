@@ -79,8 +79,47 @@
   </main>
 </div><!-- /.page -->
 
+<div class="page right" id="page-post-mypost">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back">내 동영상</span>
+  </header>
+  <main role="main" class="content">
+    <ul class="media-list content-padded"data-role="list"></ul>
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-mylist">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back">내 재생목록</span>
+  </header>
+  <main role="main" class="content">
+    <ul class="media-list content-padded"data-role="list"></ul>
+  </main>
+</div><!-- /.page -->
+
+<div class="page right" id="page-post-saved">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back">나중에 볼 동영상</span>
+  </header>
+  <main role="main" class="content">
+    <ul class="media-list content-padded"data-role="list"></ul>
+  </main>
+</div><!-- /.page -->
+
 <div class="page right" id="page-post-view">
 </div><!-- /.page -->
+
+
+<!-- 모달 시작 -->
 
 
 <div class="modal" id="modal-post-view">
@@ -213,4 +252,10 @@
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/view.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/keyword.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/category.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/best.js<?php echo $g['wcache']?>" ></script>
+
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mypost.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mylist.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/saved.js<?php echo $g['wcache']?>" ></script>
+
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>

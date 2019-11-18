@@ -1,0 +1,31 @@
+<li class="media mb-2" data-role="item"
+	data-toggle="page"
+	data-target="#page-post-listview"
+	data-start="{$start}"
+	data-uid="{$uid}"
+	data-title="{$name}"
+	data-featured="{$featured_img}"
+  data-url="/list/{$id}" data-id="{$id}">
+  <div class="media-left">
+		<span class="media-object pull-left position-relative bg-faded">
+      <img class="" src="{$featured_img}" class="img-fluid" alt="" style="width:160px">
+      <span class="list_mask">
+        <span class="txt">{$num}<i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+      </span>
+    </span>
+  </div>
+  <div class="media-body pt-1">
+    <h4 class="media-heading f15 line-clamp-2">{$name}</h4>
+		<div class="f14">동영상 {$num}개</div>
+		<ul class="list-inline f13 text-muted mt-1 mb-0">
+			<li class="list-inline-item">{$nic}</li>
+			<li class="list-inline-item"><time data-plugin="timeago" datetime="{$d_modify}"></time></li>
+			<li class="list-inline-item"><i class="material-icons f15" style="vertical-align:text-bottom">{$display}</i></li>
+		</ul>
+  </div>
+	<div class="ml-4 px-1">
+		<a href="#popup-post-listmore" data-toggle="popup" data-uid="" data-role="more" class="icon material-icons text-muted f18">
+			more_vert
+		</a>
+	</div>
+</li>

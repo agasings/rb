@@ -92,6 +92,7 @@ function getWidgetPostbest(target,sort) {
 	$(target).find('[role="loader"]').removeClass('d-none');
 
 	$.post(rooturl+'/?r='+raccount+'&m=post&a=get_postBest',{
+		dashboard : 'Y',
 		sort : sort,
 		markup_file : 'dashboard-media',
 		d_start : '<?php echo 'site='.$s.' and date >= '.date("Ymd", strtotime("-1 week")); ?>',  //일주일전

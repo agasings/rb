@@ -7,7 +7,7 @@
     <strong data-role="title" class="h5 mb-0 line-clamp-2">
       {$subject}
     </strong>
-    <small class="d-block text-muted">
+    <small class="d-block text-muted mt-1">
       조회수 {$hit}회
     </small>
   </div>
@@ -18,61 +18,58 @@
 
 <div class="d-flex text-xs-center px-3">
   <div class="flex-fill">
-    <button type="button" class="btn btn-link text-muted px-3"
-      data-send="ajax"
-      data-act="opinion"
+    <button type="button" class="btn btn-link muted-link px-3"
+      data-toggle="opinion"
+      data-title="동영상이 마음에 드시나요?"
+      data-subtext="로그인하여 의견을 알려주세요."
+      data-send="_ajax"
       data-uid="{$uid}"
       data-opinion="like"
       data-effect="heartbeat"
       data-role="btn_post_like">
       <i class="material-icons d-block mb-1">thumb_up</i>
-      <small data-role='likes_{$uid}'>0</small>
+      <small class="text-muted" data-role='likes_{$uid}'>{$likes}</small>
     </button>
   </div>
   <div class="flex-fill">
-    <button type="button" class="btn btn-link text-muted px-3"
-      data-send="ajax"
-      data-act="opinion"
+    <button type="button" class="btn btn-link muted-link px-3"
+      data-toggle="opinion"
+      data-target="#popup-login-guide"
+      data-title="동영상이 마음에 안 드시나요?"
+      data-subtext="로그인하여 의견을 알려주세요."
+      data-send="_ajax"
       data-uid="{$uid}"
       data-opinion="dislike"
       data-effect="heartbeat"
       data-role="btn_post_like">
       <i class="material-icons d-block mb-1">thumb_down</i>
-      <small data-role='dislikes_{$uid}'>0</small>
+      <small class="text-muted" data-role='dislikes_{$uid}'>{$dislikes}</small>
     </button>
   </div>
   <div class="flex-fill">
-    <button type="button" class="btn btn-link text-muted px-3"
+    <button type="button" class="btn btn-link muted-link px-3"
       data-send="ajax"
-      data-act="opinion"
-      data-uid="{$uid}"
-      data-opinion="dislike"
-      data-effect="heartbeat"
-      data-role="btn_post_like">
+      data-uid="{$uid}">
       <i class="material-icons d-block mb-1 mirror" style="font-size: 30px;margin-top:-6px">reply</i>
       <small data-role='dislikes_{$uid}'>공유</small>
     </button>
   </div>
   <div class="flex-fill">
-    <button type="button" class="btn btn-link text-muted px-3"
-      data-send="ajax"
-      data-act="opinion"
-      data-uid="{$uid}"
-      data-opinion="dislike"
-      data-effect="heartbeat"
-      data-role="btn_post_like">
+    <button type="button" class="btn btn-link muted-link px-3"
+      data-toggle="listadd"
+      data-title="나중에 다시 보고 싶으신가요?"
+      data-subtext="로그인하여 동영상을 재생목록에 추가하세요."
+      data-uid="{$uid}">
       <i class="material-icons d-block mb-1" style="font-size: 26px;">library_add</i>
       <small data-role='dislikes_{$uid}'>저장</small>
     </button>
   </div>
   <div class="flex-fill">
-    <button type="button" class="btn btn-link text-muted px-3"
-      data-send="ajax"
-      data-act="opinion"
-      data-uid="{$uid}"
-      data-opinion="dislike"
-      data-effect="heartbeat"
-      data-role="btn_post_like">
+    <button type="button" class="btn btn-link muted-link px-3"
+      data-toggle="report"
+      data-title="동영상을 신고하시겠습니까?"
+      data-subtext="부적절한 콘텐츠를 신고하려면 로그인하세요."
+      data-uid="{$uid}">
       <i class="material-icons d-block mb-1" style="font-size: 30px;margin-top:-2px">flag</i>
       <small data-role='dislikes_{$uid}'>신고</small>
     </button>

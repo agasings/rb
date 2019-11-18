@@ -3,7 +3,10 @@ if(!defined('__KIMS__')) exit;
 
 require_once $g['path_core'].'function/sys.class.php';
 include_once $g['dir_module'].'lib/action.func.php';
-include_once $g['dir_module'].'var/var.php';
+
+$g['postVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+$svfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['dir_module'].'var/var.php';
+include_once $svfile;
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['post']['skin_mobile'];
@@ -20,6 +23,10 @@ $result['error'] = false;
 
 $uid = $_POST['uid']; // 포스트 고유번호
 $R = getUidData($table[$m.'data'],$uid);
+$mod = 'view';
+$d['post']['isperm'] = true;
+
+include_once $g['dir_module'].'mod/_view.php';
 
 if ($list) {
   $LIST=getDbData($table[$m.'list'],"id='".$list."'",'*');
@@ -53,12 +60,12 @@ if ($list) {
   $TMPL['listPost'] = $listPost;
   $skin_listCollapse=new skin('view_list-collapse');
   $result['listCollapse']=$skin_listCollapse->make();
-
 }
 
 $TMPL['list_name'] = $LIST['name'];
 $TMPL['list_num'] = $LIST['num'];
 
+$TMPL['uid'] = $R['uid'];
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
 $TMPL['subject'] = stripslashes($R['subject']);

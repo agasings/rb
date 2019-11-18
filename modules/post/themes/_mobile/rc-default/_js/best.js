@@ -1,5 +1,6 @@
-function getPostAll(settings) {
+function getPostBest(settings) {
   var start = settings.start;
+  var d_start = settings.d_start;
   var wrapper = settings.wrapper;
   var sort=settings.sort; // sort
   var orderby=settings.orderby; // orderby
@@ -14,8 +15,9 @@ function getPostAll(settings) {
 
   wrapper.loader();
 
-  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postAll',{
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postBest',{
     start: start,
+    d_start : d_start,
     sort : sort,
     recnum : recnum,
     p : currentPage,
@@ -27,7 +29,7 @@ function getPostAll(settings) {
         var num=result.num;
 
         wrapper.loader('hide');
-        if (num) wrapper.html(list)
+        if (list) wrapper.html(list)
         else wrapper.html(none)
 
         wrapper.find('[data-plugin="timeago"]').timeago();
@@ -37,8 +39,9 @@ function getPostAll(settings) {
           dataSource: function(helpers, callback){
             var nextPage = parseInt(currentPage)+1;
             if (totalPage>currentPage) {
-              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postAll',{
+              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postBest',{
                   start: start,
+                  d_start : d_start,
                   sort: sort,
                   recnum : recnum,
                   markup_file : markup_file,

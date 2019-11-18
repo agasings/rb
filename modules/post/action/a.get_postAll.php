@@ -12,6 +12,7 @@ include_once $svfile;
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['post']['skin_mobile'];
+  $TMPL['start']=$start;
 } else {
   $theme = $d['post']['skin_main'];
 }
@@ -35,7 +36,7 @@ foreach ($RCD as $R) {
   $TMPL['likes']=$R['likes'];
   $TMPL['provider']=getFeaturedimgMeta($R,'provider');
   $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
-  $TMPL['featured_img'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+  $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
   $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
   $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
