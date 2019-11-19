@@ -1,7 +1,11 @@
+var page_post_allpost =  $('#page-post-allpost'); //전체 포스트
+var page_post_alllist =  $('#page-post-alllist'); //전체 리스트
+var page_post_listview =  $('#page-post-listview'); //특정 리스트 보기
 var page_post_keyword =  $('#page-post-keyword'); //키워드 보기
 var page_post_category_view =  $('#page-post-category-view'); //카테고리 보기
 var page_post_mypost =  $('#page-post-mypost'); //내 포스트 관리
 var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
+var page_post_saved=  $('#page-post-saved'); // 내 포스트 저장내역(나중에 볼 동영상)
 var page_post_view =  $('#page-post-view'); //포스트 보기
 
 var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
@@ -9,6 +13,64 @@ var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
 var modal_post_listview =  $('#modal-post-listview'); //리스트 보기
 var modal_post_view =  $('#modal-post-view'); //포스트 보기
 
+
+// 전체 포스트 보기
+page_post_allpost.on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var wrapper = page.find('[data-role="list"]');
+  wrapper.html('');
+
+  getPostAll({
+    wrapper : wrapper,
+    markup    : 'post-row',  // 테마 > _html > post-row.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  });
+})
+
+// 전체 리스트 보기
+page_post_alllist.on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var wrapper = page.find('[data-role="list"]');
+  wrapper.html('');
+
+  getPostListAll({
+    wrapper : wrapper,
+    start : '#page-post-alllist',
+    markup    : 'list-row',  // 테마 > _html > list-row.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  });
+})
+
+//포스트 : 특정 리스트 보기
+page_post_listview.on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var wrapper = page.find('[data-role="box"]');
+  var listid = button.attr('data-id');
+  wrapper.html('');
+
+  getPostListview({
+    listid : listid,
+    wrapper : wrapper,
+    markup    : 'listview-box',  // 테마 > _html > listview-box.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : '',
+    orderby   : '',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  });
+})
 
 page_post_keyword.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
@@ -233,6 +295,28 @@ page_post_mylist.on('show.rc.page', function(event) {
   }
 
   getMyList(settings);
+
+})
+
+page_post_saved.on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var id = page.attr('id');
+  var wrapper = page.find('[data-role="list"]');
+  wrapper.html('');
+
+  var settings={
+    wrapper : wrapper,
+    start : '#'+id,
+    markup    : 'post-mediaList',  // 테마 > _html > list-mediaList.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 리스트가 없습니다.</div>'
+  }
+
+  getPostSaved(settings);
 
 })
 

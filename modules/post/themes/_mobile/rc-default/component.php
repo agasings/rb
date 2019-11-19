@@ -116,7 +116,7 @@
     <span class="title title-left" data-history="back">내 동영상</span>
   </header>
   <main role="main" class="content">
-    <ul class="media-list content-padded"data-role="list"></ul>
+    <ul class="media-list content-padded" data-role="list"></ul>
   </main>
 </div><!-- /.page -->
 
@@ -129,7 +129,7 @@
     <span class="title title-left" data-history="back">내 재생목록</span>
   </header>
   <main role="main" class="content">
-    <ul class="media-list content-padded"data-role="list"></ul>
+    <ul class="media-list content-padded" data-role="list"></ul>
   </main>
 </div><!-- /.page -->
 
@@ -142,7 +142,7 @@
     <span class="title title-left" data-history="back">나중에 볼 동영상</span>
   </header>
   <main role="main" class="content">
-    <ul class="media-list content-padded"data-role="list"></ul>
+    <ul class="media-list content-padded" data-role="list"></ul>
   </main>
 </div><!-- /.page -->
 

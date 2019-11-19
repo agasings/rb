@@ -14,7 +14,7 @@ function getPostSaved(settings) {
 
   wrapper.loader();
 
-  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_myList',{
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postSaved',{
     start: start,
     sort : sort,
     recnum : recnum,
@@ -37,7 +37,7 @@ function getPostSaved(settings) {
           dataSource: function(helpers, callback){
             var nextPage = parseInt(currentPage)+1;
             if (totalPage>currentPage) {
-              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_myList',{
+              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postSaved',{
                   start: start,
                   sort: sort,
                   recnum : recnum,

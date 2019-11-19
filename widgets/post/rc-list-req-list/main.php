@@ -25,8 +25,8 @@
       data-url="/list/<?php echo $_s ?>" data-id="<?php echo $_s ?>">
 
         <div class="media-left">
-      		<span class="media-object pull-left position-relative bg-faded">
-            <img src="<?php echo getPreviewResize(getListImageSrc($_R['uid']),'480x270'); ?>" class="img-fluid" alt="" style="width:160px">
+      		<span class="embed-responsive embed-responsive-16by9 bg-faded">
+            <img src="<?php echo getPreviewResize(getListImageSrc($_R['uid']),'480x270'); ?>" class="media-object img-fluid" alt="" style="width:160px">
             <span class="list_mask">
               <span class="txt"><?php echo $_R['num'] ?><i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
             </span>

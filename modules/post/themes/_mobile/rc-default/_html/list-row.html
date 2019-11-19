@@ -1,12 +1,15 @@
 <li class="table-view-cell border-bottom-0" data-role="item" data-uid="{$uid}">
 
-  <div data-toggle="page" data-target="#page-post-listview" class="ml-1" data-start="" data-url="/list/{$id}" data-id="{$id}" data-title="{$name}">
-    <span class="media-object pull-left position-relative bg-faded">
-      <img class="" src="{$featured_img}" class="img-fluid" alt="" style="width:160px">
-      <span class="list_mask">
-        <span class="txt">{$num}<i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
-      </span>
-    </span>
+  <div class="media" data-toggle="page" data-target="#page-post-listview" class="ml-1" data-start="" data-url="/list/{$id}" data-id="{$id}" data-title="{$name}">
+
+    <div class="media-left">
+      <div class="embed-responsive embed-responsive-16by9 bg-faded">
+        <img class="media-object " src="{$featured_img}" class="img-fluid" alt="" style="width:160px">
+        <span class="list_mask">
+          <span class="txt">{$num}<i class="fa fa-list-ul d-block" aria-hidden="true"></i></span>
+        </span>
+      </div>
+    </div>
 
     <div class="media-body">
       <div class="line-clamp-3">{$name}</div>

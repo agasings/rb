@@ -888,7 +888,7 @@ $(document).ready(function() {
     var textarea =  fieldset.find('textarea');
     var url = textarea.val();
     if (!url) {
-      input.focus();
+      textarea.focus();
       return false;
     }
 

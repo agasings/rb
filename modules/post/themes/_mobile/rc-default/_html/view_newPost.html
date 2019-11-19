@@ -7,9 +7,11 @@
       data-format="{$newpost_format}"
       data-url="/post/{$newpost_cid}">
 
-    <div href="" class="position-relative mr-2 media-object pull-left">
-      <img class="border" src="{$newpost_featured_320}" alt="" style="width: 160px">
-      <time class="badge badge-default rounded-0 position-absolute" style="top:auto;left:auto;right:1px;bottom:1px">{$newpost_time}</time>
+    <div class="pull-left mr-2">
+      <div class="embed-responsive embed-responsive-16by9 bg-faded">
+        <img class="media-object border" src="{$newpost_featured_320}" alt="" style="width: 160px">
+        <time class="badge badge-default rounded-0 position-absolute" style="top:auto;left:auto;right:1px;bottom:1px">{$newpost_time}</time>
+      </div>
     </div>
 
     <div class="media-body">
