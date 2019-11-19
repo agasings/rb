@@ -60,18 +60,20 @@
         <div class="tab-pane show active" id="basic" role="tabpanel" aria-labelledby="home-basic">
 
           <?php if (!$cid): ?>
-          <fieldset id="quick-write" class="mt-5">
+          <fieldset id="quick-write" class="mt-4">
             <input type="hidden" name="attachfiles[]" value="">
             <input type="hidden" name="format" value="">
             <div class="form-group">
-              <label>빠른저장</label>
+              <label>외부링크</label>
               <div class="input-group">
                 <textarea class="form-control" placeholder="URL 입력"></textarea>
                 <div class="input-group-append">
-                  <button class="btn btn-white" type="button">불러오기</button>
+                  <button class="btn btn-white text-primary" type="button">불러오기</button>
                 </div>
               </div>
-              <small class="form-text text-muted">링크기반 포스트의 경우 URL 입력후 불러오기를 해주세요.</small>
+              <small class="form-text text-muted">
+                외부링크가 포함되는 경우 URL 입력후 불러오기를 해주세요. <br>링크의 메타정보를 불러와 빠르게 포스트를 셋팅합니다.
+              </small>
             </div>
           </fieldset>
           <?php endif; ?>
