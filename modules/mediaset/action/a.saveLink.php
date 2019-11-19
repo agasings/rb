@@ -46,14 +46,14 @@ if($uid){
 
   $QKEY = "gid,pid,parent,hidden,tmpcode,site,mbruid,fileonly,type,ext,fserver,host,folder,name,tmpname,size,width,height,caption,description,src,provider,author,down,d_regis,d_update,linkurl,time,duration,tag";
   $QVAL = "'$gid','$gid','$parent','$hidden','$tmpcode','$s','$mbruid','0','$type','$fileExt','$fserver','$thumbnail_host','$folder','$name','$tmpname','$size','$width','$height','$caption','$description','$src','$provider','$author','$down','$d_regis','$d_update','$linkurl','$time','$duration','$tag'";
-     getDbInsert($table['s_upload'],$QKEY,$QVAL);
-     $NOWUID= getDbCnt($table['s_upload'],'max(uid)','');
+   getDbInsert($table['s_upload'],$QKEY,$QVAL);
+   $NOWUID= getDbCnt($table['s_upload'],'max(uid)','');
 }
 
 $R=getUidData($table['s_upload'],$NOWUID);
+$result['last_uid']=$NOWUID;
 $result['list']=getAttachPlatform($R,'','',$wysiwyg);
 $result['table']=$table['s_upload'];
-$reuslt['last_uid']=$NOWUID;
 echo json_encode($result,true);
 exit;
 ?>

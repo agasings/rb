@@ -59,6 +59,24 @@
       <div class="tab-content p-3">
         <div class="tab-pane show active" id="basic" role="tabpanel" aria-labelledby="home-basic">
 
+          <?php if (!$cid): ?>
+          <fieldset id="quick-write" class="mt-5">
+            <input type="hidden" name="attachfiles[]" value="">
+            <input type="hidden" name="format" value="">
+            <div class="form-group">
+              <label>빠른저장</label>
+              <div class="input-group">
+                <textarea class="form-control" placeholder="URL 입력"></textarea>
+                <div class="input-group-append">
+                  <button class="btn btn-white" type="button">불러오기</button>
+                </div>
+              </div>
+              <small class="form-text text-muted">링크기반 포스트의 경우 URL 입력후 불러오기를 해주세요.</small>
+            </div>
+          </fieldset>
+          <?php endif; ?>
+
+          <?php if ($cid): ?>
           <div class="form-group">
             <label class="sr-only">요약설명</label>
             <textarea class="form-control meta" rows="3" name="review" placeholder="요약설명을 입력하세요"><?php echo $R['review']?></textarea>
@@ -70,8 +88,6 @@
             <textarea class="form-control meta" rows="2" name="tag" placeholder="태그를 입력하세요"><?php echo $R['tag']?></textarea>
             <small class="form-text text-muted">콤마(,)로 구분하여 입력해 주세요.</small>
           </div>
-
-          <?php if ($cid): ?>
 
           <div class="form-group">
             <label class="sr-only">리스트</label>
@@ -862,6 +878,129 @@ $(document).ready(function() {
     selector.find('[data-toggle="dropdown"]').text(label)
     selector.find('[type="text"]').val(url+'?ref='+ref)
     selector.find('.js-tooltip').click();
+  });
+
+  $('#quick-write').find('button').click(function(){
+    var fieldset = $('#quick-write');
+    var button = $(this)
+    var textarea =  fieldset.find('textarea');
+    var url = textarea.val();
+    if (!url) {
+      input.focus();
+      return false;
+    }
+
+    var link_url_parse = $('<a>', {href: url});
+
+    //네이버 블로그 URL의 실제 URL 변환
+    if ((link_url_parse.prop('hostname')=='blog.naver.com' || link_url_parse.prop('hostname')=='m.blog.naver.com' ) && link_url_parse.prop('pathname')) {
+      var nblog_path_arr = link_url_parse.prop('pathname').split("/");
+      var nblog_id = nblog_path_arr[1];
+      var nblog_pid = nblog_path_arr[2];
+      if (nblog_pid) {
+        var url =  'https://blog.naver.com/PostView.nhn?blogId='+nblog_id+'&logNo='+nblog_pid;
+      } else {
+        var url = 'https://blog.naver.com/PostList.nhn?blogId='+nblog_id;
+      }
+    }
+
+    button.attr('disabled',true);
+    textarea.attr('disabled',true)
+
+    $.get('//embed.kimsq.com/oembed',{
+  			url: url
+  	}).done(function(response) {
+        var type = response.type;
+  			var title = response.title;
+        var description = response.description?response.description:'.';
+        var thumbnail_url = response.thumbnail_url;
+        var author = response.author;
+        var provider = response.provider_name;
+        var url = response.url;
+        var width = response.thumbnail_width;
+        var height = response.thumbnail_height;
+        var embed = response.html;
+  			$('[name="subject"]').val(title);
+
+        editor.model.change( writer => {
+          writer.insertText( description, editor.model.document.selection.getFirstPosition() );
+        } );
+
+        if (type=='video') {
+
+          $.get('//embed.kimsq.com/iframely',{
+        			url: url
+        	}).done(function(response) {
+              var duration = response.meta.duration;
+              var _duration = moment.duration(duration, 's');
+              var formatted_duration = _duration.format("h:*m:ss");
+
+              $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
+                 type : 9,
+                 title : title,
+                 theme : '_desktop/bs4-default-link',
+                 description : description,
+                 thumbnail_url : thumbnail_url,
+                 author: author,
+                 provider : provider,
+                 url : url,
+                 duration : duration?duration:'',
+                 time :  duration?formatted_duration:'',
+                 width : width,
+                 height : height,
+                 embed : embed
+              },function(response){
+                  var result=$.parseJSON(response);
+                  var uid = result.last_uid
+                  if(!result.error){
+                    fieldset.find('[name="attachfiles[]"]').val(uid);
+                    fieldset.find('[name="format"]').val(2);  //비디오 타입
+                    $('[name="featured_img"]').val(uid);
+                    $('[data-role="postsubmit"]').click(); // 포스트 저장
+                  }
+              });
+
+        	});
+
+        } else {
+
+          $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
+            type : 8,
+            title : title,
+            theme : '_desktop/bs4-default-link',
+            description : description,
+            thumbnail_url : thumbnail_url,
+            author: author,
+            provider : provider,
+            url : url,
+            width : width,
+            height : height,
+            embed : embed
+          },function(response){
+            var result=$.parseJSON(response);
+            var uid = result.last_uid
+            if(!result.error){
+
+              const content = '<figure class="media"><oembed url="'+url+'"></oembed></figure>';
+              const viewFragment = editor.data.processor.toView( content );
+              const modelFragment = editor.data.toModel( viewFragment );
+              editor.model.insertContent( modelFragment );
+
+              fieldset.find('[name="attachfiles[]"]').val(uid);
+              fieldset.find('[name="format"]').val(1);  //문서 타입
+              $('[name="featured_img"]').val(uid);
+              $('[data-role="postsubmit"]').click(); // 포스트 저장
+            }
+          });
+        }
+
+  	}).fail(function() {
+      alert( "URL을 확인해주세요." );
+      button.attr('disabled',false);
+      textarea.attr('disabled',false).focus()
+    }).always(function() {
+    });
+
   });
 
 });
