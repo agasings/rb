@@ -228,3 +228,32 @@ $(document).on('click','[data-toggle="listadd"]',function(){
   }
 
 });
+
+$(document).on('click','[data-toggle="profile"]',function(){
+  var button = $(this);
+  var mbruid = button.attr('data-mbruid');
+  var nic = button.attr('data-nic');
+  var modal = modal_member_profile;
+
+  modal.attr('data-mbruid',mbruid);
+  window.history.back();
+  setTimeout(function(){
+    modal.modal({
+      title: nic
+    });
+  }, 300);
+
+});
+
+$(document).on('click','[data-toggle="tag"]',function(){
+  var button = $(this);
+  var keyword = button.attr('data-tag');
+  var page = $('#page-post-keyword');
+  page.attr('data-keyword',keyword);
+  page.find('[data-role="title"]').text(keyword);
+  window.history.back();
+  setTimeout(function(){ page.page({
+    start: '#page-main',
+    title : keyword
+   }); }, 300);
+});

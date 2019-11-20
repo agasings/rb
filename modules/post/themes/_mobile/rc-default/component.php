@@ -11,16 +11,17 @@
 8. 페이지 : 내 리스트 관리
 9. 페이지 : 나중에 볼 동영상
 10. 페이지 : 포스트 보기
-11. 모달 : 포스트 보기
-12. 모달 : 전체 포스트
-13. 모달 : 전체 리스트
-14. 모달 : 리스트 보기
-15. 모달 : 포스트 검색 (임시)
-16. 팝업 : 포스트 옵션 더보기
-17. 시트 : 포스트 필터
+11. 페이지 : 새 포스트
+12. 모달 : 포스트 보기
+13. 모달 : 전체 포스트
+14. 모달 : 전체 리스트
+15. 모달 : 리스트 보기
+16. 모달 : 포스트 검색 (임시)
+17. 팝업 : 포스트 옵션 더보기
+18. 시트 : 포스트 필터
 -->
 
-<!-- 1. 페이지 : 전체포스트 -->
+<!-- 페이지 : 전체포스트 -->
 <div class="page right" id="page-post-allpost">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -33,7 +34,7 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 2. 페이지 : 전체 리스트 -->
+<!-- 페이지 : 전체 리스트 -->
 <div class="page right" id="page-post-alllist">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -46,7 +47,7 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 3. 페이지 : 리스트 보기 -->
+<!-- 페이지 : 리스트 보기 -->
 <div class="page right" id="page-post-listview">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -58,7 +59,7 @@
   </section>
 </div><!-- /.page -->
 
-<!-- 4. 페이지   : 전체 카테고리 -->
+<!-- 페이지   : 전체 카테고리 -->
 <div class="page right" id="page-post-category">
   <header class="bar bar-nav bar-light bg-faded px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -69,7 +70,7 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 5. 페이지 : 특정 카테고리 보기 -->
+<!-- 페이지 : 특정 카테고리 보기 -->
 <div class="page right" id="page-post-category-view">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -95,7 +96,7 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 6. 페이지 : 키워드 보기 -->
+<!-- 페이지 : 키워드 보기 -->
 <div class="page right" id="page-post-keyword">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -107,7 +108,7 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 7. 페이지 : 내 포스트 관리 -->
+<!-- 페이지 : 내 포스트 관리 -->
 <div class="page right" id="page-post-mypost">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -120,7 +121,7 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 8. 페이지 : 내 리스트 관리 -->
+<!-- 페이지 : 내 리스트 관리 -->
 <div class="page right" id="page-post-mylist">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -133,7 +134,7 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 9. 페이지 : 나중에 볼 동영상 -->
+<!-- 페이지 : 나중에 볼 동영상 -->
 <div class="page right" id="page-post-saved">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -146,16 +147,41 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 10. 페이지 : 포스트 보기 -->
+<!-- 페이지 : 포스트 보기 -->
 <div class="page right" id="page-post-view">
 </div><!-- /.page -->
 
+<!-- 페이지 : 새 포스트 -->
+<div class="page right" id="page-post-new">
+  <header class="bar bar-nav bar-light bg-faded">
+    <button class="btn btn-link btn-nav pull-right px-3" data-history="back">
+      취소
+    </button>
+    <span class="title" data-role="title">새 포스트</span>
+  </header>
+  <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
+  	<a class="tab-item bg-primary disabled" role="button" data-title="이영상에 사용된 제품" data-target="#page-shop-category" data-index="1" data-parent="1" data-category="6" data-toggle="page" data-start="#page-post-view-video" data-act="pauseVideo">
+  		저장하기
+  	</a>
+  </nav>
+  <main role="main" class="content">
+    <textarea class="form-control mb-0 border-0" rows="4" placeholder="복사한 URL를 붙여넣으세요."></textarea>
+    <div class="content-padded">
+      <small class="text-muted">
+        외부링크가 포함되는 경우 URL 입력후 불러오기를 해주세요.
+        링크의 메타정보를 불러와 빠르게 포스트를 셋팅합니다.
+      </small>
+    </div>
+  </main>
+</div><!-- /.page -->
 
-<!-- 11. 모달 : 포스트 보기 -->
+
+
+<!-- 모달 : 포스트 보기 -->
 <div class="modal" id="modal-post-view">
 </div><!-- /.modal -->
 
-<!-- 12. 모달 : 전체 포스트 -->
+<!-- 모달 : 전체 포스트 -->
 <div id="modal-post-allpost" class="modal fast">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -168,7 +194,7 @@
   </section>
 </div>
 
-<!-- 13. 모달 : 전체 리스트 -->
+<!-- 모달 : 전체 리스트 -->
 <div id="modal-post-alllist" class="modal">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
@@ -181,7 +207,7 @@
   </section>
 </div>
 
-<!-- 14. 모달 : 리스트 보기 -->
+<!-- 모달 : 리스트 보기 -->
 <div id="modal-post-listview" class="modal zoom">
   <header class="bar bar-nav bar-light bg-white px-0">
   	<a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
@@ -192,7 +218,7 @@
   </section>
 </div>
 
-<!-- 15. 모달 : 포스트 검색 -->
+<!-- 모달 : 포스트 검색 -->
 <div id="modal-post-search" class="modal fast">
   <header class="bar bar-nav bar-light bg-white">
     <a class="icon icon-close pull-right" data-history="back" role="button"></a>
@@ -205,7 +231,7 @@
   </div>
 </div>
 
-<!-- 16. 팝업 : 포스트 옵션 더보기 -->
+<!-- 팝업 : 포스트 옵션 더보기 -->
 <div id="popup-post-optionMore" class="popup zoom">
   <div class="popup-content">
     <ul class="table-view table-view-full text-xs-center rounded-0">
@@ -233,7 +259,7 @@
   </div>
 </div>
 
-<!-- 17. 시트 : 포스트 필터 -->
+<!-- 시트 : 포스트 필터 -->
 <div id="sheet-post-filter" class="sheet shadow">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>

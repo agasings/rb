@@ -26,22 +26,28 @@ $_MD = getDbData($table['s_mbrdata'],"memberuid='".$mbruid."'",'*');
 $TMPL['id'] = $_MH['id'];
 $TMPL['nic'] = $_MD['nic'];
 $TMPL['name'] = $_MD['name'];
+$TMPL['cover'] = getCoverSrc($mbruid,'800','600');
+$TMPL['avatar'] = getAvatarSrc($mbruid,'120');
+$TMPL['grade'] = $g['grade']['m'.$_MD['level']];
 $TMPL['point'] = number_format($_MD['point']);
 $TMPL['level'] = $_MD['level'];
 $TMPL['bio'] = $_MD['bio'];
 $TMPL['d_regis'] = getDateFormat($_MD['d_regis'],'Y.m.d');
 $TMPL['avatar'] = getAvatarSrc($mbruid,'84');
+$TMPL['num_follower'] = number_format($_MD['num_follower']);
 
 if ($type=='popover') {
   $markup_file = 'profile-popover'; // 기본 마크업 페이지 전달 (테마 내부 _html/profile-popover.html)
 }
 
-
+if (!$type || $type=='modal' || $type=='page') {
+  $markup_file = 'profile'; // 기본 마크업 페이지 전달 (테마 내부 _html/profile.html)
+}
 
 // 최종 결과값 추출 (sys.class.php)
 $skin=new skin($markup_file);
 $result['profile']=$skin->make();
-
+$result['nic'] = $_MD['nic'];
 
 echo json_encode($result);
 exit;

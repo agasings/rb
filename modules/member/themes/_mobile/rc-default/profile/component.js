@@ -1,0 +1,78 @@
+var modal_member_profile =  $('#modal-member-profile'); // 프로필 메인
+
+
+modal_member_profile.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  var mbruid = button.attr('data-mbruid')?button.attr('data-mbruid'):modal.attr('data-mbruid');
+  if (!modal.attr('data-mbruid')) modal.attr('data-mbruid',mbruid);
+
+  modal.find('.content').loader({ position: 'inside' });
+
+  setTimeout(function(){
+
+    $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profileData',{
+       mbruid : mbruid,
+       type : 'modal'
+      },function(response){
+       var result = $.parseJSON(response);
+       var profile=result.profile;
+       var nic=result.nic;
+
+       modal.find('[data-role="title"]').text(nic);
+       modal.find('.content').html(profile);
+
+       modal.find('.content').scroll({type:'updown'});
+       var nav_control = modal.find('.profile-nav-control')
+       var swiper_member_profile = new Swiper('#modal-member-profile .swiper-container', {
+         autoHeight: true,
+         pagination: {
+           el: '#modal-member-profile .bar-header-secondary .nav-inline',
+           clickable: true,
+           autoHeight: true,
+           effect : 'fade',
+           spaceBetween: 30,
+           slideActiveClass :'active',
+           bulletClass : 'nav-link',
+           bulletActiveClass : 'active' ,
+           autoHeight : true,
+           renderBullet: function (index, className) {
+             var title;
+             if (index === 0) title = '홈';
+             if (index === 1) title = '동영상'
+             if (index === 2) title = '재생목록'
+             if (index === 3) title = '커뮤니티'
+             if (index === 4) title = '채널'
+             if (index === 5) title = '정보'
+             return '<a class="' + className + '">'+title+'</a>';
+           },
+         },
+         on: {
+           init: function () {
+             console.log('swiper 초기화');
+           },
+         }
+       });
+
+       swiper_member_profile.on('slideChange', function () {
+         var index = swiper_member_profile.activeIndex
+         nav_control.find('.nav-link').removeClass('active')
+         nav_control.find('[data-index="'+index+'"]').addClass('active')
+         setTimeout(function(){
+           modal.find('.content').animate({scrollTop:0}, '400');
+         }, 600);
+       });
+
+       nav_control.find('.nav-link').click(function(){
+         var index =  $(this).data('index')
+         swiper_member_profile.slideTo(index);
+       });
+     });
+
+  }, 200);
+})
+
+modal_member_profile.on('hidden.rc.modal', function(event) {
+  var modal = $(this);
+  modal.attr('data-mbruid','');
+})

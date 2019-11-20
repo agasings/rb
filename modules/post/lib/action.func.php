@@ -10,7 +10,7 @@ function getPostTag($tag){
   $i=0;
   for($i = 0; $i < $_tagn; $i++):;
     $_tagk=trim($_tags[$i]);
-    $html.='<span data-toggle="tag" data-tag='.$_tagk.'" class="badge badge-primary badge-inverted f13">#';
+    $html.='<span data-toggle="tag" data-tag="'.$_tagk.'" class="badge badge-primary badge-inverted f13">#';
     $html.=$_tagk;
     $html.='</span>';
   endfor;

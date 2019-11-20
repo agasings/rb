@@ -27,6 +27,8 @@ $box='';
 $list='';
 
 $TMPL['avatar'] = getAvatarSrc($LIST['mbruid'],'64');
+$TMPL['mbruid'] = $LIST['mbruid'];
+$TMPL['nic'] = getProfileInfo($LIST['mbruid'],'nic');
 $TMPL['name'] = $LIST['name'];
 $TMPL['num']=$LIST['num'];
 $TMPL['list']=$LIST['id'];

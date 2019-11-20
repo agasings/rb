@@ -31,6 +31,8 @@ foreach ($RCD as $R) {
   $TMPL['format'] = $formats[$R['format']];
   $TMPL['uid']=$R['uid'];
   $TMPL['cid']=$R['cid'];
+  $TMPL['mbruid']=$R['mbruid'];
+  $TMPL['profile_url']=getProfileLink($R['mbruid']);
   $TMPL['hit']=$R['hit'];
   $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
   $TMPL['likes']=$R['likes'];
