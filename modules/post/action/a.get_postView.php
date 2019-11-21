@@ -16,6 +16,16 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 
 include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 
+$mbruid = $my['uid'];
+
+$check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."' and opinion='like'";
+$check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."' and opinion='dislike'";
+$check_saved_qry   = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."'";
+
+$is_post_liked    = getDbRows($table['s_opinion'],$check_like_qry);
+$is_post_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
+$is_post_saved    = getDbRows($table['s_saved'],$check_saved_qry);
+
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
 
 $result=array();
@@ -116,6 +126,10 @@ if (!checkPostPerm($R)){
   $result['isperm']  = true;
   $result['linkurl']=getFeaturedimgMeta($R,'linkurl');
 }
+
+if ($is_post_liked) $result['is_post_liked'] = 1;
+if ($is_post_disliked) $result['is_post_disliked'] = 1;
+if ($is_post_saved) $result['is_post_saved'] = 1;
 
 $markup_file = $markup_file?$markup_file:'view_doc_content';
 $skin=new skin($markup_file);

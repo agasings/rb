@@ -1,3 +1,5 @@
+
+
 var page_post_allpost =  $('#page-post-allpost'); //전체 포스트
 var page_post_alllist =  $('#page-post-alllist'); //전체 리스트
 var page_post_listview =  $('#page-post-listview'); //특정 리스트 보기
@@ -13,6 +15,10 @@ var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
 var modal_post_listview =  $('#modal-post-listview'); //리스트 보기
 var modal_post_view =  $('#modal-post-view'); //포스트 보기
 
+var popup_post_optionMore = $('#popup-post-optionMore') // 포스트 옵션 더보기
+var popup_post_report = $('#popup-post-report') // 포스트 신고
+
+var sheet_post_listadd = $('#sheet-post-listadd') // 포스트 리스트에 저장
 
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
@@ -100,9 +106,6 @@ page_post_category_view.on('show.rc.page', function(event) {
   var page = $(this);
   var category = button.attr('data-category');
   var wrapper = page.find('[data-role="list"]');
-
-
-
 
 
   var swiper_shop_category_thumbs = document.querySelector('#page-post-category-view .bar-standard .swiper-container-thumbs').swiper;
@@ -329,6 +332,7 @@ page_post_view.on('show.rc.page', function(event) {
   var featured = button.attr('data-featured');
   var provider = button.attr('data-provider');
   var videoId = button.attr('data-videoId');
+  var url = button.attr('data-url');
 
   getPostView({
     format : format,
@@ -337,7 +341,8 @@ page_post_view.on('show.rc.page', function(event) {
     featured : featured,
     provider : provider,
     videoId : videoId,
-    wrapper : page
+    wrapper : page,
+    url : url
   });
 })
 
@@ -432,3 +437,164 @@ modal_post_view.on('hidden.rc.modal', function(event) {
   var modal = $(this);
   modal.empty()
 })
+
+popup_post_optionMore.on('show.rc.popup', function(event) {
+  var button = $(event.relatedTarget);
+  var popup = $(this);
+  var uid = button.attr('data-uid');
+  popup.attr('data-uid',uid);
+})
+
+popup_post_optionMore.on('click','[data-toggle="listAdd"]',function(){
+  var button = $(this);
+  var uid = popup_post_optionMore.attr('data-uid');
+  history.back();
+  setTimeout(function(){
+    if (memberid) {
+      sheet_post_listadd.attr('data-uid',uid).css('top','20vh');
+      sheet_post_listadd.sheet();
+    } else {
+      var title = button.attr('data-title')
+      var subtext = button.attr('data-subtext')
+      popup_login_guide.find('[data-role="title"]').text(title);
+      popup_login_guide.find('[data-role="subtext"]').text(subtext);
+      popup_login_guide.popup('show');
+    }
+  }, 200);
+});
+
+popup_post_optionMore.on('click','[data-toggle="report"]',function(){
+  var button = $(this);
+  var uid = popup_post_optionMore.attr('data-uid');
+  history.back();
+  setTimeout(function(){
+    if (memberid) {
+      popup_post_report.attr('data-uid',uid);
+      popup_post_report.popup();
+    } else {
+      var title = button.attr('data-title')
+      var subtext = button.attr('data-subtext')
+      popup_login_guide.find('[data-role="title"]').text(title);
+      popup_login_guide.find('[data-role="subtext"]').text(subtext);
+      popup_login_guide.popup('show');
+    }
+  }, 200);
+});
+
+popup_post_optionMore.on('click','[data-toggle="saved"]',function(){
+  var button = $(this);
+  var uid = popup_post_optionMore.attr('data-uid');
+  history.back();
+  setTimeout(function(){
+    if (memberid) {
+      setTimeout(function(){
+        $.post(rooturl+'/?r='+raccount+'&m=post&a=update_saved',{
+          uid : uid
+          },function(response,status){
+            if(status=='success'){
+              $.notify({message: '나중에 볼 동영상에 추가되었습니다.'},{type: 'default'});
+            } else {
+              alert(status);
+            }
+        });
+      }, 100);
+    } else {
+      var title = button.attr('data-title')
+      var subtext = button.attr('data-subtext')
+      popup_login_guide.find('[data-role="title"]').text(title);
+      popup_login_guide.find('[data-role="subtext"]').text(subtext);
+      popup_login_guide.popup('show');
+    }
+  }, 200);
+});
+
+popup_post_report.on('show.rc.popup', function(event) {
+  var button = $(event.relatedTarget);
+  var popup = $(this);
+  var uid = button.attr('data-uid');
+  popup.attr('data-uid',uid);
+})
+
+popup_post_report.find('[data-act="submit"]').click(function(){
+  var popup = popup_post_report;
+  var uid = popup.attr('data-uid');
+  $(this).attr('disabled',true );
+  history.back();
+
+  $.notify({message: '신고 되었습니다'},{type: 'default'});
+  return false;
+
+  setTimeout(function(){
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=report',{
+      uid : uid,
+      subject : subject,
+      content : content
+      },function(response,status){
+        if(status=='success'){
+          $.notify({message: '신고 되었습니다'},{type: 'default'});
+        } else {
+          alert(status);
+        }
+    });
+  }, 100);
+});
+
+sheet_post_listadd.on('show.rc.sheet', function(event) {
+  var sheet = $(this);
+  var uid = sheet.attr('data-uid');
+  sheet.find('[data-role="list-selector"]').loader({ position: 'inside' });
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_listMy',{
+    uid : uid,
+    markup_file : 'radio-stacked'
+  },function(response){
+    var result = $.parseJSON(response);
+    var list=result.list;
+    var is_saved=result.is_saved;
+
+    sheet.find('[data-role="list-selector"]').html(list);
+    if (is_saved) sheet.find('[name="saved"]').prop("checked", true);
+    else sheet.find('[name="saved"]').prop("checked", false);
+  });
+})
+
+sheet_post_listadd.find('[data-act="submit"]').click(function(){
+  var sheet = sheet_post_listadd;
+  var uid = sheet.attr('data-uid');
+  var saved = sheet.find('input[name="saved"]').is(":checked") == true?1:0;
+  var list_sel=sheet.find('input[name="postlist_members[]"]');
+  var list_arr=sheet.find('input[name="postlist_members[]"]:checked').map(function(){return $(this).val();}).get();
+  var list_n=list_arr.length;
+  var list_members='';
+  for (var i=0;i <list_n;i++) {
+    if(list_arr[i]!='')  list_members += '['+list_arr[i]+']';
+  }
+  $(this).attr('disabled',true );
+  history.back();
+  setTimeout(function(){
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=update_listindex',{
+      uid : uid,
+      saved : saved,
+      list_members : list_members
+      },function(response,status){
+        if(status=='success'){
+          $.notify({message: '저장 되었습니다'},{type: 'default'});
+        } else {
+          alert(status);
+        }
+    });
+  }, 100);
+});
+
+$(document).on('click','[data-toggle="profile"]',function(){
+  var button = $(this);
+  var mbruid = button.attr('data-mbruid');
+  var nic = button.attr('data-nic');
+  var modal = modal_member_profile;
+  modal.attr('data-mbruid',mbruid);
+  window.history.back();
+  setTimeout(function(){
+    modal.modal({
+      title: nic
+    });
+  }, 300);
+});

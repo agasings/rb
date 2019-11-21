@@ -233,15 +233,15 @@ window.parent.$.notify({
 
 <?php if ($opinion=='like'): ?>
 	<?php if ($is_liked): ?>
-	message: "'좋아요'가 취소 되었습니다."
+	message: "좋아요가 취소 되었습니다."
 	<?php else:?>
-	message: "'좋아요'가 추가 되었습니다."
+	message: "좋아요가 추가 되었습니다."
 	<?php endif; ?>
 <?php else: ?> // 싫어요
 	<?php if ($is_disliked): ?>
-	message: "'싫어요'가 취소 되었습니다."
+	message: "싫어요가 취소 되었습니다."
 	<?php else:?>
-	message: "'싫어요'가 추가 되었습니다."
+	message: "싫어요가 추가 되었습니다."
 	<?php endif; ?>
 <?php endif; ?>
 
@@ -252,7 +252,7 @@ window.parent.$.notify({
 	},
 	allow_dismiss: false,
 	offset: 20,
-	type: "success",
+	type: "default",
 	timer: 100,
 	delay: 1500,
 	animate: {

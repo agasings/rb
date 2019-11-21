@@ -7,6 +7,20 @@ $R = getUidData($table[$m.'data'],$uid);
 $mbruid =  $my['uid'];
 $last_log	= $date['totime'];
 $display = $R['display'];
+$subject = $R['subject'];
+$category = '포스트';
+
+// 저장함 업데이트
+$check_saved_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."'";
+$is_saved = getDbRows($table['s_saved'],$check_saved_qry);
+
+if ($is_saved){ // 이미 저장했던 경우
+	getDbDelete($table['s_saved'],$check_saved_qry);
+}else{ // 저장을 안한 경우 추가
+	$_QKEY = 'mbruid,module,category,entry,subject,url,d_regis';
+	$_QVAL = "'$mbruid','$m','$category','$uid','$subject','$url','$last_log'";
+	getDbInsert($table['s_saved'],$_QKEY,$_QVAL);
+}
 
 //리스트 업데이트
 $_orign_list_members = getDbArray($table[$m.'list_index'],'data='.$R['uid'].' and mbruid='.$mbruid,'*','data','asc',0,1);

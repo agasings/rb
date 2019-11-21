@@ -5,7 +5,7 @@
 3. 모달 : modal-pwReset :  비밀번호 초기화
 -->
 
-<!-- 1. 일반모달 : 로그인-->
+<!-- 일반모달 : 로그인-->
 <div id="modal-login" class="modal">
 
 	<div class="page center" id="page-login-main">
@@ -123,6 +123,22 @@
 	</div><!-- /#page-login -->
 
 </div><!-- /.modal -->
+
+<!-- 팝업 : 로그인 안내-->
+<div id="popup-login-guide" class="popup zoom">
+  <div class="popup-content rounded-0">
+    <div class="content rounded-0" style="min-height: 110px;">
+      <div class="p-a-1">
+        <h5 data-role="title"></h5>
+				<span data-role="subtext" class="f14 text-muted"></span>
+        <div class="text-xs-right mt-2">
+          <button type="button" class="btn btn-link text-muted mr-2" data-history="back">취소</button>
+          <button type="button" class="btn btn-link" data-toggle="login">로그인</button>
+        </div>
+			</div>
+    </div>
+  </div>
+</div>
 
 
 <?php
@@ -243,8 +259,16 @@ $_SESSION['SL'] = ''; //세션 비우기
 <script>
 
 var modal_combine = $('#modal-combine')
+var modal_login = $('#modal-login')
+
+var page_login_main = $('#page-login-main')
+var page_login_form = $('#page-login-form')
+
+var popup_login_guide = $('#popup-login-guide') // 로그인 가이드
+
 var form_combine = $('#modal-combineform')
 var f_combine = document.getElementById('modal-combineform');
+
 
 <?php if ($call_modal_combine): ?>
 modal_combine.modal('show')
@@ -295,18 +319,6 @@ form_combine.submit( function(event){
 	}, 300);
 
 });
-
-
-
-</script>
-
-
-
-<script>
-
-var modal_login = $('#modal-login')
-var page_login_main = $('#page-login-main')
-var page_login_form = $('#page-login-form')
 
 //로그인폼 - 실행
 page_login_form.find('form').submit( function(e){
@@ -824,6 +836,14 @@ modal_pwReset.find(".form-list.floating .input-row input").on('keyup', function(
 		$(this).parents('.input-row').removeClass('active');
 	}
 })
+
+
+popup_login_guide.on('click','[data-toggle="login"]',function(){
+  history.back();
+  setTimeout(function(){
+		modal_login.modal();
+  }, 200);
+});
 
 
 </script>

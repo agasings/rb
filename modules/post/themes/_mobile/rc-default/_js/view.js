@@ -8,6 +8,7 @@ function getPostView(settings) {
   var featured=settings.featured;
   var provider = settings.provider;
   var videoId = settings.videoId;
+  var url = settings.url;
   var ctheme = '_mobile/rc-default';
   var template = '/modules/post/themes/'+post_skin_mobile+'/_html/view_'+format+'.html';
   var list_collapse = settings.list_collapse;
@@ -66,6 +67,8 @@ function getPostView(settings) {
           var article=result.article;
           var linkurl=result.linkurl;
           var listCollapse=result.listCollapse;
+          var is_post_liked=result.is_post_liked;
+          var is_post_disliked=result.is_post_disliked;
 
           wrapper.find('oembed').attr('url',linkurl);
 
@@ -103,6 +106,9 @@ function getPostView(settings) {
             moreText: '더보기',
             lessText: ''
           });
+
+          if (is_post_liked) wrapper.find('[data-role="btn_post_like"]').addClass('active');
+          if (is_post_disliked) wrapper.find('[data-role="btn_post_dislike"]').addClass('active');
 
           wrapper.find('#collapseContent').on('show.rc.collapse', function () {
             $('[data-role="title"]').removeClass('line-clamp-2')
@@ -175,77 +181,29 @@ function getPostView(settings) {
     });
 
   });
-}
 
-$(document).on('click','[data-toggle="opinion"]',function(){
+} // getPostView
+
+
+$(document).on('click','[data-toggle="view_listadd"]',function(){
   var button = $(this);
   var popup = $('#popup-login-guide');
-
+  var sheet = $('#sheet-post-listadd');
+  var uid = button.attr('data-uid');
+  var height = button.closest('.content').css('padding-top');
   if (memberid) {
-
+    sheet.attr('data-uid',uid).css('top',height);
+    sheet.sheet();
   } else {
     var title = button.attr('data-title')
     var subtext = button.attr('data-subtext')
     popup.find('[data-role="title"]').text(title);
     popup.find('[data-role="subtext"]').text(subtext);
     popup.popup('show');
-
   }
-
 });
 
-
-$(document).on('click','[data-toggle="report"]',function(){
-  var button = $(this);
-  var popup = $('#popup-login-guide');
-
-  if (memberid) {
-
-  } else {
-    var title = button.attr('data-title')
-    var subtext = button.attr('data-subtext')
-    popup.find('[data-role="title"]').text(title);
-    popup.find('[data-role="subtext"]').text(subtext);
-    popup.popup('show');
-
-  }
-
-});
-
-$(document).on('click','[data-toggle="listadd"]',function(){
-  var button = $(this);
-  var popup = $('#popup-login-guide');
-
-  if (memberid) {
-
-  } else {
-    var title = button.attr('data-title')
-    var subtext = button.attr('data-subtext')
-    popup.find('[data-role="title"]').text(title);
-    popup.find('[data-role="subtext"]').text(subtext);
-    popup.popup('show');
-
-  }
-
-});
-
-$(document).on('click','[data-toggle="profile"]',function(){
-  var button = $(this);
-  var mbruid = button.attr('data-mbruid');
-  var nic = button.attr('data-nic');
-  var modal = modal_member_profile;
-
-  modal.attr('data-mbruid',mbruid);
-  window.history.back();
-  setTimeout(function(){
-    modal.modal({
-      title: nic
-    });
-  }, 300);
-
-});
-
-$(document).on('click','[data-toggle="tag"]',function(){
+$(document).on('click','[data-toggle="view_tag"]',function(){
   var button = $(this);
   var keyword = button.attr('data-tag');
   var page = $('#page-post-keyword');
@@ -256,4 +214,39 @@ $(document).on('click','[data-toggle="tag"]',function(){
     start: '#page-main',
     title : keyword
    }); }, 300);
+});
+
+$(document).on('click','[data-toggle="view_opinion"]',function(){
+  var button = $(this);
+  var popup = $('#popup-login-guide');
+  var uid = button.attr('data-uid');
+  var opinion = button.attr('data-opinion');
+  var url = rooturl+'/?r='+raccount+'&m=post&a=opinion&opinion='+opinion+'&uid='+uid;
+
+  if (memberid) {
+    button.button('toggle');
+    getIframeForAction('');
+    frames.__iframe_for_action__.location.href = url;
+  } else {
+    var title = button.attr('data-title')
+    var subtext = button.attr('data-subtext')
+    popup.find('[data-role="title"]').text(title);
+    popup.find('[data-role="subtext"]').text(subtext);
+    popup.popup('show');
+  }
+});
+
+$(document).on('click','[data-toggle="view_report"]',function(){
+  var button = $(this);
+  var uid = button.attr('data-uid');
+  if (memberid) {
+    popup_post_report.attr('data-uid',uid);
+    popup_post_report.popup();
+  } else {
+    var title = button.attr('data-title')
+    var subtext = button.attr('data-subtext')
+    popup_login_guide.find('[data-role="title"]').text(title);
+    popup_login_guide.find('[data-role="subtext"]').text(subtext);
+    popup_login_guide.popup('show');
+  }
 });

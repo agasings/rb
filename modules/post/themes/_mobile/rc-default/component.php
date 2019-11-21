@@ -18,7 +18,9 @@
 15. 모달 : 리스트 보기
 16. 모달 : 포스트 검색 (임시)
 17. 팝업 : 포스트 옵션 더보기
-18. 시트 : 포스트 필터
+18. 팝업 : 포스트 신고
+19. 시트 : 포스트 필터
+20. 시트 : 리스트 저장
 -->
 
 <!-- 페이지 : 전체포스트 -->
@@ -236,12 +238,12 @@
   <div class="popup-content">
     <ul class="table-view table-view-full text-xs-center rounded-0">
       <li class="table-view-cell">
-        <a class="" data-toggle="postSaved">
+        <a class="" data-toggle="saved" data-title="나중에 다시 보고 싶으신가요" data-subtext="로그인하여 동영상을 저장하세요.">
           나중에 볼 동영상에 저장
         </a>
       </li>
-      <li class="table-view-cell" data-toggle="listAdd">
-        <a class="">
+      <li class="table-view-cell">
+        <a class="" data-toggle="listAdd" data-title="나중에 다시 보고 싶으신가요" data-subtext="로그인하여 동영상을 재생목록에 추가하세요.">
           재생목록에 저장
         </a>
       </li>
@@ -250,12 +252,96 @@
           공유
         </a>
       </li>
-      <li class="table-view-cell" data-toggle="postReport">
-        <a class="">
+      <li class="table-view-cell">
+        <a class="" data-toggle="report" data-title="동영상을 신고하시겠습니까?" data-subtext="부적절한 콘텐츠를 신고하려면 로그인하세요.">
           신고
         </a>
       </li>
     </ul>
+  </div>
+</div>
+
+<!-- 팝업 : 포스트 신고 -->
+<div id="popup-post-report" class="popup zoom">
+  <div class="popup-content rounded-0">
+    <header class="bar bar-nav bg-white">
+      <h1 class="title">동영상 신고</h1>
+    </header>
+    <nav class="bar bar-tab">
+      <a class="tab-item bg-white" role="button" data-history="back">
+        취소
+      </a>
+      <a class="tab-item bg-white active" role="button" data-act="submit">
+        신고
+      </a>
+    </nav>
+    <div class="content rounded-0">
+      <div class="p-3">
+
+        <div class="custom-controls-stacked">
+          <label class="custom-control custom-radio">
+            <input id="radio-01" type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">성적인 콘텐츠</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input id="radio-02" type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">폭력적 또는 혐오스러운 콘텐츠</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">증오 또는 악의적인 콘텐츠</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">유해한 위험 행위</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">아동 학대</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">테러 조장</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">스팸 또는 사용자를 현혹하는 콘텐츠</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">권리 침해</span>
+          </label>
+
+          <label class="custom-control custom-radio">
+            <input type="radio" name="report" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">기타</span>
+          </label>
+        </div>
+
+        <div class="mt-1">
+          <small class="text-muted">
+          커뮤니티 가이드를 위반한 계정은 제재를 받게 되며 심각하거나 반복적인 위반 행위에 대해서는 계정 해지 조치가 취해질 수 있습니다.
+          </small>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
 
@@ -278,9 +364,42 @@
       </div>
     </div>
   </div>
-
 </div>
 
+<!-- 시트 : 리스트 저장 -->
+
+<div id="sheet-post-listadd" class="sheet shadow">
+  <header class="bar bar-nav bar-light bg-white">
+    <button class="btn btn-link btn-nav pull-right px-3">
+      새 재생목록
+    </button>
+    <h1 class="title title-left px-3">포스트 저장</h1>
+  </header>
+  <nav class="bar bar-tab bar-light bg-white">
+    <a class="tab-item text-muted" role="button" data-history="back">
+      취소
+    </a>
+    <a class="tab-item text-primary" role="button" data-act="submit">
+      저장
+    </a>
+  </nav>
+  <main>
+    <div class="content-padded px-1">
+
+      <div class="d-flex justify-content-between align-items-center py-2">
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" type="checkbox" id="saved" name="saved" {$is_saved}>
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description" for="saved">나중에 볼 동영상</span>
+        </label>
+        <i class="material-icons text-muted mr-2" data-toggle="tooltip" title="비공개">lock</i>
+      </div>
+
+      <div data-role="list-selector"></div>
+
+    </div>
+  </main>
+</div>
 
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/post.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
