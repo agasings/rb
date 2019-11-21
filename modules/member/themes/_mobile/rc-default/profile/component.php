@@ -6,7 +6,7 @@
 
 -->
 
-<div id="modal-member-profile" class="modal fast" data-mbruid="">
+<div id="modal-member-profile" class="modal fast" data-mbruid="" data-role="profile">
   <header class="bar bar-nav bar-dark bg-inverse px-0 border-bottom-0" data-snap-ignore="true">
     <a class="icon material-icons pull-left text-white px-3" role="button" data-history="back">arrow_back</a>
     <a class="icon material-icons pull-right pl-2 pr-3 text-white" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
@@ -15,7 +15,7 @@
     </h1>
   </header>
   <div class="bar bar-standard bar-header-secondary bar-dark bg-inverse border-bottom-0 p-x-0 shadow-sm">
-    <nav class="nav nav-inline"></nav>
+    <nav class="nav nav-inline" style="margin-top: 3px;"></nav>
   </div>
   <div class="content bg-white" data-control="scroll" data-type="updown" data-defaultHeight="180"></div>
 </div><!-- /.modal -->

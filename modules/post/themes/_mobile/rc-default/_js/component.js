@@ -584,17 +584,3 @@ sheet_post_listadd.find('[data-act="submit"]').click(function(){
     });
   }, 100);
 });
-
-$(document).on('click','[data-toggle="profile"]',function(){
-  var button = $(this);
-  var mbruid = button.attr('data-mbruid');
-  var nic = button.attr('data-nic');
-  var modal = modal_member_profile;
-  modal.attr('data-mbruid',mbruid);
-  window.history.back();
-  setTimeout(function(){
-    modal.modal({
-      title: nic
-    });
-  }, 300);
-});

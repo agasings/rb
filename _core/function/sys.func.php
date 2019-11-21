@@ -777,7 +777,7 @@ function getCoverSrc($mbruid,$width,$height){
 	$name=$_array[0];
 	$ext=$_array[1];
 	if ($M['cover']) $result=$g['s'].'/cover/'.$name.'_'.$width.'x'.$height.'.'.$ext;
-	else $result=$g['s'].'/files/cover/0_'.$width.'x'.$height.'.jpg';
+	else $result=$g['s'].'/files/cover/0_'.$width.'x'.$height.'.png';
 	return $result;
 }
 

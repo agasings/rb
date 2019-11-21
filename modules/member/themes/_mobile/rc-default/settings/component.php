@@ -682,31 +682,27 @@
             프로필 수정
           </button>
         </li>
-      </ul>
 
-
-      <ul class="table-view bg-white m-t-0 border-top-0">
-        <li class="table-view-cell table-view-divider">설정</li>
   			<li class="table-view-cell">
-  				<a class="" data-toggle="page" href="#page-settings-account" data-start="#page-settings-main" data-title="회원계정">
+  				<a class="navigate-right" data-toggle="page" href="#page-settings-account" data-start="#page-settings-main" data-title="회원계정">
   					<span class="badge badge-default badge-inverted"><?php echo $my['id'] ?></span>
   					회원계정
   				</a>
   			</li>
   			<li class="table-view-cell">
-  				<a class="" data-toggle="page" href="#page-settings-email" data-start="#page-settings-main" data-title="이메일 관리">
+  				<a class="navigate-right" data-toggle="page" href="#page-settings-email" data-start="#page-settings-main" data-title="이메일 관리">
   					<span class="badge badge-default badge-inverted"><?php echo $my['email']?$my['email']:'미등록' ?></span>
   					이메일
   				</a>
   			</li>
   			<li class="table-view-cell">
-  				<a class="" data-toggle="page" href="#page-settings-phone" data-start="#page-settings-main" data-title="휴대폰 관리">
+  				<a class="navigate-right" data-toggle="page" href="#page-settings-phone" data-start="#page-settings-main" data-title="휴대폰 관리">
   					<span class="badge badge-default badge-inverted"><?php echo $my['phone']?$my['phone']:'미등록' ?></span>
   					휴대폰
   				</a>
   			</li>
   			<li class="table-view-cell">
-  				<a class="" data-toggle="page" href="#page-settings-noti" data-start="#page-settings-main" data-title="알림설정">
+  				<a class="navigate-right" data-toggle="page" href="#page-settings-noti" data-start="#page-settings-main" data-title="알림설정">
   					<?php if ($nt_web==''): ?>
   					<span class="badge badge-primary badge-pill">ON</span>
   					<?php else: ?>
@@ -719,7 +715,7 @@
   			<?php if ($d['member']['login_social']): ?>
   			<?php $isSNSlogin = getDbData($table['s_mbrsns'],'memberuid='.$my['uid'],'*'); ?>
   			<li class="table-view-cell">
-  				<a class="" data-toggle="page" href="#page-settings-connect" data-start="#page-settings-main" data-title="연결계정 관리">
+  				<a class="navigate-right" data-toggle="page" href="#page-settings-connect" data-start="#page-settings-main" data-title="연결계정 관리">
   					<span class="badge badge-inverted">
   						<?php if ($my_naver['uid']): ?><img class="rounded-circle" src="/_core/images/sns/naver.png" alt="네이버" width="22"><?php endif; ?>
   						<?php if ($my_kakao['uid']): ?><img class="rounded-circle" src="/_core/images/sns/kakao.png" alt="카카오" width="22"><?php endif; ?>
@@ -732,7 +728,7 @@
   			</li>
   			<?php endif; ?>
   			<li class="table-view-cell">
-  				<a class="" data-toggle="page" href="#page-settings-shipping" data-start="#page-settings-main" data-title="배송지 관리">
+  				<a class="navigate-right" data-toggle="page" href="#page-settings-shipping" data-start="#page-settings-main" data-title="배송지 관리">
   					<span class="badge badge-default badge-inverted">
   						<?php echo $my_shipping_num?number_format($my_shipping_num).' 곳':'미등록'?>
   					</span>

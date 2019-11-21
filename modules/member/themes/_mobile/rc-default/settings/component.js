@@ -104,3 +104,17 @@ page_settings_bio.on('show.rc.page', function(event) {
   console.log('간단설명')
 
 })
+
+$(document).on('click','[data-toggle="profile"]',function(){
+  var button = $(this);
+  var mbruid = button.attr('data-mbruid');
+  var nic = button.attr('data-nic');
+  var modal = modal_member_profile;
+  modal.attr('data-mbruid',mbruid);
+  window.history.back();
+  setTimeout(function(){
+    modal.modal({
+      title: nic
+    });
+  }, 300);
+});
