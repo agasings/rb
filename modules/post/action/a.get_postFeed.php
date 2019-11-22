@@ -25,6 +25,7 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
+$mbruid = $my['uid'];
 
 $result=array();
 $result['error'] = false;
@@ -32,6 +33,7 @@ $result['error'] = false;
 $list='';
 
 $i=1;foreach ($RCD as $R) {
+  $_markup_file = $markup_file.'-'.$formats[$R['format']];
   $TMPL['link']=getPostLink($R,1);
   $TMPL['subject']=htmlspecialchars(stripslashes($R['subject']));
   $TMPL['format'] = $formats[$R['format']];
@@ -51,12 +53,22 @@ $i=1;foreach ($RCD as $R) {
   $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
   $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
 
+  $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
+  $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";
+  $check_saved_qry   = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."'";
+  $is_post_liked    = getDbRows($table['s_opinion'],$check_like_qry);
+  $is_post_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
+  $is_post_saved    = getDbRows($table['s_saved'],$check_saved_qry);
+  $TMPL['is_post_liked'] = $is_post_liked?'active':'';
+  $TMPL['is_post_disliked'] = $is_post_disliked?'active':'';
+  $TMPL['is_post_saved'] = $is_post_saved?'true':'false';
+
   if ($sort=='hit') $TMPL['num']=$R['hit']?'조회 '.$R['hit']:'';
   if ($sort=='likes') $TMPL['num']=$R['likes']?'좋아요 '.$R['likes']:'';
   if ($sort=='dislikes') $TMPL['num']=$R['dislikes']?'싫어요 '.$R['dislikes']:'';
   if ($sort=='comment') $TMPL['num']=$R['comment']?'댓글 '.$R['comment']:'';
 
-  $skin=new skin($markup_file);
+  $skin=new skin($_markup_file);
   $list.=$skin->make();
 
   if ($i==$limit) break;

@@ -19,8 +19,9 @@
 16. 모달 : 포스트 검색 (임시)
 17. 팝업 : 포스트 옵션 더보기
 18. 팝업 : 포스트 신고
-19. 시트 : 포스트 필터
-20. 시트 : 리스트 저장
+19. 팝업 : 정렬방식 변경
+20. 시트 : 포스트 필터
+21. 시트 : 리스트 저장
 -->
 
 <!-- 페이지 : 전체포스트 -->
@@ -119,7 +120,9 @@
     <span class="title title-left" data-history="back">내 동영상</span>
   </header>
   <main role="main" class="content">
-    <ul class="media-list content-padded" data-role="list"></ul>
+    <div class="content-padded">
+      <ul class="media-list" data-role="list"></ul>
+    </div>
   </main>
 </div><!-- /.page -->
 
@@ -132,7 +135,9 @@
     <span class="title title-left" data-history="back">내 재생목록</span>
   </header>
   <main role="main" class="content">
-    <ul class="media-list content-padded" data-role="list"></ul>
+    <div class="content-padded">
+      <ul class="media-list" data-role="list"></ul>
+    </div>
   </main>
 </div><!-- /.page -->
 
@@ -145,7 +150,9 @@
     <span class="title title-left" data-history="back">나중에 볼 동영상</span>
   </header>
   <main role="main" class="content">
-    <ul class="media-list content-padded" data-role="list"></ul>
+    <div class="content-padded">
+      <ul class="media-list" data-role="list"></ul>
+    </div>
   </main>
 </div><!-- /.page -->
 
@@ -342,6 +349,34 @@
 
       </div>
     </div>
+  </div>
+</div>
+
+<!-- 팝업 : 정렬방식 변경 -->
+<div id="popup-post-sort" class="popup zoom">
+  <div class="popup-content">
+    <ul class="table-view table-view-full text-xs-center rounded-0">
+      <li class="table-view-cell">
+        <a class="" data-toggle="sort" data-sort="hit">
+          조회순
+        </a>
+      </li>
+      <li class="table-view-cell">
+        <a class="" data-toggle="sort" data-sort="hit">
+          좋아요순
+        </a>
+      </li>
+      <li class="table-view-cell">
+        <a class="" data-toggle="sort" data-sort="d-regis" data-orderby="asc">
+          추가된 날짜 (오래된순)
+        </a>
+      </li>
+      <li class="table-view-cell" data-toggle="sort" data-sort="d-regis" data-orderby="desc">
+        <a class="">
+          추가된 날짜 (최신순)
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
 

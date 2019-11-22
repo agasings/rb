@@ -2,7 +2,7 @@
   <div class="swiper-wrapper">
     <div class="swiper-slide" data-role="profile_home">
 
-      <div class="member-profile" style="background-image: url({$cover});height:85px;background-size: cover;">
+      <div class="member-profile" style="background-image: url({$cover});height:85px;background-size: cover;background-position: center center;">
       </div>
 
       <div class="d-flex align-items-center justify-content-between bg-faded p-3">
@@ -29,86 +29,83 @@
       </div><!-- /.d-flex -->
 
       <section data-role="newPost" class="p-3 border-bottom">
-        <h4 class="f18">업로드한 동영상</h4>
+        <h4 class="f18">최신 포스트</h4>
         <ul class="media-list">
           {$newPost}
         </ul>
 
         <div data-role="none" class="d-none">
-          <div class="d-flex align-items-center justify-content-center p-5 text-xs-center text-muted f13" style="height: calc(30vh)">
+          <div class="d-flex align-items-center justify-content-center p-5 text-xs-center text-muted f13" style="height: 60vh">
             <div>
               <p class="f16">등록된 동영상이 없습니다.</p>
             </div>
           </div>
         </div>
-
       </section>
 
       <section data-role="newPost" class="p-3 border-bottom">
-
-        {$newList}
-
+        <h4 class="f18">최신 리스트</h4>
+        <ul class="media-list">
+          {$newList}
+        </ul>
       </section>
 
     </div><!-- /.swiper-slide -->
 
-    <div class="swiper-slide">
-      <ul class="table-view mt-0 bg-white table-view-full" data-role="profile_project"></ul>
-      <div data-role="none">
-        <div class="d-flex align-items-center justify-content-center p-5 text-xs-center text-muted f13" style="height: calc(30vh)">
-          <div>
-            <p class="f16">등록된 동영상이 없습니다.</p>
+    <div class="swiper-slide" data-role="postList">
+      <div class="content-padded">
+        <a class="btn btn-link text-reset pl-0" style="margin-top:-8px"
+          data-toggle="popup" href="#popup-post-sort">
+          <div class="d-flex align-items-center">
+            <i class="material-icons text-muted mr-2">notes</i>
+            정렬 기준
+            <i class="material-icons text-muted ml-1">arrow_drop_down</i>
           </div>
-        </div>
+        </a>
+        <ul class="media-list" data-role="list"></ul>
+      </div>
+    </div><!-- /.swiper-slide -->
+
+    <div class="swiper-slide" data-role="listList">
+      <div class="content-padded">
+        <a class="btn btn-link text-reset pl-0" style="margin-top:-8px"
+          data-toggle="popup" href="#popup-post-sort">
+          <div class="d-flex align-items-center">
+            <i class="material-icons text-muted mr-2">notes</i>
+            정렬 기준
+            <i class="material-icons text-muted ml-1">arrow_drop_down</i>
+          </div>
+        </a>
+        <ul class="media-list" data-role="list"></ul>
+      </div>
+    </div><!-- /.swiper-slide -->
+
+    <div class="swiper-slide" data-role="commList">
+      <div class="media-list" data-role="list"></div>
+    </div><!-- /.swiper-slide -->
+
+    <div class="swiper-slide" data-role="followList">
+      <div class="p-4">
+        <ul class="media-list" data-role="list"></ul>
       </div>
     </div><!-- /.swiper-slide -->
 
     <div class="swiper-slide">
-      <ul class="table-view mt-0 bg-white table-view-full" data-role="profile_follow">
-      </ul>
-      <div data-role="none">
-        <div class="d-flex align-items-center justify-content-center p-5 text-xs-center text-muted f13" style="height: calc(30vh)" data-role="none">
-          <div>
-            <p class="f16">재생목록이 없습니다.</p>
-          </div>
-        </div>
-      </div>
-    </div><!-- /.swiper-slide -->
 
-    <div class="swiper-slide">
-      <ul class="table-view mt-0 bg-white table-view-full" data-role="profile_follow">
-      </ul>
-      <div data-role="none">
-        <div class="d-flex align-items-center justify-content-center p-5 text-xs-center text-muted f13" style="height: calc(30vh)" data-role="none">
-          <div>
-            <p class="f16">커뮤니티 내역이 없습니다.</p>
-          </div>
+      <h6 class="f14 px-3 mt-4">
+        정보
+      </h6>
+      <div class="border-top border-bottom">
+        <div class="px-3 py-2">
+          <p class="text-muted">{$bio}</p>
+          가입일 : {$d_regis}
         </div>
       </div>
-    </div><!-- /.swiper-slide -->
 
-    <div class="swiper-slide">
-      <ul class="table-view mt-0 bg-white table-view-full" data-role="profile_follow">
-      </ul>
-      <div data-role="none">
-        <div class="d-flex align-items-center justify-content-center p-5 text-xs-center text-muted f13" style="height: calc(30vh)" data-role="none">
-          <div>
-            <p class="f16">채널정보가 없습니다.</p>
-          </div>
-        </div>
+      <div class="text-xs-center mt-2">
+        <strong>조회수 {$hit_post} 회</strong>
       </div>
-    </div><!-- /.swiper-slide -->
 
-    <div class="swiper-slide">
-      <ul class="table-view mt-0 bg-white table-view-full" data-role="profile_follow">
-      </ul>
-      <div data-role="none">
-        <div class="d-flex align-items-center justify-content-center p-5 text-xs-center text-muted f13" style="height: calc(30vh)" data-role="none">
-          <div>
-            <p class="f16">정보가 없습니다.</p>
-          </div>
-        </div>
-      </div>
     </div><!-- /.swiper-slide -->
 
   </div><!-- /.swiper-wrapper -->

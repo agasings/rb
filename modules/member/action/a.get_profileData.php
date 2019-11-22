@@ -26,7 +26,7 @@ $_MD = getDbData($table['s_mbrdata'],"memberuid='".$mbruid."'",'*');
 $TMPL['id'] = $_MH['id'];
 $TMPL['nic'] = $_MD['nic'];
 $TMPL['name'] = $_MD['name'];
-$TMPL['cover'] = getCoverSrc($mbruid,'800','600');
+$TMPL['cover'] = getCoverSrc($mbruid,'800','500');
 $TMPL['avatar'] = getAvatarSrc($mbruid,'136');
 $TMPL['grade'] = $g['grade']['m'.$_MD['level']];
 $TMPL['point'] = number_format($_MD['point']);
@@ -34,6 +34,12 @@ $TMPL['level'] = $_MD['level'];
 $TMPL['bio'] = $_MD['bio'];
 $TMPL['d_regis'] = getDateFormat($_MD['d_regis'],'Y.m.d');
 $TMPL['num_follower'] = number_format($_MD['num_follower']);
+$TMPL['bio'] = $_MD['bio'];
+$TMPL['hit_post'] = number_format($_MD['hit_post']);
+
+// 작업필요
+$_isFollowing = getDbRows($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mbruid='.$mbruid);
+if($my['uid']!=$_MP['uid'])
 
 if ($type=='popover') {
   $markup_file = 'profile-popover'; // 기본 마크업 페이지 전달 (테마 내부 _html/profile-popover.html)
@@ -44,35 +50,55 @@ if ($type=='popover') {
 $postque = 'mbruid='.$mbruid.' and site='.$s;
 if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
 else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
-$_RCD=getDbArray($table['postmember'],$postque,'*','gid','asc',6,1);
+$_RCD=getDbArray($table['postmember'],$postque,'*','gid','asc',3,1);
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
-$_NUM = getDbRows($table['postmember'],$postque);
+$NUM = getDbRows($table['postmember'],$postque);
 $newPost = '';
 
-if ($_NUM) {
+if ($NUM) {
   foreach ($RCD as $POST) {
-    $TMPL['newpost_uid']=$POST['uid'];
-    $TMPL['newpost_cid']=$POST['cid'];
-    $TMPL['newpost_format']='video';
-    $TMPL['newpost_subject']=stripslashes($POST['subject']);
-    $TMPL['newpost_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
-    $TMPL['newpost_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
-    $TMPL['newpost_provider']=getFeaturedimgMeta($POST,'provider');
-    $TMPL['newpost_videoId']=getFeaturedimgMeta($POST,'provider')=='YouTube'?getFeaturedimgMeta($POST,'name'):'';
-    $TMPL['newpost_hit']=$POST['hit'];
-    $TMPL['newpost_d_modify'] = getDateFormat($POST['d_modify']?$POST['d_modify']:$POST['d_regis'],'c');
-    $TMPL['newpost_nic'] = getProfileInfo($POST['mbruid'],'nic');
-    $TMPL['newpost_time'] = getUpImageTime($POST);
-    $skin_newPost=new skin('view_newPost');
+    $TMPL['post_uid']=$POST['uid'];
+    $TMPL['post_cid']=$POST['cid'];
+    $TMPL['post_format']='video';
+    $TMPL['post_subject']=stripslashes($POST['subject']);
+    $TMPL['post_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
+    $TMPL['post_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
+    $TMPL['post_provider']=getFeaturedimgMeta($POST,'provider');
+    $TMPL['post_videoId']=getFeaturedimgMeta($POST,'provider')=='YouTube'?getFeaturedimgMeta($POST,'name'):'';
+    $TMPL['post_hit']=$POST['hit'];
+    $TMPL['post_d_modify'] = getDateFormat($POST['d_modify']?$POST['d_modify']:$POST['d_regis'],'c');
+    $TMPL['post_nic'] = getProfileInfo($POST['mbruid'],'nic');
+    $TMPL['post_time'] = getUpImageTime($POST);
+    $skin_newPost=new skin('_postList');
     $newPost.=$skin_newPost->make();
   }
 }
-
+if (!$_NUM) $newList = '<div>자료가 없습니다.</div>';
 $TMPL['newPost'] = $newPost;
 
+//최근 리스트
+$listque = 'mbruid='.$mbruid.' and site='.$s;
+if ($my['uid']) $listque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
+else $listque .= ' and display = 5'; // 전체공개 포스트만 출력
+$LCD=getDbArray($table['postlist'],$listque,'*','gid','asc',3,1);
+$_NUM = getDbRows($table['postlist'],$listque);
 
-
-$TMPL['newList'] = '새리스트';
+$newList = '';
+if ($_NUM) {
+  foreach ($LCD as $LIST) {
+    $TMPL['list_name']=stripslashes($LIST['name']);
+    $TMPL['list_uid']=$LIST['uid'];
+    $TMPL['list_id']=$LIST['id'];
+    $TMPL['list_num']=$LIST['num'];
+    $TMPL['list_featured_img'] = getPreviewResize(getListImageSrc($LIST['uid']),'480x270');
+    $TMPL['list_d_modify'] = getDateFormat($LIST['d_modify']?$LIST['d_modify']:$LIST['d_regis'],'c');
+    $TMPL['list_nic'] = getProfileInfo($LIST['mbruid'],'nic');
+    $skin_newList=new skin('_listList');
+    $newList.=$skin_newList->make();
+  }
+}
+if (!$_NUM) $newList = '<div>자료가 없습니다.</div>';
+$TMPL['newList'] = $newList;
 
 if (!$type || $type=='modal' || $type=='page') {
   $markup_file = 'profile'; // 기본 마크업 페이지 전달 (테마 내부 _html/profile.html)

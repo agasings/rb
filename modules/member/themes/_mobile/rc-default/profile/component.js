@@ -1,6 +1,5 @@
 var modal_member_profile =  $('#modal-member-profile'); // 프로필 메인
 
-
 modal_member_profile.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var modal = $(this);
@@ -21,7 +20,7 @@ modal_member_profile.on('show.rc.modal', function(event) {
 
        modal.find('[data-role="title"]').text(nic);
        modal.find('.content').html(profile);
-
+       modal.find('.content [data-plugin="timeago"]').timeago();
        modal.find('.content').scroll({type:'updown'});
        var nav_control = modal.find('.profile-nav-control')
        var swiper_member_profile = new Swiper('#modal-member-profile .swiper-container', {
@@ -61,6 +60,71 @@ modal_member_profile.on('show.rc.modal', function(event) {
          setTimeout(function(){
            modal.find('.content').animate({scrollTop:0}, '400');
          }, 600);
+
+         if (index==1) { // 포스트
+           modal.find('[data-role="postList"] [data-role="list"]').loader({ position: 'inside' });
+           $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profilePost',{
+              mbruid : mbruid,
+              type : 'modal'
+           },function(response){
+            var result = $.parseJSON(response);
+            var postlist=result.list;
+            var postnum=result.num;
+            modal.find('[data-role="postList"] [data-role="list"]').html(postlist);
+            if (postnum) modal.find('[data-role="postList"] .btn').show();
+            else modal.find('[data-role="postList"] .btn').hide();
+            swiper_member_profile.updateAutoHeight(100);
+            modal.find('[data-role="postList"] [data-role="list"] [data-plugin="timeago"]').timeago();
+          });
+         }
+
+         if (index==2) { // 리스트
+           modal.find('[data-role="listList"] [data-role="list"]').loader({ position: 'inside' });
+           $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profileList',{
+              mbruid : mbruid,
+              type : 'modal'
+           },function(response){
+            var result = $.parseJSON(response);
+            var listlist=result.list;
+            var listnum=result.num;
+            modal.find('[data-role="listList"] [data-role="list"]').html(listlist);
+            if (listnum) modal.find('[data-role="listList"] .btn').show();
+            else modal.find('[data-role="listList"] .btn').hide();
+            swiper_member_profile.updateAutoHeight(100);
+            modal.find('[data-role="listList"] [data-role="list"] [data-plugin="timeago"]').timeago();
+          });
+         }
+
+         if (index==3) { // 커뮤니티
+           modal.find('[data-role="commList"] [data-role="list"]').loader({ position: 'inside' });
+           $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profileComm',{
+              mbruid : mbruid,
+              type : 'modal'
+           },function(response){
+            var result = $.parseJSON(response);
+            var commlist=result.list;
+            var commnum=result.num;
+            modal.find('[data-role="commList"] [data-role="list"]').html(commlist);
+            swiper_member_profile.updateAutoHeight(100);
+            modal.find('[data-role="commList"] [data-role="list"] [data-plugin="timeago"]').timeago();
+          });
+         }
+
+         if (index==4) {  // 채널
+           modal.find('[data-role="followList"] [data-role="list"]').loader({ position: 'inside' });
+           $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profileFollow',{
+              mbruid : mbruid,
+              type : 'modal'
+           },function(response){
+            var result = $.parseJSON(response);
+            var followlist=result.list;
+            var follownum=result.num;
+            modal.find('[data-role="followList"] [data-role="list"]').html(followlist);
+            swiper_member_profile.updateAutoHeight(100);
+            modal.find('[data-role="followList"] [data-role="list"] [data-plugin="timeago"]').timeago();
+          });
+         }
+         
        });
 
        nav_control.find('.nav-link').click(function(){
@@ -75,4 +139,5 @@ modal_member_profile.on('show.rc.modal', function(event) {
 modal_member_profile.on('hidden.rc.modal', function(event) {
   var modal = $(this);
   modal.attr('data-mbruid','');
+  modal.find('.bar-header-secondary .nav-inline').empty();
 })

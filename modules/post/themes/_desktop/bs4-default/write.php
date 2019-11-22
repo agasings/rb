@@ -183,10 +183,11 @@
 
           <div class="form-group">
             <label class="small text-muted">컨텐츠 포맷</label>
-            <?php $formats = explode(',', $d['theme']['format']);array_unshift($formats,''); ?>
             <select name="format" class="form-control custom-select meta">
-              <option value="1"<?php echo $R['format']==1?' selected':'' ?>><?php echo $formats[1] ?></option>
-              <option value="2"<?php echo $R['format']==2?' selected':'' ?>><?php echo $formats[2] ?></option>
+              <?php $_formatset=explode(',',$d['theme']['format'])?>
+              <?php $i=1;foreach($_formatset as $_format):?>
+                <option value="<?php echo $i ?>" <?php if($i==$R['format']):?> selected="selected"<?php endif?>>ㆍ<?php echo $_format?></option>
+              <?php $i++;endforeach;?>
             </select>
           </div>
 

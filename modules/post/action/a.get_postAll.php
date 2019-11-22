@@ -20,14 +20,17 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
+$mbruid = $my['uid'];
 
 $result=array();
 $result['error'] = false;
 $list='';
 
 foreach ($RCD as $R) {
+  $_markup_file = $markup_file.'-'.$formats[$R['format']];
   $TMPL['link']=getPostLink($R,1);
   $TMPL['subject']=stripslashes($R['subject']);
+  $TMPL['review']=stripslashes($R['review']);
   $TMPL['format'] = $formats[$R['format']];
   $TMPL['uid']=$R['uid'];
   $TMPL['cid']=$R['cid'];
@@ -36,6 +39,7 @@ foreach ($RCD as $R) {
   $TMPL['hit']=$R['hit'];
   $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
   $TMPL['likes']=$R['likes'];
+  $TMPL['dislikes']=$R['dislikes'];
   $TMPL['provider']=getFeaturedimgMeta($R,'provider');
   $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
   $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
@@ -44,7 +48,17 @@ foreach ($RCD as $R) {
   $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
   $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
 
-  $skin=new skin($markup_file);
+  $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
+  $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";
+  $check_saved_qry   = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."'";
+  $is_post_liked    = getDbRows($table['s_opinion'],$check_like_qry);
+  $is_post_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
+  $is_post_saved    = getDbRows($table['s_saved'],$check_saved_qry);
+  $TMPL['is_post_liked'] = $is_post_liked?'active':'';
+  $TMPL['is_post_disliked'] = $is_post_disliked?'active':'';
+  $TMPL['is_post_saved'] = $is_post_saved?'true':'false';
+
+  $skin=new skin($_markup_file);
   $list.=$skin->make();
 }
 

@@ -17,6 +17,7 @@ var modal_post_view =  $('#modal-post-view'); //포스트 보기
 
 var popup_post_optionMore = $('#popup-post-optionMore') // 포스트 옵션 더보기
 var popup_post_report = $('#popup-post-report') // 포스트 신고
+var popup_post_sort = $('#popup-post-sort') // 정열방식 변경
 
 var sheet_post_listadd = $('#sheet-post-listadd') // 포스트 리스트에 저장
 

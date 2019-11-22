@@ -5,7 +5,7 @@ $( document ).ready(function() {
     getPostAll({
       wrapper : $('<?php echo $wdgvar['wrapper'] ?>'),
       start : '<?php echo $wdgvar['start'] ?>',
-      markup    : 'post-row',  // 테마 > _html > post-card-full.html
+      markup    : 'post-row',  // 테마 > _html > post-row-***.html
       totalNUM  : '<?php echo $NUM?>',
       recnum    : <?php echo $wdgvar['recnum'] ?>,
       totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
