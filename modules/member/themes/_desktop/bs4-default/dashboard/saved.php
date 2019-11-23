@@ -10,6 +10,7 @@ if ($where && $keyword)
 	$sqlque .= getSearchSql($where,$keyword,$ikeyword,'or');
 }
 $RCD = getDbArray($table['s_saved'],$sqlque,'*',$sort,$orderby,$recnum,$p);
+
 $NUM = getDbRows($table['s_saved'],$sqlque);
 $TPG = getTotalPage($NUM,$recnum);
 
@@ -18,6 +19,7 @@ $g['page_list']	= $g['page_reset'].getLinkFilter('',array($category?'category':'
 $g['pagelink']	= $g['page_list'];
 
 ?>
+
 
 <div class="container">
 	<div class="subhead mt-0">

@@ -42,8 +42,9 @@ $TMPL['d_regis'] = getDateFormat($_MD['d_regis'],'Y.m.d');
 $TMPL['num_follower'] = number_format($_MD['num_follower']);
 $TMPL['bio'] = $_MD['bio'];
 $TMPL['hit_post'] = number_format($_MD['hit_post']);
-$TMPL['profile_setting'] = $mbruid==$my['uid']?$member->getHtml('profile-setting'):'';
 $TMPL['isFollowing'] = $_isFollowing ?'active':'';
+$TMPL['profile_setting'] = $mbruid==$my['uid']?$member->getHtml('profile_setting'):'';
+$TMPL['profile_follow'] = $my['uid']!=$mbruid?$member->getHtml('profile_follow'):'';
 
 // 작업필요
 $_isFollowing = getDbRows($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mbruid='.$mbruid);
