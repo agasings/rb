@@ -62,8 +62,8 @@ if ($uid) {
   getDbUpdate($table[$m.'data'],$QVAL1,'uid='.$R['uid']);
 
   //포스트 공유설정 업데이트
-  getDbUpdate($table[$m.'index'],'display='.$display,'gid='.$R['gid']);
-  getDbUpdate($table[$m.'member'],'display='.$display,'data='.$R['uid']);
+  getDbUpdate($table[$m.'index'],'display='.$display.',format='.$format,'gid='.$R['gid']);
+  getDbUpdate($table[$m.'member'],'display='.$display.',format='.$format,'data='.$R['uid']);
   getDbUpdate($table[$m.'day'],'display='.$display,'data='.$R['uid']); // 일별현황 업데이트 (인기 포스트 추출목적)
 
   //카테고리 업데이트
@@ -81,13 +81,13 @@ if ($uid) {
 	foreach($_category_members['data'] as $_ct1) {
 
     if (getDbRows($table[$m.'category_index'],'data='.$uid.' and category='.$_ct1)) {
-      getDbUpdate($table[$m.'category_index'],'display='.$display,'data='.$uid.' and category='.$_ct1);
+      getDbUpdate($table[$m.'category_index'],'display='.$display.',format='.$format,'data='.$uid.' and category='.$_ct1);
     } else {
       $mingid = getDbCnt($table[$m.'data'],'min(gid)','');
       $gid = $mingid ? $mingid-1 : 100000000;
       $_ct1_info=getUidData($table[$m.'category'],$_ct1);
       $_ct1_depth=$_ct1_info['depth'];
-      getDbInsert($table[$m.'category_index'],'site,data,category,display,depth,gid',"'".$s."','".$R['uid']."','".$_ct1."','".$display."','".$_ct1_depth."','".$gid."'");
+      getDbInsert($table[$m.'category_index'],'site,data,category,display,format,depth,gid',"'".$s."','".$R['uid']."','".$_ct1."','".$display."','".$format."','".$_ct1_depth."','".$gid."'");
       getDbUpdate($table[$m.'category'],'num=num+1','uid='.$_ct1);
     }
 
@@ -175,11 +175,11 @@ if ($uid) {
   $QVAL1 = "'$s','$gid','$mbruid','$cid','$subject','$review','$content','$tag','$html',";
   $QVAL1.= "'0','0','0','$d_regis','','','$member','$upload','$log','$display','$hidden','$featured_img','$format','$dis_comment','$dis_like','$dis_rating','$dis_listadd','$ip','$agent'";
   getDbInsert($table[$m.'data'],$QKEY1,$QVAL1);
-  getDbInsert($table[$m.'index'],'site,display,gid',"'$s','$display','$gid'");
+  getDbInsert($table[$m.'index'],'site,display,format,gid',"'$s','$display','$format','$gid'");
 
   $LASTUID = getDbCnt($table[$m.'data'],'max(uid)','');
-  $QKEY2 = "mbruid,site,gid,data,display,auth,level,d_regis";
-  $QVAL2 = "'$mbruid','$s','$gid','$LASTUID','$display','1','1','$d_regis'";
+  $QKEY2 = "mbruid,site,gid,data,display,format,auth,level,d_regis";
+  $QVAL2 = "'$mbruid','$s','$gid','$LASTUID','$display','$format','1','1','$d_regis'";
   getDbInsert($table[$m.'member'],$QKEY2,$QVAL2);
 
   if(!getDbRows($table['s_mbrmonth'],"date='".$date['month']."' and site=".$s.' and mbruid='.$mbruid)) {

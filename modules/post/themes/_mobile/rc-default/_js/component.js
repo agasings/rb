@@ -333,6 +333,20 @@ page_post_view.on('show.rc.page', function(event) {
   var videoId = button.attr('data-videoId');
   var url = button.attr('data-url');
 
+  switch(format) {
+    case '1':
+      format = 'doc';
+      break;
+    case '2':
+      format = 'video';
+      break;
+    case '3':
+      format = 'adv';
+      break;
+    default:
+      format = 'doc';
+  }
+
   getPostView({
     format : format,
     uid : uid,
@@ -420,6 +434,20 @@ modal_post_view.on('show.rc.modal', function(event) {
   var featured = button.attr('data-featured');
   var provider = button.attr('data-provider');
   var videoId = button.attr('data-videoId');
+
+  switch(format) {
+    case '1':
+      format = 'doc';
+      break;
+    case '2':
+      format = 'video';
+      break;
+    case '3':
+      format = 'adv';
+      break;
+    default:
+      format = 'doc';
+  }
 
   getPostView({
     format : format,

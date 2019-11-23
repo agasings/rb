@@ -29,7 +29,6 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 }
 
 include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
-
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
 
 $result=array();
@@ -43,7 +42,7 @@ $i=1;foreach ($_RCD as $R) {
   $TMPL['link']=getPostLink($R,1);
   $TMPL['edit_link']=RW('m=post&mod=write&cid='.$R['cid']);
   $TMPL['subject']=htmlspecialchars(stripslashes($R['subject']));
-  $TMPL['format'] = $formats[$R['format']];
+  $TMPL['format'] = $R['format'];
   $TMPL['uid']=$R['uid'];
   $TMPL['mbruid']=$R['mbruid'];
   $TMPL['profile_url']=getProfileLink($R['mbruid']);

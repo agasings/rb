@@ -33,7 +33,7 @@ foreach ($RCD as $R) {
   $TMPL['link']=getPostLink($R,1);
   $TMPL['subject']=stripslashes($R['subject']);
   $TMPL['review']=stripslashes($R['review']);
-  $TMPL['format'] = $formats[$R['format']];
+  $TMPL['format'] = $R['format'];
   $TMPL['uid']=$R['uid'];
   $TMPL['cid']=$R['cid'];
   $TMPL['mbruid']=$R['mbruid'];

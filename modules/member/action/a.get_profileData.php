@@ -59,7 +59,7 @@ if ($NUM) {
   foreach ($RCD as $POST) {
     $TMPL['post_uid']=$POST['uid'];
     $TMPL['post_cid']=$POST['cid'];
-    $TMPL['post_format']='video';
+    $TMPL['post_format']=$POST['format'];
     $TMPL['post_subject']=stripslashes($POST['subject']);
     $TMPL['post_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
     $TMPL['post_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');

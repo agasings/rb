@@ -64,8 +64,6 @@ if ($sort == 'gid' && !$keyword) {
 
 $TPG = getTotalPage($NUM,$recnum);
 
-$formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
-
 $result=array();
 $result['error'] = false;
 $list='';
@@ -75,7 +73,7 @@ $TMPL['start']=$start;
 foreach ($RCD as $R) {
   $TMPL['link']=getPostLink($R,1);
   $TMPL['subject']=stripslashes($R['subject']);
-  $TMPL['format'] = $formats[$R['format']];
+  $TMPL['format'] = $R['format'];
   $TMPL['uid']=$R['uid'];
   $TMPL['cid']=$R['cid'];
   $TMPL['hit']=$R['hit'];

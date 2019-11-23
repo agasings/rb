@@ -91,9 +91,11 @@ $_tmp = ("
 CREATE TABLE ".$table[$module.'index']." (
 site		  INT				DEFAULT '0'		NOT NULL,
 display		TINYINT		DEFAULT '0'		NOT NULL,
+format	TINYINT			DEFAULT '0'		NOT NULL,
 gid			  INT				DEFAULT '0'		NOT NULL,
 KEY site(site),
 KEY display(display),
+KEY format(format),
 KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'index'],$DB_CONNECT);
@@ -108,6 +110,7 @@ CREATE TABLE ".$table[$module.'category_index']." (
 site		  INT				DEFAULT '0'		NOT NULL,
 category	INT				DEFAULT '0'		NOT NULL,
 display		TINYINT		DEFAULT '0'		NOT NULL,
+format	TINYINT			DEFAULT '0'		NOT NULL,
 data			INT				DEFAULT '0'		NOT NULL,
 gid			  INT				DEFAULT '0'		NOT NULL,
 depth		TINYINT		DEFAULT '0'		NOT NULL,
@@ -115,6 +118,7 @@ KEY site(site),
 KEY category(category),
 KEY data(data),
 KEY display(display),
+KEY format(format),
 KEY gid(gid)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'category_index'],$DB_CONNECT);
@@ -166,6 +170,7 @@ site		    INT				DEFAULT '0'		NOT NULL,
 gid			  INT				DEFAULT '0'		NOT NULL,
 data			INT				DEFAULT '0'		NOT NULL,
 display		  TINYINT			DEFAULT '0'		NOT NULL,
+format	TINYINT			DEFAULT '0'		NOT NULL,
 auth		  TINYINT			DEFAULT '0'		NOT NULL,
 level		  TINYINT			DEFAULT '0'		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
@@ -173,6 +178,7 @@ KEY mbruid(mbruid),
 KEY gid(gid),
 KEY data(data),
 KEY display(display),
+KEY format(format),
 KEY auth(auth),
 KEY level(level)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
 db_query($_tmp, $DB_CONNECT);

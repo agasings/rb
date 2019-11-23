@@ -49,10 +49,11 @@ function getPofileView(modal,mbruid) {
        modal.find('.content').animate({scrollTop:0}, '400');
      }, 600);
 
-     if (index==1) { // 포스트
+     if (index==1) { // 동영상
        modal.find('[data-role="postList"] [data-role="list"]').loader({ position: 'inside' });
        $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profilePost',{
           mbruid : mbruid,
+          format : 2, //video
           type : 'modal'
        },function(response){
         var result = $.parseJSON(response);

@@ -25,7 +25,7 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
-$postque = 'mbruid='.$mbruid.' and site='.$s;
+$postque = 'mbruid='.$mbruid.' and format='.$format.' and site='.$s;
 
 if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
 else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
@@ -66,7 +66,7 @@ if ($NUM) {
   foreach ($RCD as $POST) {
     $TMPL['post_uid']=$POST['uid'];
     $TMPL['post_cid']=$POST['cid'];
-    $TMPL['post_format']='video';
+    $TMPL['post_format']=$POST['format'];
     $TMPL['post_subject']=stripslashes($POST['subject']);
     $TMPL['post_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
     $TMPL['post_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
