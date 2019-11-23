@@ -239,8 +239,6 @@ page_post_category_view.on('show.rc.page', function(event) {
     })
   })
 
-
-
   var settings={
     wrapper : wrapper,
     start : '#page-post-category-view',

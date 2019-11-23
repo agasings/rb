@@ -103,6 +103,11 @@ $TMPL['tag'] = $R['tag']?getPostTag($R['tag']):'';
 $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d H:i');
 $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
 $TMPL['view_postadmin'] = $_perm['post_owner']?$post->getHtml('view_postadmin'):'';
+$TMPL['isFollowing'] = $_isFollowing ?'active':'';
+$result['dis_like'] = $R['dis_like']?$R['dis_like']:'';
+$result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
+$result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';
+$result['dis_listadd'] = $R['dis_listadd']?$R['dis_listadd']:'';
 
 //최근 포스트
 $postque = 'mbruid='.$R['mbruid'].' and site='.$s.' and data <>'.$R['uid'];

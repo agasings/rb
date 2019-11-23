@@ -27,6 +27,23 @@ $(document).on('click','[data-toggle="profile"]',function(){
     modal.find('.content').loader({ position: 'inside' });
     getPofileView(modal,mbruid)
   }, delay);
+});
 
+
+$(document).on('click','[data-toggle="follow"]',function(){
+  var button = $(this);
+  var mbruid = button.attr('data-mbruid');
+  var url = '/?r='+raccount+'&m=member&a=profile_follow&mbruid='+mbruid;
+  button.toggleClass('active');
+  if (memberid) {
+    getIframeForAction('');
+    frames.__iframe_for_action__.location.href = url;
+  } else {
+    var title = button.attr('data-title')
+    var subtext = button.attr('data-subtext')
+    popup_login_guide.find('[data-role="title"]').text(title);
+    popup_login_guide.find('[data-role="subtext"]').text(subtext);
+    popup_login_guide.popup('show');
+  }
 
 });

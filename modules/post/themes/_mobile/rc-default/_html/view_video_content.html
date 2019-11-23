@@ -17,7 +17,7 @@
 </button>
 
 <div class="d-flex text-xs-center px-3">
-  <div class="flex-fill">
+  <div class="flex-fill" data-role="opinion">
     <button type="button" class="btn btn-link muted-link px-3"
       data-toggle="view_opinion"
       data-title="동영상이 마음에 드시나요?"
@@ -31,7 +31,7 @@
       <small class="text-muted" data-role='likes_{$uid}'>{$likes}</small>
     </button>
   </div>
-  <div class="flex-fill">
+  <div class="flex-fill" data-role="opinion">
     <button type="button" class="btn btn-link muted-link px-3"
       data-toggle="view_opinion"
       data-target="#popup-login-guide"
@@ -54,7 +54,7 @@
       <small>공유</small>
     </button>
   </div>
-  <div class="flex-fill">
+  <div class="flex-fill" data-role="listadd">
     <button type="button" class="btn btn-link muted-link px-3"
       data-toggle="view_listadd"
       data-title="나중에 다시 보고 싶으신가요?"
@@ -95,25 +95,23 @@
       </div>
     </div><!-- /.media -->
 
-    <div data-role="item" data-featured_img="{$avatar}" data-subject="{$subject}">
-
-      <button type="button" class="btn btn btn-outline-primary"
+    <div>
+      <button type="button" class="btn btn-link"
        data-target="#modal-post-opinion"
        data-opinion="like"
        data-toggle="modal"
+       data-featured_img="{$avatar}" data-subject="{$subject}"
        data-uid="{$uid}">
         좋아요 내역
       </button>
-
-      {$view_postadmin}
-
-       <button type="button" class="btn btn-primary active"
-        data-act=""
-        data-toggle="button"
-        data-role="follow"
-        data-url="">
+       <button type="button" class="btn btn-link {$isFollowing} mr-2"
+          data-title="채널을 구독하시겠습니까?"
+          data-subtext="채널을 구독하려면 로그인하세요."
+          data-toggle="follow"
+          data-mbruid="{$mbruid}">
          구독
        </button>
+       {$view_postadmin}
     </div>
 
   </div><!-- /.d-flex -->

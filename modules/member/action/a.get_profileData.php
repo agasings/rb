@@ -26,10 +26,12 @@ $member->theme_name = $theme;
 
 $_MH = getUidData($table['s_mbrid'],$mbruid);
 $_MD = getDbData($table['s_mbrdata'],"memberuid='".$mbruid."'",'*');
+$_isFollowing = getDbRows($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mbruid='.$mbruid);
 
 $TMPL['id'] = $_MH['id'];
 $TMPL['nic'] = $_MD['nic'];
 $TMPL['name'] = $_MD['name'];
+$TMPL['mbruid'] = $mbruid;
 $TMPL['cover'] = getCoverSrc($mbruid,'800','500');
 $TMPL['avatar'] = getAvatarSrc($mbruid,'136');
 $TMPL['grade'] = $g['grade']['m'.$_MD['level']];
@@ -41,6 +43,7 @@ $TMPL['num_follower'] = number_format($_MD['num_follower']);
 $TMPL['bio'] = $_MD['bio'];
 $TMPL['hit_post'] = number_format($_MD['hit_post']);
 $TMPL['profile_setting'] = $mbruid==$my['uid']?$member->getHtml('profile-setting'):'';
+$TMPL['isFollowing'] = $_isFollowing ?'active':'';
 
 // 작업필요
 $_isFollowing = getDbRows($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mbruid='.$mbruid);

@@ -6,7 +6,7 @@
 -->
 
 <!-- 일반모달 : 로그인-->
-<div id="modal-login" class="modal">
+<div id="modal-login" class="modal" style="z-index:21">
 
 	<div class="page center" id="page-login-main">
 		<header class="bar bar-nav bar-light bg-faded p-x-0">

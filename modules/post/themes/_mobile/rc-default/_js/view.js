@@ -69,6 +69,10 @@ function getPostView(settings) {
           var listCollapse=result.listCollapse;
           var is_post_liked=result.is_post_liked;
           var is_post_disliked=result.is_post_disliked;
+          var dis_like = result.dis_like;
+          var dis_rating = result.dis_rating;
+          var dis_comment = result.dis_comment;
+          var dis_listadd = result.dis_listadd;
 
           wrapper.find('oembed').attr('url',linkurl);
 
@@ -117,33 +121,40 @@ function getPostView(settings) {
             $('[data-role="title"]').addClass('line-clamp-2')
           })
 
+          if (dis_like) wrapper.find('[data-role="opinion"]').hide();
+          if (dis_listadd) wrapper.find('[data-role="listadd"]').hide();
 
-          // 댓글 출력 함수 정의
-          var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
-            wrapper.find('[data-role="comment"]').Rb_comment({
-             moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
-             parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
-             parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
-             theme_name : theme, // 댓글 테마
-             containerClass :'', // 본 엘리먼트(#commentting-container)에 추가되는 class
-             recnum: 5, // 출력갯수
-             commentPlaceHolder : '댓글을 입력해주세요.',
-             noMoreCommentMsg : '댓글 없음 ',
-             commentLength : 200, // 댓글 입력 글자 수 제한
-             toolbar : ['imageUpload'] // 툴바 항목
-            });
-          }
-          // 댓글 출력 함수 실행
-          var p_module = 'post';
-          var p_table = 'rb_post_data';
+          if (!dis_comment) {
+            // 댓글 출력 함수 정의
+            var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
+              wrapper.find('[data-role="comment"]').Rb_comment({
+               moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
+               parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
+               parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
+               theme_name : theme, // 댓글 테마
+               containerClass :'', // 본 엘리먼트(#commentting-container)에 추가되는 class
+               recnum: 5, // 출력갯수
+               commentPlaceHolder : '댓글을 입력해주세요.',
+               noMoreCommentMsg : '댓글 없음 ',
+               commentLength : 200, // 댓글 입력 글자 수 제한
+               toolbar : ['imageUpload'] // 툴바 항목
+              });
+            }
+            // 댓글 출력 함수 실행
+            var p_module = 'post';
+            var p_table = 'rb_post_data';
 
-          get_Rb_Comment(p_module,p_table,uid,ctheme);
+            get_Rb_Comment(p_module,p_table,uid,ctheme);
 
           } else {
-            alert(status);
+            wrapper.find('[data-role="comment"]').html('<div class="text-muted pb-3 text-xs-center">댓글이 사용 중지되었습니다.</div>')
           }
 
-          if (!isperm) wrapper.find('.bar-standard .embed-responsive').empty().removeAttr('style')
+        } else {
+          alert(status);
+        }
+
+        if (!isperm) wrapper.find('.bar-standard .embed-responsive').empty().removeAttr('style')
 
     });
 
