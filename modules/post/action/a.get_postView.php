@@ -3,6 +3,8 @@ if(!defined('__KIMS__')) exit;
 
 require_once $g['path_core'].'function/sys.class.php';
 include_once $g['dir_module'].'lib/action.func.php';
+require_once $g['dir_module'].'lib/base.class.php';
+require_once $g['dir_module'].'lib/module.class.php';
 
 $g['postVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
 $svfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['dir_module'].'var/var.php';
@@ -14,9 +16,18 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['post']['skin_main'];
 }
 
+$post = new Post();
+$post->theme_name = $theme;
+
 include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 
 $mbruid = $my['uid'];
+
+$_IS_POSTMBR=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$uid);
+$_IS_POSTOWN=getDbRows($table[$m.'member'],'mbruid='.$my['uid'].' and data='.$uid.' and level=1');
+
+$_perm['post_member'] = $my['admin'] || $_IS_POSTMBR ? true : false;
+$_perm['post_owner'] = $my['admin'] || $_IS_POSTOWN  ? true : false;
 
 $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."' and opinion='like'";
 $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$uid."' and opinion='dislike'";
@@ -91,6 +102,7 @@ $TMPL['oneline'] = $R['oneline']?'+'.$R['oneline']:'';
 $TMPL['tag'] = $R['tag']?getPostTag($R['tag']):'';
 $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d H:i');
 $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
+$TMPL['view_postadmin'] = $_perm['post_owner']?$post->getHtml('view_postadmin'):'';
 
 //최근 포스트
 $postque = 'mbruid='.$R['mbruid'].' and site='.$s.' and data <>'.$R['uid'];
