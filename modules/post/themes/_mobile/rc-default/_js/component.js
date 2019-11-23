@@ -6,6 +6,7 @@ var page_post_category_view =  $('#page-post-category-view'); //카테고리 보
 var page_post_mypost =  $('#page-post-mypost'); //내 포스트 관리
 var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
 var page_post_saved=  $('#page-post-saved'); // 내 포스트 저장내역(나중에 볼 동영상)
+var page_post_liked=  $('#page-post-liked'); // 좋아요한 포스트
 var page_post_view =  $('#page-post-view'); //포스트 보기
 
 var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
@@ -315,10 +316,32 @@ page_post_saved.on('show.rc.page', function(event) {
     recnum    : '',
     totalPage : '',
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 리스트가 없습니다.</div>'
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
   }
 
   getPostSaved(settings);
+
+})
+
+page_post_liked.on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var id = page.attr('id');
+  var wrapper = page.find('[data-role="list"]');
+  wrapper.html('');
+
+  var settings={
+    wrapper : wrapper,
+    start : '#'+id,
+    markup    : 'post-mediaList',  // 테마 > _html > list-mediaList.html
+    totalNUM  : '',
+    recnum    : '',
+    totalPage : '',
+    sort      : 'gid',
+    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+  }
+
+  getPostLiked(settings);
 
 })
 

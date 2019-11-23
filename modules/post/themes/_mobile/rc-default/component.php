@@ -9,19 +9,20 @@
 6. 페이지 : 키워드 보기
 7. 페이지 : 내 포스트 관리
 8. 페이지 : 내 리스트 관리
-9. 페이지 : 나중에 볼 동영상
-10. 페이지 : 포스트 보기
-11. 페이지 : 새 포스트
-12. 모달 : 포스트 보기
-13. 모달 : 전체 포스트
-14. 모달 : 전체 리스트
-15. 모달 : 리스트 보기
-16. 모달 : 포스트 검색 (임시)
-17. 팝업 : 포스트 옵션 더보기
-18. 팝업 : 포스트 신고
-19. 팝업 : 정렬방식 변경
-20. 시트 : 포스트 필터
-21. 시트 : 리스트 저장
+9. 페이지 : 나중에 볼 포스트
+10. 페이지 : 좋아요 한 포스트
+11. 페이지 : 포스트 보기
+12. 페이지 : 새 포스트
+13. 모달 : 포스트 보기
+14. 모달 : 전체 포스트
+15. 모달 : 전체 리스트
+16. 모달 : 리스트 보기
+17. 모달 : 포스트 검색 (임시)
+18. 팝업 : 포스트 옵션 더보기
+19. 팝업 : 포스트 신고
+20. 팝업 : 정렬방식 변경
+21. 시트 : 포스트 필터
+22. 시트 : 리스트 저장
 -->
 
 <!-- 페이지 : 전체포스트 -->
@@ -117,7 +118,7 @@
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
     <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
     <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
-    <span class="title title-left" data-history="back">내 동영상</span>
+    <span class="title title-left" data-history="back" data-role="title">내 포스트</span>
   </header>
   <main role="main" class="content">
     <div class="content-padded">
@@ -132,7 +133,7 @@
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
     <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
     <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
-    <span class="title title-left" data-history="back">내 재생목록</span>
+    <span class="title title-left" data-history="back" data-role="title">내 재생목록</span>
   </header>
   <main role="main" class="content">
     <div class="content-padded">
@@ -141,13 +142,28 @@
   </main>
 </div><!-- /.page -->
 
-<!-- 페이지 : 나중에 볼 동영상 -->
+<!-- 페이지 : 나중에 볼 포스트 -->
 <div class="page right" id="page-post-saved">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
     <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
     <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
-    <span class="title title-left" data-history="back">나중에 볼 동영상</span>
+    <span class="title title-left" data-history="back" data-role="title">나중에 볼 포스트</span>
+  </header>
+  <main role="main" class="content">
+    <div class="content-padded">
+      <ul class="media-list" data-role="list"></ul>
+    </div>
+  </main>
+</div><!-- /.page -->
+
+<!-- 페이지 : 좋아요 한 포스트 -->
+<div class="page right" id="page-post-liked">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <span class="title title-left" data-history="back" data-role="title">좋아요 한 포스트</span>
   </header>
   <main role="main" class="content">
     <div class="content-padded">
@@ -447,6 +463,7 @@
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mypost.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mylist.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/saved.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/liked.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/feed.js<?php echo $g['wcache']?>" ></script>
 
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>
