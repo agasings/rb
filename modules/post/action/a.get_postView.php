@@ -76,6 +76,7 @@ $TMPL['list_num'] = $LIST['num'];
 
 $TMPL['uid'] = $R['uid'];
 $TMPL['mbruid'] = $R['mbruid'];
+$TMPL['profile_url']=getProfileLink($R['mbruid']);
 $TMPL['num_follower'] = number_format(getProfileInfo($R['mbruid'],'num_follower'));
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');

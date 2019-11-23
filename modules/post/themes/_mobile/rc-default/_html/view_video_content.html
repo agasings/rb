@@ -79,7 +79,12 @@
 <div class="border-top border-bottom">
   <div class="d-flex justify-content-between align-items-center content-padded">
 
-    <div data-toggle="profile" class="text-reset media" data-mbruid="{$mbruid}" data-nic="{$nic}">
+    <div class="text-reset media"
+      data-toggle="profile"
+      data-target="#modal-member-profile"
+      dat-url="{$profile_url}"
+      data-mbruid="{$mbruid}"
+      data-nic="{$nic}" data-change="true">
       <img src="{$avatar}" class="mr-2 rounded-circle" width="34" height="34" alt="{$M1_nic}의 프로필">
       <div class="media-body">
         <div class="f16" style="line-height: 1.2;">{$nic}</div>
