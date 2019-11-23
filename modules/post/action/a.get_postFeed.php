@@ -34,6 +34,8 @@ $list='';
 
 $i=1;foreach ($RCD as $R) {
   $_markup_file = $markup_file.'-'.$formats[$R['format']];
+  $comment = $R['comment'].($R['oneline']?'+'.$R['oneline']:'');
+  $_comment =  $comment==0?'':$comment;
   $TMPL['link']=getPostLink($R,1);
   $TMPL['subject']=htmlspecialchars(stripslashes($R['subject']));
   $TMPL['format'] = $formats[$R['format']];
@@ -41,7 +43,7 @@ $i=1;foreach ($RCD as $R) {
   $TMPL['hit']=$R['hit'];
   $TMPL['mbruid']=$R['mbruid'];
   $TMPL['profile_url']=getProfileLink($R['mbruid']);
-  $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
+  $TMPL['comment']=$_comment;
   $TMPL['likes']=$R['likes'];
   $TMPL['dislikes']=$R['dislikes'];
   $TMPL['provider']=getFeaturedimgMeta($R,'provider');

@@ -39,6 +39,7 @@ $list='';
 
 $i=1;foreach ($_RCD as $R) {
   if ($dashboard=='Y' && !strpos('_'.$R['member'],'['.$my['uid'].']')) continue;
+  $_markup_file = $markup_file.'-'.$formats[$R['format']];
   $TMPL['link']=getPostLink($R,1);
   $TMPL['edit_link']=RW('m=post&mod=write&cid='.$R['cid']);
   $TMPL['subject']=htmlspecialchars(stripslashes($R['subject']));
@@ -64,7 +65,7 @@ $i=1;foreach ($_RCD as $R) {
   if ($sort=='dislikes') $TMPL['num']=$R['dislikes']?'싫어요 '.$R['dislikes']:'';
   if ($sort=='comment') $TMPL['num']=$R['comment']?'댓글 '.$R['comment']:'';
 
-  $skin=new skin($markup_file);
+  $skin=new skin($_markup_file);
   $list.=$skin->make();
 
   if ($i==$limit) break;

@@ -157,7 +157,7 @@
 </div><!-- /.page -->
 
 <!-- 페이지 : 포스트 보기 -->
-<div class="page right" id="page-post-view">
+<div class="page right" id="page-post-view" data-role="view">
 </div><!-- /.page -->
 
 <!-- 페이지 : 새 포스트 -->
@@ -187,7 +187,7 @@
 
 
 <!-- 모달 : 포스트 보기 -->
-<div class="modal" id="modal-post-view">
+<div class="modal" id="modal-post-view" data-role="view">
 </div><!-- /.modal -->
 
 <!-- 모달 : 전체 포스트 -->

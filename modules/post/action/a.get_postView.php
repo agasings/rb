@@ -86,6 +86,7 @@ $TMPL['hit'] = $R['hit'];
 $TMPL['likes'] = $R['likes'];
 $TMPL['dislikes'] = $R['dislikes'];
 $TMPL['comment'] = $R['comment'];
+$TMPL['oneline'] = $R['oneline']?'+'.$R['oneline']:'';
 $TMPL['tag'] = $R['tag']?getPostTag($R['tag']):'';
 $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d H:i');
 $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');

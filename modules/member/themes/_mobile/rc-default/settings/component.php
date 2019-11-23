@@ -7,7 +7,7 @@
       <h1 class="title" data-history="back">프로필 수정</h1>
     </header>
     <nav class="bar bar-tab bar-light bg-faded">
-    	<a class="tab-item bg-white text-primary" href="#modal-member-profile" data-toggle="profile" data-mbruid="<?php echo $my['uid'] ?>" data-title="<?php echo $my['nic'] ?>" role="button">
+    	<a class="tab-item bg-white text-primary" data-target="#modal-member-profile" data-toggle="profile" data-mbruid="<?php echo $my['uid'] ?>" data-title="<?php echo $my['nic'] ?>" role="button">
     		내 채널 보기
     	</a>
     </nav>
@@ -667,7 +667,7 @@
 
       <ul class="table-view bg-white mt-0 mb-2 border-top-0">
         <li class="table-view-cell">
-          <a class="" href="#modal-member-profile" data-toggle="profile" data-mbruid="<?php echo $my['uid'] ?>" data-title="<?php echo $my['nic'] ?>">
+          <a class="" data-target="#modal-member-profile" data-toggle="profile" data-mbruid="<?php echo $my['uid'] ?>" data-title="<?php echo $my['nic'] ?>">
             <img class="media-object pull-left img-circle" src="<?php echo getAvatarSrc($my['uid'],'130') ?>" style="width:65px;height:65px">
             <div class="media-body">
               <?php echo $my['name'] ?>

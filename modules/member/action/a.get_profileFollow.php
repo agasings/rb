@@ -40,6 +40,8 @@ if ($NUM) {
     $_isFollowing = getDbRows($table['s_friend'],'my_mbruid='.$my['uid'].' and by_mbruid='.$R['by_mbruid']);
     $TMPL['avatar']=getAvatarSrc($R['by_mbruid'],'130');
     $TMPL['nic']=getProfileInfo($R['by_mbruid'],'nic');
+    $TMPL['mbruid']=$R['by_mbruid'];
+    $TMPL['profile_url']=getProfileLink($R['by_mbruid']);
     $TMPL['num_follower']=number_format($num_follower);
     $TMPL['num_post']=number_format($num_post);
     $skin_followList=new skin('_followList');

@@ -203,7 +203,7 @@ if ($send=='ajax') {
 <script>
 
 <?php if ($opinion=='like'): ?>
-	<?php if ($is_liked): ?> 
+	<?php if ($is_liked): ?>
 	parent.$("[data-role=btn_post_like_<?php echo $uid?>]").removeClass("active <?php echo $effect ?>");
 	<?php else: ?>
 	parent.$("[data-role=btn_post_like_<?php echo $uid?>]").addClass("active <?php echo $effect ?>");
@@ -222,7 +222,7 @@ if ($send=='ajax') {
 	<?php endif; ?>
 
 	<?php if ($is_liked ): ?>
-	parent.$("[data-role=btn_post_like]").removeClass("active");
+	parent.$("[data-role=btn_post_like_<?php echo $uid?>]").removeClass("active");
 	<?php endif; ?>
 <?php endif; ?>
 

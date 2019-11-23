@@ -107,8 +107,8 @@ function getPostView(settings) {
             lessText: ''
           });
 
-          if (is_post_liked) wrapper.find('[data-role="btn_post_like"]').addClass('active');
-          if (is_post_disliked) wrapper.find('[data-role="btn_post_dislike"]').addClass('active');
+          if (is_post_liked) wrapper.find('[data-role="btn_post_like_'+uid+'"]').addClass('active');
+          if (is_post_disliked) wrapper.find('[data-role="btn_post_dislike_'+uid+'"]').addClass('active');
 
           wrapper.find('#collapseContent').on('show.rc.collapse', function () {
             $('[data-role="title"]').removeClass('line-clamp-2')

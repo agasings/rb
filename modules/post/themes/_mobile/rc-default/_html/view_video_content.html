@@ -26,7 +26,7 @@
       data-uid="{$uid}"
       data-opinion="like"
       data-effect="heartbeat"
-      data-role="btn_post_like">
+      data-role="btn_post_like_{$uid}">
       <i class="material-icons d-block mb-1">thumb_up</i>
       <small class="text-muted" data-role='likes_{$uid}'>{$likes}</small>
     </button>
@@ -41,7 +41,7 @@
       data-uid="{$uid}"
       data-opinion="dislike"
       data-effect="heartbeat"
-      data-role="btn_post_dislike">
+      data-role="btn_post_dislike_{$uid}">
       <i class="material-icons d-block mb-1">thumb_down</i>
       <small class="text-muted" data-role='dislikes_{$uid}'>{$dislikes}</small>
     </button>

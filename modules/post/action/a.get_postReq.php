@@ -30,6 +30,8 @@ $list='';
 foreach ($RCD as $_R) {
   $R = getDbData($table[$m.'data'],"cid='".$_R."'",'*');
   $_markup_file = $markup_file.'-'.$formats[$R['format']];
+  $comment = $R['comment'].($R['oneline']?'+'.$R['oneline']:'');
+  $_comment =  $comment==0?'':$comment;
   $TMPL['link']=getPostLink($R,1);
   $TMPL['subject']=stripslashes($R['subject']);
   $TMPL['review']=stripslashes($R['review']);
@@ -39,7 +41,7 @@ foreach ($RCD as $_R) {
   $TMPL['mbruid']=$R['mbruid'];
   $TMPL['profile_url']=getProfileLink($R['mbruid']);
   $TMPL['hit']=$R['hit'];
-  $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
+  $TMPL['comment']=$_comment;
   $TMPL['likes']=$R['likes'];
   $TMPL['dislikes']=$R['dislikes'];
   $TMPL['provider']=getFeaturedimgMeta($R,'provider');

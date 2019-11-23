@@ -25,6 +25,7 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 $sort	= $sort ? $sort : 'gid';
 $orderby= $orderby ? $orderby : 'asc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 15;
+
 $postque = 'mbruid='.$mbruid.' and site='.$s;
 
 if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
@@ -64,6 +65,8 @@ $postList = '';
 
 if ($NUM) {
   foreach ($RCD as $POST) {
+    $comment = $POST['comment'].($POST['oneline']?'+'.$POST['oneline']:'');
+    $_comment =  $comment==0?'':$comment;
     $TMPL['post_uid']=$POST['uid'];
     $TMPL['post_cid']=$POST['cid'];
     $TMPL['post_format']='doc';
@@ -75,11 +78,13 @@ if ($NUM) {
     $TMPL['post_hit']=$POST['hit'];
     $TMPL['post_likes']=$POST['likes'];
     $TMPL['post_dislikes']=$POST['dislikes'];
-    $TMPL['post_comment']=$POST['comment'];
+    $TMPL['post_comment']=$_comment;
     $TMPL['post_d_modify'] = getDateFormat($POST['d_modify']?$POST['d_modify']:$POST['d_regis'],'c');
     $TMPL['post_nic'] = getProfileInfo($POST['mbruid'],'nic');
     $TMPL['post_time'] = getUpImageTime($POST);
     $TMPL['post_avatar'] = getAvatarSrc($POST['mbruid'],'68');
+    $TMPL['post_profile_url']=getProfileLink($POST['mbruid']);
+    $TMPL['post_mbruid']=$POST['mbruid'];
 
     $check_like_qry    = "mbruid='".$_mbruid."' and module='post' and entry='".$POST['uid']."' and opinion='like'";
     $check_dislike_qry = "mbruid='".$_mbruid."' and module='post' and entry='".$POST['uid']."' and opinion='dislike'";

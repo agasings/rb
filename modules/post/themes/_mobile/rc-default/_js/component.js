@@ -1,5 +1,3 @@
-
-
 var page_post_allpost =  $('#page-post-allpost'); //전체 포스트
 var page_post_alllist =  $('#page-post-alllist'); //전체 리스트
 var page_post_listview =  $('#page-post-listview'); //특정 리스트 보기

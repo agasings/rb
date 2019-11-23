@@ -1,12 +1,10 @@
 <li class="media mb-3" data-role="item" data-uid="{$uid}">
-  <a data-toggle="modal" class="w-100"
-      data-target="#modal-post-view"
-      data-uid="{$post_uid}"
-      data-featured="{$post_featured_640}"
-      data-provider="{$post_provider}"
-      data-videoId="{$post_videoId}"
-      data-format="{$post_format}"
-      data-url="/post/{$post_cid}">
+  <a class="w-100"
+    data-toggle="profile"
+    data-target="#modal-member-profile"
+    data-mbruid="{$mbruid}"
+    data-title="{$nic}"
+    data-url="{$profile_url}">
 
     <div class="pull-left text-xs-center" style="width:100px">
       <img class="border img-circle" src="{$avatar}" alt="" style="width: 65px">
