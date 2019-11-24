@@ -13,6 +13,8 @@ var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
 var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
 var modal_post_listview =  $('#modal-post-listview'); //리스트 보기
 var modal_post_view =  $('#modal-post-view'); //포스트 보기
+var modal_post_photo =  $('#modal-post-photo'); //포스트 사진 보기
+var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
 
 var popup_post_optionMore = $('#popup-post-optionMore') // 포스트 옵션 더보기
 var popup_post_report = $('#popup-post-report') // 포스트 신고
@@ -484,6 +486,23 @@ modal_post_view.on('show.rc.modal', function(event) {
 modal_post_view.on('hidden.rc.modal', function(event) {
   var modal = $(this);
   modal.empty()
+})
+
+modal_post_photo.on('show.rc.modal', function(event) {
+
+})
+
+modal_post_opinion.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var uid = button.attr('data-uid');
+  var modal = $(this);
+  var wrapper = modal.find('[data-role="list"]');
+  getPostOpinion({
+    uid : uid,
+    wrapper : wrapper,
+    opinion : 'like',
+    markup : '_opinionList'
+  });
 })
 
 popup_post_optionMore.on('show.rc.popup', function(event) {

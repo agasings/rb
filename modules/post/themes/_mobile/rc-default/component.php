@@ -14,15 +14,17 @@
 11. 페이지 : 포스트 보기
 12. 페이지 : 새 포스트
 13. 모달 : 포스트 보기
-14. 모달 : 전체 포스트
-15. 모달 : 전체 리스트
-16. 모달 : 리스트 보기
-17. 모달 : 포스트 검색 (임시)
-18. 팝업 : 포스트 옵션 더보기
-19. 팝업 : 포스트 신고
-20. 팝업 : 정렬방식 변경
-21. 시트 : 포스트 필터
-22. 시트 : 리스트 저장
+14. 모달 : 포스트 사진 보기
+15. 모달 : 포스트 좋아요 보기
+16. 모달 : 전체 포스트
+17. 모달 : 전체 리스트
+18. 모달 : 리스트 보기
+19. 모달 : 포스트 검색 (임시)
+20. 팝업 : 포스트 옵션 더보기
+21. 팝업 : 포스트 신고
+22. 팝업 : 정렬방식 변경
+23. 시트 : 포스트 필터
+24. 시트 : 리스트 저장
 -->
 
 <!-- 페이지 : 전체포스트 -->
@@ -200,11 +202,47 @@
   </main>
 </div><!-- /.page -->
 
-
-
 <!-- 모달 : 포스트 보기 -->
 <div class="modal" id="modal-post-view" data-role="view">
 </div><!-- /.modal -->
+
+<!-- 모달 : 포스트 사진 보기 -->
+<section id="modal-post-photo" class="modal fast" data-role="post-photo">
+  <header class="bar bar-nav bar-dark bg-black px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+   <h1 class="title" data-role="title" data-history="back">제목</h1>
+  </header>
+  <div class="bar bar-standard bar-header-secondary bar-dark bg-black">
+     <h1 class="title text-muted"><small><i class="fa fa-expand mr-2" aria-hidden="true"></i> 이미지를 터치해서 확대해서 볼 수 있습니다.</small></h1>
+  </div>
+  <div class="bar bar-footer bar-dark bg-black text-muted">
+    <div class="swiper-pagination"></div>
+  </div>
+  <div class="content bg-black">
+    <div class="d-flex" style="height:78vh">
+      <div class="swiper-container align-self-center" style="height:78vh">
+        <div class="swiper-wrapper">
+        </div>
+    </div>
+      <!-- Add Navigation -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 모달 : 포스트 좋아요 보기 -->
+<section id="modal-post-opinion" class="modal fast" data-role="post-photo">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <h1 class="title title-left" data-history="back">좋아요</h1>
+  </header>
+  <div class="content">
+    <div class="content-padded">
+      <ul class="media-list" data-role="list"></ul>
+    </div>
+  </div>
+</section>
 
 <!-- 모달 : 전체 포스트 -->
 <div id="modal-post-allpost" class="modal fast">
@@ -270,7 +308,7 @@
           재생목록에 저장
         </a>
       </li>
-      <li class="table-view-cell" data-toggle="linkShare">
+      <li class="table-view-cell" data-toggle="linkShare" data-hback="true">
         <a class="">
           공유
         </a>
@@ -465,5 +503,6 @@
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/saved.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/liked.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/feed.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/opinion.js<?php echo $g['wcache']?>" ></script>
 
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>

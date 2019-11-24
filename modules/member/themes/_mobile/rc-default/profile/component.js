@@ -8,6 +8,7 @@ $(document).on('click','[data-toggle="profile"]',function(){
   var modal_id = 'modal-member-profile-'+mbruid;
   var modal = $('#'+modal_id);
   var delay = 10;
+
   if (!modal.length) {
     var _modal = $(target).clone().appendTo('[data-role="profile-wapper"]');
     _modal.attr('id',modal_id);
@@ -29,13 +30,12 @@ $(document).on('click','[data-toggle="profile"]',function(){
   }, delay);
 });
 
-
 $(document).on('click','[data-toggle="follow"]',function(){
   var button = $(this);
   var mbruid = button.attr('data-mbruid');
   var url = '/?r='+raccount+'&m=member&a=profile_follow&mbruid='+mbruid;
-  button.toggleClass('active');
   if (memberid) {
+    button.toggleClass('active');
     getIframeForAction('');
     frames.__iframe_for_action__.location.href = url;
   } else {

@@ -39,6 +39,8 @@ var deviceType = '<?php echo $g['deviceType'] ?>';
 var kakao_jskey = '<?php echo $d['connect']['jskey_k'] ?>';
 var post_skin_main =   '<?php echo $d['post']['skin_main']  ?>';
 var post_skin_mobile = '<?php echo $d['post']['skin_mobile'] ?>';
+var ios_Token = window.localStorage.getItem('setTokenTolocal');
+var is_pwa = navigator.share === undefined?1:'';
 </script>
 
 <!-- is-loading : https://github.com/hekigan/is-loading-->

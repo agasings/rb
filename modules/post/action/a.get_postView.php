@@ -88,6 +88,7 @@ $TMPL['list_num'] = $LIST['num'];
 $TMPL['uid'] = $R['uid'];
 $TMPL['mbruid'] = $R['mbruid'];
 $TMPL['profile_url']=getProfileLink($R['mbruid']);
+$TMPL['post_url']=getPostLink($R,0);
 $TMPL['num_follower'] = number_format(getProfileInfo($R['mbruid'],'num_follower'));
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
@@ -105,6 +106,8 @@ $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c
 $TMPL['isFollowing'] = $_isFollowing ?'active':'';
 $TMPL['view_postadmin'] = $_perm['post_owner']?$post->getHtml('view_postadmin'):'';
 $TMPL['view_follow'] = $my['uid']!=$R['mbruid']?$post->getHtml('view_follow'):'';
+$TMPL['view_opinion'] = $my['uid']?$post->getHtml('view_opinion'):'';
+
 $result['dis_like'] = $R['dis_like']?$R['dis_like']:'';
 $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
 $result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';

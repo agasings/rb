@@ -36,15 +36,17 @@ $NUM2 = getDbRows($table['s_opinion'],$where2);  //싫어요 수량
 $html='';
 foreach ($RCD as $R) {
   $M	= getUidData($table['s_mbrid'],$R['mbruid']);
-  $M1 = getDbData($table['s_mbrdata'],'memberuid='.$R['mbruid'],'nic');
+  $M1 = getDbData($table['s_mbrdata'],'memberuid='.$R['mbruid'],'*');
   $myself = $R['mbruid']==$my['uid']?' (나)':'';
   $TMPL['nic']=$M1['nic'].$myself;
   $TMPL['id']=$M['id'];
   $TMPL['mbruid']=$R['mbruid'];
   $TMPL['avatar']=getAvatarSrc($R['mbruid'],'84');
+  $TMPL['num_follower']=$M1['num_follower'];
+  $TMPL['num_post']=$M1['num_post'];
   $TMPL['profile_link']=getProfileLink($R['mbruid']);
   $TMPL['d_regis']=getDateFormat($R['d_regis'],'Y-m-d H:i');
-  $skin_item=new skin('opinion-item');
+  $skin_item=new skin($markup_file);
   $html.=$skin_item->make();
 }
 

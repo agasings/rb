@@ -255,7 +255,8 @@ $( document ).ready(function() {
 		setTimeout(function(){
       $.post(rooturl+'/?r='+raccount+'&m=post&a=get_opinionList',{
            uid : uid,
-           opinion : opinion
+           opinion : opinion,
+           markup_file : 'opinion-item'
         },function(response){
 				 var result = $.parseJSON(response);
 				 var _uid=result.uid;
@@ -290,7 +291,8 @@ $( document ).ready(function() {
     setTimeout(function(){
       $.post(rooturl+'/?r='+raccount+'&m=post&a=get_opinionList',{
            uid : uid,
-           opinion : opinion
+           opinion : opinion,
+           markup_file : 'opinion-item'
         },function(response){
          var result = $.parseJSON(response);
          var _uid=result.uid;

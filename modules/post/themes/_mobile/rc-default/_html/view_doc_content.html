@@ -56,10 +56,13 @@
       <small class="text-muted" data-role='dislikes_{$uid}'>{$dislikes}</small>
     </button>
   </div>
-  <div class="flex-fill">
+  <div class="flex-fill" data-role="linkShare">
     <button type="button" class="btn btn-link muted-link px-3"
-      data-send="ajax"
-      data-uid="{$uid}">
+      data-toggle="linkShare"
+      data-subject="{$subject}"
+      data-desc="{$review}"
+      data-url="{$post_url}"
+      data-title="링크공유">
       <i class="material-icons d-block mb-1 mirror" style="font-size: 30px;margin-top:-6px">reply</i>
       <small>공유</small>
     </button>
@@ -106,14 +109,7 @@
     </div><!-- /.media -->
 
     <div>
-      <button type="button" class="btn btn-link"
-       data-target="#modal-post-opinion"
-       data-opinion="like"
-       data-toggle="modal"
-       data-featured_img="{$avatar}" data-subject="{$subject}"
-       data-uid="{$uid}">
-        좋아요 내역
-      </button>
+      {$view_opinion}
       {$view_follow}
       {$view_postadmin}
     </div>
