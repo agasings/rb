@@ -39,6 +39,7 @@ foreach ($RCD as $_R) {
   $TMPL['uid']=$R['uid'];
   $TMPL['cid']=$R['cid'];
   $TMPL['mbruid']=$R['mbruid'];
+  $TMPL['post_url']=getPostLink($R,0);
   $TMPL['profile_url']=getProfileLink($R['mbruid']);
   $TMPL['hit']=$R['hit'];
   $TMPL['comment']=$_comment;

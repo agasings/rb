@@ -366,8 +366,6 @@ page_post_view.on('show.rc.page', function(event) {
     case '3':
       format = 'adv';
       break;
-    default:
-      format = 'doc';
   }
 
   getPostView({
@@ -468,8 +466,6 @@ modal_post_view.on('show.rc.modal', function(event) {
     case '3':
       format = 'adv';
       break;
-    default:
-      format = 'doc';
   }
 
   getPostView({
@@ -501,7 +497,8 @@ modal_post_opinion.on('show.rc.modal', function(event) {
     uid : uid,
     wrapper : wrapper,
     opinion : 'like',
-    markup : '_opinionList'
+    markup : '_opinionList',
+    none : '<div class="p-5 text-xs-center text-muted">자료가 없습니다.</div>'
   });
 })
 

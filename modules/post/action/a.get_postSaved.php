@@ -57,6 +57,7 @@ foreach ($RCD as $R) {
   $TMPL['uid']=$R['uid'];
   $TMPL['cid']=$R['cid'];
   $TMPL['hit']=$R['hit'];
+	$TMPL['post_url']=getPostLink($R,0);
   $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
   $TMPL['likes']=$R['likes'];
   $TMPL['provider']=getFeaturedimgMeta($R,'provider');

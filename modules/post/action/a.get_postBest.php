@@ -45,6 +45,7 @@ $i=1;foreach ($_RCD as $R) {
   $TMPL['format'] = $R['format'];
   $TMPL['uid']=$R['uid'];
   $TMPL['mbruid']=$R['mbruid'];
+  $TMPL['post_url']=getPostLink($R,0);
   $TMPL['profile_url']=getProfileLink($R['mbruid']);
   $TMPL['hit']=$R['hit'];
   $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
