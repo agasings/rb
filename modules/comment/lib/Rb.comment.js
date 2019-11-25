@@ -274,22 +274,13 @@
             $('[data-role="comment-input-wrapper"]').find('.toolbar-container').html(editor_comment.ui.view.toolbar.element)
             $('[data-role="commentWrite-container"]').removeClass('active')
 
-            //입력글자수 1자 이상일때 전송버튼 활성처리
-            // const wordCountPlugin = editor_comment.plugins.get('WordCount');
-            // wordCountPlugin.on( 'update', ( evt, data ) => {
-              // var btn_regis = $('[data-role="comment-input-wrapper"] [data-kcact="regis"]');
-              // if (data.characters > 0) btn_regis.addClass('active');
-              // else btn_regis.removeClass('active');
-            // } );
-
             editor_comment.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
               if (value) {
-                console.log('editor focus');
+                console.log('editor_comment focus');
                 $('[data-role="commentWrite-container"]').addClass('active');
               } else {
-                console.log('editor blur');
+                console.log('editor_comment blur');
               }
-
             } );
 
           })

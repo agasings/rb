@@ -50,9 +50,9 @@
 
 .sheet [data-role="commentWrite-container"] [data-role="form"] .btn{
   padding-top: .8rem;
-  padding-bottom: 1rem;
-  padding-left: .8rem;
-  padding-right: 1rem;
+  padding-bottom: .8rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
   font-size: 1.3rem;
   color: #999
 }
@@ -67,12 +67,14 @@
 }
 
 .sheet [data-role="commentWrite-container"] .toolbar-container,
-.sheet [data-role="commentWrite-container"] [data-kcact="regis"] {
-  /* visibility: hidden */
+.sheet [data-role="commentWrite-container"] [data-kcact="regis"],
+.sheet [data-role="commentWrite-container"] [data-toggle="collapse"] {
+  visibility: hidden
 }
 .sheet [data-role="commentWrite-container"].active .toolbar-container,
-.sheet [data-role="commentWrite-container"].active [data-kcact="regis"] {
-  /* visibility: visible; */
+.sheet [data-role="commentWrite-container"].active [data-kcact="regis"],
+.sheet [data-role="commentWrite-container"].active [data-toggle="collapse"] {
+  visibility: visible;
 }
 
 .sheet .fa-paper-plane:before {

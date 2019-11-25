@@ -24,7 +24,7 @@ $result['article'] = getContents($R['content'],'HTML');
 $result['hit'] = $R['hit'];
 $result['likes'] = $R['likes'];
 $result['dislikes'] = $R['dislikes'];
-$result['comment'] = $R['comment'];
+$result['comment'] = $R['comment'].($R['oneline']?'+'.$R['oneline']:'');
 
 $markup_file = $markup_file?$markup_file:'view';
 

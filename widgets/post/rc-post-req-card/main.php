@@ -1,4 +1,4 @@
-<div style="min-height: 600px"></div>
+<div style="min-height: 600px" data-role="list"></div>
 
 <script>
 
@@ -8,6 +8,8 @@ var posts = '<?php echo $wdgvar['posts'] ?>';
 var markup_file = '<?php echo $wdgvar['markup'] ?>';
 
 wrapper.loader({ position: 'inside' });
+
+
 
 $( document ).ready(function() {
 
@@ -19,7 +21,6 @@ $( document ).ready(function() {
       if(status=='success'){
         var result = $.parseJSON(response);
         var list=result.list;
-
         wrapper.loader('hide');
         if (list) {
           wrapper.html(list);
@@ -28,9 +29,7 @@ $( document ).ready(function() {
         } else {
           wrapper.html(none)
         }
-
         wrapper.find('[data-plugin="timeago"]').timeago();
-
       } else {
         alert(status);
       }

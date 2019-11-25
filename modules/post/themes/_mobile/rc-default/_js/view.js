@@ -134,7 +134,7 @@ function getPostView(settings) {
                theme_name : theme, // 댓글 테마
                containerClass :'', // 본 엘리먼트(#commentting-container)에 추가되는 class
                recnum: 5, // 출력갯수
-               commentPlaceHolder : '댓글을 입력해주세요.',
+               commentPlaceHolder : '공개 댓글 추가...',
                noMoreCommentMsg : '댓글 없음 ',
                commentLength : 200, // 댓글 입력 글자 수 제한
                toolbar : ['imageUpload'] // 툴바 항목
@@ -145,6 +145,65 @@ function getPostView(settings) {
             var p_table = 'rb_post_data';
 
             get_Rb_Comment(p_module,p_table,uid,ctheme);
+
+            // 보기 에서 댓글이 등록된 이후에 ..
+            wrapper.find('[data-role="comment"]').on('saved.rb.comment',function(){
+              window.history.back(); //댓글작성 sheet 내림
+              var list_item = $(document).find('[data-role="item"] [data-uid="'+uid+'"]')
+              //var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+              var showComment_Ele_2 = wrapper.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+              var showComment_ListEle = list_item.find('[data-role="comment_'+uid+'"]'); // 댓글 숫자 출력 element
+
+              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postData',{
+                   uid : uid
+                },function(response){
+                   var result = $.parseJSON(response);
+                   var total_comment=result.comment;
+                   //$.notify({message: '댓글이 등록 되었습니다.'},{type: 'default'});
+                   //showComment_Ele_1.text(total_comment); // 모달 상단 최종 댓글수량 합계 업데이트
+                   showComment_Ele_2.text(total_comment); // 모달 상단 최종 댓글수량 합계 업데이트
+                   showComment_ListEle.text(total_comment); // 포스트 목록 해당 항목의 최종 댓글수량 합계 업데이트
+              });
+            });
+
+            // 포스트 보기 모달에서 한줄의견이 등록된 이후에..
+            wrapper.find('[data-role="comment"]').on('saved.rb.oneline',function(){
+              window.history.back(); //댓글작성 sheet 내림
+              var uid = wrapper.find('[name="uid"]').val()
+              var theme = wrapper.find('[name="theme"]').val()
+              var list_item = $('[data-role="bbs-list"]').find('#item-'+uid)
+              //var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+              var showComment_Ele_2 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+
+              var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+              $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postData',{
+                   uid : uid,
+                   theme : theme
+                },function(response){
+                   var result = $.parseJSON(response);
+                   var total_comment=result.total_comment;
+                   //$.notify({message: '한줄의견이 등록 되었습니다.'},{type: 'default'});
+                   showComment_Ele_1.text(total_comment); // 최종 댓글수량 합계 업데이트
+                   showComment_Ele_2.text(total_comment); // 최종 댓글수량 합계 업데이트
+                   showComment_ListEle.text(total_comment); // 포스트 목록 해당 항목의 최종 댓글수량 합계 업데이트
+              });
+            });
+
+            // 댓글이 수정된 후에..
+            wrapper.find('[data-role="comment"]').on('edited.rb.comment',function(){
+              setTimeout(function(){
+                history.back()
+                $.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
+              }, 300);
+            })
+
+            // 한줄의견이 수정 후에
+            wrapper.find('[data-role="comment"]').on('edited.rb.oneline',function(){
+              setTimeout(function(){
+                history.back()
+                $.notify({message: '답글이 수정 되었습니다.'},{type: 'default'});
+              }, 300);
+            })
 
           } else {
             wrapper.find('[data-role="comment"]').html('<div class="text-muted pb-3 text-xs-center">댓글이 사용 중지되었습니다.</div>')

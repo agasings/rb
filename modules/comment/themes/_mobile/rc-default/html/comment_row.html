@@ -1,16 +1,21 @@
-<li data-role="comment-item" data-uid="{$comment_uid}" data-page="{$comment_page}" data-totalPage="{$total_page}" data-type="comment" data-hidden="{$comment_getHidden}" data-notice="{$comment_getNoitce}">
+<li data-role="comment-item"
+  data-uid="{$comment_uid}"
+  data-page="{$comment_page}"
+  data-totalPage="{$total_page}"
+  data-type="comment" data-hidden="{$comment_getHidden}" data-notice="{$comment_getNoitce}">
   <span id="CMT-{$comment_uid}" data-role="anchor-link"></span>
-  <div class="media">
-    <img class="mr-3 border rounded-circle" src="{$comment_user_pic}" alt="아바타" style="width:2.25rem;height:2.25rem">
+  <div class="media content-padded my-0">
+    <img class="mr-3 border rounded-circle" src="{$comment_user_pic}" alt="아바타" style="width:40px;height:40px">
     <div class="media-body">
 
         <h4 class="media-heading h6 d-flex align-items-center">
           <span data-role="comment-hidden" class="badge badge-default badge-inverted"><i class="fa fa-lock" aria-hidden="true"></i></span>
-          <span class="badge badge-default badge-inverted">{$comment_user_name}</span>
-          <time class="pl-1 badge badge-default badge-inverted" data-role="comment-time-wrapper-{$comment_uid}" datetime="{$comment_regis_ago}" data-plugin="timeago">
+          <small class="text-muted">{$comment_user_name}</small>
+
+          <time class="ml-2 small text-muted" data-role="comment-time-wrapper-{$comment_uid}" datetime="{$comment_regis_ago}" data-plugin="timeago">
             {$comment_regis_time}
           </time>
-          <small class="ml-1 {$comment_getNew}"></small><!-- 24시간이내 new 출력 -->
+          <small class="ml-2 {$comment_getNew}"></small><!-- 24시간이내 new 출력 -->
 
           <div class="ml-auto">
             <span class="badge badge-primary badge-inverted {$comment_getIsNoitce}"><i class="fa fa-thumb-tack fa-fw" aria-hidden="true"></i> 고정</span>
@@ -18,23 +23,41 @@
 
         </h4>
 
-        <article class="mb-1" data-role="comment-origin-content-{$comment_uid}">{$comment_content}</article>
-        <article class="mb-1 border" style="display:none" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
+        <article class="mb-2" data-role="comment-origin-content-{$comment_uid}">{$comment_content}</article>
+        <article class="mb-2 border" style="display:none" data-role="comment-content-editable-{$comment_uid}">{$comment_content}</article>
 
         <div class="d-flex justify-content-between align-items-center">{$btn_editMod} <!-- 수정 모드시 취소/완료 버튼 btn_ediMod.html --></div>
 
         <div class="d-flex align-items-center">
           <div class="">
-            <button type="button" class="btn btn-secondary btn-sm add-comment" data-role="toggle-oneline-input" data-toggle="commentWrite" data-type="oneline" data-act="regis" data-parent="{$comment_uid}">답글</button>
-            <button class="btn btn-secondary btn-sm {$comment_getIsLiked}"
+            <button class="btn btn-link btn-sm muted-link {$comment_getIsLiked}" style="margin-left:-0.5rem"
               data-kcact="like"
               data-type="comment"
               data-entry="{$comment_uid}"
               data-effect="animated bounceIn delay-1"
               data-role="comment-isLiked-{$comment_uid}">
-              <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-              <span class="badge badge-inverted" data-role="comment-likeTotal-{$comment_uid}">{$comment_like_total}</span>
+              <i class="material-icons f16 align-middle">thumb_up</i>
+              <span class="ml-1" data-role="comment-likeTotal-{$comment_uid}">{$comment_like_total}</span>
             </button>
+            <button class="btn btn-link btn-sm muted-link {$comment_getIsDisLiked}"
+              data-kcact="dislike"
+              data-type="comment"
+              data-entry="{$comment_uid}"
+              data-effect="animated bounceIn delay-1"
+              data-role="comment-isDisLiked-{$comment_uid}">
+              <i class="material-icons f16 align-middle">thumb_down</i>
+              <span class="ml-1" data-role="comment-dislikeTotal-{$comment_uid}">{$comment_dislike_total}</span>
+            </button>
+
+            <button type="button" class="btn btn-link muted-link btn-sm add-comment"
+              data-role="toggle-oneline-input"
+              data-toggle="commentWrite"
+              data-type="oneline"
+              data-act="regis" data-parent="{$comment_uid}">
+              <i class="material-icons f16 align-middle">comment</i>
+              <span class="ml-1" data-role="comment-onelineNum-{$comment_uid}">{$comment_oneline_num}</span>
+            </button>
+
           </div>
 
           <div class="ml-auto">
