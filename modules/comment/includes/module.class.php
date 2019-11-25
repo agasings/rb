@@ -132,6 +132,9 @@ class Comment extends Comment_base{
         $TMPL['comment_parent'] =$this->parent;
         $TMPL['total_page'] = $this->getTotalData($sync_arr[1].$sync_arr[2],$this->recnum,'comment','page',$notice);
 
+        $TMPL['oneline_num'] = $row['oneline'];
+        $TMPL['oneline_button'] = $row['oneline']?$this->getHtml('oneline_button'):'';
+
         $my_menu = $this->getHtml('my_menu');
         $btn_showHideMenu = $this->getHtml('btn_showHideMenu');
 

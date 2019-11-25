@@ -94,7 +94,12 @@
 .media-list .media-list {
   margin: 10px 0 0 -20px;
   padding: 2px 20px;
+  display: none
 }
+.media-list hr {
+  display: none
+}
+
 .media-list .media-list:empty {
   margin: 0
 }
@@ -360,4 +365,20 @@
   pointer-events: none;
   cursor: text;
   color: var(--ck-color-engine-placeholder-text);
+}
+
+/* sheet */
+.sheet .media-list .media-list {
+  display: block;
+}
+.sheet [data-toggle="sheet"] {
+  display: none
+}
+.sheet .media-list .media-list {
+  margin: 10px 0 0 -65px;
+  padding-left: 25px
+}
+.sheet .media-list hr {
+  display: block;
+  margin: 20px -10px 20px -65px;
 }

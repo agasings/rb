@@ -66,17 +66,9 @@
 
         </div>
 
-        <div class="d-none" data-role="oneline-input-wrapper-{$comment_uid}"> <!-- 한줄의견 등록폼 -->
-          <form class="input-group">
-            <input type="text" data-role="oneline-input-{$comment_uid}"> <!-- 주의 : comment_uid 가 들어가야 함 -->
-            <span class="input-group-btn">
-              <button type="submit" class="btn btn-secondary btn-sm" data-kcact="regis" data-type="oneline" data-parent="{$comment_uid}" data-grant="{$grant_uid}" data-effect="animated fadeInUp">
-                답글쓰기
-              </button>
-            </span>
-          </form>
-        </div>
-        <div class="media-list flex-column pr-0" data-role="oneline-container-{$comment_uid}">
+        {$oneline_button} <!-- 한줄의견 보기 -->
+        <hr>
+        <div class="media-list flex-column pr-0 mb-3" data-role="oneline-container-{$comment_uid}">
            <!-- 한줄의견 리스트 -->
            {$oneline_rows}
         </div>
