@@ -24,7 +24,6 @@ $( document ).ready(function() {
         wrapper.loader('hide');
         if (list) {
           wrapper.html(list);
-          console.log(start)
           wrapper.find('[data-toggle="page"]').attr('data-start',start);
         } else {
           wrapper.html(none)

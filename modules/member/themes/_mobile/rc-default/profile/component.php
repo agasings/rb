@@ -11,7 +11,7 @@
   <div id="modal-member-profile" class="modal fast" data-mbruid="" data-role="profile">
     <header class="bar bar-nav bar-dark bg-inverse px-0 border-bottom-0" data-snap-ignore="true">
       <a class="icon material-icons pull-left text-white px-3" role="button" data-history="back">arrow_back</a>
-      <a class="icon material-icons pull-right pl-2 pr-3 text-white" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+      <a class="icon material-icons pull-right pl-2 pr-3 text-white" role="button" data-toggle="modal" data-target="#modal-search">search</a>
       <h1 class="title title-left" data-history="back">
         <span data-role="title"></span>
       </h1>
