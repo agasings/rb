@@ -23,8 +23,9 @@
 20. 팝업 : 포스트 옵션 더보기
 21. 팝업 : 포스트 신고
 22. 팝업 : 정렬방식 변경
-23. 시트 : 포스트 필터
-24. 시트 : 리스트 저장
+23. 팝업 :  새 재생목록
+24. 시트 : 포스트 필터
+25. 시트 : 리스트 저장
 -->
 
 <!-- 페이지 : 전체포스트 -->
@@ -434,6 +435,46 @@
   </div>
 </div>
 
+<!-- 팝업 : 새 재생목록 -->
+<div id="popup-post-newList" class="popup zoom">
+  <div class="popup-content rounded-0">
+    <div class="content rounded-0" style="min-height: 110px;">
+      <div class="p-a-1">
+        <h5>새 재생목록</h5>
+        <div class="form-list stacked mt-3 mb-1">
+				  <input type="text" placeholder="제목" name="name" class="border-primary px-0 py-2" autocomplete="off">
+
+          <div class="input-row px-0 mt-3 border-bottom-0">
+            <label class="text-muted mb-1">개인정보보호</label>
+            <select class="form-control custom-select mb-0" name="display" style="height: inherit;">
+              <?php $displaySet=explode('||',$d['displaySet'])?>
+  						<?php $i=1;foreach($displaySet as $displayLine):if(!trim($displayLine))continue;$dis=explode(',',$displayLine)?>
+              <option value="<?php echo $i ?>" class="<?php echo $dis[0]=='일부공개'?'d-none':'' ?>"><?php echo $dis[0]?></option>
+  						<?php $i++;endforeach?>
+            </select>
+          </div>
+
+				</div>
+
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-lg btn-link text-muted mr-2" data-history="back">취소</button>
+          <button type="button" class="btn btn-lg btn-link" data-act="submit">
+            <span class="not-loading">
+							만들기
+						</span>
+            <span class="is-loading">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </span>
+          </button>
+        </div>
+
+			</div>
+    </div>
+  </div>
+</div>
+
 <!-- 시트 : 포스트 필터 -->
 <div id="sheet-post-filter" class="sheet shadow">
   <header class="bar bar-nav bar-light bg-white px-0">
@@ -459,7 +500,7 @@
 
 <div id="sheet-post-listadd" class="sheet shadow">
   <header class="bar bar-nav bar-light bg-white">
-    <button class="btn btn-link btn-nav pull-right px-3">
+    <button class="btn btn-link btn-nav pull-right px-3" data-toggle="newList">
       새 재생목록
     </button>
     <h1 class="title title-left px-3">포스트 저장</h1>

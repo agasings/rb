@@ -19,6 +19,7 @@ var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
 var popup_post_optionMore = $('#popup-post-optionMore') // 포스트 옵션 더보기
 var popup_post_report = $('#popup-post-report') // 포스트 신고
 var popup_post_sort = $('#popup-post-sort') // 정열방식 변경
+var popup_post_newList = $('#popup-post-newList') // 새 재생목록
 
 var sheet_post_listadd = $('#sheet-post-listadd') // 포스트 리스트에 저장
 
@@ -92,9 +93,9 @@ page_post_keyword.on('show.rc.page', function(event) {
     start : '#page-post-keyword',
     markup    : 'keyword-row',  // 테마 > _html > post-card-full.html
     keyword : keyword,
-    totalNUM  : '<?php echo $NUM?>',
+    totalNUM  : '',
     recnum    : '',
-    totalPage : '<?php echo getTotalPage($NUM,$recnum)?>',
+    totalPage : '',
     sort      : 'gid',
     none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
   }
@@ -455,6 +456,7 @@ modal_post_view.on('show.rc.modal', function(event) {
   var featured = button.attr('data-featured');
   var provider = button.attr('data-provider');
   var videoId = button.attr('data-videoId');
+  var url = button.attr('data-url');
 
   switch(format) {
     case '1':
@@ -475,7 +477,8 @@ modal_post_view.on('show.rc.modal', function(event) {
     featured : featured,
     provider : provider,
     videoId : videoId,
-    wrapper : modal
+    wrapper : modal,
+    url : url
   });
 })
 
@@ -647,4 +650,76 @@ sheet_post_listadd.find('[data-act="submit"]').click(function(){
         }
     });
   }, 100);
+});
+
+
+sheet_post_listadd.find('[data-toggle="newList"]').click(function(){
+  var sheet = sheet_post_listadd;
+  var uid = sheet.attr('data-uid');
+  popup_post_newList.attr('data-uid',uid);
+  history.back();
+  setTimeout(function(){
+    popup_post_newList.popup();
+  }, 100);
+});
+
+popup_post_newList.on('shown.rc.popup', function(event) {
+  var popup = $(this);
+  setTimeout(function(){
+    popup.find('[name="name"]').focus()
+  }, 400);
+})
+
+popup_post_newList.on('hidden.rc.popup', function(event) {
+  var popup = $(this);
+  // 상태 초기화
+  popup.find('[name="name"]').val('');
+  popup.find('[name="display"]').val("1").prop("selected", true);
+  popup.find('[data-act="submit"]').attr('disabled',false );
+})
+
+popup_post_newList.find('[data-act="submit"]').click(function(){
+  var popup = popup_post_newList;
+  var uid = popup.attr('data-uid');
+  var name = popup.find('[name="name"]').val();
+  var display = popup.find('[name="display"]').val();
+
+  if (!name) {
+    popup.find('[name="name"]').focus();
+    return false
+  }
+
+  $(this).attr('disabled',true );
+
+  setTimeout(function(){
+    history.back();
+
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=regis_list',{
+      name : name,
+      display : display,
+      send_mod: 'ajax'
+      },function(response,status){
+        if(status=='success'){
+          var result = $.parseJSON(response);
+          var list_members=result.uid;
+
+          $.post(rooturl+'/?r='+raccount+'&m=post&a=update_listindex',{
+            uid : uid,
+            saved : 0,
+            list_members : list_members
+            },function(response,status){
+              if(status=='success'){
+                $.notify({message: name+' 에 저장 되었습니다'},{type: 'default'});
+              } else {
+                alert(status);
+              }
+          });
+
+        } else {
+          alert(status);
+        }
+
+    });
+  }, 800);
+
 });

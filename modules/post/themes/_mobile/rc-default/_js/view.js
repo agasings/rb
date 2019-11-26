@@ -21,6 +21,7 @@ function getPostView(settings) {
     var window_height = $(window).height();
     var content_height = window_height - height;
 
+    wrapper.find('[data-toggle="linkShare"]').attr('data-url',url);
     wrapper.find('.embed-responsive').css('background-image','url('+featured+')')
     wrapper.find('.content').css('padding-top',height+'px')
 
@@ -125,6 +126,7 @@ function getPostView(settings) {
           if (dis_listadd) wrapper.find('[data-role="listadd"]').hide();
 
           if (!dis_comment) {
+
             // 댓글 출력 함수 정의
             var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
               wrapper.find('[data-role="comment"]').Rb_comment({
@@ -170,20 +172,17 @@ function getPostView(settings) {
             wrapper.find('[data-role="comment"]').on('saved.rb.oneline',function(){
               window.history.back(); //댓글작성 sheet 내림
               var uid = wrapper.find('[name="uid"]').val()
-              var theme = wrapper.find('[name="theme"]').val()
-              var list_item = $('[data-role="bbs-list"]').find('#item-'+uid)
+              var list_item = $('[data-role="list"]').find('#item-'+uid)
               //var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-              var showComment_Ele_2 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-
+              var showComment_Ele_2 = wrapper.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
               var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
               $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postData',{
-                   uid : uid,
-                   theme : theme
+                   uid : uid
                 },function(response){
                    var result = $.parseJSON(response);
                    var total_comment=result.total_comment;
-                   //$.notify({message: '한줄의견이 등록 되었습니다.'},{type: 'default'});
-                   showComment_Ele_1.text(total_comment); // 최종 댓글수량 합계 업데이트
+                   $.notify({message: '답글이 등록 되었습니다.'},{type: 'default'});
+                   //showComment_Ele_1.text(total_comment); // 최종 댓글수량 합계 업데이트
                    showComment_Ele_2.text(total_comment); // 최종 댓글수량 합계 업데이트
                    showComment_ListEle.text(total_comment); // 포스트 목록 해당 항목의 최종 댓글수량 합계 업데이트
               });
@@ -206,6 +205,7 @@ function getPostView(settings) {
             })
 
           } else {
+            wrapper.find('[data-role="btn_comment"]').hide();  //댓글 바로가기 버튼 숨김
             wrapper.find('[data-role="comment"]').html('<div class="text-muted pb-3 text-xs-center">댓글이 사용 중지되었습니다.</div>')
           }
 
