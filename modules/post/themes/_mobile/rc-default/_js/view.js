@@ -320,3 +320,12 @@ $(document).on('click','[data-toggle="view_report"]',function(){
     popup_login_guide.popup('show');
   }
 });
+
+$(document).on('tap','[data-toggle="tag"]',function(){
+  var keyword= $(this).attr('data-tag');
+  page_post_keyword.attr('data-keyword',keyword)
+  history.back();
+  setTimeout(function(){
+    page_post_keyword.page({ start: '#page-main' });
+  }, 300);
+})

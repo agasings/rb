@@ -86,6 +86,7 @@ page_post_keyword.on('show.rc.page', function(event) {
   var page = $(this);
   var keyword = button.attr('data-keyword')?button.attr('data-keyword'):page.attr('data-keyword');
   var wrapper = page.find('[data-role="list"]');
+  page.find('[data-role="title"]').text('# '+keyword);
   wrapper.html('');
 
   var settings={
