@@ -341,7 +341,7 @@ $PCD = getDbArray($table['s_mbrphone'],$sqlque,'*','uid','asc',0,1);
                 <input type="hidden" name="r" value="<?php echo $r?>">
                 <input type="hidden" name="m" value="<?php echo $m?>">
                 <input type="hidden" name="a" value="avatar">
-                <input type="file" name="upfile" id="rb-upfile-avatar" accept="image/*" class="d-none">
+                <input type="file" name="upfile" id="rb-upfile-avatar" accept="image/gif, image/jpg, image/jpeg, image/png" class="d-none">
               </form>
 
               <form name="MbrCoverForm" action="<?php echo $g['s']?>/" method="post" enctype="multipart/form-data">
