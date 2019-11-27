@@ -1,6 +1,68 @@
 
 <div id="modal-settings-profile" class="modal">
 
+  <form id="memberForm" role="form" action="<?php echo $g['s']?>/" method="post" hidden>
+    <input type="hidden" name="r" value="<?php echo $r?>">
+    <input type="hidden" name="m" value="member">
+    <input type="hidden" name="front" value="<?php echo $front?>">
+    <input type="hidden" name="a" value="info_update">
+    <input type="hidden" name="act" value="info">
+    <input type="hidden" name="send_mod" value="ajax">
+    <input type="hidden" name="check_nic" value="<?php echo $my['nic']?1:0?>">
+    <input type="hidden" name="check_email" value="<?php echo $my['email']?1:0?>">
+    <input type="hidden" name="name" value="<?php echo $my['name']?>">
+    <input type="hidden" name="nic" value="<?php echo $my['nic']?>">
+    <input type="hidden" name="email" value="<?php echo $my['email']?>">
+
+    <?php $tel1=explode('-',$my['tel1'])?>
+    <input type="hidden" name="tel1_1" value="<?php echo $tel1[0]?>">
+    <input type="hidden" name="tel1_2" value="<?php echo $tel1[1]?>">
+    <input type="hidden" name="tel1_3" value="<?php echo $tel1[2]?>">
+
+    <?php $tel2=explode('-',$my['tel2'])?>
+    <input type="hidden" name="tel2_1" value="<?php echo $tel2[0]?>">
+    <input type="hidden" name="tel2_2" value="<?php echo $tel2[1]?>">
+    <input type="hidden" name="tel2_3" value="<?php echo $tel2[2]?>">
+
+    <?php $birth_2=substr($my['birth2'],0,2)?>
+    <?php $birth_3=substr($my['birth2'],2,2)?>
+    <input type="hidden" name="birth_1" value="<?php echo $my['birth1']?>">
+    <input type="hidden" name="birth_2" value="<?php echo $birth_2?>">
+    <input type="hidden" name="birth_3" value="<?php echo $birth_3?>">
+    <input type="hidden" name="birthtype" value="<?php echo $my['birthtype']?>">
+
+    <input type="hidden" name="remail" value="<?php echo $my['mailing']?>">
+    <input type="hidden" name="sms" value="<?php echo $my['sms']?>">
+
+    <input type="hidden" name="sex" value="<?php echo $my['sex']?>">
+
+    <input type="hidden" name="zip" value="<?php echo $my['zip']?>">
+    <input type="hidden" name="addr1" value="<?php echo $my['addr1']?>">
+    <input type="hidden" name="addr2" value="<?php echo $my['addr2']?>">
+
+    <input type="hidden" name="bio" value="<?php echo $my['bio']?>">
+    <input type="hidden" name="home" value="<?php echo $my['home']?>">
+    <input type="hidden" name="job" value="<?php echo $my['job']?>">
+
+    <input type="hidden" name="marr_1" value="<?php echo $my['marr1']?>">
+    <input type="hidden" name="marr_2" value="<?php echo substr($my['marr2'],0,2)?>">
+    <input type="hidden" name="marr_3" value="<?php echo substr($my['marr2'],2,4)?>">
+
+    <?php foreach($_add as $_key):?>
+    <?php $_val = explode('|',trim($_key))?>
+    <?php if($_val[6]) continue?>
+    <?php $_myadd1 = explode($_val[0].'^^^',$my['addfield'])?>
+    <?php $_myadd2 = explode('|||',$_myadd1[1])?>
+
+    <?php if ($_val[2]=='checkbox'): ?>
+    <input type="hidden" name="add_<?php echo $_val[0]?>[]" value="<?php echo $_myadd2[0]?>">
+    <?php else: ?>
+    <input type="hidden" name="add_<?php echo $_val[0]?>" value="<?php echo $_myadd2[0]?>">
+    <?php endif; ?>
+    <?php endforeach?>
+
+  </form>
+
   <div class="page center" id="page-settings-profile">
     <header class="bar bar-nav bg-white px-0">
       <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
@@ -49,19 +111,19 @@
         </li>
   			<li class="table-view-cell">
   				<a class="navigate-right" data-toggle="page" href="#page-settings-name" data-start="#page-settings-profile" data-title="이름">
-  					<span class="badge badge-default badge-inverted" data-role="name"><?php echo $my['name'] ?></span>
+  					<span class="badge badge-primary badge-inverted" data-role="name"><?php echo $my['name'] ?></span>
   					이름
   				</a>
   			</li>
         <li class="table-view-cell">
   				<a class="navigate-right" data-toggle="page" href="#page-settings-nic" data-start="#page-settings-profile" data-title="채널명">
-  					<span class="badge badge-default badge-inverted" data-role="nic"><?php echo $my['nic'] ?></span>
+  					<span class="badge badge-primary badge-inverted" data-role="nic"><?php echo $my['nic'] ?></span>
   					채널명
   				</a>
   			</li>
         <li class="table-view-cell">
           <a class="navigate-right" data-toggle="page" href="#page-settings-pemail" data-start="#page-settings-profile" data-title="공개 이메일">
-            <span class="badge badge-default badge-inverted" data-role="nic"><?php echo $my['email_profile']?$my['email_profile']:'미표시' ?></span>
+            <span class="badge badge-primary badge-inverted" data-role="email"><?php echo $my['email_profile']?$my['email_profile']:'미표시' ?></span>
             공개 이메일
           </a>
         </li>
@@ -69,7 +131,7 @@
   			<li class="table-view-cell">
   				<a class="navigate-right" data-toggle="page" data-start="#page-settings-profile" href="#page-settings-tel1" data-title="유선전화">
   					<?php if ($my['tel1']): ?>
-  					<span class="badge badge-default badge-inverted" data-role="tel1"><?php echo $my['tel1'] ?></span>
+  					<span class="badge badge-primary badge-inverted" data-role="tel1"><?php echo $my['tel1'] ?></span>
   					<?php else: ?>
   					<span class="badge badge-default badge-inverted" data-role="tel1">미등록</span>
   					<?php endif; ?>
@@ -82,7 +144,7 @@
   			<li class="table-view-cell">
   				<a class="navigate-right" data-toggle="page" data-start="#page-settings-profile" href="#page-settings-birth" data-title="생년월일">
   					<?php if ($my['birth1']): ?>
-  					<span class="badge badge-default badge-inverted" data-role="birth"><?php echo $my['birth1'] ?>.<?php echo substr($my['birth2'],0,2) ?>.<?php echo substr($my['birth2'],2,4) ?></span>
+  					<span class="badge badge-primary badge-inverted" data-role="birth"><?php echo $my['birth1'] ?>.<?php echo substr($my['birth2'],0,2) ?>.<?php echo substr($my['birth2'],2,4) ?></span>
   					<?php else: ?>
   					<span class="badge badge-default badge-inverted" data-role="birth">미등록</span>
   					<?php endif; ?>
@@ -95,7 +157,7 @@
   			<li class="table-view-cell">
   				<a class="navigate-right" data-toggle="page" data-start="#page-settings-profile" href="#page-settings-sex" data-title="성별">
   					<?php if ($my['sex']): ?>
-  					<span class="badge badge-default badge-inverted" data-role="sex"><?php echo $my['sex']==1?'남성':'여성' ?></span>
+  					<span class="badge badge-primary badge-inverted" data-role="sex"><?php echo $my['sex']==1?'남성':'여성' ?></span>
   					<?php else: ?>
   					<span class="badge badge-default badge-inverted" data-role="sex">미등록</span>
   					<?php endif; ?>
@@ -109,7 +171,7 @@
   		    <a class="navigate-right" data-toggle="page" data-start="#page-settings-profile" href="#page-settings-bio" data-title="간단소개">
   		      <div class="media-body">
   		        간단소개
-  		        <p data-role="bio"><?php echo $my['bio']?></p>
+  		        <p data-role="bio" class="text-muted mt-1"><?php echo $my['bio']?></p>
   		      </div>
   					<?php if (!$my['bio']): ?>
   					<span class="badge badge-default badge-inverted" data-role="_bio">미등록</span>
@@ -122,7 +184,7 @@
   			<li class="table-view-cell">
   				<a class="navigate-right" data-toggle="page" data-start="#page-settings-profile" href="#page-settings-home">
   					<?php if ($my['home']): ?>
-  					<span class="badge badge-default badge-inverted" data-role="home"><?php echo $my['home'] ?></span>
+  					<span class="badge badge-primary badge-inverted" data-role="home"><?php echo $my['home'] ?></span>
   					<?php else: ?>
   					<span class="badge badge-default badge-inverted" data-role="home">미등록</span>
   					<?php endif; ?>
@@ -173,7 +235,7 @@
   <div class="page right" id="page-settings-avatar" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">프로필 설정</h1>
+      <h1 class="title" data-history="back">프로필 설정</h1>
     </header>
     <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
     	<a class="tab-item bg-primary js-save" role="button">
@@ -202,7 +264,7 @@
               <img class="img-circle m-x-auto" data-role="avatar" src="<?php echo getAvatarSrc($my['uid'],'320') ?>" alt="<?php echo $my[$_HS['nametype']]?>" width="160">
             </span>
             <div class="m-t-1">
-              <a class="btn btn-secondary" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;a=member_photo_delete" onclick="return hrefCheck(this,true,'정말로 삭제 하시겠습니까?');">
+              <a class="btn btn-secondary" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=member&amp;a=member_photo_delete" onclick="return hrefCheck(this,true,'정말로 삭제 하시겠습니까?');">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                 현재 사진삭제
               </a>
@@ -218,7 +280,7 @@
 
         <form name="MbrPhotoForm" action="<?php echo $g['s']?>/" method="post" enctype="multipart/form-data">
           <input type="hidden" name="r" value="<?php echo $r?>">
-          <input type="hidden" name="m" value="<?php echo $m?>">
+          <input type="hidden" name="m" value="member">
           <input type="hidden" name="a" value="member_photo">
           <input type="file" name="upfile" class="hidden" id="rb-upfile-avatar" accept="image/jpg">
         </form>
@@ -232,7 +294,7 @@
   <div class="page right" id="page-settings-cover" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">배경 이미지 설정</h1>
+      <h1 class="title" data-history="back">배경 이미지 설정</h1>
     </header>
     <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
     	<a class="tab-item bg-primary js-save" role="button">
@@ -258,7 +320,7 @@
             <img class="img-fluid" data-role="cover" src="<?php echo getCoverSrc($my['uid'],'680','350') ?>" alt="<?php echo $my[$_HS['nametype']]?>">
           </span>
           <div class="m-t-1">
-            <a class="btn btn-secondary" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=<?php echo $m?>&amp;a=member_cover_delete" onclick="return hrefCheck(this,true,'정말로 삭제 하시겠습니까?');">
+            <a class="btn btn-secondary" href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=member&amp;a=member_cover_delete" onclick="return hrefCheck(this,true,'정말로 삭제 하시겠습니까?');">
               <i class="fa fa-trash-o" aria-hidden="true"></i>
               현재 사진삭제
             </a>
@@ -270,7 +332,7 @@
 
       <form name="MbrCoverForm" action="<?php echo $g['s']?>/" method="post" enctype="multipart/form-data">
         <input type="hidden" name="r" value="<?php echo $r?>">
-        <input type="hidden" name="m" value="<?php echo $m?>">
+        <input type="hidden" name="m" value="member">
         <input type="hidden" name="a" value="member_cover">
         <input type="file" name="upfile" class="hidden" id="rb-upfile-cover" accept="image/jpg">
       </form>
@@ -282,11 +344,11 @@
   <div class="page right" id="page-settings-name" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">이름 설정</h1>
+      <h1 class="title" data-history="back">이름 설정</h1>
     </header>
 
     <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
-    	<a class="tab-item bg-primary js-save" role="button">
+    	<a class="tab-item bg-primary" data-act="submit" role="button">
     		저장하기
     	</a>
     </nav>
@@ -302,7 +364,6 @@
           사용하고 싶은 이름 입력해 주세요 (8자이내 중복불가)
         </small>
 
-
       </div>
     </div>
   </div>
@@ -311,7 +372,7 @@
   <div class="page right" id="page-settings-pemail" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">공개 이메일 설정</h1>
+      <h1 class="title" data-history="back">공개 이메일 설정</h1>
     </header>
 
     <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
@@ -345,10 +406,10 @@
   <div class="page right" id="page-settings-nic" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title" data-role="title">채널명 설정</h1>
+      <h1 class="title" data-role="title" data-history="back">채널명 설정</h1>
     </header>
     <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
-    	<a class="tab-item bg-primary js-save" role="button">
+    	<a class="tab-item bg-primary" data-act="submit" role="button">
     		저장하기
     	</a>
     </nav>
@@ -375,7 +436,7 @@
   <div class="page right" id="page-settings-tel1" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">유선전화 설정</h1>
+      <h1 class="title" data-history="back">유선전화 설정</h1>
     </header>
     <div class="bar bar-standard bar-footer bar-light bg-faded">
       <button type="button" class="btn btn-outline-primary btn-block js-save">변경하기</button>
@@ -418,7 +479,7 @@
   <div class="page right" id="page-settings-birth" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">생년월일 설정</h1>
+      <h1 class="title" data-history="back">생년월일 설정</h1>
     </header>
     <div class="bar bar-standard bar-footer bar-light bg-faded">
       <button type="button" class="btn btn-outline-primary btn-block js-save">변경하기</button>
@@ -482,7 +543,7 @@
   <div class="page right" id="page-settings-sex" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">성별 설정</h1>
+      <h1 class="title" data-history="back">성별 설정</h1>
     </header>
     <div class="bar bar-standard bar-footer bar-light bg-faded">
       <button type="button" class="btn btn-outline-primary btn-block js-save">변경하기</button>
@@ -516,10 +577,10 @@
   <div class="page right" id="page-settings-bio" >
     <header class="bar bar-nav bg-white px-0">
       <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title">간단소개 설정</h1>
+      <h1 class="title" data-history="back">간단소개 설정</h1>
     </header>
     <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
-    	<a class="tab-item bg-primary js-save" role="button">
+    	<a class="tab-item bg-primary" data-act="submit" role="button">
     		저장하기
     	</a>
     </nav>

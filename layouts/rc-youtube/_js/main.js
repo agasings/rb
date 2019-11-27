@@ -59,6 +59,26 @@ function moreNOTI(container,totalPage){
 
 }
 
+// Textarea 또는 Input의 끝으로 커서 이동
+jQuery.fn.putCursorAtEnd = function() {
+  return this.each(function() {
+    var $el = $(this),
+        el = this;
+    if (!$el.is(":focus")) {
+     $el.focus();
+    }
+    if (el.setSelectionRange) {
+      var len = $el.val().length * 2;
+      setTimeout(function() {
+        el.setSelectionRange(len, len);
+      }, 1);
+    } else {
+      $el.val($el.val());
+    }
+    this.scrollTop = 999999;
+  });
+};
+
 $(document).ready(function() {
 
   // tab메뉴
