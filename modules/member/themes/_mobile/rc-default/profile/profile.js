@@ -1,3 +1,34 @@
+// RGB 코드 헥사코드 변환
+function RGBToHex(rgb) {
+  let sep = rgb.indexOf(",") > -1 ? "," : " ";
+  rgb = rgb.substr(4).split(")")[0].split(sep);
+  let r = (+rgb[0]).toString(16),
+      g = (+rgb[1]).toString(16),
+      b = (+rgb[2]).toString(16);
+  if (r.length == 1)
+    r = "0" + r;
+  if (g.length == 1)
+    g = "0" + g;
+  if (b.length == 1)
+    b = "0" + b;
+  return "#" + r + g + b;
+}
+
+// 배경밝기에 따라 반전된 폰트 칼라 적용
+function convertColor(hex) {
+	hex = hex.replace('#', '');
+	r = parseInt(hex.substring(0, 2), 16);
+	g = parseInt(hex.substring(2, 4), 16);
+	b = parseInt(hex.substring(4, 6), 16);
+	var o = Math.round(((parseInt(r) * 299) + (parseInt(g) * 587) + (parseInt(b) * 114)) / 1000);
+	if (o > 125) {
+		result = true;
+	} else {
+		result = false;
+	}
+	return result;
+}
+
 function getPofileView(modal,mbruid) {
   $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profileData',{
      mbruid : mbruid,
@@ -12,8 +43,17 @@ function getPofileView(modal,mbruid) {
    modal.find('[data-role="cover"]').load(function(){
      var colorThief = new ColorThief();
      var coverImage = modal.find('[data-role="cover"]')[0];
-     var cover_color =  colorThief.getColor(coverImage);
-     modal.find('.bar').css('background-color', 'rgb(' + cover_color + ')');
+     var cover_rgb =  colorThief.getColor(coverImage);
+     modal.find('.bar').css('background-color', 'rgb(' + cover_rgb + ')');
+     var _cover_rgb = modal.find('.bar').css('background-color');
+     var cover_hex = RGBToHex(_cover_rgb)
+
+     if (convertColor(cover_hex)) {
+       modal.find('.bar').removeClass('bar-dark').addClass('bar-light');
+     } else {
+       modal.find('.bar').removeClass('bar-light').addClass('bar-dark');
+     }
+
    });
 
    modal.find('.content [data-plugin="timeago"]').timeago();

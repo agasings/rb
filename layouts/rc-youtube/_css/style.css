@@ -599,21 +599,42 @@ button[data-toggle="collapse"]:active {
 
 /* profile */
 
+[data-role="profile"] .bar-light .title,
+[data-role="profile"] .bar-light .icon {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+[data-role="profile"] .bar-dark .title,
+[data-role="profile"] .bar-dark .icon {
+  color: #fff !important;
+}
+
 [data-role="profile"] .bg-inverse {
   background-color: #666666;
 }
 
-[data-role="profile"] .bar .nav-inline .nav-link {
+[data-role="profile"] .bar-light .nav-inline .nav-link {
+  font-size: .9rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+[data-role="profile"] .bar-light .nav-inline .nav-link.active {
+  color: rgba(0, 0, 0, 1);
+}
+
+[data-role="profile"] .bar-dark .nav-inline .nav-link {
   font-size: .9rem;
   color: rgba(255, 255, 255, 0.5);
 }
+[data-role="profile"] .bar-dark .nav-inline .nav-link.active {
+  color: #fff
+}
+
 [data-role="profile"] .bar .nav-inline .nav-link:focus,
 [data-role="profile"] .bar .nav-inline .nav-link:active {
   outline: none
 }
-[data-role="profile"] .bar .nav-inline .nav-link.active {
-  color: #fff
-}
+
 [data-role="profile"] .swiper-slide {
   min-height: 80vh;
 }
