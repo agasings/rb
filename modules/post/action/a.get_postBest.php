@@ -30,6 +30,7 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 
 include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 $formats = explode(',', $d['theme']['format']);array_unshift($formats,'');
+$mbruid = $my['uid'];
 
 $result=array();
 $result['error'] = false;
@@ -59,6 +60,16 @@ $i=1;foreach ($_RCD as $R) {
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
   $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
   $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
+
+  $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
+  $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";
+  $check_saved_qry   = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."'";
+  $is_post_liked    = getDbRows($table['s_opinion'],$check_like_qry);
+  $is_post_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
+  $is_post_saved    = getDbRows($table['s_saved'],$check_saved_qry);
+  $TMPL['is_post_liked'] = $is_post_liked?'active':'';
+  $TMPL['is_post_disliked'] = $is_post_disliked?'active':'';
+  $TMPL['is_post_saved'] = $is_post_saved?'true':'false';
 
   if ($sort=='hit') $TMPL['num']=$R['hit']?'조회 '.$R['hit']:'';
   if ($sort=='likes') $TMPL['num']=$R['likes']?'좋아요 '.$R['likes']:'';
