@@ -26,6 +26,7 @@ $(document).on('click','[data-toggle="profile"]',function(){
   setTimeout(function(){
     modal.attr('data-mbruid',mbruid);
     modal.find('.bar-header-secondary .nav-inline').empty();
+    modal.find('.bar').css('background-color','');
     modal.modal({
       title: nic,
       url : url

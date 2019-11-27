@@ -619,7 +619,7 @@ button[data-toggle="collapse"]:active {
 }
 
 [data-role="profile"] .bar-light .nav-inline .nav-link.active {
-  color: rgba(0, 0, 0, 1);
+  color: rgba(0, 0, 0, 0.9);
 }
 
 [data-role="profile"] .bar-dark .nav-inline .nav-link {
