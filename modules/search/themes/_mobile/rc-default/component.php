@@ -12,6 +12,11 @@
 	  </form>
 	</header>
 	<main class="content bg-faded">
+
+		<ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list-list"></ul>
+
+		<ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list-post"></ul>
+
 	</main>
 </div><!-- /.modal -->
 
