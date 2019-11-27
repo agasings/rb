@@ -112,6 +112,7 @@ $result['dis_like'] = $R['dis_like']?$R['dis_like']:'';
 $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
 $result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';
 $result['dis_listadd'] = $R['dis_listadd']?$R['dis_listadd']:'';
+$result['goods'] = $R['goods'];
 
 //최근 포스트
 $postque = 'mbruid='.$R['mbruid'].' and site='.$s.' and data <>'.$R['uid'];

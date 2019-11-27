@@ -23,7 +23,7 @@ $list='';
 $i=1;foreach ($_RCD as $R) {
   if (!strpos('_'.$R['member'],'['.$my['uid'].']')) continue;
   $TMPL['link']=getPostLink($R,1);
-  $TMPL['subject']=htmlspecialchars($R['subject']);
+  $TMPL['subject']=stripslashes($R['subject']);
   $TMPL['uid']=$R['uid'];
   $TMPL['hit']=$R['hit'];
   $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');

@@ -13,7 +13,7 @@ function getPostBest(settings) {
   var prevNUM = currentPage * recnum;
   var moreNUM = totalNUM - prevNUM ;
 
-  wrapper.loader();
+  wrapper.loader({ position: 'inside' });
 
   $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postBest',{
     start: start,

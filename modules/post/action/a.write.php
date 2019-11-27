@@ -58,7 +58,7 @@ if ($uid) {
 
   $log = $my[$_HS['nametype']].'|'.getDateFormat($date['totime'],'Y.m.d H:i').'<s>'.$R['log'];
   $QVAL1 = "subject='$subject',review='$review',content='$content',tag='$tag',display='$display',hidden='$hidden',format='$format',";
-  $QVAL1 .="d_modify='$d_modify',category='$category_members',member='$member',upload='$upload',log='$log',featured_img='$featured_img',linkedmenu='$linkedmenu',dis_comment='$dis_comment',dis_like='$dis_like',dis_rating='$dis_rating',dis_listadd='$dis_listadd'";
+  $QVAL1 .="d_modify='$d_modify',category='$category_members',member='$member',upload='$upload',log='$log',featured_img='$featured_img',linkedmenu='$linkedmenu',dis_comment='$dis_comment',dis_like='$dis_like',dis_rating='$dis_rating',dis_listadd='$dis_listadd',goods='$goods'";
   getDbUpdate($table[$m.'data'],$QVAL1,'uid='.$R['uid']);
 
   //포스트 공유설정 업데이트

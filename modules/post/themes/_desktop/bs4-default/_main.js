@@ -121,6 +121,7 @@ function savePost(f) {
   var tag = form.find('[name="tag"]').val();
   var display = form.find('[name="display"]').val();
   var format = form.find('[name="format"]').val();
+  var goods = form.find('[name="goods"]').val();
 
   var dis_rating = form.find('[name="use_rating"]').is(":checked")?0:1;
   var dis_like = form.find('[name="use_like"]').is(":checked")?0:1;
@@ -143,6 +144,7 @@ function savePost(f) {
         review : review,
         tag : tag,
         format : format,
+        goods : goods,
         display : display,
         dis_rating : dis_rating,
         dis_like : dis_like,

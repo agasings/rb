@@ -412,6 +412,17 @@
             </div>
           </ul>
 
+          <div class="form-group my-4">
+            <label class="small text-muted">상품연결</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="준비중" name="goods" value="<?php echo $R['goods'] ?>">
+              <div class="input-group-append">
+                <button class="btn btn-white" type="button">상품찾기</button>
+              </div>
+            </div>
+            <small class="form-text text-muted">구매를 위한 상품을 연결해주세요.</small>
+          </div>
+
           <?php if (getDbRows($table[$m.'category'],'site='.$s.' and reject=0 and hidden=0')): ?>
           <strong class="d-block small text-muted pb-2">카테고리</strong>
           <div class="card mb-2 border-0 border-top" style="margin-left: -1rem;margin-right: -1rem">
