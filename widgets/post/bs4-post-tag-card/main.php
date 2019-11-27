@@ -18,6 +18,7 @@ $TCD = getDbArray($table['postdata'],$_WHERE,'*',$sort,$orderby,$wdgvar['limit']
 while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
 ?>
 
+<?php if ($wdgvar['tag']): ?>
 <section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
 
@@ -116,3 +117,6 @@ while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
   </div><!-- /.card-deck -->
 
 </section>
+<?php else: ?>
+<div class="p-5 mb-4 text-muted text-center border">태그를 지정해 주세요.</div>
+<?php endif; ?>

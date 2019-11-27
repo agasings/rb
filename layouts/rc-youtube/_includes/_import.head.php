@@ -51,6 +51,9 @@
 <!-- 소셜공유시 URL 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
 <?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 
+<!-- color-thief : https://github.com/lokesh/color-thief  -->
+<?php getImport('color-thief','color-thief.min','2.3.0','js') ?>
+
 <!-- 사이트 헤드 코드 -->
 <?php echo $_HS['headercode']?>
 

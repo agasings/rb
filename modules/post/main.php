@@ -155,7 +155,7 @@ $g['post_print'] = $g['post_reset'].'&amp;iframe=Y&amp;print=Y&amp;cid=';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 	$_HM['m_layout'] = $_HM['m_layout'] ? $_HM['m_layout'] : $d['post']['m_layout'];
-  $g['dir_module_skin'] = $g['dir_module'].'/themes/'.$d['post']['skin_mobile'].'/';
+  $g['dir_module_skin'] = $g['dir_module'].'themes/'.$d['post']['skin_mobile'].'/';
   $g['url_module_skin'] = $g['url_module'].'/themes/'.$d['post']['skin_mobile'];
   $g['img_module_skin'] = $g['url_module_skin'].'/images';
 } else {

@@ -12,6 +12,7 @@ $_RCD=getDbArray($table['postlist_index'],$_postque,'*','gid','asc',$wdgvar['lim
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
 ?>
 
+<?php if ($wdgvar['listid']): ?>
 <section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
 
@@ -91,3 +92,6 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
   </div><!-- /.card-deck -->
 
 </section>
+<?php else: ?>
+<div class="p-5 mb-4 text-muted text-center border">리스트 아이디를 지정해주세요.</div>
+<?php endif; ?>

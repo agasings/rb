@@ -14,14 +14,14 @@
 <!-- 설정 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/settings/component.php';  ?>
 
-<!-- 통합검색 -->
-<?php include_once $g['path_module'].'search/themes/_mobile/rc-default/component.php';  ?>
-
 <!-- 프로필 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/profile/component.php';  ?>
 
 <!-- 포스트 -->
 <?php include_once $g['path_module'].'post/themes/'.$d['post']['skin_mobile'].'/component.php';  ?>
+
+<!-- 통합검색 -->
+<?php include_once $g['path_module'].'search/themes/_mobile/rc-default/component.php';  ?>
 
 <!-- 댓글 -->
 <?php include_once $g['path_module'].'comment/themes/_mobile/rc-default/component.php';  ?>

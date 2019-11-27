@@ -282,7 +282,7 @@
           <input type="hidden" name="r" value="<?php echo $r?>">
           <input type="hidden" name="m" value="member">
           <input type="hidden" name="a" value="member_photo">
-          <input type="file" name="upfile" class="hidden" id="rb-upfile-avatar" accept="image/jpg">
+          <input type="file" name="upfile" class="hidden" id="rb-upfile-avatar" accept="image/jpg, image/gif, image/jpeg, image/png">
         </form>
         <?php endif?>
 
@@ -334,7 +334,7 @@
         <input type="hidden" name="r" value="<?php echo $r?>">
         <input type="hidden" name="m" value="member">
         <input type="hidden" name="a" value="member_cover">
-        <input type="file" name="upfile" class="hidden" id="rb-upfile-cover" accept="image/jpg">
+        <input type="file" name="upfile" class="hidden" id="rb-upfile-cover" accept="image/jpg, image/gif, image/jpeg, image/png">
       </form>
 
     </div>

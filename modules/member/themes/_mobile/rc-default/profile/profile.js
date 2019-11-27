@@ -8,6 +8,14 @@ function getPofileView(modal,mbruid) {
    var nic=result.nic;
    modal.find('[data-role="title"]').text(nic);
    modal.find('.content').html(profile);
+
+   modal.find('[data-role="cover"]').load(function(){
+     var colorThief = new ColorThief();
+     var coverImage = modal.find('[data-role="cover"]')[0];
+     var cover_color =  colorThief.getColor(coverImage);
+     modal.find('.bar').css('background-color', 'rgb(' + cover_color + ')');
+   });
+
    modal.find('.content [data-plugin="timeago"]').timeago();
    modal.find('.content').scroll({type:'updown'});
    var nav_control = modal.find('.profile-nav-control')

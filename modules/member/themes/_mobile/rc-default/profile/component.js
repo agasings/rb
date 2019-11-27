@@ -7,6 +7,7 @@ $(document).on('click','[data-toggle="profile"]',function(){
   var nic = button.attr('data-nic');
   var modal_id = 'modal-member-profile-'+mbruid;
   var modal = $('#'+modal_id);
+  var zindex = button.attr('data-zindex');
   var delay = 10;
 
   if (!modal.length) {
@@ -18,6 +19,10 @@ $(document).on('click','[data-toggle="profile"]',function(){
     history.back();
     delay = 250;
   }
+
+  modal.css('z-index','');
+  if (zindex) modal.css('z-index',zindex);
+
   setTimeout(function(){
     modal.attr('data-mbruid',mbruid);
     modal.find('.bar-header-secondary .nav-inline').empty();
