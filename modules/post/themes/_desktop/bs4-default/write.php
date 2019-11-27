@@ -415,7 +415,7 @@
           <div class="form-group my-4">
             <label class="small text-muted">상품연결</label>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="준비중" name="goods" value="<?php echo $R['goods'] ?>">
+              <input type="text" class="form-control meta" placeholder="준비중" name="goods" value="<?php echo $R['goods'] ?>">
               <div class="input-group-append">
                 <button class="btn btn-white" type="button">상품찾기</button>
               </div>
