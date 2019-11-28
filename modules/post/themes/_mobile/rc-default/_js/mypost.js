@@ -4,13 +4,9 @@ function getMyPost(settings) {
   var sort=settings.sort; // sort
   var orderby=settings.orderby; // orderby
   var recnum=settings.recnum; // recnum
-  var totalPage = settings.totalPage;
-  var totalNUM = settings.totalNUM;
   var markup_file = settings.markup;
   var none = settings.none;
   var currentPage =1; // 처음엔 무조건 1, 아래 더보기 진행되면서 +1 증가
-  var prevNUM = currentPage * recnum;
-  var moreNUM = totalNUM - prevNUM ;
 
   wrapper.loader();
 
@@ -25,6 +21,7 @@ function getMyPost(settings) {
         var result = $.parseJSON(response);
         var list=result.list;
         var num=result.num;
+        var totalPage=result.tpg;
 
         wrapper.loader('hide');
         if (num) wrapper.html(list)

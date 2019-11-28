@@ -1,3 +1,10 @@
+<?php
+$feedque = 'site='.$s;
+$feedque .= ' and (display=2 and hidden=0) or display>3';
+$feedque .= ' and mbruid='.$my['uid'];
+$Feed_NUM = getDbRows($table['s_feed'],$feedque);
+?>
+
 <div id="tab-main" class="tab-content active bg-faded">
 
   <section class="widget" id="widget-post-req">
@@ -73,8 +80,7 @@
 
 <div id="tab-best" class="tab-content">
 
-  <section data-role="list-best" style="min-height: 650px">
-  </section>
+  <section data-role="list-best" style="min-height: 650px"></section>
 
   <section class="mt-2 widget bg-white border-top border-bottom">
     <?php getWidget('post/rc-list-req-list',array('title'=>'추천 리스트','start'=>'#page-main','markup'=>'list-row','lists'=>$d['layout']['main_list_req']))?>
@@ -260,3 +266,84 @@
   <?php endif; ?>
 
 </div>
+
+<script>
+
+$(document).ready(function() {
+
+  // tab메뉴
+  page_main.find('.bar-tab [data-tab]').tap(function(){
+    var tab_id = $(this).attr('data-tab');
+    if (tab_id =='tab-category' || tab_id =='tab-mypage' || tab_id =='tab-noti') {
+      page_main.find('.bar-header-secondary').addClass('d-none')
+    } else {
+      page_main.find('.bar-header-secondary').removeClass('d-none')
+    }
+
+    if (tab_id =='tab-best') {
+
+      var d_start = $(this).attr('data-d_start');
+      var sort = $(this).attr('data-sort');
+      var wrapper = tab_best.find('[data-role="list-best"]')
+      getPostBest({
+        wrapper : wrapper,
+        start : '#page-main',
+        d_start : d_start,
+        markup    : 'post-row',  // 테마 > _html > post-row.html
+        totalNUM  : 10,
+        recnum    : 5,
+        totalPage : 10,
+        sort      : 'hit',
+        none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+      })
+
+    }
+
+    if (tab_id =='tab-feed' && memberid) {
+
+      getPostFeed({
+        wrapper : tab_feed,
+        start : '#page-main',
+        markup    : 'post-row',  // 테마 > _html > post-row.html
+        totalNUM  : <?php echo $Feed_NUM ?>,
+        recnum    : 5,
+        totalPage : 10,
+        none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">표시할 포스트가 없습니다.</div<</div>'
+      })
+
+    }
+
+    if (tab_id =='tab-noti' && memberid) {
+
+      $.get(rooturl+'/?r='+raccount+'&m=notification&a=get_notiList',{
+          sort: noti_sort,
+          orderby: noti_orderby,
+          recnum: noti_recnum,
+          callMod: 'unread'
+        },function(response){
+         var result = $.parseJSON(response);
+         var num=result.num;
+         var tpg=result.tpg;
+         var content=result.content;
+
+         tab_noti.find('[data-role="noti-list"]').html(content);
+         tab_noti.find('[data-plugin="timeago"]').timeago();
+         bar.find('[data-role="noti-status"]').text(num);
+         // drawer_right.find('[data-role="noti-status"]').text(num);
+         // drawer_right.find('[data-role="noti-list"]').attr('data-totalPage',tpg);
+         // moreNOTI(drawer_right_content,tpg)
+      });
+
+
+    }
+
+    page_main.find('.tab-content').removeClass('active');
+    page_main.find('.bar-tab .tab-item').removeClass('active');
+    $(this).addClass('active');
+    $("#"+tab_id).addClass('active');
+    page_main.find('.content').scrollTop(0);
+  })
+
+});
+
+</script>

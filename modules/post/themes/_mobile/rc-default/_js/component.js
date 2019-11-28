@@ -265,42 +265,52 @@ page_post_mypost.on('show.rc.page', function(event) {
   var id = page.attr('id');
   var wrapper = page.find('[data-role="list"]');
   wrapper.html('');
-
   var settings={
     wrapper : wrapper,
     start : '#'+id,
     markup    : 'post-mediaList',  // 테마 > _html > post-mediaList.html
-    totalNUM  : '',
-    recnum    : '',
-    totalPage : '',
+    recnum    : 10,
     sort      : 'gid',
     none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
   }
-
   getMyPost(settings);
+})
 
+page_post_mypost.on('hidden.rc.page', function(event) {
+  var page = $(this);
+  page.find('.content [data-role="list"]').empty();
+  page.find('.infinitescroll-end').remove();
+  var markup = page.find('.content').clone().wrapAll("<div/>").parent().html();
+  page.find('.content').infinitescroll('destroy');
+  page.append(markup);
 })
 
 page_post_mylist.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var id = page.attr('id');
+  var num = page.attr('data-num');
+  var tpg = page.attr('data-tpg');
   var wrapper = page.find('[data-role="list"]');
   wrapper.html('');
-
   var settings={
     wrapper : wrapper,
     start : '#'+id,
     markup    : 'list-mediaList',  // 테마 > _html > list-mediaList.html
-    totalNUM  : '',
-    recnum    : '',
-    totalPage : '',
+    recnum    : 10,
     sort      : 'gid',
     none : '<div class="p-5 text-xs-center text-muted">등록된 리스트가 없습니다.</div>'
   }
-
   getMyList(settings);
+})
 
+page_post_mylist.on('hidden.rc.page', function(event) {
+  var page = $(this);
+  page.find('.content [data-role="list"]').empty();
+  page.find('.infinitescroll-end').remove();
+  var markup = page.find('.content').clone().wrapAll("<div/>").parent().html();
+  page.find('.content').infinitescroll('destroy');
+  page.append(markup);
 })
 
 page_post_saved.on('show.rc.page', function(event) {
@@ -314,9 +324,7 @@ page_post_saved.on('show.rc.page', function(event) {
     wrapper : wrapper,
     start : '#'+id,
     markup    : 'post-mediaList',  // 테마 > _html > list-mediaList.html
-    totalNUM  : '',
-    recnum    : '',
-    totalPage : '',
+    recnum    : 10,
     sort      : 'gid',
     none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
   }
@@ -325,26 +333,39 @@ page_post_saved.on('show.rc.page', function(event) {
 
 })
 
+page_post_saved.on('hidden.rc.page', function(event) {
+  var page = $(this);
+  page.find('.content [data-role="list"]').empty();
+  page.find('.infinitescroll-end').remove();
+  var markup = page.find('.content').clone().wrapAll("<div/>").parent().html();
+  page.find('.content').infinitescroll('destroy');
+  page.append(markup);
+})
+
 page_post_liked.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var id = page.attr('id');
   var wrapper = page.find('[data-role="list"]');
   wrapper.html('');
-
   var settings={
     wrapper : wrapper,
     start : '#'+id,
     markup    : 'post-mediaList',  // 테마 > _html > list-mediaList.html
-    totalNUM  : '',
-    recnum    : '',
-    totalPage : '',
+    recnum    : 10,
     sort      : 'gid',
     none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
   }
-
   getPostLiked(settings);
+})
 
+page_post_liked.on('hidden.rc.page', function(event) {
+  var page = $(this);
+  page.find('.content [data-role="list"]').empty();
+  page.find('.infinitescroll-end').remove();
+  var markup = page.find('.content').clone().wrapAll("<div/>").parent().html();
+  page.find('.content').infinitescroll('destroy');
+  page.append(markup);
 })
 
 page_post_view.on('show.rc.page', function(event) {

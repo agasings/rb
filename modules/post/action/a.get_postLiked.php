@@ -75,6 +75,7 @@ foreach ($RCD as $R) {
 
 $result['list'] = $list;
 $result['num'] = $NUM;
+$result['tpg']= $TPG;
 
 echo json_encode($result);
 exit;
