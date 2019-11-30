@@ -17,6 +17,9 @@ if ($sort=='comment') $_WHERE2= 'data,sum(comment) as comment';
 $RCD	= getDbSelect($table[$m.'day'],$_WHERE1.' group by data order by '.$sort.' '.$orderby.' limit 0,'.$recnum,$_WHERE2);
 while($_R = db_fetch_array($RCD)) $_RCD[] = getDbData($table[$m.'data'],'uid='.$_R['data'],'*');
 
+$NUM = getDbRows($table[$m.'day'],$_WHERE1.' group by data');
+$TPG = getTotalPage($NUM,$recnum);
+
 require_once $g['path_core'].'function/sys.class.php';
 include_once $g['dir_module'].'lib/action.func.php';
 include_once $g['dir_module'].'var/var.php';
@@ -84,6 +87,9 @@ $i=1;foreach ($_RCD as $R) {
 }
 
 $result['list'] = $list;
+$result['num'] = $NUM;
+$result['tpg'] = $TPG;
+
 echo json_encode($result);
 exit;
 ?>

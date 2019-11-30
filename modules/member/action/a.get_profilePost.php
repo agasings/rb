@@ -98,6 +98,7 @@ if ($NUM) {
 
 $result['list']=$postList;
 $result['num']=$NUM;
+$result['tpg']=$TPG;
 
 echo json_encode($result);
 exit;

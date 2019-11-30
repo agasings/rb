@@ -79,17 +79,93 @@ jQuery.fn.putCursorAtEnd = function() {
   });
 };
 
+// youtube API
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+if(navigator.userAgent.indexOf("Mac") > 0) {
+  $("body").addClass("mac-os");
+}
+
 $(document).ready(function() {
 
-  // youtube API
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  // tab메뉴
+  page_main.find('.bar-tab [data-tab]').tap(function(){
+    var tab_id = $(this).attr('data-tab');
+    if (tab_id =='tab-category' || tab_id =='tab-mypage' || tab_id =='tab-noti') {
+      page_main.find('.bar-header-secondary').addClass('d-none')
+    } else {
+      page_main.find('.bar-header-secondary').removeClass('d-none')
+    }
 
-  if(navigator.userAgent.indexOf("Mac") > 0) {
-    $("body").addClass("mac-os");
-  }
+    if (tab_id =='tab-main') {
+      $('#contentMain').attr('data-scroll','infinite').infinitescroll('enable'); // 무한 스크롤 작동
+    } else {
+      $('#contentMain').removeAttr('data-scroll').infinitescroll('disable'); // 무한 스크롤 중지
+      $('.infinitescroll-end').remove();
+    }
+
+    if (tab_id =='tab-best') {
+
+      var d_start = $(this).attr('data-d_start');
+      var sort = $(this).attr('data-sort');
+      var wrapper = tab_best.find('[data-role="list-best"]')
+      getPostBest({
+        wrapper : wrapper,
+        start : '#page-main',
+        d_start : d_start,
+        markup    : 'post-row',  // 테마 > _html > post-row.html
+        recnum    : 5,
+        sort      : 'hit',
+        none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+      })
+
+    }
+
+    if (tab_id =='tab-feed' && memberid) {
+
+      getPostFeed({
+        wrapper : tab_feed,
+        start : '#page-main',
+        markup    : 'post-row',  // 테마 > _html > post-row.html
+        recnum    : 5,
+        none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">표시할 포스트가 없습니다.</div<</div>'
+      })
+
+    }
+
+    if (tab_id =='tab-noti' && memberid) {
+
+      $.get(rooturl+'/?r='+raccount+'&m=notification&a=get_notiList',{
+          sort: noti_sort,
+          orderby: noti_orderby,
+          recnum: noti_recnum,
+          callMod: 'unread'
+        },function(response){
+         var result = $.parseJSON(response);
+         var num=result.num;
+         var tpg=result.tpg;
+         var content=result.content;
+
+         tab_noti.find('[data-role="noti-list"]').html(content);
+         tab_noti.find('[data-plugin="timeago"]').timeago();
+         bar.find('[data-role="noti-status"]').text(num);
+         // drawer_right.find('[data-role="noti-status"]').text(num);
+         // drawer_right.find('[data-role="noti-list"]').attr('data-totalPage',tpg);
+         // moreNOTI(drawer_right_content,tpg)
+      });
+
+    }
+
+    page_main.find('.tab-content').removeClass('active');
+    page_main.find('.bar-tab .tab-item').removeClass('active');
+    $(this).addClass('active');
+    $("#"+tab_id).addClass('active');
+    page_main.find('.content').scrollTop(0);
+  })
+
 
   putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
 

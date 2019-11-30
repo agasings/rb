@@ -474,6 +474,7 @@ modal_post_view.on('show.rc.modal', function(event) {
   var modal = $(this);
   var format = button.attr('data-format');
   var uid = button.attr('data-uid');
+  var _uid = modal.attr('data-uid');
   var list = button.attr('data-list');
   var featured = button.attr('data-featured');
   var provider = button.attr('data-provider');
@@ -492,21 +493,47 @@ modal_post_view.on('show.rc.modal', function(event) {
       break;
   }
 
-  getPostView({
-    format : format,
-    uid : uid,
-    list : list,
-    featured : featured,
-    provider : provider,
-    videoId : videoId,
-    wrapper : modal,
-    url : url
-  });
+  modal.attr('data-format',format).attr('data-uid',uid);
+
+  if (uid!=_uid) {
+    modal.removeClass('miniplayer');
+    modal.empty();
+  }
+
+  if(modal.hasClass("miniplayer") === true ) {
+    modal.removeClass('miniplayer');
+  } else {
+    getPostView({
+      format : format,
+      uid : uid,
+      list : list,
+      featured : featured,
+      provider : provider,
+      videoId : videoId,
+      wrapper : modal,
+      url : url
+    });
+  }
+
 })
+
+modal_post_view.on('hide.rc.modal', function(event) {
+  var modal = $(this);
+  var format = modal.attr('data-format');
+  var profile_num = $('[data-role="profile-wapper"]').find('.modal.active').length;
+
+  if (format=='video') {
+    modal.addClass('miniplayer');
+    if (profile_num) modal.addClass('no-bartab');
+  } else {
+    modal.empty()
+  }
+})
+
 
 modal_post_view.on('hidden.rc.modal', function(event) {
   var modal = $(this);
-  modal.empty()
+  // modal.empty()
 })
 
 modal_post_photo.on('show.rc.modal', function(event) {
@@ -744,4 +771,9 @@ popup_post_newList.find('[data-act="submit"]').click(function(){
     });
   }, 800);
 
+});
+
+
+$(document).on('click','.modal.miniplayer .miniplayer-control .js-close',function(){
+  modal_post_view.removeClass('miniplayer no-bartab active').css('display','none').empty();
 });

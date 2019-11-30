@@ -867,6 +867,60 @@ button[data-toggle="collapse"]:active {
   animation: load8 .75s infinite linear;
 }
 
+/* miniplayer */
+.modal.miniplayer {
+  display: block;
+  bottom: 110px;
+  top: auto;
+  min-height: 56px;
+  height: 56px;
+  display: block !important;
+  opacity: 1;
+  left: 4px;
+  right: 4px;
+  width: auto;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 3px 6px 0 rgba(0,0,0,0.20);
+}
+
+.modal.miniplayer.no-bartab {
+  bottom: 60px;
+}
+
+.modal.miniplayer .embed-responsive,
+.modal.miniplayer iframe {
+  width: 100px;
+  height: 56px;
+}
+
+.modal.miniplayer .embed-responsive {
+  background-image: none !important;
+  background-color: #fff !important
+}
+
+.modal.miniplayer .bg-black {
+  background-color: #fff !important
+}
+
+.modal.miniplayer .miniplayer-control {
+  position: absolute;
+  right: 0;
+  top: 0;
+  left : 107px;
+  height: 55px;
+  color: #666
+}
+.modal.miniplayer .miniplayer-control .d-flex {
+  padding-top: 0.4rem !important;
+}
+
+.modal.miniplayer .miniplayer-control .btn {
+  color: #666;
+  line-height: 1.2;
+}
+
+.modal.active .miniplayer-control {
+  display: none
+}
 
 /**
   * 8 - utility 유틸리티

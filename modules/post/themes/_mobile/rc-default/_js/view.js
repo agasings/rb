@@ -25,6 +25,7 @@ function getPostView(settings) {
     wrapper.find('.embed-responsive').css('background-image','url('+featured+')')
     wrapper.find('.content').css('padding-top',height+'px')
     wrapper.find('[data-role="goodsLink"]').addClass('d-none');
+    wrapper.find('[data-uid]').attr('data-uid',uid);
 
     if (format=='video') {
       wrapper.find('.bar-standard').css('height',embed_height+'px')
@@ -65,6 +66,8 @@ function getPostView(settings) {
      },function(response,status){
         if(status=='success'){
           var result = $.parseJSON(response);
+          var subject=result.subject;
+          var nic=result.nic;
           var isperm=result.isperm;
           var article=result.article;
           var linkurl=result.linkurl;
@@ -78,6 +81,8 @@ function getPostView(settings) {
           var goods = result.goods;
 
           wrapper.find('oembed').attr('url',linkurl);
+          wrapper.find('[data-role="subject"]').text(subject);
+          wrapper.find('[data-role="nic"]').text(nic);
 
           if (provider!='YouTube') {
             Iframely('oembed[url]') // oembed 미디어 변환
@@ -239,6 +244,8 @@ function getPostView(settings) {
 
     //wrapper.empty(); //초기화
     wrapper.load('/modules/post/themes/'+post_skin_mobile+'/_html/view_'+_format+'.html', function() {
+
+    wrapper.attr('data-format',_format).attr('data-uid',_uid);
 
       setTimeout(function(){
         wrapper.find('[data-role="box"]').loader({ position: 'inside' });

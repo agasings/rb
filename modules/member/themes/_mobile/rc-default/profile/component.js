@@ -51,5 +51,11 @@ $(document).on('click','[data-toggle="follow"]',function(){
     popup_login_guide.find('[data-role="subtext"]').text(subtext);
     popup_login_guide.popup('show');
   }
+});
 
+$(document).on('shown.rc.modal', '[id*="modal-member-profile"]', function (event) {
+  $('.modal.miniplayer').addClass('no-bartab');
+});
+$(document).on('hidden.rc.modal', '[id*="modal-member-profile"]', function (event) {
+  $('.modal.miniplayer').removeClass('no-bartab');
 });

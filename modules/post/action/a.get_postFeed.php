@@ -8,6 +8,7 @@ $postque = 'site='.$s;
 $postque .= ' and (display=2 and hidden=0) or display>3';
 $postque .= ' and mbruid='.$my['uid'];
 $NUM = getDbRows($table['s_feed'],$postque);
+$TPG = getTotalPage($NUM,$recnum);
 $TCD = getDbArray($table['s_feed'],$postque,'entry',$sort,$orderby,$recnum,$p);
 while($_R = db_fetch_array($TCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['entry'],'*');
 
@@ -79,6 +80,8 @@ $i=1;foreach ($RCD as $R) {
 }
 
 $result['list'] = $list;
+$result['tpg'] = $TPG;
+
 echo json_encode($result);
 exit;
 ?>

@@ -57,7 +57,6 @@ function getPofileView(modal,mbruid) {
    });
 
    modal.find('.content [data-plugin="timeago"]').timeago();
-   modal.find('.content').scroll({type:'updown'});
    var nav_control = modal.find('.profile-nav-control')
    var swiper_member_profile = new Swiper('#modal-member-profile-'+mbruid+' .swiper-container', {
      autoHeight: true,
@@ -97,19 +96,77 @@ function getPofileView(modal,mbruid) {
        modal.find('.content').animate({scrollTop:0}, '400');
      }, 600);
 
+     var currentPage =1; // 처음엔 무조건 1, 아래 더보기 진행되면서 +1 증가
+     var recnum = 10;
+
+     //무한 스크롤 환경 초기화
+     modal.find('.infinitescroll-end').remove();
+     modal.find('.content .content-padded [data-role="list"]').empty();
+     // var content_markup = modal.find('.content').clone().wrapAll("<div/>").parent().html();
+     // modal.find('.content').infinitescroll('destroy');
+     // modal.append(content_markup);
+
+     if (index==0) { // 프로필 홈
+
+     }
+
      if (index==1) { // 동영상
        modal.find('[data-role="postList"] [data-role="list"]').loader({ position: 'inside' });
        $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profilePost',{
           mbruid : mbruid,
           format : 2, //video
-          type : 'modal'
+          type : 'modal',
+          recnum : recnum
        },function(response){
         var result = $.parseJSON(response);
         var postlist=result.list;
         var postnum=result.num;
+        var totalPage=result.tpg;
         modal.find('[data-role="postList"] [data-role="list"]').html(postlist);
-        if (postnum) modal.find('[data-role="postList"] .btn').show();
-        else modal.find('[data-role="postList"] .btn').hide();
+
+        if (postnum) {
+          modal.find('[data-role="postList"] .btn').show();
+
+          if (postnum>recnum) {
+            //무한 스크롤
+            modal.find('.content').infinitescroll({
+              dataSource: function(helpers, callback){
+                var nextPage = parseInt(currentPage)+1;
+                if (totalPage>currentPage) {
+                  $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profilePost',{
+                      mbruid : mbruid,
+                      format : 2, //video
+                      type : 'modal',
+                      recnum : recnum,
+                      p : nextPage
+                  },function(response) {
+                      var result = $.parseJSON(response);
+                      var error = result.error;
+                      var list=result.list;
+                      if(error) alert(result.error);
+                      callback({ content: list });
+
+                      currentPage++; // 현재 페이지 +1
+                      console.log(currentPage+'페이지 불러옴')
+                      wrapper.find('[data-plugin="timeago"]').timeago();
+                      //wrapper.find('[data-plugin="markjs"]').mark(keyword); // marks.js
+                      swiper_member_profile.updateAutoHeight(100);
+                  });
+                } else {
+                  callback({ end: true });
+                  console.log('더이상 불러올 페이지가 없습니다.')
+                }
+              },
+              appendToEle : modal.find('[data-role="postList"] .content-padded'),
+              percentage : 85,  // 95% 아래로 스크롤할때 다움페이지 호출
+              hybrid : false  // true: 버튼형, false: 자동
+            });
+          }
+
+        } else {
+          modal.find('[data-role="postList"] .btn').hide();
+        }
+
         swiper_member_profile.updateAutoHeight(100);
         modal.find('[data-role="postList"] [data-role="list"] [data-plugin="timeago"]').timeago();
       });

@@ -108,6 +108,8 @@ $TMPL['view_postadmin'] = $_perm['post_owner']?$post->getHtml('view_postadmin'):
 $TMPL['view_follow'] = $my['uid']!=$R['mbruid']?$post->getHtml('view_follow'):'';
 $TMPL['view_opinion'] = $my['uid']&&$R['likes']&&!$R['dis_like'] ?$post->getHtml('view_opinion'):'';
 
+$result['subject'] = stripslashes($R['subject']);
+$result['nic'] = getProfileInfo($R['mbruid'],'nic');
 $result['dis_like'] = $R['dis_like']?$R['dis_like']:'';
 $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
 $result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';
