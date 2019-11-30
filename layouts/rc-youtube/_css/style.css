@@ -916,6 +916,7 @@ button[data-toggle="collapse"]:active {
 .modal.miniplayer .miniplayer-control .btn {
   color: #666;
   line-height: 1.2;
+  outline: none
 }
 
 .modal.active .miniplayer-control {

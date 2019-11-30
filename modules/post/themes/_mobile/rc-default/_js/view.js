@@ -52,6 +52,17 @@ function getPostView(settings) {
           wrapper.find('.modia-loader').loader('hide');
         }, 1000);
 
+        wrapper.on('click','[data-toggle="play"]',function(){
+          if ($(this).hasClass('active')) {
+            player.pauseVideo();
+            $(this).find('.material-icons').text('play_arrow');
+          } else {
+            player.playVideo();
+            $(this).find('.material-icons').text('pause');
+          }
+          $(this).button('toggle')
+        })
+
       }
     } else {
       setTimeout(function(){
