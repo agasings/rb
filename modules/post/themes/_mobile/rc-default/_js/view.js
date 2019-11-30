@@ -40,12 +40,36 @@ function getPostView(settings) {
           width: '640',
           videoId: videoId,
           events: {
-            'onReady': onPlayerReady
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
           }
         });
 
         function onPlayerReady(event) {
           event.target.playVideo();
+        }
+
+        function onPlayerStateChange(event) {
+
+          var miniplayer =   wrapper.find('.miniplayer-control');
+
+          if (event.data == YT.PlayerState.PLAYING) {
+            console.log('재생중')
+            miniplayer.find('[data-toggle="play"]').addClass('active');
+            miniplayer.find('[data-toggle="play"] .material-icons').text('pause');
+          }
+          if (event.data == YT.PlayerState.PAUSED) {
+            console.log('일시중지')
+            miniplayer.find('[data-toggle="play"]').removeClass('active');
+            miniplayer.find('[data-toggle="play"] .material-icons').text('play_arrow');
+          }
+
+          if (event.data == YT.PlayerState.ENDED) {
+            console.log('재생끝')
+            miniplayer.find('[data-toggle="play"]').removeClass('active');
+            miniplayer.find('[data-toggle="play"] .material-icons').text('replay');
+          }
+
         }
 
         setTimeout(function(){
