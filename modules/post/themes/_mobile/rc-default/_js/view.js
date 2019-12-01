@@ -118,6 +118,7 @@ function getPostView(settings) {
           wrapper.find('oembed').attr('url',linkurl);
           wrapper.find('[data-role="subject"]').text(subject);
           wrapper.find('[data-role="nic"]').text(nic);
+          wrapper.find('.miniplayer-control [data-toggle="play"]').removeClass('d-none');
 
           if (provider!='YouTube') {
             Iframely('oembed[url]') // oembed 미디어 변환
@@ -125,6 +126,7 @@ function getPostView(settings) {
               wrapper.find('.bar-media [data-role="featured"]').addClass('d-none')
               wrapper.find('.embed-responsive').removeClass('d-none');
               wrapper.find('.modia-loader').loader('hide');
+              wrapper.find('.miniplayer-control [data-toggle="play"]').addClass('d-none');
             }, 500);
           }
 
