@@ -1,6 +1,7 @@
 var memberForm = document.getElementById("memberForm");
 
-var modal_member_settings =  $('#modal-member-settings'); // 설정 모달
+var modal_settings_general =  $('#modal-settings-general'); // 계정설정 모달
+var modal_settings_profile = $('#modal-settings-profile'); // 프로필 설정
 
 var page_settings_main =  $('#page-settings-main'); // 설정메인
 var page_settings_account =  $('#page-settings-account'); //회원계정
@@ -47,10 +48,11 @@ function saveMemberInfo(mbruid,field) {
 
 } // saveMemberInfo
 
-modal_member_settings.on('show.rc.modal', function(event) {
+modal_settings_general.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var modal = $(this);
   modal.attr('data-mbruid','');
+  $('#modal-post-view').find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
 })
 
 

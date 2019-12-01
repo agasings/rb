@@ -1,4 +1,4 @@
-<div id="modal-join" class="modal zoom">
+<div id="modal-join" class="modal fast">
 
   <div class="page center" id="page-join-main">
     <header class="bar bar-nav bar-light bg-faded">
