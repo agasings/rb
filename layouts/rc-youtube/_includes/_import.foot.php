@@ -7,6 +7,9 @@
 <?php getImport('photoswipe','rc-photoswipe','4.1.1','js') ?>
 <?php getImport('photoswipe','photoswipe-ui-default.min','4.1.1','js') ?>
 
+<!-- youtube iframe_api -->
+<script src="https://www.youtube.com/player_api"></script>
+
 <!-- 입력 textarea 자동확장 -->
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 
