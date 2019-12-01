@@ -12,6 +12,7 @@ var page_post_view =  $('#page-post-view'); //포스트 보기
 var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
 var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
 var modal_post_listview =  $('#modal-post-listview'); //리스트 보기
+var modal_post_edit = $('#modal-post-edit'); //포스트 편집
 var modal_post_view =  $('#modal-post-view'); //포스트 보기
 var modal_post_photo =  $('#modal-post-photo'); //포스트 사진 보기
 var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
@@ -20,8 +21,10 @@ var popup_post_optionMore = $('#popup-post-optionMore') // 포스트 옵션 더�
 var popup_post_report = $('#popup-post-report') // 포스트 신고
 var popup_post_sort = $('#popup-post-sort') // 정열방식 변경
 var popup_post_newList = $('#popup-post-newList') // 새 재생목록
+var popup_post_newPost = $('#popup-post-newPost') // 새 포스트작성을 위한 작업선택
 
 var sheet_post_listadd = $('#sheet-post-listadd') // 포스트 리스트에 저장
+var sheet_post_linkadd = $('#sheet-post-linkadd') // 새 포스트작성을 위한 링크저장
 
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
@@ -554,6 +557,18 @@ modal_post_opinion.on('show.rc.modal', function(event) {
   });
 })
 
+//포스트 편집 저장
+modal_post_edit.find('[data-act="submit"]').click(function(){
+  var button = $(this)
+  button.attr('disabled',true );
+
+  setTimeout(function(){
+    history.back();
+    location.reload();
+  }, 1000);
+
+});
+
 popup_post_optionMore.on('show.rc.popup', function(event) {
   var button = $(event.relatedTarget);
   var popup = $(this);
@@ -673,6 +688,28 @@ sheet_post_listadd.on('show.rc.sheet', function(event) {
   });
 })
 
+sheet_post_linkadd.on('shown.rc.sheet', function(event) {
+  var sheet = $(this);
+  sheet.find('textarea').val('');
+  setTimeout(function(){ sheet.find('textarea').focus(); }, 10);
+  sheet.find('[data-act="submit"]').attr('disabled',false );
+})
+
+sheet_post_linkadd.find('[data-act="submit"]').click(function(){
+  var button = $(this)
+  button.attr('disabled',true );
+
+  setTimeout(function(){
+    history.back();
+
+    setTimeout(function(){
+      modal_post_edit.modal({title:'새 포스트'})
+    }, 200);
+
+  }, 1000);
+
+});
+
 sheet_post_listadd.find('[data-act="submit"]').click(function(){
   var sheet = sheet_post_listadd;
   var uid = sheet.attr('data-uid');
@@ -773,6 +810,27 @@ popup_post_newList.find('[data-act="submit"]').click(function(){
 
 });
 
+
+popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
+  var popup = popup_post_newPost;
+  var button = $(this);
+  var type =  button.attr('data-type');
+
+  history.back();
+
+  setTimeout(function(){
+
+    if (type=='link') {
+      sheet_post_linkadd.sheet('show');
+    } else if (type=='link') {
+      sheet_post_linkadd.sheet('show');
+    } else {
+      modal_post_edit.modal({title: '새 포스트'})
+    }
+
+  }, 200);
+
+});
 
 $(document).on('click','.modal.miniplayer .miniplayer-control .js-close',function(){
   modal_post_view.removeClass('miniplayer no-bartab active').css('display','none').empty();

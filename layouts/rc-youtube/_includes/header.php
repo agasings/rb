@@ -15,7 +15,7 @@
   <?php endif?>
 
   <?php if ($my['uid']): ?>
-  <a role="button" data-toggle="page" data-start="#page-main" href="#page-post-new" data-title="새 포스트" class="icon material-icons px-2 pull-right">
+  <a role="button" data-toggle="popup" href="#popup-post-newPost" data-title="작업선택" class="icon material-icons px-2 pull-right">
     add_box
   </a>
   <?php endif; ?>

@@ -179,29 +179,173 @@
 <div class="page right" id="page-post-view" data-role="view">
 </div><!-- /.page -->
 
-<!-- 페이지 : 새 포스트 -->
-<div class="page right" id="page-post-new">
-  <header class="bar bar-nav bar-light bg-faded">
-    <button class="btn btn-link btn-nav pull-right px-3" data-history="back">
-      취소
-    </button>
-    <span class="title" data-role="title">새 포스트</span>
-  </header>
-  <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
-  	<a class="tab-item bg-primary disabled" role="button" data-title="이영상에 사용된 제품" data-target="#page-shop-category" data-index="1" data-parent="1" data-category="6" data-toggle="page" data-start="#page-post-view-video" data-act="pauseVideo">
-  		저장하기
-  	</a>
-  </nav>
-  <main role="main" class="content">
-    <textarea class="form-control mb-0 border-0" rows="4" placeholder="복사한 URL를 붙여넣으세요."></textarea>
-    <div class="content-padded">
-      <small class="text-muted">
-        외부링크가 포함되는 경우 URL 입력후 불러오기를 해주세요.
-        링크의 메타정보를 불러와 빠르게 포스트를 셋팅합니다.
-      </small>
-    </div>
-  </main>
-</div><!-- /.page -->
+<!-- 모달 : 포스트 편집 -->
+<div class="modal fast" id="modal-post-edit">
+
+  <section class="page center" id="page-post-edit-main">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
+      <button class="btn btn-link btn-nav pull-right px-4" data-act="submit">
+        <span class="not-loading">
+          저장
+        </span>
+        <span class="is-loading">
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">저장중...</span>
+          </div>
+        </span>
+      </button>
+      <span class="title" data-role="title">새 포스트</span>
+    </header>
+    <main role="main" class="content">
+
+      <div class="content-padded">
+        <div class="media">
+          <span class="media-left media-middle">
+            <img class="media-object" src="http://placehold.it/56x56" alt="">
+          </span>
+          <div class="media-body f14" style="max-height: 300px;overflow: auto">
+
+            토트넘은 1일(한국시간) 새벽 영국 런던의 토트넘 홋스퍼 스타디움 열린 2019-2020 잉글리시 프리미어리그(EPL) 14라운드 본머스와 경기에서 델레 알리의 멀티골과 무사 시소코의 득점에 힘 입어 3-2로 승리했다.
+
+
+          </div>
+        </div><!-- /.media -->
+      </div><!-- /.content-padded -->
+      <ul class="table-view">
+        <li class="table-view-cell">
+          <a href="#page-post-edit-attach" data-start="#page-post-edit-main" data-toggle="page">
+            사진 및 파일추가
+          </a>
+          <span class="badge badge-inverted">4</span>
+        </li>
+        <li class="table-view-cell">
+          <a href="#page-post-edit-link" data-start="#page-post-edit-main" data-toggle="page">
+            링크추가
+          </a>
+          <span class="badge badge-inverted">4</span>
+        </li>
+        <li class="table-view-cell">
+          <a href="#page-post-edit-category" data-start="#page-post-edit-main" data-toggle="page">
+            카테고리 지정
+          </a>
+        </li>
+
+        <li class="table-view-cell">
+          외부공개
+          <div data-toggle="switch" class="switch">
+            <div class="switch-handle"></div>
+          </div>
+        </li>
+        <li class="table-view-cell">
+          <a href="#page-post-edit-review" data-start="#page-post-edit-main" data-toggle="page">
+            <span class="badge badge-default badge-inverted"></span>
+            요약
+          </a>
+        </li>
+        <li class="table-view-cell">
+          <a href="#page-post-edit-tag" data-start="#page-post-edit-main" data-toggle="page">
+            <span class="badge badge-default badge-inverted"></span>
+            태그
+          </a>
+        </li>
+        <li class="table-view-cell">
+          <a href="#page-post-edit-format" data-start="#page-post-edit-main" data-toggle="page">
+            <span class="badge badge-inverted">video</span>
+            포맷
+          </a>
+        </li>
+        <li class="table-view-cell">
+          <a href="#page-post-edit-advan" data-start="#page-post-edit-main" data-toggle="page">
+            고급설정
+          </a>
+        </li>
+      </ul>
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-attach">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">파일첨부</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-link">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">링크추가</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-review">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">요약설명</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-tag">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">태그</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-category">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">카테고리 지정</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-format">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">포맷</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-display">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">공개설정</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-advan">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">고급설정</span>
+    </header>
+    <main class="center">
+
+    </main>
+  </section>
+
+</div><!-- /.modal -->
 
 <!-- 모달 : 포스트 보기 -->
 <div class="modal" id="modal-post-view" data-role="view">
@@ -475,6 +619,46 @@
   </div>
 </div>
 
+<!-- 팝업 : 새 포스트 작업선택   -->
+<div id="popup-post-newPost" class="popup zoom">
+  <div class="popup-content rounded-0">
+    <header class="bar bar-nav border-bottom-0">
+      <a class="icon icon-close pull-right" data-history="back" role="button"></a>
+      <h1 class="title">작업선택</h1>
+    </header>
+    <div class="content rounded-0" style="min-height: 185px;">
+      <div class="content-padded">
+        <div class="row">
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="link">
+              <div class="material-icons" style="font-size: 64px;">
+                link
+              </div>
+              <div><small class="text-black">링크추가</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="file">
+              <div class="material-icons" style="font-size: 64px;">
+                cloud_upload
+              </div>
+              <div><small class="text-black">이미지 업로드</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="editor">
+              <div class="material-icons" style="font-size: 64px;">
+                notes
+              </div>
+              <div><small class="text-black">글작성</small></div>
+            </button>
+          </div>
+        </div><!-- /.row -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- 시트 : 포스트 필터 -->
 <div id="sheet-post-filter" class="sheet shadow">
   <header class="bar bar-nav bar-light bg-white px-0">
@@ -497,7 +681,6 @@
 </div>
 
 <!-- 시트 : 리스트 저장 -->
-
 <div id="sheet-post-listadd" class="sheet shadow">
   <header class="bar bar-nav bar-light bg-white">
     <button class="btn btn-link btn-nav pull-right px-3" data-toggle="newList">
@@ -530,6 +713,28 @@
     </div>
   </main>
 </div>
+
+<!-- 시트 : 새 포스트 링크추가 -->
+<div id="sheet-post-linkadd" class="sheet shadow" style="height: 155px;">
+  <header class="bar bar-nav bar-light bg-white">
+    <button class="btn btn-link btn-nav pull-right px-3" data-act="submit">
+      <span class="not-loading">
+        저장
+      </span>
+      <span class="is-loading">
+        <div class="spinner-border spinner-border-sm" role="status">
+          <span class="sr-only">저장중...</span>
+        </div>
+      </span>
+    </button>
+    <h1 class="title title-left px-3">링크 추가</h1>
+  </header>
+  <main>
+    <textarea class="form-control border-0" rows="3" placeholder="복사한 링크를 붙여넣기 하세요."></textarea>
+  </main>
+</div>
+
+
 
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/post.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
