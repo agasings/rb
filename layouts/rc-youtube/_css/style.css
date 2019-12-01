@@ -923,6 +923,10 @@ button[data-toggle="collapse"]:active {
   display: none
 }
 
+.modal.miniplayer .embed-responsive.mask::before {
+  content: none;
+}
+
 /**
   * 8 - utility 유틸리티
   * ----------------------------------------------------------------------------
