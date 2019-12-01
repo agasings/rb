@@ -12,7 +12,7 @@ var page_post_view =  $('#page-post-view'); //포스트 보기
 var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
 var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
 var modal_post_listview =  $('#modal-post-listview'); //리스트 보기
-var modal_post_edit = $('#modal-post-edit'); //포스트 편집
+var modal_post_write = $('#modal-post-write'); //포스트 작성
 var modal_post_view =  $('#modal-post-view'); //포스트 보기
 var modal_post_photo =  $('#modal-post-photo'); //포스트 사진 보기
 var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
@@ -533,15 +533,9 @@ modal_post_view.on('hide.rc.modal', function(event) {
   }
 })
 
-
-modal_post_view.on('hidden.rc.modal', function(event) {
-  var modal = $(this);
-  // modal.empty()
-})
-
-modal_post_photo.on('show.rc.modal', function(event) {
-
-})
+// modal_post_photo.on('show.rc.modal', function(event) {
+//
+// })
 
 modal_post_opinion.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
@@ -558,7 +552,33 @@ modal_post_opinion.on('show.rc.modal', function(event) {
 })
 
 //포스트 편집 저장
-modal_post_edit.find('[data-act="submit"]').click(function(){
+modal_post_write.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  var uid = button.attr('data-uid');
+  var url = button.attr('data-url');
+
+  modal.attr('data-uid',uid);
+  modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
+
+  getPostWrite({
+    uid : uid,
+    wrapper : modal,
+  });
+
+})
+
+modal_post_write.on('hidden.rc.modal', function(event) {
+  var modal = $(this);
+  // 입력사항 초기화
+  modal.find('[data-role="subject"]').val('');
+  modal.find('[data-role="featured"]').attr('src','')
+  modal.find('[data-role="time"]').text('');
+  modal.find('.form-list.floating .input-row').removeClass('active');
+
+})
+
+modal_post_write.find('[data-act="submit"]').click(function(){
   var button = $(this)
   button.attr('disabled',true );
 
@@ -695,18 +715,145 @@ sheet_post_linkadd.on('shown.rc.sheet', function(event) {
   sheet.find('[data-act="submit"]').attr('disabled',false );
 })
 
+// 링크저장
 sheet_post_linkadd.find('[data-act="submit"]').click(function(){
   var button = $(this)
-  button.attr('disabled',true );
+  var textarea = sheet_post_linkadd.find('textarea');
+  var url = textarea.val();
+  var link_url_parse = $('<a>', {href: url});
 
-  setTimeout(function(){
-    history.back();
+  if (!url) {
+    textarea.focus();
+    return false
+  }
 
-    setTimeout(function(){
-      modal_post_edit.modal({title:'새 포스트'})
-    }, 200);
+  button.attr('disabled',true);
 
-  }, 1000);
+  //네이버 블로그 URL의 실제 URL 변환
+  if ((link_url_parse.prop('hostname')=='blog.naver.com' || link_url_parse.prop('hostname')=='m.blog.naver.com' ) && link_url_parse.prop('pathname')) {
+    var nblog_path_arr = link_url_parse.prop('pathname').split("/");
+    var nblog_id = nblog_path_arr[1];
+    var nblog_pid = nblog_path_arr[2];
+    if (nblog_pid) {
+      var url =  'https://blog.naver.com/PostView.nhn?blogId='+nblog_id+'&logNo='+nblog_pid;
+    } else {
+      var url = 'https://blog.naver.com/PostList.nhn?blogId='+nblog_id;
+    }
+  }
+
+  $.get('//embed.kimsq.com/oembed',{
+      url: url
+  }).done(function(response) {
+      var type = response.type;
+      var title = response.title;
+      var description = response.description?response.description:'.';
+      var thumbnail_url = response.thumbnail_url;
+      var author = response.author;
+      var provider = response.provider_name;
+      var url = response.url;
+      var width = response.thumbnail_width;
+      var height = response.thumbnail_height;
+      var embed = response.html;
+      $('[name="subject"]').val(title);
+
+
+      if (type=='video') {
+
+        $.get('//embed.kimsq.com/iframely',{
+            url: url
+        }).done(function(response) {
+            var duration = response.meta.duration;
+            var _duration = moment.duration(duration, 's');
+            var formatted_duration = _duration.format("h:*m:ss");
+
+            $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
+               type : 9,
+               title : title,
+               theme : '_desktop/bs4-default-link',
+               description : description,
+               thumbnail_url : thumbnail_url,
+               author: author,
+               provider : provider,
+               url : url,
+               duration : duration?duration:'',
+               time :  duration?formatted_duration:'',
+               width : width,
+               height : height,
+               embed : embed
+            },function(response){
+                var result=$.parseJSON(response);
+                var uid = result.last_uid
+                if(!result.error){
+                  modal_post_write.find('[name="attachfiles[]"]').val(uid);
+                  modal_post_write.find('[name="format"]').val(2);  //비디오 타입
+                  modal_post_write.find('[name="featured_img"]').val(uid);
+
+                  setTimeout(function(){
+                    history.back();
+
+                    setTimeout(function(){
+                      modal_post_write.modal({title:'새 포스트'})
+                    }, 200);
+
+                  }, 1000);
+
+
+                }
+            });
+
+        });
+
+      } else {
+
+        $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
+          type : 8,
+          title : title,
+          theme : '_desktop/bs4-default-link',
+          description : description,
+          thumbnail_url : thumbnail_url,
+          author: author,
+          provider : provider,
+          url : url,
+          width : width,
+          height : height,
+          embed : embed
+        },function(response){
+          var result=$.parseJSON(response);
+          var uid = result.last_uid
+          if(!result.error){
+
+            const content = '<figure class="media"><oembed url="'+url+'"></oembed></figure>';
+            const viewFragment = editor.data.processor.toView( content );
+            const modelFragment = editor.data.toModel( viewFragment );
+            editor.model.insertContent( modelFragment );
+
+            modal_post_write.find('[name="attachfiles[]"]').val(uid);
+            modal_post_write.find('[name="format"]').val(1);  //문서 타입
+            modal_post_write.find('[name="featured_img"]').val(uid);
+
+            setTimeout(function(){
+              history.back();
+
+              setTimeout(function(){
+                modal_post_write.modal({title:'새 포스트'})
+              }, 200);
+
+            }, 1000);
+
+
+          }
+        });
+      }
+
+  }).fail(function() {
+    $.notify({message: 'URL을 확인해주세요.'},{type: 'default'});
+    button.attr('disabled',false);
+    textarea.attr('disabled',false).focus()
+  }).always(function() {
+  });
+
+
+
 
 });
 
@@ -810,6 +957,10 @@ popup_post_newList.find('[data-act="submit"]').click(function(){
 
 });
 
+// popup_post_newPost
+popup_post_newPost.on('show.rc.popup', function(event) {
+  modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
+})
 
 popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
   var popup = popup_post_newPost;
@@ -825,7 +976,7 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
     } else if (type=='link') {
       sheet_post_linkadd.sheet('show');
     } else {
-      modal_post_edit.modal({title: '새 포스트'})
+      modal_post_write.modal({title: '새 포스트'})
     }
 
   }, 200);

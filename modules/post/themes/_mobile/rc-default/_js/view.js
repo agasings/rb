@@ -87,6 +87,10 @@ function getPostView(settings) {
           $(this).button('toggle')
         })
 
+        wrapper.on('click','[data-act="pauseVideo"]',function(){
+          player.pauseVideo();
+        })
+
       }
     } else {
       setTimeout(function(){
