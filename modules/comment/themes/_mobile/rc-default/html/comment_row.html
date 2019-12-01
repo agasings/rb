@@ -5,7 +5,17 @@
   data-type="comment" data-hidden="{$comment_getHidden}" data-notice="{$comment_getNoitce}">
   <span id="CMT-{$comment_uid}" data-role="anchor-link"></span>
   <div class="media content-padded my-0">
-    <img class="mr-3 border rounded-circle" src="{$comment_user_pic}" alt="아바타" style="width:40px;height:40px">
+
+    <span class="mr-3"
+      data-toggle="profile"
+      data-target="#modal-member-profile"
+      data-nic="{$comment_user_nic}"
+      data-url="{$comment_user_url}"
+      data-change="true"
+      data-mbruid="{$comment_user_uid}">
+      <img class="border rounded-circle" src="{$comment_user_pic}" alt="아바타" style="width:40px;height:40px">
+    </span>
+
     <div class="media-body">
 
         <h4 class="media-heading h6 d-flex align-items-center">
@@ -51,7 +61,6 @@
 
             <button type="button" class="btn btn-link muted-link btn-sm add-comment"
               data-role="toggle-oneline-input"
-              data-toggle="commentWrite"
               data-type="oneline"
               data-act="regis" data-parent="{$comment_uid}">
               <i class="material-icons f16 align-middle">comment</i>
@@ -66,7 +75,18 @@
 
         </div>
 
-        {$oneline_button} <!-- 한줄의견 보기 -->
+        <div class="d-none" data-role="oneline-input-wrapper-{$comment_uid}"> <!-- 한줄의견 등록폼 -->
+          <form class="input-group">
+            <input type="text" class="form-control" data-role="oneline-input-{$comment_uid}"> <!-- 주의 : comment_uid 가 들어가야 함 -->
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-secondary btn-sm" data-kcact="regis" data-type="oneline" data-parent="{$comment_uid}" data-grant="{$grant_uid}">
+                답글쓰기
+              </button>
+            </span>
+          </form>
+        </div>
+
+        {$oneline_button} <!-- 한줄의견 보기 버튼 -->
         <hr>
         <div class="media-list flex-column pr-0 mb-3" data-role="oneline-container-{$comment_uid}">
            <!-- 한줄의견 리스트 -->

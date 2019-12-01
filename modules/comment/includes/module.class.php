@@ -114,6 +114,9 @@ class Comment extends Comment_base{
         $TMPL['comment_content'] = getContents($row['content'],'HTML');
         $TMPL['comment_user_name'] = $row[$_HS['nametype']]?$row[$_HS['nametype']]:'손님';
         $TMPL['comment_user_pic'] = $this->getUserAvatar($row['mbruid'],'src');
+        $TMPL['comment_user_uid'] = $row['mbruid'];
+        $TMPL['comment_user_nic'] = getProfileInfo($row['mbruid'],'nic');
+        $TMPL['comment_user_url'] = getProfileLink($row['mbruid']);
         $TMPL['comment_like_total'] = ($row['likes']==0)?'':$row['likes'];
         $TMPL['comment_uid'] = $row['uid'];
         $TMPL['comment_regis_time'] = getDateFormat($row['d_modify']?$row['d_modify']:$row['d_regis'],'Y.m.d H:i');
