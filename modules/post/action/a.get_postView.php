@@ -86,6 +86,7 @@ $TMPL['list_name'] = $LIST['name'];
 $TMPL['list_num'] = $LIST['num'];
 
 $TMPL['uid'] = $R['uid'];
+$TMPL['cid'] = $R['cid'];
 $TMPL['mbruid'] = $R['mbruid'];
 $TMPL['profile_url']=getProfileLink($R['mbruid']);
 $TMPL['post_url']=getPostLink($R,0);

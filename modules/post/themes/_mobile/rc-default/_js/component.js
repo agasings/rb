@@ -16,6 +16,7 @@ var modal_post_write = $('#modal-post-write'); //포스트 작성
 var modal_post_view =  $('#modal-post-view'); //포스트 보기
 var modal_post_photo =  $('#modal-post-photo'); //포스트 사진 보기
 var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
+var modal_post_analytics =  $('#modal-post-analytics'); //포스트 통계분석
 
 var popup_post_optionMore = $('#popup-post-optionMore') // 포스트 옵션 더보기
 var popup_post_report = $('#popup-post-report') // 포스트 신고
@@ -24,7 +25,8 @@ var popup_post_newList = $('#popup-post-newList') // 새 재생목록
 var popup_post_newPost = $('#popup-post-newPost') // 새 포스트작성을 위한 작업선택
 
 var sheet_post_listadd = $('#sheet-post-listadd') // 포스트 리스트에 저장
-var sheet_post_linkadd = $('#sheet-post-linkadd') // 새 포스트작성을 위한 링크저장
+var sheet_post_linkadd = $('#sheet-post-linkadd') // 새 포스트작성을 위한 링크추가
+var sheet_post_photoadd = $('#sheet-post-photoadd') // 새 포스트작성을 위한 사진 추가
 
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
@@ -542,6 +544,7 @@ modal_post_opinion.on('show.rc.modal', function(event) {
   var uid = button.attr('data-uid');
   var modal = $(this);
   var wrapper = modal.find('[data-role="list"]');
+  modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
   getPostOpinion({
     uid : uid,
     wrapper : wrapper,
@@ -551,17 +554,26 @@ modal_post_opinion.on('show.rc.modal', function(event) {
   });
 })
 
-//포스트 편집 저장
+//포스트 작성
 modal_post_write.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var modal = $(this);
   var uid = button.attr('data-uid');
   var url = button.attr('data-url');
 
-  modal.attr('data-uid',uid);
+  if (!uid) {
+    var uid = modal.attr('data-uid');
+  } else {
+    modal.attr('data-uid',uid);
+  }
+
+  modal.find('[data-act="submit"]').attr('disabled', false);
+  modal.find('[data-role="loader"]').removeClass('d-none') //로더 초기화
+  modal.find('form').addClass('d-none')
+
   modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
 
-  getPostWrite({
+  setPostWrite({
     uid : uid,
     wrapper : modal,
   });
@@ -576,6 +588,24 @@ modal_post_write.on('hidden.rc.modal', function(event) {
   modal.find('[data-role="time"]').text('');
   modal.find('.form-list.floating .input-row').removeClass('active');
 
+  if(modal.find('[data-act="submit"]').is(":disabled")) var submitting = true;
+  modal.find('[name="uid"]').val(''); // uid 초기화
+  modal.find('[name="pcode"]').val(''); // pcode 초기화
+
+  // var content = editor_post.getData();
+
+  editor_post.destroy();  //에디터 제거
+  console.log('editor_post.destroy');
+  setTimeout(function(){ modal.find('[data-role="editor-body"]').empty(); }, 100);
+
+  // if (!submitting && (content || subject)) {
+  //   setTimeout(function(){
+  //     popup_post_cancelCheck.popup({
+  //       backdrop: 'static'
+  //     });  // 글쓰기 취소확인 팝업 호출
+  //   }, 200);
+  // }
+
 })
 
 modal_post_write.find('[data-act="submit"]').click(function(){
@@ -583,11 +613,18 @@ modal_post_write.find('[data-act="submit"]').click(function(){
   button.attr('disabled',true );
 
   setTimeout(function(){
-    history.back();
-    location.reload();
-  }, 1000);
+    savePost(document.writeForm)
+  }, 600);
 
 });
+
+modal_post_analytics.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  var uid = button.attr('data-uid');
+
+  modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
+})
 
 popup_post_optionMore.on('show.rc.popup', function(event) {
   var button = $(event.relatedTarget);
@@ -708,7 +745,7 @@ sheet_post_listadd.on('show.rc.sheet', function(event) {
   });
 })
 
-sheet_post_linkadd.on('shown.rc.sheet', function(event) {
+sheet_post_linkadd.on('show.rc.sheet', function(event) {
   var sheet = $(this);
   sheet.find('textarea').val('');
   setTimeout(function(){ sheet.find('textarea').focus(); }, 10);
@@ -721,12 +758,10 @@ sheet_post_linkadd.find('[data-act="submit"]').click(function(){
   var textarea = sheet_post_linkadd.find('textarea');
   var url = textarea.val();
   var link_url_parse = $('<a>', {href: url});
-
   if (!url) {
     textarea.focus();
     return false
   }
-
   button.attr('disabled',true);
 
   //네이버 블로그 URL의 실제 URL 변환
@@ -741,120 +776,7 @@ sheet_post_linkadd.find('[data-act="submit"]').click(function(){
     }
   }
 
-  $.get('//embed.kimsq.com/oembed',{
-      url: url
-  }).done(function(response) {
-      var type = response.type;
-      var title = response.title;
-      var description = response.description?response.description:'.';
-      var thumbnail_url = response.thumbnail_url;
-      var author = response.author;
-      var provider = response.provider_name;
-      var url = response.url;
-      var width = response.thumbnail_width;
-      var height = response.thumbnail_height;
-      var embed = response.html;
-      $('[name="subject"]').val(title);
-
-
-      if (type=='video') {
-
-        $.get('//embed.kimsq.com/iframely',{
-            url: url
-        }).done(function(response) {
-            var duration = response.meta.duration;
-            var _duration = moment.duration(duration, 's');
-            var formatted_duration = _duration.format("h:*m:ss");
-
-            $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
-               type : 9,
-               title : title,
-               theme : '_desktop/bs4-default-link',
-               description : description,
-               thumbnail_url : thumbnail_url,
-               author: author,
-               provider : provider,
-               url : url,
-               duration : duration?duration:'',
-               time :  duration?formatted_duration:'',
-               width : width,
-               height : height,
-               embed : embed
-            },function(response){
-                var result=$.parseJSON(response);
-                var uid = result.last_uid
-                if(!result.error){
-                  modal_post_write.find('[name="attachfiles[]"]').val(uid);
-                  modal_post_write.find('[name="format"]').val(2);  //비디오 타입
-                  modal_post_write.find('[name="featured_img"]').val(uid);
-
-                  setTimeout(function(){
-                    history.back();
-
-                    setTimeout(function(){
-                      modal_post_write.modal({title:'새 포스트'})
-                    }, 200);
-
-                  }, 1000);
-
-
-                }
-            });
-
-        });
-
-      } else {
-
-        $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
-          type : 8,
-          title : title,
-          theme : '_desktop/bs4-default-link',
-          description : description,
-          thumbnail_url : thumbnail_url,
-          author: author,
-          provider : provider,
-          url : url,
-          width : width,
-          height : height,
-          embed : embed
-        },function(response){
-          var result=$.parseJSON(response);
-          var uid = result.last_uid
-          if(!result.error){
-
-            const content = '<figure class="media"><oembed url="'+url+'"></oembed></figure>';
-            const viewFragment = editor.data.processor.toView( content );
-            const modelFragment = editor.data.toModel( viewFragment );
-            editor.model.insertContent( modelFragment );
-
-            modal_post_write.find('[name="attachfiles[]"]').val(uid);
-            modal_post_write.find('[name="format"]').val(1);  //문서 타입
-            modal_post_write.find('[name="featured_img"]').val(uid);
-
-            setTimeout(function(){
-              history.back();
-
-              setTimeout(function(){
-                modal_post_write.modal({title:'새 포스트'})
-              }, 200);
-
-            }, 1000);
-
-
-          }
-        });
-      }
-
-  }).fail(function() {
-    $.notify({message: 'URL을 확인해주세요.'},{type: 'default'});
-    button.attr('disabled',false);
-    textarea.attr('disabled',false).focus()
-  }).always(function() {
-  });
-
-
-
-
+  savePostByLink(url);
 });
 
 sheet_post_listadd.find('[data-act="submit"]').click(function(){
@@ -973,10 +895,10 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
 
     if (type=='link') {
       sheet_post_linkadd.sheet('show');
-    } else if (type=='link') {
-      sheet_post_linkadd.sheet('show');
+    } else if (type=='photo') {
+      sheet_post_photoadd.sheet('show');
     } else {
-      modal_post_write.modal({title: '새 포스트'})
+      modal_post_write.modal({title: '새 포스트',url: '/post/write'})
     }
 
   }, 200);

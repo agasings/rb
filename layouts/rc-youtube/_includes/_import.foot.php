@@ -22,6 +22,10 @@
 <!-- jquery.shorten : https://github.com/viralpatel/jquery.shorten -->
 <?php getImport('jquery.shorten','jquery.shorten.min','1.0','js')?>
 
+<!-- moment -->
+<?php getImport('moment','moment','2.22.2','js');?>
+<?php getImport('moment-duration-format','moment-duration-format','2.2.2','js');?>
+
 <!-- 댓글출력시 필요 -->
 <?php if ($mod!='write'): ?>
 <?php getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');  ?>

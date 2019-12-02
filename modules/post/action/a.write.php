@@ -284,8 +284,19 @@ if ($uid) {
 	exit;
 
 } else {
-  $_R = getUidData($table[$m.'data'],$LASTUID);
-	getLink(RW('m=post&mod=write&cid='.$_R['cid']),'parent.','','');
+
+	if ($send_mod=='ajax') {
+
+		$result['last_uid'] = $LASTUID;
+		$result['last_cid'] = $cid;
+	  echo json_encode($result);
+		exit;
+
+	} else {
+		$_R = getUidData($table[$m.'data'],$LASTUID);
+		getLink(RW('m=post&mod=write&cid='.$_R['cid']),'parent.','','');
+	}
+
 }
 
 ?>

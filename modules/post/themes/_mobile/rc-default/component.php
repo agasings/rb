@@ -183,6 +183,19 @@
 <div class="modal" id="modal-post-view" data-role="view">
 </div><!-- /.modal -->
 
+<!-- 모달 : 포스트 통계 -->
+<div class="modal fast" id="modal-post-analytics">
+  <header class="bar bar-nav bar-light bg-faded px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <h1 class="title" data-history="back">통계분석</h1>
+  </header>
+  <div class="content">
+    <div class="content-padded">
+      준비중
+    </div>
+  </div>
+</div><!-- /.modal -->
+
 <!-- 모달 : 포스트 사진 보기 -->
 <section id="modal-post-photo" class="modal fast" data-role="post-photo">
   <header class="bar bar-nav bar-dark bg-black px-0">
@@ -274,20 +287,8 @@
 <!-- 모달 : 포스트 편집 -->
 <div class="modal fast" id="modal-post-write">
 
-  <input type="hidden" name="uid" value="">
-  <input type="hidden" name="category_members" value="">
-  <input type="hidden" name="list_members" value="">
-  <input type="hidden" name="upload" id="upfilesValue" value="">
-  <input type="hidden" name="member" value="">
-  <input type="hidden" name="featured_img" value="">
-  <input type="hidden" name="html" value="HTML">
-  <input type="hidden" name="display">
-  <input type="hidden" name="dis_rating">
-  <input type="hidden" name="dis_like">
-  <input type="hidden" name="dis_comment">
-  <input type="hidden" name="dis_listadd">
-
   <section class="page center" id="page-post-edit-main">
+
     <header class="bar bar-nav bar-light bg-faded px-0">
       <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
       <button class="btn btn-link btn-nav pull-right px-4" data-act="submit">
@@ -302,78 +303,108 @@
       </button>
       <span class="title" data-role="title">새 포스트</span>
     </header>
-    <main role="main" class="content">
+    <header class="bar bar-nav bar-light bg-faded p-x-0 border-top" data-role="editor-nav">
+      <div class="d-flex align-items-center">
+        <div class="toolbar-container w-100"></div>
+        <?php if ($g['mobile']!='iphone' && $g['mobile']!='ipad'): ?>
+        <div class="flex-shrink-1 border-left text-xs-center" style="min-width:4rem">
+          <button class="btn btn-link" type="button">완료</button>
+        </div>
+      <?php endif; ?>
+      </div>
+    </header>
 
-      <div class="content-padded mt-0">
-        <div class="media">
-          <span class="media-left media-middle position-relative pr-0 mr-2" >
-            <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:103px;height:58px">
-            <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="time"></time>
-          </span>
-          <div class="media-body f14" style="max-height: 300px;overflow: auto">
-            <div class="form-list floating mb-3">
-              <div class="input-row pl-1">
-                <label class="small text-muted">제목</label>
-                <textarea class="form-control p-0 border-0 mb-0" rows="2" data-role="subject" placeholder="제목을 입력해주세요."></textarea>
+    <main role="main" class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center text-muted" style="height:70vh">
+          <div class="spinner-border mr-2" role="status"></div>
+        </div>
+      </div>
+      <form name="writeForm" method="post" class="d-none">
+
+        <input type="hidden" name="uid" value="">
+        <input type="hidden" name="category_members" value="">
+        <input type="hidden" name="list_members" value="">
+        <input type="hidden" name="upload" id="upfilesValue" value="">
+        <input type="hidden" name="member" value="">
+        <input type="hidden" name="featured_img" value="">
+        <input type="hidden" name="html" value="HTML">
+        <input type="hidden" name="review">
+        <input type="hidden" name="display">
+        <input type="hidden" name="format">
+        <input type="hidden" name="dis_rating">
+        <input type="hidden" name="dis_like">
+        <input type="hidden" name="dis_comment">
+        <input type="hidden" name="dis_listadd">
+        <input type="hidden" name="goods">
+
+        <div class="content-padded my-0 editor-focused-hide">
+          <div class="media">
+            <span class="media-left media-middle position-relative pr-0 mr-2" >
+              <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:103px;height:58px">
+              <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="time"></time>
+            </span>
+            <div class="media-body f14" style="max-height: 300px;overflow: auto">
+              <div class="form-list floating mb-1">
+                <div class="input-row pl-1">
+                  <label class="small text-muted">제목</label>
+                  <textarea class="form-control p-0 border-0 mb-0" rows="2" name="subject" data-role="subject" data-plugin="autosize" placeholder="제목 입력..."></textarea>
+                </div>
               </div>
             </div>
-          </div>
-        </div><!-- /.media -->
+          </div><!-- /.media -->
+        </div><!-- /.content-padded -->
 
-        <div class="f15" style="color:#55595c">
-          토트넘은 1일(한국시간) 새벽 영국 런던의 토트넘 홋스퍼 스타디움 열린 2019-2020 잉글리시 프리미어리그(EPL) 14라운드 본머스와 경기에서 델레 알리의 멀티골과
+        <div data-role="editor" style="margin-top: -5px;">
+          <div data-role="editor-body" class="editable-container" style="color:#55595c"></div>
         </div>
 
-      </div><!-- /.content-padded -->
-      <ul class="table-view">
-        <li class="table-view-cell">
-          <a href="#page-post-edit-attach" data-start="#page-post-edit-main" data-toggle="page">
-            사진 및 파일추가
-          </a>
-          <span class="badge badge-default badge-outline">4</span>
-        </li>
-        <li class="table-view-cell">
-          <a href="#page-post-edit-link" data-start="#page-post-edit-main" data-toggle="page">
-            링크추가
-          </a>
-          <span class="badge badge-default badge-outline">4</span>
-        </li>
-        <li class="table-view-cell">
-          <a href="#page-post-edit-category" data-start="#page-post-edit-main" data-toggle="page">
-            카테고리 지정
-          </a>
-        </li>
+        <ul class="table-view editor-focused-hide mt-3">
+          <li class="table-view-cell">
+            <a href="#page-post-edit-attach" data-start="#page-post-edit-main" data-toggle="page">
+              사진 및 파일추가
+            </a>
+            <span class="badge badge-default badge-outline"></span>
+          </li>
+          <li class="table-view-cell">
+            <a href="#page-post-edit-link" data-start="#page-post-edit-main" data-toggle="page">
+              링크추가
+            </a>
+            <span class="badge badge-default badge-outline"></span>
+          </li>
 
-        <li class="table-view-cell">
-          외부공개
-          <div data-toggle="switch" class="switch">
-            <div class="switch-handle"></div>
-          </div>
-        </li>
-        <li class="table-view-cell">
-          <a href="#page-post-edit-review" data-start="#page-post-edit-main" data-toggle="page">
-            <span class="badge badge-default badge-inverted"></span>
-            요약
-          </a>
-        </li>
-        <li class="table-view-cell">
-          <a href="#page-post-edit-tag" data-start="#page-post-edit-main" data-toggle="page">
-            <span class="badge badge-default badge-inverted"></span>
-            태그
-          </a>
-        </li>
-        <li class="table-view-cell">
-          <a href="#page-post-edit-format" data-start="#page-post-edit-main" data-toggle="page">
-            <span class="badge badge-default badge-outline">video</span>
-            포맷
-          </a>
-        </li>
-        <li class="table-view-cell">
-          <a href="#page-post-edit-advan" data-start="#page-post-edit-main" data-toggle="page">
-            고급설정
-          </a>
-        </li>
-      </ul>
+          <li class="table-view-cell">
+            외부공개
+            <div data-toggle="switch" class="switch">
+              <div class="switch-handle"></div>
+            </div>
+          </li>
+          <li class="table-view-cell">
+            <a href="#page-post-edit-review" data-start="#page-post-edit-main" data-toggle="page">
+              <span class="badge badge-default badge-inverted"></span>
+              요약
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a href="#page-post-edit-tag" data-start="#page-post-edit-main" data-toggle="page">
+              <span class="badge badge-default badge-inverted"></span>
+              태그
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a href="#page-post-edit-format" data-start="#page-post-edit-main" data-toggle="page">
+              <span class="badge badge-default badge-outline"></span>
+              포맷
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a href="#page-post-edit-advan" data-start="#page-post-edit-main" data-toggle="page">
+              고급설정
+            </a>
+          </li>
+        </ul>
+
+      </form><!-- /.content-padded -->
 
     </main>
   </section>
@@ -383,7 +414,7 @@
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title" data-history="back">파일첨부</span>
     </header>
-    <main class="center">
+    <main class="content">
 
     </main>
   </section>
@@ -393,7 +424,7 @@
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title" data-history="back">링크추가</span>
     </header>
-    <main class="center">
+    <main class="content">
 
     </main>
   </section>
@@ -403,7 +434,7 @@
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title" data-history="back">요약설명</span>
     </header>
-    <main class="center">
+    <main class="content">
 
     </main>
   </section>
@@ -413,37 +444,7 @@
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title" data-history="back">태그</span>
     </header>
-    <main class="center">
-
-    </main>
-  </section>
-
-  <section class="page right" id="page-post-edit-category">
-    <header class="bar bar-nav bar-light bg-faded px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">카테고리 지정</span>
-    </header>
-    <main class="center">
-
-    </main>
-  </section>
-
-  <section class="page right" id="page-post-edit-format">
-    <header class="bar bar-nav bar-light bg-faded px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">포맷</span>
-    </header>
-    <main class="center">
-
-    </main>
-  </section>
-
-  <section class="page right" id="page-post-edit-display">
-    <header class="bar bar-nav bar-light bg-faded px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">공개설정</span>
-    </header>
-    <main class="center">
+    <main class="content">
 
     </main>
   </section>
@@ -453,7 +454,50 @@
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title" data-history="back">고급설정</span>
     </header>
-    <main class="center">
+    <main class="content">
+      <ul class="table-view mt-0 border-top-0">
+        <li class="table-view-cell">
+          <a href="#page-post-edit-category" data-start="#page-post-edit-advan" data-toggle="page">
+            카테고리 지정
+          </a>
+        </li>
+        <li class="table-view-cell">
+          <a href="#page-post-edit-display" data-start="#page-post-edit-advan" data-toggle="page">
+            <span class="badge badge-default badge-inverted"></span>
+            공유설정
+          </a>
+        </li>
+      </ul>
+    </main>
+  </section>
+
+
+  <section class="page right" id="page-post-edit-category">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">카테고리 지정</span>
+    </header>
+    <main class="content">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-format">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">포맷</span>
+    </header>
+    <main class="content">
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-display">
+    <header class="bar bar-nav bar-light bg-faded px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title" data-history="back">공유설정</span>
+    </header>
+    <main class="content">
 
     </main>
   </section>
@@ -644,7 +688,7 @@
 <!-- 팝업 : 새 포스트 작업선택   -->
 <div id="popup-post-newPost" class="popup zoom">
   <div class="popup-content rounded-0">
-    <header class="bar bar-nav border-bottom-0">
+    <header class="bar bar-nav">
       <a class="icon icon-close pull-right" data-history="back" role="button"></a>
       <h1 class="title">작업선택</h1>
     </header>
@@ -652,27 +696,27 @@
       <div class="content-padded">
         <div class="row">
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="link">
+            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newpost" data-type="photo">
+              <div class="material-icons" style="font-size: 64px;">
+                insert_photo
+              </div>
+              <div><small class="text-black">사진 추가</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newpost" data-type="link">
               <div class="material-icons" style="font-size: 64px;">
                 link
               </div>
-              <div><small class="text-black">링크추가</small></div>
+              <div><small class="text-black">링크 추가</small></div>
             </button>
           </div>
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="file">
-              <div class="material-icons" style="font-size: 64px;">
-                cloud_upload
-              </div>
-              <div><small class="text-black">이미지 업로드</small></div>
-            </button>
-          </div>
-          <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="editor">
+            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newpost" data-type="editor">
               <div class="material-icons" style="font-size: 64px;">
                 notes
               </div>
-              <div><small class="text-black">본문쓰기</small></div>
+              <div><small class="text-black">본문 작성</small></div>
             </button>
           </div>
         </div><!-- /.row -->
@@ -741,7 +785,7 @@
   <header class="bar bar-nav bar-light bg-white">
     <button class="btn btn-link btn-nav pull-right px-3" data-act="submit">
       <span class="not-loading">
-        저장
+        다음
       </span>
       <span class="is-loading">
         <div class="spinner-border spinner-border-sm" role="status">
@@ -753,6 +797,27 @@
   </header>
   <main>
     <textarea class="form-control border-0" rows="3" placeholder="복사한 링크를 붙여넣기 하세요."></textarea>
+  </main>
+</div>
+
+<!-- 시트 : 새 포스트 사진 추가 -->
+<div id="sheet-post-photoadd" class="sheet shadow" style="height: 70vh;">
+  <header class="bar bar-nav bar-light bg-white">
+    <button class="btn btn-link btn-nav pull-right px-3" data-act="submit">
+      <span class="not-loading">
+        다음
+      </span>
+      <span class="is-loading">
+        <div class="spinner-border spinner-border-sm" role="status">
+          <span class="sr-only">저장중...</span>
+        </div>
+      </span>
+    </button>
+    <h1 class="title title-left px-3">사진 추가</h1>
+  </header>
+  <main>
+
+
   </main>
 </div>
 

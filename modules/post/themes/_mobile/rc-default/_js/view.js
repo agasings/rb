@@ -168,10 +168,10 @@ function getPostView(settings) {
           if (is_post_disliked) wrapper.find('[data-role="btn_post_dislike_'+uid+'"]').addClass('active');
 
           wrapper.find('#collapseContent').on('show.rc.collapse', function () {
-            $('[data-role="title"]').removeClass('line-clamp-2')
+            wrapper.find('[data-toggle="collapse"] [data-role="subject"]').removeClass('line-clamp-2')
           })
           wrapper.find('#collapseContent').on('hide.rc.collapse', function () {
-            $('[data-role="title"]').addClass('line-clamp-2')
+            wrapper.find('[data-toggle="collapse"] [data-role="subject"]').addClass('line-clamp-2')
           })
 
           if (dis_like) wrapper.find('[data-role="opinion"]').hide();
