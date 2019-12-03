@@ -1,7 +1,13 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-$R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
+if ($_POST['uid']) {
+	$uid = $_POST['uid'];
+	$R = getUidData($table[$m.'data'],$uid);
+} else {
+	$R=getDbData($table[$m.'data'],"cid='".$cid."'",'*');
+}
+
 
 if (!$R['uid']) getLink('','','삭제되었거나 존재하지 않는 포스트 입니다.','');
 
@@ -186,8 +192,20 @@ while ($_F=db_fetch_array($_FCD)) {
   if ($is_feed) getDbDelete($table['s_feed'],$check_feed_qry);
 }
 
-setrawcookie('post_action_result', rawurlencode('포스트가 삭제 되었습니다.|success'));  // 처리여부 cookie 저장
 
-if ($usertype=='admin') getLink('reload','parent.' , $alert , $history);
-else getLink(RW('mod=dashboard&page=post') ,'parent.' , $alert , $history);
+if ($send_mod=='ajax') {
+
+	$result=array();
+	$result['error'] = false;
+	echo json_encode($result);
+	exit;
+
+} else {
+
+	setrawcookie('post_action_result', rawurlencode('포스트가 삭제 되었습니다.|success'));  // 처리여부 cookie 저장
+
+	if ($usertype=='admin') getLink('reload','parent.' , $alert , $history);
+	else getLink(RW('mod=dashboard&page=post') ,'parent.' , $alert , $history);
+}
+
 ?>

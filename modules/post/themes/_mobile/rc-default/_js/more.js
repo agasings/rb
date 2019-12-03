@@ -3,20 +3,31 @@ function getPostMore(uid) {
   var wrapper = popup_post_postMore;
   wrapper.find('[data-role="list"]').html('<div data-role="loader"><div class="d-flex justify-content-center align-items-center text-muted" style="height:30vh"><div class="spinner-border mr-2" role="status"></div></div></div>');
 
-  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postOption',{
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postMenu',{
     uid: uid
     },function(response,status){
       if(status=='success'){
         var result = $.parseJSON(response);
         var list=result.list;
+        var owner=result.owner;
+        var likes=result.likes;
+
         wrapper.find('[data-role="list"]').html(list)
+
+        if (owner) {
+          wrapper.find('[data-role="list"] [data-toggle="saved"]').closest('.table-view-cell').remove();
+          wrapper.find('[data-role="list"] [data-toggle="report"]').closest('.table-view-cell').remove();
+        }
+        if (!likes) {
+          wrapper.find('[data-role="list"] [data-toggle="opinionList"]').closest('.table-view-cell').remove();
+        }
+
       } else {
         alert(status);
       }
   });
 
 }
-
 
 popup_post_postMore.on('click','[data-toggle="listAdd"]',function(){
   var button = $(this);
@@ -104,5 +115,29 @@ popup_post_postMore.on('click','[data-toggle="analytics"]',function(){
   history.back();
   setTimeout(function(){
     modal_post_analytics.modal()
+  }, 200);
+});
+
+popup_post_postMore.on('click','[data-toggle="opinionList"]',function(){
+  var button = $(this);
+  var uid = popup_post_postMore.attr('data-uid');
+  modal_post_opinion.attr('data-uid',uid);
+  history.back();
+  setTimeout(function(){
+    modal_post_opinion.modal()
+  }, 200);
+});
+
+popup_post_postMore.on('click','[data-toggle="postdel"]',function(){
+  var button = $(this);
+  var uid = popup_post_postMore.attr('data-uid');
+  var title = button.attr('data-title');
+  var type = button.attr('data-type');
+  popup_post_delConfirm.attr('data-uid',uid);
+  history.back();
+  setTimeout(function(){
+    popup_post_delConfirm.popup({
+      title : title
+    })
   }, 200);
 });

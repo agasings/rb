@@ -30,9 +30,11 @@ $TMPL['uid'] = $R['uid'];
 $TMPL['cid'] = $R['cid'];
 
 $list='';
-$list = $post->getHtml('post-option');
-$list .= $_perm['post_owner']?$post->getHtml('post-option-owner'):'';
+$list = $post->getHtml('post-menu');
+$list .= $_perm['post_owner']?$post->getHtml('post-menu-owner'):'';
 
+$result['likes'] = $R['likes']?$R['likes']:'';
+$result['owner'] = $_perm['post_owner']?1:0;
 $result['list'] = $list;
 $result['num'] = $i;
 

@@ -187,7 +187,7 @@
 <div class="modal fast" id="modal-post-analytics">
   <header class="bar bar-nav bar-light bg-faded px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <h1 class="title" data-history="back">통계분석</h1>
+    <h1 class="title" data-history="back">분석</h1>
   </header>
   <div class="content">
     <div class="content-padded">
@@ -515,7 +515,7 @@
 <div id="popup-post-report" class="popup zoom">
   <div class="popup-content rounded-0">
     <header class="bar bar-nav bg-white">
-      <h1 class="title">동영상 신고</h1>
+      <h1 class="title">컨텐츠 신고</h1>
     </header>
     <nav class="bar bar-tab">
       <a class="tab-item bg-white" role="button" data-history="back">
@@ -699,6 +699,31 @@
           </div>
         </div><!-- /.row -->
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 팝업 : 삭제확인 안내-->
+<div id="popup-post-delConfirm" class="popup zoom">
+  <div class="popup-content rounded-0">
+    <div class="content rounded-0" style="min-height: 110px;">
+      <div class="p-a-1">
+        <h5 data-role="title">정말로 삭제하시겠습니까?</h5>
+				<span data-role="subtext" class="f14 text-muted"></span>
+        <div class="text-xs-right mt-4">
+          <button type="button" class="btn btn-link text-muted mr-2" data-history="back">취소</button>
+          <button type="button" class="btn btn-link" data-act="submit">
+            <span class="not-loading">
+              삭제
+            </span>
+            <span class="is-loading">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">처리중...</span>
+              </div>
+            </span>
+          </button>
+        </div>
+			</div>
     </div>
   </div>
 </div>

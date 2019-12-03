@@ -18,15 +18,16 @@ var modal_post_photo =  $('#modal-post-photo'); //포스트 사진 보기
 var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
 var modal_post_analytics =  $('#modal-post-analytics'); //포스트 통계분석
 
-var popup_post_postMore = $('#popup-post-postMore') // 포스트 옵션 더보기
-var popup_post_report = $('#popup-post-report') // 포스트 신고
-var popup_post_sort = $('#popup-post-sort') // 정열방식 변경
-var popup_post_newList = $('#popup-post-newList') // 새 재생목록
-var popup_post_newPost = $('#popup-post-newPost') // 새 포스트작성을 위한 작업선택
+var popup_post_postMore = $('#popup-post-postMore'); // 포스트 옵션 더보기
+var popup_post_report = $('#popup-post-report'); // 포스트 신고
+var popup_post_sort = $('#popup-post-sort'); // 정열방식 변경
+var popup_post_newList = $('#popup-post-newList'); // 새 재생목록
+var popup_post_newPost = $('#popup-post-newPost'); // 새 포스트작성을 위한 작업선택
+var popup_post_delConfirm = $('#popup-post-delConfirm'); // 포스트 삭제 확인
 
-var sheet_post_listadd = $('#sheet-post-listadd') // 포스트 리스트에 저장
-var sheet_post_linkadd = $('#sheet-post-linkadd') // 새 포스트작성을 위한 링크추가
-var sheet_post_photoadd = $('#sheet-post-photoadd') // 새 포스트작성을 위한 사진 추가
+var sheet_post_listadd = $('#sheet-post-listadd'); // 포스트 리스트에 저장
+var sheet_post_linkadd = $('#sheet-post-linkadd'); // 새 포스트작성을 위한 링크추가
+var sheet_post_photoadd = $('#sheet-post-photoadd'); // 새 포스트작성을 위한 사진 추가
 
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
@@ -543,6 +544,7 @@ modal_post_opinion.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var uid = button.attr('data-uid');
   var modal = $(this);
+  if (!uid) uid = modal.attr('data-uid');
   var wrapper = modal.find('[data-role="list"]');
   modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
   getPostOpinion({
@@ -628,16 +630,12 @@ popup_post_postMore.on('show.rc.popup', function(event) {
   var popup = $(this);
   var uid = button.attr('data-uid');
   popup.attr('data-uid',uid);
-
-  console.log('옵션팝업')
   getPostMore(uid);
 })
 
 popup_post_postMore.on('hidden.rc.popup', function(event) {
   var popup = $(this);
   popup.find('[data-role="list"]').empty();
-  console.log('옵션팝업 닫힘')
-
 })
 
 popup_post_report.on('show.rc.popup', function(event) {
@@ -669,6 +667,33 @@ popup_post_report.find('[data-act="submit"]').click(function(){
         }
     });
   }, 100);
+});
+
+popup_post_delConfirm.find('[data-act="submit"]').click(function(){
+  var button = $(this)
+  var popup = popup_post_delConfirm
+  var uid = popup.attr('data-uid');
+  button.attr('disabled',true );
+
+  setTimeout(function(){
+    button.attr('disabled',false );
+    history.back();
+
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=delete',{
+      uid : uid,
+      send_mod : 'ajax'
+      },function(response,status){
+        if(status=='success'){
+          $(document).find('[data-role="item"][data-uid="'+uid+'"]').slideUp();
+          setTimeout(function(){
+            $.notify({message: '삭제 되었습니다.'},{type: 'default'});
+          }, 700);
+        } else {
+          alert(status);
+        }
+    });
+
+  }, 400);
 });
 
 sheet_post_listadd.on('show.rc.sheet', function(event) {
@@ -897,7 +922,6 @@ sheet_post_photoadd.find('[data-act="submit"]').click(function(){
 
   }, 300);
 });
-
 
 $(document).on('click','.modal.miniplayer .miniplayer-control .js-close',function(){
   modal_post_view.removeClass('miniplayer no-bartab active').css('display','none').empty();
