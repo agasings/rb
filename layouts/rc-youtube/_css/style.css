@@ -1013,6 +1013,15 @@ button[data-toggle="collapse"]:active {
   color: #999;
 }
 
+.sheet .rb-attach.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.sheet .rb-attach .col-xs-3 {
+  padding: 0;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff
+}
 
 /**
   * 8 - utility 유틸리티

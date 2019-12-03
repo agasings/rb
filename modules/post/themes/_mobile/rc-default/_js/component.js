@@ -18,7 +18,7 @@ var modal_post_photo =  $('#modal-post-photo'); //포스트 사진 보기
 var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
 var modal_post_analytics =  $('#modal-post-analytics'); //포스트 통계분석
 
-var popup_post_optionMore = $('#popup-post-optionMore') // 포스트 옵션 더보기
+var popup_post_postMore = $('#popup-post-postMore') // 포스트 옵션 더보기
 var popup_post_report = $('#popup-post-report') // 포스트 신고
 var popup_post_sort = $('#popup-post-sort') // 정열방식 변경
 var popup_post_newList = $('#popup-post-newList') // 새 재생목록
@@ -571,8 +571,6 @@ modal_post_write.on('show.rc.modal', function(event) {
   modal.find('[data-role="loader"]').removeClass('d-none') //로더 초기화
   modal.find('form').addClass('d-none')
 
-  modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
-
   setPostWrite({
     uid : uid,
     wrapper : modal,
@@ -623,79 +621,24 @@ modal_post_analytics.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var modal = $(this);
   var uid = button.attr('data-uid');
-
-  modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
 })
 
-popup_post_optionMore.on('show.rc.popup', function(event) {
+popup_post_postMore.on('show.rc.popup', function(event) {
   var button = $(event.relatedTarget);
   var popup = $(this);
   var uid = button.attr('data-uid');
   popup.attr('data-uid',uid);
+
+  console.log('옵션팝업')
+  getPostMore(uid);
 })
 
-popup_post_optionMore.on('click','[data-toggle="listAdd"]',function(){
-  var button = $(this);
-  var uid = popup_post_optionMore.attr('data-uid');
-  history.back();
-  setTimeout(function(){
-    if (memberid) {
-      sheet_post_listadd.attr('data-uid',uid).css('top','20vh');
-      sheet_post_listadd.sheet();
-    } else {
-      var title = button.attr('data-title')
-      var subtext = button.attr('data-subtext')
-      popup_login_guide.find('[data-role="title"]').text(title);
-      popup_login_guide.find('[data-role="subtext"]').text(subtext);
-      popup_login_guide.popup('show');
-    }
-  }, 200);
-});
+popup_post_postMore.on('hidden.rc.popup', function(event) {
+  var popup = $(this);
+  popup.find('[data-role="list"]').empty();
+  console.log('옵션팝업 닫힘')
 
-popup_post_optionMore.on('click','[data-toggle="report"]',function(){
-  var button = $(this);
-  var uid = popup_post_optionMore.attr('data-uid');
-  history.back();
-  setTimeout(function(){
-    if (memberid) {
-      popup_post_report.attr('data-uid',uid);
-      popup_post_report.popup();
-    } else {
-      var title = button.attr('data-title')
-      var subtext = button.attr('data-subtext')
-      popup_login_guide.find('[data-role="title"]').text(title);
-      popup_login_guide.find('[data-role="subtext"]').text(subtext);
-      popup_login_guide.popup('show');
-    }
-  }, 200);
-});
-
-popup_post_optionMore.on('click','[data-toggle="saved"]',function(){
-  var button = $(this);
-  var uid = popup_post_optionMore.attr('data-uid');
-  history.back();
-  setTimeout(function(){
-    if (memberid) {
-      setTimeout(function(){
-        $.post(rooturl+'/?r='+raccount+'&m=post&a=update_saved',{
-          uid : uid
-          },function(response,status){
-            if(status=='success'){
-              $.notify({message: '나중에 볼 동영상에 추가되었습니다.'},{type: 'default'});
-            } else {
-              alert(status);
-            }
-        });
-      }, 100);
-    } else {
-      var title = button.attr('data-title')
-      var subtext = button.attr('data-subtext')
-      popup_login_guide.find('[data-role="title"]').text(title);
-      popup_login_guide.find('[data-role="subtext"]').text(subtext);
-      popup_login_guide.popup('show');
-    }
-  }, 200);
-});
+})
 
 popup_post_report.on('show.rc.popup', function(event) {
   var button = $(event.relatedTarget);
@@ -761,6 +704,7 @@ sheet_post_linkadd.find('[data-act="submit"]').click(function(){
   var link_url_parse = $('<a>', {href: url});
   if (!url) {
     textarea.focus();
+    $.notify({message: '복사한 링크를 붙여넣기 하세요.'},{type: 'default'});
     return false
   }
   button.attr('disabled',true);
@@ -905,6 +849,55 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
   }, 200);
 
 });
+
+sheet_post_photoadd.on('hidden.rc.sheet', function(event) {
+  var sheet = $(this);
+  sheet.find('[data-act="submit"]').attr('disabled',false );
+  sheet.find('[data-role="guide"]').removeClass('d-none');
+  sheet.find('[data-role="attach-preview-photo"]').empty();
+  sheet.find('[data-role="attach-preview-file"]').empty();
+  sheet.find('[data-role="attach-preview-audio"]').empty();
+  sheet.find('[data-role="attach-preview-video"]').empty();
+})
+
+sheet_post_photoadd.find('[data-act="submit"]').click(function(){
+  var button = $(this)
+  var sheet = sheet_post_photoadd;
+  button.attr('disabled',true);
+
+  // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
+  var featured_img_input = modal_post_write.find('input[name="featured_img"]'); // 대표이미지 input
+  var featured_img_src = modal_post_write.find('[data-role="featured"]'); // 대표이미지 src
+  var first_attach_img_li = sheet.find('.rb-attach li:first'); // 첫번째 첨부된 이미지 리스트 li
+  var first_attach_img_uid = $(first_attach_img_li).attr('data-id');
+
+  featured_img_input.val(first_attach_img_uid);
+  featured_img_src.attr('src','http://placehold.it/206x116')
+
+  // 첨부파일 uid 를 upfiles 값에 추가하기
+  var attachfiles=sheet.find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
+  var new_upfiles='';
+  if(attachfiles){
+    for(var i=0;i<attachfiles.length;i++) {
+      new_upfiles+=attachfiles[i];
+    }
+    modal_post_write.find('input[name="upload"]').val(new_upfiles);
+    modal_post_write.find('[data-role="attachNum"]').text(attachfiles.length)
+  } else {
+
+    button.attr('disabled',false);
+    return false;
+  }
+
+  setTimeout(function(){ history.back(); }, 100);
+  setTimeout(function(){
+    modal_post_write.modal({
+      title : '새 포스트'
+    })
+
+  }, 300);
+});
+
 
 $(document).on('click','.modal.miniplayer .miniplayer-control .js-close',function(){
   modal_post_view.removeClass('miniplayer no-bartab active').css('display','none').empty();

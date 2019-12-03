@@ -342,6 +342,7 @@
             <span class="media-left media-middle position-relative pr-0 mr-2" >
               <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:103px;height:58px">
               <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="time"></time>
+              <span class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="attachNum"></span>
             </span>
             <div class="media-body f14" style="max-height: 300px;overflow: auto">
               <div class="form-list floating mb-1">
@@ -363,18 +364,18 @@
             <a href="#page-post-edit-attach" data-start="#page-post-edit-main" data-toggle="page">
               사진 및 파일추가
             </a>
-            <span class="badge badge-default badge-outline"></span>
+            <span class="badge badge-default badge-outline" data-role="attachNum"></span>
           </li>
           <li class="table-view-cell">
             <a href="#page-post-edit-link" data-start="#page-post-edit-main" data-toggle="page">
               링크추가
             </a>
-            <span class="badge badge-default badge-outline"></span>
+            <span class="badge badge-default badge-outline" data-role="linkNum"></span>
           </li>
 
           <li class="table-view-cell">
             외부공개
-            <div data-toggle="switch" class="switch">
+            <div data-toggle="switch" data-role="public" class="switch">
               <div class="switch-handle"></div>
             </div>
           </li>
@@ -414,7 +415,6 @@
       <span class="title" data-history="back">파일첨부</span>
     </header>
     <main class="content">
-
     </main>
   </section>
 
@@ -504,29 +504,9 @@
 
 
 <!-- 팝업 : 포스트 옵션 더보기 -->
-<div id="popup-post-optionMore" class="popup zoom">
+<div id="popup-post-postMore" class="popup zoom">
   <div class="popup-content">
-    <ul class="table-view table-view-full text-xs-center rounded-0">
-      <li class="table-view-cell">
-        <a class="" data-toggle="saved" data-title="나중에 다시 보고 싶으신가요" data-subtext="로그인하여 동영상을 저장하세요.">
-          나중에 볼 동영상에 저장
-        </a>
-      </li>
-      <li class="table-view-cell">
-        <a class="" data-toggle="listAdd" data-title="나중에 다시 보고 싶으신가요" data-subtext="로그인하여 동영상을 재생목록에 추가하세요.">
-          재생목록에 저장
-        </a>
-      </li>
-      <li class="table-view-cell" data-toggle="linkShare" data-hback="true">
-        <a class="">
-          공유
-        </a>
-      </li>
-      <li class="table-view-cell">
-        <a class="" data-toggle="report" data-title="동영상을 신고하시겠습니까?" data-subtext="부적절한 콘텐츠를 신고하려면 로그인하세요.">
-          신고
-        </a>
-      </li>
+    <ul class="table-view table-view-full text-xs-center rounded-0" data-role="list" style="max-height: 328px;">
     </ul>
   </div>
 </div>
@@ -799,27 +779,46 @@
 </div>
 
 <!-- 시트 : 새 포스트 사진 추가 -->
-<div id="sheet-post-photoadd" class="sheet shadow" style="height: 70vh;">
+<div id="sheet-post-photoadd" class="sheet shadow" style="top: 40vh;">
   <header class="bar bar-nav bar-light bg-white">
-    <button class="btn btn-link btn-nav pull-right px-3" data-act="submit">
+    <button class="btn btn-link btn-nav pull-right px-3" data-history="back" >
+      취소
+    </button>
+    <h1 class="title title-left px-3">사진 추가</h1>
+  </header>
+  <nav class="bar bar-tab bar-light bg-white">
+    <a class="tab-item text-muted" role="button" data-act="submit">
       <span class="not-loading">
         다음
       </span>
-      <span class="is-loading">
+      <span class="is-loading d-none">
         <div class="spinner-border spinner-border-sm" role="status">
           <span class="sr-only">저장중...</span>
         </div>
       </span>
-    </button>
-    <h1 class="title title-left px-3">사진 추가</h1>
-  </header>
+    </a>
+  </nav>
   <main>
 
+    <?php
+    // 설정값 세팅
+    $attachSkin = '_mobile/rc-col';  // 업로드 테마
+    $parent_module=$m; // 첨부파일 사용하는 모듈
+    $parent_data=$R; // 해당 포스트 데이타 (수정시 필요)
+    $attach_module_theme=$attachSkin; // 첨부파일 테마
+    $attach_handler_file='[data-role="attach-handler-file"]'; //파일첨부 실행 엘리먼트 button or 기타 엘리먼트 data-role="" 형태로 하는 것을 권고
+    $attach_handler_photo='[data-role="attach-handler-photo"]'; // 사진첨부 실행 엘리먼트 button or 기타 엘리먼트 data-role="" 형태로 하는 것을 권고
+    $attach_handler_getModalList='.getModalList'; // 첨부파일 리스트 호출 handler
+    $attach_object_type= 'photo';//첨부 대상에 따른 분류 : photo, file, link, video....
+
+    // 함수 인클루드
+    include $g['path_module'].'mediaset/attach.php';
+    ?>
 
   </main>
 </div>
 
-
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/post.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/list_view.js<?php echo $g['wcache']?>" ></script>
@@ -834,5 +833,4 @@
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/liked.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/feed.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/opinion.js<?php echo $g['wcache']?>" ></script>
-
-<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/more.js<?php echo $g['wcache']?>" ></script>

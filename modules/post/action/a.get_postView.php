@@ -105,7 +105,6 @@ $TMPL['tag'] = $R['tag']?getPostTag($R['tag']):'';
 $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d H:i');
 $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
 $TMPL['isFollowing'] = $_isFollowing ?'active':'';
-$TMPL['view_postadmin'] = $_perm['post_owner']?$post->getHtml('view_postadmin'):'';
 $TMPL['view_follow'] = $my['uid']!=$R['mbruid']?$post->getHtml('view_follow'):'';
 $TMPL['view_opinion'] = $my['uid']&&$R['likes']&&!$R['dis_like'] ?$post->getHtml('view_opinion'):'';
 

@@ -107,6 +107,12 @@ function setPostWrite(settings) {
                 wrapper.find('[data-role="loader"]').addClass('d-none') //로더 제거
                 wrapper.find('form').removeClass('d-none')
 
+                if (display==5) {
+                  wrapper.find('[data-toggle="switch"][data-role="public"]').addClass('active');
+                } else {
+                  wrapper.find('[data-toggle="switch"][data-role="public"]').removeClass('active');
+                }
+
                 if (goods) {
                   wrapper.find('[data-role="goodsLink"]').removeClass('d-none');
                 }
@@ -164,20 +170,7 @@ function setPostWrite(settings) {
 
 function savePost(f) {
 
-	if (f.subject.value == '') {
-		alert('제목 입력해 주세요.');
-		f.subject.focus();
-		return false;
-	}
-
   var editorData = editor_post.getData();
-
-  if (editorData == '')
-  {
-    $.notify({message: '본문 입력후 저장해 주세요.'},{type: 'primary'});
-    editor_post.editing.view.focus();
-    return false;
-  }
 
   // 카테고리 체크
 	var cat_sel=$('input[name="tree_members[]"]');
@@ -260,6 +253,19 @@ function savePost(f) {
   var dis_comment = form.find('[name="dis_comment"]').val();
   var dis_listadd = form.find('[name="dis_listadd"]').val();
 
+  if (!subject) {
+    $.notify({message: '제목 입력후 저장해 주세요.'},{type: 'default'});
+    form.find('[name="subject"]').focus();
+    modal_post_write.find('[data-act="submit"]').attr('disabled',false);
+    return false;
+  }
+
+  if (editorData == '') {
+    $.notify({message: '본문 입력후 저장해 주세요.'},{type: 'default'});
+    modal_post_write.find('[data-act="submit"]').attr('disabled',false);
+    return false;
+  }
+
   setTimeout(function(){
 
     $.post(rooturl+'/?r='+raccount+'&m=post&a=write',{
@@ -296,7 +302,6 @@ function savePost(f) {
         }
     });
   }, 200);
-
 }
 
 function savePostByLink(url) {
@@ -449,7 +454,7 @@ function savePostByLink(url) {
 
   }).fail(function() {
     $.notify({message: 'URL을 확인해주세요.'},{type: 'default'});
-    button.attr('disabled',false);
+    sheet_post_linkadd.find('[data-act="submit"]').attr('disabled',false );
     textarea.attr('disabled',false).focus()
   }).always(function() {
   });
