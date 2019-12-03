@@ -583,6 +583,7 @@ modal_post_write.on('show.rc.modal', function(event) {
 modal_post_write.on('hidden.rc.modal', function(event) {
   var modal = $(this);
   // 입력사항 초기화
+  modal.removeAttr('data-uid');
   modal.find('[data-role="subject"]').val('');
   modal.find('[data-role="featured"]').attr('src','')
   modal.find('[data-role="time"]').text('');

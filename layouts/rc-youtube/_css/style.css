@@ -920,6 +920,7 @@ button[data-toggle="collapse"]:active {
   outline: none
 }
 
+.page.center .miniplayer-control,
 .modal.active .miniplayer-control {
   display: none
 }

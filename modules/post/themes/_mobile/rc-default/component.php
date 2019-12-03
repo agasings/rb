@@ -279,7 +279,6 @@
   </header>
   <div class="content">
     <p class="content-padded">
-      The contents of my modal go here.
     </p>
   </div>
 </div>
@@ -470,7 +469,6 @@
       </ul>
     </main>
   </section>
-
 
   <section class="page right" id="page-post-edit-category">
     <header class="bar bar-nav bar-light bg-faded px-0">
