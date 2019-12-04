@@ -33,6 +33,10 @@ $list='';
 $list = $post->getHtml('post-menu');
 $list .= $_perm['post_owner']?$post->getHtml('post-menu-owner'):'';
 
+$result['subject'] = stripslashes($R['subject']);
+$result['featured'] = $g['url_host'].getPreviewResize(getUpImageSrc($R),'640x360');
+$result['review'] = $R['review'];
+$result['link'] = $g['url_host'].getPostLink($R,0);
 $result['likes'] = $R['likes']?$R['likes']:'';
 $result['owner'] = $_perm['post_owner']?1:0;
 $result['list'] = $list;

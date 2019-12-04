@@ -65,3 +65,9 @@
 <link href="<?php echo $g['url_layout']?>/_css/article.css<?php echo $g['wcache']?>" rel="stylesheet">
 
 <link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['post']['comment_mobile']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script>
+var kakao_jskey = '<?php echo $d['connect']['jskey_k'] ?>';
+Kakao.init(kakao_jskey);
+</script>

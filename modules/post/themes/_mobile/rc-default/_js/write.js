@@ -2,6 +2,28 @@ function setPostWrite(settings) {
   var wrapper = settings.wrapper;
   var uid=settings.uid;
 
+  // 상태 초기화
+  wrapper.find('[name="uid"]').val('');
+
+
+  wrapper.find('[data-role="display_label"]').text(uid?'':'비공개');
+
+  popover_post_display.find('[data-toggle="display"] .badge').empty();
+  popover_post_display.find('[data-toggle="display"][data-display="1"] .badge').html('<span class="icon icon-check"></span>');
+  wrapper.find('[name="display"]').val(1);
+  wrapper.find('[name="category_members"]').val('');
+  wrapper.find('[name="list_members"]').val('');
+  wrapper.find('[name="upload"]').val('');
+  wrapper.find('[name="member"]').val('');
+  wrapper.find('[name="featured_img"]').val('');
+  wrapper.find('[name="review"]').val('');
+  wrapper.find('[name="format"]').val(1);
+  wrapper.find('[name="dis_rating"]').val(0);
+  wrapper.find('[name="dis_like"]').val(0);
+  wrapper.find('[name="dis_comment"]').val(0);
+  wrapper.find('[name="dis_listadd"]').val(0);
+  wrapper.find('[name="goods"]').val('');
+
   wrapper.find('[name="uid"]').val(uid);
   autosize.destroy(wrapper.find('[data-plugin="autosize"]'));
 
@@ -70,6 +92,7 @@ function setPostWrite(settings) {
                 var featured_img=result.featured_img;
                 var upload=result.upload;
                 var display=result.display;
+                var display_label=result.display_label;
                 var format=result.format;
                 var time=result.time;
                 var subject=result.subject;
@@ -87,12 +110,17 @@ function setPostWrite(settings) {
                 var dis_listadd = result.dis_listadd;
                 var goods = result.goods;
 
+
+                wrapper.find('[data-role="display_label"]').text(display_label);
+                popover_post_display.find('[data-toggle="display"] .badge').empty();
+                popover_post_display.find('[data-toggle="display"][data-display="'+display+'"] .badge').html('<span class="icon icon-check"></span>');
+                wrapper.find('[name="display"]').val(display);
+
                 wrapper.find('[data-role="subject"]').val(subject);
                 wrapper.find('[data-role="time"]').text(time);
                 wrapper.find('[data-role="featured"]').attr('src',featured);
                 wrapper.find('[name="featured_img"]').val(featured_img);
                 wrapper.find('[name="upload"]').val(upload);
-                wrapper.find('[name="display"]').val(display);
                 wrapper.find('[name="format"]').val(format);
                 wrapper.find('[data-role="nic"]').text(nic);
 
@@ -127,7 +155,6 @@ function setPostWrite(settings) {
 
                 autosize(wrapper.find('[data-plugin="autosize"]'));
 
-
               } else {
                 alert(status);
               }
@@ -137,8 +164,6 @@ function setPostWrite(settings) {
           wrapper.find('[data-role="loader"]').addClass('d-none') //로더 제거
           wrapper.find('form').removeClass('d-none')
 
-          setTimeout(function(){ wrapper.find('[name="subject"]').focus(); }, 1000);
-          wrapper.find('[data-act="submit"] .not-loading').text('등록');
           autosize(wrapper.find('[data-plugin="autosize"]'));
         }
 
@@ -147,7 +172,7 @@ function setPostWrite(settings) {
           console.error( error );
       } );
 
-  }, 200);
+  }, 10);
 
   wrapper.find('.form-list.floating .input-row textarea').on('keyup', function(event) {
     if ($(this).val().length >= 1) {

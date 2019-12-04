@@ -8,6 +8,9 @@ var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
 var page_post_saved=  $('#page-post-saved'); // 내 포스트 저장내역(나중에 볼 동영상)
 var page_post_liked=  $('#page-post-liked'); // 좋아요한 포스트
 var page_post_view =  $('#page-post-view'); //포스트 보기
+
+var page_post_edit_main = $('#page-post-edit-main'); // 포스트 작성 메인
+
 var page_post_analytics_main = $('#page-post-analytics-main'); // 포스트 통계분석 메인
 var page_post_analytics_hit = $('#page-post-analytics-hit'); // 포스트 통계분석 유입추이
 var page_post_analytics_referer = $('#page-post-analytics-referer'); // 포스트 통계분석 유입경로
@@ -36,6 +39,8 @@ var popup_post_delConfirm = $('#popup-post-delConfirm'); // 포스트 삭제 확
 var sheet_post_listadd = $('#sheet-post-listadd'); // 포스트 리스트에 저장
 var sheet_post_linkadd = $('#sheet-post-linkadd'); // 새 포스트작성을 위한 링크추가
 var sheet_post_photoadd = $('#sheet-post-photoadd'); // 새 포스트작성을 위한 사진 추가
+
+var popover_post_display = $('#popover-post-display') // 새 포스트 작성을 위한 공개설정
 
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
@@ -658,6 +663,14 @@ modal_post_analytics.on('show.rc.modal', function(event) {
         modal.find('[data-role="comment"]').text(comment);
         modal.find('[data-role="loader"]').addClass('d-none');
         modal.find('[data-role="article"]').removeClass('d-none');
+
+
+        var ctx = page_post_analytics_main.find('canvas');
+        var mod = 'hit';
+        var start = modal.attr('data-start');
+        setPostTrendChart(ctx,uid,mod,'day',start);
+
+
       } else {
         alert(status);
       }
@@ -961,6 +974,19 @@ sheet_post_photoadd.find('[data-act="submit"]').click(function(){
 
   }, 300);
 });
+
+popover_post_display.find('[data-toggle="display"]').click(function(){
+  var item = $(this)
+  var popover = popover_post_display;
+  var display = item.attr('data-display');
+  var label = item.attr('data-label');
+  popover_post_display.find('.badge').empty();
+  item.find('.badge').html('<span class="icon icon-check"></span>');
+  page_post_edit_main.find('[data-role="display_label"]').text(label);
+  page_post_edit_main.find('[name="display"]').val(display);
+  history.back();
+});
+
 
 $(document).on('click','.modal.miniplayer .miniplayer-control .js-close',function(){
   modal_post_view.removeClass('miniplayer no-bartab active').css('display','none').empty();

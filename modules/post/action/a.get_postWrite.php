@@ -11,6 +11,17 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['post']['skin_main'];
 }
 
+// 포스트 공개관련
+$d['displaySet'] = "||비공개,lock||일부공개,how_to_reg||미등록,insert_link||회원공개,people_alt||전체공개,public";
+$g['displaySet']['label'] = [];
+$g['displaySet']['icon'] = [];
+$displaySet=explode('||',$d['displaySet']);
+foreach ($displaySet as $displayLine) {
+	$dis=explode(',',$displayLine);
+	array_push($g['displaySet']['label'], $dis[0]);
+	array_push($g['displaySet']['icon'], $dis[1]);
+}
+
 include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 
 $mbruid = $my['uid'];
@@ -45,6 +56,7 @@ $result['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $result['featured'] = getPreviewResize(getUpImageSrc($R),'240x134');
 $result['featured_img'] = $R['featured_img'];
 $result['display'] = $R['display'];
+$result['display_label']=$g['displaySet']['label'][$R['display']];
 $result['format'] = $R['format'];
 $result['upload'] = $R['upload'];
 $result['time'] = getUpImageTime($R)?getUpImageTime($R):'';

@@ -150,7 +150,7 @@
   <?php if ($my['uid']): ?>
   <ul class="table-view bg-white mt-3">
     <li class="table-view-cell">
-      <a class="" href="#page-post-mypost" data-start="#page-main" data-toggle="page" data-title="내 포스트">
+      <a class="" href="#page-post-mypost" data-start="#page-main" data-toggle="page" data-title="내 포스트" data-url="<?php echo RW('mod=dashboard&page=post')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">play_circle_outline</span>
         <span class="badge badge-default badge-inverted"><?php echo number_format($my['num_post']) ?></span>
         <div class="media-body">
@@ -159,7 +159,7 @@
       </a>
     </li>
     <li class="table-view-cell">
-      <a class="" href="#page-post-mylist" data-start="#page-main" data-toggle="page" data-title="내 리스트">
+      <a class="" href="#page-post-mylist" data-start="#page-main" data-toggle="page" data-title="내 리스트" data-url="<?php echo RW('mod=dashboard&page=list')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">playlist_play</span>
         <span class="badge badge-default badge-inverted"><?php echo number_format($my['num_list']) ?></span>
         <div class="media-body">
@@ -168,7 +168,7 @@
       </a>
     </li>
     <li class="table-view-cell">
-      <a class="" href="#page-post-saved" data-start="#page-main" data-toggle="page" data-title="나중에 볼 포스트">
+      <a class="" href="#page-post-saved" data-start="#page-main" data-toggle="page" data-title="나중에 볼 포스트" data-url="<?php echo RW('mod=dashboard&page=saved')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">schedule</span>
         <span class="badge badge-default badge-inverted"></span>
         <div class="media-body">

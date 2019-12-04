@@ -199,25 +199,25 @@
         </div>
       </div>
       <div class="d-none" data-role="article">
-        <div class="media content-padded">
-          <span class="media-left">
-            <div class="embed-responsive embed-responsive-16by9 bg-faded">
-              <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:110px">
-              <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:0;bottom:0" data-role="time"></time>
+        <div class="border-bottom">
+          <div class="media content-padded">
+            <span class="media-left">
+              <div class="embed-responsive embed-responsive-16by9 bg-faded">
+                <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:110px">
+                <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:0;bottom:0" data-role="time"></time>
+              </div>
+            </span>
+            <div class="media-body">
+              <h5 class="media-heading f15 line-clamp-2 mb-0" data-role="subject"></h5>
+              <small data-role="nic" class="text-muted"></small> <small class="text-muted ml-2">조회수 <span data-role="hit"></span>회</small>
             </div>
-          </span>
-          <div class="media-body">
-            <h5 class="media-heading f15 line-clamp-3 mb-0" data-role="subject"></h5>
-            <small data-role="nic" class="text-muted"></small>
           </div>
         </div>
+
+        <canvas class="my-3"></canvas>
+
         <ul class="table-view">
-          <li class="table-view-cell">
-            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-hit" data-start="#page-post-analytics-main">
-              <span class="badge badge-pill" data-role="hit"></span>
-              유입추이
-            </a>
-          </li>
+
           <li class="table-view-cell">
             <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-referer" data-start="#page-post-analytics-main">
               유입경로
@@ -252,27 +252,6 @@
             </a>
           </li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="page right" id="page-post-analytics-hit">
-    <header class="bar bar-nav bar-light bg-white px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <h1 class="title" data-history="back">유입추이</h1>
-    </header>
-    <div class="content">
-      <div data-role="loader">
-        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
-          <div class="spinner-border text-muted" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      </div>
-      <div data-role="canvas">
-        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
-          <canvas></canvas>
-        </div>
       </div>
     </div>
   </section>
@@ -497,7 +476,7 @@
 
   <section class="page center" id="page-post-edit-main">
 
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
       <button class="btn btn-link btn-nav pull-right px-4" data-act="submit">
         <span class="not-loading">
@@ -509,7 +488,10 @@
           </div>
         </span>
       </button>
-      <span class="title" data-role="title">새 포스트</span>
+      <a href="#popover-post-display" data-toggle="popover" class="title title-left ml-3">
+        <span data-role="display_label">비공개</span>
+        <span class="icon icon-caret ml-1" style="top: 2px;"></span>
+      </a>
     </header>
     <header class="bar bar-nav bar-light bg-faded p-x-0 border-top" data-role="editor-nav">
       <div class="d-flex align-items-center">
@@ -538,8 +520,7 @@
         <input type="hidden" name="featured_img" value="">
         <input type="hidden" name="html" value="HTML">
         <input type="hidden" name="review">
-        <input type="hidden" name="display">
-        <input type="hidden" name="format">
+        <input type="hidden" name="display" value="1">
         <input type="hidden" name="dis_rating">
         <input type="hidden" name="dis_like">
         <input type="hidden" name="dis_comment">
@@ -581,13 +562,6 @@
             </a>
             <span class="badge badge-default badge-outline" data-role="linkNum"></span>
           </li>
-
-          <li class="table-view-cell">
-            외부공개
-            <div data-toggle="switch" data-role="public" class="switch">
-              <div class="switch-handle"></div>
-            </div>
-          </li>
           <li class="table-view-cell">
             <a href="#page-post-edit-review" data-start="#page-post-edit-main" data-toggle="page">
               <span class="badge badge-default badge-inverted"></span>
@@ -601,9 +575,18 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a href="#page-post-edit-format" data-start="#page-post-edit-main" data-toggle="page">
-              <span class="badge badge-default badge-outline"></span>
-              포맷
+            포맷
+            <div class="select custom-select border-0">
+              <select name="format">
+                <option value="1">doc</option>
+                <option value="2">video</option>
+                <option value="3">adv</option>
+              </select>
+            </div>
+          </li>
+          <li class="table-view-cell">
+            <a href="#page-post-edit-category" data-start="#page-post-edit-main" data-toggle="page">
+              카테고리 설정
             </a>
           </li>
           <li class="table-view-cell">
@@ -619,18 +602,18 @@
   </section>
 
   <section class="page right" id="page-post-edit-attach">
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">파일첨부</span>
+      <span class="title title-left" data-history="back">파일첨부</span>
     </header>
     <main class="content">
     </main>
   </section>
 
   <section class="page right" id="page-post-edit-link">
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">링크추가</span>
+      <span class="title title-left" data-history="back">링크추가</span>
     </header>
     <main class="content">
 
@@ -638,9 +621,9 @@
   </section>
 
   <section class="page right" id="page-post-edit-review">
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">요약설명</span>
+      <span class="title title-left" data-history="back">요약설명</span>
     </header>
     <main class="content">
 
@@ -648,9 +631,9 @@
   </section>
 
   <section class="page right" id="page-post-edit-tag">
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">태그</span>
+      <span class="title title-left" data-history="back">태그</span>
     </header>
     <main class="content">
 
@@ -658,41 +641,27 @@
   </section>
 
   <section class="page right" id="page-post-edit-advan">
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">고급설정</span>
+      <span class="title title-left" data-history="back">고급설정</span>
     </header>
     <main class="content">
       <ul class="table-view mt-0 border-top-0">
+
         <li class="table-view-cell">
-          <a href="#page-post-edit-category" data-start="#page-post-edit-advan" data-toggle="page">
-            카테고리 지정
-          </a>
-        </li>
-        <li class="table-view-cell">
-          <a href="#page-post-edit-display" data-start="#page-post-edit-advan" data-toggle="page">
-            <span class="badge badge-default badge-inverted"></span>
-            공유설정
-          </a>
+          외부공개
+          <div data-toggle="switch" data-role="public" class="switch">
+            <div class="switch-handle"></div>
+          </div>
         </li>
       </ul>
     </main>
   </section>
 
   <section class="page right" id="page-post-edit-category">
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">카테고리 지정</span>
-    </header>
-    <main class="content">
-
-    </main>
-  </section>
-
-  <section class="page right" id="page-post-edit-format">
-    <header class="bar bar-nav bar-light bg-faded px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">포맷</span>
+      <span class="title title-left" data-history="back">카테고리 설정</span>
     </header>
     <main class="content">
 
@@ -700,9 +669,9 @@
   </section>
 
   <section class="page right" id="page-post-edit-display">
-    <header class="bar bar-nav bar-light bg-faded px-0">
+    <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title" data-history="back">공유설정</span>
+      <span class="title title-left" data-history="back">공유설정</span>
     </header>
     <main class="content">
 
@@ -1051,6 +1020,64 @@
 
   </main>
 </div>
+
+<!-- Popover-->
+<div id="popover-post-display" class="popover">
+  <ul class="table-view" style="line-height: 1.2;max-height: 325px;">
+
+    <li class="table-view-cell">
+      <a class="d-flex align-items-center" data-toggle="display" data-display="1" data-label="비공개">
+        <span class="badge badge-inverted"><span class="icon icon-check"></span></span>
+        <i class="media-object pull-left media-middle material-icons f28 ml-1 mr-3 text-muted" data-role="icon">lock</i>
+         <div class="media-body">
+           비공개
+           <p><small>나만 볼수있음</small></p>
+         </div>
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a class="d-flex align-items-center" data-toggle="display" data-display="2" data-label="일부공개">
+        <span class="badge badge-inverted"><span class=""></span></span>
+        <i class="media-object pull-left media-middle material-icons f28 ml-1 mr-3 text-muted" data-role="icon">how_to_reg</i>
+         <div class="media-body">
+           일부공개
+           <p><small>지정된 친구만 볼수 있음</small></p>
+         </div>
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a class="d-flex align-items-center" data-toggle="display" data-display="3" data-label="미등록">
+        <span class="badge badge-inverted"><span class=""></span></span>
+        <i class="media-object pull-left media-middle material-icons f28 ml-1 mr-3 text-muted" data-role="icon">insert_link</i>
+         <div class="media-body">
+           미등록
+           <p><small>링크 있는 사용자만 볼 수 있음. 로그인 불필요</small></p>
+         </div>
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a class="d-flex align-items-center" data-toggle="display" data-display="4" data-label="회원공개">
+        <span class="badge badge-inverted"><span class=""></span></span>
+        <i class="media-object pull-left media-middle material-icons f28 ml-1 mr-3 text-muted" data-role="icon">people_alt</i>
+         <div class="media-body">
+           회원공개
+           <p><small>사이트 회원만 볼수 있음. 로그인 필요</small></p>
+         </div>
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a class="d-flex align-items-center" data-toggle="display" data-display="5" data-label="전체공개">
+        <span class="badge badge-inverted"><span class=""></span></span>
+        <i class="media-object pull-left media-middle material-icons f28 ml-1 mr-3 text-muted" data-role="icon">public</i>
+         <div class="media-body">
+           전체공개
+           <p><small>모든 사용자가 검색하고 볼 수 있음</small></p>
+         </div>
+      </a>
+    </li>
+  </ul>
+</div>
+
 
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/post.js<?php echo $g['wcache']?>" ></script>

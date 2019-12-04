@@ -11,8 +11,14 @@ function getPostMore(uid) {
         var list=result.list;
         var owner=result.owner;
         var likes=result.likes;
+        var subject = result.subject.replace(/&quot;/g, '"');
+        var featured=result.featured;
+        var review=result.review;
+        var link=result.link;
 
         wrapper.find('[data-role="list"]').html(list)
+
+        wrapper.find('[data-toggle="kakaoTalkSend"],[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-review',review).attr('data-featured',featured).attr('data-link',link);
 
         if (owner) {
           wrapper.find('[data-role="list"] [data-toggle="saved"]').closest('.table-view-cell').remove();
@@ -27,6 +33,36 @@ function getPostMore(uid) {
       }
   });
 
+}
+
+//카카오톡 링크보내기
+function kakaoTalkSend(settings) {
+  var title = settings.subject;
+  var description = settings.review;
+  var imageUrl = settings.featured;
+  var link = settings.link+'?ref=kt'  // 카카오톡 파라미터 추가;
+
+  Kakao.Link.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+      link: {
+        mobileWebUrl: link,
+        webUrl: link
+      }
+    },
+    buttons: [
+      {
+        title: '바로가기',
+        link: {
+          mobileWebUrl: link,
+          webUrl: link
+        }
+      },
+    ]
+  });
 }
 
 popup_post_postMore.on('click','[data-toggle="listAdd"]',function(){
@@ -140,4 +176,23 @@ popup_post_postMore.on('click','[data-toggle="postdel"]',function(){
       title : title
     })
   }, 200);
+});
+
+// 카카오톡 링크 공유
+popup_post_postMore.on('click','[data-toggle="kakaoTalkSend"]',function(){
+  var button = $(this);
+  var subject = button.attr('data-subject');
+  var review = button.attr('data-review');
+  var featured = button.attr('data-featured');
+  var link = button.attr('data-link');
+
+  history.back();
+
+  kakaoTalkSend({
+    subject : subject,
+    review : review,
+    featured : featured,
+    link : link
+  })
+
 });

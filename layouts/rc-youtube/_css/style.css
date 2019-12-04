@@ -807,11 +807,7 @@ button[data-toggle="collapse"]:active {
 }
 
 .popover {
-  top: 40px;
-  left: auto;
-  right: 15px;
-  width: 200px;
-  margin-left: 0;
+  top: 10px;
   border: none;
   border-radius: 0;
   -webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
