@@ -1,6 +1,7 @@
 function setPostWrite(settings) {
   var wrapper = settings.wrapper;
   var uid=settings.uid;
+  if (!uid) var uid=wrapper.attr('data-uid');
 
   // 상태 초기화
   wrapper.find('[name="uid"]').val('');
@@ -30,7 +31,7 @@ function setPostWrite(settings) {
   setTimeout(function(){
 
     DecoupledEditor
-      .create( document.querySelector( '#modal-post-write [data-role="editor-body"]' ),{
+      .create( document.querySelector( '[data-role="write"] [data-role="editor-body"]' ),{
         placeholder: '본문 입력...',
         toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
         removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle',,'WordCount' ],

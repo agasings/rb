@@ -5,7 +5,7 @@
   <div class="modia-loader"></div>
   <div class="miniplayer-control">
     <div class="d-flex justify-content-between align-items-center">
-      <div class="py-1" data-uid='' data-toggle="modal" data-target="#modal-post-view">
+      <div class="py-1" data-uid='' data-toggle="modal" data-target="#modal-post-view" data-url="">
         <div data-role="subject" class="f13 text-black line-clamp-1"></div>
         <span data-role="nic" class="f12 line-clamp-1 text-muted"></span>
       </div>
@@ -30,10 +30,15 @@
   <div data-role="listCollapse" class="bg-black text-white"></div>
 </header>
 <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0 d-none" data-role="goodsLink">
-	<a class="tab-item bg-inverse text-white" role="button" data-history="back">
+	<a class="tab-item bg-inverse text-white" role="button" data-history="back" data-role="hback">
 		이전가기
 	</a>
-  <a class="tab-item bg-primary" role="button" data-title="이영상에 사용된 제품" data-target="#page-shop-category" data-index="1" data-parent="1" data-category="6" data-toggle="page" data-start="#page-post-view-video" onclick="javascript:alert('준비중입니다.')">
+  <a class="tab-item bg-inverse text-white d-none" role="button" data-href="/" data-text="홈으로 이동" data-role="gohome">
+    홈으로
+  </a>
+  <a class="tab-item bg-primary" role="button" data-title="이영상에 사용된 제품"
+    data-target="#page-shop-category"
+    data-index="1" data-parent="1" data-category="6" data-toggle="page" data-start="#page-post-view-video" onclick="javascript:alert('준비중입니다.')">
 		제품 구매하기
 	</a>
 </nav>

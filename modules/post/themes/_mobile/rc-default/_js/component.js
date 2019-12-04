@@ -499,6 +499,7 @@ modal_post_view.on('show.rc.modal', function(event) {
   var provider = button.attr('data-provider');
   var videoId = button.attr('data-videoId');
   var url = button.attr('data-url');
+  var landing = button.attr('data-landing');
 
   switch(format) {
     case '1':
@@ -530,7 +531,8 @@ modal_post_view.on('show.rc.modal', function(event) {
       provider : provider,
       videoId : videoId,
       wrapper : modal,
-      url : url
+      url : url,
+      landing : landing
     });
   }
 

@@ -472,7 +472,7 @@
 </div>
 
 <!-- 모달 : 포스트 편집 -->
-<div class="modal fast" id="modal-post-write">
+<div class="modal fast" id="modal-post-write" data-role="write">
 
   <section class="page center" id="page-post-edit-main">
 
@@ -507,7 +507,7 @@
     <main role="main" class="content">
       <div data-role="loader">
         <div class="d-flex justify-content-center align-items-center text-muted" style="height:70vh">
-          <div class="spinner-border mr-2" role="status"></div>
+          <div class="spinner-border" role="status"></div>
         </div>
       </div>
       <form name="writeForm" method="post" class="d-none">

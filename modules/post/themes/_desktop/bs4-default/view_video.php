@@ -141,7 +141,6 @@
 			</div><!-- /.page-meta-body -->
 		</div>
 
-
 		<div class="d-flex justify-content-between">
 
 			<div class="media w-100" data-mbruid="<?php echo $R['mbruid'] ?>">

@@ -9,6 +9,7 @@ function getPostView(settings) {
   var provider = settings.provider;
   var videoId = settings.videoId;
   var url = settings.url;
+  var landing = settings.landing;
   var ctheme = '_mobile/rc-default';
   var template = '/modules/post/themes/'+post_skin_mobile+'/_html/view_'+format+'.html';
   var list_collapse = settings.list_collapse;
@@ -21,11 +22,17 @@ function getPostView(settings) {
     var window_height = $(window).height();
     var content_height = window_height - height;
 
+    if (landing) {
+      wrapper.find('[data-role="hback"]').addClass('d-none');
+      wrapper.find('[data-role="gohome"]').removeClass('d-none');
+    }
+
     wrapper.find('[data-toggle="linkShare"]').attr('data-url',url);
     wrapper.find('.embed-responsive').css('background-image','url('+featured+')')
     wrapper.find('.content').css('padding-top',height+'px')
     wrapper.find('[data-role="goodsLink"]').addClass('d-none');
     wrapper.find('[data-uid]').attr('data-uid',uid);
+    wrapper.find('[data-url]').attr('data-url',url);
 
     if (format=='video') {
       wrapper.find('.bar-standard').css('height',embed_height+'px')
