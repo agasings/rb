@@ -4,7 +4,7 @@
     <?php getWidget('post/rc-post-req-card',array('wrapper'=>'#widget-post-req','title'=>'추천 포스트','markup'=>'post-row','start'=>'#page-main','posts'=>$d['layout']['main_post_req']))?>
   </section>
 
-  <section class="widget border-top border-bottom" id="widget-post-all">
+  <section class="widget" id="widget-post-all">
     <?php getWidget('post/rc-post-all-scroll',array('wrapper'=>'#widget-post-all','start'=>'#page-main','recnum'=>5,'link'=>'/post'))?>
   </section>
 

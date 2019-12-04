@@ -26,6 +26,10 @@
 <?php getImport('moment','moment','2.22.2','js');?>
 <?php getImport('moment-duration-format','moment-duration-format','2.2.2','js');?>
 
+<!-- Chart.js : https://github.com/chartjs/Chart.js/  -->
+<?php getImport('Chart.js','Chart','2.8.0','css') ?>
+<?php getImport('Chart.js','Chart.bundle.min','2.8.0','js') ?>
+
 <!-- 댓글출력시 필요 -->
 <?php if ($mod!='write'): ?>
 <?php getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');  ?>

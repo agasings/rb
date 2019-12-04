@@ -19,12 +19,16 @@ $uid = $_POST['uid']; // 포스트 고유번호
 $R = getUidData($table[$m.'data'],$uid);
 $linkedshopArr = getArrayString($R['linkedshop']);
 
+$result['featured'] = getPreviewResize(getUpImageSrc($R),'320x180');
+$result['subject'] = stripslashes($R['subject']);
 $result['goods'] = $linkedshopArr['data'][0];
 $result['article'] = getContents($R['content'],'HTML');
+$result['nic'] = getProfileInfo($R['mbruid'],'nic');
 $result['hit'] = $R['hit'];
-$result['likes'] = $R['likes'];
-$result['dislikes'] = $R['dislikes'];
-$result['comment'] = $R['comment'].($R['oneline']?'+'.$R['oneline']:'');
+$result['likes'] = $R['likes']?$R['likes']:'';
+$result['dislikes'] = $R['dislikes']?$R['dislikes']:'';
+$result['comment'] = $R['comment']?($R['comment'].($R['oneline']?'+'.$R['oneline']:'')):'';
+$result['time'] = getUpImageTime($R)?getUpImageTime($R):'';
 
 $markup_file = $markup_file?$markup_file:'view';
 

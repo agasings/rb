@@ -105,7 +105,7 @@ function getPostView(settings) {
      },function(response,status){
         if(status=='success'){
           var result = $.parseJSON(response);
-          var subject=result.subject;
+          var subject = result.subject.replace(/&quot;/g, '"');
           var nic=result.nic;
           var isperm=result.isperm;
           var article=result.article;

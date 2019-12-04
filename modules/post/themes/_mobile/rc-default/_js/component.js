@@ -8,6 +8,14 @@ var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
 var page_post_saved=  $('#page-post-saved'); // 내 포스트 저장내역(나중에 볼 동영상)
 var page_post_liked=  $('#page-post-liked'); // 좋아요한 포스트
 var page_post_view =  $('#page-post-view'); //포스트 보기
+var page_post_analytics_main = $('#page-post-analytics-main'); // 포스트 통계분석 메인
+var page_post_analytics_hit = $('#page-post-analytics-hit'); // 포스트 통계분석 유입추이
+var page_post_analytics_referer = $('#page-post-analytics-referer'); // 포스트 통계분석 유입경로
+var page_post_analytics_device = $('#page-post-analytics-device'); // 포스트 통계분석 디바이스별
+var page_post_analytics_side = $('#page-post-analytics-side'); // 포스트 통계분석 외부유입
+var page_post_analytics_likes = $('#page-post-analytics-likes'); // 포스트 통계분석 좋아요
+var page_post_analytics_dislikes = $('#page-post-analytics-dislikes'); // 포스트 통계분석 싫어요
+var page_post_analytics_comment = $('#page-post-analytics-comment'); // 포스트 통계분석 댓글
 
 var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
 var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
@@ -622,7 +630,38 @@ modal_post_write.find('[data-act="submit"]').click(function(){
 modal_post_analytics.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
   var modal = $(this);
-  var uid = button.attr('data-uid');
+  var uid = modal.attr('data-uid');
+
+  modal.find('[data-role="loader"]').removeClass('d-none');
+  modal.find('[data-role="article"]').addClass('d-none');
+
+  $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postData',{
+    uid : uid
+    },function(response,status){
+      if(status=='success'){
+        var result = $.parseJSON(response);
+        var subject = result.subject.replace(/&quot;/g, '"');
+        var featured=result.featured;
+        var time=result.time;
+        var nic=result.nic;
+        var hit=result.hit;
+        var likes=result.likes;
+        var dislikes=result.dislikes;
+        var comment=result.comment;
+        modal.find('[data-role="subject"]').text(subject);
+        modal.find('[data-role="featured"]').attr('src',featured);
+        modal.find('[data-role="nic"]').text(nic);
+        modal.find('[data-role="hit"]').text(hit);
+        modal.find('[data-role="time"]').text(time);
+        modal.find('[data-role="likes"]').text(likes);
+        modal.find('[data-role="dislikes"]').text(dislikes);
+        modal.find('[data-role="comment"]').text(comment);
+        modal.find('[data-role="loader"]').addClass('d-none');
+        modal.find('[data-role="article"]').removeClass('d-none');
+      } else {
+        alert(status);
+      }
+  });
 })
 
 popup_post_postMore.on('show.rc.popup', function(event) {

@@ -184,16 +184,225 @@
 </div><!-- /.modal -->
 
 <!-- 모달 : 포스트 통계 -->
-<div class="modal fast" id="modal-post-analytics">
-  <header class="bar bar-nav bar-light bg-faded px-0">
-    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <h1 class="title" data-history="back">분석</h1>
-  </header>
-  <div class="content">
-    <div class="content-padded">
-      준비중
+<div class="modal fast" id="modal-post-analytics" data-start="<?php echo date("Ymd", strtotime("-1 week")); ?>">
+
+  <section class="page center" id="page-post-analytics-main">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
+      <h1 class="title" data-history="back">통계</h1>
+    </header>
+    <div class="content">
+
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center text-muted" style="height:70vh">
+          <div class="spinner-border mr-2" role="status"></div>
+        </div>
+      </div>
+      <div class="d-none" data-role="article">
+        <div class="media content-padded">
+          <span class="media-left">
+            <div class="embed-responsive embed-responsive-16by9 bg-faded">
+              <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:110px">
+              <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:0;bottom:0" data-role="time"></time>
+            </div>
+          </span>
+          <div class="media-body">
+            <h5 class="media-heading f15 line-clamp-3 mb-0" data-role="subject"></h5>
+            <small data-role="nic" class="text-muted"></small>
+          </div>
+        </div>
+        <ul class="table-view">
+          <li class="table-view-cell">
+            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-hit" data-start="#page-post-analytics-main">
+              <span class="badge badge-pill" data-role="hit"></span>
+              유입추이
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-referer" data-start="#page-post-analytics-main">
+              유입경로
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-device" data-start="#page-post-analytics-main">
+              디바이스별
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-side" data-start="#page-post-analytics-main">
+              외부유입
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-likes" data-start="#page-post-analytics-main">
+              <span class="badge badge-pill" data-role="likes"></span>
+              좋아요
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-dislikes" data-start="#page-post-analytics-main">
+              <span class="badge badge-pill" data-role="dislikes"></span>
+              싫어요
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" data-toggle="page" data-target="#page-post-analytics-comment" data-start="#page-post-analytics-main">
+              <span class="badge badge-pill" data-role="comment"></span>
+              댓글
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="page right" id="page-post-analytics-hit">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <h1 class="title" data-history="back">유입추이</h1>
+    </header>
+    <div class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
+          <div class="spinner-border text-muted" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div data-role="canvas">
+        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page right" id="page-post-analytics-referer">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <h1 class="title" data-history="back">유입경로</h1>
+    </header>
+    <div class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
+          <div class="spinner-border text-muted" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div data-role="canvas">
+        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page right" id="page-post-analytics-device">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <h1 class="title" data-history="back">디바이스별</h1>
+    </header>
+    <div class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
+          <div class="spinner-border text-muted" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div data-role="canvas">
+        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page right" id="page-post-analytics-side">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <h1 class="title" data-history="back">외부유입</h1>
+    </header>
+    <div class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
+          <div class="spinner-border text-muted" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div data-role="canvas">
+        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page right" id="page-post-analytics-likes">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <h1 class="title" data-history="back">좋아요</h1>
+    </header>
+    <div class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
+          <div class="spinner-border text-muted" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div data-role="canvas">
+        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page right" id="page-post-analytics-dislikes">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <h1 class="title" data-history="back">싫어요</h1>
+    </header>
+    <div class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
+          <div class="spinner-border text-muted" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div data-role="canvas">
+        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page right" id="page-post-analytics-comment">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <h1 class="title" data-history="back">댓글</h1>
+    </header>
+    <div class="content">
+      <div data-role="loader">
+        <div class="d-flex justify-content-center align-items-center"  style="height:385px">
+          <div class="spinner-border text-muted" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div data-role="canvas">
+        <div class="d-flex justify-content-center align-items-center"  style="height:80vh">
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div><!-- /.modal -->
 
 <!-- 모달 : 포스트 사진 보기 -->
@@ -859,3 +1068,4 @@
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/feed.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/opinion.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/more.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/analytics.js<?php echo $g['wcache']?>" ></script>
