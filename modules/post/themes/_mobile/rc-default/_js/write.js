@@ -121,7 +121,6 @@ function setPostWrite(settings) {
                 wrapper.find('[data-role="featured"]').attr('src',featured);
                 wrapper.find('[name="featured_img"]').val(featured_img);
                 wrapper.find('[name="upload"]').val(upload);
-                wrapper.find('[name="format"]').val(format);
                 wrapper.find('[data-role="nic"]').text(nic);
 
                 wrapper.find('[name="dis_rating"]').val(dis_rating);
@@ -131,6 +130,7 @@ function setPostWrite(settings) {
                 wrapper.find('[name="goods"]').val(goods);
 
                 editor_post.setData(content);
+                wrapper.find('[name="format"] [value="'+format+'"]').attr('selected',true);
 
                 wrapper.find('[data-role="loader"]').addClass('d-none') //로더 제거
                 wrapper.find('form').removeClass('d-none')

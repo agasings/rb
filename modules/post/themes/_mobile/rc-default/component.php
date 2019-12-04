@@ -577,7 +577,7 @@
           <li class="table-view-cell">
             포맷
             <div class="select custom-select border-0">
-              <select name="format">
+              <select name="format" class="pl-3">
                 <option value="1">doc</option>
                 <option value="2">video</option>
                 <option value="3">adv</option>
