@@ -17,7 +17,7 @@
             data-featured="<?php echo getPreviewResize(getUpImageSrc($R),'640x360'); ?>"
             data-provider="<?php echo getFeaturedimgMeta($R,'provider') ?>"
             data-videoid="<?php echo getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'' ?>"
-            data-url="/post/<?php echo $R['cid'] ?>">
+            data-url="/post/<?php echo $R['cid'] ?>?ref=<?php echo $ref ?>">  
           <div class="media-left">
             <div class="embed-responsive embed-responsive-16by9 bg-faded">
               <img class="media-object" src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180'); ?>" alt="" data-role="featured" style="width:160px">
