@@ -244,56 +244,78 @@ if ($m=='bbs') {
 
 <!-- 팝업 : 링크공유 -->
 <div id="popup-link-share" class="popup zoom">
-  <div class="popup-content">
-    <header class="bar bar-nav">
+  <div class="popup-content rounded-0">
+    <header class="bar bar-nav rounded-0">
       <a class="icon icon-close pull-right" data-history="back" role="button"></a>
       <h1 class="title">
-				<span data-role="title">링크 공유</span>
+				링크 복사
 			</h1>
     </header>
-    <div class="content text-xs-center">
-      <ul class="share list-inline m-b-0 m-t-2">
-        <li class="list-inline-item">
-          <a role="button" id="kakao-link-btn">
-            <img src="<?php echo $g['img_core']?>/sns/kakaotalk.png" alt="카카오톡" class="img-circle">
-            <p><small>카카오톡</small></p>
-          </a>
+    <div class="content text-xs-center rounded-0">
+
+      <ul class="table-view mt-0" style="max-height: 400px;">
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/kakaotalk.png" alt="카카오톡" class="media-object pull-left img-circle" style="width:38px">
+          카카오톡
+          <button class="btn btn-secondary" id="kakao-link-btn">링크공유</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="facebook" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/facebook.png" alt="페이스북공유" class="img-circle">
-            <p><small>페이스북</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/youtube.png" alt="유튜브" class="media-object pull-left img-circle" style="width:38px">
+          유튜브
+          <button class="btn btn-secondary" data-role="youtube" data-toggle="linkCopy" data-clipboard-text="">
+            링크복사
+          </button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="kakaostory" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/kakaostory.png" alt="카카오스토리" class="img-circle">
-            <p><small>카카오스토리</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/instagram.png" alt="인스타그램" class="media-object pull-left img-circle" style="width:38px">
+          인스타그램
+          <button class="btn btn-secondary" data-role="instagram" data-toggle="linkCopy">링크복사</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="naver" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/naver.png" alt="네이버" class="img-circle">
-            <p><small>네이버</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/facebook.png" alt="페이스북공유" class="media-object pull-left img-circle" style="width:38px">
+          페이스북
+          <button class="btn btn-secondary" data-role="facebook" data-toggle="linkCopy">링크복사</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="twitter" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/twitter.png" alt="트위터" class="img-circle">
-            <p><small>트위터</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/band.png" alt="밴드" class="media-object pull-left img-circle" style="width:38px">
+          밴드
+          <button class="btn btn-secondary" data-role="band" data-toggle="linkCopy">링크복사</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" data-role="email">
-            <img src="<?php echo $g['img_core']?>/sns/mail.png" alt="메일" class="img-circle">
-            <p><small>메일보내기</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/naver.png" alt="네이버 카페" class="media-object pull-left img-circle" style="width:38px">
+          네이버 카페
+          <button class="btn btn-secondary" data-role="naver" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/kakaostory.png" alt="카카오스토리" class="media-object pull-left img-circle" style="width:38px">
+          카카오스토리
+          <button class="btn btn-secondary" data-role="kakaostory" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/twitter.png" alt="트위터" class="media-object pull-left img-circle" style="width:38px">
+          트위터
+          <button class="btn btn-secondary" data-role="twitter" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/mail.png" alt="이메일" class="media-object pull-left img-circle" style="width:38px">
+          이메일
+          <button class="btn btn-secondary" data-role="email" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/sms.png" alt="SMS" class="media-object pull-left img-circle" style="width:38px">
+          SMS
+          <button class="btn btn-secondary" data-role="sms" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <span class="ml-2">기타</span>
+          <button class="btn btn-secondary" data-role="etc" data-toggle="linkCopy">링크복사</button>
         </li>
       </ul>
-      <p class="content-padded">
-        <input class="form-control form-control-sm" type="text" data-role="share" readonly>
-        <small>외부 공유시에 사용할 게시물의 URL 입니다.</small>
-      </p>
+
+
+
+
+
     </div><!-- /.content -->
   </div><!-- /.popup-content -->
 </div><!-- /.popup -->

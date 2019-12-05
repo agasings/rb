@@ -35,36 +35,6 @@ function getPostMore(uid) {
 
 }
 
-//카카오톡 링크보내기
-function kakaoTalkSend(settings) {
-  var title = settings.subject;
-  var description = settings.review;
-  var imageUrl = settings.featured;
-  var link = settings.link+'?ref=kt'  // 카카오톡 파라미터 추가;
-
-  Kakao.Link.sendDefault({
-    objectType: 'feed',
-    content: {
-      title: title,
-      description: description,
-      imageUrl: imageUrl,
-      link: {
-        mobileWebUrl: link,
-        webUrl: link
-      }
-    },
-    buttons: [
-      {
-        title: '바로가기',
-        link: {
-          mobileWebUrl: link,
-          webUrl: link
-        }
-      },
-    ]
-  });
-}
-
 popup_post_postMore.on('click','[data-toggle="listAdd"]',function(){
   var button = $(this);
   var uid = popup_post_postMore.attr('data-uid');

@@ -11,7 +11,8 @@
 <meta name="title" content="<?php echo strip_tags($g['meta_tit'])?>">
 <meta name="keywords" content="<?php echo strip_tags($g['meta_key'])?>">
 <meta name="description" content="<?php echo strip_tags($g['meta_des'])?>">
-<link rel="image_src" href="<?php echo strip_tags($g['meta_img'])?>">
+<link rel="image_src" href="<?php echo strip_tags($g['url_root'].$g['meta_img'])?>">
+<link rel="canonical" href="<?php echo strip_tags($g['url_root'].$_SERVER['REQUEST_URI'])?>">
 
 <title><?php echo $g['browtitle']?></title>
 

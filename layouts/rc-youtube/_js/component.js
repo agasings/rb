@@ -154,70 +154,44 @@ $( document ).ready(function() {
 
   //링크 공유 팝업이 열릴때
   popup_link_share.on('shown.rc.popup', function (event) {
-    var ele = $(event.relatedTarget)
-    var path = ele.attr('data-url')?ele.attr('data-url'):''
-    var host = $(location).attr('origin');
-    var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
-    var email = ele.attr('data-email')?ele.attr('data-email'):'' // 버튼에서 이메일 추출
-    var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
-    var image = ele.attr('data-image')?ele.attr('data-image'):'' // 버튼에서 대표이미지 경로 추출
-    var likes = ele.attr('data-likes')?ele.attr('data-likes'):'' // 버튼에서 좋아요 수 추출
-    var comment = ele.attr('data-comment')?ele.attr('data-comment'):'' // 버튼에서 댓글수 추출
     var popup = $(this)
+    var subject = popup.attr('data-subject');
+    var review = popup.attr('data-review');
+    var featured = popup.attr('data-featured');
+    var link = popup.attr('data-link');
+    var protocol = $(location).attr('protocol');
+    var host = $(location).attr('host');
+    var url = protocol+'//'+host+link;
+    var featured_url = protocol+'//'+host+featured;
 
-
-    var link = host+path // 게시물 보기 URL
-    var imageUrl = host+image // 대표이미지 URL
-    var enc_link = encodeURIComponent(host+path) // URL 인코딩
-    var enc_sbj = encodeURIComponent(sbj) // 제목 인코딩
-    var facebook = 'http://www.facebook.com/sharer.php?u=' + enc_link;
-    var twitter = 'https://twitter.com/intent/tweet?url=' + enc_link + '&text=' + sbj;
-    var naver = 'http://share.naver.com/web/shareView.nhn?url=' + enc_link + '&title=' + sbj;
-    var kakaostory = 'https://story.kakao.com/share?url=' + enc_link + '&title=' + enc_sbj;
-    var email = 'mailto:' + email + '?subject=링크공유-' + enc_sbj+'&body='+ enc_link;
-
-    popup.find('[data-role="share"]').focus(function(){
-      $(this).on("mouseup.a keyup.a", function(e){
-        $(this).off("mouseup.a keyup.a").select();
-      });
-    });
-
-    popup.find('[data-role="facebook"]').attr('href',facebook)
-    popup.find('[data-role="twitter"]').attr('href',twitter)
-    popup.find('[data-role="naver"]').attr('href',naver)
-    popup.find('[data-role="kakaostory"]').attr('href',kakaostory)
-    popup.find('[data-role="email"]').attr('href',email)
-
-    //카카오 링크
-    function sendLink() {
-      Kakao.Link.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: sbj,
-          description: desc,
-          imageUrl: imageUrl,
-          link: {
-            mobileWebUrl: link,
-            webUrl: link
-          }
-        },
-        buttons: [
-          {
-            title: '바로가기',
-            link: {
-              mobileWebUrl: link,
-              webUrl: link
-            }
-          },
-        ]
-      });
-    }
+    popup.find('[data-role="youtube"]').attr('data-clipboard-text',url+'?ref=yt')
+    popup.find('[data-role="instagram"]').attr('data-clipboard-text',url+'?ref=ig')
+    popup.find('[data-role="facebook"]').attr('data-clipboard-text',url+'?ref=fb')
+    popup.find('[data-role="band"]').attr('data-clipboard-text',url+'?ref=bd')
+    popup.find('[data-role="naverblog"]').attr('data-clipboard-text',url+'?ref=nb')
+    popup.find('[data-role="navercafe"]').attr('data-clipboard-text',url+'?ref=nc')
+    popup.find('[data-role="kakaostory"]').attr('data-clipboard-text',url+'?ref=ks')
+    popup.find('[data-role="twitter"]').attr('data-clipboard-text',url+'?ref=tt')
+    popup.find('[data-role="email"]').attr('data-clipboard-text',url+'?ref=em')
+    popup.find('[data-role="sms"]').attr('data-clipboard-text',url+'?ref=sm')
+    popup.find('[data-role="etc"]').attr('data-clipboard-text',url)
 
     //카카오톡 링크공유
-    kakao_link_btn.click(function() {
-       sendLink()
+    kakao_link_btn.off('click').click(function() {
+       kakaoTalkSend({
+         subject : subject,
+         review : review,
+         featured : featured_url,
+         link : url,
+       })
      });
 
+  })
+
+  popup_link_share.on('hidden.rc.popup', function (event) {
+    var popup = popup_link_share;
+    popup.removeAttr('data-link').removeAttr('data-subject').removeAttr('data-review').removeAttr('data-featured');
+    popup.find('[data-role]').removeAttr('data-clipboard-text')
   })
 
 });

@@ -84,6 +84,37 @@ if(navigator.userAgent.indexOf("Mac") > 0) {
   $("body").addClass("mac-os");
 }
 
+//카카오톡 링크보내기
+function kakaoTalkSend(settings) {
+  var title = settings.subject;
+  var description = settings.review?settings.review:'';
+  var imageUrl = settings.featured?settings.featured:'';
+  var link = settings.link+'?ref=kt'  // 카카오톡 파라미터 추가;
+
+  Kakao.Link.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+      link: {
+        mobileWebUrl: link,
+        webUrl: link
+      }
+    },
+    buttons: [
+      {
+        title: '바로가기',
+        link: {
+          mobileWebUrl: link,
+          webUrl: link
+        }
+      },
+    ]
+  });
+}
+
+
 $(document).ready(function() {
 
   // tab메뉴
@@ -317,9 +348,9 @@ $(document).ready(function() {
     var ele = $(this)
     var sbj = ele.attr('data-subject'); // 버튼에서 제목 추출
     var desc = ele.attr('data-desc'); // 버튼에서 요약설명 추출
-    var host = $(location).attr('origin');
-    var path = ele.attr('data-url');
-    var title = ele.attr('data-title');
+    var featured = ele.attr('data-featured');
+    var link = ele.attr('data-link');
+    var title = ele.attr('data-title')?ele.attr('data-title'):'링크 공유';
     var hback = ele.attr('data-hback');
     var delay = 10;
 
@@ -331,8 +362,8 @@ $(document).ready(function() {
       if (ios_Token) {  // iOS 네이티브앱 일 경우
         shareNative(sbj,link)
      } else if (navigator.share === undefined) {  //webshare.api가 지원되지 않는 환경
-       console.log(host+path)
-       popup_link_share.find('[data-role="share"]').val(host+path)
+
+       popup_link_share.attr('data-link',link).attr('data-subject',sbj).attr('data-review',desc).attr('data-featured',featured);
        setTimeout(function(){
          popup_link_share.popup({
             title : title

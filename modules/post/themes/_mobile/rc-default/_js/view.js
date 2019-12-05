@@ -27,12 +27,11 @@ function getPostView(settings) {
       wrapper.find('[data-role="gohome"]').removeClass('d-none');
     }
 
-    wrapper.find('[data-toggle="linkShare"]').attr('data-url',url);
+    wrapper.find('[data-toggle="linkShare"]').attr('data-link',url);
     wrapper.find('.embed-responsive').css('background-image','url('+featured+')')
     wrapper.find('.content').css('padding-top',height+'px')
     wrapper.find('[data-role="goodsLink"]').addClass('d-none');
     wrapper.find('[data-uid]').attr('data-uid',uid);
-    wrapper.find('[data-url]').attr('data-url',url);
 
     if (format=='video') {
       wrapper.find('.bar-standard').css('height',embed_height+'px')
@@ -125,6 +124,9 @@ function getPostView(settings) {
           var dis_comment = result.dis_comment;
           var dis_listadd = result.dis_listadd;
           var goods = result.goods;
+          var featured = result.featured_640;
+
+          wrapper.find('[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-link',url).attr('data-featured',featured);
 
           wrapper.find('oembed').attr('url',linkurl);
           wrapper.find('[data-role="subject"]').text(subject);

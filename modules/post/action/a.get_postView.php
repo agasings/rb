@@ -90,6 +90,7 @@ $TMPL['cid'] = $R['cid'];
 $TMPL['mbruid'] = $R['mbruid'];
 $TMPL['profile_url']=getProfileLink($R['mbruid']);
 $TMPL['post_url']=getPostLink($R,0);
+$TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
 $TMPL['num_follower'] = number_format(getProfileInfo($R['mbruid'],'num_follower'));
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
@@ -109,6 +110,7 @@ $TMPL['view_follow'] = $my['uid']!=$R['mbruid']?$post->getHtml('view_follow'):''
 $TMPL['view_opinion'] = $my['uid']&&$R['likes']&&!$R['dis_like'] ?$post->getHtml('view_opinion'):'';
 
 $result['subject'] = stripslashes($R['subject']);
+$result['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
 $result['nic'] = getProfileInfo($R['mbruid'],'nic');
 $result['dis_like'] = $R['dis_like']?$R['dis_like']:'';
 $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
