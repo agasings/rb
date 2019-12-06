@@ -8,9 +8,13 @@ var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
 var page_post_saved=  $('#page-post-saved'); // 내 포스트 저장내역(나중에 볼 동영상)
 var page_post_liked=  $('#page-post-liked'); // 좋아요한 포스트
 var page_post_view =  $('#page-post-view'); //포스트 보기
-
 var page_post_edit_main = $('#page-post-edit-main'); // 포스트 작성 메인
-
+var page_post_edit_attach =  $('#page-post-edit-attach'); //포스트 작성 첨부파일 추가
+var page_post_edit_link = $('#page-post-edit-link'); // 포스트 작성 링크추가
+var page_post_edit_review = $('#page-post-edit-review'); // 포스트 작성 리뷰입력
+var page_post_edit_tag = $('#page-post-edit-tag'); // 포스트 작성 태그입력
+var page_post_edit_advan = $('#page-post-edit-advan'); // 포스트 작성 고급설정
+var page_post_edit_category = $('#page-post-edit-category'); //포스트 작성 카테고리입력
 var page_post_analytics_main = $('#page-post-analytics-main'); // 포스트 통계분석 메인
 var page_post_analytics_hit = $('#page-post-analytics-hit'); // 포스트 통계분석 유입추이
 var page_post_analytics_referer = $('#page-post-analytics-referer'); // 포스트 통계분석 유입경로
@@ -39,6 +43,7 @@ var popup_post_delConfirm = $('#popup-post-delConfirm'); // 포스트 삭제 확
 var sheet_post_listadd = $('#sheet-post-listadd'); // 포스트 리스트에 저장
 var sheet_post_linkadd = $('#sheet-post-linkadd'); // 새 포스트작성을 위한 링크추가
 var sheet_post_photoadd = $('#sheet-post-photoadd'); // 새 포스트작성을 위한 사진 추가
+var sheet_post_filter = $('#sheet-post-filter')  // 리스트 필터링,정별방식 설정
 
 var popover_post_display = $('#popover-post-display') // 새 포스트 작성을 위한 공개설정
 
@@ -294,6 +299,57 @@ page_post_mypost.on('show.rc.page', function(event) {
   }
   getMyPost(settings);
 })
+
+
+// 작업중
+sheet_post_filter.on('hidden.rc.sheet', function(event) {
+  var sheet = $(this);
+  sheet.find('[data-act="submit"]').attr('disabled',false );
+
+})
+
+sheet_post_filter.find('.nav-link').click(function(){
+  var button = $(this)
+  var sheet = sheet_post_filter;
+  var sort = button.attr('data-sort');
+  var submit = sheet.find('[data-act="submit"]')
+  sheet.find('.nav-link').removeClass('active');
+  button.addClass('active');
+  submit.attr('data-sort',sort);
+});
+
+sheet_post_filter.find('[data-act="submit"]').click(function(){
+  var button = $(this)
+  var sort = button.attr('data-sort');
+  var sheet = sheet_post_filter;
+  button.attr('disabled',true );
+
+  var page = page_post_mypost;
+  var id = 'page-post-mypost';
+  var wrapper = page.find('[data-role="list"]');
+
+  setTimeout(function(){
+    history.back();
+    wrapper.html('');
+    var contianer_html = page.find('.content').clone().wrapAll('<div/>').parent().html();
+    page.find('.content').infinitescroll('destroy');
+    page.append(contianer_html);
+    var _wrapper = page.find('[data-role="list"]');
+    getMyPost({
+      wrapper : _wrapper,
+      start : '#'+id,
+      markup    : 'post-mediaList',  // 테마 > _html > post-mediaList.html
+      recnum    : 10,
+      sort      : sort,
+      none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    })
+  }, 400);
+
+});
+
+
+
+
 
 page_post_mypost.on('hidden.rc.page', function(event) {
   var page = $(this);

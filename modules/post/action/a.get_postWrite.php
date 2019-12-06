@@ -64,7 +64,7 @@ $result['nic'] = getProfileInfo($R['mbruid'],'nic');
 $result['subject'] = stripslashes($R['subject']);
 $result['review'] = stripslashes($R['review']);
 $result['content'] = getContents($R['content'],'HTML');
-$result['tag'] = $R['tag']?getPostTag($R['tag']):'';
+$result['tag'] = $R['tag']?$R['tag']:'';
 $result['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d H:i');
 $result['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
 
@@ -74,6 +74,21 @@ $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
 $result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';
 $result['dis_listadd'] = $R['dis_listadd']?$R['dis_listadd']:'';
 $result['goods'] = $R['goods'];
+
+//첨부링크 및 파일
+$theme_attach= '_mobile/rc-default';
+$theme_link= '_mobile/rc-post-link';
+include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
+include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
+
+if($R['upload']) {
+  $result['attachNum'] = getAttachNum($R['upload'],'modify');
+  $result['linkNum'] = getLinkNum($R['upload'],'modify');
+  $result['file'] = getAttachFileList($R,'upload','file');
+  $result['photo'] = getAttachFileList($R,'upload','photo');
+  $result['video'] = getAttachFileList($R,'upload','video');
+  $result['audio'] = getAttachFileList($R,'upload','audio');
+}
 
 if (!checkPostPerm($R)){
   $markup_file = '_404';

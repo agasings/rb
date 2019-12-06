@@ -148,7 +148,7 @@
   <?php endif; ?>
 
   <?php if ($my['uid']): ?>
-  <ul class="table-view bg-white mt-3">
+  <ul class="table-view bg-white border-top-0">
     <li class="table-view-cell">
       <a class="" href="#page-post-mypost" data-start="#page-main" data-toggle="page" data-title="내 포스트" data-url="<?php echo RW('mod=dashboard&page=post')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">play_circle_outline</span>

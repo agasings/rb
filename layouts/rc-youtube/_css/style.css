@@ -962,6 +962,7 @@ button[data-toggle="collapse"]:active {
   top: 2.75rem;
   bottom: .5rem;
   padding-top: 0;
+  background-color: #fff;
 }
 
 [data-role="write"] [data-role="editor"] {

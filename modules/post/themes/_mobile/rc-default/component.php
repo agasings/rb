@@ -119,8 +119,7 @@
 <div class="page right" id="page-post-mypost">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
-    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <a class="icon pull-right material-icons px-3" role="button" data-toggle="sheet" data-target="#sheet-post-filter">tune</a>
     <span class="title title-left" data-history="back" data-role="title">내 포스트</span>
   </header>
   <main role="main" class="content">
@@ -134,8 +133,7 @@
 <div class="page right" id="page-post-mylist">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
-    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <a class="icon pull-right material-icons px-3" role="button" data-toggle="sheet" data-target="#sheet-post-filter">tune</a>
     <span class="title title-left" data-history="back" data-role="title">내 재생목록</span>
   </header>
   <main role="main" class="content">
@@ -149,8 +147,7 @@
 <div class="page right" id="page-post-saved">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
-    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <a class="icon pull-right material-icons px-3" role="button" data-toggle="sheet" data-target="#sheet-post-filter">tune</a>
     <span class="title title-left" data-history="back" data-role="title">나중에 볼 포스트</span>
   </header>
   <main role="main" class="content">
@@ -164,8 +161,7 @@
 <div class="page right" id="page-post-liked">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
-    <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
+    <a class="icon pull-right material-icons px-3" role="button" data-toggle="sheet" data-target="#sheet-post-filter">tune</a>
     <span class="title title-left" data-history="back" data-role="title">좋아요 한 포스트</span>
   </header>
   <main role="main" class="content">
@@ -504,13 +500,13 @@
       </div>
     </header>
 
-    <main role="main" class="content">
+    <main role="main" class="content bg-faded">
       <div data-role="loader">
         <div class="d-flex justify-content-center align-items-center text-muted" style="height:70vh">
           <div class="spinner-border" role="status"></div>
         </div>
       </div>
-      <form name="writeForm" method="post" class="d-none">
+      <form name="writeForm" method="post" class="d-none bg-white">
 
         <input type="hidden" name="uid" value="">
         <input type="hidden" name="category_members" value="">
@@ -519,9 +515,7 @@
         <input type="hidden" name="member" value="">
         <input type="hidden" name="featured_img" value="">
         <input type="hidden" name="html" value="HTML">
-        <input type="hidden" name="review">
         <input type="hidden" name="display" value="1">
-        <input type="hidden" name="dis_rating">
         <input type="hidden" name="dis_like">
         <input type="hidden" name="dis_comment">
         <input type="hidden" name="dis_listadd">
@@ -549,18 +543,18 @@
           <div data-role="editor-body" class="editable-container" style="color:#55595c"></div>
         </div>
 
-        <ul class="table-view editor-focused-hide mt-3">
+        <ul class="table-view editor-focused-hide mt-3 bg-white">
           <li class="table-view-cell">
             <a href="#page-post-edit-attach" data-start="#page-post-edit-main" data-toggle="page">
               사진 및 파일추가
             </a>
-            <span class="badge badge-default badge-outline" data-role="attachNum"></span>
+            <span class="badge" data-role="attachNum"></span>
           </li>
           <li class="table-view-cell">
             <a href="#page-post-edit-link" data-start="#page-post-edit-main" data-toggle="page">
               링크추가
             </a>
-            <span class="badge badge-default badge-outline" data-role="linkNum"></span>
+            <span class="badge" data-role="linkNum"></span>
           </li>
           <li class="table-view-cell">
             <a href="#page-post-edit-review" data-start="#page-post-edit-main" data-toggle="page">
@@ -604,9 +598,15 @@
   <section class="page right" id="page-post-edit-attach">
     <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title title-left" data-history="back">파일첨부</span>
+      <span class="title title-left" data-history="back">사진 및 파일추가</span>
     </header>
+    <nav class="bar bar-tab bar-light bg-white">
+      <a class="tab-item text-muted" role="button" data-role="attach-handler-file" data-type="file" title="파일첨부">
+        파일 불러오기
+      </a>
+    </nav>
     <main class="content">
+      <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-default','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y'));?>
     </main>
   </section>
 
@@ -615,8 +615,29 @@
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title title-left" data-history="back">링크추가</span>
     </header>
-    <main class="content">
 
+    <div class="bar bar-standard bar-footer bar-light bg-white px-0">
+      <div class="input-group" data-role="linkadd_input" style="top: 0.1rem;">
+        <input type="text" class="form-control border-0" placeholder="복사한 URL을 여기에 붙여주세요.">
+        <span class="input-group-btn">
+          <button class="btn btn-link text-muted" type="button" style="top: 0.1rem;outline:none" data-act="saveLink">
+            <span class="not-loading">
+              <i class="material-icons">send</i>
+            </span>
+            <span class="is-loading">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">처리중...</span>
+              </div>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <main class="content">
+      <div class="content-padded">
+        <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y'));?>
+      </div>
     </main>
   </section>
 
@@ -625,18 +646,30 @@
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title title-left" data-history="back">요약설명</span>
     </header>
+    <nav class="bar bar-tab bar-light bg-white">
+      <a class="tab-item text-muted" role="button" data-history="back">
+        확인
+      </a>
+    </nav>
     <main class="content">
-
+      <textarea class="form-control border-0" rows="5" name="review" placeholder="요약설명을 입력해주세요."></textarea>
     </main>
   </section>
 
   <section class="page right" id="page-post-edit-tag">
     <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title title-left" data-history="back">태그</span>
+      <span class="title title-left" data-history="back">태그 <small class="text-muted ml-3">콤마(,)로 구분하여 입력해주세요.</small></span>
     </header>
+    <nav class="bar bar-tab bar-light bg-white">
+      <a class="tab-item text-muted" role="button" data-history="back">
+        확인
+      </a>
+    </nav>
     <main class="content">
-
+      <div class="content-padded">
+        <textarea class="form-control border-0" rows="5" name="tag" placeholder="태그를 입력해주세요"></textarea>
+      </div>
     </main>
   </section>
 
@@ -647,14 +680,39 @@
     </header>
     <main class="content">
       <ul class="table-view mt-0 border-top-0">
-
         <li class="table-view-cell">
-          외부공개
-          <div data-toggle="switch" data-role="public" class="switch">
+          댓글 사용
+          <div data-toggle="switch" data-role="dis_comment" class="switch active">
+            <div class="switch-handle"></div>
+          </div>
+        </li>
+        <li class="table-view-cell">
+          좋아요 사용
+          <div data-toggle="switch" data-role="dis_like" class="switch active">
+            <div class="switch-handle"></div>
+          </div>
+        </li>
+        <li class="table-view-cell">
+          저장 허용
+          <div data-toggle="switch" data-role="dis_listadd" class="switch active">
             <div class="switch-handle"></div>
           </div>
         </li>
       </ul>
+
+      <div class="content-padded">
+
+        <label class="small text-muted">상품연결</label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="goods" placeholder="준비중...">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button" disabled>상품찾기</button>
+          </span>
+        </div>
+
+      </div>
+
+
     </main>
   </section>
 
@@ -662,16 +720,6 @@
     <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <span class="title title-left" data-history="back">카테고리 설정</span>
-    </header>
-    <main class="content">
-
-    </main>
-  </section>
-
-  <section class="page right" id="page-post-edit-display">
-    <header class="bar bar-nav bar-light bg-white px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title title-left" data-history="back">공유설정</span>
     </header>
     <main class="content">
 
@@ -909,8 +957,18 @@
 <!-- 시트 : 포스트 필터 -->
 <div id="sheet-post-filter" class="sheet shadow">
   <header class="bar bar-nav bar-light bg-white px-0">
-    <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
-    <a class="icon icon-check pull-right px-3" role="button"></a>
+
+    <button class="btn btn-link btn-nav pull-right px-3" data-act="submit" data-sort="gid">
+      <span class="not-loading">
+        적용
+      </span>
+      <span class="is-loading">
+        <div class="spinner-border spinner-border-sm" role="status">
+          <span class="sr-only">처리중...</span>
+        </div>
+      </span>
+    </button>
+
     <h1 class="title">보기옵션</h1>
   </header>
   <div style="padding-top: 2.75rem;">
@@ -918,10 +976,10 @@
 
       <div class="text-xs-center mb-2 text-muted">정렬 선택</div>
       <div class="nav nav-control">
-        <a class="nav-link active" role="button">등록순</a>
-        <a class="nav-link" role="button">최신순</a>
-        <a class="nav-link" role="button">좋아요순</a>
-        <a class="nav-link" role="button">댓글순</a>
+        <a class="nav-link active" role="button" data-sort="gid">등록순</a>
+        <a class="nav-link" role="button" data-sort="hit">조회순</a>
+        <a class="nav-link" role="button" data-sort="likes">좋아요순</a>
+        <a class="nav-link" role="button" data-sort="comment">댓글순</a>
       </div>
     </div>
   </div>
