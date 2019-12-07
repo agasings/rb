@@ -825,21 +825,24 @@ sheet_post_listadd.on('show.rc.sheet', function(event) {
 })
 
 sheet_post_linkadd.on('show.rc.sheet', function(event) {
+  var button = $(event.relatedTarget)
   var sheet = $(this);
-  sheet.find('textarea').val('');
-  setTimeout(function(){ sheet.find('textarea').focus(); }, 10);
-  sheet.find('[data-act="submit"]').attr('disabled',false );
+  var act = button.attr('data-act');
+  if (act) sheet.find('button').attr('data-act',act);
+  sheet.find('input').val('');
+  // setTimeout(function(){ sheet.find('input').focus(); }, 10);
+  sheet.find('button').attr('disabled',false );
 })
 
 // 링크저장
-sheet_post_linkadd.find('[data-act="submit"]').click(function(){
+sheet_post_linkadd.on('click','[data-act="submit"]',function(){
   var button = $(this)
-  var textarea = sheet_post_linkadd.find('textarea');
-  var url = textarea.val();
+  var input = sheet_post_linkadd.find('input');
+  var url = input.val();
   var link_url_parse = $('<a>', {href: url});
   if (!url) {
-    textarea.focus();
-    $.notify({message: '복사한 링크를 붙여넣기 하세요.'},{type: 'default'});
+    input.focus();
+    // $.notify({message: '복사한 링크를 붙여넣기 하세요.'},{type: 'default'});
     return false
   }
   button.attr('disabled',true);
@@ -975,6 +978,7 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
 
     if (type=='link') {
       sheet_post_linkadd.sheet('show');
+      sheet_post_linkadd.find('button').attr('data-act','submit');
     } else if (type=='photo') {
       sheet_post_photoadd.sheet('show');
     } else {

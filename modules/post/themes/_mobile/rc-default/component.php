@@ -500,7 +500,7 @@
       </div>
     </header>
 
-    <main role="main" class="content bg-faded">
+    <main role="main" class="content">
       <div data-role="loader">
         <div class="d-flex justify-content-center align-items-center text-muted" style="height:70vh">
           <div class="spinner-border" role="status"></div>
@@ -523,7 +523,7 @@
 
         <div class="content-padded my-0 editor-focused-hide">
           <div class="media">
-            <span class="media-left media-middle position-relative pr-0 mr-2" >
+            <span class="media-left media-middle position-relative pr-0 mr-2 d-none">
               <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:103px;height:58px">
               <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="time"></time>
               <span class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="attachNum"></span>
@@ -543,48 +543,45 @@
           <div data-role="editor-body" class="editable-container" style="color:#55595c"></div>
         </div>
 
-        <ul class="table-view editor-focused-hide mt-3 bg-white">
+        <ul class="table-view editor-focused-hide mt-3 mb-0 bg-white">
           <li class="table-view-cell">
-            <a href="#page-post-edit-attach" data-start="#page-post-edit-main" data-toggle="page">
-              사진 및 파일추가
-            </a>
-            <span class="badge" data-role="attachNum"></span>
+            사진 및 파일
+            <button class="btn btn-link text-muted" data-role="attach-handler-photo" data-type="file">추가</button>
           </li>
+        </ul>
+        <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+
+        <ul class="table-view editor-focused-hide mb-0 bg-white" style="margin-top:-1px">
           <li class="table-view-cell">
-            <a href="#page-post-edit-link" data-start="#page-post-edit-main" data-toggle="page">
-              링크추가
+            링크
+            <a class="btn btn-link text-muted" href="#sheet-post-linkadd" data-toggle="sheet" data-act="saveLink" role="button">
+              추가
             </a>
-            <span class="badge" data-role="linkNum"></span>
           </li>
+        </ul>
+
+        <ul class="table-view editor-focused-hide bg-white" style="margin-top:-1px">
           <li class="table-view-cell">
-            <a href="#page-post-edit-review" data-start="#page-post-edit-main" data-toggle="page">
+            <a class="navigate-right" href="#page-post-edit-review" data-start="#page-post-edit-main" data-toggle="page">
               <span class="badge badge-default badge-inverted"></span>
               요약
             </a>
           </li>
           <li class="table-view-cell">
-            <a href="#page-post-edit-tag" data-start="#page-post-edit-main" data-toggle="page">
+            <a class="navigate-right" href="#page-post-edit-tag" data-start="#page-post-edit-main" data-toggle="page">
               <span class="badge badge-default badge-inverted"></span>
               태그
             </a>
           </li>
+          <?php if (getDbRows($table['postcategory'],'site='.$s.' and reject=0 and hidden=0')): ?>
           <li class="table-view-cell">
-            포맷
-            <div class="select custom-select border-0">
-              <select name="format" class="pl-3">
-                <option value="1">doc</option>
-                <option value="2">video</option>
-                <option value="3">adv</option>
-              </select>
-            </div>
-          </li>
-          <li class="table-view-cell">
-            <a href="#page-post-edit-category" data-start="#page-post-edit-main" data-toggle="page">
+            <a class="navigate-right" href="#page-post-edit-category" data-start="#page-post-edit-main" data-toggle="page">
               카테고리 설정
             </a>
           </li>
+          <?php endif; ?>
           <li class="table-view-cell">
-            <a href="#page-post-edit-advan" data-start="#page-post-edit-main" data-toggle="page">
+            <a class="navigate-right" href="#page-post-edit-advan" data-start="#page-post-edit-main" data-toggle="page">
               고급설정
             </a>
           </li>
@@ -592,52 +589,6 @@
 
       </form><!-- /.content-padded -->
 
-    </main>
-  </section>
-
-  <section class="page right" id="page-post-edit-attach">
-    <header class="bar bar-nav bar-light bg-white px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title title-left" data-history="back">사진 및 파일추가</span>
-    </header>
-    <nav class="bar bar-tab bar-light bg-white">
-      <a class="tab-item text-muted" role="button" data-role="attach-handler-file" data-type="file" title="파일첨부">
-        파일 불러오기
-      </a>
-    </nav>
-    <main class="content">
-      <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-default','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y'));?>
-    </main>
-  </section>
-
-  <section class="page right" id="page-post-edit-link">
-    <header class="bar bar-nav bar-light bg-white px-0">
-      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-      <span class="title title-left" data-history="back">링크추가</span>
-    </header>
-
-    <div class="bar bar-standard bar-footer bar-light bg-white px-0">
-      <div class="input-group" data-role="linkadd_input" style="top: 0.1rem;">
-        <input type="text" class="form-control border-0" placeholder="복사한 URL을 여기에 붙여주세요.">
-        <span class="input-group-btn">
-          <button class="btn btn-link text-muted" type="button" style="top: 0.1rem;outline:none" data-act="saveLink">
-            <span class="not-loading">
-              <i class="material-icons">send</i>
-            </span>
-            <span class="is-loading">
-              <div class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">처리중...</span>
-              </div>
-            </span>
-          </button>
-        </span>
-      </div>
-    </div>
-
-    <main class="content">
-      <div class="content-padded">
-        <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y'));?>
-      </div>
     </main>
   </section>
 
@@ -681,6 +632,16 @@
     <main class="content">
       <ul class="table-view mt-0 border-top-0">
         <li class="table-view-cell">
+          포맷
+          <div class="select custom-select border-0">
+            <select name="format" class="pl-3">
+              <option value="1">doc</option>
+              <option value="2">video</option>
+              <option value="3">adv</option>
+            </select>
+          </div>
+        </li>
+        <li class="table-view-cell">
           댓글 사용
           <div data-toggle="switch" data-role="dis_comment" class="switch active">
             <div class="switch-handle"></div>
@@ -722,6 +683,8 @@
       <span class="title title-left" data-history="back">카테고리 설정</span>
     </header>
     <main class="content">
+
+      <div class="content-padded" data-role="box"></div>
 
     </main>
   </section>
@@ -1020,22 +983,26 @@
 </div>
 
 <!-- 시트 : 새 포스트 링크추가 -->
-<div id="sheet-post-linkadd" class="sheet shadow" style="height: 135px;">
+<div id="sheet-post-linkadd" class="sheet shadow" style="height: 93px;">
   <header class="bar bar-nav bar-light bg-white">
-    <button class="btn btn-link btn-nav pull-right px-3" data-act="submit">
-      <span class="not-loading">
-        다음
-      </span>
-      <span class="is-loading">
-        <div class="spinner-border spinner-border-sm" role="status">
-          <span class="sr-only">저장중...</span>
-        </div>
-      </span>
-    </button>
     <h1 class="title title-left px-3">링크 추가</h1>
   </header>
   <main>
-    <textarea class="form-control border-0" rows="3" placeholder="복사한 링크를 붙여넣기 하세요."></textarea>
+    <div class="input-group" data-role="linkadd_input" style="top: 0.1rem;">
+      <input type="text" class="form-control border-0" placeholder="복사한 URL을 여기에 붙여주세요.">
+      <span class="input-group-btn">
+        <button class="btn btn-link text-muted" type="button" style="top: 0.1rem;outline:none" data-act="saveLink">
+          <span class="not-loading">
+            <i class="material-icons">send</i>
+          </span>
+          <span class="is-loading">
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="sr-only">처리중...</span>
+            </div>
+          </span>
+        </button>
+      </span>
+    </div>
   </main>
 </div>
 
@@ -1061,20 +1028,6 @@
   </nav>
   <main>
 
-    <?php
-    // 설정값 세팅
-    $attachSkin = '_mobile/rc-col';  // 업로드 테마
-    $parent_module=$m; // 첨부파일 사용하는 모듈
-    $parent_data=$R; // 해당 포스트 데이타 (수정시 필요)
-    $attach_module_theme=$attachSkin; // 첨부파일 테마
-    $attach_handler_file='[data-role="attach-handler-file"]'; //파일첨부 실행 엘리먼트 button or 기타 엘리먼트 data-role="" 형태로 하는 것을 권고
-    $attach_handler_photo='[data-role="attach-handler-photo"]'; // 사진첨부 실행 엘리먼트 button or 기타 엘리먼트 data-role="" 형태로 하는 것을 권고
-    $attach_handler_getModalList='.getModalList'; // 첨부파일 리스트 호출 handler
-    $attach_object_type= 'photo';//첨부 대상에 따른 분류 : photo, file, link, video....
-
-    // 함수 인클루드
-    include $g['path_module'].'mediaset/attach.php';
-    ?>
 
   </main>
 </div>

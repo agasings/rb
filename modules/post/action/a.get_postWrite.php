@@ -76,7 +76,7 @@ $result['dis_listadd'] = $R['dis_listadd']?$R['dis_listadd']:'';
 $result['goods'] = $R['goods'];
 
 //첨부링크 및 파일
-$theme_attach= '_mobile/rc-default';
+$theme_attach= '_mobile/rc-post-file';
 $theme_link= '_mobile/rc-post-link';
 include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
 include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';

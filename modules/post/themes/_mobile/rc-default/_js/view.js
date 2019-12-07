@@ -32,6 +32,7 @@ function getPostView(settings) {
     wrapper.find('.content').css('padding-top',height+'px')
     wrapper.find('[data-role="goodsLink"]').addClass('d-none');
     wrapper.find('[data-uid]').attr('data-uid',uid);
+    wrapper.find('[data-role="progress_yt"] .progress-bar').css('width',0);
 
     if (format=='video') {
       wrapper.find('.bar-standard').css('height',embed_height+'px')
@@ -58,12 +59,32 @@ function getPostView(settings) {
         function onPlayerStateChange(event) {
 
           var miniplayer =   wrapper.find('.miniplayer-control');
+          var playerTimeDifference =0;
 
           if (event.data == YT.PlayerState.PLAYING) {
             console.log('재생중')
             miniplayer.find('[data-toggle="play"]').addClass('active');
             miniplayer.find('[data-toggle="play"] .material-icons').text('pause');
+
+            //재생 진행바
+            setTimeout(function(){
+              wrapper.find('[data-role="progress_yt"]').show();
+            }, 2000);
+
+            var playerTotalTime = player.getDuration();
+
+            timer_yt = setInterval(function() {
+              var playerCurrentTime = player.getCurrentTime();
+              var playerTimeDifference = (playerCurrentTime / playerTotalTime) * 100;
+              // console.log(playerTimeDifference)
+              wrapper.find('[data-role="progress_yt"] .progress-bar').css('width',playerTimeDifference+'%')
+            }, 1000);
+
+          } else {
+            clearTimeout(timer_yt);
+            wrapper.find('[data-role="progress_yt"]').hide();
           }
+
           if (event.data == YT.PlayerState.PAUSED) {
             console.log('일시중지')
             miniplayer.find('[data-toggle="play"]').removeClass('active');
@@ -75,6 +96,7 @@ function getPostView(settings) {
             miniplayer.find('[data-toggle="play"]').removeClass('active');
             miniplayer.find('[data-toggle="play"] .material-icons').text('replay');
           }
+
 
         }
 

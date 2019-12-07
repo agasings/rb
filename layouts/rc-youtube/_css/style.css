@@ -879,6 +879,14 @@ button[data-toggle="collapse"]:active {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 3px 6px 0 rgba(0,0,0,0.20);
 }
 
+.modal .progress {
+  background-color: transparent
+}
+
+.modal.miniplayer .progress {
+  top: 54.5px !important;
+}
+
 .modal.miniplayer.no-bartab {
   bottom: 60px;
 }

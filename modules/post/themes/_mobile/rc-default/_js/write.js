@@ -25,11 +25,13 @@ function setPostWrite(settings) {
   wrapper.find('[data-role="addlink_guide"]').removeClass('d-none');
   wrapper.find('[data-role="attachNum"]').text('');
   wrapper.find('[data-role="linkNum"]').text('');
-  wrapper.find('[data-role="attach-preview-photo"]').addClass('hidden').html('')
+  wrapper.find('[data-role="attach-preview-photo"]').html('')
   wrapper.find('[data-role="linkadd_input"]').val('')
   wrapper.find('[data-toggle="switch"][data-role="dis_like"]').addClass('active');
   wrapper.find('[data-toggle="switch"][data-role="dis_comment"]').addClass('active');
   wrapper.find('[data-toggle="switch"][data-role="dis_listadd"]').addClass('active');
+  wrapper.find('.switch-handle').removeAttr("style");
+  wrapper.find('.media-left').addClass('d-none');
 
   wrapper.find('[name="uid"]').val(uid);
   autosize.destroy(wrapper.find('[data-plugin="autosize"]'));
@@ -89,6 +91,18 @@ function setPostWrite(settings) {
           }
         } );
 
+        $.post(rooturl+'/?r='+raccount+'&m=post&a=get_category',{
+          uid : uid
+        },function(response,status){
+           if(status=='success'){
+             var result = $.parseJSON(response);
+             var category_tree=result.category_tree;
+             page_post_edit_category.find('[data-role="box"]').html(category_tree);
+           } else {
+             alert(status);
+           }
+        });
+
         if (uid) {
           $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postWrite',{
             uid : uid
@@ -121,6 +135,7 @@ function setPostWrite(settings) {
                 var audio=result.audio;
                 var file=result.file;
 
+                if (featured) wrapper.find('.media-left').removeClass('d-none');
                 wrapper.find('[data-role="display_label"]').text(display_label);
                 popover_post_display.find('[data-toggle="display"] .badge').empty();
                 popover_post_display.find('[data-toggle="display"][data-display="'+display+'"] .badge').html('<span class="icon icon-check"></span>');
@@ -248,9 +263,9 @@ function savePost(f) {
   var editorData = editor_post.getData();
 
   // 카테고리 체크
-	var cat_sel=modal_post_write.find('input[name="tree_members[]"]');
+	var cat_sel=page_post_edit_category.find('input[name="tree_members[]"]');
 	var cat_sel_n=cat_sel.length;
-  var cat_arr=modal_post_write.find('input[name="tree_members[]"]:checked').map(function(){return $(this).val();}).get();
+  var cat_arr=page_post_edit_category.find('input[name="tree_members[]"]:checked').map(function(){return $(this).val();}).get();
 	var cat_n=cat_arr.length;
 
 	// if(cat_sel_n>0 && cat_arr==''){
@@ -263,6 +278,7 @@ function savePost(f) {
   for (var i=0;i <cat_n;i++) {
     if(cat_arr[i]!='')  s += '['+cat_arr[i]+']';
   }
+
   f.category_members.value = s;
 
 
@@ -318,7 +334,7 @@ function savePost(f) {
   var html = form.find('[name="html"]').val();
   var subject = form.find('[name="subject"]').val();
   var display = form.find('[name="display"]').val();
-  var format = form.find('[name="format"]').val();
+  var format = modal_post_write.find('[name="format"]').val();
 
   var review = page_post_edit_review.find('[name="review"]').val();
   var tag = page_post_edit_tag.find('[name="tag"]').val();
