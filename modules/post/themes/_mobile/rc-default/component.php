@@ -539,26 +539,60 @@
           </div><!-- /.media -->
         </div><!-- /.content-padded -->
 
-        <div data-role="editor" style="margin-top: -5px;">
+        <div data-role="editor" class="mb-4" style="margin-top: -5px;">
           <div data-role="editor-body" class="editable-container" style="color:#55595c"></div>
         </div>
 
-        <ul class="table-view editor-focused-hide mt-3 mb-0 bg-white">
+
+        <ul class="table-view editor-focused-hide mb-0 bg-faded" id="attach-tree">
+  			  <li class="table-view-cell">
+  					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#attach-tree" data-target="#collapse-attach-file">
+              <span class="badge badge-default badge-inverted" data-role="attachNum"></span>
+  			      사진 및 파일
+  			    </a>
+  			    <!-- 2depth -->
+            <div class="collapse ml-5" id="collapse-attach-file" role="tabpanel" >
+              <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+            </div>
+  			  </li>
+
+
+  				<li class="table-view-cell">
+  					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#attach-tree" data-target="#collapse-attach-link">
+              <span class="badge badge-default badge-inverted" data-role="linkNum"></span>
+  			      링크
+  			    </a>
+  			    <!-- 2depth -->
+  			    <div class="table-view collapse mb-0" id="collapse-attach-link">
+              <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+
+              <a class="btn btn-link btn-block" href="#sheet-post-linkadd" data-toggle="sheet" data-act="saveLink" role="button">
+                추가
+              </a>
+
+            </div>
+  			  </li>
+
+
+  			</ul>
+
+        <ul class="table-view editor-focused-hide mt-3 mb-0 bg-white d-none">
           <li class="table-view-cell">
             사진 및 파일
-            <button class="btn btn-link text-muted" data-role="attach-handler-photo" data-type="file">추가</button>
+
           </li>
         </ul>
-        <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
 
-        <ul class="table-view editor-focused-hide mb-0 bg-white" style="margin-top:-1px">
+
+        <ul class="table-view editor-focused-hide mb-0 bg-white d-none" style="margin-top: -1px;">
           <li class="table-view-cell">
             링크
-            <a class="btn btn-link text-muted" href="#sheet-post-linkadd" data-toggle="sheet" data-act="saveLink" role="button">
-              추가
-            </a>
+
           </li>
         </ul>
+        <div class="editor-focused-hide">
+
+        </div>
 
         <ul class="table-view editor-focused-hide bg-white" style="margin-top:-1px">
           <li class="table-view-cell">
@@ -1009,26 +1043,42 @@
 <!-- 시트 : 새 포스트 사진 추가 -->
 <div id="sheet-post-photoadd" class="sheet shadow" style="top: 40vh;">
   <header class="bar bar-nav bar-light bg-white">
-    <button class="btn btn-link btn-nav pull-right px-3" data-history="back" >
-      취소
+    <button class="btn btn-link text-muted  btn-nav pull-right px-3" data-act="attach">
+      <span class="not-loading">
+        추가
+      </span>
+      <span class="is-loading">
+        <div class="spinner-border spinner-border-sm" role="status">
+          <span class="sr-only">업로드중...</span>
+        </div>
+      </span>
     </button>
     <h1 class="title title-left px-3">사진 추가</h1>
   </header>
   <nav class="bar bar-tab bar-light bg-white">
-    <a class="tab-item text-muted" role="button" data-act="submit">
-      <span class="not-loading">
-        다음
-      </span>
-      <span class="is-loading d-none">
-        <div class="spinner-border spinner-border-sm" role="status">
-          <span class="sr-only">저장중...</span>
-        </div>
-      </span>
+    <a class="tab-item text-muted" role="button" data-history="back">
+      취소
+    </a>
+    <a class="tab-item text-muted" role="button" data-act="submit" disabled>
+      다음
     </a>
   </nav>
   <main>
-
-
+    <div data-role="none">
+      <div class="d-flex justify-content-center align-items-center" style="height: 43vh">
+          <div class="text-xs-center" data-act="attach">
+            <div class="material-icons mb-4" style="font-size: 100px;color:#ccc">
+              photo_library
+            </div>
+            <h5>새로운 사진을 올려 주세요.</h5>
+            <small class="text-muted">포토 라이브러리에서 원하는 사진을 선택해주세요.</small>
+          </div>
+        </div>
+    </div>
+    <div class="content-padded">
+      <input type="hidden" name="featured_img" value="">
+      <ul class="table-view mb-0 border-0" data-role="attach-preview-photo" data-plugin="sortable"></ul>
+    </div>
   </main>
 </div>
 

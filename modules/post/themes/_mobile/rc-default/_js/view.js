@@ -147,6 +147,12 @@ function getPostView(settings) {
           var dis_listadd = result.dis_listadd;
           var goods = result.goods;
           var featured = result.featured_640;
+          var photo=result.photo;
+          var video=result.video;
+          var audio=result.audio;
+          var file=result.file;
+          var zip=result.zip;
+          var doc=result.doc;
 
           wrapper.find('[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-link',url).attr('data-featured',featured);
 
@@ -172,6 +178,31 @@ function getPostView(settings) {
           wrapper.find('[data-role="box"]').html(article);
 
           if (format!='video') Iframely('oembed[url]') // oembed 미디어 변환
+
+          if (photo) {  // 첨부 이미지가 있을 경우
+            wrapper.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+          }
+
+          if (video) {  // 첨부 비디오가 있을 경우
+            wrapper.find('[data-role="attach-video"]').removeClass('hidden').html(video)
+            wrapper.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
+          }
+
+          if (audio) {  // 첨부 오디오가 있을 경우
+            wrapper.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
+          }
+
+          if (doc) {  // 첨부 문서 있을 경우
+            wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
+          }
+
+          if (zip) {  // 첨부 압축파일이 있을 경우
+            wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
+          }
+
+          if (file) {  // 첨부 기타파일이 있을 경우
+            wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(file)
+          }
 
           if (listCollapse) {
             wrapper.find('[data-role="listCollapse"]').html(listCollapse);

@@ -659,6 +659,9 @@ modal_post_write.on('hidden.rc.modal', function(event) {
   modal.find('[data-role="featured"]').attr('src','')
   modal.find('[data-role="time"]').text('');
   modal.find('.form-list.floating .input-row').removeClass('active');
+  modal.find('[data-role="attach-preview-photo"]').html('');
+  modal.find('[data-role="attachNum"]').text('');
+  modal.find('[data-role="featured"]').closest('.media-left').addClass('d-none');
 
   if(modal.find('[data-act="submit"]').is(":disabled")) var submitting = true;
   modal.find('[name="uid"]').val(''); // uid 초기화
@@ -991,7 +994,9 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
 
 sheet_post_photoadd.on('hidden.rc.sheet', function(event) {
   var sheet = $(this);
-  sheet.find('[data-act="submit"]').attr('disabled',false );
+  sheet.find('[data-act="attach"]').attr('disabled',false );
+  sheet.find('[data-act="submit"]').removeClass('active').addClass('text-muted');
+  sheet.find('[data-role="none"]').removeClass('d-none');
   sheet.find('[data-role="guide"]').removeClass('d-none');
   sheet.find('[data-role="attach-preview-photo"]').empty();
   sheet.find('[data-role="attach-preview-file"]').empty();
@@ -999,42 +1004,41 @@ sheet_post_photoadd.on('hidden.rc.sheet', function(event) {
   sheet.find('[data-role="attach-preview-video"]').empty();
 })
 
-sheet_post_photoadd.find('[data-act="submit"]').click(function(){
+sheet_post_photoadd.find('[data-act="attach"]').click(function(){
   var button = $(this)
   var sheet = sheet_post_photoadd;
-  button.attr('disabled',true);
+  modal_post_write.find('[data-role="attach-handler-photo"]').click();
+});
 
-  // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
-  var featured_img_input = modal_post_write.find('input[name="featured_img"]'); // 대표이미지 input
-  var featured_img_src = modal_post_write.find('[data-role="featured"]'); // 대표이미지 src
-  var first_attach_img_li = sheet.find('.rb-attach li:first'); // 첫번째 첨부된 이미지 리스트 li
-  var first_attach_img_uid = $(first_attach_img_li).attr('data-id');
+sheet_post_photoadd.find('[data-act="submit"]').click(function(){
+  var sheet = $(this)
+  var num = $('#sheet-post-photoadd').find('[data-role="attach-item"]').length;
 
-  featured_img_input.val(first_attach_img_uid);
-  featured_img_src.attr('src','http://placehold.it/206x116')
-
-  // 첨부파일 uid 를 upfiles 값에 추가하기
-  var attachfiles=sheet.find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
-  var new_upfiles='';
-  if(attachfiles){
-    for(var i=0;i<attachfiles.length;i++) {
-      new_upfiles+=attachfiles[i];
-    }
-    modal_post_write.find('input[name="upload"]').val(new_upfiles);
-    modal_post_write.find('[data-role="attachNum"]').text(attachfiles.length)
-  } else {
-
-    button.attr('disabled',false);
-    return false;
+  if (num==0) {
+    $.notify({message: '사진을 첨부 해주세요.'},{type: 'default'});
+    return false
   }
 
-  setTimeout(function(){ history.back(); }, 100);
-  setTimeout(function(){
-    modal_post_write.modal({
-      title : '새 포스트'
-    })
+  // 대표이미지가 없을 경우, 첫번째 업로드 사진을 지정함
+  var featured_img_input = $('#sheet-post-photoadd').find('input[name="featured_img"]'); // 대표이미지 input
+  var featured_img_uid = featured_img_input.val();
+  var modal_featured = modal_post_write.find('[data-role="featured"]');
 
-  }, 300);
+  if(featured_img_uid ==0){ // 대표이미지로 지정된 값이 없는 경우
+    var first_attach_img_li = $('#sheet-post-photoadd').find('[data-role="attach-preview-photo"] li:first'); // 첫번째 첨부된 이미지 리스트 li
+    var first_attach_img_src = first_attach_img_li.find('img').attr('src');
+    if (first_attach_img_src) modal_featured.attr('src',first_attach_img_src);
+  } else {
+    var featured_attach_img_src = $('#sheet-post-photoadd').find('[data-id="'+featured_img_uid+'"] img').attr('src');
+    if (featured_attach_img_src) modal_featured.attr('src',featured_attach_img_src);
+  }
+
+  modal_featured.closest('.media-left').removeClass('d-none');
+  history.back();
+  modal_post_write.find('[data-role="attachNum"]').text(num==0?'':num);
+  setTimeout(function(){
+    modal_post_write.modal();
+  }, 200);
 });
 
 popover_post_display.find('[data-toggle="display"]').click(function(){

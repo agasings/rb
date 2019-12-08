@@ -9,7 +9,7 @@ include_once $g['dir_module'].'lib/action.func.php';
 
 $mbruid		= $author ? $author : $my['uid'];
 $tag		= trim($tag);
-$subject	= $subject?addslashes(htmlspecialchars(trim($subject))):'(제목 없음)';
+$subject	= $subject?addslashes(trim($subject)):'(제목 없음)';
 $review		= trim($review);
 $content	= trim($content);
 $d_regis	= $date['totime']; // 최초 등록일

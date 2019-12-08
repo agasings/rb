@@ -21,17 +21,16 @@ function setPostWrite(settings) {
   wrapper.find('[name="dis_comment"]').val(0);
   wrapper.find('[name="dis_listadd"]').val(0);
   wrapper.find('[name="goods"]').val('');
-  wrapper.find('[data-role="attach_guide"]').removeClass('d-none');
-  wrapper.find('[data-role="addlink_guide"]').removeClass('d-none');
-  wrapper.find('[data-role="attachNum"]').text('');
   wrapper.find('[data-role="linkNum"]').text('');
-  wrapper.find('[data-role="attach-preview-photo"]').html('')
-  wrapper.find('[data-role="linkadd_input"]').val('')
+  //wrapper.find('[data-role="attach-preview-photo"]').html('');
+  wrapper.find('[data-role="attach-preview-link"]').html('');
+  wrapper.find('[data-role="linkadd_input"]').val('');
   wrapper.find('[data-toggle="switch"][data-role="dis_like"]').addClass('active');
   wrapper.find('[data-toggle="switch"][data-role="dis_comment"]').addClass('active');
   wrapper.find('[data-toggle="switch"][data-role="dis_listadd"]').addClass('active');
   wrapper.find('.switch-handle').removeAttr("style");
-  wrapper.find('.media-left').addClass('d-none');
+  wrapper.find('[data-toggle="collapse"]').addClass('collapsed');
+  wrapper.find('.collapse').removeClass('in');
 
   wrapper.find('[name="uid"]').val(uid);
   autosize.destroy(wrapper.find('[data-plugin="autosize"]'));
@@ -134,6 +133,7 @@ function setPostWrite(settings) {
                 var video=result.video;
                 var audio=result.audio;
                 var file=result.file;
+                var link=result.link;
 
                 if (featured) wrapper.find('.media-left').removeClass('d-none');
                 wrapper.find('[data-role="display_label"]').text(display_label);
@@ -156,6 +156,7 @@ function setPostWrite(settings) {
                 if (linkNum) {
                   wrapper.find('[data-role="addlink_guide"]').addClass('d-none');
                   wrapper.find('[data-role="linkNum"]').text(linkNum);
+                  wrapper.find('[data-role="attach-preview-link"]').removeClass('hidden').html(link)
                 }
 
                 if (attachNum) {

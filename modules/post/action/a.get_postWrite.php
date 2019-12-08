@@ -88,6 +88,7 @@ if($R['upload']) {
   $result['photo'] = getAttachFileList($R,'upload','photo');
   $result['video'] = getAttachFileList($R,'upload','video');
   $result['audio'] = getAttachFileList($R,'upload','audio');
+  $result['link'] = getAttachPlatformList($R,'upload','file');
 }
 
 if (!checkPostPerm($R)){
