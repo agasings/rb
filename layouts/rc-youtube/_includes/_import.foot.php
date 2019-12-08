@@ -10,6 +10,13 @@
 <!-- youtube iframe_api -->
 <script src="https://www.youtube.com/player_api"></script>
 
+<!-- jQuery UI : https://jqueryui.com/-->
+<?php getImport('jquery-ui','jquery-ui.sortable,min','1.12.1','js')?>
+
+
+<!-- jquery-ui-touch-punch : https://github.com/furf/jquery-ui-touch-punch/ -->
+<?php getImport('jquery-ui-touch-punch','jquery.ui.touch-punch.min','0.2.3','js')?>
+
 <!-- 입력 textarea 자동확장 -->
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 

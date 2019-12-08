@@ -351,15 +351,20 @@ if ($m=='bbs') {
 <!-- 시트 : 첨부파일 설정 -->
 <div id="sheet-attach-moreAct" class="sheet bg-faded">
   <ul class="table-view table-view-full bg-white mb-0">
-    <li class="table-view-cell table-view-divider" data-dismiss="sheet"><span data-role="title"></span></li>
+    <li class="table-view-cell table-view-divider" data-history="back"><span data-role="title" class="line-clamp-1"></span></li>
     <li class="table-view-cell">
       <a data-attach-act="featured-img">
         대표이미지 설정
       </a>
     </li>
     <li class="table-view-cell d-none">
-      <a data-attach-act="showhide">
+      <a data-attach-act="edit">
         정보수정
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a data-attach-act="showhide">
+        보이기
       </a>
     </li>
     <li class="table-view-cell">

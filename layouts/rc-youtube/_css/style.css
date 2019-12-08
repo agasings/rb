@@ -647,6 +647,14 @@ button[data-toggle="collapse"]:active {
   content: "중"
 }
 
+/* collapse */
+[data-toggle="collapse"].navigate-right.collapsed:after {
+  content: '\e826';
+}
+[data-toggle="collapse"].navigate-right:after {
+  content: '\e820';
+}
+
 /**
  * 6 - Drawer 드로어(사이드 메뉴)
  * ----------------------------------------------------------------------------
