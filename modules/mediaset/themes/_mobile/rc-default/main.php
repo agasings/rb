@@ -29,15 +29,16 @@
 
   </div>
 
-  <div class="content-padded text-muted guide text-center" data-role="guide">
-    <div data-role="attach-handler-file" data-type="file" title="파일첨부" role="button" data-loading-text="업로드 중...">
-      <div class="display-3">
-        <i class="fa fa-paperclip" aria-hidden="true"></i>
+  <div data-role="attach_guide">
+    <div class="d-flex justify-content-center align-items-center text-muted" style="height:70vh">
+      <div data-role="attach-handler-photo" data-type="file" title="파일첨부" role="button" class="text-xs-center">
+        <div class="material-icons mb-2" style="font-size: 120px;color:#ccc">
+          add_photo_alternate
+        </div>
+        <p><small>사진,비디오,오디오,문서,파일을<br>첨부할 수 있습니다.</small></p>
       </div>
-      <small>사진,비디오,오디오,문서,파일을<br>첨부할 수 있습니다.</small>
     </div>
   </div>
-
 
   <script src="<?php echo $g['url_attach_theme']?>/main.js"></script>
 

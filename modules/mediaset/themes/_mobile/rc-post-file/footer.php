@@ -14,13 +14,18 @@ $(document).ready(function() {
         inputId:inputId, // 실제 작옹하는 input 엘리먼트 id 값을 옵션으로 지정을 해준다. (커스텀 버튼으로 click 이벤트 바인딩)
         formData: {"saveDir":attach_file_saveDir,"theme":attach_module_theme}, // 추가 데이타 세팅
         onSubmit:function(files){
-
-          sheet_post_photoadd.find('[data-role="attach-handler-file"]').attr('disabled',true );
-
+          sheet_post_photoadd.find('[data-act="attach"]').attr('disabled',true);
+          modal_post_write.find('[data-role="attach-handler-photo"]').attr('disabled',true);
         },
         onSuccess:function(files,data,xhr,pd){
-          sheet_post_photoadd.find('[data-role="attach-handler-file"]').attr('disabled',false );
-          sheet_post_photoadd.find('[data-role="guide"]').addClass('d-none');
+          setTimeout(function(){
+            var modal_item_num = $('#modal-post-write').find('[data-role="attach-preview-photo"] [data-role="attach-item"]').length;
+            $('#modal-post-write').find('[data-role="attachNum"]').text(modal_item_num);
+          }, 10);
+          $('[data-act="attach"]').attr('disabled',false);
+          sheet_post_photoadd.find('[data-role="none"]').addClass('d-none');
+          sheet_post_photoadd.find('[data-act="submit"]').addClass('active').removeClass('text-muted');
+          modal_post_write.find('[data-role="attach-handler-photo"]').attr('disabled',false);
 
         }
    }
@@ -37,7 +42,28 @@ $(document).ready(function() {
   }
   $("#attach-files").RbAttachTheme(attach_settings);
 
-  $('body').on('click','[data-act="sheet"][data-target="#sheet-attach-moreAct"]',function(){
+  $('[data-plugin="sortable"]').sortable({
+    axis: 'y',
+    cancel: 'button',
+    delay: 250,
+    update: function( event, ui ) {
+
+      var attachfiles=$('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
+      var new_upfiles='';
+      if(attachfiles){
+        for(var i=0;i<attachfiles.length;i++) {
+          new_upfiles+=attachfiles[i];
+        }
+      }
+      $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=modifygid',{
+         attachfiles : new_upfiles
+       })
+
+    }
+  });
+  $('[data-plugin="sortable"]').disableSelection();
+
+  $('body').on('tap','[data-act="sheet"][data-target="#sheet-attach-moreAct"]',function(){
     var button = $(this);
     var target = button.attr('data-target');
     var type = button.attr('data-type');

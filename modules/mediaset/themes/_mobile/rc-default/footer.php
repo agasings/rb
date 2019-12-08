@@ -25,7 +25,7 @@ $(document).ready(function() {
         onSuccess:function(files,data,xhr,pd){
           $(".content").loader("hide")
           $('#popup-success').popup();
-
+          $('[data-role="attach_guide"]').addClass('d-none');
         }
    }
    $("#attach-files").RbUploadFile(upload_settings); // 아작스 폼+input=file 엘리먼트 세팅

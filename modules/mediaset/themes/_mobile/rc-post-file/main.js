@@ -104,7 +104,19 @@
                          var delEl_default=$(previewUl_default).find('[data-id="'+uid+'"]'); // 삭제 이벤트 진행된 엘리먼트
                          //var delEl_modal=$(previewUl_modal).find('[data-id="'+uid+'"]'); // 삭제 이벤트 진행된 엘리먼트
                          delEl_default.remove();// 삭제 이벤트 진행시 해당 li 엘리먼트 remove
-                         //delEl_modal.remove();// 삭제 이벤트 진행시 해당 li 엘리먼트 remove
+
+                         var sheet_item_num = $('#sheet-post-photoadd').find('[data-role="attach-item"]').length;
+                         var modal_item_num = $('#modal-post-write').find('[data-role="attach-preview-photo"] [data-role="attach-item"]').length;
+                         setTimeout(function(){
+                           $('#modal-post-write').find('[data-role="attachNum"]').text(modal_item_num==0?'':modal_item_num);
+                           if (!sheet_item_num) {
+                             $('#sheet-post-photoadd').find('[data-role="none"]').removeClass('d-none');
+                             $('#sheet-post-photoadd').find('[data-act="submit"]').removeClass('active').addClass('text-muted');
+                           }
+                         }, 100);
+
+
+
                    });
               }else if(act=='showhide'){
                    var showhide=$(this).attr('data-content'); // data('content') 로 할 경우, ajax 로 변경된 값이 인식되지 않는다.
