@@ -180,7 +180,8 @@ function getPostView(settings) {
           if (format!='video') Iframely('oembed[url]') // oembed 미디어 변환
 
           if (photo) {  // 첨부 이미지가 있을 경우
-            wrapper.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+            wrapper.find('[data-role="attach-photo"]').removeClass('hidden').html(photo);
+            initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프
           }
 
           if (video) {  // 첨부 비디오가 있을 경우

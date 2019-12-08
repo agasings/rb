@@ -118,24 +118,6 @@ $result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';
 $result['dis_listadd'] = $R['dis_listadd']?$R['dis_listadd']:'';
 $result['goods'] = $R['goods'];
 
-//첨부링크 및 파일
-$theme_attach= '_mobile/rc-post-file';
-$theme_link= '_mobile/rc-post-link';
-include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
-include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
-
-if($R['upload']) {
-  if ($AttachListType == 'object') {
-    $result['photo'] = getAttachObjectArray($R,'photo');
-  } else {
-    $result['attachNum'] = getAttachNum($R['upload'],'view');
-    $result['file'] = getAttachFileList($R,'view','file',$device);
-    $result['photo'] = getAttachFileList($R,'view','photo',$device);
-    $result['video'] = getAttachFileList($R,'view','video',$device);
-    $result['audio'] = getAttachFileList($R,'view','audio',$device);
-  }
-}
-
 //최근 포스트
 $postque = 'mbruid='.$R['mbruid'].' and site='.$s.' and data <>'.$R['uid'];
 if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
@@ -182,6 +164,25 @@ $markup_file = $markup_file?$markup_file:'view_doc_content';
 $skin=new skin($markup_file);
 $result['error'] = false;
 $result['article']=$skin->make();
+
+//첨부링크 및 파일
+$theme_attach= '_mobile/rc-post-file';
+$theme_link= '_mobile/rc-post-link';
+include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
+include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
+
+if($R['upload']) {
+  if ($AttachListType == 'object') {
+    $result['photo'] = getAttachObjectArray($R,'photo');
+  } else {
+    $result['attachNum'] = getAttachNum($R['upload'],'view');
+    $result['file'] = getAttachFileList($R,'view','file',$theme_attach);
+    $result['photo'] = getAttachFileList($R,'view','photo',$theme_attach);
+    $result['video'] = getAttachFileList($R,'view','video',$theme_attach);
+    $result['audio'] = getAttachFileList($R,'view','audio',$theme_attach);
+  }
+}
+
 echo json_encode($result);
 exit;
 ?>

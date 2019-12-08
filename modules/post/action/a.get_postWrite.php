@@ -84,10 +84,10 @@ include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
 if($R['upload']) {
   $result['attachNum'] = getAttachNum($R['upload'],'modify');
   $result['linkNum'] = getLinkNum($R['upload'],'modify');
-  $result['file'] = getAttachFileList($R,'upload','file');
-  $result['photo'] = getAttachFileList($R,'upload','photo');
-  $result['video'] = getAttachFileList($R,'upload','video');
-  $result['audio'] = getAttachFileList($R,'upload','audio');
+  $result['file'] = getAttachFileList($R,'upload','file',$theme_attach);
+  $result['photo'] = getAttachFileList($R,'upload','photo',$theme_attach);
+  $result['video'] = getAttachFileList($R,'upload','video',$theme_attach);
+  $result['audio'] = getAttachFileList($R,'upload','audio',$theme_attach);
   $result['link'] = getAttachPlatformList($R,'upload','file');
 }
 

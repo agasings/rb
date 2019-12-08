@@ -192,10 +192,7 @@ $(document).ready(function() {
     page_main.find('.content').scrollTop(0);
   })
 
-
   putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
-
-  RC_initPhotoSwipe(); // 포토갤러리 초기화 (모바일 전용)
 
 	$('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화
 

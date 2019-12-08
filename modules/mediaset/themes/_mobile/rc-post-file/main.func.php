@@ -26,121 +26,118 @@ function getAttachNum($upload,$mod)
    $parent_data : 해당 포스트의 row 배열
    $mod : upload or modal  ==> 실제 업로드 모드 와 모달을 띄워서 본문에 삽입용도로 쓰거나
 */
-function getAttachFileList($parent_data,$mod,$type)
-{
+function getAttachFileList($parent_data,$mod,$type,$theme) {
 	global $table;
 
-     $upload=$parent_data['upload'];
-     $featured_img_uid=$parent_data['featured_img'];// 대표이미지 uid
-		 $featured_video_uid=$parent_data['featured_video'];// 대표비디오 uid
-		 $featured_audio_uid=$parent_data['featured_audio'];// 대표오디오 uid
+   $upload=$parent_data['upload'];
+   $featured_img_uid=$parent_data['featured_img'];// 대표이미지 uid
+	 $featured_video_uid=$parent_data['featured_video'];// 대표비디오 uid
+	 $featured_audio_uid=$parent_data['featured_audio'];// 대표오디오 uid
 
-     if($type=='file') $sql='type=1';
-		 else if($type=='photo') $sql='type=2';
-     else if($type=='audio') $sql='type=4';
-		 else if($type=='video') $sql='type=5';
-		 else if($type=='doc') $sql='type=6';
-		 else if($type=='zip') $sql='type=7';
- 		 else $sql='type=1';
+   if($type=='file') $sql='type=1';
+	 else if($type=='photo') $sql='type=2';
+   else if($type=='audio') $sql='type=4';
+	 else if($type=='video') $sql='type=5';
+	 else if($type=='doc') $sql='type=6';
+	 else if($type=='zip') $sql='type=7';
+		 else $sql='type=1';
 
-     $attach = getArrayString($upload);
-     $uid_q='(';
-     foreach($attach['data'] as $uid)
-	{
+	 if ($mod=='view') $sql.=' and hidden=0';
+
+   $attach = getArrayString($upload);
+   $uid_q='(';
+   foreach($attach['data'] as $uid) {
 		$uid_q.='uid='.$uid.' or ';
-	}
-	$uid_q=substr($uid_q,0,-4).')';
-      $sql=$sql.' and '.$uid_q;
-      $RCD=getDbArray($table['s_upload'],$sql,'*','gid','desc','',1);
-      $html='';
-      while($R=db_fetch_array($RCD)){
-         	$U=getUidData($table['s_upload'],$R['uid']);
+	 }
 
-					if($type=='file') $html.=getAttachFile($U,$mod,$featured_img_uid);
-					else if($type=='photo') $html.=getAttachFile($U,$mod,$featured_img_uid);
-					else if($type=='audio') $html.=getAttachAudio($U,$mod,$featured_audio_uid);
-					else if($type=='video') $html.=getAttachVideo($U,$mod,$featured_video_uid);
-					else $html.=getAttachFile($U,$mod,$featured_img_uid);;
-      }
+	$uid_q=substr($uid_q,0,-4).')';
+  $sql=$sql.' and '.$uid_q;
+  $RCD=getDbArray($table['s_upload'],$sql,'*','gid','asc','',1);
+  $html='';
+  while($R=db_fetch_array($RCD)){
+	 	$U=getUidData($table['s_upload'],$R['uid']);
+
+		if($type=='file') $html.=getAttachFile($U,$mod,$featured_img_uid,$theme);
+		else if($type=='photo') $html.=getAttachFile($U,$mod,$featured_img_uid,$theme);
+		else if($type=='audio') $html.=getAttachAudio($U,$mod,$featured_audio_uid,$theme);
+		else if($type=='video') $html.=getAttachVideo($U,$mod,$featured_video_uid,$theme);
+		else $html.=getAttachFile($U,$mod,$featured_img_uid,$theme);
+  }
 
 	return $html;
 }
 
 
 // 첨부파일 리스트 추출 함수 (낱개)
-function getAttachFile($R,$mod,$featured_img_uid)
-{
-	global $g,$r;
+function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 
-      $fileName=explode('.',$R['name']);
-      $file_name=$fileName[0]; // 파일명만 분리
+	global $g,$r,$m,$theme,$TMPL;
 
-			if ($R['type']==2) {
-				$type='photo';
-			} elseif($R['type']==4) {
-				$type='audio';
-			} elseif($R['type']==5) {
-				$type='video';
-			} else {
-				$type='file';
-			}
+	$m='mediaset';
+	$theme='_mobile/rc-post-file';
 
-      if($type=='photo'){
-            $caption=$R['caption']?$R['caption']:$file_name;
-            $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
-						$thumb_list=getPreviewResize($R['src'],'q'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-            $thumb_modal=getPreviewResize($R['src'],'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-            $insert_text='!['.$caption.']('.$g['url_root'].$img_origin.')';
-			}else if($type=='file'){
-						$caption=$R['caption']?$R['caption']:$R['name'];
-						$src=$R['host'].$R['folder'].'/'.$R['name'];
-						$insert_text='['.$caption.']('.$g['url_root'].'/?r='.$r.'&m=attach&a=download&uid='.$R['uid'].')';
-			}
+	include_once $GLOBALS['g']['path_core'].'function/sys.class.php';
 
+  $fileName=explode('.',$R['name']);
+  $file_name=$fileName[0]; // 파일명만 분리
 
-      $html='';
-	$html.='
-	 <li class="table-view-cell bg-white animated fadeIn pl-0" data-id="'.$R['uid'].'" data-role="attach-item">';
+	if ($R['type']==2) {
+		$type='photo';
+	} elseif($R['type']==4) {
+		$type='audio';
+	} elseif($R['type']==5) {
+		$type='video';
+	} else {
+		$type='file';
+	}
 
-	 if($R['type']==2){
-	      $html.='<div class="media"><div class="pull-left media-object">
-              <img src="'.$thumb_list.'" alt="'.$caption.'" style="width: 42px;height: 42px"></div>
-              <div class="media-body text-muted f14 w-75">';
-                  $html.='<span class="badge badge-pill mr-1'.($R['uid']==$featured_img_uid?'':' hidden').'" data-role="attachList-label-featured" data-id="'.$R['uid'].'">대표</span> ';
-                  $html.='<span class="badge badge-pill mr-1'.(!$R['hidden']?' hidden':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
-                  $html.=
-                  getStrCut($R['name'],25,'..').'
-                  <p>'.getSizeFormat($R['size'],2).'</p>
-              </div></div>';
-			}else {
-            $html.='
-						<div class="media-body">
-            <i class="fa fa-floppy-o fa-fw"></i>';
-           $html.='<span class="badge badge-pill'.(!$R['hidden']?' hidden':'').'" data-role="attachList-label-hidden-'.$R['uid'].'">숨김</span>';
-           $html.=$R['name'].'
-            <p>'.getSizeFormat($R['size'],2).'</p>
-						</div>';
-      }
+  if($type=='photo'){
+    $caption=$R['caption']?$R['caption']:$file_name;
+    $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
+		$thumb_list=getPreviewResize($R['src'],'q'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+    $thumb_modal=getPreviewResize($R['src'],'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+		$thumb_view=getPreviewResize($R['src'],'600x600'); // 보기 페이지 출력용
+    $insert_text='!['.$caption.']('.$g['url_root'].$img_origin.')';
+	}else if($type=='file'){
+		$caption=$R['caption']?$R['caption']:$R['name'];
+		$src=$R['host'].$R['folder'].'/'.$R['name'];
+		$insert_text='['.$caption.']('.$g['url_root'].'/?r='.$r.'&m=attach&a=download&uid='.$R['uid'].')';
+	}
 
-					 if($mod=='upload')  $html.='<input type="hidden" name="attachfiles[]" value="['.$R['uid'].']"/>';
-						$html.='
-						<button type="button" class="btn btn-link" data-act="sheet" data-target="#sheet-attach-moreAct" data-id="'.$R['uid'].'" data-showhide="'.(!$R['hidden']?'hide':'show').'" data-insert="'.$insert_text.'" data-title="'.$R['name'].'" data-type="'.$type.'"><span class="fa fa-caret-down fa-lg text-muted"></span></button>';
-						if($mod=='upload'){
-						$html.='
-						<ul class="hidden dropdown-menu dropdown-menu-right" role="menu">';
-							if($R['type']==2){
-								$html.='
-									<li><a class="dropdown-item" href="#" data-attach-act="featured-img" data-type="'.$type.'" data-id="'.$R['uid'].'">대표이미지 설정</a></li>';
-							 }
-							 $html.='
-								<li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-attach-'.($R['type']==2?'photo':'file').'-meta" data-filename="'.$file_name.'"  data-fileext="'.$R['ext'].'" data-caption="'.$caption.'" data-src="'.$thumb_modal.'" data-origin="'.$img_origin.'" data-attach-act="edit" data-id="'.$R['uid'].'" data-type="'.$type.'" data-role="attachList-menu-edit-'.$R['uid'].'">정보수정</a></li>
-								<li><a class="dropdown-item" href="#" data-attach-act="showhide" data-role="attachList-menu-showhide-'.$R['uid'].'" data-id="'.$R['uid'].'" data-content="'.($R['hidden']?'show':'hide').'" >'.($R['hidden']?'보이기':'숨기기').'</a></li>
-								<li><a class="dropdown-item" href="#" data-attach-act="delete" data-id="'.$R['uid'].'" data-role="attachList-menu-delete-'.$R['uid'].'" data-featured="" data-type="'.$type.'">삭제</a></li>
-						 </ul>';
-						}
-						$html.='
+  $html='';
 
-      </li>';
+	$TMPL['is_featured']=$R['uid']==$featured_img_uid?'':' hidden';
+	$TMPL['is_hidden']=!$R['hidden']?' hidden':'';
+	$TMPL['hidden_code']=$R['hidden']?'show':'hide';
+	$TMPL['hidden_str']=$R['hidden']?'보이기':'숨기기';
+	$TMPL['img_origin']=$img_origin;
+	$TMPL['img_origin_width']=$R['width'];
+	$TMPL['img_origin_height']=$R['height'];
+	$TMPL['type']=$type;
+	$TMPL['type_modal']=$R['type']==2?'photo':'file';
+	$TMPL['file_name']=$file_name;
+	$TMPL['fileext']=$R['ext'];
+	$TMPL['caption']=$caption;
+	$TMPL['showhide']=!$R['hidden']?'hide':'show';
+	$TMPL['insert_text']=$insert_text;
+	$TMPL['thumb_modal']=$thumb_modal;
+	$TMPL['thumb_list']=$thumb_list;
+	$TMPL['thumb_view']=$thumb_view;
+	$TMPL['name']=$R['name'];
+	$TMPL['_name']=getStrCut($R['name'],25,'..');
+	$TMPL['size']=getSizeFormat($R['size'],2);
+	$TMPL['uid']=$R['uid'];
+
+	if ($mod=='upload') {
+		if ($R['type']==2) $markup_file = 'edit_photo_row';
+		else $markup_file = 'edit_file_row';
+	} else {
+		if ($R['type']==2) $markup_file = 'view_photo_row';
+		else $markup_file = 'view_file_row';
+	}
+
+	$skin=new skin($markup_file);
+	$html.=$skin->make();
 
 	return $html;
 }

@@ -20,7 +20,6 @@ if($R['upload']) {
   $result['zip'] = getAttachFileList($R,'upload','zip');
   $result['video'] = getAttachFileList($R,'upload','video');
   $result['audio'] = getAttachFileList($R,'upload','audio');
-  $result['youtube'] = getAttachPlatformList($R,'upload','default');
 }
 
 echo json_encode($result);

@@ -2,10 +2,11 @@
 <?php include $g['path_core'].'engine/foot.engine.php'?>
 
 <!-- 포토모달 : photoswipe http://photoswipe.com/documentation/getting-started.html -->
-<?php getImport('photoswipe','photoswipe','4.1.1','css') ?>
-<?php getImport('photoswipe','default-skin/default-skin','4.1.1','css') ?>
-<?php getImport('photoswipe','rc-photoswipe','4.1.1','js') ?>
-<?php getImport('photoswipe','photoswipe-ui-default.min','4.1.1','js') ?>
+<?php getImport('photoswipe','photoswipe','4.1.2','css') ?>
+<?php getImport('photoswipe','default-skin/default-skin','4.1.2','css') ?>
+<?php getImport('photoswipe','photoswipe.min','4.1.2','js') ?>
+<?php getImport('photoswipe','photoswipe-ui-default.min','4.1.2','js') ?>
+<script src="<?php echo $g['url_layout']?>/_js/photoswipe.js"></script>
 
 <!-- youtube iframe_api -->
 <script src="https://www.youtube.com/player_api"></script>
