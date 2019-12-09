@@ -5,7 +5,7 @@ $(document).ready(function() {
 
   var sheet = $('#sheet-post-linkadd');
 
-  sheet.find('[data-act="saveLink"]').click(function(){
+  sheet.on('click','[data-act="saveLink"]',function(){
     var container = '#modal-post-write';
     var button = $(this);
     var input = sheet.find('input');

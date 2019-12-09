@@ -1020,7 +1020,7 @@
     <div class="input-group" data-role="linkadd_input" style="top: 0.1rem;">
       <input type="text" class="form-control border-0" placeholder="복사한 URL을 여기에 붙여주세요.">
       <span class="input-group-btn">
-        <button class="btn btn-link text-muted" type="button" style="top: 0.1rem;outline:none" data-act="saveLink">
+        <button class="btn btn-link text-muted" type="button" style="top: 0.1rem;outline:none" data-act="submit">
           <span class="not-loading">
             <i class="material-icons">send</i>
           </span>
