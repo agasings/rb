@@ -666,6 +666,7 @@ modal_post_write.on('hidden.rc.modal', function(event) {
   if(modal.find('[data-act="submit"]').is(":disabled")) var submitting = true;
   modal.find('[name="uid"]').val(''); // uid 초기화
   modal.find('[name="pcode"]').val(''); // pcode 초기화
+  modal.removeAttr('data-after');
 
   // var content = editor_post.getData();
 

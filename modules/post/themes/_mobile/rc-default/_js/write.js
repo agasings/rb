@@ -262,6 +262,7 @@ function setPostWrite(settings) {
 function savePost(f) {
 
   var editorData = editor_post.getData();
+  var after = modal_post_write.attr('data-after');
 
   // 카테고리 체크
 	var cat_sel=page_post_edit_category.find('input[name="tree_members[]"]');
@@ -385,7 +386,10 @@ function savePost(f) {
 
           history.back();
           form.find('[data-role="postsubmit"]').attr( 'disabled', false );
-          setTimeout(function(){ $.notify({message: '저장 되었습니다.'},{type: 'default'}); }, 300);
+          setTimeout(function(){
+            if (uid && !after) $.notify({message: '저장 되었습니다.'},{type: 'default'});
+            else $('#page-post-mypost').page({ start: '#page-main' });
+           }, 300);
 
         } else {
           alert(status);
@@ -462,7 +466,7 @@ function savePostByLink(url) {
                         var cid=result.last_cid;
 
                         history.back();
-                        modal_post_write.attr('data-uid',uid);
+                        modal_post_write.attr('data-uid',uid).attr('data-after','mypost');
 
                         setTimeout(function(){
                           modal_post_write.modal({
@@ -523,7 +527,7 @@ function savePostByLink(url) {
                   var cid=result.last_cid;
 
                   history.back();
-                  modal_post_write.attr('data-uid',uid);
+                  modal_post_write.attr('data-uid',uid).attr('data-after','mypost');
 
                   setTimeout(function(){
                     modal_post_write.modal({

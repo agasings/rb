@@ -120,7 +120,7 @@
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
     <a class="icon pull-right material-icons px-3" role="button" data-toggle="sheet" data-target="#sheet-post-filter">tune</a>
-    <span class="title title-left" data-history="back" data-role="title">내 포스트</span>
+    <span class="title title-left" data-history="back">내 포스트</span>
   </header>
   <main role="main" class="content">
     <div class="content-padded">
