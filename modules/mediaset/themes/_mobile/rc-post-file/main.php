@@ -26,8 +26,8 @@
     <div class="mb-0 border-0" data-role="attach-preview-video">
     </div>
 
-    <div class="px-3">
-      <button class="btn btn-link btn-block" data-role="attach-handler-photo" data-type="file" role="button">
+    <div class="px-2">
+      <button class="btn btn-link btn-block py-3" data-role="attach-handler-photo" data-type="file" role="button">
         <span class="not-loading">
           추가
         </span>
