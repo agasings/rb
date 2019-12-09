@@ -551,8 +551,6 @@ function savePostByLink(url) {
 
 } // savePostByLink()
 
-
-
 page_post_edit_review.on('shown.rc.page', function(event) {
   var page = $(this)
   var textarea = page.find('textarea')

@@ -1033,9 +1033,12 @@ sheet_post_photoadd.find('[data-act="submit"]').click(function(){
     if (featured_attach_img_src) modal_featured.attr('src',featured_attach_img_src);
   }
 
+  var list = $('#sheet-post-photoadd').find('[data-role="attach-preview-photo"]').html();
+
   modal_featured.closest('.media-left').removeClass('d-none');
   history.back();
   modal_post_write.find('[data-role="attachNum"]').text(num==0?'':num);
+  modal_post_write.find('[data-role="attach-preview-photo"]').html(list);
   setTimeout(function(){
     modal_post_write.modal();
   }, 200);

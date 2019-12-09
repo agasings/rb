@@ -524,7 +524,7 @@
         <div class="content-padded my-0 editor-focused-hide">
           <div class="media">
             <span class="media-left media-middle position-relative pr-0 mr-2 d-none">
-              <img class="media-object bg-faded" src="" alt="" data-role="featured" style="width:103px;height:58px">
+              <img class="media-object bg-faded" src="" alt="" data-role="featured" style="height:58px">
               <time class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="time"></time>
               <span class="badge badge-default bg-black rounded-0 position-absolute f12 p-1" style="right:1px;bottom:1px" data-role="attachNum"></span>
             </span>
