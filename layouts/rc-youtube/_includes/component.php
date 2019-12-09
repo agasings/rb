@@ -357,8 +357,8 @@ if ($m=='bbs') {
         대표이미지 설정
       </a>
     </li>
-    <li class="table-view-cell d-none">
-      <a data-attach-act="edit">
+    <li class="table-view-cell">
+      <a data-attach-act="edit" class="navigate-right">
         정보수정
       </a>
     </li>

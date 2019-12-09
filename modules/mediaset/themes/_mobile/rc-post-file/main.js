@@ -57,9 +57,16 @@
               var act=$(this).data('attach-act');
               var uid=$(this).attr('data-id');
               var type=$(this).data('type'); // file or photo
+
               if(act=='edit'){
+
+                // setTimeout(function(){ history.back(); }, 30);
+                setTimeout(function(){ $('#page-post-edit-mediaset').page({ start: '#page-post-edit-main',title:'미디어 정보수정' }); }, 250);
+                return false
+
+
                 // data 값 세팅
-                var modal=$(this).data('target');
+                var page=$(this).data('target');
                 var filename=$(this).attr('data-filename'); // data-로 하면 변경된 값 적용 안됨
                 var fileext=$(this).data('fileext');
                 var caption=$(this).attr('data-caption'); // data- 로 하면 변경된 값 적용 안됨
@@ -67,20 +74,20 @@
                 var img_origin=$(this).data('origin');// 원본 이미지
 
                 // data 값 모달에 적용
-                $(modal).find('[data-role="filename"]').val(filename);
-                $(modal).find('[data-role="fileext"]').text(fileext);
-                $(modal).find('[data-role="filecaption"]').val(caption);
-                $(modal).find('[data-role="eventHandler"]').attr('data-id',uid); // save, cancel 엘리먼트 data-id="" 값에 uid 값 적용
-                $(modal).find('[data-role="eventHandler"]').attr('data-type',type); // save, cancel 엘리먼트 data-type="" 값에 type 값 적용
+                $(page).find('[data-role="filename"]').val(filename);
+                $(page).find('[data-role="fileext"]').text(fileext);
+                $(page).find('[data-role="filecaption"]').val(caption);
+                $(page).find('[data-role="eventHandler"]').attr('data-id',uid); // save, cancel 엘리먼트 data-id="" 값에 uid 값 적용
+                $(page).find('[data-role="eventHandler"]').attr('data-type',type); // save, cancel 엘리먼트 data-type="" 값에 type 값 적용
                 if(type=='photo'){
-                   $(modal).find('[data-role="img-preview"]').attr('src',img_thumb); // 미리보기 이미지 src 적용
-                   $(modal).find('[data-role="img-preview"]').attr('data-origin',img_origin); // 원본 이미지 src 적용
+                   $(page).find('[data-role="img-preview"]').attr('src',img_thumb); // 미리보기 이미지 src 적용
+                   $(page).find('[data-role="img-preview"]').attr('data-origin',img_origin); // 원본 이미지 src 적용
                  } else if(type=='video'){
-                   $(modal).find('[data-role="img-preview"]').html('<i class="fa fa-file-video-o fa-4x"></i>'); // 타입별 아이콘 적용
+                   $(page).find('[data-role="img-preview"]').html('<i class="fa fa-file-video-o fa-4x"></i>'); // 타입별 아이콘 적용
                  } else if(type=='audio'){
-                   $(modal).find('[data-role="img-preview"]').html('<i class="fa fa-file-audio-o fa-4x"></i>'); // 타입별 아이콘 적용
+                   $(page).find('[data-role="img-preview"]').html('<i class="fa fa-file-audio-o fa-4x"></i>'); // 타입별 아이콘 적용
                  } else {
-                   $(modal).find('[data-role="img-preview"]').html('<i class="fa fa-floppy-o fa-4x"></i>'); // 타입별 아이콘 적용
+                   $(page).find('[data-role="img-preview"]').html('<i class="fa fa-floppy-o fa-4x"></i>'); // 타입별 아이콘 적용
                  }
 
               }

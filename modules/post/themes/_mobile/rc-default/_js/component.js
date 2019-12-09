@@ -15,6 +15,7 @@ var page_post_edit_review = $('#page-post-edit-review'); // 포스트 작성 리
 var page_post_edit_tag = $('#page-post-edit-tag'); // 포스트 작성 태그입력
 var page_post_edit_advan = $('#page-post-edit-advan'); // 포스트 작성 고급설정
 var page_post_edit_category = $('#page-post-edit-category'); //포스트 작성 카테고리입력
+var page_post_edit_mediaset = $('#page-post-edit-mediaset'); //포스트 작성 미디어셋설정
 var page_post_analytics_main = $('#page-post-analytics-main'); // 포스트 통계분석 메인
 var page_post_analytics_hit = $('#page-post-analytics-hit'); // 포스트 통계분석 유입추이
 var page_post_analytics_referer = $('#page-post-analytics-referer'); // 포스트 통계분석 유입경로
@@ -984,7 +985,7 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
       sheet_post_linkadd.sheet('show');
       sheet_post_linkadd.find('button').attr('data-act','submit');
     } else if (type=='photo') {
-      sheet_post_photoadd.sheet('show');
+      sheet_post_photoadd.sheet({backdrop: 'static'});
     } else {
       modal_post_write.modal({title: '새 포스트',url: '/post/write'})
     }

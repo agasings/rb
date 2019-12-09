@@ -78,6 +78,7 @@ $(document).ready(function() {
     $('#attach-files-backdrop').removeClass('hidden');
     sheet.find('[data-role="insert_text"]').val(insert_text);
     sheet.find('[data-attach-act="featured-img"]').attr('data-id',uid).attr('data-type',type).attr('data-mod','file');
+    sheet.find('[data-attach-act="edit"]').attr('data-id',uid).attr('data-type',type).attr('data-mod','file');
     sheet.find('[data-attach-act="showhide"]').attr('data-id',uid).attr('data-content',showhide).attr('data-mod','file');
     sheet.find('[data-attach-act="delete"]').attr('data-id',uid).attr('data-type',type).attr('data-mod','file');
 

@@ -718,8 +718,19 @@
     </main>
   </section>
 
-</div><!-- /.modal -->
+  <section class="page right" id="page-post-edit-mediaset">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title title-left" data-history="back" data-role="title">미디어셋 설정</span>
+    </header>
+    <main class="content">
 
+      <div class="content-padded" data-role="box"></div>
+
+    </main>
+  </section>
+
+</div><!-- /.modal -->
 
 <!-- 팝업 : 포스트 옵션 더보기 -->
 <div id="popup-post-postMore" class="popup zoom">
