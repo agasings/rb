@@ -3,16 +3,17 @@
 
 $(document).ready(function() {
 
-  var check_url = $('#check_url');
+  var sheet = $('#sheet-post-linkadd');
 
-  check_url.find(".btn").click(function(){
-    var container = '#attach_link'
-    var fieldset = check_url
-    var textarea = check_url.find('textarea')
-  	var url = textarea.val()
+  sheet.find('[data-act="saveLink"]').click(function(){
+    var container = '#modal-post-write';
+    var button = $(this);
+    var input = sheet.find('input');
+  	var url = input.val();
+    var linkNum = Number($(container).find('[data-role="linkNum"]').text());
 
     if (!url) {
-      textarea.focus()
+      input.focus()
       return false
     }
 
@@ -30,7 +31,7 @@ $(document).ready(function() {
       }
     }
 
-    fieldset.attr('disabled',true)
+    button.attr('disabled',true)
 
   	$.get('//embed.kimsq.com/oembed',{
   			url: url
@@ -45,14 +46,11 @@ $(document).ready(function() {
         var width = response.thumbnail_width;
         var height = response.thumbnail_height;
         var embed = response.html;
-  			check_url.find('[data-role="title"]').text(title);
-        check_url.find('[data-role="description"]').text(description);
-        check_url.find('[data-role="thumbnail"]').attr('src',thumbnail_url);
-        check_url.find('[data-act="insert"]').attr('data-url',url).attr('data-title',title).attr('data-description',description).attr('data-thumbnail',thumbnail_url).attr('data-provider',provider);
 
-        // 포스트 글쓰기 페이지 저장버튼 출력
-        $('[data-role="postsubmit"]').removeClass('d-none');
-        $('[data-role="library"]').addClass('d-none');
+  			sheet.find('[data-role="title"]').text(title);
+        sheet.find('[data-role="description"]').text(description);
+        sheet.find('[data-role="thumbnail"]').attr('src',thumbnail_url);
+        sheet.find('[data-act="insert"]').attr('data-url',url).attr('data-title',title).attr('data-description',description).attr('data-thumbnail',thumbnail_url).attr('data-provider',provider);
 
         if (type=='video') {
 
@@ -66,7 +64,7 @@ $(document).ready(function() {
               $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
                  type : 9,
                  title : title,
-                 theme : '_desktop/bs4-default-link',
+                 theme : '_mobile/rc-post-link',
                  description : description,
                  thumbnail_url : thumbnail_url,
                  author: author,
@@ -78,12 +76,13 @@ $(document).ready(function() {
                  height : height,
                  embed : embed
               },function(response){
-                    var result=$.parseJSON(response);
-                    if(!result.error){
-                        $(container).find('[data-role="attach-preview-link"]').prepend(result.list);
-                        $.notify("추가 되었습니다.");
-                        $('[data-role="postsubmit"]').click(); // 포스트 저장
-                    }
+                  var result=$.parseJSON(response);
+                  if(!result.error){
+                    history.back();
+                    $(container).find('[data-role="attach-preview-link"]').append(result.list);
+                    setTimeout(function(){ $.notify("링크가 추가 되었습니다."); }, 300);
+                    $(container).find('[data-role="linkNum"]').text(linkNum+1);
+                  }
               });
 
         	});
@@ -93,7 +92,7 @@ $(document).ready(function() {
           $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
             type : 8,
             title : title,
-            theme : '_desktop/bs4-default-link',
+            theme : '_mobile/rc-post-link',
             description : description,
             thumbnail_url : thumbnail_url,
             author: author,
@@ -103,11 +102,13 @@ $(document).ready(function() {
             height : height,
             embed : embed
           },function(response){
-                var result=$.parseJSON(response);
-                if(!result.error){
-                    $(container).find('[data-role="attach-preview-link"]').prepend(result.list);
-                    $.notify("추가 되었습니다.");
-                }
+              var result=$.parseJSON(response);
+              if(!result.error){
+                history.back();
+                $(container).find('[data-role="attach-preview-link"]').append(result.list);
+                setTimeout(function(){ $.notify("링크가 추가 되었습니다."); }, 300);
+                $(container).find('[data-role="linkNum"]').text(linkNum+1);
+              }
           });
 
         }
@@ -116,22 +117,39 @@ $(document).ready(function() {
   	}).fail(function() {
       alert( "URL을 확인해주세요." );
     }).always(function() {
-      textarea.val('')
-      fieldset.attr('disabled',false)
+      input.val('')
+      button.attr('disabled',false)
     });
 
   });
 
-  $(document).on('click','[data-act="linkInsert"]',function(){
-    var url = $(this).attr('data-url')
+  $('body').on('tap','[data-act="sheet"][data-target="#sheet-attach-moreAct"][data-mod="link"]',function(){
+    var button = $(this);
+    var target = button.attr('data-target');
+    var type = button.attr('data-type');
+    var title = button.attr('data-title');
 
-    $(this).attr('data-original-title', '본문삽입 되었습니다.')
-    $(this).attr('data-original-title', '본문삽입')
+    var uid = button.attr('data-id');
+    var type = button.attr('data-type');
+    var showhide = button.attr('data-showhide');
+    var name = button.attr('data-name');
+    var insert_text = button.attr('data-insert');
+    var sheet = $('#sheet-attach-moreAct');
+    $('#attach-files-backdrop').removeClass('hidden');
+    sheet.find('[data-role="insert_text"]').val(insert_text);
+    sheet.find('[data-attach-act="featured-img"]').attr('data-id',uid).attr('data-type',type).attr('data-mod','link');
+    sheet.find('[data-attach-act="showhide"]').attr('data-id',uid).attr('data-content',showhide).attr('data-mod','link');
+    sheet.find('[data-attach-act="delete"]').attr('data-id',uid).attr('data-type',type).attr('data-mod','link');
 
-    var html = '<figure class="media"><oembed url="'+url+'"></oembed></figure>'
-
-    InserHTMLtoEditor(editor,html)
-  } );
+    if (type!='photo') { // 이미지가 아닐 경우
+      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').addClass('hidden');  // 대표이미지 항목 숨김처리함
+    } else {
+      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').removeClass('hidden');  // 대표이미지 항목 숨김처리함
+    }
+    $(target).sheet({
+      title : title
+    });
+  });
 
 
 })

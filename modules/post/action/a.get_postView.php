@@ -179,7 +179,7 @@ if($R['upload']) {
     $result['file'] = getAttachFileList($R,'view','file',$theme_attach);
     $result['photo'] = getAttachFileList($R,'view','photo',$theme_attach);
     $result['video'] = getAttachFileList($R,'view','video',$theme_attach);
-    $result['audio'] = getAttachFileList($R,'view','audio',$theme_attach);
+    $result['link'] = getAttachPlatformList($R,'view','link');
   }
 }
 

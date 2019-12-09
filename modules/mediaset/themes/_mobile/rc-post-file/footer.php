@@ -63,7 +63,7 @@ $(document).ready(function() {
   });
   $('[data-plugin="sortable"]').disableSelection();
 
-  $('body').on('tap','[data-act="sheet"][data-target="#sheet-attach-moreAct"]',function(){
+  $('body').on('tap','[data-act="sheet"][data-target="#sheet-attach-moreAct"][data-mod="file"]',function(){
     var button = $(this);
     var target = button.attr('data-target');
     var type = button.attr('data-type');
@@ -77,9 +77,9 @@ $(document).ready(function() {
     var sheet = $('#sheet-attach-moreAct');
     $('#attach-files-backdrop').removeClass('hidden');
     sheet.find('[data-role="insert_text"]').val(insert_text);
-    sheet.find('[data-attach-act="featured-img"]').attr('data-id',uid).attr('data-type',type);
-    sheet.find('[data-attach-act="showhide"]').attr('data-id',uid).attr('data-content',showhide);
-    sheet.find('[data-attach-act="delete"]').attr('data-id',uid).attr('data-type',type);
+    sheet.find('[data-attach-act="featured-img"]').attr('data-id',uid).attr('data-type',type).attr('data-mod','file');
+    sheet.find('[data-attach-act="showhide"]').attr('data-id',uid).attr('data-content',showhide).attr('data-mod','file');
+    sheet.find('[data-attach-act="delete"]').attr('data-id',uid).attr('data-type',type).attr('data-mod','file');
 
     if (showhide=='show') sheet.find('[data-attach-act="showhide"]').text('보이기');
     else sheet.find('[data-attach-act="showhide"]').text('숨기기');

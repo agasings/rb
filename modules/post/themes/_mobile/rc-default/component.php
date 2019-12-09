@@ -551,7 +551,7 @@
   			      사진 및 파일
   			    </a>
   			    <!-- 2depth -->
-            <div class="collapse ml-5" id="collapse-attach-file" role="tabpanel" >
+            <div class="table-view collapse mb-0" id="collapse-attach-file" role="tabpanel" >
               <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
             </div>
   			  </li>
@@ -565,11 +565,6 @@
   			    <!-- 2depth -->
   			    <div class="table-view collapse mb-0" id="collapse-attach-link">
               <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
-
-              <a class="btn btn-link btn-block" href="#sheet-post-linkadd" data-toggle="sheet" data-act="saveLink" role="button">
-                추가
-              </a>
-
             </div>
   			  </li>
 

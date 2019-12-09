@@ -52,7 +52,7 @@
         }
 
         // 이벤트 바인딩 및 세팅
-        $('body').on('click','[data-attach-act]',function(e){
+        $('body').on('click','[data-attach-act][data-mod="file"]',function(e){
               e.preventDefault();
               var act=$(this).data('attach-act');
               var uid=$(this).attr('data-id');

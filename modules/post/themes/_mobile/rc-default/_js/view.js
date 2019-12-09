@@ -153,6 +153,7 @@ function getPostView(settings) {
           var file=result.file;
           var zip=result.zip;
           var doc=result.doc;
+          var link=result.link;
 
           wrapper.find('[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-link',url).attr('data-featured',featured);
 
@@ -203,6 +204,11 @@ function getPostView(settings) {
 
           if (file) {  // 첨부 기타파일이 있을 경우
             wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(file)
+          }
+
+          if (link) {  // 첨부 링크가 있을 경우
+            wrapper.find('[data-role="attach-link"]').removeClass('hidden').html(link);
+            Iframely('oembed[url]') // oembed 미디어 변환
           }
 
           if (listCollapse) {
