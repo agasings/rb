@@ -35,6 +35,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
 
   <div class="card-deck">
 
+    <?php if (!empty($RCD)): ?>
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm">
       <a class="position-relative" href="<?php echo getPostLink($R,1) ?>">
@@ -74,7 +75,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.
       <?php endfor?>
     <?php endif?>
 
-    <?php if(!db_num_rows($_RCD)):?>
+    <?php else:?>
     <div class="card text-center text-muted p-5">
       자료가 없습니다.
     </div>

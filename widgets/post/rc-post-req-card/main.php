@@ -6,6 +6,7 @@ var wrapper =   $('<?php echo $wdgvar['wrapper'] ?> div');
 var start = '<?php echo $wdgvar['start'] ?>';
 var posts = '<?php echo $wdgvar['posts'] ?>';
 var markup_file = '<?php echo $wdgvar['markup'] ?>';
+var none = '';
 
 wrapper.loader({ position: 'inside' });
 

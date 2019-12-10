@@ -70,27 +70,29 @@ $list='';
 
 $TMPL['start']=$start;
 
-foreach ($RCD as $R) {
-  $TMPL['link']=getPostLink($R,1);
-  $TMPL['subject']=stripslashes($R['subject']);
-  $TMPL['format'] = $R['format'];
-  $TMPL['uid']=$R['uid'];
-  $TMPL['cid']=$R['cid'];
-  $TMPL['hit']=$R['hit'];
-  $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
-  $TMPL['likes']=$R['likes'];
-  $TMPL['provider']=getFeaturedimgMeta($R,'provider');
-  $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
-  $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
-  $TMPL['featured_320'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'320x180'):getPreviewResize('/files/noimage.png','320x180');
-  $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
-  $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
-  $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
-  $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
-  $TMPL['display']=$R['display']!=5?$g['displaySet']['icon'][$R['display']]:'';
+if (!empty($RCD)) {
+	foreach ($RCD as $R) {
+	  $TMPL['link']=getPostLink($R,1);
+	  $TMPL['subject']=stripslashes($R['subject']);
+	  $TMPL['format'] = $R['format'];
+	  $TMPL['uid']=$R['uid'];
+	  $TMPL['cid']=$R['cid'];
+	  $TMPL['hit']=$R['hit'];
+	  $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
+	  $TMPL['likes']=$R['likes'];
+	  $TMPL['provider']=getFeaturedimgMeta($R,'provider');
+	  $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
+	  $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+	  $TMPL['featured_320'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'320x180'):getPreviewResize('/files/noimage.png','320x180');
+	  $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
+	  $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
+	  $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
+	  $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
+	  $TMPL['display']=$R['display']!=5?$g['displaySet']['icon'][$R['display']]:'';
 
-  $skin=new skin($markup_file);
-  $list.=$skin->make();
+	  $skin=new skin($markup_file);
+	  $list.=$skin->make();
+	}
 }
 
 $result['list'] = $list;

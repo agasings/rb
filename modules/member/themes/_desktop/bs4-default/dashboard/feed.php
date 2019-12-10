@@ -60,6 +60,7 @@ $g['pagelink']	= $g['page_list'];
 
 	<?php if ($vtype=='media'): ?>
 	<ul class="list-unstyled" style="margin-top: -1rem">
+		<?php if (!empty($RCD)): ?>
 		<?php foreach($RCD as $R):?>
 		<li class="mt-4 d-flex justify-content-between align-items-center"
 			data-role="item"
@@ -111,11 +112,12 @@ $g['pagelink']	= $g['page_list'];
 			</div>
 		</li>
 		<?php endforeach?>
+		<?php endif; ?>
 	</ul>
 	<?php else: ?>
 
 	<div class="card-deck" data-role="post-list">
-
+		<?php if (!empty($RCD)): ?>
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm" id="item-<?php echo $_R['uid'] ?>">
       <a class="text-nowrap text-truncate muted-link position-relative " href="<?php echo getPostLink($R,1) ?>" target="_blank">
@@ -140,6 +142,7 @@ $g['pagelink']	= $g['page_list'];
 
     <?php if(!($i%$_line)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
     <?php endforeach?>
+		<?php endif; ?>
 
     <?php if($lack_card_num ):?>
       <?php for($j=0;$j<$lack_card_num;$j++):$i++;?>

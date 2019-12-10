@@ -40,50 +40,52 @@ $result['error'] = false;
 
 $list='';
 
-$i=1;foreach ($_RCD as $R) {
-  if ($dashboard=='Y' && !strpos('_'.$R['member'],'['.$my['uid'].']')) continue;
-  $_markup_file = $markup_file.'-'.$formats[$R['format']];
-  $TMPL['link']=getPostLink($R,1);
-  $TMPL['edit_link']=RW('m=post&mod=write&cid='.$R['cid']);
-  $TMPL['subject']=stripslashes($R['subject']);
-  $TMPL['format'] = $R['format'];
-  $TMPL['uid']=$R['uid'];
-  $TMPL['mbruid']=$R['mbruid'];
-  $TMPL['post_url']=getPostLink($R,0);
-  $TMPL['profile_url']=getProfileLink($R['mbruid']);
-  $TMPL['hit']=$R['hit'];
-  $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
-  $TMPL['likes']=$R['likes'];
-  $TMPL['dislikes']=$R['dislikes'];
-  $TMPL['provider']=getFeaturedimgMeta($R,'provider');
-  $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
-  $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
-  $TMPL['featured_img'] = checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'300x168'):getPreviewResize('/files/noimage.png','300x168');
-  $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
-  $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
-  $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
-  $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
+if (!empty($_RCD)) {
+  $i=1;foreach ($_RCD as $R) {
+    if ($dashboard=='Y' && !strpos('_'.$R['member'],'['.$my['uid'].']')) continue;
+    $_markup_file = $markup_file.'-'.$formats[$R['format']];
+    $TMPL['link']=getPostLink($R,1);
+    $TMPL['edit_link']=RW('m=post&mod=write&cid='.$R['cid']);
+    $TMPL['subject']=stripslashes($R['subject']);
+    $TMPL['format'] = $R['format'];
+    $TMPL['uid']=$R['uid'];
+    $TMPL['mbruid']=$R['mbruid'];
+    $TMPL['post_url']=getPostLink($R,0);
+    $TMPL['profile_url']=getProfileLink($R['mbruid']);
+    $TMPL['hit']=$R['hit'];
+    $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
+    $TMPL['likes']=$R['likes'];
+    $TMPL['dislikes']=$R['dislikes'];
+    $TMPL['provider']=getFeaturedimgMeta($R,'provider');
+    $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
+    $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+    $TMPL['featured_img'] = checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'300x168'):getPreviewResize('/files/noimage.png','300x168');
+    $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
+    $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
+    $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
+    $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
 
-  $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
-  $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";
-  $check_saved_qry   = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."'";
-  $is_post_liked    = getDbRows($table['s_opinion'],$check_like_qry);
-  $is_post_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
-  $is_post_saved    = getDbRows($table['s_saved'],$check_saved_qry);
-  $TMPL['is_post_liked'] = $is_post_liked?'active':'';
-  $TMPL['is_post_disliked'] = $is_post_disliked?'active':'';
-  $TMPL['is_post_saved'] = $is_post_saved?'true':'false';
+    $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
+    $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";
+    $check_saved_qry   = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."'";
+    $is_post_liked    = getDbRows($table['s_opinion'],$check_like_qry);
+    $is_post_disliked = getDbRows($table['s_opinion'],$check_dislike_qry);
+    $is_post_saved    = getDbRows($table['s_saved'],$check_saved_qry);
+    $TMPL['is_post_liked'] = $is_post_liked?'active':'';
+    $TMPL['is_post_disliked'] = $is_post_disliked?'active':'';
+    $TMPL['is_post_saved'] = $is_post_saved?'true':'false';
 
-  if ($sort=='hit') $TMPL['num']=$R['hit']?'조회 '.$R['hit']:'';
-  if ($sort=='likes') $TMPL['num']=$R['likes']?'좋아요 '.$R['likes']:'';
-  if ($sort=='dislikes') $TMPL['num']=$R['dislikes']?'싫어요 '.$R['dislikes']:'';
-  if ($sort=='comment') $TMPL['num']=$R['comment']?'댓글 '.$R['comment']:'';
+    if ($sort=='hit') $TMPL['num']=$R['hit']?'조회 '.$R['hit']:'';
+    if ($sort=='likes') $TMPL['num']=$R['likes']?'좋아요 '.$R['likes']:'';
+    if ($sort=='dislikes') $TMPL['num']=$R['dislikes']?'싫어요 '.$R['dislikes']:'';
+    if ($sort=='comment') $TMPL['num']=$R['comment']?'댓글 '.$R['comment']:'';
 
-  $skin=new skin($_markup_file);
-  $list.=$skin->make();
+    $skin=new skin($_markup_file);
+    $list.=$skin->make();
 
-  if ($i==$limit) break;
-  $i++;
+    if ($i==$limit) break;
+    $i++;
+  }
 }
 
 $result['list'] = $list;

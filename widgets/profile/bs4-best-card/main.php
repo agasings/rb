@@ -41,6 +41,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['s_mbrdata'],'membe
 
   <div class="card-deck">
 
+    <?php if (!empty($RCD)): ?>
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm card-mask">
       <a href="<?php echo getProfileLink($R['memberuid']) ?>" class="position-relative">
@@ -82,6 +83,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['s_mbrdata'],'membe
 
     <?php if(!($i%$recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
     <?php endforeach?>
+    <?php endif?>
 
     <?php if($lack_card_num ):?>
       <?php for($j=0;$j<$lack_card_num;$j++):$i++;?>
@@ -90,7 +92,7 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['s_mbrdata'],'membe
       <?php endfor?>
     <?php endif?>
 
-    <?php if(!db_num_rows($_RCD)):?>
+    <?php if(!$_RCD):?>
     <div class="card text-center text-muted p-5">
       자료가 없습니다.
     </div>

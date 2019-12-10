@@ -182,7 +182,13 @@ function getPostView(settings) {
 
           if (photo) {  // 첨부 이미지가 있을 경우
             wrapper.find('[data-role="attach-photo"]').removeClass('hidden').html(photo);
-            initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프
+
+            if (wrapper.attr('id')=='modal-post-view') {
+              initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프 활성
+            } else {
+              wrapper.on('click','[data-plugin="photoswipe"] a',function(){return false;}) //포토 스와이프 비활성 (page 히스토리와 충돌)
+            }
+
           }
 
           if (video) {  // 첨부 비디오가 있을 경우

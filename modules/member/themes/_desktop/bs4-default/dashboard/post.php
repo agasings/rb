@@ -159,6 +159,7 @@ switch ($sort) {
 		<input type="hidden" name="a" value="" />
 
 		<ul class="list-unstyled" style="margin-top: -1rem" data-plugin="markjs">
+			<?php if (!empty($RCD)): ?>
 			<?php foreach($RCD as $R):?>
 		  <li class="media mt-4"
 				data-role="item"
@@ -262,6 +263,7 @@ switch ($sort) {
 				</div>
 		  </li>
 			<?php endforeach?>
+			<?php endif; ?>
 
 			<?php if(!$NUM):?>
 			<li>

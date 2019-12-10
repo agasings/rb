@@ -120,6 +120,7 @@ switch ($sort) {
 
 			<ul class="list-unstyled" data-plugin="markjs">
 
+				<?php if (!empty($RCD)): ?>
 				<?php foreach($RCD as $R):?>
 			  <li class="media mt-4">
 
@@ -170,6 +171,7 @@ switch ($sort) {
 			    </div>
 			  </li>
 				<?php endforeach?>
+				<?php endif?>
 
 				<?php if(!$NUM):?>
 				<li>
