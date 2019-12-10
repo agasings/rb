@@ -1,8 +1,10 @@
 <div id="tab-main" class="tab-content active bg-faded">
 
+  <?php if ($d['layout']['main_post_req']): ?>
   <section class="widget" id="widget-post-req">
     <?php getWidget('post/rc-post-req-card',array('wrapper'=>'#widget-post-req','title'=>'추천 포스트','markup'=>'post-row','start'=>'#page-main','posts'=>$d['layout']['main_post_req']))?>
   </section>
+  <?php endif; ?>
 
   <section class="widget" id="widget-post-all">
     <?php getWidget('post/rc-post-all-scroll',array('wrapper'=>'#widget-post-all','start'=>'#page-main','recnum'=>5,'link'=>'/post'))?>
