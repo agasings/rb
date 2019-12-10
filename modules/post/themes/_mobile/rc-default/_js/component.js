@@ -62,7 +62,7 @@ page_post_allpost.on('show.rc.page', function(event) {
     recnum    : '',
     totalPage : '',
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   });
 })
 
@@ -81,7 +81,7 @@ page_post_alllist.on('show.rc.page', function(event) {
     recnum    : '',
     totalPage : '',
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   });
 })
 
@@ -102,7 +102,7 @@ page_post_listview.on('show.rc.page', function(event) {
     totalPage : '',
     sort      : '',
     orderby   : '',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   });
 })
 
@@ -123,7 +123,7 @@ page_post_keyword.on('show.rc.page', function(event) {
     recnum    : '',
     totalPage : '',
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
 
   getPostKeyword(settings);
@@ -277,7 +277,7 @@ page_post_category_view.on('show.rc.page', function(event) {
     recnum    : 10,
     totalPage : '',
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
 
   getPostCategory(settings);
@@ -296,7 +296,7 @@ page_post_mypost.on('show.rc.page', function(event) {
     markup    : 'post-mediaList',  // 테마 > _html > post-mediaList.html
     recnum    : 10,
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
   getMyPost(settings);
 })
@@ -342,7 +342,7 @@ sheet_post_filter.find('[data-act="submit"]').click(function(){
       markup    : 'post-mediaList',  // 테마 > _html > post-mediaList.html
       recnum    : 10,
       sort      : sort,
-      none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+      none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
     })
   }, 400);
 
@@ -375,7 +375,7 @@ page_post_mylist.on('show.rc.page', function(event) {
     markup    : 'list-mediaList',  // 테마 > _html > list-mediaList.html
     recnum    : 10,
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 리스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 리스트가 없습니다.</div<</div>'
   }
   getMyList(settings);
 })
@@ -402,7 +402,7 @@ page_post_saved.on('show.rc.page', function(event) {
     markup    : 'post-mediaList',  // 테마 > _html > list-mediaList.html
     recnum    : 10,
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
 
   getPostSaved(settings);
@@ -430,7 +430,7 @@ page_post_liked.on('show.rc.page', function(event) {
     markup    : 'post-mediaList',  // 테마 > _html > list-mediaList.html
     recnum    : 10,
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
   getPostLiked(settings);
 })
@@ -497,7 +497,7 @@ modal_post_allpost.on('show.rc.modal', function(event) {
     recnum    : '',
     totalPage : '',
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
 
   getPostAll(settings);
@@ -517,7 +517,7 @@ modal_post_alllist.on('show.rc.modal', function(event) {
     recnum    : '',
     totalPage : '',
     sort      : 'gid',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
 
   getPostListAll(settings);
@@ -540,7 +540,7 @@ modal_post_listview.on('show.rc.modal', function(event) {
     totalPage : '',
     sort      : '',
     orderby   : '',
-    none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   });
 
 })
@@ -624,7 +624,7 @@ modal_post_opinion.on('show.rc.modal', function(event) {
     wrapper : wrapper,
     opinion : 'like',
     markup : '_opinionList',
-    none : '<div class="p-5 text-xs-center text-muted">자료가 없습니다.</div>'
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">자료가 없습니다.</div<</div>'
   });
 })
 

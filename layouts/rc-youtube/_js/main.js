@@ -130,7 +130,7 @@ $(document).ready(function() {
       $('#contentMain').attr('data-scroll','infinite').infinitescroll('enable'); // 무한 스크롤 작동
     } else {
       $('#contentMain').removeAttr('data-scroll').infinitescroll('disable'); // 무한 스크롤 중지
-      $('.infinitescroll-end').remove();
+      $(document).find('.infinitescroll-end').remove();
     }
 
     if (tab_id =='tab-best') {
@@ -145,7 +145,7 @@ $(document).ready(function() {
         markup    : 'post-row',  // 테마 > _html > post-row.html
         recnum    : 5,
         sort      : 'hit',
-        none : '<div class="p-5 text-xs-center text-muted">등록된 포스트가 없습니다.</div>'
+        none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
       })
 
     }
