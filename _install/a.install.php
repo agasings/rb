@@ -144,7 +144,7 @@ foreach($mdlarray as $_val)
 
 $siteid = $siteid ? $siteid : 'home';
 $layout = 'bs4-starter/default.php';
-$m_layout = 'rc-starter/default.php';
+$m_layout = 'rc-youtube/default.php';
 
 $QKEY = "gid,id,name,label,title,titlefix,icon,layout,startpage,m_layout,m_startpage,lang,open,dtd,nametype,timecal,rewrite,buffer,usescode,headercode,footercode";
 $QVAL = "'0','".$siteid."','$sitename','$sitename','{subject} | {site}','0','','$layout','','$m_layout','','','1','','nic','0','$rewrite','0','0','',''";
