@@ -30,6 +30,8 @@ function getAttachPlatformList($parent_data,$mod,$type) {
       $sql='fserver=3';
       $attach = getArrayString($upload);
 
+		  if ($mod=='view') $sql.=' and hidden=0';
+
       $uid_q='(';
       foreach($attach['data'] as $uid)
      {

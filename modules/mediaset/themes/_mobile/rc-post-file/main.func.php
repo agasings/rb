@@ -40,7 +40,7 @@ function getAttachFileList($parent_data,$mod,$type,$theme) {
 	 else if($type=='video') $sql='type=5';
 	 else if($type=='doc') $sql='type=6';
 	 else if($type=='zip') $sql='type=7';
-		 else $sql='type=1';
+	 else $sql='type=1';
 
 	 if ($mod=='view') $sql.=' and hidden=0';
 
