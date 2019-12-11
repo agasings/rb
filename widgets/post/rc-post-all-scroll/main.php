@@ -6,8 +6,8 @@
       <div class="material-icons mb-4" style="font-size: 100px;color:#ccc">
         subscriptions
       </div>
-      <h5>나만의 동영상 서비스를 시작해보세요.</h5>
-      <small class="text-muted">유용하고 소중한 정보를 공유하세요.</small>
+      <h5>나만의 유튜브를 시작합니다.</h5>
+      <small class="text-muted">로그인 후에 상단 플러스(+) 버튼을 눌러주세요.</small>
     </div>
   </div>
 </div>
