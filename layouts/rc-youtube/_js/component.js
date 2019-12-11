@@ -198,10 +198,9 @@ $( document ).ready(function() {
   })
 
 
-  modal_site_settings.on('show.rc.modal', function (e) {
+  modal_site_settings.on('shown.rc.modal', function (e) {
     var modal = $(this)
     modal.find('[name="main_post_req"]').val('');
-
     $.post(rooturl+'/?r='+raccount+'&m=site&a=get_sitecode',{
       },function(response,status){
         if(status=='success'){
