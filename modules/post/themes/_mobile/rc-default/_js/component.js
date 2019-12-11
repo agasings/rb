@@ -635,6 +635,12 @@ modal_post_write.on('show.rc.modal', function(event) {
   var uid = button.attr('data-uid');
   var url = button.attr('data-url');
 
+  if (!memberid) {
+    modal.modal('hide');
+    setTimeout(function(){ modal_login.modal();}, 100);
+    return false;
+  }
+
   if (!uid) {
     var uid = modal.attr('data-uid');
   } else {
@@ -833,6 +839,11 @@ sheet_post_linkadd.on('show.rc.sheet', function(event) {
   var button = $(event.relatedTarget)
   var sheet = $(this);
   var act = button.attr('data-act');
+  if (!memberid) {
+    sheet.modal('hide');
+    setTimeout(function(){ modal_login.modal();}, 100);
+    return false;
+  }
   if (act) sheet.find('button').attr('data-act',act);
   sheet.find('input').val('');
   // setTimeout(function(){ sheet.find('input').focus(); }, 10);
@@ -969,6 +980,11 @@ popup_post_newList.find('[data-act="submit"]').click(function(){
 
 // popup_post_newPost
 popup_post_newPost.on('show.rc.popup', function(event) {
+  if (!memberid) {
+    popup_post_newPost.modal('hide');
+    setTimeout(function(){ modal_login.modal();}, 100);
+    return false;
+  }
   modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
 })
 
@@ -993,6 +1009,15 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
   }, 200);
 
 });
+
+sheet_post_photoadd.on('show.rc.sheet', function(event) {
+  var sheet = $(this);
+  if (!memberid) {
+    sheet.sheet('hide');
+    setTimeout(function(){ modal_login.modal();}, 100);
+    return false;
+  }
+})
 
 sheet_post_photoadd.on('hidden.rc.sheet', function(event) {
   var sheet = $(this);
