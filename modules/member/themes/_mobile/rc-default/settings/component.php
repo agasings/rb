@@ -809,6 +809,16 @@
   			</li>
   		</ul>
 
+      <?php if ($my['uid']): ?>
+      <ul class="table-view bg-white mb-2">
+        <li class="table-view-cell">
+          <a class="" href="#modal-site-settings" data-toggle="changeModal">
+            사이트 설정
+          </a>
+        </li>
+      </ul>
+      <?php endif; ?>
+
       <ul class="table-view bg-white mb-2">
         <li class="table-view-cell">
           <a class="" href="#popup-logout" data-toggle="popup">

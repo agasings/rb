@@ -127,7 +127,7 @@ if ($usertype == 'admin' && $M1['admin']) {
 }
 
 if ($M1['admin']) {
-	setrawcookie('site_login_result', rawurlencode('관리자 로그인 되었습니다.|default'));  // 알림처리를 위한 로그인 상태 cookie 저장
+	setrawcookie('site_common_result', rawurlencode('관리자 로그인 되었습니다.|default'));  // 알림처리를 위한 로그인 상태 cookie 저장
 
 	$site	= getUidData($table['s_site'],$s);
 	$site_array = explode('/',$site['layout']);
@@ -140,7 +140,7 @@ if ($M1['admin']) {
 	}
 
 } else {
-	setrawcookie('site_login_result', rawurlencode($M1['name'].'님 로그인 되었습니다.'));  // 알림처리를 위한 로그인 상태 cookie 저장
+	setrawcookie('site_common_result', rawurlencode($M1['name'].'님 로그인 되었습니다.'));  // 알림처리를 위한 로그인 상태 cookie 저장
 	getLink($referer?$referer:$g['s'].'/?r='.$r,'parent.','','');
 }
 

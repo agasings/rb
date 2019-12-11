@@ -1,5 +1,6 @@
 //사이트
 var page_site_page = $('#page-site-page');  // 사이트 모듈 페이지
+var modal_site_settings = $('#modal-site-settings'); //사이드
 
 //게시판
 var page_bbs_list = $('#page-bbs-list');  // 게시판 목록
@@ -195,5 +196,42 @@ $( document ).ready(function() {
     popup.removeAttr('data-link').removeAttr('data-subject').removeAttr('data-review').removeAttr('data-featured').removeAttr('data-entry');
     popup.find('[data-role]').removeAttr('data-clipboard-text');
   })
+
+
+  modal_site_settings.on('show.rc.modal', function (e) {
+    var modal = $(this)
+    modal.find('[name="main_post_req"]').val('');
+
+    $.post(rooturl+'/?r='+raccount+'&m=site&a=get_sitecode',{
+      },function(response,status){
+        if(status=='success'){
+          var result = $.parseJSON(response);
+          var main_post_req=result.main_post_req;
+          modal.find('[name="main_post_req"]').val(main_post_req);
+        } else {
+          alert(status);
+        }
+    });
+  })
+
+  modal_site_settings.find('[data-act="submit"]').click(function(){
+    var button = $(this)
+    var modal = modal_site_settings;
+    var main_post_req = modal.find('[name="main_post_req"]').val();
+    button.addClass('disabled');
+    setTimeout(function(){
+      $.post(rooturl+'/?r='+raccount+'&m=site&a=regissitecode',{
+        main_post_req : main_post_req
+        },function(response,status){
+          if(status=='success'){
+            button.removeClass('disabled');
+            $.notify({message: '저장 되었습니다.'},{type: 'default'});
+          } else {
+            alert(status);
+          }
+      });
+    }, 200);
+  });
+
 
 });

@@ -92,6 +92,7 @@
 						</button>
 						<?php if ($my['admin']): ?>
 						<div class="dropdown-divider"></div>
+						<a class="dropdown-item text-danger" href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=settings_site' ?>">사이트 설정</a>
 						<a class="dropdown-item text-danger" href="/admin" target="_top">관리자모드</a>
 						<?php endif; ?>
 				  </div>

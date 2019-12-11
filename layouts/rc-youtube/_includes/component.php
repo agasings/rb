@@ -398,3 +398,37 @@ if ($m=='bbs') {
     </div>
   </div>
 </div>
+
+<!-- 사이트 설정 -->
+<div id="modal-site-settings" class="modal">
+  <header class="bar bar-nav bg-white px-0">
+    <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
+    <h1 class="title">사이트 설정</h1>
+  </header>
+  <nav class="bar bar-tab bar-dark bar-dark bg-inverse border-top-0">
+    	<a class="tab-item bg-primary" data-act="submit" role="button">
+        <span class="not-loading">
+          저장하기
+        </span>
+        <span class="is-loading">
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">저장중...</span>
+          </div>
+        </span>
+    	</a>
+    </nav>
+  <div class="content">
+    <div class="content-padded">
+
+      <div class="form-group">
+        <label for="">추천 포스트</label>
+        <textarea class="form-control" name="main_post_req" rows="3" placeholder="고유번호 입력"></textarea>
+        <small class="form-text text-muted">
+          홈화면 상단에 고정출력 됩니다. 콤마(,)로 구분하여 포스트 고유번호를 입력해주세요. <br><br>고정된 포스트의 중복출력을 피하기 위해 포스트의 공개설정을 '미등록' 으로 변경해주세요.
+        </small>
+      </div>
+
+
+    </div>
+  </div>
+</div>

@@ -7,4 +7,10 @@ include is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['dir_layou
 $g['manifestForSite'] = $g['path_var'].'site/'.$r.'/manifest.json';
 $g['url_manifest'] = $g['s'].'/_var/site/'.$r.'/manifest.json';
 $manifestForSite = file_exists($g['manifestForSite']) ? $g['url_manifest'] : $g['path_module'].'site/var/manifest.json';
+
+if ($layoutPage) {
+  $g['main'] = $g['path_layout'].$d['site_layout'].'/_pages/'.$layoutPage.'.php';
+}
+
+
 ?>

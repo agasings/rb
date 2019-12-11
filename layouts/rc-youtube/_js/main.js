@@ -338,6 +338,7 @@ $(document).ready(function() {
   $(document).on('tap','[data-toggle="linkCopy"]',function(){
     setTimeout(function(){
       $.notify({message: '클립보드에 복사 되었습니다.'},{type: 'default'});
+      history.back();
     }, 300);
   });
 

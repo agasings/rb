@@ -1,4 +1,4 @@
-<?php
+site_common_result<?php
 if(!defined('__KIMS__')) exit;
 
 if ($my['uid'])
@@ -14,6 +14,6 @@ $referer = $referer ? urldecode($referer) : $_SERVER['HTTP_REFERER'];
 $referer = explode('&_admpnl_',$referer);
 $referer = $referer[0];
 
-setrawcookie('site_login_result', rawurlencode('로그아웃 되었습니다.'));  // 처리여부 cookie 저장
+setrawcookie('site_common_result', rawurlencode('로그아웃 되었습니다.'));  // 처리여부 cookie 저장
 getLink($referer,'top.','','');
 ?>
