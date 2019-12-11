@@ -15,10 +15,11 @@ function getPostMore(uid) {
         var featured=result.featured;
         var review=result.review;
         var link=result.link;
+        var uid=result.uid;
 
         wrapper.find('[data-role="list"]').html(list)
 
-        wrapper.find('[data-toggle="kakaoTalkSend"],[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-review',review).attr('data-featured',featured).attr('data-link',link);
+        wrapper.find('[data-toggle="kakaoTalkSend"],[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-review',review).attr('data-featured',featured).attr('data-link',link).attr('data-entry',uid);
 
         if (owner) {
           wrapper.find('[data-role="list"] [data-toggle="saved"]').closest('.table-view-cell').remove();

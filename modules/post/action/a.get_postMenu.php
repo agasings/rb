@@ -41,6 +41,7 @@ $result['likes'] = $R['likes']?$R['likes']:'';
 $result['owner'] = $_perm['post_owner']?1:0;
 $result['list'] = $list;
 $result['num'] = $i;
+$result['uid'] = $R['uid'];
 
 echo json_encode($result);
 exit;

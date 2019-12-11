@@ -310,6 +310,13 @@ if ($m=='bbs') {
           <span class="ml-2">기타</span>
           <button class="btn btn-secondary" data-role="etc" data-toggle="linkCopy">링크복사</button>
         </li>
+
+        <?php if ($my['admin']): ?>
+        <li class="table-view-cell media align-items-center">
+          <span class="ml-2">고유번호</span>
+          <button class="btn btn-secondary" data-role="uid" data-toggle="linkCopy">복사</button>
+        </li>
+        <?php endif; ?>
       </ul>
 
 

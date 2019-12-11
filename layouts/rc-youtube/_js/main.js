@@ -337,7 +337,7 @@ $(document).ready(function() {
   var clipboard = new ClipboardJS('[data-toggle="linkCopy"]');
   $(document).on('tap','[data-toggle="linkCopy"]',function(){
     setTimeout(function(){
-      $.notify({message: '링크가 복사 되었습니다.'},{type: 'default'});
+      $.notify({message: '클립보드에 복사 되었습니다.'},{type: 'default'});
     }, 300);
   });
 
@@ -349,6 +349,7 @@ $(document).ready(function() {
     var link = ele.attr('data-link');
     var title = ele.attr('data-title')?ele.attr('data-title'):'링크 공유';
     var hback = ele.attr('data-hback');
+    var entry = ele.attr('data-entry');
     var delay = 10;
 
     if (hback) {
@@ -360,7 +361,7 @@ $(document).ready(function() {
         shareNative(sbj,link)
      } else if (navigator.share === undefined) {  //webshare.api가 지원되지 않는 환경
 
-       popup_link_share.attr('data-link',link).attr('data-subject',sbj).attr('data-review',desc).attr('data-featured',featured);
+       popup_link_share.attr('data-link',link).attr('data-subject',sbj).attr('data-review',desc).attr('data-featured',featured).attr('data-entry',entry);
        setTimeout(function(){
          popup_link_share.popup({
             title : title

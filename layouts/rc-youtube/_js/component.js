@@ -163,6 +163,7 @@ $( document ).ready(function() {
     var host = $(location).attr('host');
     var url = protocol+'//'+host+link;
     var featured_url = protocol+'//'+host+featured;
+    var entry = popup.attr('data-entry');
 
     popup.find('[data-role="youtube"]').attr('data-clipboard-text',url+'?ref=yt')
     popup.find('[data-role="instagram"]').attr('data-clipboard-text',url+'?ref=ig')
@@ -175,6 +176,7 @@ $( document ).ready(function() {
     popup.find('[data-role="email"]').attr('data-clipboard-text',url+'?ref=em')
     popup.find('[data-role="sms"]').attr('data-clipboard-text',url+'?ref=sm')
     popup.find('[data-role="etc"]').attr('data-clipboard-text',url)
+    popup.find('[data-role="uid"]').attr('data-clipboard-text',entry)
 
     //카카오톡 링크공유
     kakao_link_btn.off('click').click(function() {
@@ -190,8 +192,8 @@ $( document ).ready(function() {
 
   popup_link_share.on('hidden.rc.popup', function (event) {
     var popup = popup_link_share;
-    popup.removeAttr('data-link').removeAttr('data-subject').removeAttr('data-review').removeAttr('data-featured');
-    popup.find('[data-role]').removeAttr('data-clipboard-text')
+    popup.removeAttr('data-link').removeAttr('data-subject').removeAttr('data-review').removeAttr('data-featured').removeAttr('data-entry');
+    popup.find('[data-role]').removeAttr('data-clipboard-text');
   })
 
 });
