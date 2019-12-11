@@ -243,6 +243,12 @@ anger {
 .text-nowrap {
   white-space: nowrap !important;
 }
+.text-left {
+  text-align: left !important
+}
+.text-right {
+  text-align: right !important
+}
 
 .text-truncate {
   overflow: hidden;
@@ -525,15 +531,21 @@ anger {
 }
 
 /*submit button loading*/
+[role="button"] .not-loading,
 .btn .not-loading {
   display: block;
 }
+[role="button"].disabled .not-loading,
+[role="button"]:disabled .not-loading,
 .btn:disabled .not-loading {
   display: none;
 }
+[role="button"] .is-loading,
 .btn .is-loading {
   display: none;
 }
+[role="button"].disabled .is-loading,
+[role="button"]:disabled .is-loading,
 .btn:disabled .is-loading {
   display: block;
 }
