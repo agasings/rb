@@ -1,13 +1,13 @@
 <div data-role="list"></div>
 
 <div data-role="none" hidden>
-  <div class="d-flex justify-content-center align-items-center" style="height: 80vh">
+  <div class="d-flex justify-content-center align-items-center" style="height: 70vh">
     <div class="text-xs-center">
       <div class="material-icons mb-4" style="font-size: 100px;color:#ccc">
         subscriptions
       </div>
-      <h5>새로운 동영상을 시작해보세요.</h5>
-      <small class="text-muted">첫번째 포스트를 등록하려면 로그인 하세요.</small>
+      <h5>나만의 동영상 서비스를 시작해보세요.</h5>
+      <small class="text-muted">유용하고 소중한 정보를 공유하세요.</small>
     </div>
   </div>
 </div>
