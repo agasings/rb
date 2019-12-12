@@ -70,8 +70,6 @@ function getPostAll(settings) {
           //수동 페이징
           if (totalPage>currentPage) {
 
-
-
             $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postAll',{
                 start: start,
                 sort: sort,
@@ -96,7 +94,6 @@ function getPostAll(settings) {
           } else {
             console.log('더이상 불러올 페이지가 없습니다.')
           }
-
 
         }
 

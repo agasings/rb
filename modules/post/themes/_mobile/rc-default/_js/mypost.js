@@ -62,6 +62,21 @@ function getMyPost(settings) {
           hybrid : false  // true: 버튼형, false: 자동
         });
 
+        // edgeEffect
+        var wrapper_startY = 0;
+        wrapper.closest('.content').on('touchstart',function(event){
+          wrapper_startY = event.originalEvent.changedTouches[0].pageY;
+        });
+        wrapper.closest('.content').on('touchmove',function(event){
+          var wrapper_moveY = event.originalEvent.changedTouches[0].pageY;
+          var wrapper_contentY = $(this).scrollTop();
+          if (wrapper_contentY === 0 && wrapper_moveY > wrapper_startY) {
+            edgeEffect(wrapper.closest('.page'),'top','show');
+          }
+          if( (wrapper_moveY < wrapper_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+            edgeEffect(wrapper.closest('.page'),'bottom','show');
+          }
+        });
 
       } else {
         alert(status);
