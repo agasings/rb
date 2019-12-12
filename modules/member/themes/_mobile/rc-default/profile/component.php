@@ -16,7 +16,7 @@
         <span data-role="title"></span>
       </h1>
     </header>
-    <div class="bar bar-standard bar-header-secondary  border-bottom-0 p-x-0 shadow-sm">
+    <div class="bar bar-header-secondary  border-bottom-0 p-x-0 shadow-sm">
       <nav class="nav nav-inline" style="margin-top: 3px;"></nav>
     </div>
     <div class="content bg-white" data-control="scroll" data-type="updown" data-defaultHeight="180"></div>

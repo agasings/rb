@@ -227,4 +227,20 @@ function getPofileView(modal,mbruid) {
    });
   });
 
+  // edgeEffect
+  var wrapper_startY = 0;
+  modal.find('.content').on('touchstart',function(event){
+    wrapper_startY = event.originalEvent.changedTouches[0].pageY;
+  });
+  modal.find('.content').on('touchmove',function(event){
+    var wrapper_moveY = event.originalEvent.changedTouches[0].pageY;
+    var wrapper_contentY = $(this).scrollTop();
+    if (wrapper_contentY === 0 && wrapper_moveY > wrapper_startY) {
+      edgeEffect(modal,'top','show');
+    }
+    if( (wrapper_moveY < wrapper_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+      edgeEffect(modal,'bottom','show');
+    }
+  });
+
 } // getPofileView

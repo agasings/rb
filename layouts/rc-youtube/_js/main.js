@@ -68,7 +68,7 @@ function edgeEffect(container,pos,show) {
   var bar_footer_secondary_height = container.find('.bar-footer-secondary:not(.d-none)').height();
   var bar_footer_height  = container.find('.bar-footer:not(.d-none)').height();
   var top_margin = bar_nav_height + bar_header_secondary + bar_standard_height;
-  var bottom_margin = bar_tab_height + bar_footer_secondary_height + bar_footer_height ;
+  var bottom_margin = bar_tab_height + bar_footer_secondary_height + bar_footer_height;
   topEdge.css("opacity", "0");
   bottomEdge.css("opacity", "0");
   if (pos=='top' && show=='show') {
