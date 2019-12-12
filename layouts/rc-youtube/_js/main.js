@@ -58,6 +58,35 @@ function moreNOTI(container,totalPage){
 
 }
 
+function edgeEffect(container,pos,show) {
+  var topEdge = $('#topEdge');
+  var bottomEdge = $('#bottomEdge');
+  var bar_nav_height = container.find('.bar-nav:not(.d-none)').height();
+  var bar_standard_height = container.find('.bar-standard:not(.d-none)').height();
+  var bar_header_secondary = container.find('.bar-header-secondary:not(.d-none)').height();
+  var bar_tab_height = container.find('.bar-tab:not(.d-none)').height();
+  var bar_footer_secondary_height = container.find('.bar-footer-secondary:not(.d-none)').height();
+  var bar_footer_height  = container.find('.bar-footer:not(.d-none)').height();
+  var top_margin = bar_nav_height + bar_header_secondary + bar_standard_height;
+  var bottom_margin = bar_tab_height + bar_footer_secondary_height + bar_footer_height ;
+
+  if (pos=='top' && show=='show') {
+    topEdge.css('top',top_margin?top_margin:0);
+    topEdge.animate({height:'42px', opacity:'.5'}, 100);
+    topEdge.animate({height:'20px', opacity:'0'}, 600);
+    setTimeout(function(){ topEdge.clearQueue() }, 680);
+  }
+  if (pos=='bottom' && show=='show') {
+    bottomEdge.css('bottom',bottom_margin?bottom_margin:0);
+    bottomEdge.animate({height:'42px', opacity:'.5'}, 100);
+    bottomEdge.animate({height:'20px', opacity:'0'}, 600);
+    setTimeout(function(){ bottomEdge.clearQueue() }, 680);
+  }
+  if (pos=='bottom' && show=='hide') {
+    bottomEdge.css("opacity", "0");
+  }
+}
+
 // Textarea 또는 Input의 끝으로 커서 이동
 jQuery.fn.putCursorAtEnd = function() {
   return this.each(function() {
@@ -403,34 +432,27 @@ $(document).ready(function() {
 
   }
 
-  var startY = 0;
+    //  pull to refresh (#page-main)
+    var page_main_startY = 0;
 
-  page_main.find('.content').on('touchstart',function(event){
-    startY = event.originalEvent.changedTouches[0].pageY;
-  });
+    page_main.find('.content').on('touchstart',function(event){
+      page_main_startY = event.originalEvent.changedTouches[0].pageY;
+    });
 
-  page_main.find('.content').on('touchmove',function(event){
-
-    var moveY = event.originalEvent.changedTouches[0].pageY;
-    var contentY = $(this).scrollTop();
-    var tab_id = $(this).attr('data-tab');
-
-    if (contentY === 0 && moveY > startY && !document.body.classList.contains('refreshing') && tab_id!='libary') {
-      $('#topEdge').animate({height:'42px', opacity:'.5'}, 100);
-      $('#topEdge').animate({height:'20px', opacity:'0'}, 600);
-      simulateRefreshAction();
-    }
-
-    if( (moveY < startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
-      console.log('스크롤 끝')
-      $('#bottomEdge').animate({height:'42px', opacity:'.5'}, 100);
-      $('#bottomEdge').animate({height:'20px', opacity:'0'}, 600);
-      setTimeout(function(){ $('#bottomEdge').clearQueue() }, 680);
-    } else {
-      $("#bottomEdge").css("opacity", "0");
-    }
-
-  });
+    page_main.find('.content').on('touchmove',function(event){
+      var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
+      var page_main_contentY = $(this).scrollTop();
+      var tab_id = $(this).attr('data-tab');
+      if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing') && tab_id!='libary') {
+        edgeEffect(page_main,'top','show'); // 스크롤 상단 끝
+        simulateRefreshAction();
+      }
+      if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+        edgeEffect(page_main,'bottom','show'); // 스크롤 하단 끝
+      } else {
+        edgeEffect(page_main,'bottom','hide');
+      }
+    });
 
 
   //

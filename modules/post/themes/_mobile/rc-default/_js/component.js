@@ -48,6 +48,11 @@ var sheet_post_filter = $('#sheet-post-filter')  // 리스트 필터링,정별�
 
 var popover_post_display = $('#popover-post-display') // 새 포스트 작성을 위한 공개설정
 
+// for 'pull to refresh' and 'edge effect'
+var modal_post_view_startY = 0;
+var page_post_mypost_startY = 0;
+
+
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
@@ -300,6 +305,22 @@ page_post_mypost.on('show.rc.page', function(event) {
   }
   getMyPost(settings);
 })
+
+page_post_mypost.find('.content').on('touchstart',function(event){
+  page_post_mypost_startY = event.originalEvent.changedTouches[0].pageY;
+});
+
+page_post_mypost.find('.content').on('touchmove',function(event){
+  var page_post_mypost_moveY = event.originalEvent.changedTouches[0].pageY;
+  var page_post_mypost_contentY = $(this).scrollTop();
+  if (page_post_mypost_contentY === 0 && page_post_mypost_moveY > page_post_mypost_startY && !document.body.classList.contains('refreshing')) {
+    edgeEffect(page_post_mypost,'top','show');
+    // simulateRefreshAction();
+  }
+  if( (page_post_mypost_moveY < page_post_mypost_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+    edgeEffect(page_post_mypost,'bottom','show');
+  }
+});
 
 
 // 작업중
@@ -608,10 +629,6 @@ modal_post_view.on('hide.rc.modal', function(event) {
     modal.empty()
   }
 })
-
-// modal_post_photo.on('show.rc.modal', function(event) {
-//
-// })
 
 modal_post_opinion.on('show.rc.modal', function(event) {
   var button = $(event.relatedTarget);
