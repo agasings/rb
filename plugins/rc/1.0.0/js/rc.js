@@ -3130,7 +3130,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		},
 
 		end: function (content) {
-			var end = $('<div class="infinitescroll-end py-4"></div>');
+			var end = $('<div class="infinitescroll-end"></div>');
 			if (content) {
 				end.append(content);
 			} else {

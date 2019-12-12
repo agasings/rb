@@ -14,7 +14,6 @@
 <!-- jQuery UI : https://jqueryui.com/-->
 <?php getImport('jquery-ui','jquery-ui.sortable,min','1.12.1','js')?>
 
-
 <!-- jquery-ui-touch-punch : https://github.com/furf/jquery-ui-touch-punch/ -->
 <?php getImport('jquery-ui-touch-punch','jquery.ui.touch-punch.min','0.2.3','js')?>
 

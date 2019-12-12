@@ -809,7 +809,7 @@
   			</li>
   		</ul>
 
-      <?php if ($my['uid']): ?>
+      <?php if ($my['admin']): ?>
       <ul class="table-view bg-white mb-2">
         <li class="table-view-cell">
           <a class="" href="#modal-site-settings" data-toggle="changeModal">

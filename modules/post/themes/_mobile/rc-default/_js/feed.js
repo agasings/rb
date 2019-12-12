@@ -104,14 +104,10 @@ function getPostFeed(settings) {
 
             });
 
-
-
-
             wrapper.append('<div class="content-padded"><button type="button" class="btn btn-link btn-block text-muted" data-toggle="morePage"><i class="material-icons">expand_more</i></button></div>');
 
-
           } else {
-            wrapper.append('<div class="infinitescroll-end py-4"></div>');
+            wrapper.append('<div class="infinitescroll-end"></div>');
             console.log('피드에서 더이상 불러올 페이지가 없습니다.')
           }
 

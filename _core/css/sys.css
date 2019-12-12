@@ -2057,18 +2057,23 @@ fieldset[disabled] .btn-instagram.focus {
 
 /* 무한스크롤 */
 .infinitescroll-end {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  /* padding-top: 1rem;
+  padding-bottom: 1rem; */
   text-align: center;
   font-size: .8rem;
   color: #999
 }
 
 .infinitescroll-end::before {
-  content: '더 이상 없습니다.'
+  /* content: '더 이상 없습니다.' */
 }
 .infinitescroll-load .btn::before {
   content: '더보기'
+}
+
+.miniplayer .infinitescroll-end {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 /* form */

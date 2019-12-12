@@ -61,7 +61,7 @@ function getPostAll(settings) {
               }
             },
             appendToEle : wrapper,
-            percentage : 95,  // 95% 아래로 스크롤할때 다움페이지 호출
+            percentage : 85,  // 95% 아래로 스크롤할때 다움페이지 호출
             hybrid : false  // true: 버튼형, false: 자동
           });
 

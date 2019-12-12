@@ -602,6 +602,7 @@ modal_post_view.on('hide.rc.modal', function(event) {
 
   if (format=='video') {
     modal.addClass('miniplayer');
+    $('body').addClass('miniplayer');
     if (profile_num) modal.addClass('no-bartab');
   } else {
     modal.empty()
@@ -1086,4 +1087,5 @@ popover_post_display.find('[data-toggle="display"]').click(function(){
 
 $(document).on('click','.modal.miniplayer .miniplayer-control .js-close',function(){
   modal_post_view.removeClass('miniplayer no-bartab active').css('display','none').empty();
+  $('body').removeClass('miniplayer');
 });

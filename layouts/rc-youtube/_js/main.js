@@ -16,7 +16,6 @@ var noti_orderby = 'desc';
 var noti_recnum = '10';
 
 var page_main = $('#page-main');
-
 var tab_main = $('#tab-main');
 var tab_best = $('#tab-best');
 var tab_feed = $('#tab-feed');
@@ -120,20 +119,15 @@ $(document).ready(function() {
   // tab메뉴
   page_main.find('.bar-tab [data-tab]').tap(function(){
     var tab_id = $(this).attr('data-tab');
-    if (tab_id =='tab-category' || tab_id =='tab-mypage' || tab_id =='tab-noti') {
-      page_main.find('.bar-header-secondary').addClass('d-none')
-    } else {
-      page_main.find('.bar-header-secondary').removeClass('d-none')
-    }
 
-    if (tab_id =='tab-main') {
-      $('#contentMain').attr('data-scroll','infinite').infinitescroll('enable'); // 무한 스크롤 작동
+    if (tab_id =='main') {
+      page_main.find('.content').attr('data-scroll','infinite').infinitescroll('enable'); // 무한 스크롤 작동
     } else {
-      $('#contentMain').removeAttr('data-scroll').infinitescroll('disable'); // 무한 스크롤 중지
+      page_main.find('.content').removeAttr('data-scroll').infinitescroll('disable'); // 무한 스크롤 중지
       $(document).find('.infinitescroll-end').remove();
     }
 
-    if (tab_id =='tab-best') {
+    if (tab_id =='best') {
 
       var d_start = $(this).attr('data-d_start');
       var sort = $(this).attr('data-sort');
@@ -150,7 +144,7 @@ $(document).ready(function() {
 
     }
 
-    if (tab_id =='tab-feed' && memberid) {
+    if (tab_id =='feed' && memberid) {
 
       getPostFeed({
         wrapper : tab_feed,
@@ -162,7 +156,7 @@ $(document).ready(function() {
 
     }
 
-    if (tab_id =='tab-noti' && memberid) {
+    if (tab_id =='noti' && memberid) {
 
       $.get(rooturl+'/?r='+raccount+'&m=notification&a=get_notiList',{
           sort: noti_sort,
@@ -187,9 +181,9 @@ $(document).ready(function() {
 
     page_main.find('.tab-content').removeClass('active');
     page_main.find('.bar-tab .tab-item').removeClass('active');
+    page_main.find('.content').scrollTop(0).attr('data-tab',tab_id);
     $(this).addClass('active');
-    $("#"+tab_id).addClass('active');
-    page_main.find('.content').scrollTop(0);
+    $("#tab-"+tab_id).addClass('active');
   })
 
   putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
@@ -380,5 +374,88 @@ $(document).ready(function() {
       }
     }, delay);
   });
+
+
+  async function simulateRefreshAction() {
+    const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
+    const transitionEnd = function(propertyName, node) {
+      return new Promise(resolve => {
+        function callback(e) {
+          e.stopPropagation();
+          if (e.propertyName === propertyName) {
+            node.removeEventListener('transitionend', callback);
+            resolve(e);
+          }
+        }
+        node.addEventListener('transitionend', callback);
+      });
+    }
+    const refresher = document.querySelector('.refresher');
+    document.body.classList.add('refreshing');
+    await sleep(1000);
+    refresher.classList.add('shrink');
+    await transitionEnd('transform', refresher);
+    refresher.classList.add('done');
+    refresher.classList.remove('shrink');
+    document.body.classList.remove('refreshing');
+    await sleep(0); // let new styles settle.
+    refresher.classList.remove('done');
+
+  }
+
+  var startY = 0;
+
+  page_main.find('.content').on('touchstart',function(event){
+    startY = event.originalEvent.changedTouches[0].pageY;
+  });
+
+  page_main.find('.content').on('touchmove',function(event){
+
+    var moveY = event.originalEvent.changedTouches[0].pageY;
+    var contentY = $(this).scrollTop();
+    var tab_id = $(this).attr('data-tab');
+
+    if (contentY === 0 && moveY > startY && !document.body.classList.contains('refreshing') && tab_id!='libary') {
+      $('#topEdge').animate({height:'42px', opacity:'.5'}, 100);
+      $('#topEdge').animate({height:'20px', opacity:'0'}, 600);
+      simulateRefreshAction();
+    }
+
+    if( (moveY < startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+      console.log('스크롤 끝')
+      $('#bottomEdge').animate({height:'42px', opacity:'.5'}, 100);
+      $('#bottomEdge').animate({height:'20px', opacity:'0'}, 600);
+      setTimeout(function(){ $('#bottomEdge').clearQueue() }, 680);
+    } else {
+      $("#bottomEdge").css("opacity", "0");
+    }
+
+  });
+
+
+  //
+  // $('#contentMain').scroll(function(){
+  //   if ($('#contentMain').scrollTop() == $(document).height()-$('#contentMain').height()){
+  //     $('#bottomScroll').animate({height:'32px', opacity:'1'});
+  //     $('#bottomScroll').animate({height:'20px', opacity:'0'});
+  //   } else {
+  //    $("#bottomScroll").css("opacity", "0");
+  //  }
+  // });
+  //
+  //  $('#contentMain').scroll(function() {
+  //    if($('#contentMain').scrollTop() <= 0) {
+  //     $('#topScroll').animate({height:'32px', opacity:'1'}, 500);
+  //     $('#topScroll').animate({height:'20px', opacity:'0'}, 700);
+  //    }
+  // });
+
+
+
+
+
+
+
+
 
 });
