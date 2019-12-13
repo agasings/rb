@@ -249,7 +249,7 @@ $(document).ready(function() {
 
     if (page_main_contentY === 0 && page_main_endY > page_main_startY ) {
 
-      if (page_main_endY-page_main_startY>200) {
+      if (page_main_endY-page_main_startY>150) {
 
         if (tab=='main') {
           getPostAll({
