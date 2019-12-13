@@ -43,6 +43,49 @@ $(document).on('click','.sheet [data-role="toggle-oneline-input"]',function(){
   return false;
 });
 
+
+$(document).on('click','#popup-comment-mypost .table-view-cell a',function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  var button = $(this);
+  var uid = button.attr('data-uid');
+  var type = button.attr('data-type');
+  var parent = button.attr('data-parent');
+  var toggle = button.attr('data-toggle');
+  var kcact = button.attr('data-kcact');
+  var act = button.attr('data-act');
+  var hidden =  button.attr('data-hidden');
+
+  history.back() // popup 닫기
+
+  // console.log(toggle)
+  setTimeout(function() {
+    if (toggle) {
+      if (act=='edit') {
+        console.log('댓글 수정모드');
+        var content = $('[data-role="comment"]').find('[data-role="'+type+'-origin-content-'+uid+'"]').html();
+        $('[data-role="comment"]').find('[data-toggle="edit"][data-type="'+type+'"][data-uid="'+uid+'"]').click();
+        sheet_comment_write.sheet();
+        setTimeout(function(){
+          sheet_comment_write.attr('data-uid',uid).attr('data-type',type);
+          InserHTMLtoEditor(editor_sheet,content);
+          sheet_comment_write.find('[data-kcact="regis"]').attr('data-type',type).attr('data-uid',uid).attr('data-act',act).attr('data-hidden',hidden);;
+          if(hidden=='true') {
+            sheet_comment_write.find('[data-role="comment-hidden"]').addClass('active');
+          }
+        }, 10);
+
+      } else {
+        $(document).find('[data-role="comment"] [data-role="'+type+'-item"][data-uid="'+uid+'"] [data-toggle="'+toggle+'"]').click()
+      }
+
+    } else {
+      $(document).find('[data-role="comment"] [data-role="menu-container-'+type+'"] [data-uid="'+uid+'"][data-kcact="'+kcact+'"]').click()
+    }
+  }, 100);
+});
+
+
 //댓글 저장버튼 클릭
 sheet_comment_write.find('[data-kcact="regis"]').click(function(event) {
 
