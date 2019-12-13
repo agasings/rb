@@ -15,6 +15,7 @@ include_once $g['path_layout'].$layout.'/_var/_var.php';
 
 $fdset = array($d['layout']['site_code']);
 $gfile = $g['path_var'].'sitephp/'.$s.'.php';
+
 $fp = fopen($gfile,'w');
 fwrite($fp, "<?php\n");
 foreach ($fdset as $val)
