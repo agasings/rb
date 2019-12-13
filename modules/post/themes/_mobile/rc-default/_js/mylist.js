@@ -70,10 +70,14 @@ function getMyList(settings) {
           var wrapper_moveY = event.originalEvent.changedTouches[0].pageY;
           var wrapper_contentY = $(this).scrollTop();
           if (wrapper_contentY === 0 && wrapper_moveY > wrapper_startY) {
-            edgeEffect(wrapper.closest('.page'),'top','show');
+            if (wrapper_moveY-wrapper_startY>50) {
+              edgeEffect(wrapper.closest('.page'),'top','show'); // 스크롤 상단 끝
+            }
           }
           if( (wrapper_moveY < wrapper_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
-            edgeEffect(wrapper.closest('.page'),'bottom','show');
+            if (wrapper_startY-wrapper_moveY>50) {
+              edgeEffect(wrapper.closest('.page'),'bottom','show');
+            }
           }
         });
 

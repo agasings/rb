@@ -437,23 +437,30 @@ $(document).ready(function() {
 
     //  pull to refresh (#page-main)
     var page_main_startY = 0;
+    var page_main_endY = 0;
 
     page_main.find('.content').on('touchstart',function(event){
       page_main_startY = event.originalEvent.changedTouches[0].pageY;
     });
-
     page_main.find('.content').on('touchmove',function(event){
       var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
       var page_main_contentY = $(this).scrollTop();
       var tab_id = $(this).attr('data-tab');
       if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing') && tab_id!='libary') {
-        edgeEffect(page_main,'top','show'); // 스크롤 상단 끝
-        simulateRefreshAction();
+        if (page_main_moveY-page_main_startY>50) {
+          edgeEffect(page_main,'top','show'); // 스크롤 상단 끝
+        }
       }
       if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
         edgeEffect(page_main,'bottom','show'); // 스크롤 하단 끝
       } else {
         edgeEffect(page_main,'bottom','hide');
+      }
+    });
+    page_main.find('.content').on('touchend',function(event){
+      page_main_endY=event.originalEvent.changedTouches[0].pageY;
+      if (page_main_endY-page_main_startY>200) {
+        simulateRefreshAction();
       }
     });
 
