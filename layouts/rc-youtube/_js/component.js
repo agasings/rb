@@ -15,7 +15,6 @@ var page_bbs_qnawrite = $('#page-bbs-qnawrite');  // 1:1 상담 게시판 쓰기
 var popup_link_share =  $('#popup-link-share'); //링크 공유
 var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
 
-
 function getBbsList(bid,cat,page,collapse) {
 
   $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_bbsList',{

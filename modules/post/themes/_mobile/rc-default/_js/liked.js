@@ -8,6 +8,7 @@ function getPostLiked(settings) {
   var none = settings.none;
   var currentPage =1; // 처음엔 무조건 1, 아래 더보기 진행되면서 +1 증가
 
+  wrapper.removeClass('animated fadeIn');
   wrapper.loader();
 
   $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postLiked',{
@@ -24,8 +25,8 @@ function getPostLiked(settings) {
         var totalPage=result.tpg;
 
         wrapper.loader('hide');
-        if (num) wrapper.html(list)
-        else wrapper.html(none)
+        if (num) wrapper.html(list).addClass('animated fadeIn');
+        else wrapper.html(none);
 
         wrapper.find('[data-plugin="timeago"]').timeago();
 

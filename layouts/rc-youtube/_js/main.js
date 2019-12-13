@@ -145,10 +145,9 @@ function kakaoTalkSend(settings) {
   });
 }
 
-
 $(document).ready(function() {
 
-  // tab메뉴
+  // tab메뉴 (#page-main)
   page_main.find('.bar-tab [data-tab]').tap(function(){
     var tab_id = $(this).attr('data-tab');
 
@@ -217,6 +216,87 @@ $(document).ready(function() {
     $(this).addClass('active');
     $("#tab-"+tab_id).addClass('active');
   })
+
+  // over scroll effect (#page-main)
+  var page_main_startY = 0;
+  var page_main_endY = 0;
+
+  page_main.find('.content').on('touchstart',function(event){
+    page_main_startY = event.originalEvent.changedTouches[0].pageY;
+  });
+  page_main.find('.content').on('touchmove',function(event){
+    var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
+    var page_main_contentY = $(this).scrollTop();
+    var tab_id = $(this).attr('data-tab');
+    if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing') && tab_id!='libary') {
+      if (page_main_moveY-page_main_startY>50) {
+        edgeEffect(page_main,'top','show'); // 스크롤 상단 끝
+      }
+    }
+    if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+      if (page_main_startY-page_main_moveY>50) {
+        edgeEffect(page_main,'bottom','show'); // 스크롤 하단 끝
+      }
+
+    }
+  });
+
+  //  pull to refresh (#page-main)
+  page_main.find('.content').on('touchend',function(event){
+    var page_main_endY=event.originalEvent.changedTouches[0].pageY;
+    var tab = $(this).attr('data-tab');
+
+    if (page_main_endY-page_main_startY>200) {
+
+      if (tab=='main') {
+
+        $('#widget-post-all [data-role="list"]').loader({  //  로더 출력
+          position:   "inside"
+        });
+
+        getPostAll({
+          wrapper : $('#widget-post-all [data-role="list"]'),
+          start : '#page-main',
+          markup    : 'post-row',  // 테마 > _html > post-row-***.html
+          recnum    : 5,
+          sort      : 'gid',
+          none : $('#widget-post-all').find('[data-role="none"]').html(),
+          paging : 'infinit'
+        })
+
+      }
+
+      if (tab=='best') {
+        var button = page_main.find('.bar-tab [data-tab="best"]');
+        var d_start = button.attr('data-d_start');
+        var sort = button.attr('data-sort');
+        var wrapper = tab_best.find('[data-role="list-best"]')
+        getPostBest({
+          wrapper : wrapper,
+          start : '#page-main',
+          d_start : d_start,
+          markup    : 'post-row',  // 테마 > _html > post-row.html
+          recnum    : 5,
+          sort      : 'hit',
+          none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
+        })
+      }
+
+      if (tab=='feed') {
+
+        tab_feed.loader({position: "inside"});
+
+        getPostFeed({
+          wrapper : tab_feed,
+          start : '#page-main',
+          markup    : 'post-row',  // 테마 > _html > post-row.html
+          recnum    : 5,
+          none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">표시할 포스트가 없습니다.</div<</div>'
+        })
+      }
+
+    }
+  });
 
   putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
 
@@ -406,89 +486,5 @@ $(document).ready(function() {
       }
     }, delay);
   });
-
-
-  async function simulateRefreshAction() {
-    const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
-    const transitionEnd = function(propertyName, node) {
-      return new Promise(resolve => {
-        function callback(e) {
-          e.stopPropagation();
-          if (e.propertyName === propertyName) {
-            node.removeEventListener('transitionend', callback);
-            resolve(e);
-          }
-        }
-        node.addEventListener('transitionend', callback);
-      });
-    }
-    const refresher = document.querySelector('.refresher');
-    document.body.classList.add('refreshing');
-    await sleep(1000);
-    refresher.classList.add('shrink');
-    await transitionEnd('transform', refresher);
-    refresher.classList.add('done');
-    refresher.classList.remove('shrink');
-    document.body.classList.remove('refreshing');
-    await sleep(0); // let new styles settle.
-    refresher.classList.remove('done');
-
-  }
-
-    //  pull to refresh (#page-main)
-    var page_main_startY = 0;
-    var page_main_endY = 0;
-
-    page_main.find('.content').on('touchstart',function(event){
-      page_main_startY = event.originalEvent.changedTouches[0].pageY;
-    });
-    page_main.find('.content').on('touchmove',function(event){
-      var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
-      var page_main_contentY = $(this).scrollTop();
-      var tab_id = $(this).attr('data-tab');
-      if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing') && tab_id!='libary') {
-        if (page_main_moveY-page_main_startY>50) {
-          edgeEffect(page_main,'top','show'); // 스크롤 상단 끝
-        }
-      }
-      if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
-        if (page_main_startY-page_main_moveY>50) {
-          edgeEffect(page_main,'bottom','show'); // 스크롤 하단 끝
-        }
-
-      }
-    });
-    page_main.find('.content').on('touchend',function(event){
-      page_main_endY=event.originalEvent.changedTouches[0].pageY;
-      if (page_main_endY-page_main_startY>200) {
-        simulateRefreshAction();
-      }
-    });
-
-
-  //
-  // $('#contentMain').scroll(function(){
-  //   if ($('#contentMain').scrollTop() == $(document).height()-$('#contentMain').height()){
-  //     $('#bottomScroll').animate({height:'32px', opacity:'1'});
-  //     $('#bottomScroll').animate({height:'20px', opacity:'0'});
-  //   } else {
-  //    $("#bottomScroll").css("opacity", "0");
-  //  }
-  // });
-  //
-  //  $('#contentMain').scroll(function() {
-  //    if($('#contentMain').scrollTop() <= 0) {
-  //     $('#topScroll').animate({height:'32px', opacity:'1'}, 500);
-  //     $('#topScroll').animate({height:'20px', opacity:'0'}, 700);
-  //    }
-  // });
-
-
-
-
-
-
-
-
 
 });
