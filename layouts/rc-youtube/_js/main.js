@@ -452,9 +452,10 @@ $(document).ready(function() {
         }
       }
       if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
-        edgeEffect(page_main,'bottom','show'); // 스크롤 하단 끝
-      } else {
-        edgeEffect(page_main,'bottom','hide');
+        if (page_main_startY-page_main_moveY>50) {
+          edgeEffect(page_main,'bottom','show'); // 스크롤 하단 끝
+        }
+
       }
     });
     page_main.find('.content').on('touchend',function(event){
