@@ -27,8 +27,8 @@ function getPostBest(settings) {
         var totalPage=result.tpg
 
         wrapper.loader('hide');
-        if (list) wrapper.html(list)
-        else wrapper.html(none)
+        if (list) wrapper.html(list);
+        else wrapper.html(none);
 
         wrapper.find('[data-plugin="timeago"]').timeago();
 

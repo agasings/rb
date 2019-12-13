@@ -148,7 +148,7 @@ function kakaoTalkSend(settings) {
 $(document).ready(function() {
 
   // tab메뉴 (#page-main)
-  page_main.find('.bar-tab [data-tab]').tap(function(){
+  page_main.find('.bar-tab [data-tab]').click(function(){
     var tab_id = $(this).attr('data-tab');
 
     if (tab_id =='main') {
@@ -244,57 +244,55 @@ $(document).ready(function() {
   //  pull to refresh (#page-main)
   page_main.find('.content').on('touchend',function(event){
     var page_main_endY=event.originalEvent.changedTouches[0].pageY;
+    var page_main_contentY = $(this).scrollTop();
     var tab = $(this).attr('data-tab');
 
-    if (page_main_endY-page_main_startY>200) {
+    if (page_main_contentY === 0 && page_main_endY > page_main_startY ) {
 
-      if (tab=='main') {
+      if (page_main_endY-page_main_startY>200) {
 
-        $('#widget-post-all [data-role="list"]').loader({  //  로더 출력
-          position:   "inside"
-        });
+        if (tab=='main') {
+          getPostAll({
+            wrapper : $('#widget-post-all [data-role="list"]'),
+            start : '#page-main',
+            markup    : 'post-row',  // 테마 > _html > post-row-***.html
+            recnum    : 5,
+            sort      : 'gid',
+            none : $('#widget-post-all').find('[data-role="none"]').html(),
+            paging : 'infinit'
+          })
+        }
 
-        getPostAll({
-          wrapper : $('#widget-post-all [data-role="list"]'),
-          start : '#page-main',
-          markup    : 'post-row',  // 테마 > _html > post-row-***.html
-          recnum    : 5,
-          sort      : 'gid',
-          none : $('#widget-post-all').find('[data-role="none"]').html(),
-          paging : 'infinit'
-        })
+        if (tab=='best') {
+          var button = page_main.find('.bar-tab [data-tab="best"]');
+          var d_start = button.attr('data-d_start');
+          var sort = button.attr('data-sort');
+          var wrapper = tab_best.find('[data-role="list-best"]')
+          getPostBest({
+            wrapper : wrapper,
+            start : '#page-main',
+            d_start : d_start,
+            markup    : 'post-row',  // 테마 > _html > post-row.html
+            recnum    : 5,
+            sort      : 'hit',
+            none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
+          })
+        }
+
+        if (tab=='feed') {
+
+          tab_feed.loader({position: "inside"});
+
+          getPostFeed({
+            wrapper : tab_feed,
+            start : '#page-main',
+            markup    : 'post-row',  // 테마 > _html > post-row.html
+            recnum    : 5,
+            none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">표시할 포스트가 없습니다.</div<</div>'
+          })
+        }
 
       }
-
-      if (tab=='best') {
-        var button = page_main.find('.bar-tab [data-tab="best"]');
-        var d_start = button.attr('data-d_start');
-        var sort = button.attr('data-sort');
-        var wrapper = tab_best.find('[data-role="list-best"]')
-        getPostBest({
-          wrapper : wrapper,
-          start : '#page-main',
-          d_start : d_start,
-          markup    : 'post-row',  // 테마 > _html > post-row.html
-          recnum    : 5,
-          sort      : 'hit',
-          none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
-        })
-      }
-
-      if (tab=='feed') {
-
-        tab_feed.loader({position: "inside"});
-
-        getPostFeed({
-          wrapper : tab_feed,
-          start : '#page-main',
-          markup    : 'post-row',  // 테마 > _html > post-row.html
-          recnum    : 5,
-          none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">표시할 포스트가 없습니다.</div<</div>'
-        })
-      }
-
     }
   });
 

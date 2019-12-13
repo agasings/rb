@@ -39,13 +39,6 @@
 		</div><!-- /.snap-content -->
 	</div><!-- /.page -->
 
-	<div class="refresher">
-	  <div class="loading-bar"></div>
-	  <div class="loading-bar"></div>
-	  <div class="loading-bar"></div>
-	  <div class="loading-bar"></div>
-	</div>
-
 	<?php include $g['dir_layout'].'/_includes/component.php' ?>
 	<?php include $g['dir_layout'].'/_includes/_import.foot.php' ?>
 
