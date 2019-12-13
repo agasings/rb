@@ -81,18 +81,19 @@ function getPostView(settings) {
             }, 1000);
 
           } else {
-            clearTimeout(timer_yt);
             wrapper.find('[data-role="progress_yt"]').hide();
           }
 
           if (event.data == YT.PlayerState.PAUSED) {
             console.log('일시중지')
+            clearTimeout(timer_yt);
             miniplayer.find('[data-toggle="play"]').removeClass('active');
             miniplayer.find('[data-toggle="play"] .material-icons').text('play_arrow');
           }
 
           if (event.data == YT.PlayerState.ENDED) {
             console.log('재생끝')
+            clearTimeout(timer_yt);
             miniplayer.find('[data-toggle="play"]').removeClass('active');
             miniplayer.find('[data-toggle="play"] .material-icons').text('replay');
           }
@@ -303,6 +304,8 @@ function getPostView(settings) {
               //var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
               var showComment_Ele_2 = wrapper.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
               var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+
+
               $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postData',{
                    uid : uid
                 },function(response){
@@ -341,6 +344,25 @@ function getPostView(settings) {
         }
 
         if (!isperm) wrapper.find('.bar-standard .embed-responsive').empty().removeAttr('style')
+
+        // edgeEffect
+        var wrapper_startY = 0;
+
+        wrapper.find('.content').on('touchstart',function(event){
+          wrapper_startY = event.originalEvent.changedTouches[0].pageY;
+        });
+
+        wrapper.find('.content').on('touchmove',function(event){
+          var wrapper_moveY = event.originalEvent.changedTouches[0].pageY;
+          var wrapper_contentY = $(this).scrollTop();
+          if (wrapper_contentY === 0 && wrapper_moveY > wrapper_startY) {
+            edgeEffect(wrapper,'top','show');
+          }
+          if( (wrapper_moveY < wrapper_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+            edgeEffect(wrapper,'bottom','show');
+          }
+        });
+
 
     });
 
