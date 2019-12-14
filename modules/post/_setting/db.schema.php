@@ -216,6 +216,30 @@ db_query($_tmp, $DB_CONNECT);
 db_query("OPTIMIZE TABLE ".$table[$module.'list'],$DB_CONNECT);
 }
 
+//리스트 멤버
+$_tmp = db_query( "select count(*) from ".$table[$module.'list_member'], $DB_CONNECT );
+if ( !$_tmp ) {
+$_tmp = ("
+
+CREATE TABLE ".$table[$module.'list_member']." (
+mbruid		INT				DEFAULT '0'		NOT NULL,
+site		    INT				DEFAULT '0'		NOT NULL,
+gid			  INT				DEFAULT '0'		NOT NULL,
+list			INT				DEFAULT '0'		NOT NULL,
+display		  TINYINT			DEFAULT '0'		NOT NULL,
+auth		  TINYINT			DEFAULT '0'		NOT NULL,
+level		  TINYINT			DEFAULT '0'		NOT NULL,
+d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
+KEY mbruid(mbruid),
+KEY gid(gid),
+KEY data(data),
+KEY display(display),
+KEY auth(auth),
+KEY level(level)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
+db_query($_tmp, $DB_CONNECT);
+db_query("OPTIMIZE TABLE ".$table[$module.'list_member'],$DB_CONNECT);
+}
+
 //포스트 월별수량
 $_tmp = db_query( "select count(*) from ".$table[$module.'month'], $DB_CONNECT );
 if ( !$_tmp ) {

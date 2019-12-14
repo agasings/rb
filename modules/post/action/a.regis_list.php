@@ -102,6 +102,10 @@ if ($uid) {
 
   $LASTUID = getDbCnt($table[$m.'list'],'max(uid)','');
 
+  $QKEY2 = "mbruid,site,gid,list,display,auth,level,d_regis";
+  $QVAL2 = "'$mbruid','$s','$gid','$LASTUID','$display','1','1','$last_log'";
+  getDbInsert($table[$m.'list_member'],$QKEY2,$QVAL2);
+
   if ($send_mod == 'ajax') {
 
     $_R = getUidData($table[$m.'list'],$LASTUID);
