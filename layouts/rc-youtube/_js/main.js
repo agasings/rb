@@ -148,7 +148,7 @@ function kakaoTalkSend(settings) {
 $(document).ready(function() {
 
   // tab메뉴 (#page-main)
-  page_main.find('.bar-tab [data-tab]').on('click', function () {
+  page_main.find('.bar-tab [data-tab]').on('tap click', function () {
     var tab_id = $(this).attr('data-tab');
 
     page_main.find('.tab-content').removeClass('active');
@@ -334,13 +334,6 @@ $(document).ready(function() {
             none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">표시할 포스트가 없습니다.</div<</div>'
           })
         }
-
-        if (tab=='libary') {
-
-          console.log('기록 업데이트')
-
-        }
-
 
       }
     }

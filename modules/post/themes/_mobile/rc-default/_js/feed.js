@@ -13,7 +13,7 @@ function getPostFeed(settings) {
   var prevNUM = currentPage * recnum;
   var moreNUM = totalNUM - prevNUM ;
 
-  wrapper.loader();
+  // wrapper.loader();
 
   $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postFeed',{
     start: start,
@@ -28,7 +28,7 @@ function getPostFeed(settings) {
         var num=result.num;
         var totalPage=result.tpg;
 
-        wrapper.loader('hide');
+        // wrapper.loader('hide');
         if (list) wrapper.html(list)
         else wrapper.html(none)
 
