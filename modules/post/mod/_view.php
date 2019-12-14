@@ -1,6 +1,18 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
+// 조회기록
+if ($mod=='view' && $d['post']['isperm'] && $my['uid']) {
+	if(!getDbRows($table['s_history'],"date='".$date['today']."' and site=".$s.' and entry='.$R['uid'].' and mbruid='.$my['uid'])) {
+		getDbInsert($table['s_history'],'site,mbruid,module,entry,date,d_regis',"'".$s."','".$my['uid']."','".$m."','".$R['uid']."','".$date['today']."','".$date['totime']."'");
+		$_REFCNT = getDbRows($table['s_history'],'');
+		if ($_REFCNT > 10000) {
+			$_REFOVER = getDbArray($table['s_history'],'','*','uid','asc',($_REFCNT - 9000),1);
+			while($_REFK=db_fetch_array($_REFOVER)) getDbDelete($table['s_history'],'uid='.$_REFK['uid']);
+		}
+	}
+}
+
 if ($mod=='view' && $d['post']['isperm'] && ($d['post']['hitcount'] || !strpos('_'.$_SESSION['module_'.$m.'_view'],'['.$R['uid'].']'))) {
 
 	getDbUpdate($table[$m.'data'],'hit=hit+1','uid='.$R['uid']);

@@ -148,8 +148,14 @@ function kakaoTalkSend(settings) {
 $(document).ready(function() {
 
   // tab메뉴 (#page-main)
-  page_main.find('.bar-tab [data-tab]').click(function(){
+  page_main.find('.bar-tab [data-tab]').on('click', function () {
     var tab_id = $(this).attr('data-tab');
+
+    page_main.find('.tab-content').removeClass('active');
+    page_main.find('.bar-tab .tab-item').removeClass('active');
+    page_main.find('.content').scrollTop(0).attr('data-tab',tab_id);
+    $(this).addClass('active');
+    $("#tab-"+tab_id).addClass('active');
 
     if (tab_id =='main') {
       page_main.find('.content').attr('data-scroll','infinite').infinitescroll('enable'); // 무한 스크롤 작동
@@ -210,11 +216,48 @@ $(document).ready(function() {
 
     }
 
-    page_main.find('.tab-content').removeClass('active');
-    page_main.find('.bar-tab .tab-item').removeClass('active');
-    page_main.find('.content').scrollTop(0).attr('data-tab',tab_id);
-    $(this).addClass('active');
-    $("#tab-"+tab_id).addClass('active');
+    if (tab_id =='libary' && memberid ) {
+
+      var start = '#'+page_main.attr('id');
+      var wrapper = tab_libary.find('.js-swiper-myhistory .swiper-wrapper');
+      var none = '내역없음';
+      wrapper.html('<div class="spinner-border m-3 mx-auto text-muted" role="status" style="border-width: .15em"><span class="sr-only">Loading...</span></div>');
+
+      $.post(rooturl+'/?r='+raccount+'&m=post&a=get_myHistory',{
+        start: start,
+        sort : 'uid',
+        recnum : 20,
+        p : 1,
+        markup_file : 'post-swiperSlide'
+        },function(response,status){
+          if(status=='success'){
+            var result = $.parseJSON(response);
+            var slide=result.list;
+            var num=result.num;
+
+            wrapper.loader('hide');
+            if (num) {
+              wrapper.html(slide).addClass('animated fadeIn');
+
+              var swiper_post_myhistory = new Swiper('.js-swiper-myhistory', {
+                spaceBetween: 15,
+                slidesPerView: 'auto',
+                on: {
+                  init: function () {
+                    console.log('최근 포스트 swiper initialized');
+                  },
+                }
+              });
+
+            } else {
+              wrapper.html(none);
+            }
+
+          } else {
+            alert(status);
+          }
+      });
+    }
   })
 
   // over scroll effect (#page-main)
@@ -228,7 +271,7 @@ $(document).ready(function() {
     var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
     var page_main_contentY = $(this).scrollTop();
     var tab_id = $(this).attr('data-tab');
-    if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing') && tab_id!='libary') {
+    if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing')) {
       if (page_main_moveY-page_main_startY>50) {
         edgeEffect(page_main,'top','show'); // 스크롤 상단 끝
       }
@@ -291,6 +334,13 @@ $(document).ready(function() {
             none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">표시할 포스트가 없습니다.</div<</div>'
           })
         }
+
+        if (tab=='libary') {
+
+          console.log('기록 업데이트')
+
+        }
+
 
       }
     }

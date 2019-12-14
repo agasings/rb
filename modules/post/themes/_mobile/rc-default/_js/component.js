@@ -3,6 +3,7 @@ var page_post_alllist =  $('#page-post-alllist'); //전체 리스트
 var page_post_listview =  $('#page-post-listview'); //특정 리스트 보기
 var page_post_keyword =  $('#page-post-keyword'); //키워드 보기
 var page_post_category_view =  $('#page-post-category-view'); //카테고리 보기
+var page_post_myhistory =  $('#page-post-myhistory'); //최근에 본 포스트
 var page_post_mypost =  $('#page-post-mypost'); //내 포스트 관리
 var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
 var page_post_saved=  $('#page-post-saved'); // 내 포스트 저장내역(나중에 볼 동영상)
@@ -282,6 +283,33 @@ page_post_category_view.on('show.rc.page', function(event) {
 
   getPostCategory(settings);
 
+})
+
+
+page_post_myhistory.on('show.rc.page', function(event) {
+  var button = $(event.relatedTarget);
+  var page = $(this);
+  var id = page.attr('id');
+  var wrapper = page.find('[data-role="list"]');
+  wrapper.html('');
+  var settings={
+    wrapper : wrapper,
+    start : '#'+id,
+    markup    : 'post-mediaList',  // 테마 > _html > post-mediaList.html
+    recnum    : 10,
+    sort      : 'uid',
+    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">내역이 없습니다.</div<</div>'
+  }
+  getMyHistory(settings);
+  page.find('.content').on('touchstart',function(event){
+    page_startY = event.originalEvent.changedTouches[0].pageY;
+  });
+  page.find('.content').on('touchend',function(event){
+    var page_endY=event.originalEvent.changedTouches[0].pageY;
+    if (page_endY-page_startY>200) {
+      getMyHistory(settings);
+    }
+  });
 })
 
 page_post_mypost.on('show.rc.page', function(event) {

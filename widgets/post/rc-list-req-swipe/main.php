@@ -42,7 +42,6 @@
 
 
 <script>
-
 var swiper_post_gallery = new Swiper('.js-swiper-gallery', {
   spaceBetween: 10,
   slidesPerView: 'auto'

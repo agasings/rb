@@ -150,11 +150,37 @@
   <?php endif; ?>
 
   <?php if ($my['uid']): ?>
-  <ul class="table-view bg-white border-top-0">
+
+  <div class="mb-2 bg-white border-bottom">
+    <div class="p-3">
+      <h6 class="mb-0">최근 포스트</h6>
+    </div>
+    <div class="text-xs-center text-muted f15 p-5 d-none" data-role="none">
+      내역이 없습니다.
+    </div>
+
+    <div class="pl-3 pb-3">
+
+      <div class="swiper-container js-swiper-myhistory" style="min-height: 100px">
+        <div class="swiper-wrapper">
+        </div><!-- /.swiper-wrapper -->
+      </div><!-- /.swiper-container -->
+    </div>
+  </div>
+
+  <ul class="table-view bg-white mb-2">
+    <li class="table-view-cell">
+      <a class="" href="#page-post-myhistory" data-start="#page-main" data-toggle="page" data-title="기록" data-url="<?php echo RW('mod=dashboard&page=history')?>">
+        <span class="media-object pull-left icon material-icons text-muted mr-2">history</span>
+        <div class="media-body">
+          기록
+        </div>
+      </a>
+    </li>
     <li class="table-view-cell">
       <a class="" href="#page-post-mypost" data-start="#page-main" data-toggle="page" data-title="내 포스트" data-url="<?php echo RW('mod=dashboard&page=post')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">play_circle_outline</span>
-        <span class="badge badge-default badge-inverted"><?php echo number_format($my['num_post']) ?></span>
+        <span class="badge"><?php echo number_format($my['num_post']) ?></span>
         <div class="media-body">
           내 포스트
         </div>
@@ -163,7 +189,7 @@
     <li class="table-view-cell">
       <a class="" href="#page-post-mylist" data-start="#page-main" data-toggle="page" data-title="내 리스트" data-url="<?php echo RW('mod=dashboard&page=list')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">playlist_play</span>
-        <span class="badge badge-default badge-inverted"><?php echo number_format($my['num_list']) ?></span>
+        <span class="badge"><?php echo number_format($my['num_list']) ?></span>
         <div class="media-body">
           내 리스트
         </div>

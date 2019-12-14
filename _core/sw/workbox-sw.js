@@ -50,8 +50,8 @@ workbox.precaching.precacheAndRoute([
 
   '/plugins/bootstrap-notify/3.1.3/bootstrap-notify.min.js',
 
-  '/plugins/swiper/4.5.0/css/swiper.css',
-  '/plugins/swiper/4.5.0/js/swiper.min.js',
+  '/plugins/swiper/5.2.1/css/swiper.css',
+  '/plugins/swiper/5.2.1/js/swiper.min.js',
 
   '/plugins/snap/1.9.3/rc-snap.js',
 

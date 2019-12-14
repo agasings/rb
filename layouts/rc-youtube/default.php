@@ -28,7 +28,7 @@
 
 			<?php include $g['dir_layout'].'/_includes/header.php' ?>
 
-			<main role="main" class="content swiper-no-swiping-main bg-faded" data-snap-ignore="true" data-tab="main">
+			<main role="main" class="content bg-faded" data-snap-ignore="true" data-tab="main">
 
 				<article class="animated fadeIn delay-1" style="min-height:250px" role="article">
 					<?php include __KIMS_CONTENT__ ?>

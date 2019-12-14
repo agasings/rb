@@ -46,4 +46,5 @@ $table['s_seo']		= $DB['head'].'_s_seo';
 $table['s_xtralog']	= $DB['head'].'_s_xtralog';
 $table['s_notice']	= $DB['head'].'_s_notice';
 $table['s_feed']	= $DB['head'].'_s_feed';
+$table['s_history']	= $DB['head'].'_s_history';
 ?>

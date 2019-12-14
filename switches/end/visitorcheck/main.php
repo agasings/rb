@@ -19,7 +19,7 @@ if ($m != 'admin' && $iframe !='Y' && !$system)
 		getDbUpdate($table['s_counter'],'page=page+1','site='.$s." and date='".$date['today']."'");
 		if ($_keyword && !strstr('[name][nic][id][term]',$where))
 		{
-			if (preg_match("/(http|https):\/\/(.*?)$/i", $_keyword)) exit;	
+			if (preg_match("/(http|https):\/\/(.*?)$/i", $_keyword)) exit;
 			$_INKEY = getDbData($table['s_inkey'],'site='.$s." and date='".$date['today']."' and keyword='".$_keyword."'",'*');
 			if($_INKEY['uid']) getDbUpdate($table['s_inkey'],'hit=hit+1','uid='.$_INKEY['uid']);
 			else getDbInsert($table['s_inkey'],'site,date,keyword,hit',"'".$s."','".$date['today']."','".$_keyword."','1'");
@@ -37,7 +37,7 @@ if ($m != 'admin' && $iframe !='Y' && !$system)
 		if ($_REFCNT > 1000000)
 		{
 			$_REFOVER = getDbArray($table['s_referer'],'','*','uid','asc',($_REFCNT - 1000000),1);
-			while($_REFK=db_fetch_array($_REFOVER)) getDbDelete($table['s_referer'],$_REFK['uid']);
+			while($_REFK=db_fetch_array($_REFOVER)) getDbDelete($table['s_referer'],'uid='.$_REFK['uid']);
 		}
 		if ($_outkeyw)
 		{
@@ -61,11 +61,11 @@ if ($m != 'admin' && $iframe !='Y' && !$system)
 		}
 		if ($_REFCNT == 1)
 		{
-			db_query("OPTIMIZE TABLE ".$table['s_referer'],$DB_CONNECT); 
-			db_query("OPTIMIZE TABLE ".$table['s_outkey'],$DB_CONNECT); 
-			db_query("OPTIMIZE TABLE ".$table['s_browser'],$DB_CONNECT); 
-			db_query("OPTIMIZE TABLE ".$table['s_counter'],$DB_CONNECT); 
-			db_query("OPTIMIZE TABLE ".$table['s_numinfo'],$DB_CONNECT); 
+			db_query("OPTIMIZE TABLE ".$table['s_referer'],$DB_CONNECT);
+			db_query("OPTIMIZE TABLE ".$table['s_outkey'],$DB_CONNECT);
+			db_query("OPTIMIZE TABLE ".$table['s_browser'],$DB_CONNECT);
+			db_query("OPTIMIZE TABLE ".$table['s_counter'],$DB_CONNECT);
+			db_query("OPTIMIZE TABLE ".$table['s_numinfo'],$DB_CONNECT);
 		}
 		$_SESSION['mylog'.$s] = $g['ip'].'-'.$date['totime'];
 		$_SESSION['agent'.$s] = $g['agent'];

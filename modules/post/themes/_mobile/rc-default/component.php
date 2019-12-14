@@ -7,25 +7,26 @@
 4. 페이지   : 전체 카테고리
 5. 페이지 : 특정 카테고리 보기
 6. 페이지 : 키워드 보기
-7. 페이지 : 내 포스트 관리
-8. 페이지 : 내 리스트 관리
-9. 페이지 : 나중에 볼 포스트
-10. 페이지 : 좋아요 한 포스트
-11. 페이지 : 포스트 보기
-12. 페이지 : 새 포스트
-13. 모달 : 포스트 보기
-14. 모달 : 포스트 사진 보기
-15. 모달 : 포스트 좋아요 보기
-16. 모달 : 전체 포스트
-17. 모달 : 전체 리스트
-18. 모달 : 리스트 보기
-19. 모달 : 포스트 검색 (임시)
-20. 팝업 : 포스트 옵션 더보기
-21. 팝업 : 포스트 신고
-22. 팝업 : 정렬방식 변경
-23. 팝업 :  새 재생목록
-24. 시트 : 포스트 필터
-25. 시트 : 리스트 저장
+7. 페이지 : 최근에 본 포스트
+8. 페이지 : 내 포스트 관리
+9. 페이지 : 내 리스트 관리
+10. 페이지 : 나중에 볼 포스트
+11. 페이지 : 좋아요 한 포스트
+12. 페이지 : 포스트 보기
+13. 페이지 : 새 포스트
+14. 모달 : 포스트 보기
+15. 모달 : 포스트 사진 보기
+16. 모달 : 포스트 좋아요 보기
+17. 모달 : 전체 포스트
+18. 모달 : 전체 리스트
+19. 모달 : 리스트 보기
+20. 모달 : 포스트 검색 (임시)
+21. 팝업 : 포스트 옵션 더보기
+22. 팝업 : 포스트 신고
+23. 팝업 : 정렬방식 변경
+24. 팝업 :  새 재생목록
+25. 시트 : 포스트 필터
+26. 시트 : 리스트 저장
 -->
 
 <!-- 페이지 : 전체포스트 -->
@@ -112,6 +113,19 @@
   </header>
   <main role="main" class="content">
     <ul class="table-view table-view-sm mt-2 border-top-0 border-bottom-0" data-role="list"></ul>
+  </main>
+</div><!-- /.page -->
+
+<!-- 페이지 : 최근에 본 포스트 -->
+<div class="page right" id="page-post-myhistory">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+    <span class="title title-left" data-history="back">기록</span>
+  </header>
+  <main role="main" class="content">
+    <div class="content-padded">
+      <ul class="media-list" data-role="list"></ul>
+    </div>
   </main>
 </div><!-- /.page -->
 
@@ -1155,6 +1169,7 @@
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/category.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/best.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/write.js<?php echo $g['wcache']?>" ></script>
+<script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/myhistory.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mypost.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/mylist.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/post/themes/<?php echo $d['post']['skin_mobile'] ?>/_js/saved.js<?php echo $g['wcache']?>" ></script>

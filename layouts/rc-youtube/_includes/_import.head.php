@@ -39,8 +39,8 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- swiper : http://idangero.us/swiper/ -->
-<?php getImport('swiper','css/swiper','4.5.0','css')?>
-<?php getImport('swiper','js/swiper.min','4.5.0','js')?>
+<?php getImport('swiper','css/swiper','5.2.1','css')?>
+<?php getImport('swiper','js/swiper.min','5.2.1','js')?>
 
 <!-- timeago : 상대시간 표기 -->
 <?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
