@@ -75,14 +75,14 @@ function edgeEffect(container,pos,show) {
     topEdge.clearQueue();
     topEdge.css('top',top_margin?top_margin:0);
     topEdge.animate({height:'42px', opacity:'.5'}, 100);
-    topEdge.animate({height:'20px', opacity:'0'}, 600);
+    topEdge.animate({height:'0', opacity:'0'}, 600);
     setTimeout(function(){ topEdge.clearQueue() }, 680);
   }
   if (pos=='bottom' && show=='show') {
     bottomEdge.clearQueue();
     bottomEdge.css('bottom',bottom_margin?bottom_margin:0);
     bottomEdge.animate({height:'42px', opacity:'.5'}, 100);
-    bottomEdge.animate({height:'20px', opacity:'0'}, 600);
+    bottomEdge.animate({height:'0', opacity:'0'}, 600);
     setTimeout(function(){ bottomEdge.clearQueue() }, 680);
   }
   if (pos=='bottom' && show=='hide') {

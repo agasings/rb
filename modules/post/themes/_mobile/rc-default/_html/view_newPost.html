@@ -7,7 +7,7 @@
       data-format="{$newpost_format}"
   		data-title="{$subject}"
       data-url="/post/{$newpost_cid}">
-    <div class="pull-left mr-2">
+    <div class="pull-left mr-2  {$newpost_has_featured}">
       <div class="embed-responsive embed-responsive-16by9 bg-faded">
         <img class="media-object border" src="{$newpost_featured_320}" alt="" style="width: 160px">
         <time class="badge badge-default rounded-0 position-absolute" style="top:auto;left:auto;right:1px;bottom:1px">{$newpost_time}</time>

@@ -135,6 +135,7 @@ if ($_NUM) {
     $TMPL['newpost_subject']=stripslashes($POST['subject']);
     $TMPL['newpost_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
     $TMPL['newpost_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
+    $TMPL['newpost_has_featured'] = $POST['featured_img']?'':'d-none';
     $TMPL['newpost_provider']=getFeaturedimgMeta($POST,'provider');
     $TMPL['newpost_videoId']=getFeaturedimgMeta($POST,'provider')=='YouTube'?getFeaturedimgMeta($POST,'name'):'';
     $TMPL['newpost_hit']=$POST['hit'];

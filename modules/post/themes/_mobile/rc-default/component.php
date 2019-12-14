@@ -933,11 +933,26 @@
             </button>
           </div>
           <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newtwit" data-type="editor">
+              <div class="material-icons" style="font-size: 64px;">
+                format_quote
+              </div>
+              <div><small class="text-black">간단글</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
             <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newpost" data-type="editor">
               <div class="material-icons" style="font-size: 64px;">
                 notes
               </div>
-              <div><small class="text-black">본문 작성</small></div>
+              <div><small class="text-black">긴글 작성</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="" data-type="">
+              <div class="fa fa-youtube-square text-muted" style="font-size: 64px;">
+              </div>
+              <div><small class="text-muted">유튜브 영상</small></div>
             </button>
           </div>
         </div><!-- /.row -->

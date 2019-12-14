@@ -44,7 +44,6 @@ if ($sort == 'uid' && !$keyword) {
 
 } else {
 
-
 }
 
 $TPG = getTotalPage($NUM,$recnum);
@@ -58,7 +57,7 @@ $TMPL['start']=$start;
 if (!empty($RCD)) {
 	foreach ($RCD as $R) {
 	  $TMPL['link']=getPostLink($R,1);
-	  $TMPL['subject']=stripslashes($R['subject']);
+	  $TMPL['subject']=$R['uid']?stripslashes($R['subject']):'삭제된 포스트';
 	  $TMPL['format'] = $R['format'];
 	  $TMPL['uid']=$R['uid'];
 	  $TMPL['cid']=$R['cid'];

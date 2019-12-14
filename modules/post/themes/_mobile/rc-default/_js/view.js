@@ -14,6 +14,15 @@ function getPostView(settings) {
   var template = '/modules/post/themes/'+post_skin_mobile+'/_html/view_'+format+'.html';
   var list_collapse = settings.list_collapse;
 
+  if (!uid || !post_skin_mobile || !format) {
+    console.log('템플릿이 없어요')
+    setTimeout(function(){
+      history.back();
+      setTimeout(function(){ $.notify({message: ' 존재하지 않는 포스트 입니다.'},{type: 'default'}); }, 400);
+      return false
+    }, 300);
+  }
+
   wrapper.load(template, function() {
 
     var header_height = wrapper.find('.bar-nav').outerHeight();
@@ -340,7 +349,13 @@ function getPostView(settings) {
           }
 
         } else {
-          alert(status);
+
+          setTimeout(function(){
+            history.back();
+            setTimeout(function(){ $.notify({message: error+' 존재하지 않는 포스트 입니다.'},{type: 'default'}); }, 400);
+            return false
+          }, 300);
+
         }
 
         if (!isperm) wrapper.find('.bar-standard .embed-responsive').empty().removeAttr('style')

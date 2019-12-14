@@ -1115,7 +1115,7 @@ body.refreshing .refresher.shrink {
   top: 44px;
   left: 0;
   width: 100%;
-  height: 20px;
+  height: 0;
   z-index: 21;
   opacity: 0;
   display: block;
@@ -1127,7 +1127,7 @@ body.refreshing .refresher.shrink {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 20px;
+  height: 0;
   z-index: 21;
   opacity: 0;
   display: block;

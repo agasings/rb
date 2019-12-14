@@ -2,7 +2,7 @@
 if(!defined('__KIMS__')) exit;
 
 // 조회기록
-if ($mod=='view' && $d['post']['isperm'] && $my['uid']) {
+if ($mod=='view' && $d['post']['isperm'] && $my['uid'] && $R['uid']) {
 	if(!getDbRows($table['s_history'],"date='".$date['today']."' and site=".$s.' and entry='.$R['uid'].' and mbruid='.$my['uid'])) {
 		getDbInsert($table['s_history'],'site,mbruid,module,entry,date,d_regis',"'".$s."','".$my['uid']."','".$m."','".$R['uid']."','".$date['today']."','".$date['totime']."'");
 		$_REFCNT = getDbRows($table['s_history'],'');
