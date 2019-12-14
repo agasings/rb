@@ -180,7 +180,7 @@
     <li class="table-view-cell">
       <a class="" href="#page-post-mypost" data-start="#page-main" data-toggle="page" data-title="내 포스트" data-url="<?php echo RW('mod=dashboard&page=post')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">play_circle_outline</span>
-        <span class="badge"><?php echo number_format($my['num_post']) ?></span>
+        <span class="badge"><?php echo $my['num_post']?number_format($my['num_post']):'' ?></span>
         <div class="media-body">
           내 포스트
         </div>
@@ -189,7 +189,7 @@
     <li class="table-view-cell">
       <a class="" href="#page-post-mylist" data-start="#page-main" data-toggle="page" data-title="내 리스트" data-url="<?php echo RW('mod=dashboard&page=list')?>">
         <span class="media-object pull-left icon material-icons text-muted mr-2">playlist_play</span>
-        <span class="badge"><?php echo number_format($my['num_list']) ?></span>
+        <span class="badge"><?php echo $my['num_list']?number_format($my['num_list']):'' ?></span>
         <div class="media-body">
           내 리스트
         </div>
