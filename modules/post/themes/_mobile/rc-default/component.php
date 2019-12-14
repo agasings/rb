@@ -917,42 +917,42 @@
       <div class="content-padded">
         <div class="row">
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newpost" data-type="photo">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="photo">
               <div class="material-icons" style="font-size: 64px;">
                 insert_photo
               </div>
-              <div><small class="text-black">사진 추가</small></div>
+              <div><small class="text-muted">사진 추가</small></div>
             </button>
           </div>
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newpost" data-type="link">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="link">
               <div class="material-icons" style="font-size: 64px;">
                 link
               </div>
-              <div><small class="text-black">링크 추가</small></div>
+              <div><small class="text-muted">링크 추가</small></div>
             </button>
           </div>
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newtwit" data-type="editor">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newtwit" data-type="editor">
               <div class="material-icons" style="font-size: 64px;">
                 format_quote
               </div>
-              <div><small class="text-black">간단글</small></div>
+              <div><small class="text-muted">간단글</small></div>
             </button>
           </div>
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="newpost" data-type="editor">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="editor">
               <div class="material-icons" style="font-size: 64px;">
                 notes
               </div>
-              <div><small class="text-black">긴글 작성</small></div>
+              <div><small class="text-muted">긴글 작성</small></div>
             </button>
           </div>
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-reset" data-toggle="" data-type="">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="" data-type="">
               <div class="fa fa-youtube-square text-muted" style="font-size: 64px;">
               </div>
-              <div><small class="text-muted">유튜브 영상</small></div>
+              <div style="margin-top:3px"><small class="text-muted">내 영상 추가</small></div>
             </button>
           </div>
         </div><!-- /.row -->

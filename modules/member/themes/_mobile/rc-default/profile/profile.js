@@ -236,10 +236,14 @@ function getPofileView(modal,mbruid) {
     var wrapper_moveY = event.originalEvent.changedTouches[0].pageY;
     var wrapper_contentY = $(this).scrollTop();
     if (wrapper_contentY === 0 && wrapper_moveY > wrapper_startY) {
-      edgeEffect(modal,'top','show');
+      if (wrapper_moveY-wrapper_startY>50) {
+        edgeEffect(modal,'top','show');
+      }
     }
     if( (wrapper_moveY < wrapper_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
-      edgeEffect(modal,'bottom','show');
+      if (wrapper_startY-wrapper_moveY>50) {
+        edgeEffect(modal,'bottom','show');
+      }
     }
   });
 

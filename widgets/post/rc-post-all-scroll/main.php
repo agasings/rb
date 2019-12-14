@@ -7,7 +7,7 @@
         subscriptions
       </div>
       <h5>나만의 유튜브를 시작합니다.</h5>
-      <small class="text-muted">당신이 쉽게 선택해 볼 수 있는 나만의 마케팅 베이스캠프</small>
+      <small class="text-muted">당신만울 위한 브랜드 베이스캠프</small>
     </div>
   </div>
 </div>

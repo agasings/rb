@@ -148,7 +148,7 @@ function kakaoTalkSend(settings) {
 $(document).ready(function() {
 
   // tab메뉴 (#page-main)
-  page_main.find('.bar-tab [data-tab]').on('tap click', function () {
+  page_main.find('.bar-tab [data-tab]').on('tap', function () {
     var tab_id = $(this).attr('data-tab');
 
     page_main.find('.tab-content').removeClass('active');
