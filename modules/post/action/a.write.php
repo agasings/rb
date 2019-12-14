@@ -45,6 +45,7 @@ if ($d['post']['badword_action'])
 	}
 }
 
+if (!$featured_img) $format = 1;  //대표이미자가 없을 경우 무조건 doc 포맷지정
 
 if ($uid) {
 

@@ -60,6 +60,7 @@ if (!empty($_RCD)) {
     $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
     $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
     $TMPL['featured_img'] = checkPostPerm($R) ?getPreviewResize(getUpImageSrc($R),'300x168'):getPreviewResize('/files/noimage.png','300x168');
+    $TMPL['has_featured'] = !$R['featured_img']?'d-none':'';
     $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
     $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
