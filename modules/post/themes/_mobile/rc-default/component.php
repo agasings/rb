@@ -914,11 +914,11 @@
       <h1 class="title">작업선택</h1>
     </header>
     <div class="content rounded-0" style="min-height: 185px;">
-      <div class="content-padded">
+      <div class="px-3 pb-3">
         <div class="row">
           <div class="col-xs-4">
             <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="photo">
-              <div class="material-icons" style="font-size: 64px;">
+              <div class="material-icons" style="font-size: 60px;">
                 insert_photo
               </div>
               <div><small class="text-muted">사진 추가</small></div>
@@ -926,7 +926,7 @@
           </div>
           <div class="col-xs-4">
             <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="link">
-              <div class="material-icons" style="font-size: 64px;">
+              <div class="material-icons" style="font-size: 60px;">
                 link
               </div>
               <div><small class="text-muted">링크 추가</small></div>
@@ -934,7 +934,7 @@
           </div>
           <div class="col-xs-4">
             <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newtwit" data-type="editor">
-              <div class="material-icons" style="font-size: 64px;">
+              <div class="material-icons" style="font-size: 60px;">
                 format_quote
               </div>
               <div><small class="text-muted">간단글</small></div>
@@ -942,7 +942,7 @@
           </div>
           <div class="col-xs-4">
             <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="editor">
-              <div class="material-icons" style="font-size: 64px;">
+              <div class="material-icons" style="font-size: 60px;">
                 notes
               </div>
               <div><small class="text-muted">긴글 작성</small></div>
@@ -950,9 +950,17 @@
           </div>
           <div class="col-xs-4">
             <button type="button" class="btn btn-block btn-link text-muted" data-toggle="" data-type="">
-              <div class="fa fa-youtube-square text-muted" style="font-size: 64px;">
+              <div class="fa fa-youtube-square text-muted" style="font-size: 60px;">
               </div>
               <div style="margin-top:3px"><small class="text-muted">내 영상 추가</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="" data-type="">
+              <div class="material-icons" style="font-size: 60px;">
+                room
+              </div>
+              <div><small class="text-muted">위치 추가</small></div>
             </button>
           </div>
         </div><!-- /.row -->

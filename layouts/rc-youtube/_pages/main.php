@@ -6,7 +6,7 @@
   </section>
   <?php endif; ?>
 
-  <section class="widget" id="widget-post-all">
+  <section class="widget" id="widget-post-all" data-role="postAll">
     <?php getWidget('post/rc-post-all-scroll',array('wrapper'=>'#widget-post-all','start'=>'#page-main','recnum'=>5,'link'=>'/post'))?>
   </section>
 

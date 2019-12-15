@@ -296,12 +296,12 @@ $(document).ready(function() {
 
         if (tab=='main') {
           getPostAll({
-            wrapper : $('#widget-post-all [data-role="list"]'),
+            wrapper : $('[data-role="postAll"] [data-role="list"]'),
             start : '#page-main',
             markup    : 'post-row',  // 테마 > _html > post-row-***.html
             recnum    : 5,
             sort      : 'gid',
-            none : $('#widget-post-all').find('[data-role="none"]').html(),
+            none : $('[data-role="postAll"]').find('[data-role="none"]').html(),
             paging : 'infinit'
           })
         }
