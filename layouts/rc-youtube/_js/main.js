@@ -221,7 +221,7 @@ $(document).ready(function() {
       var start = '#'+page_main.attr('id');
       var wrapper = tab_libary.find('.js-swiper-myhistory .swiper-wrapper');
       var none = '<div class="text-xs-center text-muted p-5 mx-auto">내역이 없습니다.</div>';
-      wrapper.html('<div class="spinner-border m-3 mx-auto text-muted" role="status" style="border-width: .15em"><span class="sr-only">Loading...</span></div>');
+      wrapper.html('<div class="spinner-border m-5 mx-auto text-muted" role="status" style="border-width: .15em"><span class="sr-only">Loading...</span></div>');
 
       $.post(rooturl+'/?r='+raccount+'&m=post&a=get_myHistory',{
         start: start,

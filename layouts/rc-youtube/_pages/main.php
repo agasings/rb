@@ -161,7 +161,7 @@
 
     <div class="pl-3 pb-3">
 
-      <div class="swiper-container js-swiper-myhistory" style="min-height: 100px">
+      <div class="swiper-container js-swiper-myhistory" style="min-height: 140px">
         <div class="swiper-wrapper">
         </div><!-- /.swiper-wrapper -->
       </div><!-- /.swiper-container -->
