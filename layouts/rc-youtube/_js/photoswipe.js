@@ -142,7 +142,8 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             // define gallery index (for URL)
             galleryUID: galleryElement.getAttribute('data-pswp-uid'),
             showHideOpacity:true,
-            getThumbBoundsFn:false
+            getThumbBoundsFn:false,
+            loop : false
 
         };
 
