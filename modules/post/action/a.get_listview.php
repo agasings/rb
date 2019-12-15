@@ -43,8 +43,8 @@ foreach ($RCD as $R) {
   $TMPL['time']=checkPostPerm($R)?getUpImageTime($R):'';
   $TMPL['provider']=getFeaturedimgMeta($R,'provider');
   $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
-  $TMPL['featured_480'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'480x270'):getPreviewResize('/files/noimage.png','480x270');
-  $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+  $TMPL['featured_16by9_sm'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'480x270'):getPreviewResize('/files/noimage.png','480x270');
+  $TMPL['featured_16by9'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
   $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
   $skin_list=new skin('listview-row');

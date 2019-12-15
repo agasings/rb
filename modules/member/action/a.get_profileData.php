@@ -68,9 +68,9 @@ if ($NUM) {
     $TMPL['post_uid']=$POST['uid'];
     $TMPL['post_cid']=$POST['cid'];
     $TMPL['post_format']=$POST['format'];
-    $TMPL['post_subject']=stripslashes($POST['subject']);
-    $TMPL['post_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
-    $TMPL['post_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
+    $TMPL['post_subject']=getContents($POST['subject'],$R['html']);
+    $TMPL['post_featured_16by9'] = getPreviewResize(getUpImageSrc($POST),'640x360');
+    $TMPL['post_featured_16by9_sm'] = getPreviewResize(getUpImageSrc($POST),'320x180');
     $TMPL['post_has_featured'] = $POST['featured_img']?'':'d-none';
     $TMPL['post_provider']=getFeaturedimgMeta($POST,'provider');
     $TMPL['post_videoId']=getFeaturedimgMeta($POST,'provider')=='YouTube'?getFeaturedimgMeta($POST,'name'):'';
@@ -99,7 +99,7 @@ if ($_NUM) {
     $TMPL['list_uid']=$LIST['uid'];
     $TMPL['list_id']=$LIST['id'];
     $TMPL['list_num']=$LIST['num'];
-    $TMPL['list_featured_img'] = getPreviewResize(getListImageSrc($LIST['uid']),'480x270');
+    $TMPL['list_featured_16by9_sm'] = getPreviewResize(getListImageSrc($LIST['uid']),'480x270');
     $TMPL['list_d_modify'] = getDateFormat($LIST['d_modify']?$LIST['d_modify']:$LIST['d_regis'],'c');
     $TMPL['list_nic'] = getProfileInfo($LIST['mbruid'],'nic');
     $skin_newList=new skin('_listList');

@@ -389,27 +389,25 @@ function savePost(f) {
           history.back();
           form.find('[data-role="postsubmit"]').attr( 'disabled', false );
           setTimeout(function(){
-            if (uid && !after) {
+            if (uid) {
               $.notify({message: '저장 되었습니다.'},{type: 'default'});
             } else {
               if (display==5 || display==4) {
                 history.back();
-
-                // 메인화면 목록 새로불러오기
-                getPostAll({
-                  wrapper : $('[data-role="postAll"] [data-role="list"]'),
-                  start : '#page-main',
-                  markup    : 'post-row',  // 테마 > _html > post-row-***.html
-                  recnum    : 5,
-                  sort      : 'gid',
-                  none : '',
-                  paging : 'infinit'
-                })
-
               } else {
                 $('#page-post-mypost').page({ start: '#page-main' });
               }
             }
+            // 메인화면 목록 새로불러오기
+            getPostAll({
+              wrapper : $('[data-role="postAll"] [data-role="list"]'),
+              start : '#page-main',
+              markup    : 'post-row',  // 테마 > _html > post-row-***.html
+              recnum    : 5,
+              sort      : 'gid',
+              none : '',
+              paging : 'infinit'
+            })
            }, 300);
 
         } else {
@@ -567,7 +565,8 @@ function savePostByLink(url) {
 
             // 새 포스트 저장
             var subject = title;
-            var content = '<p>'+description+'</p><figure class="media"><oembed url="'+url+'"></oembed></figure>';
+            // var content = '<p>'+description+'</p><figure class="media"><oembed url="'+url+'"></oembed></figure>';
+            var content = '<p>'+description+'</p>';
             var upload = '['+uid+']';
             var featured_img = uid;
             var format = 1; //문서 타입

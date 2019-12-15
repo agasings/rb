@@ -68,8 +68,8 @@ if ($NUM) {
     $TMPL['post_cid']=$POST['cid'];
     $TMPL['post_format']=$POST['format'];
     $TMPL['post_subject']=stripslashes($POST['subject']);
-    $TMPL['post_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
-    $TMPL['post_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
+    $TMPL['post_featured_16by9'] = getPreviewResize(getUpImageSrc($POST),'640x360');
+    $TMPL['post_featured_16by9_sm'] = getPreviewResize(getUpImageSrc($POST),'320x180');
     $TMPL['post_provider']=getFeaturedimgMeta($POST,'provider');
     $TMPL['post_videoId']=getFeaturedimgMeta($POST,'provider')=='YouTube'?getFeaturedimgMeta($POST,'name'):'';
     $TMPL['post_hit']=$POST['hit'];

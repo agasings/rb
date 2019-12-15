@@ -60,7 +60,7 @@ foreach ($RCD as $R) {
   $TMPL['uid']=$R['uid'];
 	$TMPL['id']=$R['id'];
 	$TMPL['num']=$R['num'];
-  $TMPL['featured_img'] = getPreviewResize(getListImageSrc($R['uid']),'480x270');
+  $TMPL['featured_16by9'] = getPreviewResize(getListImageSrc($R['uid']),'480x270');
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
   $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
   $TMPL['display']=$R['display']!=5?$g['displaySet']['icon'][$R['display']]:'';

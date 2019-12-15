@@ -49,7 +49,7 @@ if (!empty($RCD)) {
     $TMPL['dislikes']=$R['dislikes'];
     $TMPL['provider']=getFeaturedimgMeta($R,'provider');
     $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
-    $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+    $TMPL['featured_16by9'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
     $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
     $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');

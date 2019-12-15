@@ -46,7 +46,8 @@ foreach ($RCD as $R) {
   $TMPL['dislikes']=$R['dislikes'];
   $TMPL['provider']=getFeaturedimgMeta($R,'provider');
   $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
-  $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+  $TMPL['featured_16by9'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+  $TMPL['featured_1by1'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x640'):getPreviewResize('/files/noimage.png','640x640');
   $TMPL['has_featured'] = !$R['featured_img']?'d-none':'';
   $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
   $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');

@@ -51,7 +51,7 @@ if ($NUM) {
     $TMPL['list_uid']=$LIST['uid'];
     $TMPL['list_id']=$LIST['id'];
     $TMPL['list_num']=$LIST['num'];
-    $TMPL['list_featured_img'] = getPreviewResize(getListImageSrc($LIST['uid']),'480x270');
+    $TMPL['list_featured_16by9_sm'] = getPreviewResize(getListImageSrc($LIST['uid']),'480x270');
     $TMPL['list_d_modify'] = getDateFormat($LIST['d_modify']?$LIST['d_modify']:$LIST['d_regis'],'c');
     $TMPL['list_nic'] = getProfileInfo($LIST['mbruid'],'nic');
     $skin_listList=new skin('_listList');

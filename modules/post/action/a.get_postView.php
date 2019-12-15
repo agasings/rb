@@ -68,8 +68,8 @@ if ($list) {
     $TMPL['L_uid']=$_L['uid'];
     $TMPL['L_cid']=$_L['cid'];
     $TMPL['L_subject']=checkPostPerm($_L)?stripslashes($_L['subject']):'[비공개 포스트]';
-    $TMPL['L_featured_240'] = checkPostPerm($_L)?getPreviewResize(getUpImageSrc($_L),'240x134'):getPreviewResize('/files/noimage.png','240x134');
-    $TMPL['L_featured_640'] = checkPostPerm($_L)?getPreviewResize(getUpImageSrc($_L),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+    $TMPL['L_featured_16by9_sm'] = checkPostPerm($_L)?getPreviewResize(getUpImageSrc($_L),'240x134'):getPreviewResize('/files/noimage.png','240x134');
+    $TMPL['L_featured_16by9'] = checkPostPerm($_L)?getPreviewResize(getUpImageSrc($_L),'640x360'):getPreviewResize('/files/noimage.png','640x360');
     $TMPL['L_time'] = checkPostPerm($_L)?getUpImageTime($_L):'';
     $TMPL['L_provider']=getFeaturedimgMeta($_L,'provider');
     $TMPL['L_videoId']=getFeaturedimgMeta($_L,'provider')=='YouTube'?getFeaturedimgMeta($_L,'name'):'';
@@ -90,7 +90,7 @@ $TMPL['cid'] = $R['cid'];
 $TMPL['mbruid'] = $R['mbruid'];
 $TMPL['profile_url']=getProfileLink($R['mbruid']);
 $TMPL['post_url']=getPostLink($R,0);
-$TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+$TMPL['featured_16by9'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
 $TMPL['num_follower'] = number_format(getProfileInfo($R['mbruid'],'num_follower'));
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
@@ -113,7 +113,7 @@ $TMPL['view_follow'] = $my['uid']!=$R['mbruid']?$post->getHtml('view_follow'):''
 $TMPL['view_opinion'] = $my['uid']&&$R['likes']&&!$R['dis_like'] ?$post->getHtml('view_opinion'):'';
 
 $result['subject'] = stripslashes($R['subject']);
-$result['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+$result['featured_16by9'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
 $result['nic'] = getProfileInfo($R['mbruid'],'nic');
 $result['dis_like'] = $R['dis_like']?$R['dis_like']:'';
 $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
@@ -136,8 +136,8 @@ if ($_NUM) {
     $TMPL['newpost_cid']=$POST['cid'];
     $TMPL['newpost_format']=$formats[$POST['format']];
     $TMPL['newpost_subject']=stripslashes($POST['subject']);
-    $TMPL['newpost_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
-    $TMPL['newpost_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
+    $TMPL['newpost_featured_16by9'] = getPreviewResize(getUpImageSrc($POST),'640x360');
+    $TMPL['newpost_featured_16by9_sm'] = getPreviewResize(getUpImageSrc($POST),'320x180');
     $TMPL['newpost_has_featured'] = $POST['featured_img']?'':'d-none';
     $TMPL['newpost_provider']=getFeaturedimgMeta($POST,'provider');
     $TMPL['newpost_videoId']=getFeaturedimgMeta($POST,'provider')=='YouTube'?getFeaturedimgMeta($POST,'name'):'';
