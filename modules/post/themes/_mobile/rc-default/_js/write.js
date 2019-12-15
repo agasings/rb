@@ -390,9 +390,9 @@ function savePost(f) {
             if (uid && !after) {
               $.notify({message: '저장 되었습니다.'},{type: 'default'});
             } else {
-              $('#page-post-mypost').page({ start: '#page-main' });
-              setTimeout(function(){
-
+              if (display==5 || display==4) {
+                history.back();
+                
                 // 메인화면 목록 새로불러오기
                 getPostAll({
                   wrapper : $('[data-role="postAll"] [data-role="list"]'),
@@ -404,7 +404,9 @@ function savePost(f) {
                   paging : 'infinit'
                 })
 
-              }, 1000);
+              } else {
+                $('#page-post-mypost').page({ start: '#page-main' });
+              }
             }
            }, 300);
 
