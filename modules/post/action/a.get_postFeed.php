@@ -40,6 +40,7 @@ if (!empty($RCD)) {
     $_comment =  $comment==0?'':$comment;
     $TMPL['link']=getPostLink($R,1);
     $TMPL['subject']=getContents($R['subject'],$R['html']);
+    $TMPL['has_content']=$R['content']?'d-block':'d-none';
     $TMPL['format'] = $R['format'];
     $TMPL['uid']=$R['uid'];
     $TMPL['hit']=$R['hit'];

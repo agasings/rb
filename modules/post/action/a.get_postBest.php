@@ -47,6 +47,7 @@ if (!empty($_RCD)) {
     $TMPL['link']=getPostLink($R,1);
     $TMPL['edit_link']=RW('m=post&mod=write&cid='.$R['cid']);
     $TMPL['subject']=getContents($R['subject'],$R['html']);
+    $TMPL['has_content']=$R['content']?'d-block':'d-none';
     $TMPL['format'] = $R['format'];
     $TMPL['uid']=$R['uid'];
     $TMPL['mbruid']=$R['mbruid'];

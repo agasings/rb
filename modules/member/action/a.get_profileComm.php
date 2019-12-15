@@ -71,6 +71,7 @@ if ($NUM) {
     $TMPL['post_cid']=$POST['cid'];
     $TMPL['post_format']=$POST['format'];
     $TMPL['post_subject']=getContents($POST['subject'],$R['html']);
+    $TMPL['post_has_content']=$POST['content']?'d-block':'d-none';
     $TMPL['post_featured_640'] = getPreviewResize(getUpImageSrc($POST),'640x360');
     $TMPL['post_featured_320'] = getPreviewResize(getUpImageSrc($POST),'320x180');
     $TMPL['post_has_featured'] = $POST['featured_img']?'':'d-none';
