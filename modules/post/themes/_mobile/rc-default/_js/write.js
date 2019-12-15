@@ -135,7 +135,6 @@ function setPostWrite(settings) {
                 var file=result.file;
                 var link=result.link;
 
-                if (featured) wrapper.find('.media-left').removeClass('d-none');
                 wrapper.find('[data-role="display_label"]').text(display_label);
                 popover_post_display.find('[data-toggle="display"] .badge').empty();
                 popover_post_display.find('[data-toggle="display"][data-display="'+display+'"] .badge').html('<span class="icon icon-check"></span>');
@@ -152,6 +151,9 @@ function setPostWrite(settings) {
                 wrapper.find('[name="dis_like"]').val(dis_like);
                 wrapper.find('[name="dis_comment"]').val(dis_comment);
                 wrapper.find('[name="dis_listadd"]').val(dis_listadd);
+
+                if (featured_img) wrapper.find('.media-left').removeClass('d-none');
+                else wrapper.find('.media-left').addClass('d-none');
 
                 if (linkNum) {
                   wrapper.find('[data-role="addlink_guide"]').addClass('d-none');
@@ -352,11 +354,11 @@ function savePost(f) {
     return false;
   }
 
-  if (editorData == '') {
-    $.notify({message: '본문 입력후 저장해 주세요.'},{type: 'default'});
-    modal_post_write.find('[data-act="submit"]').attr('disabled',false);
-    return false;
-  }
+  // if (editorData == '') {
+  //   $.notify({message: '본문 입력후 저장해 주세요.'},{type: 'default'});
+  //   modal_post_write.find('[data-act="submit"]').attr('disabled',false);
+  //   return false;
+  // }
 
   setTimeout(function(){
 
@@ -392,7 +394,7 @@ function savePost(f) {
             } else {
               if (display==5 || display==4) {
                 history.back();
-                
+
                 // 메인화면 목록 새로불러오기
                 getPostAll({
                   wrapper : $('[data-role="postAll"] [data-role="list"]'),
@@ -407,6 +409,46 @@ function savePost(f) {
               } else {
                 $('#page-post-mypost').page({ start: '#page-main' });
               }
+            }
+           }, 300);
+
+        } else {
+          alert(status);
+        }
+    });
+  }, 200);
+}
+
+function saveTwit(display,content) {
+
+  setTimeout(function(){
+
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=write',{
+      send_mod : 'ajax',
+      content : '',
+      subject : content,
+      display : display,
+      html : 'TEXT'
+      },function(response,status){
+        if(status=='success'){
+          var result = $.parseJSON(response);
+          history.back(); // 작성모달 내리고
+          setTimeout(function(){
+            if (display==5) {
+
+              // 메인화면 목록 새로불러오기
+              getPostAll({
+                wrapper : $('[data-role="postAll"] [data-role="list"]'),
+                start : '#page-main',
+                markup    : 'post-row',  // 테마 > _html > post-row-***.html
+                recnum    : 5,
+                sort      : 'gid',
+                none : '',
+                paging : 'infinit'
+              })
+
+            } else {
+              $('#page-post-mypost').page({ start: '#page-main' });
             }
            }, 300);
 

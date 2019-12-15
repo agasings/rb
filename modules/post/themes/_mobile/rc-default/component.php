@@ -482,7 +482,7 @@
 </div>
 
 <!-- 모달 : 포스트 편집 -->
-<div class="modal fast" id="modal-post-write" data-role="write">
+<div class="modal" id="modal-post-write" data-role="write">
 
   <section class="page center" id="page-post-edit-main">
 
@@ -746,6 +746,51 @@
 
 </div><!-- /.modal -->
 
+<!-- 모달 : 포스트 간단글 쓰기-->
+<div class="modal" id="modal-post-twit" data-role="write">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon icon-close pull-left px-3" data-history="back" role="button"></a>
+
+    <button class="btn btn-link btn-nav pull-right pl-2 pr-4" data-act="submit" data-display="5">
+      <span class="not-loading">
+        올리기
+      </span>
+      <span class="is-loading">
+        <div class="spinner-border spinner-border-sm" role="status">
+          <span class="sr-only">저장중...</span>
+        </div>
+      </span>
+    </button>
+    <button class="btn btn-link btn-nav text-muted pull-right px-2" data-act="submit" data-display="1">
+      <span class="not-loading">
+        임시저장
+      </span>
+      <span class="is-loading">
+        <div class="spinner-border spinner-border-sm" role="status">
+          <span class="sr-only">저장중...</span>
+        </div>
+      </span>
+    </button>
+  </header>
+  <main class="content">
+    <div class="content-padded my-0 editor-focused-hide">
+      <div class="media mt-3">
+        <span class="media-left  position-relative pr-0 mr-2">
+          <img class="media-object img-circle" src="<?php echo getAvatarSrc($my['uid'],'84') ?>" style="height:42px">
+        </span>
+        <div class="media-body f14" style="max-height: 300px;overflow: auto">
+          <div class="form-list mt-2">
+            <div class="input-row pl-1 border-bottom-0">
+              <label class="sr-only">제목</label>
+              <textarea class="form-control p-0 border-0 mb-0" rows="2" name="subject" data-plugin="autosize" placeholder="오늘 하루, 어떤 일이 있었나요?"></textarea>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.media -->
+    </div><!-- /.content-padded -->
+  </main>
+</div>
+
 <!-- 팝업 : 포스트 옵션 더보기 -->
 <div id="popup-post-postMore" class="popup zoom">
   <div class="popup-content">
@@ -917,23 +962,7 @@
       <div class="px-3 pb-3">
         <div class="row">
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="photo">
-              <div class="material-icons" style="font-size: 60px;">
-                insert_photo
-              </div>
-              <div><small class="text-muted">사진 추가</small></div>
-            </button>
-          </div>
-          <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="link">
-              <div class="material-icons" style="font-size: 60px;">
-                link
-              </div>
-              <div><small class="text-muted">링크 추가</small></div>
-            </button>
-          </div>
-          <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newtwit" data-type="editor">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="twit">
               <div class="material-icons" style="font-size: 60px;">
                 format_quote
               </div>
@@ -949,18 +978,34 @@
             </button>
           </div>
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="" data-type="">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="link">
+              <div class="material-icons" style="font-size: 60px;">
+                link
+              </div>
+              <div><small class="text-muted">링크 추가</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="photo">
+              <div class="material-icons" style="font-size: 60px;">
+                insert_photo
+              </div>
+              <div><small class="text-muted">사진 추가</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="youtube">
               <div class="fa fa-youtube-square text-muted" style="font-size: 60px;">
               </div>
               <div style="margin-top:3px"><small class="text-muted">내 영상 추가</small></div>
             </button>
           </div>
           <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="" data-type="">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="map">
               <div class="material-icons" style="font-size: 60px;">
                 room
               </div>
-              <div><small class="text-muted">위치 추가</small></div>
+              <div><small class="text-muted">장소 추가</small></div>
             </button>
           </div>
         </div><!-- /.row -->

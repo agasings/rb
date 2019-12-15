@@ -54,7 +54,7 @@ include_once $g['dir_module'].'mod/_view.php';
 $result['uid'] = $R['uid'];
 $result['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $result['featured'] = getPreviewResize(getUpImageSrc($R),'240x134');
-$result['featured_img'] = $R['featured_img'];
+$result['featured_img'] = $R['featured_img']?$R['featured_img']:'';
 $result['display'] = $R['display'];
 $result['display_label']=$g['displaySet']['label'][$R['display']];
 $result['format'] = $R['format'];

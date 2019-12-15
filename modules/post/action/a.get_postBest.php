@@ -46,7 +46,7 @@ if (!empty($_RCD)) {
     $_markup_file = $markup_file.'-'.$formats[$R['format']];
     $TMPL['link']=getPostLink($R,1);
     $TMPL['edit_link']=RW('m=post&mod=write&cid='.$R['cid']);
-    $TMPL['subject']=stripslashes($R['subject']);
+    $TMPL['subject']=getContents($R['subject'],$R['html']);
     $TMPL['format'] = $R['format'];
     $TMPL['uid']=$R['uid'];
     $TMPL['mbruid']=$R['mbruid'];

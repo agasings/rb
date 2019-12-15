@@ -30,6 +30,7 @@ var modal_post_allpost =  $('#modal-post-allpost'); //전체 포스트
 var modal_post_alllist =  $('#modal-post-alllist'); //전체 리스트
 var modal_post_listview =  $('#modal-post-listview'); //리스트 보기
 var modal_post_write = $('#modal-post-write'); //포스트 작성
+var modal_post_twit = $('#modal-post-twit'); // 포스트 간단글 쓰기
 var modal_post_view =  $('#modal-post-view'); //포스트 보기
 var modal_post_photo =  $('#modal-post-photo'); //포스트 사진 보기
 var modal_post_opinion =  $('#modal-post-opinion'); //포스트 좋아요 보기
@@ -705,11 +706,12 @@ modal_post_write.on('show.rc.modal', function(event) {
   modal.find('[data-role="loader"]').removeClass('d-none') //로더 초기화
   modal.find('form').addClass('d-none')
 
-  setPostWrite({
-    uid : uid,
-    wrapper : modal,
-  });
-
+  setTimeout(function(){
+    setPostWrite({
+      uid : uid,
+      wrapper : modal,
+    });
+  }, 300);
 })
 
 modal_post_write.on('hidden.rc.modal', function(event) {
@@ -748,11 +750,52 @@ modal_post_write.on('hidden.rc.modal', function(event) {
 modal_post_write.find('[data-act="submit"]').click(function(){
   var button = $(this)
   button.attr('disabled',true );
-
   setTimeout(function(){
     savePost(document.writeForm)
   }, 600);
+});
 
+
+modal_post_twit.on('show.rc.modal', function(event) {
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  var uid = button.attr('data-uid');
+  var url = button.attr('data-url');
+
+  if (!memberid) {
+    modal.modal('hide');
+    setTimeout(function(){ modal_login.modal();}, 100);
+    return false;
+  }
+
+  if (!uid) {
+    var uid = modal.attr('data-uid');
+  } else {
+    modal.attr('data-uid',uid);
+  }
+
+  modal.find('[data-act="submit"]').attr('disabled', false);
+  modal.find('[name="subject"]').removeAttr('style').val('');
+  setTimeout(function(){ modal.find('[name="subject"]').focus();}, 100);
+  autosize(modal.find('[data-plugin="autosize"]'));
+})
+
+modal_post_twit.find('[data-act="submit"]').click(function(){
+  var button = $(this);
+  var modal = modal_post_twit;
+  var display = button.attr('data-display');
+  var subject = modal.find('[name="subject"]').val();
+
+  if (!subject) {
+    $.notify({message: '내용을 입력해주세요.'},{type: 'default'});
+    modal.find('[name="subject"]').focus();
+    return false;
+  }
+
+  button.attr('disabled',true );
+  setTimeout(function(){
+    saveTwit(display,subject);
+  }, 500);
 });
 
 modal_post_analytics.on('show.rc.modal', function(event) {
@@ -1056,6 +1099,12 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
       sheet_post_linkadd.find('button').attr('data-act','submit');
     } else if (type=='photo') {
       sheet_post_photoadd.sheet({backdrop: 'static'});
+    } else if (type=='twit') {
+      modal_post_twit.modal();
+    } else if (type=='youtube') {
+      $.notify({message: '구글계정 연결이 필요합니다.'},{type: 'default'});
+    } else if (type=='map') {
+      $.notify({message: '준비중 입니다.'},{type: 'default'});
     } else {
       modal_post_write.modal({title: '새 포스트',url: '/post/write'})
     }

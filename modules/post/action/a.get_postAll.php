@@ -31,7 +31,7 @@ foreach ($RCD as $R) {
   $comment = $R['comment'].($R['oneline']?'+'.$R['oneline']:'');
   $_comment =  $comment==0?'':$comment;
   $TMPL['link']=getPostLink($R,1);
-  $TMPL['subject']=stripslashes($R['subject']);
+  $TMPL['subject']=getContents($R['subject'],$R['html']);
   $TMPL['review']=stripslashes($R['review']);
   $TMPL['format'] = $R['format'];
   $TMPL['uid']=$R['uid'];

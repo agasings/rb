@@ -94,7 +94,10 @@ $TMPL['featured_640'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'64
 $TMPL['num_follower'] = number_format(getProfileInfo($R['mbruid'],'num_follower'));
 $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
-$TMPL['subject'] = stripslashes($R['subject']);
+
+if ($R['format']==2) $TMPL['subject'] = stripslashes($R['subject']);
+else $TMPL['subject']=getContents($R['subject'],$R['html']);
+
 $TMPL['review'] = stripslashes($R['review']);
 $TMPL['content'] = getContents($R['content'],'HTML');
 $TMPL['hit'] = $R['hit'];
