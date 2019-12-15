@@ -54,8 +54,8 @@ if ($type=='popover') {
 }
 
 
-//최근 포스트
-$postque = 'mbruid='.$mbruid.' and site='.$s;
+//최근 동영상
+$postque = 'mbruid='.$mbruid.' and site='.$s.' and format=2';
 if ($my['uid']) $postque .= ' and display > 3';  // 회원공개와 전체공개 포스트 출력
 else $postque .= ' and display = 5'; // 전체공개 포스트만 출력
 $_RCD=getDbArray($table['postmember'],$postque,'*','gid','asc',3,1);
