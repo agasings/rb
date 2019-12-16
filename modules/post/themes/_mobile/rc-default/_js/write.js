@@ -638,3 +638,15 @@ page_post_edit_tag.on('hidden.rc.page', function(event) {
   var textarea = page.find('textarea')
   textarea.blur()
 })
+
+page_post_edit_goods.on('shown.rc.page', function(event) {
+  var page = $(this)
+  var input = page.find('[name="keyword"]')
+  setTimeout(function(){ input.focus() }, 300);
+})
+
+page_post_edit_goods.on('hidden.rc.page', function(event) {
+  var page = $(this)
+  var input = page.find('[name="keyword"]')
+  input.blur()
+})

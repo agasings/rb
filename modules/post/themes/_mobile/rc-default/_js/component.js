@@ -17,6 +17,7 @@ var page_post_edit_tag = $('#page-post-edit-tag'); // 포스트 작성 태그입
 var page_post_edit_advan = $('#page-post-edit-advan'); // 포스트 작성 고급설정
 var page_post_edit_category = $('#page-post-edit-category'); //포스트 작성 카테고리입력
 var page_post_edit_mediaset = $('#page-post-edit-mediaset'); //포스트 작성 미디어셋설정
+var page_post_edit_goods = $('#page-post-edit-goods'); //포스트 작성 상품연결
 var page_post_analytics_main = $('#page-post-analytics-main'); // 포스트 통계분석 메인
 var page_post_analytics_hit = $('#page-post-analytics-hit'); // 포스트 통계분석 유입추이
 var page_post_analytics_referer = $('#page-post-analytics-referer'); // 포스트 통계분석 유입경로
@@ -286,7 +287,6 @@ page_post_category_view.on('show.rc.page', function(event) {
 
 })
 
-
 page_post_myhistory.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
@@ -301,7 +301,7 @@ page_post_myhistory.on('show.rc.page', function(event) {
     sort      : 'uid',
     none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">내역이 없습니다.</div<</div>'
   }
-  getMyHistory(settings);
+  setTimeout(function(){getMyHistory(settings)}, 200);
   page.find('.content').on('touchstart',function(event){
     page_startY = event.originalEvent.changedTouches[0].pageY;
   });
@@ -327,7 +327,7 @@ page_post_mypost.on('show.rc.page', function(event) {
     sort      : 'gid',
     none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
-  getMyPost(settings);
+  setTimeout(function(){getMyPost(settings)}, 200);
   page.find('.content').on('touchstart',function(event){
     page_startY = event.originalEvent.changedTouches[0].pageY;
   });
@@ -410,7 +410,7 @@ page_post_mylist.on('show.rc.page', function(event) {
     sort      : 'gid',
     none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 리스트가 없습니다.</div<</div>'
   }
-  getMyList(settings);
+  setTimeout(function(){getMyList(settings)}, 200);
   page.find('.content').on('touchstart',function(event){
     page_startY = event.originalEvent.changedTouches[0].pageY;
   });
@@ -431,7 +431,7 @@ page_post_mylist.on('hidden.rc.page', function(event) {
   page.append(markup);
 })
 
-page_post_saved.on('show.rc.page', function(event) {
+page_post_saved.on('shown.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var id = page.attr('id');
@@ -446,7 +446,8 @@ page_post_saved.on('show.rc.page', function(event) {
     sort      : 'gid',
     none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
-  getPostSaved(settings);
+
+  setTimeout(function(){getPostSaved(settings)}, 200);
   page.find('.content').on('touchstart',function(event){
     page_startY = event.originalEvent.changedTouches[0].pageY;
   });
@@ -467,7 +468,7 @@ page_post_saved.on('hidden.rc.page', function(event) {
   page.append(markup);
 })
 
-page_post_liked.on('show.rc.page', function(event) {
+page_post_liked.on('shown.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
   var id = page.attr('id');
@@ -481,7 +482,7 @@ page_post_liked.on('show.rc.page', function(event) {
     sort      : 'gid',
     none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
   }
-  getPostLiked(settings);
+  setTimeout(function(){getPostLiked(settings)}, 200);
   page.find('.content').on('touchstart',function(event){
     page_startY = event.originalEvent.changedTouches[0].pageY;
   });

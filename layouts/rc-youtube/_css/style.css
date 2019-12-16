@@ -138,7 +138,8 @@ body.disabled .content{
 
 .title.title-left {
   position: static;
-  text-align: left
+  text-align: left;
+  font-weight: 700
 }
 .title.title-ellipsis {
   width: 70%;
@@ -308,6 +309,27 @@ figure.media.ck-placeholder:before {
  padding: 0.6rem 0.7rem;
  color: #ccc
  }
+
+ /*상품검색*/
+[data-role="search"] .bar-nav {
+   height: 2.6rem;
+ }
+[data-role="search"] .bar-nav ~ .content {
+   padding-top: 2.6rem;
+ }
+[data-role="search"] .input-group .form-control {
+   border: none
+ }
+[data-role="search"] .bar-nav .input-group {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 80%
+ }
+[data-role="search"] .input-group > .input-group-btn > .btn {
+  padding: 0.6rem 0.7rem;
+  color: #ccc
+  }
 
 /*검색어 추천*/
 .autocomplete-suggestions {
@@ -781,7 +803,11 @@ body.refreshing .refresher.shrink {
   color: #818a91;
 }
 .bar .nav-inline .nav-link.active {
-  color: #0275d8;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.bar.bar-light .nav-inline .nav-link.active:after {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .bar .btn-link:disabled {

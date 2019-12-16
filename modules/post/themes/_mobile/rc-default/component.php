@@ -588,7 +588,6 @@
         <ul class="table-view editor-focused-hide mt-3 mb-0 bg-white d-none">
           <li class="table-view-cell">
             사진 및 파일
-
           </li>
         </ul>
 
@@ -596,7 +595,6 @@
         <ul class="table-view editor-focused-hide mb-0 bg-white d-none" style="margin-top: -1px;">
           <li class="table-view-cell">
             링크
-
           </li>
         </ul>
         <div class="editor-focused-hide">
@@ -626,6 +624,11 @@
           <li class="table-view-cell">
             <a class="navigate-right" href="#page-post-edit-advan" data-start="#page-post-edit-main" data-toggle="page">
               고급설정
+            </a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" href="#page-post-edit-goods" data-start="#page-post-edit-main" data-toggle="page">
+              상품연결
             </a>
           </li>
         </ul>
@@ -703,20 +706,6 @@
           </div>
         </li>
       </ul>
-
-      <div class="content-padded">
-
-        <label class="small text-muted">상품연결</label>
-        <div class="input-group">
-          <input type="text" class="form-control" name="goods" placeholder="준비중...">
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button" disabled>상품찾기</button>
-          </span>
-        </div>
-
-      </div>
-
-
     </main>
   </section>
 
@@ -741,6 +730,25 @@
 
       <div class="content-padded" data-role="box"></div>
 
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-goods" data-role="search">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <form class="input-group input-group-lg bg-white">
+  	    <input type="search" name="keyword" class="form-control pl-0" placeholder="상품명을 입력하세요." id="search-input-goods" required="" autocomplete="off">
+  			<span class="input-group-btn hidden" data-role="keyword-reset">
+  	      <button class="btn btn-link pr-3" type="button" data-act="keyword-reset" tabindex="-1">
+  	        <i class="fa fa-times-circle" aria-hidden="true"></i>
+  	      </button>
+  	    </span>
+  	  </form>
+    </header>
+    <main class="content">
+      <div class="content-padded">
+        <input type="hidden" class="form-control" name="goods" placeholder="준비중...">
+      </div>
     </main>
   </section>
 
@@ -1006,6 +1014,14 @@
                 room
               </div>
               <div><small class="text-muted">장소 추가</small></div>
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="map">
+              <div class="material-icons" style="font-size: 60px;">
+                redeem
+              </div>
+              <div><small class="text-muted">상품 등록</small></div>
             </button>
           </div>
         </div><!-- /.row -->
