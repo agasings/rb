@@ -94,7 +94,7 @@ function getAttachFile($R,$mod,$featured_img_uid,$editor)
             $caption=$R['caption']?$R['caption']:$file_name;
             $img_origin=$R['host'].'/'.$R['folder'].'/'.$R['tmpname'];
 						$thumb_list=getPreviewResize($R['src'],'s'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
-            $thumb_modal=getPreviewResize($R['src'],'n'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
+            $thumb_modal=getPreviewResize($R['src'],'c'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
             $insert_text='!['.$caption.']('.$g['url_root'].$img_origin.')';
 			}else if($type=='file'){
 						$caption=$R['caption']?$R['caption']:$R['name'];
@@ -142,7 +142,8 @@ function getAttachFile($R,$mod,$featured_img_uid,$editor)
 						<div class="dropdown-menu dropdown-menu-right">';
 							if($R['type']==2){
 								$html.='
-									<a class="dropdown-item" href="#" data-attach-act="featured-img" data-type="'.$type.'" data-id="'.$R['uid'].'">대표이미지 설정</a>';
+									<a class="dropdown-item" href="#" data-attach-act="featured-img" data-type="'.$type.'" data-id="'.$R['uid'].'">대표이미지 설정</a>
+									<a class="dropdown-item" href="#" data-toggle="modal" data-backdrop="false" data-target="#modal-attach-photo-tag" data-filename="'.$file_name.'"  data-fileext="'.$R['ext'].'" data-caption="'.$caption.'" data-src="'.$img_origin.'" data-attach-act="edit" data-id="'.$R['uid'].'" data-type="'.$type.'" data-role="attachList-menu-edit-'.$R['uid'].'">상품태그</a>';
 							 }
 							 $html.='
 								<a class="dropdown-item" href="#" data-toggle="modal" data-backdrop="false" data-target="#modal-attach-'.($R['type']==2?'photo':'file').'-meta" data-filename="'.$file_name.'"  data-fileext="'.$R['ext'].'" data-caption="'.$caption.'" data-src="'.$thumb_modal.'" data-origin="'.$img_origin.'" data-attach-act="edit" data-id="'.$R['uid'].'" data-type="'.$type.'" data-role="attachList-menu-edit-'.$R['uid'].'">정보수정</a>

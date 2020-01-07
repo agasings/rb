@@ -42,7 +42,7 @@ $(document).ready(function() {
   }
   $("#attach-files").RbAttachTheme(attach_settings);
 
-  $('[data-plugin="sortable"]').sortable({
+  $('[data-sortable="mediaset"]').sortable({
     axis: 'y',
     cancel: 'button',
     delay: 250,
@@ -61,7 +61,7 @@ $(document).ready(function() {
 
     }
   });
-  $('[data-plugin="sortable"]').disableSelection();
+  $('[data-sortable="mediaset"]').disableSelection();
 
   $('body').on('tap','[data-act="sheet"][data-target="#sheet-attach-moreAct"][data-mod="file"]',function(){
     var button = $(this);
@@ -87,8 +87,10 @@ $(document).ready(function() {
 
     if (type!='photo') { // 이미지가 아닐 경우
       sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').addClass('hidden');  // 대표이미지 항목 숨김처리함
+      sheet.find('[data-attach-act="imageGoodsTag"]').closest('.table-view-cell').addClass('hidden');  // 상품태그 항목 숨김처리함
     } else {
-      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').removeClass('hidden');  // 대표이미지 항목 숨김처리함
+      sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').removeClass('hidden');  // 대표이미지 항목 노출
+      sheet.find('[data-attach-act="imageGoodsTag"]').closest('.table-view-cell').removeClass('hidden');  // 상품태그 항목 노출
     }
     $(target).sheet({
       title : title

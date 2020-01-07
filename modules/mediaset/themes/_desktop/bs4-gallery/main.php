@@ -1,7 +1,6 @@
 <?php
 include $g['dir_attach_theme'].'/header.php';
 ?>
-<div id="attach-files" class="files"><!-- 파일폼 출력 --></div>
 
 <p class="text-muted">
   사진 또는 이미지만 업로드 가능합니다.
@@ -21,6 +20,8 @@ include $g['dir_attach_theme'].'/header.php';
     <i class="fa fa-plus fa-lg"></i>
   </button>
 </div>
+
+<div id="attach-files" class="files"><!-- 파일폼 출력 --></div>
 
 <?php include $g['dir_attach_theme'].'/footer.php';?>
 

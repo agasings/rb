@@ -61,8 +61,8 @@
 			sequential:false,
 			sequentialCount:2,
 			customProgressBar: false,
-			abortButtonClass: "ajax-file-upload-abort content-padded text-danger",
-			cancelButtonClass: "ajax-file-upload-cancel content-padded text-danger",
+			abortButtonClass: "btn btn-light btn-sm mt-2",
+			cancelButtonClass: "ajax-file-upload-cancel",
 			dragDropContainerClass: "ajax-upload-dragdrop",
 			dragDropHoverClass: "state-hover",
 			errorClass: "content-padded text-danger",
@@ -70,7 +70,7 @@
 			dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
 			//uploadStr:"Upload",
 			uploadStr:"", // 첨부파일 버튼을 커스텀할 수 있도록 숨긴다.
-			abortStr: "실패",
+			abortStr: "취소",
 			cancelStr: "취소",
 			deletelStr: "삭제",
 			doneStr: "완료",
@@ -83,7 +83,7 @@
 			downloadStr: "Download",
 			customErrorKeyStr: "content-padded text-danger",
 			showQueueDiv: false,
-			statusBarWidth: 400,
+			// statusBarWidth: 400,
 			dragdropWidth: 400,
 			showPreview: false,
 			previewHeight: "auto",
@@ -132,10 +132,10 @@
 				$(obj).append(obj.errorLog);
 
 				// 미리보기 div 출력 삭제 - 이 부분은 해당 페이지에서 커스텀으로 처리한다.
-			// if(s.showQueueDiv)
-			//     	obj.container =$("#"+s.showQueueDiv);
-			   //  else
-			//         obj.container = $("<div class='ajax-file-upload-container'></div>").insertAfter($(obj));
+			if(s.showQueueDiv)
+			    	obj.container =$("#"+s.showQueueDiv);
+			    else
+			        obj.container = $("<div class='ajax-file-upload-container'></div>").insertAfter($(obj));
 
 				s.onLoad.call(this, obj);
 				createCustomInputFile(obj, formGroup, s, uploadLabel);
@@ -644,18 +644,18 @@
 		function defaultProgressBar(obj,s)
 		{
 
-			this.statusbar = $("<div class='ajax-file-upload-statusbar'></div>").width(s.statusBarWidth);
+			this.statusbar = $("<section class='mb-3'></section>").width(s.statusBarWidth);
 			this.preview = $("<img class='ajax-file-upload-preview' />").width(s.previewWidth).height(s.previewHeight).appendTo(this.statusbar).hide();
-			this.filename = $("<div class='ajax-file-upload-filename'></div>").appendTo(this.statusbar);
-			this.progressDiv = $("<div class='ajax-file-upload-progress'>").appendTo(this.statusbar).hide();
-			this.progressbar = $("<div class='ajax-file-upload-bar'></div>").appendTo(this.progressDiv);
-			this.abort = $("<div>" + s.abortStr + "</div>").appendTo(this.statusbar).hide();
+			this.filename = $("<div class='text-muted small my-2'></div>").appendTo(this.statusbar);
+			this.progressDiv = $("<div class='progress rounded-0' style='height: 20px;'>").appendTo(this.statusbar).hide();
+			this.progressbar = $("<div class='progress-bar progress-bar-striped progress-bar-animated'></div>").appendTo(this.progressDiv);
+			this.abort = $("<button>" + s.abortStr + "</button>").appendTo(this.statusbar).hide();
 			this.cancel = $("<div>" + s.cancelStr + "</div>").appendTo(this.statusbar).hide();
 			this.done = $("<div>" + s.doneStr + "</div>").appendTo(this.statusbar).hide();
 			this.download = $("<div>" + s.downloadStr + "</div>").appendTo(this.statusbar).hide();
 			this.del = $("<div>" + s.deletelStr + "</div>").appendTo(this.statusbar).hide();
 
-			this.abort.addClass("ajax-file-upload-red");
+			// this.abort.addClass("ajax-file-upload-red");
 			this.done.addClass("ajax-file-upload-green");
 			this.download.addClass("ajax-file-upload-green");
 			this.cancel.addClass("ajax-file-upload-red");

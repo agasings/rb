@@ -98,6 +98,7 @@
                                return false;
                           }
                    }
+                   $(this).closest('[data-id]').remove(); //항목 우선삭제
                    $.post(rooturl+'/?r='+raccount+'&m='+module+'&a=delete',{
                       uid : uid
                     },function(response){

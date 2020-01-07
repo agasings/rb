@@ -2,8 +2,7 @@
 include $g['dir_attach_theme'].'/header.php';
 ?>
 
-<div id="attach-files" class="files position-relative"><!-- 파일폼 출력 -->
-</div>
+<div id="attach-files" class="files position-relative"><!-- 파일폼 출력 --></div>
 
 <div class="rb-attach mb-3 dd" id="nestable-photo">
   <ol class="list-group rb-attach-photo rb-attach-featured mb-2 bg-faded dd-list" data-role="attach-preview-photo"><!-- 포토/이미지  리스트  -->
@@ -90,7 +89,7 @@ include $g['dir_attach_theme'].'/header.php';
     });
 
     // 순서변경 내역 저장
-    $('.dd').on('change', function() {
+    $('[data-role="attach"] .dd').on('change', function() {
       var attachfiles=$('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
       var new_upfiles='';
       if(attachfiles){

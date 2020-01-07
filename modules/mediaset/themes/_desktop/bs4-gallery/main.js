@@ -90,12 +90,13 @@
                    // 삭제하는 리스트가 대표 이미지인 경우 write.php input 값에 적용
                    var is_featured=$(this).attr('data-featured');
                    if(is_featured=='1' && type=='photo'){
-                          if(confirm('대표이미지를 삭제하시겠습니까? ')){
-                                $('input[name="featured_img"]').val('');
-                          }else{
-                               return false;
-                          }
+                      if(confirm('대표이미지를 삭제하시겠습니까? ')){
+                        $('input[name="featured_img"]').val('');
+                      }else{
+                        return false;
+                      }
                    }
+                   $(this).closest('[data-id]').remove(); //항목 우선삭제
                    $.post(rooturl+'/?r='+raccount+'&m='+module+'&a=delete',{
                       uid : uid
                     },function(response){

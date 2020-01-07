@@ -25,20 +25,11 @@ if($act=='showhide'){
     $result['filetype']=$filetype;
     $result['filecaption']=$filecaption;
     $result['filesrc']=$filesrc;
-}else if($act=='editYoutube'){
+}else if($act=='editTag'){
 
-    $videoCaption=trim($videoCaption);
-    $videoDescription=trim($videoDescription);
-    $videoTime=trim($videoTime);
+  $QVAL="tag='$tag'";
+  getDbUpdate($table['s_upload'],$QVAL,'uid='.$uid);
 
-    $QVAL="caption='$videoCaption',description='$videoDescription',time='$videoTime'";
-    getDbUpdate($table['s_upload'],$QVAL,'uid='.$uid);
-
-    $result['videoType']=$videoType;
-    $result['videoSrc']=$videoSrc;
-    $result['videoCaption']=$videoCaption;
-    $result['videoDescription']=$videoDescription;
-    $result['videoTime']=$videoTime;
 }
 echo json_encode($result,true);
 

@@ -58,6 +58,11 @@
               var uid=$(this).attr('data-id');
               var type=$(this).data('type'); // file or photo
 
+              if (act=='imageGoodsTag') {
+                setTimeout(function(){ $('#page-post-edit-imageGoodsTag').page({ start: '#page-post-edit-main',title:'상품태그 설정' }); }, 250);
+                return false
+              }
+
               if(act=='edit'){
 
                 // setTimeout(function(){ history.back(); }, 30);
