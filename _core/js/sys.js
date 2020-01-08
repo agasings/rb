@@ -539,3 +539,66 @@ function Iframely(ele) {
 
 		});
 }
+
+function getPosition(e, p = 0) {
+  var rect = e.target.getBoundingClientRect();
+  var x = e.pageX - rect.left - 10;
+  var y = e.pageY - rect.top - 10;
+  if (p) {
+    x = (x / rect.width) * 100;
+    y = (y / rect.height) * 100;
+  }
+  return {
+    x,
+    y
+  }
+}
+
+function randomId() {
+  var S4 = function() {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  };
+  return (S4());
+}
+
+function setImageGoodsTag(ele) {
+	$(ele).each(function(index) {
+		var item = $(this);
+		var src = $(this).find('img').attr('src');
+		$.getJSON(rooturl+'/?r='+raccount+'&m=mediaset&a=get_attachTag&src='+src,{
+			format: "json"
+		 },function(data){
+			 var tag = data.tag;
+			 if (tag) var point = JSON.parse(tag);
+			 if (point) {
+				 item.find('img').wrap('<div data-role="image-marker-area"></div>')
+				 item.append('<div class="swiper-container mt-3"><div class="swiper-wrapper"></div></div>');
+				 for(var i in point){
+					 var goods_uid = point[i].g;
+					 if (goods_uid) {
+						 item.find('[data-role="image-marker-area"]').append('<a data-toggle="page" href="#page-shop-view" data-start="#page-post-view" data-title="상품 상세보기" data-goods="'+point[i].g+'" class="" id="' + i + '" style="left:' + point[i].x + '%;top:' +  point[i].y + '%">+</a>');
+						 //상품고유번호를 통해 상품의 메타정보를 불러온다.
+						 $.getJSON(rooturl+'/?r='+raccount+'&m=shop&a=get_goodsData&uid='+goods_uid+'&featured_size=140x140', {
+						 	 format: "json"
+						 },
+						 function(data) {
+							 var uid = data.uid;
+							 var name = data.name;
+							 var price=data.price;
+							 var featured_img=data.featured_img;
+							 item.find('a[data-toggle="page"][data-goods="'+uid+'"]').attr('data-name',name).attr('data-price',price).attr('data-price',price);
+							 item.find('.swiper-wrapper').append('<div class="swiper-slide" style="width:20%" data-toggle="page" data-target="#page-shop-view" data-start="#page-post-view" data-title="상품 상세보기" data-price="'+price+'" data-name="'+name+'" data-url="/shop/goods/'+uid+'" data-goods="'+uid+'"><img src="'+featured_img+'" class="img-circle border" style="width: 70px"></div>');
+						 });
+					 }
+				 }
+				 setTimeout(function(){
+					 var swiper = new Swiper(ele+' .swiper-container', {
+						 slidesPerView: 'auto',
+						 spaceBetween: 10,
+					 });
+				 }, 1000);
+
+			 }
+		});
+	});
+}

@@ -36,7 +36,7 @@ workbox.precaching.precacheAndRoute([
 
   '/plugins/rc/1.0.0/css/rc.css',
   '/plugins/rc/1.0.0/css/rc-add.css',
-  '/plugins/rc/1.0.0/js/rc-custom.js',
+  '/plugins/rc/1.0.0/js/rc.js',
   '/plugins/rc/1.0.0/fonts/ratchicons.woff',
 
   '/plugins/is-loading/1.0.6/jquery.isloading.min.js',
@@ -66,7 +66,6 @@ workbox.precaching.precacheAndRoute([
   '/plugins/photoswipe/4.1.2/photoswipe.css',
   '/plugins/photoswipe/4.1.2/default-skin/default-skin.css',
   '/plugins/photoswipe/4.1.2/photoswipe.min.js',
-  '/plugins/photoswipe/4.1.2/rc-photoswipe.js',
   '/plugins/photoswipe/4.1.2/photoswipe-ui-default.min.js',
 
   '/plugins/jquery-timeago/1.6.7/jquery.timeago.js',
