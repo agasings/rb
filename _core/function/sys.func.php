@@ -357,6 +357,43 @@ function getWidget($widget,$wdgvar)
 	include getLangFile($g['path_widget'].$widget.'/lang.',$wdgvar['widgetlang'],'.php');
 	include $g['path_widget'].$widget.'/main.php';
 }
+
+//위젯목록
+function getWidgetList($str)
+{
+	$page_widgets = preg_replace('/\r\n|\r|\n/','',trim($str));
+	$widgets = getArrayString($page_widgets);
+	foreach ($widgets['data'] as $widget) {
+		$wdg_arr = explode('^',$widget);
+		$wdgvar_arr = explode(',',$wdg_arr[3]);
+		$wdgvar = array();
+		foreach ($wdgvar_arr as $key ) {
+			$_wdgvar_arr = explode('=',$key);
+			$wdgvar += [ $_wdgvar_arr[0] => $_wdgvar_arr[1] ];
+		}
+		getWidget($wdg_arr[2],$wdgvar);
+	}
+}
+
+// 페이지 편집용 위젯목록
+function getWidgetListEdit($str)
+{
+	$page_widgets = preg_replace('/\r\n|\r|\n/','',trim($str));
+	$widgets = getArrayString($page_widgets);
+	$html = '<ol class="dd-list list-unstyled mb-0">';
+	foreach ($widgets['data'] as $widget) {
+		$wdg_arr = explode('^',$widget);
+		$html .= '<li class="card round-0 mb-3 text-muted  text-center dd-item" data-name="'.$wdg_arr[1].'" data-path="'.$wdg_arr[2].'" id="'.$wdg_arr[0].'" data-role="item">
+								<div class="position-relative"><a href="" data-act="remove" title="삭제" class="badge badge-light border-0"><i class="fa fa-times" aria-hidden="true"></i></a>
+								<div data-act="move" class="badge badge-light dd-handle border-0"><i class="fa fa-arrows" aria-hidden="true"></i></div></div>
+								<input type="hidden" name="widget_members[]" value="['.$widget.']">
+								<div class="card-body"><a href="#" class="text-reset" data-role="title" data-act="edit">'.$wdg_arr[1].'</a></div>
+							</li>';
+	}
+	$html .= '</ol>';
+	echo $html;
+}
+
 //문자열필터(@ 1.1.0)
 function getStripTags($string)
 {
