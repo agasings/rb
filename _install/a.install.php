@@ -53,12 +53,6 @@ DirMake($g['path_var'].'sitephp');
 DirMake($g['path_layout'].'default/_images');
 DirMake($g['path_switch'].'top');
 
-$vfile = $g['path_var'].'php.version.txt';
-$fp = fopen($vfile,'w');
-fwrite($fp,phpversion());
-fclose($fp);
-@chmod($vfile,0707);
-
 $kfile = $g['path_var'].'project.key.txt';
 $fp = fopen($kfile,'w');
 fwrite($fp,$key);
@@ -166,6 +160,12 @@ mkdir($g['path_var'].'site/'.$siteid,0707);
 @chmod($g['path_page'].$siteid.'-menus/images',0707);
 @chmod($g['path_page'].$siteid.'-pages/images',0707);
 @chmod($g['path_var'].'site/'.$siteid,0707);
+
+$vfile = $g['path_var'].'sitephp/1.php';
+$fp = fopen($vfile,'w');
+fwrite($fp, trim(stripslashes($sitephpcode)));
+fclose($fp);
+@chmod($vfile,0707);
 
 $mfile = $g['path_page'].$siteid.'-menus/_main';
 $fp = fopen($mfile.'.css','w');
