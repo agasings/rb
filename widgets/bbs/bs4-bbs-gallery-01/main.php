@@ -18,7 +18,7 @@ $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 �
 $lack_card_num = $total_card_num;
 ?>
 
-<section class="widget">
+<section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center py-2 border-bottom">
     <strong><?php echo $wdgvar['title']?></strong>
     <?php if($wdgvar['link']):?>
