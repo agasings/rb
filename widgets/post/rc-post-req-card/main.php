@@ -2,7 +2,7 @@
 
 <script>
 
-var wrapper =   $('<?php echo $wdgvar['wrapper'] ?> div');
+var wrapper =   $('<?php echo $wdgvar['wrapper'] ?> [data-role="list"]');
 var start = '<?php echo $wdgvar['start'] ?>';
 var posts = '<?php echo $wdgvar['posts'] ?>';
 var markup_file = '<?php echo $wdgvar['markup'] ?>';

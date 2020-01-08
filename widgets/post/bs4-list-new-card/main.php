@@ -88,12 +88,6 @@ $RCD = getDbArray($table['postlist'],$_WHERE,'*','d_last','desc',$wdgvar['limit'
       <?php endfor?>
     <?php endif?>
 
-    <?php if(!$_RCD):?>
-    <div class="card text-center text-muted p-5">
-      자료가 없습니다.
-    </div>
-    <?php endif?>
-
   </div><!-- /.card-deck -->
 
 </section>
