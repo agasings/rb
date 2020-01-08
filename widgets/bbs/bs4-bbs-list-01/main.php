@@ -11,7 +11,7 @@ if ($wdgvar['view']=='modal') {
 }
 ?>
 
-<section class="card widget">
+<section class="card widget mb-4">
   <header class="card-header d-flex justify-content-between align-items-center py-2">
     <strong><?php echo $wdgvar['title']?></strong>
     <?php if($wdgvar['link']):?>

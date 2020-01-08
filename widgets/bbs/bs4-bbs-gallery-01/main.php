@@ -11,7 +11,7 @@ if ($wdgvar['view']=='modal') {
   include_once $g['dir_module_skin'].'_widget.php';  //게시판 테마 _widget.php 포함
 }
 
-$recnum = $wdgvar['recnum']; // 한 열에 출력할 카드 갯수
+$recnum = $wdgvar['line']; // 한 열에 출력할 카드 갯수
 $totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
 $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)

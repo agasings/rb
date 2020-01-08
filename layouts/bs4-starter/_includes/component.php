@@ -240,3 +240,57 @@ if ($m=='bbs') {
     </div>
   </div>
 </div>
+
+<!-- 레이아웃 위젯 찾아보기 -->
+<div class="modal" tabindex="-1" role="dialog" id="modal-widget-selector">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">위젯 찾아보기 <span class="badge badge-secondary align-middle"><?php echo $d['layout']['dir'] ?></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="min-height: 400px">
+
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label class="small text-muted">레이아웃 위젯목록</label>
+              <select class="form-control custom-select" name="widget_selector" data-area="">
+                <option>선택하세요.</option>
+                <?php include $g['dir_layout'].'_var/_var.config.php'; ?>
+                <?php $_i=1;foreach($d['layout']['widget'] as $_key => $_val):$__i=sprintf('%02d',$_i)?>
+                <optgroup label="<?php echo $_val[0]?>">
+                  <?php foreach($_val[1] as $_v):?>
+                  <option value="<?php echo $_key ?>/<?php echo $_v[0]?>"><?php echo $_v[1]?></option>
+                  <?php endforeach?>
+                </optgroup>
+                <?php $_i++;endforeach?>
+
+              </select>
+            </div><!-- /.form-group -->
+
+            <div data-role="readme"></div>
+          </div>
+          <div class="col-8 text-center">
+            <div data-role="none">
+              <div class="d-flex justify-content-center align-items-center bg-light"  style="height:370px">
+                <div class="text-muted">
+                  <i class="fa fa-puzzle-piece" aria-hidden="true" style="color: #ccc;font-size: 100px"></i>
+                  <p>위젯을 선택해주세요.</p>
+                </div>
+              </div>
+            </div>
+            <img src="" alt="" data-role="thumb" class="img-fluid d-none">
+          </div>
+        </div><!-- /.row -->
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" data-act="submit">적용</button>
+      </div>
+    </div>
+  </div>
+</div>

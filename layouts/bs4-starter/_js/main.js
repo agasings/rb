@@ -100,11 +100,10 @@ $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip()  // 툴팁 플러그인 초기화
 	$('.js-tooltip').tooltip();
 
-  $('[data-plugin="mediaelement"]').mediaelementplayer(); // 동영상, 오디오 플레이어 초기화 http://www.mediaelementjs.com/
   initPhotoSwipeFromDOM('[data-plugin="photoswipe"]'); // 포토갤러리 초기화
 
 	// 사용자 액션에 대한 피드백 메시지 제공을 위해 액션 실행후 쿠키에 저장된 결과 메시지를 출력시키고 초기화 시킵니다.
-	putCookieAlert('site_login_result') // 실행결과 알림 메시지 출력
+	putCookieAlert('site_common_result') // 실행결과 알림 메시지 출력
 
 	//외부서비스 사용자 인증요청
 	$('[data-connect]').on("click", function(){

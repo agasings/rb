@@ -1,6 +1,6 @@
 <?php
 $B = getDbData($table['bbslist'],'id="'.$wdgvar['bid'].'"','uid');
-$size = $wdgvar['width'].'x'.$wdgvar['height']; // 사진 사이즈
+$size = '400x250'; // 사진 사이즈
 
 if ($wdgvar['view']=='modal') {
   include_once $g['path_module'].'bbs/var/var.php';
@@ -11,7 +11,7 @@ if ($wdgvar['view']=='modal') {
   include_once $g['dir_module_skin'].'_widget.php';
 }
 
-$recnum = $wdgvar['recnum']; // 한 열에 출력할 카드 갯수
+$recnum = $wdgvar['line']; // 한 열에 출력할 카드 갯수
 $totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
 $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
@@ -52,7 +52,7 @@ $lack_card_num = $total_card_num;
         <div class="card-body">
           <h6 class="card-title mb-0">
             <a class="muted-link" href="<?php echo getBbsPostLink($_R)?>">
-              <?php echo getStrCut($_R['subject'],$wdgvar['sbjcut'],'..')?>
+              <?php echo $_R['subject'] ?>
             </a>
           </h6>
           <time class="text-muted small" data-plugin="timeago" datetime="<?php echo getDateFormat($_R['d_regis'],'c')?>">

@@ -8,11 +8,6 @@
 <?php getImport('photoswipe','photoswipe-ui-default.min','4.1.1','js') ?>
 <script src="<?php echo $g['url_layout']?>/_js/photoswipe.js"></script>
 
-<!-- 동영상,유튜브,오디오 player : http://www.mediaelementjs.com/ -->
-<?php getImport('mediaelement','mediaelement-and-player.min','4.2.8','js') ?>
-<?php getImport('mediaelement','lang/ko','4.2.8','js') ?>
-<?php getImport('mediaelement','mediaelementplayer','4.2.8','css') ?>
-
 <!-- 소셜공유시 URL 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
 <?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 

@@ -11,6 +11,4 @@ $manifestForSite = file_exists($g['manifestForSite']) ? $g['url_manifest'] : $g[
 if ($layoutPage) {
   $g['main'] = $g['path_layout'].$d['site_layout'].'/_pages/'.$layoutPage.'.php';
 }
-
-
 ?>

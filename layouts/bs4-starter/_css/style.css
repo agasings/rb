@@ -486,7 +486,109 @@ figure.media oembed iframe {
   color:#007bff
 }
 
+/* image-marker */
+[data-role="image-marker-area"]  {
+  position: relative
+}
 
+[data-role="image-marker-area"] a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #f30;
+  padding-left: 3.5px;
+  padding-top: 3.6px;
+  color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0.7;
+  transition: all 0.4s
+}
+
+[data-role="image-marker-area"]  a:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+[data-role="image-marker-area"]  .active {
+  animation: pulser 1s infinite
+}
+
+/* 메인화면 편집 */
+[data-role="widgetPage"] .card.active {
+  background: #f2fbff;
+  border-color: #d2d1d1
+}
+
+[data-role="widgetPage"] .dd-item .badge {
+  display: none;
+  position: absolute;
+  width: 19px;
+  height: 16px;
+  border-radius: 0
+}
+
+[data-role="widgetPage"] .dd-item:hover .badge {
+  display: inline-block;
+}
+
+.dd-dragel .dd-item .badge {
+  display: none
+}
+
+[data-role="widgetPage"] .dd-item .badge[data-act="remove"] {
+  right: 5px;
+  top: 5px;
+}
+[data-role="widgetPage"] .dd-item .badge[data-act="move"] {
+  left: 5px;
+  top: 5px;
+  cursor: pointer;
+}
+[data-role="addWidget"] .card {
+  display: none
+}
+[data-role="addWidget"].active .card {
+  display: block
+}
+[data-role="addWidget"].active .btn {
+  display: none
+}
+
+.card-placeholder {
+  margin: 5px 0; padding: 0; min-height: 30px; background: #f2fbff; border: 1px dashed #b6bcbf; box-sizing: border-box; -moz-box-sizing: border-box;
+}
+
+/**
+* Nestable
+*/
+.dd {  }
+.dd-list { display: block; position: relative; list-style: none; }
+.dd-list .dd-list {  }
+.dd-collapsed .dd-list { display: none; }
+.dd-item,
+.dd-empty,
+.dd-placeholder { }
+
+
+.dd-placeholder,
+.dd-empty { margin: 5px 0; padding: 0; min-height: 30px; background: #f2fbff; border: 1px dashed #b6bcbf; box-sizing: border-box; -moz-box-sizing: border-box; }
+.dd-empty { border: 1px dashed #bbb; min-height: 100px; background-color: #e5e5e5;
+  background-image: -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff),
+                    -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
+  background-image:    -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff),
+                       -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
+  background-image:         linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff),
+                            linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;
+}
+.dd-dragel { position: absolute; pointer-events: none; z-index: 9999; }
+.dd-dragel > .dd-item .dd-handle { margin-top: 0; }
+.dd-dragel .dd-handle {
+  -webkit-box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
+          box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
+}
 
 
 /**
