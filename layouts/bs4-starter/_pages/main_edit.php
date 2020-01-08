@@ -103,6 +103,7 @@ $('[data-role="widgetPage"]').on('click','[data-act="edit"]',function(e) {
   var path = item.attr('data-path');
   var wdgvar = item.find('[name="widget_members[]"]').val();
   var area;
+  if (!wdgvar) wdgvar = 'blank';
   setWidgetConfig(id,name,path,wdgvar,area)
   $('[data-role="widgetPage"] [data-role="item"]').removeClass('active shadow-sm');
   $('[data-role="widgetConfig"]').attr('data-id',id);
