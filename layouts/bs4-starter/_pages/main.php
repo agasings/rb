@@ -1,6 +1,8 @@
 <?php
 if ($my['uid'] && $d['layout']['main_dashboard']=='true') getLink('/dashboard','','','');
-include $g['dir_layout'].'_var/_var.main.php';
+
+$g['layoutPageVarForSite'] = $g['dir_layout'].'_var/_page.main.'.$r.'.php';
+include is_file($g['layoutPageVarForSite']) ? $g['layoutPageVarForSite'] : $g['dir_layout'].'_var/_page.main.php';
 ?>
 
 <?php getWidgetList($d['layout']['main_widget_top']) ?>

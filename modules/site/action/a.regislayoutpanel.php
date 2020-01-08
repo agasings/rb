@@ -3,13 +3,12 @@ if(!defined('__KIMS__')) exit;
 
 checkAdmin(0);
 
-
 $g['layoutVarForSite'] = $g['path_layout'].$layout.'/_var/_var.'.$r.'.php';
 $_tmpdfile = is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['path_layout'].$layout.'/_var/_var.php';
 include $themelang2 ? $themelang2 : $themelang1;
 include $_tmpdfile;
 
-$fp = fopen($_tmpdfile,'w');
+$fp = fopen($g['layoutVarForSite'],'w');
 fwrite($fp, "<?php\n");
 
 foreach($d['layout']['dom'] as $_key => $_val)

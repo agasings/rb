@@ -11,14 +11,14 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $layout = dirname($_HS['layout']);
 }
 
-$g['layoutPageVarForSite'] = $g['path_layout'].$layout.'/_var/_var.'.$r.'.'.$page.'.php';
-$_tmpdfile = is_file($g['layoutPageVarForSite']) ? $g['layoutVarForSite'] : $g['path_layout'].$layout.'/_var/_var.'.$page.'.php';
+$g['layoutPageVarForSite'] = $g['path_layout'].$layout.'/_var/_page.'.$page.'.'.$r.'.php';
+$_tmpdfile = is_file($g['layoutPageVarForSite']) ? $g['layoutPageVarForSite'] : $g['path_layout'].$layout.'/_var/_page.'.$page.'.php';
 
 include $_tmpdfile;
 
 $area_arr = explode(',',$area);
 
-$fp = fopen($_tmpdfile,'w');
+$fp = fopen($g['layoutPageVarForSite'],'w');
 fwrite($fp, "<?php\n");
 
 foreach ($area_arr as $key ) {

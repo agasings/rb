@@ -1,6 +1,8 @@
 <?php
 if (!$my['admin']) getLink('/','','','');
-include $g['dir_layout'].'_var/_var.main.php';  // 레이아웃 메인페이지 웨젯설정
+
+$g['layoutPageVarForSite'] = $g['dir_layout'].'_var/_page.main.'.$r.'.php'; // 레이아웃 메인페이지 웨젯설정
+include is_file($g['layoutPageVarForSite']) ? $g['layoutPageVarForSite'] : $g['dir_layout'].'_var/_page.main.php';
 ?>
 
 <div class="row">
