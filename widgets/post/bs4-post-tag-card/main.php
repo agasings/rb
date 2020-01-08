@@ -55,7 +55,7 @@ while($_R = db_fetch_array($TCD)) $RCD[] = $_R;
     <div class="card shadow-sm">
       <div class="card-header bg-white border-bottom-0 text-muted f13">
         <a href="<?php echo getProfileLink($R['mbruid']) ?>" class="text-reset text-decoration-none">
-          <img src="<?php echo getAvatarSrc($R['mbruid'],'24') ?>" class="rounded-circle mr-2" alt="..."> <?php echo getProfileInfo($R['mbruid'],$_HS['nametype']) ?>
+          <img src="<?php echo getAvatarSrc($R['mbruid'],'24') ?>" class="rounded-circle mr-2" alt="" style="width:24px"> <?php echo getProfileInfo($R['mbruid'],$_HS['nametype']) ?>
           <span class="ml-1">• <time data-plugin="timeago" datetime="<?php echo getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c')?>"></time></span>
         </a>
       </div>
