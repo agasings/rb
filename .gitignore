@@ -1,5 +1,10 @@
-.ftpconfig
+### macOS ###
+# General
 .DS_Store
+.AppleDouble
+.LSOverride
+
+.ftpconfig
 _var/db.info.php
 _var/install.txt
 _var/php.version.txt

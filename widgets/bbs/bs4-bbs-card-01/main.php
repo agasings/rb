@@ -1,10 +1,10 @@
 <?php
-$B = getDbData($table['bbslist'],'id="'.$wdgvar['bid'].'"','uid');
+$B = getDbData($table['bbslist'],'id="'.$wdgvar['bbsid'].'"','uid');
 $size = '400x250'; // 사진 사이즈
 
 if ($wdgvar['view']=='modal') {
   include_once $g['path_module'].'bbs/var/var.php';
-  include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bid'].'.php';
+  include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
   $d['bbs']['skin'] = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
   $g['url_module_skin'] = $g['s'].'/modules/bbs/themes/'.$d['bbs']['skin'];
   $g['dir_module_skin'] = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/';
@@ -30,7 +30,7 @@ $lack_card_num = $total_card_num;
 
   <div class="row gutter-half mt-3" data-role="bbs-list">
 
-    <?php $_RCD=getDbArray($table['bbsdata'],($wdgvar['bid']?'bbs='.$B['uid'].' and ':'').'display=1 and site='.$_HS['uid'],'*','gid','asc',$wdgvar['limit'],1)?>
+    <?php $_RCD=getDbArray($table['bbsdata'],($wdgvar['bbsid']?'bbs='.$B['uid'].' and ':'').'display=1 and site='.$_HS['uid'],'*','gid','asc',$wdgvar['limit'],1)?>
     <?php $i=0;while($_R=db_fetch_array($_RCD)):$i++?>
     <div class="col">
       <div class="card" id="item-<?php echo $_R['uid'] ?>">
@@ -38,7 +38,7 @@ $lack_card_num = $total_card_num;
         <?php if ($wdgvar['view']=='modal'): ?>
         <a class="text-nowrap text-truncate muted-link"
           href="#modal-bbs-view" data-toggle="modal"
-          data-bid="<?php echo $wdgvar['bid'] ?>"
+          data-bid="<?php echo $wdgvar['bbsid'] ?>"
           data-uid="<?php echo $_R['uid'] ?>"
           data-url="<?php echo getBbsPostLink($_R)?>"
           data-cat="<?php echo $_R['category'] ?>"

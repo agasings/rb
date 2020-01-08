@@ -1,9 +1,9 @@
 <?php
-$B = getDbData($table['bbslist'],'id="'.$wdgvar['bid'].'"','uid');
+$B = getDbData($table['bbslist'],'id="'.$wdgvar['bbsid'].'"','uid');
 
 if ($wdgvar['view']=='modal') {
   include_once $g['path_module'].'bbs/var/var.php';
-  include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bid'].'.php';
+  include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
   $d['bbs']['skin'] = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
   $g['url_module_skin'] = $g['s'].'/modules/bbs/themes/'.$d['bbs']['skin'];
   $g['dir_module_skin'] = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/';
@@ -22,7 +22,7 @@ if ($wdgvar['view']=='modal') {
   </header>
   <ul class="list-group list-group-flush" data-role="bbs-list">
 
-    <?php $_RCD=getDbArray($table['bbsdata'],($wdgvar['bid']?'bbs='.$B['uid'].' and ':'').'display=1 and site='.$_HS['uid'],'*','gid','asc',$wdgvar['limit'],1)?>
+    <?php $_RCD=getDbArray($table['bbsdata'],($wdgvar['bbsid']?'bbs='.$B['uid'].' and ':'').'display=1 and site='.$_HS['uid'],'*','gid','asc',$wdgvar['limit'],1)?>
   	<?php while($_R=db_fetch_array($_RCD)):?>
 
     <li class="list-group-item d-flex justify-content-between align-items-center" id="item-<?php echo $_R['uid'] ?>">
@@ -30,7 +30,7 @@ if ($wdgvar['view']=='modal') {
       <?php if ($wdgvar['view']=='modal'): ?>
       <a class="text-nowrap text-truncate muted-link"
         href="#modal-bbs-view" data-toggle="modal"
-        data-bid="<?php echo $wdgvar['bid'] ?>"
+        data-bid="<?php echo $wdgvar['bbsid'] ?>"
         data-uid="<?php echo $_R['uid'] ?>"
         data-url="<?php echo getBbsPostLink($_R)?>"
         data-cat="<?php echo $_R['category'] ?>"
