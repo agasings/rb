@@ -1098,19 +1098,19 @@ $(document).ready(function() {
   });
 
   //연결된 상품 불러기
-  $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_postAttachGoods',{
-    markup_file: 'attach_goods_write_item',
-    uid : <?php echo $R['uid'] ?>,
-    featured_size : '70x52'
-    },function(response,status){
-      if(status=='success'){
-        var result = $.parseJSON(response);
-        var list=result.list;
-        $('[data-role="attach-goods"]').html(list);
-      } else {
-        alert(status);
-      }
-  });
+  // $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_postAttachGoods',{
+  //   markup_file: 'attach_goods_write_item',
+  //   uid : <?php echo $R['uid'] ?>,
+  //   featured_size : '70x52'
+  //   },function(response,status){
+  //     if(status=='success'){
+  //       var result = $.parseJSON(response);
+  //       var list=result.list;
+  //       $('[data-role="attach-goods"]').html(list);
+  //     } else {
+  //       alert(status);
+  //     }
+  // });
 
   //연결상품 지우기
   $('[data-role="attach-goods"]').on('click','[data-act="del"]',function(){
