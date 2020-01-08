@@ -22,22 +22,21 @@
   </a>
   <?php if ($my['admin']): ?>
   <a class="tab-item" role="button" data-href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=main_edit&prelayout=rc-starter/blank' ?>" data-toggle="drawer-close">
-    <span class="icon icon-code"></span>
+    <span class="icon material-icons">dashboard</span>
     <span class="tab-label">메인설정</span>
   </a>
   <?php endif; ?>
-
   <a class="tab-item" role="button" href="#popup-logout" data-toggle="popup">
     <span class="icon material-icons">exit_to_app</span>
     <span class="tab-label">로그아웃</span>
   </a>
   <?php else: ?>
   <a class="tab-item" role="button" href="#modal-join" data-toggle="modal" data-url="">
-    <span class="icon icon-person"></span>
+    <span class="icon material-icons">account_circle</span>
     <span class="tab-label">회원가입</span>
   </a>
   <a class="tab-item" role="button" href="#modal-login" data-toggle="modal" data-title="<?php echo stripslashes($d['layout']['header_title'])?>">
-    <span class="icon fa fa-sign-in"></span>
+    <span class="icon material-icons">input</span>
     <span class="tab-label">로그인</span>
   </a>
   <?php endif; ?>
