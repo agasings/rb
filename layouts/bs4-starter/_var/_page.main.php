@@ -1,5 +1,5 @@
 <?php
-$d['layout']['main_widget_top'] = "";
-$d['layout']['main_widget_left'] = "[5202^기간별 추천 포스트^post/bs4-post-best-card^title=기간별 추천 포스트,subtitle=,limit=2,line=2,term=-1 week,sort=hit,link=,]";
-$d['layout']['main_widget_right'] = "[bde3^리스트형-01^bbs/bs4-bbs-list-01^bbsid=,title=리스트형-01,limit=1,line=1,view=modal,link=,]";
+$d['layout']['main_widget_top'] = "[main-top^추천 포스트^post/bs4-list-view-card^listid=,limit=4,line=4,]";
+$d['layout']['main_widget_left'] = "[1472^최근 포스트^post/bs4-post-new-card^title=최근 포스트,subtitle=,limit=4,line=2,link=,]";
+$d['layout']['main_widget_right'] = "[82d8^최근 리스트^post/bs4-list-new-card^title=최근 리스트,subtitle=,limit=4,line=2,link=,]";
 ?>
