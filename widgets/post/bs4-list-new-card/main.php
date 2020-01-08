@@ -35,7 +35,7 @@ $RCD = getDbArray($table['postlist'],$_WHERE,'*','d_last','desc',$wdgvar['limit'
 
   <div class="card-deck">
 
-    <?php if (!empty($RCD)): ?>
+    <?php if (db_num_rows($RCD)): ?>
     <?php $i=0;foreach($RCD as $R):$i++;?>
     <div class="card shadow-sm">
       <a class="position-relative" href="<?php echo getListLink($R,1) ?>">
@@ -79,13 +79,18 @@ $RCD = getDbArray($table['postlist'],$_WHERE,'*','d_last','desc',$wdgvar['limit'
 
     <?php if(!($i%$recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
     <?php endforeach?>
-    <?php endif?>
 
     <?php if($lack_card_num ):?>
       <?php for($j=0;$j<$lack_card_num;$j++):$i++;?>
        <div class="card border-0" style="background-color: transparent"></div>
        <?php if(!($i%$recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
       <?php endfor?>
+    <?php endif?>
+
+    <?php else:?>
+    <div class="card text-center text-muted p-5">
+      자료가 없습니다.
+    </div>
     <?php endif?>
 
   </div><!-- /.card-deck -->
