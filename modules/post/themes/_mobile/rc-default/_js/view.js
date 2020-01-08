@@ -36,6 +36,14 @@ function getPostView(settings) {
       wrapper.find('[data-role="gohome"]').removeClass('d-none');
     }
 
+    if (mod=='page') {
+      wrapper.find('[data-role="buy"]').attr('data-toggle','page');
+      wrapper.find('[data-role="buy"]').attr('data-act','pauseVideo')
+    } else {
+      wrapper.find('[data-role="buy"]').attr('data-toggle','goods');
+      wrapper.find('[data-role="buy"]').removeAttr('data-act','pauseVideo')
+    }
+
     wrapper.find('[data-toggle="linkShare"]').attr('data-link',url);
     wrapper.find('.embed-responsive').css('background-image','url('+featured+')')
     wrapper.find('.content').css('padding-top',height+'px')
@@ -106,8 +114,6 @@ function getPostView(settings) {
             miniplayer.find('[data-toggle="play"]').removeClass('active');
             miniplayer.find('[data-toggle="play"] .material-icons').text('replay');
           }
-
-
         }
 
         setTimeout(function(){
@@ -174,6 +180,7 @@ function getPostView(settings) {
 
           if (provider!='YouTube') {
             Iframely('oembed[url]') // oembed 미디어 변환
+
             setTimeout(function(){
               wrapper.find('.bar-media [data-role="featured"]').addClass('d-none')
               wrapper.find('.embed-responsive').removeClass('d-none');
@@ -182,19 +189,22 @@ function getPostView(settings) {
             }, 500);
           }
 
+          wrapper.find('[data-role="box"]').html(article);
+
           if (goods) {
             wrapper.find('[data-role="goodsLink"]').removeClass('d-none');
+            setImageGoodsTag('figure.image') // 이미지상품태그 처리
           }
-
-          wrapper.find('[data-role="box"]').html(article);
 
           if (format!='video') Iframely('oembed[url]') // oembed 미디어 변환
 
           if (photo) {  // 첨부 이미지가 있을 경우
             wrapper.find('[data-role="attach-photo"]').removeClass('hidden').html(photo);
 
-            if (wrapper.attr('id')=='modal-post-view') {
+            if (wrapper.attr('id')=='modal-post-view' || wrapper.attr('id')=='page-post-view') {
+
               initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프 활성
+
             } else {
               wrapper.on('click','[data-plugin="photoswipe"] a',function(){return false;}) //포토 스와이프 비활성 (page 히스토리와 충돌)
             }

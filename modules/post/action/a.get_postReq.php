@@ -50,10 +50,12 @@ if (!empty($RCD)) {
     $TMPL['provider']=getFeaturedimgMeta($R,'provider');
     $TMPL['videoId']=getFeaturedimgMeta($R,'provider')=='YouTube'?getFeaturedimgMeta($R,'name'):'';
     $TMPL['featured_16by9'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x360'):getPreviewResize('/files/noimage.png','640x360');
+    $TMPL['featured_1by1'] = checkPostPerm($R)?getPreviewResize(getUpImageSrc($R),'640x640'):getPreviewResize('/files/noimage.png','640x640');
     $TMPL['time'] = checkPostPerm($R)?getUpImageTime($R):'';
     $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
     $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
+    $TMPL['has_goodslink']=$R['goods']?'':'d-none';
 
     $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
     $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";

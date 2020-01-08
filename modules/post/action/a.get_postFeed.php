@@ -60,6 +60,7 @@ if (!empty($RCD)) {
     $TMPL['d_modify'] = getDateFormat($R['d_modify']?$R['d_modify']:$R['d_regis'],'c');
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'68');
     $TMPL['nic'] = getProfileInfo($R['mbruid'],'nic');
+    $TMPL['has_goodslink']=$R['goods']?'':'d-none';
 
     $check_like_qry    = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='like'";
     $check_dislike_qry = "mbruid='".$mbruid."' and module='".$m."' and entry='".$R['uid']."' and opinion='dislike'";

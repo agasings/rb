@@ -13,7 +13,8 @@ function getPostFeed(settings) {
   var prevNUM = currentPage * recnum;
   var moreNUM = totalNUM - prevNUM ;
 
-  // wrapper.loader();
+  wrapper.removeClass('animated fadeIn');
+  wrapper.loader({ position: 'inside' });
 
   $.post(rooturl+'/?r='+raccount+'&m=post&a=get_postFeed',{
     start: start,
@@ -28,9 +29,9 @@ function getPostFeed(settings) {
         var num=result.num;
         var totalPage=result.tpg;
 
-        // wrapper.loader('hide');
-        if (list) wrapper.html(list)
-        else wrapper.html(none)
+        wrapper.loader('hide');
+        if (list) wrapper.html(list).addClass('animated fadeIn');
+        else wrapper.html(none);
 
         wrapper.find('[data-plugin="timeago"]').timeago();
 

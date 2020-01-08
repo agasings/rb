@@ -17,7 +17,9 @@ var page_post_edit_tag = $('#page-post-edit-tag'); // 포스트 작성 태그입
 var page_post_edit_advan = $('#page-post-edit-advan'); // 포스트 작성 고급설정
 var page_post_edit_category = $('#page-post-edit-category'); //포스트 작성 카테고리입력
 var page_post_edit_mediaset = $('#page-post-edit-mediaset'); //포스트 작성 미디어셋설정
-var page_post_edit_goods = $('#page-post-edit-goods'); //포스트 작성 상품연결
+var page_post_edit_imageGoodsTag = $('#page-post-edit-imageGoodsTag'); //포스트 작성 상품태그 설정
+var page_post_edit_goodslist = $('#page-post-edit-goodslist'); //포스트 작성 상품연결
+var page_post_edit_goodsview = $('#page-post-edit-goodsview'); //포스트 작성 연결상품보기
 var page_post_analytics_main = $('#page-post-analytics-main'); // 포스트 통계분석 메인
 var page_post_analytics_hit = $('#page-post-analytics-hit'); // 포스트 통계분석 유입추이
 var page_post_analytics_referer = $('#page-post-analytics-referer'); // 포스트 통계분석 유입경로
@@ -527,6 +529,7 @@ page_post_view.on('show.rc.page', function(event) {
   }
 
   getPostView({
+    mod : 'page',
     format : format,
     uid : uid,
     list : list,
@@ -640,6 +643,7 @@ modal_post_view.on('show.rc.modal', function(event) {
     modal.removeClass('miniplayer');
   } else {
     getPostView({
+      mod : 'modal',
       format : format,
       uid : uid,
       list : list,
@@ -762,6 +766,7 @@ modal_post_twit.on('show.rc.modal', function(event) {
   var modal = $(this);
   var uid = button.attr('data-uid');
   var url = button.attr('data-url');
+  var placeholder = button.attr('data-placeholder');
 
   if (!memberid) {
     modal.modal('hide');
@@ -773,6 +778,10 @@ modal_post_twit.on('show.rc.modal', function(event) {
     var uid = modal.attr('data-uid');
   } else {
     modal.attr('data-uid',uid);
+  }
+
+  if (placeholder) {
+    modal.find('[name="subject"]').attr('placeholder',placeholder);
   }
 
   modal.find('[data-act="submit"]').attr('disabled', false);

@@ -48,6 +48,7 @@ $uid = $_POST['uid']; // 포스트 고유번호
 $R = getUidData($table[$m.'data'],$uid);
 $mod = 'write';
 $d['post']['isperm'] = true;
+$goodsArry = getArrayString($R['goods']);
 
 include_once $g['dir_module'].'mod/_view.php';
 
@@ -73,7 +74,7 @@ $result['dis_like'] = $R['dis_like']?$R['dis_like']:'';
 $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
 $result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';
 $result['dis_listadd'] = $R['dis_listadd']?$R['dis_listadd']:'';
-$result['goods'] = $R['goods'];
+
 
 //첨부링크 및 파일
 $theme_attach= '_mobile/rc-post-file';
@@ -89,6 +90,11 @@ if($R['upload']) {
   $result['video'] = getAttachFileList($R,'upload','video',$theme_attach);
   $result['audio'] = getAttachFileList($R,'upload','audio',$theme_attach);
   $result['link'] = getAttachPlatformList($R,'upload','file');
+}
+
+if ($R['goods']) {
+  $result['goods'] = $R['goods'];
+  $result['goodsNum'] = count($goodsArry['data']);
 }
 
 if (!checkPostPerm($R)){

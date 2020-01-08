@@ -7,6 +7,7 @@
   <input type="hidden" name="list_members" value="">
   <input type="hidden" name="upload" id="upfilesValue" value="<?php echo $R['upload']?>">
   <input type="hidden" name="member" value="<?php echo $R['member']?>">
+  <input type="hidden" name="goods" value="<?php echo $R['goods']?>">
   <input type="hidden" name="featured_img" value="<?php echo $R['featured_img'] ?>">
   <input type="hidden" name="html" value="HTML">
   <input type="hidden" name="display">
@@ -47,13 +48,13 @@
           <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="home-tab" data-toggle="tab" href="#advan" role="tab" aria-controls="info" aria-selected="true">고급</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="attach-tab" data-toggle="tab" href="#attach" role="tab" aria-controls="attach" aria-selected="false">첨부</a>
+          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="attach-tab" data-toggle="tab" href="#attach" role="tab" aria-controls="attach" aria-selected="false">파일</a>
         </li>
         <li class="nav-item">
           <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="profile-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">링크</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="contact-tab" data-toggle="tab" href="#index" role="tab" aria-controls="index" aria-selected="false">목차</a>
+          <a class="nav-link<?php echo !$cid?' disabled':'' ?>" id="contact-tab" data-toggle="tab" href="#goods" role="tab" aria-controls="goods" aria-selected="false">상품</a>
         </li>
       </ul>
       <div class="tab-content p-3">
@@ -412,17 +413,6 @@
             </div>
           </ul>
 
-          <div class="form-group my-4">
-            <label class="small text-muted">상품연결</label>
-            <div class="input-group">
-              <input type="text" class="form-control meta" placeholder="준비중" name="goods" value="<?php echo $R['goods'] ?>">
-              <div class="input-group-append">
-                <button class="btn btn-white" type="button">상품찾기</button>
-              </div>
-            </div>
-            <small class="form-text text-muted">구매를 위한 상품을 연결해주세요.</small>
-          </div>
-
           <?php if (getDbRows($table[$m.'category'],'site='.$s.' and reject=0 and hidden=0')): ?>
           <strong class="d-block small text-muted pb-2">카테고리</strong>
           <div class="card mb-2 border-0 border-top" style="margin-left: -1rem;margin-right: -1rem">
@@ -473,11 +463,22 @@
           <?php getWidget('_default/attach',array('parent_module'=>'post','theme'=>'_desktop/bs4-default-link','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y'));?>
 
         </div>
-        <div class="tab-pane" id="index" role="tabpanel" aria-labelledby="index-tab">
+        <div class="tab-pane" id="goods" role="tabpanel" aria-labelledby="goods-tab">
 
-          <nav id="toc" class="ml-3"></nav>
+          <div class="form-group">
+            <label class="small text-muted">상품연결 </label>
+            <div class="input-group">
+              <input type="text" class="form-control meta" placeholder="상품명 검색" data-plugin="autocomplete">
+            </div>
+            <small class="form-text text-muted"></small>
+          </div>
 
-        </div>
+          <div class="dd" id="nestable-goods">
+            <ol class="list-group bg-faded dd-list" data-role="attach-goods"></ol>
+          </div>
+
+        </div><!-- /.tab-pane -->
+
       </div>
     </div>
   </aside><!-- /.col -->
@@ -628,15 +629,13 @@
   </div>
 </div>
 
-
-<!-- bootstrap-toc : https://github.com/afeld/bootstrap-toc -->
-<?php getImport('bootstrap-toc','bootstrap-toc','1.0.1','css')?>
-<?php getImport('bootstrap-toc','bootstrap-toc.min','1.0.1','js')?>
-
 <?php getImport('smooth-scroll','smooth-scroll.min','16.1.0','js') ?>
 
 <!-- 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
 <?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
+
+<!-- jQuery-Autocomplete : https://github.com/devbridge/jQuery-Autocomplete -->
+<?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>
 
 <script>
 
@@ -688,9 +687,9 @@ $(document).ready(function() {
   	ignore: '[data-scroll-ignore]'
   });
 
-  $("#toc").empty();
+  //$("#toc").empty();
   listCheckedNum()
-  doToc();
+  //doToc();
 
   // dropdown 내부클릭시 dropdown 유지
 	$('[data-role="list-selector"] .dropdown-menu').on('click', function(e) {
@@ -1016,6 +1015,112 @@ $(document).ready(function() {
     });
 
   });
+
+
+  // 첨부상품 순서변경
+  $('#nestable-goods').nestable({
+    group: 1,
+    maxDepth: 1
+  });
+
+  // 순서변경 내역 저장
+  $('#nestable-goods').on('change', function() {
+    var attachGoods=$('input[name="attachGoods[]"]').map(function(){return $(this).val()}).get();
+    var new_goods='';
+    if(attachGoods){
+      for(var i=0;i<attachGoods.length;i++) {
+        new_goods+=attachGoods[i];
+      }
+    }
+
+    showSaveButton(true); // 저장버튼 출력
+    $('[data-role="postsubmit"]').click(); // 저장
+
+    console.log('첨부상품 순서저장');
+    return false
+
+    $.post(rooturl+'/?r='+raccount+'&m=post&a=modifygid',{
+       attachGoods : new_goods
+     });
+  });
+
+  //상품연결을 위한 상품명 검색
+  $('[data-plugin="autocomplete"]').autocomplete({
+    width : 320,
+    minChars:1,
+    showNoSuggestionNotice: true,
+    noSuggestionNotice : '결과가 없습니다.',
+    lookup: function (query, done) {
+
+       $.getJSON(rooturl+"/?m=shop&a=search_data", {q: query,featured_size : '70x52'}, function(res){
+           if (res.goodslist) {
+             var sg_goods = [];
+             var data_arr = res.goodslist.split(',');//console.log(data.usernames);
+             $.each(data_arr,function(key,goods){
+               var goodsData = goods.split('|');
+               var name = goodsData[0];
+               var uid = goodsData[1];
+               var featured_img = goodsData[2];
+               var price = goodsData[3];
+               sg_goods.push({"value":name,"data":{ 'uid': uid, 'featured_img': featured_img, 'price': price }});
+             });
+             var result = {
+               suggestions: sg_goods
+             };
+              done(result);
+           }
+       });
+   },
+
+   formatResult: function (suggestion,currentValue) {
+     return '<div class="media"><img src="' + suggestion.data.featured_img+'" class="border mr-2" /><div class="media-body">'  + $.Autocomplete.formatResult(suggestion, currentValue) + '<br><small class="text-muted  ">'+ suggestion.data.price+'</small></div></div>';
+    },
+
+    onSelect: function (suggestion) {
+      if ($('[data-plugin="autocomplete"]').val().length >= 1) {
+        console.log(suggestion.data.uid)
+        $(this).val('');
+
+        $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_goodsData',{
+            markup_file: 'attach_goods_write_item',
+            uid : suggestion.data.uid,
+            featured_size : '70x52'
+          },function(response){
+           var result = $.parseJSON(response);
+           var item=result.item;
+           $('[data-role="attach-goods"]').append(item);
+           showSaveButton(true); // 저장버튼 출력
+           $('[data-role="postsubmit"]').click(); // 저장
+        });
+
+      }
+    }
+  });
+
+  //연결된 상품 불러기
+  $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_postAttachGoods',{
+    markup_file: 'attach_goods_write_item',
+    uid : <?php echo $R['uid'] ?>,
+    featured_size : '70x52'
+    },function(response,status){
+      if(status=='success'){
+        var result = $.parseJSON(response);
+        var list=result.list;
+        $('[data-role="attach-goods"]').html(list);
+      } else {
+        alert(status);
+      }
+  });
+
+  //연결상품 지우기
+  $('[data-role="attach-goods"]').on('click','[data-act="del"]',function(){
+    var item = $(this).closest('[data-role="item"]')
+    item.remove();
+    showSaveButton(true); // 저장버튼 출력
+    $('[data-role="postsubmit"]').click(); // 저장
+  });
+
+
 
 });
 

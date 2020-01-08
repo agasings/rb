@@ -116,9 +116,33 @@ if ($uid) {
       getDbInsert($table[$m.'list_index'],'site,list,display,data,gid,mbruid',"'".$s."','".$_lt1."','".$display."','".$R['uid']."','".$gid."','".$mbruid."'");
       getDbUpdate($table[$m.'list'],'num=num+1,d_last='.$d_regis,'uid='.$_lt1);
     }
-
   }
 
+	//상품리뷰 인덱스 업데이트
+	if ($goods) {
+		$_orign_goods_members = getDbArray($table['shopreview'],'post='.$R['uid'],'*','post','asc',0,1);
+
+		while($_ogm=db_fetch_array($_orign_goods_members)) {
+	  	if(!strstr($goods,'['.$_ogm['goods'].']')) {
+	  		getDbDelete($table['shopreview'],'goods='.$_ogm['goods'].' and post='.$R['uid']);
+	      getDbUpdate($table['shopdata'],'post=post-1','uid='.$_ogm['goods']);
+	  	}
+		}
+
+	  $_goods_members = array();
+	  $_goods_members = getArrayString($goods);
+
+	  foreach($_goods_members['data'] as $_gd1) {
+	    if (getDbRows($table['shopreview'],'post='.$uid.' and goods='.$_gd1)) {
+	      getDbUpdate($table['shopreview'],'display='.$display,'post='.$uid.' and goods='.$_gd1);
+	    } else {
+	      $maxgid = getDbCnt($table['shopreview'],'max(gid)','');
+	      $gid = $maxgid ? $maxgid+1 : 1;
+	      getDbInsert($table['shopreview'],'site,goods,display,post,gid,auth',"'".$s."','".$_gd1."','".$display."','".$R['uid']."','".$gid."','1'");
+	      getDbUpdate($table['shopdata'],'post=post+1,d_last='.$d_regis,'uid='.$_gd1);
+	    }
+	  }
+	}
 
   // 피드 인덱스 추가
   if ($display>3) {

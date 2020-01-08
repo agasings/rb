@@ -105,6 +105,16 @@ function savePost(f) {
     $('input[name="member"]').val(new_members);
   }
 
+  // 첨부상품 uid 를 gooods 값에 추가하기
+  var postgoods=$('input[name="attachGoods[]"]').map(function(){return $(this).val()}).get();
+  var new_goods='';
+  if(postgoods){
+    for(var i=0;i<postgoods.length;i++) {
+      new_goods+=postgoods[i];
+    }
+    $('input[name="goods"]').val(new_goods);
+  }
+
   checkUnload = false;
   $('[data-role="postsubmit"]').attr( 'disabled', true );
 

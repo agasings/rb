@@ -31,6 +31,7 @@ function setPostWrite(settings) {
   wrapper.find('.switch-handle').removeAttr("style");
   wrapper.find('[data-toggle="collapse"]').addClass('collapsed');
   wrapper.find('.collapse').removeClass('in');
+  wrapper.find('[data-role="goodsNum"]').text('');
 
   wrapper.find('[name="uid"]').val(uid);
   autosize.destroy(wrapper.find('[data-plugin="autosize"]'));
@@ -129,6 +130,7 @@ function setPostWrite(settings) {
                 var goods = result.goods;
                 var linkNum = result.linkNum;
                 var attachNum = result.attachNum;
+                var goodsNum = result.goodsNum;
                 var photo=result.photo;
                 var video=result.video;
                 var audio=result.audio;
@@ -174,6 +176,10 @@ function setPostWrite(settings) {
                 } else {
                   $('[data-role="attach_guide"]').removeClass('d-none');
                   wrapper.find('[data-role="attachNum"]').text('');
+                }
+
+                if (goodsNum) {
+                  wrapper.find('[data-role="goodsNum"]').text(goodsNum);
                 }
 
                 editor_post.setData(content);
@@ -259,6 +265,39 @@ function setPostWrite(settings) {
     }
   })
 
+  //연결상품 불러오기
+  $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_postAttachGoods',{
+    markup_file: 'attach_goods_write_item',
+    uid : uid,
+    featured_size : '140x104'
+    },function(response,status){
+      if(status=='success'){
+        var result = $.parseJSON(response);
+        var list=result.list;
+        page_post_edit_goodslist.find('[data-role="attach-goods"]').html(list);
+        page_post_edit_goodslist.find('[data-sortable="goods"]').sortable({
+          axis: 'y',
+          cancel: 'button',
+          delay: 250,
+          update: function( event, ui ) {
+            var attachGoods=$('input[name="attachGoods[]"]').map(function(){return $(this).val()}).get();
+            var new_goods='';
+            if(attachGoods){
+              for(var i=0;i<attachGoods.length;i++) {
+                new_goods+=attachGoods[i];
+              }
+            }
+            $.post(rooturl+'/?r='+raccount+'&m=shop&a=modifygid',{
+               attachfiles : new_goods
+             })
+
+          }
+        });
+      } else {
+        alert(status);
+      }
+  });
+
 } // getPostWrite
 
 function savePost(f) {
@@ -325,6 +364,16 @@ function savePost(f) {
     modal_post_write.find('input[name="member"]').val(new_members);
   }
 
+  // 첨부상품 uid 를 gooods 값에 추가하기
+  var postgoods=$('input[name="attachGoods[]"]').map(function(){return $(this).val()}).get();
+  var new_goods='';
+  if(postgoods){
+    for(var i=0;i<postgoods.length;i++) {
+      new_goods+=postgoods[i];
+    }
+    modal_post_write.find('input[name="goods"]').val(new_goods);
+  }
+
   checkUnload = false;
   $('[data-role="postsubmit"]').attr( 'disabled', true );
 
@@ -334,6 +383,7 @@ function savePost(f) {
   var list_members = form.find('[name="list_members"]').val();
   var member = form.find('[name="member"]').val();
   var upload = form.find('[name="upload"]').val();
+  var goods = form.find('[name="goods"]').val();
   var featured_img = form.find('[name="featured_img"]').val();
   var html = form.find('[name="html"]').val();
   var subject = form.find('[name="subject"]').val();
@@ -342,7 +392,6 @@ function savePost(f) {
 
   var review = page_post_edit_review.find('[name="review"]').val();
   var tag = page_post_edit_tag.find('[name="tag"]').val();
-  var goods = page_post_edit_advan.find('[name="goods"]').val();
 
   var dis_like = form.find('[name="dis_like"]').val();
   var dis_comment = form.find('[name="dis_comment"]').val();
@@ -639,14 +688,122 @@ page_post_edit_tag.on('hidden.rc.page', function(event) {
   textarea.blur()
 })
 
-page_post_edit_goods.on('shown.rc.page', function(event) {
+page_post_edit_imageGoodsTag.on('shown.rc.page', function(event) {
   var page = $(this)
-  var input = page.find('[name="keyword"]')
-  setTimeout(function(){ input.focus() }, 300);
+  console.log('상품태그 기능추가');
+  var swiper = new Swiper('#page-post-edit-imageGoodsTag .swiper-container');
 })
 
-page_post_edit_goods.on('hidden.rc.page', function(event) {
+page_post_edit_imageGoodsTag.on('hidden.rc.page', function(event) {
+  var page = $(this)
+  var swiper = new Swiper('#page-post-edit-imageGoodsTag .swiper-container');
+  swiper.destroy();
+})
+
+page_post_edit_goodslist.on('shown.rc.page', function(event) {
   var page = $(this)
   var input = page.find('[name="keyword"]')
-  input.blur()
+  var uid = modal_post_write.attr('data-uid');
+  page.find('[data-role="backdrop"]').addClass('d-none')
+
+  page.find('[data-plugin="autocomplete"]').blur(function(){
+    page.find('[data-role="backdrop"]').addClass('d-none')
+    $(this).val('');
+  });
+
+  page.find('[data-plugin="autocomplete"]').on("change keyup paste", function() {
+    var currentVal = $(this).val();
+    if (currentVal) {
+      page.find('[data-role="backdrop"]').removeClass('d-none')
+      page.find('[data-role="keyword-reset"]').removeClass("d-none");
+
+    } else {
+      page.find('[data-role="backdrop"]').addClass('d-none');
+      page.find('[data-role="keyword-reset"]').addClass("d-none");
+    }
+  });
+
+  // 검색어 입력필드 초기화
+  page.on('click','[data-act="keyword-reset"]',function(){
+    page.find('[data-plugin="autocomplete"]').val('') // 입력필드 초기화
+    setTimeout(function(){
+      page.find('[data-plugin="autocomplete"]').blur().autocomplete('clear');; // 입력필드 포커싱
+      page.find('[data-role="keyword-reset"]').addClass("d-none"); // 검색어 초기화 버튼 숨김
+    }, 10);
+  });
+
+
+  //상품연결을 위한 상품명 검색
+  page.find('[data-plugin="autocomplete"]').autocomplete({
+    width : 320,
+    minChars:1,
+    showNoSuggestionNotice: true,
+    noSuggestionNotice : '결과가 없습니다.',
+    lookup: function (query, done) {
+
+       $.getJSON(rooturl+"/?m=shop&a=search_data", {q: query,featured_size : '140x104'}, function(res){
+           if (res.goodslist) {
+             var sg_goods = [];
+             var data_arr = res.goodslist.split(',');//console.log(data.usernames);
+             $.each(data_arr,function(key,goods){
+               var goodsData = goods.split('|');
+               var name = goodsData[0];
+               var uid = goodsData[1];
+               var featured_img = goodsData[2];
+               var price = goodsData[3];
+               sg_goods.push({"value":name,"data":{ 'uid': uid, 'featured_img': featured_img, 'price': price }});
+             });
+             var result = {
+               suggestions: sg_goods
+             };
+              done(result);
+           }
+       });
+   },
+
+   formatResult: function (suggestion,currentValue) {
+     return '<div class="media"><span class="media-left"><img src="' + suggestion.data.featured_img+'" class="media-object border mr-2" style="width:70px"/></span><div class="media-body" style="line-height: 1.2;"><h6 class="my-0 text-reset line-clamp-2">'  + $.Autocomplete.formatResult(suggestion, currentValue) + '</h6><span class="text-muted f13">'+ suggestion.data.price+'</span></div></div>';
+    },
+
+    onSelect: function (suggestion) {
+      if (page.find('[data-plugin="autocomplete"]').val().length >= 1) {
+        console.log(suggestion.data.uid)
+        $(this).val('');
+        page.find('[data-role="backdrop"]').addClass('d-none')
+        page.find('[data-role="keyword-reset"]').addClass("d-none"); // 검색어 초기화 버튼 숨김
+        $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_goodsData',{
+            markup_file: 'attach_goods_write_item',
+            uid : suggestion.data.uid,
+            featured_size : '140x104'
+          },function(response){
+           var result = $.parseJSON(response);
+           var item=result.item;
+           page.find('[data-role="attach-goods"]').append(item);
+           $.notify({message: '추가 되었습니다.'},{type: 'default'});
+        });
+
+      }
+    }
+  });
+
+})
+
+page_post_edit_goodslist.on('hidden.rc.page', function(event) {
+  var page = $(this);
+  var input = page.find('[name="keyword"]');
+  var goodsNum = page.find('[data-role="item"]').length
+  input.val('').blur()
+  page.find('[data-plugin="autocomplete"]').autocomplete('dispose');
+  page_post_edit_main.find('[data-role="goodsNum"]').text(goodsNum);
+})
+
+//연결상품 지우기
+page_post_edit_goodslist.find('[data-role="attach-goods"]').on('tap','[data-act="del"]',function(){
+  var item = $(this).closest('[data-role="item"]')
+  item.remove();
+});
+
+page_post_edit_goodsview.on('show.rc.page', function(event) {
+  var page = $(this)
+  console.log('상품 상세보기')
 })

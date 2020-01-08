@@ -627,7 +627,8 @@
             </a>
           </li>
           <li class="table-view-cell">
-            <a class="navigate-right" href="#page-post-edit-goods" data-start="#page-post-edit-main" data-toggle="page">
+            <a class="navigate-right" href="#page-post-edit-goodslist" data-start="#page-post-edit-main" data-toggle="page">
+              <span class="badge badge-default badge-inverted" data-role="goodsNum"></span>
               상품연결
             </a>
           </li>
@@ -733,22 +734,53 @@
     </main>
   </section>
 
-  <section class="page right" id="page-post-edit-goods" data-role="search">
+  <section class="page right" id="page-post-edit-imageGoodsTag">
     <header class="bar bar-nav bar-light bg-white px-0">
       <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title title-left" data-history="back">상품 태그하기</span>
+    </header>
+    <main class="content">
+
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">Slide 1</div>
+          <div class="swiper-slide">Slide 2</div>
+        </div>
+      </div>
+
+      <div class="p-5 text-xs-center text-muted">
+        상품을 태그하려면 사진을 누르세요.<br>더 보려면 살짝 미세요.
+      </div>
+
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-goodslist" data-role="search">
+    <header class="bar bar-nav py-1 px-0 bg-white">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
       <form class="input-group input-group-lg bg-white">
-  	    <input type="search" name="keyword" class="form-control pl-0" placeholder="상품명을 입력하세요." id="search-input-goods" required="" autocomplete="off">
-  			<span class="input-group-btn hidden" data-role="keyword-reset">
-  	      <button class="btn btn-link pr-3" type="button" data-act="keyword-reset" tabindex="-1">
+  	    <input type="search" name="keyword" class="form-control pl-0" placeholder="상품명을 입력하세요." id="search-input-goods" required="" autocomplete="off" data-plugin="autocomplete">
+  			<span class="input-group-btn d-none" data-role="keyword-reset">
+  	      <button class="btn btn-link pr-1" type="button" data-act="keyword-reset" tabindex="-1">
   	        <i class="fa fa-times-circle" aria-hidden="true"></i>
   	      </button>
   	    </span>
   	  </form>
     </header>
+    <main class="content bg-white">
+      <div class="content-backdrop d-none" data-role="backdrop"></div>
+      <ol class="table-view bg-white border-top-0" data-role="attach-goods" data-sortable="goods" style="margin-top:-1px"></ol>
+    </main>
+  </section>
+
+  <section class="page right" id="page-post-edit-goodsview" data-role="search">
+    <input type="hidden" class="form-control" name="goods" placeholder="준비중...">
+    <header class="bar bar-nav bar-light bg-white px-0">
+      <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+      <span class="title title-left" data-history="back">상품 상세보기</span>
+    </header>
     <main class="content">
-      <div class="content-padded">
-        <input type="hidden" class="form-control" name="goods" placeholder="준비중...">
-      </div>
+
     </main>
   </section>
 
@@ -1172,7 +1204,7 @@
       <div class="d-flex justify-content-center align-items-center" style="height: 43vh">
           <div class="text-xs-center" data-act="attach">
             <div class="material-icons mb-4" style="font-size: 100px;color:#ccc">
-              photo_library
+              image_search
             </div>
             <h5>새로운 사진을 올려 주세요.</h5>
             <small class="text-muted">포토 라이브러리에서 원하는 사진을 선택해주세요.</small>
