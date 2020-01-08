@@ -13,7 +13,8 @@ $R = getUidData($table['bbsdata'],$uid);
 $B = getUidData($table['bbslist'],$R['bbs']);
 
 include_once $g['path_module'].'bbs/var/var.php';
-include_once $g['dir_module'].'var/var.'.$bid.'.php';
+
+if ($bid) include_once $g['dir_module'].'var/var.'.$bid.'.php';
 
 $mbruid = $my['uid'];
 $result['uid'] = $R['uid'];
