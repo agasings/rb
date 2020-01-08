@@ -51,12 +51,6 @@ function moreNOTI(container,totalPage){
 
 }
 
-// youtube API
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 $(document).ready(function() {
 
   if(navigator.userAgent.indexOf("Mac") > 0) {
@@ -64,8 +58,6 @@ $(document).ready(function() {
   }
 
   putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
-
-  RC_initPhotoSwipe(); // 포토갤러리 초기화 (모바일 전용)
 
 	$('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화
 
@@ -265,6 +257,7 @@ $(document).ready(function() {
       location.href = url;
     }
   });
+
 
   //링크복사
   var clipboard = new ClipboardJS('[data-toggle="linkCopy"]');

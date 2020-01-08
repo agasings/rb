@@ -1,7 +1,6 @@
-<header class="bar bar-nav bar-dark bg-primary px-0" data-history="back">
+<header class="bar bar-nav bar-light bg-white px-0" data-history="back">
   <a class="icon icon icon-close pull-right p-x-1" role="button"title="드로어닫기"></a>
   <h1 class="title">
-    <span class="icon fa fa-bell-o mr-2"></span>
     새 알림
     <?php if ($my['uid']): ?>
     <span class="badge badge-danger badge-inverted ml-2" data-role="noti-status"><?php echo $my['num_notice']==0?'':$my['num_notice']?></span>

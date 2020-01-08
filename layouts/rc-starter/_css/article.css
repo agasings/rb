@@ -695,10 +695,3 @@
     content: '▲';
     font-size: 14px;
 }
-
-
-.rb-article.content-padded figure.image,
-.rb-article.content-padded figure.media {
-  margin-left: -0.625rem;
-  margin-right: -0.625rem;
-}

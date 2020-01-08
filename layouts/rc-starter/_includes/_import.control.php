@@ -12,4 +12,9 @@ $manifestForSite = file_exists($g['manifestForSite']) ? $g['url_manifest'] : $g[
 $g['touchIconForSite'] = $g['path_var'].'site/'.$r.'/homescreen.png';
 $g['url_touchIcon'] = $g['s'].'/_var/site/'.$r.'/homescreen-180x180.png';
 $touchIconForSite = file_exists($g['touchIconForSite']) ? $g['url_touchIcon'] : $g['img_core'].'/touch/homescreen-180x180.png';
+
+if ($layoutPage) {
+  $g['main'] = $g['path_layout'].$d['site_layout'].'/_pages/'.$layoutPage.'.php';
+}
+
 ?>

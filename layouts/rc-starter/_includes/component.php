@@ -13,18 +13,35 @@
 10. 시트 : 푸시알림 권한요청
 11. 시트 : 첨부파일 설정
 12. 팝업 : 첨부파일 업로드 성공
-12. 포스트 모듈
 
 -->
 
-<!-- 1. 일반모달 : 회원가입 -->
+<!-- 회원가입 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/join/component.php'; ?>
 
-<!-- 2. 일반모달 : 로그인 -->
+<!-- 로그인 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/login/component.php';  ?>
 
-<!-- 3. 시트 : 알림 -->
+<!-- 알림 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/noti/component.php';  ?>
+
+<!-- 설정 -->
+<?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/settings/component.php';  ?>
+
+<!-- 프로필 -->
+<?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/profile/component.php';  ?>
+
+<!-- 사이트 페이지 -->
+<div class="page right" id="page-site-page">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
+  	<a class="icon material-icons pull-right px-3 mirror" role="button" data-toggle="popup" data-target="#popup-link-share" data-url>reply</a>
+    <h1 class="title title-left" data-role="title" data-history="back"></h1>
+  </header>
+  <main role="main" class="content bg-white">
+    <div data-role="main" class="content-padded"></div>
+  </main>
+</div>
 
 <!-- 4. 팝업 : 로그아웃-->
 <div id="popup-logout" class="popup zoom">
@@ -51,7 +68,7 @@
 </div>
 
 <!-- 5. 일반모달 : 통합검색 -->
-<div id="modal-search" class="modal fast">
+<div id="modal-search" class="modal zoom">
 	<header class="bar bar-nav bg-white p-2">
 	  <form class="input-group input-group-lg border border-primary" action="<?php echo $g['s']?>/" id="modal-search-form">
 			<input type="hidden" name="r" value="<?php echo $r?>">
@@ -371,5 +388,16 @@ if ($m=='bbs') {
   </div>
 </div>
 
-<!-- 13. 포스트 -->
-<?php include_once $g['path_module'].'post/themes/'.$d['post']['skin_mobile'].'/component.php';  ?>
+
+<!-- 레이아웃 위젯탐색기 -->
+<div id="modal-widget-selector" class="modal">
+  <header class="bar bar-nav bar-light bg-white">
+    <a class="icon icon-close pull-right" data-history="back" role="button"></a>
+    <h1 class="title">위젯 탐색기</h1>
+  </header>
+  <div class="content">
+    <p class="content-padded">
+      <?php echo $d['layout']['dir'] ?>
+    </p>
+  </div>
+</div>

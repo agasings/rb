@@ -11,12 +11,17 @@
 </head>
 <body class="rb-layout-default">
 
+	<div data-role="edge_android">
+		<img src="<?php echo $g['img_core']?>/androidscroll.png" id="topEdge">
+		<img src="<?php echo $g['img_core']?>/androidscroll.png" id="bottomEdge">
+	</div>
+
 	<div class="page center" id="page-main">
 		<div class="snap-drawers">
 			<div class="snap-drawer snap-drawer-left" id="drawer-left">
 				<?php include $g['dir_layout'].'/_includes/drawer-left.php' ?>
 			</div>
-			<div class="snap-drawer snap-drawer-right bg-faded" id="drawer-right" data-role="page_cart">
+			<div class="snap-drawer snap-drawer-right bg-faded" id="drawer-right">
 				<?php include $g['dir_layout'].'/_includes/drawer-right.php' ?>
 			</div>
 		</div>
@@ -25,13 +30,20 @@
 
 			<?php include $g['dir_layout'].'/_includes/header.php' ?>
 
-			<main role="main" class="content bg-faded swiper-no-swiping-main" data-snap-ignore="true">
+			<?php if ($c): ?>
+			<div class="bar bar-standard bar-header-secondary bar-light bg-white animated fadeIn delay-1" data-snap-ignore="true">
+			 <h1 class="title"><?php echo $_HM['name']?></h1>
+			</div>
+			<?php endif; ?>
 
-				<article class="animated fadeIn delay-1 ck-content" style="min-height:250px" role="article">
+			<main role="main" class="content" data-snap-ignore="true">
+
+				<article class="content-padded animated fadeIn delay-1 ck-content" style="min-height:250px" role="article">
 					<?php include __KIMS_CONTENT__ ?>
 				</article>
 				<?php include $g['dir_layout'].'/_includes/footer.php' ?>
 			</main>
+
 
 		</div><!-- /.snap-content -->
 	</div><!-- /.page -->
