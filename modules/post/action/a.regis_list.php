@@ -38,6 +38,7 @@ if ($uid) {
     $result['error'] = false;
     echo json_encode($result);
     getDbUpdate($table[$m.'list'],'display='.$display,'uid='.$R['uid']);
+    getDbUpdate($table[$m.'list_member'],'display='.$display,'list='.$R['uid']);
     exit;
   }
 
