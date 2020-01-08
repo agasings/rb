@@ -9,7 +9,7 @@ $result=array();
 $result['error'] = false;
 
 $readme_file = $g['path_widget'].$widget.'/readme.txt';
-$readme_skin = fopen($readme_file, 'r');
+$readme_skin = @fopen($readme_file, 'r');
 $readme = @fread($readme_skin, filesize($readme_file));
 
 $result['readme'] = nl2br($readme);
