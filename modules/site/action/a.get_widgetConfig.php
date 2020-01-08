@@ -102,7 +102,7 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 	      }
 
 	      if ($_v[1]=='postlist') {
-	        $html .= '<select name="'.$_v[0].'" class="form-control custom-select">
+	        $html .= '<select name="'.$_v[0].'" class="form-control custom-select" required>
 	                    <option value="">선택하세요.</option>
 	                    <option value="" disabled>----------------------------------</option>';
 	        $_sk=explode(',',$_v[3]);
@@ -117,7 +117,7 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 	      }
 
 	      if ($_v[1]=='postcat') {
-	        $html .= '<select name="'.$_v[0].'" class="form-control custom-select">
+	        $html .= '<select name="'.$_v[0].'" class="form-control custom-select" required>
 	                    <option value="">선택하세요.</option>
 	                    <option value="" disabled>----------------------------------</option>';
 					$html .=	 getCategoryShowSelect($table['postcategory'],0,0,0,0,0,$_wdgvar[$_v[0]]);
@@ -125,8 +125,8 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 	      }
 
 	      if ($_v[1]=='bbs') {
-	        $html .= '<select name="'.$_v[0].'" class="form-control custom-select">
-	                    <option value="">사용안함</option>
+	        $html .= '<select name="'.$_v[0].'" class="form-control custom-select" required>
+	                    <option value="">전체 게시물</option>
 	                    <option value="" disabled>----------------------------------</option>';
 	        $BBSLIST = getDbArray($table['bbslist'],'','*','gid','asc',0,1);
 	        while ($R=db_fetch_array($BBSLIST)) {

@@ -4,11 +4,11 @@ $size = '400x250'; // 사진 사이즈
 
 if ($wdgvar['view']=='modal') {
   include_once $g['path_module'].'bbs/var/var.php';
-  include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
+  @include $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
   $d['bbs']['skin'] = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
   $g['url_module_skin'] = $g['s'].'/modules/bbs/themes/'.$d['bbs']['skin'];
   $g['dir_module_skin'] = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/';
-  include_once $g['dir_module_skin'].'_widget.php';
+  @include_once $g['dir_module_skin'].'_widget.php';
 }
 
 $recnum = $wdgvar['line']; // 한 열에 출력할 카드 갯수

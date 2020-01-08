@@ -1,14 +1,14 @@
 <?php
 $B = getDbData($table['bbslist'],'id="'.$wdgvar['bbsid'].'"','uid');
-$size = $wdgvar['width'].'x'.$wdgvar['height']; // 사진 사이즈
+$size = '400x250'; // 사진 사이즈
 
 if ($wdgvar['view']=='modal') {
   include_once $g['path_module'].'bbs/var/var.php';
-  include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
+  @include $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
   $d['bbs']['skin'] = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
   $g['url_module_skin'] = $g['s'].'/modules/bbs/themes/'.$d['bbs']['skin'];
   $g['dir_module_skin'] = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/';
-  include_once $g['dir_module_skin'].'_widget.php';  //게시판 테마 _widget.php 포함
+  @include_once $g['dir_module_skin'].'_widget.php';  //게시판 테마 _widget.php 포함
 }
 
 $recnum = $wdgvar['line']; // 한 열에 출력할 카드 갯수

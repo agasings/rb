@@ -63,9 +63,9 @@ $d['layout']['widget'] = array (
 	'bbs' => array(
 		'게시판',
 		array(
-			array('bs4-bbs-list-01','리스트형-01'),
-			array('bs4-bbs-card-01','카드형-01'),
-			array('bs4-bbs-gallery-01','갤러리형-01'),
+			array('bs4-bbs-list-01','게시판 리스트형-01'),
+			array('bs4-bbs-card-01','게시판 카드형-01'),
+			array('bs4-bbs-gallery-01','게시판 갤러리형-01'),
 		),
 	),
 	//
