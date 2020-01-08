@@ -68,7 +68,7 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 
 	      if ($_v[1]=='input') {
 	        $_wdgvar['title'] = $wdgvar?$_wdgvar['title']:$name;
-	        $html .= '<input type="text" class="form-control" name="'.$_v[0].'" value="'.stripslashes($_wdgvar[$_v[0]]).'">';
+	        $html .= '<input type="text" class="form-control" name="'.$_v[0].'" value="'.stripslashes($_wdgvar[$_v[0]]).'" placeholder="'.$_v[3].'">';
 	      }
 
 	      if ($_v[1]=='select') {
@@ -76,7 +76,11 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 	        $_sk=explode(',',$_v[3]);
 	        foreach ($_sk as $_sa) {
 	          $_sa1=explode('=',$_sa);
-	          $html .= '<option value="'.$_sa1[1].'" '.($_sa1[1]==$_wdgvar[$_v[0]]?' selected':'').' >'.$_sa1[0].'</option>';
+						if ($_wdgvar[$_v[0]]) {
+							$html .= '<option value="'.$_sa1[1].'" '.($_sa1[1]==$_wdgvar[$_v[0]]?' selected':'').' >'.$_sa1[0].'</option>';
+						} else {
+							$html .= '<option value="'.$_sa1[1].'" '.($_sa1[1]==$_v[4]?' selected':'').' >'.$_sa1[0].'</option>';
+						}
 	        }
 	        $html .= '</select>';
 	      }

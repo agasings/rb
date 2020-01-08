@@ -13,8 +13,8 @@ $d['widget']['dom'] = array(
 		array(
 			array('title','input','타이틀',''),
 			array('subtitle','input','보조 타이틀',''),
-			array('limit','select','노출갯수','1개=1,2개=2,3개=3,4개=4,5개=5'),
-			array('line','select','한줄 아이템수','1개=1,2개=2,3개=3,4개=4,5개=5'),
+			array('limit','select','총 항목수','1개=1,2개=2,3개=3,4개=4,5개=5,6개=6,7개=7,8개=8,9개=9,10개=10,11개=11,12개=12','4'),
+			array('line','select','한줄 항목수','1개=1,2개=2,3개=3,4개=4,5개=5','2'),
 			array('term','select','출력기간','최근1주=-1 week,최근2주=-2 week,최근3주=-3 week,최근1달=-4 week'),
 			array('sort','select','정렬순','조회순=hit,좋아요순=likes,댓글순=comment'),
 			array('link','input','링크연결','')

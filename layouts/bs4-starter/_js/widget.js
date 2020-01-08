@@ -130,7 +130,13 @@ $( document ).ready(function() {
 
     $('[data-role="widgetConfig"] [name]').each(function(index){
       var _name =  $(this).attr('name');
-      var _var =  $(this).val()?$(this).val():'';
+
+      if ( !$(this).val() && $(this).attr('placeholder')) {
+        var _var =  $(this).attr('placeholder');
+      } else {
+        var _var =  $(this).val()?$(this).val():'';
+      }
+
       widget_var += _name+'='+_var+',';
     });
 
