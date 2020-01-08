@@ -11,8 +11,10 @@ if ($wdgvar['view']=='modal') {
   @include_once $g['dir_module_skin'].'_widget.php';
 }
 
+$_RCD=getDbArray($table['bbsdata'],($wdgvar['bbsid']?'bbs='.$B['uid'].' and ':'').'display=1 and site='.$_HS['uid'],'*','gid','asc',$wdgvar['limit'],1);
 $recnum = $wdgvar['line']; // 한 열에 출력할 카드 갯수
-$totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
+if (db_num_rows($_RCD) > $recnum) $totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
+else  $totalCardRow = 1;
 $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
@@ -30,7 +32,6 @@ $lack_card_num = $total_card_num;
 
   <div class="row gutter-half mt-3" data-role="bbs-list">
 
-    <?php $_RCD=getDbArray($table['bbsdata'],($wdgvar['bbsid']?'bbs='.$B['uid'].' and ':'').'display=1 and site='.$_HS['uid'],'*','gid','asc',$wdgvar['limit'],1)?>
     <?php $i=0;while($_R=db_fetch_array($_RCD)):$i++?>
     <div class="col">
       <div class="card" id="item-<?php echo $_R['uid'] ?>">
