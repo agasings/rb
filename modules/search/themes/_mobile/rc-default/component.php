@@ -1,5 +1,5 @@
 <!-- 통합검색 -->
-<div id="modal-search" class="modal fast">
+<div id="modal-search" class="modal fast" data-role="search">
 	<header class="bar bar-nav py-1 px-0 bg-white shadow-sm">
     <a class="icon material-icons pull-left px-3 text-muted" role="button" data-history="back">arrow_back</a>
 	  <form class="input-group input-group-lg bg-white">
