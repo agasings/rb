@@ -67,7 +67,6 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 	      }
 
 	      if ($_v[1]=='input') {
-	        $_wdgvar['title'] = $wdgvar?$_wdgvar['title']:$name;
 	        $html .= '<input type="text" class="form-control" name="'.$_v[0].'" value="'.stripslashes($_wdgvar[$_v[0]]).'" placeholder="'.$_v[3].'">';
 	      }
 
@@ -130,11 +129,11 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 
 	      if ($_v[1]=='bbs') {
 	        $html .= '<select name="'.$_v[0].'" class="form-control custom-select" required>
-	                    <option value="">전체 게시물</option>
+	                    <option value="">선택하세요</option>
 	                    <option value="" disabled>----------------------------------</option>';
 	        $BBSLIST = getDbArray($table['bbslist'],'','*','gid','asc',0,1);
 	        while ($R=db_fetch_array($BBSLIST)) {
-	          $html .= '<option value="'.$R['id'].'" '.($R['id']==$_wdgvar[$_v[0]]?' selected':'').'>
+	          $html .= '<option value="'.$R['id'].'" '.($R['id']==$_wdgvar[$_v[0]]?' selected':'').' data-name="'.$R['name'].'">
 	                      ㆍ'.$R['name'].'('.$R['id'].')
 	                    </option>';
 	                  }

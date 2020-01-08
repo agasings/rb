@@ -25,6 +25,19 @@ function setWidgetConfig(id,name,path,wdgvar,area) {
           $('[data-role="widgetConfig"] [data-role="form"]').find('.form-control')[0].focus();
         }, 100);
 
+        //게시판 선택시
+        $('[data-role="widgetConfig"]').find('[name="bbsid"]').change(function(){
+          var name = $(this).find('option:selected').attr('data-name');
+          var id = $(this).find('option:selected').val();
+          if (id) {
+            $('[data-role="widgetConfig"]').find('[name="title"]').val(name);
+            $('[data-role="widgetConfig"]').find('[name="link"]').val('/b/'+id);
+          } else {
+            $('[data-role="widgetConfig"]').find('[name="title"]').val('');
+            $('[data-role="widgetConfig"]').find('[name="link"]').val('');
+          }
+        });
+
       } else {
         $.notify({message: '위젯설정을 확인해주세요.'},{type: 'danger'});
         return false
@@ -251,5 +264,6 @@ $( document ).ready(function() {
 
     $('[data-role="addWidget"]').removeClass('active');
   })
+
 
 });
