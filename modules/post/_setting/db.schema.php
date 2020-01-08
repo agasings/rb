@@ -232,7 +232,7 @@ level		  TINYINT			DEFAULT '0'		NOT NULL,
 d_regis		VARCHAR(14)		DEFAULT ''		NOT NULL,
 KEY mbruid(mbruid),
 KEY gid(gid),
-KEY data(data),
+KEY list(list),
 KEY display(display),
 KEY auth(auth),
 KEY level(level)) ENGINE=".$DB['type']." CHARSET=UTF8MB4");
