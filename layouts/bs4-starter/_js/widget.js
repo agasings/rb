@@ -28,10 +28,11 @@ function setWidgetConfig(id,name,path,wdgvar,area) {
         //게시판 선택시
         $('[data-role="widgetConfig"]').find('[name="bbsid"]').change(function(){
           var name = $(this).find('option:selected').attr('data-name');
+          var link = $(this).find('option:selected').attr('data-link');
           var id = $(this).find('option:selected').val();
           if (id) {
             $('[data-role="widgetConfig"]').find('[name="title"]').val(name);
-            $('[data-role="widgetConfig"]').find('[name="link"]').val('/b/'+id);
+            $('[data-role="widgetConfig"]').find('[name="link"]').val(link);
           } else {
             $('[data-role="widgetConfig"]').find('[name="title"]').val('');
             $('[data-role="widgetConfig"]').find('[name="link"]').val('');

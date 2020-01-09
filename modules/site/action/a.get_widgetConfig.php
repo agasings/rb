@@ -133,7 +133,7 @@ if (file_exists($g['path_widget'].$widget.'/_var.config.php')) {
 	                    <option value="" disabled>----------------------------------</option>';
 	        $BBSLIST = getDbArray($table['bbslist'],'','*','gid','asc',0,1);
 	        while ($R=db_fetch_array($BBSLIST)) {
-	          $html .= '<option value="'.$R['id'].'" '.($R['id']==$_wdgvar[$_v[0]]?' selected':'').' data-name="'.$R['name'].'">
+	          $html .= '<option value="'.$R['id'].'" '.($R['id']==$_wdgvar[$_v[0]]?' selected':'').' data-name="'.$R['name'].'" data-link="'.RW('m=bbs&bid='.$R['id']).'">
 	                      ㆍ'.$R['name'].'('.$R['id'].')
 	                    </option>';
 	                  }
