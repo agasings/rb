@@ -19,13 +19,11 @@
 			if($_u['type']==2 and $_u['hidden']==0) array_push($img_files,$_u);
 			else if($_u['type']==4 and $_u['hidden']==0) array_push($audio_files,$_u);
 			else if($_u['type']==5 and $_u['hidden']==0) array_push($video_files,$_u);
-			else if($_u['type']==8 and $_u['hidden']==0) array_push($youtube_files,$_u);
 			else if($_u['type']==1 || $_u['type']==6 || $_u['type']==7 and $_u['hidden']==0) array_push($down_files,$_u);
 	 }
 	 $attach_photo_num = count ($img_files);
 	 $attach_video_num = count ($video_files);
 	 $attach_audio_num = count ($audio_files);
-	 $attach_youtube_num = count ($youtube_files);
 	 $attach_down_num = count ($down_files);
 ?>
 

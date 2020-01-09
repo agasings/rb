@@ -13,16 +13,13 @@
 			if($_u['type']==2 and $_u['hidden']==0) array_push($img_files,$_u);
 			else if($_u['type']==4 and $_u['hidden']==0) array_push($audio_files,$_u);
 			else if($_u['type']==5 and $_u['hidden']==0) array_push($video_files,$_u);
-			else if($_u['type']==8 and $_u['hidden']==0) array_push($youtube_files,$_u);
 			else if($_u['type']==1 || $_u['type']==6 || $_u['type']==7 and $_u['hidden']==0) array_push($down_files,$_u);
 	 }
 	 $attach_photo_num = count ($img_files);
 	 $attach_video_num = count ($video_files);
 	 $attach_audio_num = count ($audio_files);
-	 $attach_youtube_num = count ($youtube_files);
 	 $attach_down_num = count ($down_files);
 ?>
-
 
 	<div class="attach-section clearfix my-5">
 
@@ -32,7 +29,7 @@
 				<?php foreach($img_files as $_u):?>
 
 				<?php
-					$img_origin=$_u['host'].'/'.$_u['folder'].'/'.$_u['tmpname'];
+					$img_origin=$_u['src'];
 					$thumb_list=getPreviewResize($img_origin,'180x120'); // 미리보기 사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
 					$thumb_modal=getPreviewResize($img_origin,'c'); // 정보수정 모달용  사이즈 조정 (이미지 업로드시 썸네일을 만들 필요 없다.)
 				?>
