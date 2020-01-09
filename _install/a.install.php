@@ -219,14 +219,14 @@ $pagesarray = array
 	'main'=>array('메인','2','1','1','','',''),
 	'privacy'=>array('개인정보취급방침','3','0','0','','rc-starter/blank.php',''),
 	'policy'=>array('이용약관','3','0','0','','rc-starter/blank.php',''),
-	'login'=>array('로그인','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=login'),
-	'join'=>array('회원가입','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=join'),
-	'settings'=>array('개인정보수정','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=settings'),
-	'password_reset'=>array('비밀번호찾기','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=login&page=password_reset'),
-	'saved'=>array('저장함','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=saved'),
-	'noti'=>array('알림함','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=noti'),
-	'profile'=>array('프로필','1','0','1','','rc-starter/blank.php','/?r='.$siteid.'&m=member&front=profile'),
-	'dashboard'=>array('대시보드','1','0','1','bs4-starter/dashboard.php','rc-starter/dashboard.php','/?r='.$siteid.'&m=member&front=dashboard')
+	'login'=>array('로그인','1','0','1','','rc-starter/blank.php','/?m=member&front=login'),
+	'join'=>array('회원가입','1','0','1','','rc-starter/blank.php','/?m=member&front=join'),
+	'settings'=>array('개인정보수정','1','0','1','','rc-starter/blank.php','/?m=member&front=settings'),
+	'password_reset'=>array('비밀번호찾기','1','0','1','','rc-starter/blank.php','/?m=member&front=login&page=password_reset'),
+	'saved'=>array('저장함','1','0','1','','rc-starter/blank.php','/?m=member&front=saved'),
+	'noti'=>array('알림함','1','0','1','','rc-starter/blank.php','/?m=member&front=noti'),
+	'profile'=>array('프로필','1','0','1','','rc-starter/blank.php','/?m=member&front=profile'),
+	'dashboard'=>array('대시보드','1','0','1','bs4-starter/dashboard.php','rc-starter/dashboard.php','/?m=member&front=dashboard')
 );
 foreach($pagesarray as $_key => $_val)
 {
