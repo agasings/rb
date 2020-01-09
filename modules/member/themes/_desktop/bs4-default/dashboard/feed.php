@@ -14,7 +14,7 @@ $total_card_num = $totalCardRow*$_line;// 총 출력되야 할 card 갯수(빈�
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
 
-$postque .= ' and (display=2 and hidden=0) or display>3';
+$postque .= ' and (display=2 and hidden=0 or display>3)';
 
 $postque .= ' and mbruid='.$my['uid'];
 $NUM = getDbRows($table['s_feed'],$postque);
