@@ -266,37 +266,37 @@ function setPostWrite(settings) {
   })
 
   //연결상품 불러오기
-  $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_postAttachGoods',{
-    markup_file: 'attach_goods_write_item',
-    uid : uid,
-    featured_size : '140x104'
-    },function(response,status){
-      if(status=='success'){
-        var result = $.parseJSON(response);
-        var list=result.list;
-        page_post_edit_goodslist.find('[data-role="attach-goods"]').html(list);
-        page_post_edit_goodslist.find('[data-sortable="goods"]').sortable({
-          axis: 'y',
-          cancel: 'button',
-          delay: 250,
-          update: function( event, ui ) {
-            var attachGoods=$('input[name="attachGoods[]"]').map(function(){return $(this).val()}).get();
-            var new_goods='';
-            if(attachGoods){
-              for(var i=0;i<attachGoods.length;i++) {
-                new_goods+=attachGoods[i];
-              }
-            }
-            $.post(rooturl+'/?r='+raccount+'&m=shop&a=modifygid',{
-               attachfiles : new_goods
-             })
-
-          }
-        });
-      } else {
-        alert(status);
-      }
-  });
+  // $.post(rooturl+'/?r='+raccount+'&m=shop&a=get_postAttachGoods',{
+  //   markup_file: 'attach_goods_write_item',
+  //   uid : uid,
+  //   featured_size : '140x104'
+  //   },function(response,status){
+  //     if(status=='success'){
+  //       var result = $.parseJSON(response);
+  //       var list=result.list;
+  //       page_post_edit_goodslist.find('[data-role="attach-goods"]').html(list);
+  //       page_post_edit_goodslist.find('[data-sortable="goods"]').sortable({
+  //         axis: 'y',
+  //         cancel: 'button',
+  //         delay: 250,
+  //         update: function( event, ui ) {
+  //           var attachGoods=$('input[name="attachGoods[]"]').map(function(){return $(this).val()}).get();
+  //           var new_goods='';
+  //           if(attachGoods){
+  //             for(var i=0;i<attachGoods.length;i++) {
+  //               new_goods+=attachGoods[i];
+  //             }
+  //           }
+  //           $.post(rooturl+'/?r='+raccount+'&m=shop&a=modifygid',{
+  //              attachfiles : new_goods
+  //            })
+  //
+  //         }
+  //       });
+  //     } else {
+  //       alert(status);
+  //     }
+  // });
 
 } // getPostWrite
 
