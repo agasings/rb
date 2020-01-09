@@ -5,13 +5,12 @@ $total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈�
 $print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
 $lack_card_num = $total_card_num;
 
-$_postque = 'site='.$s.' and display=5';
-if ($my['uid'])  $_postque .= ' or display=4';
+if ($my['uid']) $_postque = 'site='.$s.' and display>3';
+else $_postque = 'site='.$s.' and display=5';
 
 $_RCD=getDbArray($table['postindex'],$_postque,'*','gid','asc',$wdgvar['limit'],1);
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'gid='.$_R['gid'],'*');
 ?>
-
 <section class="widget mb-4">
   <header class="d-flex justify-content-between align-items-center mb-2">
     <div class="">

@@ -32,8 +32,8 @@ if(!defined('__KIMS__')) exit;
 </div>
 
 <?php
-getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');
-getImport('ckeditor5','decoupled-document/build/translations/ko','12.2.0','js');
+getImport('ckeditor5','decoupled-document/build/ckeditor','16.0.0','js');
+getImport('ckeditor5','decoupled-document/build/translations/ko','16.0.0','js');
 ?>
 <script src="<?php echo $g['s']?>/_core/js/ckeditor5.js"></script>
 <script>

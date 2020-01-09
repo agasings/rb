@@ -42,11 +42,11 @@ workbox.precaching.precacheAndRoute([
   '/plugins/is-loading/1.0.6/jquery.isloading.min.js',
   '/plugins/js-cookie/2.2.1/js.cookie.min.js',
 
-  '/plugins/ckeditor5/12.2.0/classic/build/ckeditor.js',
-  '/plugins/ckeditor5/12.2.0/classic/build/translations/ko.js',
+  '/plugins/ckeditor5/16.0.0/classic/build/ckeditor.js',
+  '/plugins/ckeditor5/16.0.0/classic/build/translations/ko.js',
 
-  '/plugins/ckeditor5/12.2.0/decoupled-document/build/ckeditor.js',
-  '/plugins/ckeditor5/12.2.0/decoupled-document/build/translations/ko.js',
+  '/plugins/ckeditor5/16.0.0/decoupled-document/build/ckeditor.js',
+  '/plugins/ckeditor5/16.0.0/decoupled-document/build/translations/ko.js',
 
   '/plugins/bootstrap-notify/3.1.3/bootstrap-notify.min.js',
 

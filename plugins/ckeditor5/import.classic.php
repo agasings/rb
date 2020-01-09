@@ -19,8 +19,8 @@ if(!defined('__KIMS__')) exit;
 
 
 <?php
-getImport('ckeditor5','classic/build/ckeditor','12.2.0','js');
-getImport('ckeditor5','classic/build/translations/ko','12.2.0','js');
+getImport('ckeditor5','classic/build/ckeditor','16.0.0','js');
+getImport('ckeditor5','classic/build/translations/ko','16.0.0','js');
 ?>
 
 <script>

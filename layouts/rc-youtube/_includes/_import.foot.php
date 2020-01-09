@@ -11,6 +11,11 @@
 <!-- youtube iframe_api -->
 <script src="https://www.youtube.com/player_api"></script>
 
+<!-- jQuery.countdown https://github.com/hilios/jQuery.countdown -->
+<?php getImport('jquery.countdown','jquery.countdown.min','2.2.0','js')?>
+
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+
 <!-- jQuery UI : https://jqueryui.com/-->
 <?php getImport('jquery-ui','jquery-ui.sortable,min','1.12.1','js')?>
 
@@ -39,8 +44,8 @@
 
 <!-- 댓글출력시 필요 -->
 <?php if ($mod!='write'): ?>
-<?php getImport('ckeditor5','decoupled-document/build/ckeditor','12.2.0','js');  ?>
-<?php getImport('ckeditor5','decoupled-document/build/translations/ko','12.2.0','js');  ?>
+<?php getImport('ckeditor5','decoupled-document/build/ckeditor','16.0.0','js');  ?>
+<?php getImport('ckeditor5','decoupled-document/build/translations/ko','16.0.0','js');  ?>
 <?php endif; ?>
 <script src="<?php echo $g['url_root']?>/modules/comment/lib/Rb.comment.js"></script>
 
