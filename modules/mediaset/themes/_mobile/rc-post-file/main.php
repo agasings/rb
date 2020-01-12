@@ -12,18 +12,18 @@
 
   <div class="rb-attach" data-role="list"><!-- 포토/이미지  리스트  -->
 
-    <ul class="mb-0" data-role="attach-preview-photo" data-sortable="mediaset"></ul>
+    <ul class="table-view table-view-full my-0 ml-4 mr-0 border-top-0" data-role="attach-preview-photo" data-sortable="mediaset"></ul>
 
     <!-- 일반파일 리스트  -->
-    <ul class="mb-0 border-0" data-role="attach-preview-file" data-sortable="mediaset">
+    <ul class="table-view table-view-full my-0 ml-4 mr-0 border-top-0" data-role="attach-preview-file" data-sortable="mediaset">
     </ul>
 
     <!-- 오디오 리스트  -->
-    <ul class="mb-0 border-0" data-role="attach-preview-audio" data-sortable="mediaset">
+    <ul class="table-view table-view-full my-0 ml-4 mr-0 border-top-0" data-role="attach-preview-audio" data-sortable="mediaset">
     </ul>
 
     <!-- 비디오 리스트  -->
-    <div class="mb-0 border-0" data-role="attach-preview-video" data-sortable="mediaset">
+    <div class="table-view table-view-full my-0 ml-4 mr-0 border-top-0" data-role="attach-preview-video" data-sortable="mediaset">
     </div>
 
     <div class="px-2">

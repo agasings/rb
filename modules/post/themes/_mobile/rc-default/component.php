@@ -558,27 +558,27 @@
         </div>
 
 
-        <ul class="table-view editor-focused-hide mb-0 bg-faded" id="bbs-attach-tree">
+        <ul class="table-view editor-focused-hide mb-0 bg-faded" id="post-attach-tree">
   			  <li class="table-view-cell">
-  					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#bbs-attach-tree" data-target="#bbs-collapse-attach-file">
+  					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#post-attach-tree" data-target="#post-collapse-attach-file">
               <span class="badge badge-default badge-inverted" data-role="attachNum"></span>
   			      사진 및 파일
   			    </a>
   			    <!-- 2depth -->
-            <div class="table-view collapse mb-0" id="bbs-collapse-attach-file" role="tabpanel" >
-              <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+            <div class="table-view collapse mb-0" id="post-collapse-attach-file" role="tabpanel" >
+              <?php if ($m!='bbs') getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
             </div>
   			  </li>
 
 
   				<li class="table-view-cell">
-  					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#bbs-attach-tree" data-target="#bbs-collapse-attach-link">
+  					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#post-attach-tree" data-target="#post-collapse-attach-link">
               <span class="badge badge-default badge-inverted" data-role="linkNum"></span>
   			      링크
   			    </a>
   			    <!-- 2depth -->
-  			    <div class="table-view collapse mb-0" id="bbs-collapse-attach-link">
-              <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+  			    <div class="table-view collapse mb-0" id="post-collapse-attach-link">
+              <?php if ($m!='bbs') getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
             </div>
   			  </li>
 

@@ -70,7 +70,7 @@
 </div>
 
 <!-- Modal : 게시판 글쓰기 -->
-<div id="modal-bbs-write" class="modal fast" data-role="bbs-write">
+<div id="modal-bbs-write" class="modal fast" data-role="write">
   <input type="hidden" name="c" value="<?php echo $c?>">
   <input type="hidden" name="cuid" value="<?php echo $_HM['uid']?>">
   <input type="hidden" name="bid" value="<?php echo $R['bbsid']?$R['bbsid']:$bid?>">
@@ -142,26 +142,24 @@
            <div data-role="editor-body" class="editable-container" style="color:#55595c"></div>
          </div>
 
-         <ul class="table-view editor-focused-hide mb-0 bg-faded" id="attach-tree">
+         <ul class="table-view table-view-full editor-focused-hide mb-0 bg-faded" id="bbs-attach-tree">
    			  <li class="table-view-cell">
-   					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#attach-tree" data-target="#collapse-attach-file">
+   					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#bbs-attach-tree" data-target="#bbs-collapse-attach-file">
                <span class="badge badge-default badge-inverted" data-role="attachNum"></span>
    			      사진 및 파일
    			    </a>
    			    <!-- 2depth -->
-             <div class="table-view collapse mb-0" id="collapse-attach-file" role="tabpanel" >
-               <?php getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+             <div class="collapse mb-0" id="bbs-collapse-attach-file" role="tabpanel" >
+               <?php getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'#modal-bbs-write [data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
              </div>
    			  </li>
-
-
    				<li class="table-view-cell">
-   					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#attach-tree" data-target="#collapse-attach-link">
+   					<a class="navigate-right collapsed" data-toggle="collapse" data-parent="#bbs-attach-tree" data-target="#bbs-collapse-attach-link">
                <span class="badge badge-default badge-inverted" data-role="linkNum"></span>
    			      링크
    			    </a>
    			    <!-- 2depth -->
-   			    <div class="table-view collapse mb-0" id="collapse-attach-link">
+   			    <div class="collapse mb-0" id="bbs-collapse-attach-link">
                <?php getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
              </div>
    			  </li>

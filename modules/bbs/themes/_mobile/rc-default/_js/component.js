@@ -376,11 +376,11 @@ $(document).ready(function() {
                     }
 
                     modal.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
-                    page_bbs_write_attach.find('[data-role="attach-preview-photo"]').html(photo);
-                    page_bbs_write_attach.find('[data-role="attach-preview-video"]').html(video)
-                    page_bbs_write_attach.find('[data-role="attach-preview-audio"]').html(audio)
-                    page_bbs_write_attach.find('[data-role="attach-preview-file"]').html(file)
-                    modal.find('[data-role="tap-attach"] .badge').text(attachNum)
+                    modal.find('[data-role="attach-preview-photo"]').html(photo);
+                    modal.find('[data-role="attach-preview-video"]').html(video)
+                    modal.find('[data-role="attach-preview-audio"]').html(audio)
+                    modal.find('[data-role="attach-preview-file"]').html(file)
+                    modal.find('[data-role="attachNum"]').text(attachNum)
 
                  });
                } else {

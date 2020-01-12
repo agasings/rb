@@ -1376,11 +1376,11 @@ progress {
 .progress {
   display: -ms-flexbox;
   display: flex;
-  height: 1rem;
+  height: .5rem;
   overflow: hidden;
-  font-size: 0.75rem;
+  font-size: 0.35rem;
   background-color: #e9ecef;
-  border-radius: 0.25rem;
+  border-radius: 0;
 }
 
 .progress-bar {
@@ -1395,6 +1395,10 @@ progress {
   white-space: nowrap;
   background-color: #007bff;
   transition: width 0.6s ease;
+}
+
+.progress[value] {
+  background-color: #0074d9;
 }
 
 @media (prefers-reduced-motion: reduce) {
