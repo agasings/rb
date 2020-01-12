@@ -647,8 +647,8 @@
 			this.statusbar = $("<section class='mb-2'></section>").width(s.statusBarWidth);
 			this.preview = $("<img class='ajax-file-upload-preview' />").width(s.previewWidth).height(s.previewHeight).appendTo(this.statusbar).hide();
 			this.filename = $("<div class='text-muted small my-2'></div>").appendTo(this.statusbar);
-			this.progressDiv = $("<div class='ajax-file-upload-progress'>").appendTo(this.statusbar).hide();
-			this.progressbar = $("<progress class='progress progress-striped progress-animated mb-2'></progress>").appendTo(this.progressDiv);
+			this.progressDiv = $("<div class='progress rounded-0 mb-3' style='height: 15px;'>").appendTo(this.statusbar).hide();
+			this.progressbar = $("<div class='progress-bar progress-bar-striped progress-bar-animated'></div>").appendTo(this.progressDiv);
 			this.abort = $("<button>" + s.abortStr + "</button>").appendTo(this.statusbar).hide();
 			this.cancel = $("<div>" + s.cancelStr + "</div>").appendTo(this.statusbar).hide();
 			this.done = $("<div>" + s.doneStr + "</div>").appendTo(this.statusbar).hide();

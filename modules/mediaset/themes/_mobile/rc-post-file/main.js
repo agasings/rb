@@ -69,7 +69,6 @@
                 setTimeout(function(){ $('#page-post-edit-mediaset').page({ start: '#page-post-edit-main',title:'미디어 정보수정' }); }, 250);
                 return false
 
-
                 // data 값 세팅
                 var page=$(this).data('target');
                 var filename=$(this).attr('data-filename'); // data-로 하면 변경된 값 적용 안됨
