@@ -1,43 +1,169 @@
 /**
  * --------------------------------------------------------------------------
- * kimsQ Rb v2.2 모바일 기본형 게시판 테마 스크립트 (rc-default): _main.js
+ * kimsQ Rb v2.2 모바일 기본형 게시판 테마 스크립트 (rc-default): component.js
  * Homepage: http://www.kimsq.com
  * Licensed under RBL
  * Copyright 2018 redblock inc
  * --------------------------------------------------------------------------
  */
 
+ var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
+
+ var page_bbs_write_main = $('#page-bbs-write-main');
+ var page_bbs_write_category = $('#page-bbs-write-category');
+ var page_bbs_write_tag = $('#page-bbs-write-tag');
+
+ var page_bbs_list = $('#page-bbs-list');
+ var page_bbs_view = $('#page-bbs-view');
+ var page_bbs_write_attach = $('#page-bbs-write-attach');
+
+ var modal_bbs_search = $('#modal-bbs-search');
+ var modal_bbs_category = $('#modal-bbs-category');
+ var modal_bbs_write = $('#modal-bbs-write');
+ var sheet_comment_write = $('#sheet-comment-write');
+
+ var popup_bbs_cancelCheck = $('#popup-bbs-cancelCheck');
+ var popup_comment_mypost = $('#popup-comment-mypost');
+ var popup_linkshare = $('#popup-link-share')  //링크공유 팝업
+
+ var popover_bbs_listMarkup = $('#popover-bbs-listMarkup');
+ var popover_bbs_view = $('#popover-bbs-view');
+
+ var editor_bbs;
+ var attach_file_saveDir = './files/bbs/';// 파일 업로드 폴더
+ var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
+
+ function overScrollEffect(page){
+   var page_startY = 0;
+   var page_endY = 0;
+
+   page.find('.content').on('touchstart',function(event){
+     page_startY = event.originalEvent.changedTouches[0].pageY;
+   });
+   page.find('.content').on('touchmove',function(event){
+     var page_moveY = event.originalEvent.changedTouches[0].pageY;
+     var page_contentY = $(this).scrollTop();
+     if (page_contentY === 0 && page_moveY > page_startY && !document.body.classList.contains('refreshing')) {
+       if (page_moveY-page_startY>50) {
+         edgeEffect(page,'top','show'); // 스크롤 상단 끝
+       }
+     }
+     if( (page_moveY < page_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+       if (page_startY-page_moveY>50) {
+         edgeEffect(page,'bottom','show'); // 스크롤 하단 끝
+       }
+     }
+   });
+ }
+
+ function pullToRefresh(page){
+   page.find('.content').on('touchstart',function(event){
+     page_startY = event.originalEvent.changedTouches[0].pageY;
+   });
+   page.find('.content').on('touchend',function(event){
+     var page_endY=event.originalEvent.changedTouches[0].pageY;
+     var page_contentY = $(this).scrollTop();
+     if (page_contentY === 0 && page_endY > page_startY ) {
+       if (page_endY-page_startY>150) {
+         resetPageContent(page);
+         getBbsList(settings_list,'','');
+       }
+     }
+   })
+ }
+
+ function resetPageContent(page){
+   page.find('.content').empty();
+   var content_html = page.find('.content').clone();
+   page.find('.content').infinitescroll('destroy');
+   page.append(content_html);
+   page.find('[data-role="post"]').loader({ position: 'inside' });
+   overScrollEffect(page_bbs_list);
+   pullToRefresh(page_bbs_list);
+   activeTab('list');
+ }
+
+ function activeTab(item){
+   page_bbs_list.find('.bar-tab .tab-item').removeClass('active');
+   page_bbs_list.find('.bar-tab [data-role="'+item+'"]').addClass('active');
+ }
 
 $(document).ready(function() {
 
-  var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
+  overScrollEffect(page_bbs_list)
+  pullToRefresh(page_bbs_list)
 
-  var page_bbs_write_main = $('#page-bbs-write-main');
-  var page_bbs_list = $('#page-bbs-list');
-  var page_bbs_view = $('#page-bbs-view');
-  var page_bbs_write_attach = $('#page-bbs-write-attach');
+  var p = page_bbs_list.find('[data-role="list-wrapper"]').attr('data-page');
 
-  var modal_bbs_write = $('#modal-bbs-write');
-  var sheet_comment_write = $('#sheet-comment-write');
+  //리스트 타입 변경
+  $('[data-toggle="listMarkup"]').tap(function() {
+    var button = $(this)
+    var markup = button.attr('data-markup');
+    var bid = button.attr('data-bid');
+    history.back() // popover 닫기
+    localStorage.setItem('bbs-'+bid+'-listMarkup', markup);
+    settings_list.markup = markup;
+    resetPageContent(page_bbs_list);
+    getBbsList(settings_list,'','');
+  });
 
-  var popup_bbs_cancelCheck = $('#popup-bbs-cancelCheck');
-  var popup_comment_mypost = $('#popup-comment-mypost');
-  var popup_linkshare = $('#popup-link-share')  //링크공유 팝업
+  $('[data-act="write"]').tap(function() {
+    $.loader({ text: $(this).attr("data-text") });
+    location.href = $(this).attr("data-href");
+  });
 
-  var popover_bbs_listMarkup = $('#popover-bbs-listMarkup');
-  var popover_bbs_view = $('#popover-bbs-view');
+  $('[data-act="category"]').click(function() {
+    $.loader({ text: $(this).attr("data-text") });
+    var category =  $(this).attr("data-cat");
+    resetPageContent(page_bbs_list);
+    getBbsList(settings_list,category,'');
+    activeTab('category');
+    history.back(); //모달 닫기
+  });
 
-  var editor_bbs;
-  var attach_file_saveDir = './files/bbs/';// 파일 업로드 폴더
-  var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
+  page_bbs_view.on('click','[data-act="tag"]',function(){
+    var tag =  $(this).attr("data-tag");
+    $.loader({ text: tag+' 검색중..' });
+    resetPageContent(page_bbs_list);
+    activeTab('search');
+    getBbsList(settings_list,'',tag+';tag');
+    history.back(); //이전 페이지 이동
+  });
 
-  putCookieAlert('bbs_action_result') // 실행결과 알림 메시지 출력
+  $('#modal-bbs-search').find('[data-role="search"]').submit(function(e){
+    e.preventDefault();
+    var form =  $(this);
+    var keyword = form.find('[name="keyword"]').val();
+    var where   = form.find('[name="where"]').val();
+    var search = keyword+';'+where;
+
+    history.back();
+    form.find('[name="keyword"]').blur().val(''); //가상 키보드 내리기
+    $.loader({ text: '검색중..' });
+
+    setTimeout(function(){
+      resetPageContent(page_bbs_list);
+      activeTab('search');
+      getBbsList(settings_list,'',search);
+    }, 300);
+
+  });
+
+  $(document).on('tap','[data-act="reset"]',function() {
+    resetPageContent(page_bbs_list);
+    getBbsList(settings_list,'','');
+  });
+
+  page_bbs_list.find('.content').on( 'scroll', function(){
+    var page =  $(this);
+    var pos =$(this).scrollTop();
+
+  });
 
   $('[data-act="opinion"]').click(function() {
     getIframeForAction('');
     frames.__iframe_for_action__.location.href = $(this).attr("data-url");
   });
-
 
   // 게시물 보기 페이지에서 댓글이 등록된 이후에 댓글 수량 업데이트
   $('#page-bbs-view').find('#commentting-container').on('saved.rb.comment',function(){
@@ -105,8 +231,16 @@ $(document).ready(function() {
 
     popover.find('[data-toggle="linkCopy"]').attr('data-clipboard-text',origin+path)
     popover.find('[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-url',origin+path)
-
   })
+
+  modal_bbs_search.on('shown.rc.modal', function (e) {
+    var modal = $(this);
+    setTimeout(function(){ modal.find('[name="keyword"]').focus(); }, 100);
+  });
+  modal_bbs_search.on('hidden.rc.modal', function (e) {
+    var modal = $(this);
+    modal.find('[name="keyword"]').blur().val('');
+  });
 
   //글쓰기 모달이 열릴때
   modal_bbs_write.on('shown.rc.modal', function (e) {
@@ -119,6 +253,7 @@ $(document).ready(function() {
     modal.find('[data-act="submit"]').attr('disabled', false);
     modal.find('[data-role="loader"]').removeClass('d-none') //로더 제거
     modal.find('form').addClass('d-none')
+    modal.find('[data-act="submit"]').addClass('d-none');
 
     setTimeout(function(){
       // 글쓰기 권한 체크
@@ -137,94 +272,125 @@ $(document).ready(function() {
            modal.find('[name="pcode"]').val(pcode)
 
            DecoupledEditor
-               .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
-                 placeholder: '내용',
-                 toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
-                 removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle',,'WordCount' ],
-                 image: {},
-                 language: 'ko',
-                 extraPlugins: [rbUploadAdapterPlugin],
-                 table: {
-                   contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
-                 },
-                 mediaEmbed: {
-                   extraProviders: [
-                     {
-                       name: 'other',
-                       url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                     },
-                     {
-                       name: 'another',
-                       url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-                     }
-                   ]
-                 },
-                 typing: {
-                   transformations: {
-                     include: [
-                     'quotes',
-                     'typography',
-                     ],
-                     extra: [
-                       // Add some custom transformations – e.g. for emojis.
-                       { from: ':)', to: '🙂' },
-                       { from: ':+1:', to: '👍' },
-                       { from: ':tada:', to: '🎉' }
-                     ],
+             .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
+               placeholder: '본문 입력...',
+               toolbar: [ 'alignment:left','alignment:center','bulletedList','blockQuote','imageUpload','insertTable','undo'],
+               removePlugins: [ 'ImageToolbar', 'ImageCaption', 'ImageStyle',,'WordCount' ],
+               image: {},
+               language: 'ko',
+               extraPlugins: [rbUploadAdapterPlugin],
+               table: {
+                 contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+               },
+               mediaEmbed: {
+                 extraProviders: [
+                   {
+                     name: 'other',
+                     url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+                   },
+                   {
+                     name: 'another',
+                     url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
                    }
+                 ]
+               },
+               typing: {
+                 transformations: {
+                   include: [
+                   'quotes',
+                   'typography',
+                   ],
+                   extra: [
+                     // Add some custom transformations – e.g. for emojis.
+                     { from: ':)', to: '🙂' },
+                     { from: ':+1:', to: '👍' },
+                     { from: ':tada:', to: '🎉' }
+                   ],
                  }
-               } )
-               .then( newEditor => {
-                 console.log('editor_bbs init');
-                 modal.find('[data-role="loader"]').addClass('d-none') //로더 제거
-                 modal.find('form').removeClass('d-none')
-                 editor_bbs = newEditor;
-                 modal.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
-                 editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-                   if (value) {
-                     console.log('editor_bbs focus');
-                     modal.addClass('editor-focused');
-                   } else {
-                     console.log('editor_bbs blur');
-                     modal.removeClass('editor-focused');
-                   }
-                 } );
-
-                 if (uid) {
-                   modal.find('[data-act="submit"] .not-loading').text('수정');
-                   modal.find('[name="subject"]').val(subject);
-                   $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-                        bid : bid,
-                        uid : uid,
-                        mod : 'edit'
-                     },function(response){
-                      var result = $.parseJSON(response);
-                      var content=result.content;
-                      var adddata=result.adddata;
-                      var featured_img=result.featured_img;
-                      var attachNum=result.attachNum;
-                      var photo=result.photo;
-                      var video=result.video;
-                      var audio=result.audio;
-                      var file=result.file;
-                      editor_bbs.setData(content);
-                      modal.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
-                      page_bbs_write_attach.find('[data-role="attach-preview-photo"]').html(photo);
-                      page_bbs_write_attach.find('[data-role="attach-preview-video"]').html(video)
-                      page_bbs_write_attach.find('[data-role="attach-preview-audio"]').html(audio)
-                      page_bbs_write_attach.find('[data-role="attach-preview-file"]').html(file)
-                      modal.find('[data-role="tap-attach"] .badge').text(attachNum)
-
-                   });
+               }
+             } )
+             .then( newEditor => {
+               console.log('editor_bbs init');
+               modal.find('[data-role="loader"]').addClass('d-none'); //로더 제거
+               modal.find('[data-act="submit"]').removeClass('d-none');
+               modal.find('form').removeClass('d-none');
+               editor_bbs = newEditor;
+               modal.find('.toolbar-container').html(editor_bbs.ui.view.toolbar.element)
+               editor_bbs.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+                 if (value) {
+                   console.log('editor_bbs focus');
+                   modal.addClass('editor-focused');
                  } else {
-                   setTimeout(function(){ modal.find('[name="subject"]').focus(); }, 1000);
-                   modal.find('[data-act="submit"] .not-loading').text('등록');
+                   console.log('editor_bbs blur');
+                   modal.removeClass('editor-focused');
                  }
-
-               })
-               .catch( error => {
-                   console.error( error );
                } );
+
+               if (uid) {
+                 modal.find('[data-act="submit"] .not-loading').text('수정');
+                 modal.find('[name="subject"]').val(subject);
+                 $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+                      bid : bid,
+                      uid : uid,
+                      mod : 'edit'
+                   },function(response){
+                    var result = $.parseJSON(response);
+                    var content=result.content;
+                    var category=result.category;
+                    var notice=result.notice;
+                    var hidden=result.hidden;
+                    var tag=result.tag;
+                    var adddata=result.adddata;
+                    var featured_img=result.featured_img;
+                    var attachNum=result.attachNum;
+                    var photo=result.photo;
+                    var video=result.video;
+                    var audio=result.audio;
+                    var file=result.file;
+                    editor_bbs.setData(content);
+
+                    modal.find('[name="category"]').val(category);
+                    modal.find('[name="notice"]').val(notice);
+                    modal.find('[name="hidden"]').val(hidden);
+
+                    if (notice==1) modal.find('[data-role="notice"]').addClass('active');
+                    else modal.find('[data-role="notice"]').removeClass('active');
+
+                    if (hidden==1) modal.find('[data-role="hidden"]').addClass('active');
+                    else modal.find('[data-role="hidden"]').removeClass('active');
+
+                    if (category) {
+                      page_bbs_write_category.find('[name="radio"][value="'+category+'"]').prop('checked', true);
+                      page_bbs_write_main.find('[data-role="category"]').text(category);
+                    } else {
+                      page_bbs_write_category.find('[name="radio"]').prop('checked', false);
+                      page_bbs_write_main.find('[data-role="category"]').text('');
+                    }
+
+                    if (tag) {
+                      modal.find('[name="tag"]').val(tag);
+                      page_bbs_write_main.find('[data-role="tag"]').text(tag);
+                    } else {
+                      modal.find('[name="tag"]').val('');
+                      page_bbs_write_main.find('[data-role="tag"]').text('');
+                    }
+
+                    modal.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
+                    page_bbs_write_attach.find('[data-role="attach-preview-photo"]').html(photo);
+                    page_bbs_write_attach.find('[data-role="attach-preview-video"]').html(video)
+                    page_bbs_write_attach.find('[data-role="attach-preview-audio"]').html(audio)
+                    page_bbs_write_attach.find('[data-role="attach-preview-file"]').html(file)
+                    modal.find('[data-role="tap-attach"] .badge').text(attachNum)
+
+                 });
+               } else {
+                 modal.find('[data-act="submit"] .not-loading').text('등록');
+               }
+
+             })
+             .catch( error => {
+                 console.error( error );
+             } );
 
          }
       });
@@ -265,11 +431,11 @@ $(document).ready(function() {
     var notice = modal.find('[name="notice"]').val();
     var hidden = modal.find('[name="hidden"]').val();
     var category = modal.find('[name="category"]').val();
+    var tag = modal.find('[name="tag"]').val();
     var backtype = modal.find('[name="backtype"]').val();
     var nlist = modal.find('[name="nlist"]').val();
     var pcode = modal.find('[name="pcode"]').val();
     var upfiles = modal.find('[name="upfiles"]').val('');
-    var bbs_tab_swiper = document.querySelector('#page-bbs-list .swiper-container').swiper;
     var markup = localStorage.getItem('bbs-'+bid+'-listMarkup');
 
     if (!memberid) {
@@ -285,22 +451,21 @@ $(document).ready(function() {
     var editorData = editor_bbs.getData();
 
     if (!subject_el.val()) {
-  		alert('제목을 입력해 주세요.       ');
-  		setTimeout(function(){subject_el.focus()}, 100);
+      subject_el.focus()
+  		setTimeout(function(){$.notify({message: '제목을 입력해 주세요.'},{type: 'default'})}, 450);
   		return false;
   	}
 
     if (editorData == '') {
-      alert('내용을 입력해 주세요.       ');
-      setTimeout(function(){editor_bbs.editing.view.focus();}, 100);
+      editor_bbs.editing.view.focus();
+      setTimeout(function(){$.notify({message: '본문을 입력해 주세요.'},{type: 'default'})}, 450);
       return false;
     }
 
     if (notice && hidden) {
       if (notice == 1 && hidden == 1)
       {
-        alert('공지글은 비밀글로 등록할 수 없습니다.  ');
-        $('#page-bbs-write-option').page({ start: '#page-bbs-write-main' });
+        $.notify({message: '공지글은 비밀글로 등록할 수 없습니다.'},{type: 'default'});
         return false;
       }
     }
@@ -308,7 +473,7 @@ $(document).ready(function() {
 
   	if (category && category == '')
   	{
-  		alert('카테고리를 선택해 주세요. ');
+      $.notify({message: '카테고리를 선택해 주세요.'},{type: 'default'});
   		$('#page-bbs-write-category').page({ start: '#page-bbs-write-main' });
   		return false;
   	}
@@ -349,8 +514,10 @@ $(document).ready(function() {
           name : name,
           subject : subject,
           content : editorData,
+          notice : notice,
           hidden : hidden,
           category : category,
+          tag : tag,
           upfiles : upfiles,
           featured_img : featured_img,
           backtype : backtype,
@@ -426,10 +593,10 @@ $(document).ready(function() {
                      $('[data-role="bbs-view"]').find('[data-role="attach-file"]').removeClass('hidden').html(file)
                    }
 
+
                  });
 
               }
-              setTimeout(function(){bbs_tab_swiper.updateAutoHeight(300);}, 300); //item 추가 후, swiper 높이 업데이트
 
               //글쓰기 모달 상태 초기화
               $(this).attr('disabled', false); //글쓰기 전성버튼 상태 초기화
@@ -450,175 +617,6 @@ $(document).ready(function() {
 
   });
 
-  //댓글 저장버튼 클릭
-  sheet_comment_write.find('[data-kcact="regis"]').click(function(event) {
-
-    if (!$(this).hasClass("active")) {
-      $.notify({message: '내용을 입력해주세요.'},{type: 'default'});
-      editor_sheet.editing.view.focus();
-      return false
-    }
-
-    sheet_comment_write.find('fieldset').prop('disabled', true);
-    $(this).addClass('fa-spin');
-
-    var type = $(this).attr('data-type');
-    var parent = $(this).attr('data-parent');
-    var uid = $(this).attr('data-uid');
-    var act = $(this).attr('data-act');
-    var hidden = $(this).attr('data-hidden');
-    var content = editor_sheet.getData();
-
-    setTimeout(function(){
-
-      if (type=='comment' && act=='regis') {
-        const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] .ck-editor__editable' );
-        const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
-        commentRegisEditorInstance.setData(content);
-        $('[data-role="bbs-comment"] [data-role="comment-input-wrapper"]').find('[data-kcact="regis"]').attr('data-hidden',hidden).click();
-      }
-
-      if (type=='oneline' && act=='regis') {
-        const onelineRegisEditor = document.querySelector( '[data-role="oneline-input-wrapper-'+parent+'"] .ck-editor__editable' );
-        const onelineRegisEditorInstance = onelineRegisEditor.ckeditorInstance;
-        onelineRegisEditorInstance.setData(content);
-        $('[data-role="oneline-input-wrapper-'+parent+'"]').find('[data-kcact="regis"]').attr('data-hidden',hidden).click();
-      }
-
-      if (type=='comment' && act=='edit') {
-
-        console.log('comment 수정 실행')
-        const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] [data-role="comment-item"] .ck-editor__editable' );
-        const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
-        commentRegisEditorInstance.setData(content);
-        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
-      }
-
-      if (type=='oneline' && act=='edit') {
-
-        console.log('oneline 수정 실행')
-        const commentRegisEditor = document.querySelector( '[data-role="bbs-comment"] [data-role="oneline-item"][data-uid="'+uid+'"] .ck-editor__editable' );
-        const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
-        commentRegisEditorInstance.setData(content);
-        $('[data-role="bbs-comment"]').find('[data-kcact="edit"][data-type="oneline"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
-      }
-    }, 600);
-
-  });
-
-  //댓글쓰기 컴포넌트가 호출될때
-  sheet_comment_write.on('shown.rc.sheet', function (e) {
-
-    DecoupledEditor
-    .create( document.querySelector('#sheet-comment-write [data-role="comment-input"]'),{
-      placeholder: '댓글을 남겨보세요..',
-      toolbar: [ 'bold','italic','bulletedList','numberedList','blockQuote','imageUpload','|','undo','redo'],
-      language: 'ko',
-      extraPlugins: [rbUploadAdapterPlugin],
-      mediaEmbed: {
-          extraProviders: [
-              {
-                  name: 'other',
-                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-              },
-              {
-                  name: 'another',
-                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-              }
-          ]
-      },
-      typing: {
-          transformations: {
-              include: [
-                  // Use only the 'quotes' and 'typography' groups.
-                  'quotes',
-                  'typography',
-
-                  // Plus, some custom transformation.
-                  { from: '->', to: '→' },
-                  { from: ':)', to: '🙂' },
-                  { from: ':+1:', to: '👍' },
-                  { from: ':tada:', to: '🎉' },
-              ],
-          }
-      },
-      removePlugins: [ 'WordCount' ],
-      image: {}
-    } )
-    .then( newEditor => {
-      editor_sheet = newEditor;
-      console.log('editor_sheet init');
-      editor_sheet.editing.view.focus();
-      console.log('editor_comment focus');
-      sheet_comment_write.find('.toolbar-container').html(editor_sheet.ui.view.toolbar.element)
-      $('[data-role="commentWrite-container"]').removeClass('active');
-
-      editor_sheet.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-        if (value) {
-          console.log('editor_comment focus');
-          $('[data-role="commentWrite-container"]').addClass('active');
-        } else {
-          console.log('editor_comment blur');
-        }
-      } );
-
-      editor_sheet.model.document.on( 'change:data', () => {
-        var content = editor_sheet.getData();
-        if (content) sheet_comment_write.find('[data-kcact="regis"]').addClass('active');
-        else sheet_comment_write.find('[data-kcact="regis"]').removeClass('active');
-      } );
-
-    })
-    .catch( error => {
-        console.error( error );
-    } );
-
-    $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','.2');
-
-    sheet_comment_write.find('[data-role="comment-hidden"]').off('changed.rc.switch').on('changed.rc.switch', function () {
-      if ($(this).hasClass("active")) {
-        console.log('비밀글 ON')
-        sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','true');
-      } else {
-        console.log('비밀글 OFF')
-        sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','false');
-      }
-    })
-  })
-
-  sheet_comment_write.on('hidden.rc.sheet', function (e) {
-
-    editor_sheet.setData('');
-    console.log('editor_sheet empty')
-    editor_sheet.destroy();
-    console.log('editor_sheet destroy')
-    sheet_comment_write.find('[data-kcact="regis"]').removeClass('active');
-    sheet_comment_write.find('fieldset').prop('disabled', false);
-    sheet_comment_write.find('[data-kcact="regis"]').removeClass('fa-spin').attr('data-type','').attr('data-parent','').attr('data-act','').attr('data-hidden','');
-    $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','1')
-    $('#sheet-comment-write-toolbar').collapse('hide');
-
-    // 비밀글 옵션 초기화
-    sheet_comment_write.find('[data-role="comment-hidden"]').removeClass('active');
-    sheet_comment_write.find('[data-role="comment-hidden"] .switch-handle').removeAttr('style');
-
-    var uid = sheet_comment_write.attr('data-uid');
-    var type = sheet_comment_write.attr('data-type');
-
-    sheet_comment_write.removeAttr('data-uid').removeAttr('data-type')
-
-    if (uid && type) {
-      $('body').removeClass('comment-editmod');
-      console.log(type+' 수정모드 해제')
-    }
-
-    const onelineRegisEditor = document.querySelector( '[data-role="comment-item"] .ck-editor__editable' );
-    if (onelineRegisEditor) {
-      const onelineRegisEditorInstance = onelineRegisEditor.ckeditorInstance;
-      onelineRegisEditorInstance.destroy();
-    }
-  })
-
   // 글쓰기 취소확인 처리
   popup_bbs_cancelCheck.find('[data-toggle="cancelCheck"]').tap(function(event) {
     event.preventDefault();
@@ -631,6 +629,12 @@ $(document).ready(function() {
       history.back();
       modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
       modal_bbs_write.find('[name="featured_img"]').val('') //대표이미지 입력내용 초기화
+      modal_bbs_write.find('[name="hidden"]').val('') // 비밀글 설정 초기화
+      modal_bbs_write.find('[name="notice"]').val('') // 공지글 설정 초기화
+      modal_bbs_write.find('[name="category"]').val('') // 카테고리 설정 초기화
+      modal_bbs_write.find('[data-role="category"]').text('') // 카테고리 설정 초기화
+      modal_bbs_write.find('[name="tag"]').val('') // 태그 설정 초기화
+      modal_bbs_write.find('[data-role="tag"]').text('') // 태그 설정 초기화
       modal_bbs_write.find('[name="upfiles"]').val('') //첨부파일 입력내용 초기화
       modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
       modal_bbs_write.find('[data-role="tap-attach"] .badge').text('')  //첨부수량 초기화
@@ -638,7 +642,9 @@ $(document).ready(function() {
       modal_bbs_write.find('[data-role="attach-preview-video"]').html('')
       modal_bbs_write.find('[data-role="attach-preview-audio"]').html('')
       modal_bbs_write.find('[data-role="attach-preview-file"]').html('')
-      console.log('editor_bbs 제목,본문입력 초기화');
+      modal_bbs_write.find('[data-toggle="switch"]').removeClass('active')
+      page_bbs_write_category.find('[name="radio"]').prop('checked', false);
+      console.log('입력사항 초기화');
     }
   });
 
@@ -665,7 +671,7 @@ $(document).ready(function() {
   })
 
   // 카테고리 항목 클릭에 글쓰기폼의 name="category" 에 값 적용하기
-  $("#page-bbs-write-category").find('[type="radio"]').click(function() {
+  page_bbs_write_category.find('[type="radio"]').click(function() {
      var radio_val = $(this).val()
   	 modal_bbs_write.find('[name="category"]').val(radio_val)
   	 modal_bbs_write.find('[data-role="tab-category"] .icon').removeClass('text-muted')
@@ -673,9 +679,34 @@ $(document).ready(function() {
   });
 
   // 태그 페이지가 닫힐때 태그폼의 내용을 추출하여 글쓰기폼의 name="tag" 에 값 적용하기
-  $('#page-bbs-write-tag').on('hidden.rc.page', function () {
-  	var tag = $('#page-bbs-write-tag').find('[name="tag"]').val()
-  	modal_bbs_write.find('[name="tag"]').val(tag)
+  page_bbs_write_tag.on('shown.rc.page', function () {
+    var tag = $('#page-bbs-write-tag').find('[name="tag"]')
+    setTimeout(function(){ tag.focus() }, 300);
+  })
+  page_bbs_write_tag.on('hidden.rc.page', function () {
+    var tag_input = $('#page-bbs-write-tag').find('[name="tag"]');
+  	var tag = tag_input.val()
+    tag_input.blur();
+    modal_bbs_write.find('[name="tag"]').val(tag);
+    page_bbs_write_main.find('[data-role="tag"]').text(tag);
+  })
+
+  // 비밀글 처리
+  $('#page-bbs-write-main').find('[data-role="hidden"]').on('changed.rc.switch', function () {
+    if ($(this).hasClass('active')) {
+      $('#modal-bbs-write').find('[name="hidden"]').val(1)
+    } else {
+      $('#modal-bbs-write').find('[name="hidden"]').val(0)
+    }
+  })
+
+  // 공지글 처리
+  $('#page-bbs-write-main').find('[data-role="notice"]').on('changed.rc.switch', function () {
+    if ($(this).hasClass('active')) {
+      $('#modal-bbs-write').find('[name="notice"]').val(1)
+    } else {
+      $('#modal-bbs-write').find('[name="notice"]').val(0)
+    }
   })
 
   // 옵션 페이지의 항목 비밀글 항목에 클릭시에 글쓰기폼의 name="hidden" 에 값 적용하기

@@ -1,13 +1,8 @@
-<script>$.loader({ text: "목록 구성중..." });</script>
-
 <section id="page-bbs-list" class="page center" data-role="bbs-list" data-snap-ignore="true">
 
-  <header class="bar bar-nav bar-dark bg-primary p-x-0">
-
+  <header class="bar bar-nav bar-light bg-white p-x-0">
     <a href="#drawer-left" data-toggle="drawer" class="icon icon-bars pull-left p-x-1" role="button"></a>
-    <a href="#popover-bbs-listMarkup" data-toggle="popover" data-bid="<?php echo $bid ?>" class="icon icon-more-vertical pull-right pl-2 pr-3">
-    </a>
-
+    <a href="#popover-bbs-listMarkup" data-toggle="popover" data-bid="<?php echo $bid ?>" class="icon icon-more-vertical pull-right pl-2 pr-3"></a>
     <h1 class="title">
       <a data-location="reload" data-text="새로고침..">
         <?php echo $B['name']?$B['name']:($_HM['name']?$_HM['name']:$_HP['name'])?>
@@ -16,81 +11,31 @@
   </header>
 
   <?php if ($NUM_NOTICE || $B['category'] || $d['theme']['search']): ?>
-  <nav class="bar bar-tab bar-light bg-white px-0 shadow-sm">
-    <!-- 동적생성 -->
+  <nav class="bar bar-tab bar-light bg-white px-0 shadow-sm swiper-pagination-clickable swiper-pagination-bullets">
+    <a class="tab-item active" role="button" data-act="reset" data-role="list">
+      <span class="icon icon-list"></span>
+      <span class="tab-label">목록</span>
+    </a>
+
+    <?php if ($B['category']): ?>
+    <a class="tab-item" href="#modal-bbs-category" data-toggle="modal" data-role="category" role="button">
+      <span class="icon fa fa-folder-o"></span>
+      <span class="tab-label">분류</span>
+    </a>
+    <?php endif; ?>
+
+    <a class="tab-item" href="#modal-bbs-search" data-toggle="modal" data-title="<?php echo $B['name'] ?>" data-role="search" role="button">
+      <span class="icon icon-search"></span>
+      <span class="tab-label">검색</span>
+    </a>
+    <a class="tab-item" href="#modal-bbs-write" data-toggle="modal" data-mod="new" data-url="<?php echo $g['bbs_write']?>" role="button">
+      <span class="icon icon-compose"></span>
+      <span class="tab-label">쓰기</span>
+    </a>
   </nav>
   <?php endif; ?>
 
-  <main class="content bg-faded" data-role="bbs-list">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-
-        <!-- 전체글 -->
-        <div class="swiper-slide" id="swiper-post" data-hash="post">
-          <div data-pullToRefresh="true" data-role="post"></div>
-        </div><!-- /.swiper-slide -->
-
-        <!-- 공지 -->
-        <?php if ($NUM_NOTICE): ?>
-        <div class="swiper-slide" data-hash="notice">
-          <ul class="table-view mb-0 border-bottom-0"><li class="table-view-divider text-muted">공지사항</li></ul>
-          <div data-role="notice"></div>
-        </div><!-- /.swiper-slide -->
-        <?php endif; ?>
-
-        <!-- 분류 -->
-        <?php if($B['category']):$_catexp = explode(',',$B['category']);$_catnum=count($_catexp)?>
-        <div class="swiper-slide" data-hash="category">
-          <ul class="table-view bg-white border-top-0 mt-0">
-            <li class="table-view-divider"><?php echo $_catexp[0]?></li>
-            <li class="table-view-cell">
-              <a data-act="reset" data-text="전체글 보기..">
-                <span class="badge badge-pill"><?php echo $NUM ?></span>
-                <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> 전체
-              </a>
-            </li>
-            <?php for($i = 1; $i < $_catnum; $i++):if(!$_catexp[$i])continue;?>
-            <li class="table-view-cell">
-              <a data-act="category" data-cat="<?php echo $_catexp[$i]?>" data-text="<?php echo $_catexp[$i]?> 분류">
-                <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> <?php echo $_catexp[$i]?>
-                <?php if($d['theme']['show_catnum']):?>
-                <span class="badge badge-pill"><?php echo getDbRows($table[$m.'data'],'site='.$s.' and notice=0 and bbs='.$B['uid']." and category='".$_catexp[$i]."'")?></span>
-                <?php endif?>
-              </a>
-            </li>
-            <?php endfor?>
-          </ul>
-        </div><!-- /.swiper-slide -->
-        <?php endif; ?>
-
-        <!-- 검색 -->
-        <?php if($d['theme']['search']):?>
-        <div class="swiper-slide" data-hash="search">
-          <form class="content-padded" data-role="search">
-
-            <div class="form-group">
-              <label class="sr-only">검색어</label>
-              <input type="search" class="form-control" placeholder="검색어를 입력해주세요." name="keyword" value="" autocomplete="off" required>
-            </div>
-
-            <div class="form-group">
-              <label class="sr-only">검색범위</label>
-              <select class="form-control form-control-sm" name="where" style="width: 92%;height: 1.5rem;">
-                <option value="subject|tag">제목+태그</option>
-                <option value="content">본문</option>
-                <option value="name">이름</option>
-                <option value="nic">닉네임</option>
-                <option value="id">아이디</option>
-              </select>
-            </div>
-
-          </form>
-        </div><!-- /.swiper-slide -->
-        <?php endif; ?>
-
-      </div><!-- /.swiper-wrapper -->
-    </div><!-- /.swiper-container -->
-  </main>
+  <main class="content bg-white" data-role="bbs-list"></main>
 
 </section>
 
@@ -100,18 +45,16 @@
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="theme" value="">
   <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
-		<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
     <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
 
-    <a class="btn-nav pull-right icon px-3" id="btn-linkShare"
+    <a class="icon material-icons pull-right px-3 mirror" id="btn-linkShare"
       data-role="linkShare"
       data-subject="{$subject}"
       data-url=""
       data-likes="{$likes}"
       data-image="{$featured_img}"
-      data-desc="">
-      <i class="fa fa-share" aria-hidden="true"></i>
+      data-desc="">reply
     </a>
 
   </header>
@@ -121,7 +64,11 @@
 
       <div class="pull-xs-left">
 
-        <div class="media" style="width:15rem">
+        <div class="media" style="width:15rem"
+          data-mbruid=""
+          data-toggle="page"
+          data-target="#page-member-profile"
+          data-start="#page-bbs-view">
           <img class="media-object pull-left rb-avatar img-circle bg-faded" src="" style="width:2.25rem;height:2.25rem" data-role="avatar">
           <div class="media-body rb-meta m-l-1">
             <span class="badge badge-default badge-inverted" data-role="name"></span> <br>
@@ -133,7 +80,10 @@
       </div>
 
       <div class="pull-xs-right pt-1">
-        <button type="button" class="btn btn-outline-secondary" data-toggle="move" data-target="[data-role='comment-box']" data-page="#page-bbs-view" data-role="btn_comment">
+        <button type="button" class="btn btn-outline-secondary"
+          data-toggle="move"
+          data-target="[data-role='comment-box']"
+          data-page="#page-bbs-view" data-role="btn_comment">
           <i class="fa fa-comment-o" aria-hidden="true"></i>
           <span data-role="total_comment" class="badge badge-default badge-inverted"></span>
         </button>
@@ -226,10 +176,8 @@
   </div>
 </section>
 
-<link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
-<script src="<?php echo $g['url_module_skin'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
-<script src="<?php echo $g['url_module_skin'] ?>/_js/getBbsList.js<?php echo $g['wcache']?>" ></script>
-<script src="<?php echo $g['url_module_skin'] ?>/_js/getBbsData.js<?php echo $g['wcache']?>" ></script>
+
+
 
 <script>
 
@@ -269,13 +217,12 @@
   var b_category   = '<?php echo $B['category'] ?>';
   var theme_search = '<?php echo $d['theme']['search'] ?>';
 
-  // 하단 tab(swiper)
-  if ( bid || b_category || b_category || theme_search ) {
-    setBbsTab(bid,num_notice,b_category,theme_search);
-  }
+  $( document ).ready(function() {
 
-  getBbsList(settings_list,category,keyword); // 목록 셋팅
-  getBbsData(settings_view); // 게시물 보기
+    getBbsList(settings_list,category,keyword); // 목록 셋팅
+    getBbsData(settings_view); // 게시물 보기
+
+  });
 
 
 </script>

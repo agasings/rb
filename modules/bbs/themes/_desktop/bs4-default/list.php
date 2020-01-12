@@ -2,7 +2,7 @@
 
 <section class="rb-bbs-list">
 
-  <header class="d-flex justify-content-between align-items-center my-4">
+  <header class="d-flex justify-content-between align-items-end my-4">
     <span class="text-muted">
       <small>총게시물 : <strong><?php echo number_format($NUM+count($NCD))?></strong> 건  (<?php echo $p?>/<?php echo $TPG?> page) </small>
       <?php if($d['bbs']['rss']):?>

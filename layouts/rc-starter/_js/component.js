@@ -15,7 +15,7 @@ var page_bbs_qnawrite = $('#page-bbs-qnawrite');  // 1:1 상담 게시판 쓰기
 var popup_link_share =  $('#popup-link-share'); //링크 공유
 var kakao_link_btn = $('#kakao-link-btn')  //카카오톡 링크공유 버튼
 
-function getBbsList(bid,cat,page,collapse) {
+function _getBbsList(bid,cat,page,collapse) {
 
   $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_bbsList',{
      bid : bid,
@@ -82,59 +82,59 @@ $( document ).ready(function() {
     page_site_page.find('[data-role="main"]').html('');
   })
 
-  // 게시판 목록 가져오기
-  page_bbs_list.on('show.rc.page', function (event) {
-    var button = $(event.relatedTarget);
-    var bid = button.attr('data-id');
-    var cat= button.attr('data-category');
-    var collapse = button.attr('data-collapse');
-    page_bbs_list.find('.content').loader({
-      position: "inside"
-    });
-    getBbsList(bid,cat,page_bbs_list,collapse)
-  })
-
-  page_bbs_list.on('hidden.rc.page', function (event) {
-    page_bbs_list.find('.bar-header-secondary').addClass('d-none');
-  })
-
-  page_bbs_list.find('[data-role="category"]').on('change', function () {
-    var option = $(this).find(':selected');
-    var bid = option.attr('data-bid');
-    var collapse = option.attr('data-collapse');
-    var cat = option.val();
-    getBbsList(bid,cat,page_bbs_list,collapse)
-  });
-
-  // 게시물 보기
-  page_bbs_view.on('show.rc.page', function (event) {
-    var button = $(event.relatedTarget);
-    var uid = button.attr('data-uid');
-
-    $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-       uid : uid,
-       markup_file : 'view_simple'
-    },function(response){
-       var result = $.parseJSON(response);
-       var error=result.error;
-       var article=result.article;
-       var mypost = result.mypost;
-       if (error) {
-         setTimeout(function(){
-           history.back();
-           page_bbs_view.find('.content').loader('hide');
-           setTimeout(function(){ $.notify({message: error},{type: 'default'}); }, 400);
-           return false
-         }, 300);
-       } else {
-         // page_bbs_view.find('.content').loader('hide');
-         page_bbs_view.find('[data-role="main"]').html(article);
-
-         if (!mypost) page_bbs_view.find('[data-role="toolbar"]').remove()
-
-       }
-    });
-  })
+  // // 게시판 목록 가져오기
+  // page_bbs_list.on('show.rc.page', function (event) {
+  //   var button = $(event.relatedTarget);
+  //   var bid = button.attr('data-id');
+  //   var cat= button.attr('data-category');
+  //   var collapse = button.attr('data-collapse');
+  //   page_bbs_list.find('.content').loader({
+  //     position: "inside"
+  //   });
+  //   getBbsList(bid,cat,page_bbs_list,collapse)
+  // })
+  //
+  // page_bbs_list.on('hidden.rc.page', function (event) {
+  //   page_bbs_list.find('.bar-header-secondary').addClass('d-none');
+  // })
+  //
+  // page_bbs_list.find('[data-role="category"]').on('change', function () {
+  //   var option = $(this).find(':selected');
+  //   var bid = option.attr('data-bid');
+  //   var collapse = option.attr('data-collapse');
+  //   var cat = option.val();
+  //   getBbsList(bid,cat,page_bbs_list,collapse)
+  // });
+  //
+  // // 게시물 보기
+  // page_bbs_view.on('show.rc.page', function (event) {
+  //   var button = $(event.relatedTarget);
+  //   var uid = button.attr('data-uid');
+  //
+  //   $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
+  //      uid : uid,
+  //      markup_file : 'view_simple'
+  //   },function(response){
+  //      var result = $.parseJSON(response);
+  //      var error=result.error;
+  //      var article=result.article;
+  //      var mypost = result.mypost;
+  //      if (error) {
+  //        setTimeout(function(){
+  //          history.back();
+  //          page_bbs_view.find('.content').loader('hide');
+  //          setTimeout(function(){ $.notify({message: error},{type: 'default'}); }, 400);
+  //          return false
+  //        }, 300);
+  //      } else {
+  //        // page_bbs_view.find('.content').loader('hide');
+  //        page_bbs_view.find('[data-role="main"]').html(article);
+  //
+  //        if (!mypost) page_bbs_view.find('[data-role="toolbar"]').remove()
+  //
+  //      }
+  //   });
+  // })
 
   // 게시판(1:1상담) 목록 가져오기
   page_bbs_qnalist.on('show.rc.page', function (event) {

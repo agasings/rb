@@ -62,15 +62,16 @@ if ($NUM_NOTICE) {
     $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
     $TMPL['has_featured_img'] = getUpImageSrc($R)=='/files/noimage.png'?'d-none':'';
     if ($collapse) $TMPL['article'] = getContents($R['content'],$R['html']);
-    $skin_item=new skin('media-item');
+    $skin_item=new skin('list-item-notice');
     $html.=$skin_item->make();
     $TMPL['items']=$html;
   }
-  $skin=new skin('media-list');
+  $skin=new skin('list');
+  $result['list_notice']=$skin->make();
 } else {
-  $skin=new skin('none');
+  $result['list_notice']='';
 }
-$result['list_notice']=$skin->make();
+
 
 $html='';
 
@@ -79,7 +80,7 @@ if ($NUM) {
 
     $TMPL['subject']=htmlspecialchars($R['subject']);
     $TMPL['uid']=$R['uid'];
-    $TMPL['name']=$R[$_HS['nametype']];
+    $TMPL['name']= getStrCut($R[$_HS['nametype']],10,'..');
     $TMPL['hit']=$R['hit'];
     $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
     $TMPL['likes']=$R['likes'];
@@ -95,9 +96,9 @@ if ($NUM) {
     $TMPL['featured_img_sm'] = getPreviewResize(getUpImageSrc($R),'240x180');
     $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');  //16:9
     $TMPL['featured_img_lg'] = getPreviewResize(getUpImageSrc($R),'686x386');
-    $TMPL['featured_img_sq_200'] = getPreviewResize(getUpImageSrc($R),'200x200');
-    $TMPL['featured_img_sq_300'] = getPreviewResize(getUpImageSrc($R),'300x300');
-    $TMPL['featured_img_sq_600'] = getPreviewResize(getUpImageSrc($R),'600x600');
+    $TMPL['featured_img_1by1_200'] = getPreviewResize(getUpImageSrc($R),'200x200');
+    $TMPL['featured_img_1by1_300'] = getPreviewResize(getUpImageSrc($R),'300x300');
+    $TMPL['featured_img_1by1_600'] = getPreviewResize(getUpImageSrc($R),'600x600');
     $TMPL['has_featured_img'] = getUpImageSrc($R)=='/files/noimage.png'?'d-none':'';
 
     //업로드 파일갯수

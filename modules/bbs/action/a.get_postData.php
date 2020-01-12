@@ -165,6 +165,10 @@ if ($mod=='view') {
 
   $result['subject'] = $R['subject'];
   $result['content'] = getContents($R['content'],$R['html']);
+  $result['hidden'] = $R['hidden'];
+  $result['notice'] = $R['notice'];
+  $result['category'] = $R['category'];
+  $result['tag'] = $R['tag'];
   $result['adddata'] = $R['adddata'];
 
   if($R['upload']) {

@@ -29,6 +29,8 @@ function getBbsData(settings){
     var cat = $(ele).attr('data-cat')?$(ele).attr('data-cat'):''; // 카테고리
     var url = $(ele).attr('data-url')?$(ele).attr('data-url'):''; // url
     var name = $(ele).attr('data-name')?$(ele).attr('data-name'):''; // name
+    var mbruid = $(ele).attr('data-mbruid')?$(ele).attr('data-mbruid'):''; // 작성자 회원 고유번호
+    var mbrid = $(ele).attr('data-mbrid')?$(ele).attr('data-mbrid'):''; // 작성자 회원아이디
     var avatar = $(ele).attr('data-avatar')?$(ele).attr('data-avatar'):''; // avatar
     var comment = $(ele).attr('data-comment')?$(ele).attr('data-comment'):''; // comment
     var hit = $(ele).attr('data-hit')?$(ele).attr('data-hit'):''; // hit
@@ -38,6 +40,7 @@ function getBbsData(settings){
     var item = ele.closest('.table-view-cell')
 		var move =  ele.attr('data-move');
 
+
     item.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
     var modal = $(this);
     modal.find('[name="uid"]').val(uid);
@@ -45,6 +48,7 @@ function getBbsData(settings){
     page.find('[data-role="subject"]').text(subject);
     page.find('[data-role="cat"]').text(cat);
     page.find('[data-role="name"]').text(name);
+    page.find('[data-target="#page-member-profile"]').attr('data-mbruid',mbruid).attr('data-url','/@'+mbrid);
     page.find('[data-role="total_comment"]').text(comment);
     page.find('[data-role="avatar"]').attr('src',avatar);
     page.find('[data-role="hit"]').text(hit);
@@ -606,7 +610,5 @@ function getBbsData(settings){
 		var list_parent =  $('[data-slide="feed"]').find('#item-'+uid)
 		list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
 	});
-
-
 
 };

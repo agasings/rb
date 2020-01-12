@@ -1,15 +1,14 @@
 <div data-role="empty">
   <div class="d-flex justify-content-center align-items-center text-muted" style="height:82vh">
-    <div class="text-xs-center">
+    <div class="text-xs-center" data-act="reset">
       <div class="display-1">
         <i class="fa fa-folder-open-o" aria-hidden="true"></i>
       </div>
-      <p>
-        <span class="badge badge-pill badge-primary">{$cat}</span>
-        <span class="badge badge-pill badge-primary">{$keyword}</span>
+      <span class="badge badge-default badge-outline">{$cat}</span>
+      <span class="badge badge-default badge-outline">{$keyword}</span>
+      <p class="mt-3 mb-0">
         게시물이 없습니다.
       </p>
-      <button type="button" data-act="reset" class="btn btn-secondary btn-lg d-none text-muted" data-text="전체글 보기">전체글</button>
     </div>
   </div>
 </div>

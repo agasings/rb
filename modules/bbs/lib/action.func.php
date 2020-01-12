@@ -10,9 +10,17 @@ function getPostTag($tag,$bid){
   $i=0;
   for($i = 0; $i < $_tagn; $i++):;
     $_tagk=trim($_tags[$i]);
-    $html.='<a href="'.$bbs_list.'&amp;where=subject|tag&amp;keyword='.$_tagk.'" class="badge badge-primary badge-outline">';
-    $html.=$_tagk;
-    $html.='</a>';
+
+    if (!$g['mobile']||$_SESSION['pcmode']=='Y') {
+      $html.='<a href="'.$bbs_list.'&amp;where=subject|tag&amp;keyword='.$_tagk.'" class="badge badge-primary badge-outline">';
+      $html.=$_tagk;
+      $html.='</a>';
+    } else {
+      $html.='<span class="badge badge-primary badge-outline" data-act="tag" data-tag="'.$_tagk.'">';
+      $html.=$_tagk;
+      $html.='</span>';
+    }
+
   endfor;
   return $html;
 }

@@ -302,7 +302,8 @@ if ($backtype == "ajax") {
       $skin=new skin($markup.'-list');
       $result['item']=$skin->make();
     } else {
-      $skin=new skin($markup.'-item');
+      if ($notice) $skin=new skin('list-item-notice');
+      else $skin=new skin($markup.'-item');
       $result['item']=$skin->make();
     }
 
