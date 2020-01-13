@@ -95,7 +95,7 @@
       <span data-role="cat" class="badge badge-primary badge-inverted"></span>
       <h3 data-role="subject" class="rb-article-title"></h3>
     </div>
-    <div data-role="article">
+    <div data-role="article" data-plugin="photoswipe">
       <div class="p-4 text-xs-center">다시 시도해주세요.</div>
     </div>
 

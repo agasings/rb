@@ -38,7 +38,11 @@ $(document).ready(function() {
       // 포스트 글쓰기 페이지 저장버튼 출력
       $('[data-role="postsubmit"]').removeClass('d-none');
       $('[data-role="library"]').addClass('d-none');
-		}
+		},
+    afterUploadAll:function(obj) {
+      console.log('전체 업로드 완료')
+      uploadElement.isLoading("hide");
+    }
  });
 
   // main.js 기본값 세팅

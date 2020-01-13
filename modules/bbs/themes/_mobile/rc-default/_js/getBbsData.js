@@ -102,7 +102,7 @@ function getBbsData(settings){
            }, 600);
          }
 
-         modal.find('[data-role="article"]').html(article);
+         // modal.find('[data-role="article"]').html(article);
 
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
@@ -134,6 +134,7 @@ function getBbsData(settings){
 
          if (photo) {  // 첨부 이미지가 있을 경우
            modal.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+           initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프 활성
          }
 
          if (video) {  // 첨부 비디오가 있을 경우

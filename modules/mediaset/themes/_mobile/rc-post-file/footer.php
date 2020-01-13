@@ -32,7 +32,7 @@ $(document).ready(function() {
       afterUploadAll:function(obj) {
         console.log('전체 업로드 완료')
         $('[data-role="attach-handler-photo"]').removeClass('d-none');
-      },
+      }
 
    }
    $("#attach-files").RbUploadFile(upload_settings); // 아작스 폼+input=file 엘리먼트 세팅
