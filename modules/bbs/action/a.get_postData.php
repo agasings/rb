@@ -13,15 +13,25 @@ $R = getUidData($table['bbsdata'],$uid);
 $B = getUidData($table['bbslist'],$R['bbs']);
 
 include_once $g['path_module'].'bbs/var/var.php';
-
 if ($bid) include_once $g['dir_module'].'var/var.'.$bid.'.php';
+
+if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
+  $theme_attach= $d['bbs']['a_mskin']?$d['bbs']['a_mskin']:$d['bbs']['attach_mobile'];
+} else {
+  $theme_attach= $d['bbs']['a_skin']?$d['bbs']['a_skin']:$d['bbs']['attach_main'];
+}
+
+//첨부링크 및 파일
+$theme_link= '_mobile/rc-post-link';
+include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
+include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
+
+include_once $g['dir_module'].'lib/action.func.php';
 
 $mbruid = $my['uid'];
 $result['uid'] = $R['uid'];
 
 if ($mod=='view') {
-
-  include_once $g['dir_module'].'lib/action.func.php';
 
   if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
     $theme = $d['bbs']['m_skin']?$d['bbs']['m_skin']:$d['bbs']['skin_mobile'];
@@ -84,11 +94,13 @@ if ($mod=='view') {
     if ($AttachListType == 'object') {
       $result['photo'] = getAttachObjectArray($R,'photo');
     } else {
-      $result['attachNum'] = getAttachNum($R['upload'],'view');
-      $result['file'] = getAttachFileList($R,'view','file',$device);
-      $result['photo'] = getAttachFileList($R,'view','photo',$device);
-      $result['video'] = getAttachFileList($R,'view','video',$device);
-      $result['audio'] = getAttachFileList($R,'view','audio',$device);
+      $result['attachNum'] = _getAttachNum($R['upload'],'view');
+      $result['linkNum'] = getLinkNum($R['upload'],'modify');
+      $result['file'] = getAttachFileList($R,'view','file',$theme_attach);
+      $result['photo'] = getAttachFileList($R,'view','photo',$theme_attach);
+      $result['video'] = getAttachFileList($R,'view','video',$theme_attach);
+      $result['audio'] = getAttachFileList($R,'view','audio',$theme_attach);
+      $result['link'] = getAttachPlatformList($R,'view','file');
     }
   }
 
@@ -155,14 +167,6 @@ if ($mod=='view') {
 } else {
 
   //글쓰기 수정모드 일때
-  if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
-    $theme= $d['bbs']['a_mskin']?$d['bbs']['a_mskin']:$d['bbs']['attach_mobile'];
-  } else {
-    $theme= $d['bbs']['a_skin']?$d['bbs']['a_skin']:$d['bbs']['attach_main'];
-  }
-
-  include_once $g['path_module'].'mediaset/themes/'.$theme.'/main.func.php';
-
   $result['subject'] = $R['subject'];
   $result['content'] = getContents($R['content'],$R['html']);
   $result['hidden'] = $R['hidden'];
@@ -172,16 +176,19 @@ if ($mod=='view') {
   $result['adddata'] = $R['adddata'];
 
   if($R['upload']) {
-    $result['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
-    $result['attachNum'] = getAttachNum($R['upload'],'modify');
-    $result['file'] = getAttachFileList($R,'upload','file');
-    $result['photo'] = getAttachFileList($R,'upload','photo');
-    $result['video'] = getAttachFileList($R,'upload','video');
-    $result['audio'] = getAttachFileList($R,'upload','audio');
+    $result['attachNum'] = _getAttachNum($R['upload'],'modify');
+    $result['linkNum'] = getLinkNum($R['upload'],'modify');
+    $result['file'] = getAttachFileList($R,'upload','file',$theme_attach);
+    $result['photo'] = getAttachFileList($R,'upload','photo',$theme_attach);
+    $result['video'] = getAttachFileList($R,'upload','video',$theme_attach);
+    $result['audio'] = getAttachFileList($R,'upload','audio',$theme_attach);
+    $result['link'] = getAttachPlatformList($R,'upload','file');
   }
 
 }
 
+
+$result['theme_attach'] = $theme_attach;
 echo json_encode($result);
 exit;
 ?>

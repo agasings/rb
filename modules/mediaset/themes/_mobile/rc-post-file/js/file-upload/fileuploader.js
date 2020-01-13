@@ -643,7 +643,6 @@
 
 		function defaultProgressBar(obj,s)
 		{
-
 			this.statusbar = $("<section class='mb-2'></section>").width(s.statusBarWidth);
 			this.preview = $("<img class='ajax-file-upload-preview' />").width(s.previewWidth).height(s.previewHeight).appendTo(this.statusbar).hide();
 			this.filename = $("<div class='text-muted small my-2'></div>").appendTo(this.statusbar);

@@ -150,7 +150,7 @@
    			    </a>
    			    <!-- 2depth -->
              <div class="collapse mb-0" id="bbs-collapse-attach-file" role="tabpanel" >
-               <?php getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'#modal-bbs-write [data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+               <?php if ($m!='post') getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'#modal-bbs-write [data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
              </div>
    			  </li>
    				<li class="table-view-cell">
@@ -160,7 +160,7 @@
    			    </a>
    			    <!-- 2depth -->
    			    <div class="collapse mb-0" id="bbs-collapse-attach-link">
-               <?php getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+               <?php if ($m!='post') getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
              </div>
    			  </li>
 

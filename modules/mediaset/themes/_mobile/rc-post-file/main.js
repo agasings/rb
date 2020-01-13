@@ -117,9 +117,9 @@
                          delEl_default.remove();// 삭제 이벤트 진행시 해당 li 엘리먼트 remove
 
                          var sheet_item_num = $('#sheet-post-photoadd').find('[data-role="attach-item"]').length;
-                         var modal_item_num = $('#modal-post-write').find('[data-role="attach-preview-photo"] [data-role="attach-item"]').length;
+                         var modal_item_num = $('[data-role="write"]').find('[data-role="attach-preview-photo"] [data-role="attach-item"]').length;
                          setTimeout(function(){
-                           $('#modal-post-write').find('[data-role="attachNum"]').text(modal_item_num==0?'':modal_item_num);
+                           $('[data-role="write"]').find('[data-role="attachNum"]').text(modal_item_num==0?'':modal_item_num);
                            if (!sheet_item_num) {
                              $('#sheet-post-photoadd').find('[data-role="none"]').removeClass('d-none');
                              $('#sheet-post-photoadd').find('[data-act="submit"]').removeClass('active').addClass('text-muted');

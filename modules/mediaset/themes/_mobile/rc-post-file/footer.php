@@ -1,5 +1,6 @@
 <?php getImport('jquery-form','jquery.form.min','4.2.2','js'); ?>
 <script>
+
 var inputId='attach-file-input'; // 실제 작옹하는 input 엘리먼트 id 값을 옵션으로 지정을 해준다. (커스텀 버튼으로 click 이벤트 바인딩)
 var attach_file_saveDir = '<?php echo $g['path_file'].$parent_module?>/';// 파일 업로드 폴더
 var attach_module_theme = '<?php echo $attach_module_theme?>';// attach 모듈 테마
@@ -12,7 +13,7 @@ $(document).ready(function() {
       fileName: "files", // <input type="file" name=""> 의 name 값 --> php 에서 파일처리할 때 사용됨.
       multiple: <?php echo $d['theme']['multiple']?'true':'false' ?>, // 멀티업로드를 할 경우 true 로 해준다.
       inputId:inputId, // 실제 작옹하는 input 엘리먼트 id 값을 옵션으로 지정을 해준다. (커스텀 버튼으로 click 이벤트 바인딩)
-      formData: {"saveDir":attach_file_saveDir,"theme":attach_module_theme}, // 추가 데이타 세팅
+      formData: {"saveDir":attach_file_saveDir,"theme":'<?php echo $attach_module_theme?>'}, // 추가 데이타 세팅
       onSubmit:function(files){
         sheet_post_photoadd.find('[data-act="attach"]').attr('disabled',true);
         modal_post_write.find('[data-role="attach-handler-photo"]').attr('disabled',true);
@@ -97,6 +98,7 @@ $(document).ready(function() {
       sheet.find('[data-attach-act="featured-img"]').closest('.table-view-cell').removeClass('hidden');  // 대표이미지 항목 노출
       sheet.find('[data-attach-act="imageGoodsTag"]').closest('.table-view-cell').removeClass('hidden');  // 상품태그 항목 노출
     }
+
     $(target).sheet({
       title : title
     });

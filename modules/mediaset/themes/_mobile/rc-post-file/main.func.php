@@ -67,14 +67,13 @@ function getAttachFileList($parent_data,$mod,$type,$theme) {
 	return $html;
 }
 
-
 // 첨부파일 리스트 추출 함수 (낱개)
 function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 
-	global $g,$r,$m,$theme,$TMPL;
+	global $g,$r,$m,$TMPL,$markup_file,$theme;
 
-	$m='mediaset';
-	$theme='_mobile/rc-post-file';
+	$GLOBALS['theme'] = '_mobile/rc-post-file';
+	$GLOBALS['m']='mediaset';
 
 	include_once $GLOBALS['g']['path_core'].'function/sys.class.php';
 

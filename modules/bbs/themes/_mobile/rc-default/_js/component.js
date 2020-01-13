@@ -15,7 +15,6 @@
 
  var page_bbs_list = $('#page-bbs-list');
  var page_bbs_view = $('#page-bbs-view');
- var page_bbs_write_attach = $('#page-bbs-write-attach');
 
  var modal_bbs_search = $('#modal-bbs-search');
  var modal_bbs_category = $('#modal-bbs-category');
@@ -31,7 +30,7 @@
 
  var editor_bbs;
  var attach_file_saveDir = './files/bbs/';// 파일 업로드 폴더
- var attach_module_theme = '_mobile/rc-default';// attach 모듈 테마
+ var attach_module_theme = '_mobile/rc-post-file';// attach 모듈 테마
 
  function overScrollEffect(page){
    var page_startY = 0;
@@ -270,6 +269,8 @@ $(document).ready(function() {
            modal.find('.bar-tab').remove();
          } else {
            modal.find('[name="pcode"]').val(pcode)
+           modal.find('[data-toggle="collapse"]').addClass('collapsed');
+           modal.find('.collapse').removeClass('in');
 
            DecoupledEditor
              .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
@@ -483,13 +484,13 @@ $(document).ready(function() {
     var featured_img_input = $('#modal-bbs-write').find('input[name="featured_img"]'); // 대표이미지 input
     var featured_img_uid = featured_img_input.val();
     if(!featured_img_uid){ // 대표이미지로 지정된 값이 없는 경우
-      var first_attach_img_li = $('#page-bbs-write-attach').find('[data-role="attach-preview-photo"] li:first'); // 첫번째 첨부된 이미지 리스트 li
+      var first_attach_img_li = $('#modal-bbs-write').find('[data-role="attach-preview-photo"] li:first'); // 첫번째 첨부된 이미지 리스트 li
       var first_attach_img_uid = first_attach_img_li.attr('data-id');
       featured_img_input.val(first_attach_img_uid);
     }
 
     // 첨부파일 uid 를 upfiles 값에 추가하기
-    var attachfiles=$('#page-bbs-write-attach').find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
+    var attachfiles=$('#modal-bbs-write').find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
     var new_upfiles='';
     if(attachfiles){
       for(var i=0;i<attachfiles.length;i++) {
@@ -563,7 +564,7 @@ $(document).ready(function() {
                 $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
                      bid : bid,
                      uid : uid,
-                     mod : 'edit'
+                     mod : 'view'
                   },function(response){
                    var result = $.parseJSON(response);
                    var featured_img=result.featured_img;
@@ -592,7 +593,6 @@ $(document).ready(function() {
                    if (file) {  // 첨부 기타파일이 있을 경우
                      $('[data-role="bbs-view"]').find('[data-role="attach-file"]').removeClass('hidden').html(file)
                    }
-
 
                  });
 
@@ -673,9 +673,8 @@ $(document).ready(function() {
   // 카테고리 항목 클릭에 글쓰기폼의 name="category" 에 값 적용하기
   page_bbs_write_category.find('[type="radio"]').click(function() {
      var radio_val = $(this).val()
-  	 modal_bbs_write.find('[name="category"]').val(radio_val)
-  	 modal_bbs_write.find('[data-role="tab-category"] .icon').removeClass('text-muted')
-  	 modal_bbs_write.find('[data-role="tab-category"]').removeClass('text-muted').addClass('active')
+  	 modal_bbs_write.find('[name="category"]').val(radio_val);
+  	 modal_bbs_write.find('[data-role="category"]').text(radio_val)
   });
 
   // 태그 페이지가 닫힐때 태그폼의 내용을 추출하여 글쓰기폼의 name="tag" 에 값 적용하기

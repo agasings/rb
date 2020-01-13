@@ -25,9 +25,6 @@
 <!-- 입력 textarea 자동확장 -->
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 
-<!-- pulltorefresh : https://github.com/BoxFactura/pulltorefresh.js-->
-<?php getImport('pulltorefresh','index.umd.min','0.1.19','js')?>
-
 <!-- jQuery-Autocomplete : https://github.com/devbridge/jQuery-Autocomplete -->
 <?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>
 

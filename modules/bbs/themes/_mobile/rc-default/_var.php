@@ -23,6 +23,6 @@ $d['theme']['perm_photo'] = "1"; //사진첨부권한(등급이상)
 $d['theme']['num_photo'] = "2"; //사진첨부갯수
 $d['theme']['perm_upload'] = "10"; //파일첨부권한(등급이상)
 $d['theme']['num_upload'] = "1"; //파일첨부갯수
-$d['theme']['upload_theme'] = "_mobile/rc-default"; //파일 업로드 테마 (/modules/mediaset/themes/ 참고)
+$d['theme']['upload_theme'] = "_mobile/rc-post-file"; //파일 업로드 테마 (/modules/mediaset/themes/ 참고)
 $d['theme']['perm_upload'] = "1"; //파일첨부권한(등급이상)
 ?>

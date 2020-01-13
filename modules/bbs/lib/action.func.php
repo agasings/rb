@@ -26,7 +26,7 @@ function getPostTag($tag,$bid){
 }
 
 // 첨부파일 리스트 갯수 추출 함수
-function getAttachNum($upload,$mod){
+function _getAttachNum($upload,$mod){
   global $table;
 
   $attach = getArrayString($upload);
@@ -51,7 +51,7 @@ function getAttachNum($upload,$mod){
    $parent_data : 해당 포스트의 row 배열
    $mod : upload or modal  ==> 실제 업로드 모드 와 모달을 띄워서 본문에 삽입용도로 쓰거나
 */
-function getAttachFileList($parent_data,$mod,$type,$device){
+function _getAttachFileList($parent_data,$mod,$type,$device){
   global $table;
 
      $upload=$parent_data['upload'];
@@ -81,23 +81,23 @@ function getAttachFileList($parent_data,$mod,$type,$device){
         $U=getUidData($table['s_upload'],$R['uid']);
 
         if ($device =='mobile') {
-          if($type=='file') $html.=getAttachFile_m($U,$mod,$featured_img_uid);
-          else if($type=='photo') $html.=getAttachPhoto_m($U,$mod,$featured_img_uid);
-          else if($type=='audio') $html.=getAttachAudio_m($U,$mod,$featured_audio_uid);
-          else if($type=='video') $html.=getAttachVideo_m($U,$mod,$featured_video_uid);
-          else $html.=getAttachFile_m($U,$mod,$featured_img_uid);;
+          if($type=='file') $html.=_getAttachFile_m($U,$mod,$featured_img_uid);
+          else if($type=='photo') $html.=_getAttachPhoto_m($U,$mod,$featured_img_uid);
+          else if($type=='audio') $html.=_getAttachAudio_m($U,$mod,$featured_audio_uid);
+          else if($type=='video') $html.=_getAttachVideo_m($U,$mod,$featured_video_uid);
+          else $html.=_getAttachFile_m($U,$mod,$featured_img_uid);;
         } else {
-          if($type=='file') $html.=getAttachFile($U,$mod,$featured_img_uid);
-          else if($type=='photo') $html.=getAttachPhoto($U,$mod,$featured_img_uid);
-          else if($type=='audio') $html.=getAttachAudio($U,$mod,$featured_audio_uid);
-          else if($type=='video') $html.=getAttachVideo($U,$mod,$featured_video_uid);
-          else $html.=getAttachFile($U,$mod,$featured_img_uid);;
+          if($type=='file') $html.=_getAttachFile($U,$mod,$featured_img_uid);
+          else if($type=='photo') $html.=_getAttachPhoto($U,$mod,$featured_img_uid);
+          else if($type=='audio') $html.=_getAttachAudio($U,$mod,$featured_audio_uid);
+          else if($type=='video') $html.=_getAttachVideo($U,$mod,$featured_video_uid);
+          else $html.=_getAttachFile($U,$mod,$featured_img_uid);;
         }
       }
   return $html;
 }
 
-function getAttachObjectArray($parent_data,$type){
+function _getAttachObjectArray($parent_data,$type){
   global $table;
 
      $upload=$parent_data['upload'];
@@ -140,7 +140,7 @@ function getAttachObjectArray($parent_data,$type){
 }
 
 // 첨부파일 리스트 추출 함수 (데스크탑,사진)
-function getAttachPhoto($R,$mod,$featured_img_uid) {
+function _getAttachPhoto($R,$mod,$featured_img_uid) {
   global $g,$r;
 
   $fileName=explode('.',$R['name']);
@@ -173,7 +173,7 @@ function getAttachPhoto($R,$mod,$featured_img_uid) {
 }
 
 // 첨부파일 리스트 추출 함수 (데스크탑,파일)
-function getAttachFile($R,$mod,$featured_img_uid) {
+function _getAttachFile($R,$mod,$featured_img_uid) {
   global $g,$r;
 
       $fileName=explode('.',$R['name']);
@@ -225,7 +225,7 @@ function getAttachFile($R,$mod,$featured_img_uid) {
 }
 
 // 오디오파일 리스트 추출 함수 (데스크탑,오디오)
-function getAttachAudio($R,$mod,$featured_audio_uid) {
+function _getAttachAudio($R,$mod,$featured_audio_uid) {
     global $g,$r;
 
     $fileName=explode('.',$R['name']);
@@ -244,7 +244,7 @@ function getAttachAudio($R,$mod,$featured_audio_uid) {
 }
 
 // 비디오파일 리스트 추출 함수 (데스크탑,비디오)
-function getAttachVideo($R,$mod,$featured_video_uid) {
+function _getAttachVideo($R,$mod,$featured_video_uid) {
     global $g,$r;
 
     $fileName=explode('.',$R['name']);
@@ -264,7 +264,7 @@ function getAttachVideo($R,$mod,$featured_video_uid) {
 }
 
 // 첨부파일 리스트 추출 함수 (모바일,사진)
-function getAttachPhoto_m($R,$mod,$featured_img_uid) {
+function _getAttachPhoto_m($R,$mod,$featured_img_uid) {
   global $g,$r;
 
   $fileName=explode('.',$R['name']);
@@ -297,7 +297,7 @@ function getAttachPhoto_m($R,$mod,$featured_img_uid) {
 }
 
 // 첨부파일 리스트 추출 함수 (모바일,파일)
-function getAttachFile_m($R,$mod,$featured_img_uid) {
+function _getAttachFile_m($R,$mod,$featured_img_uid) {
   global $g,$r;
 
   $fileName=explode('.',$R['name']);
@@ -350,7 +350,7 @@ function getAttachFile_m($R,$mod,$featured_img_uid) {
 }
 
 // 오디오파일 리스트 추출 함수 (모바일,오디오)
-function getAttachAudio_m($R,$mod,$featured_audio_uid) {
+function _getAttachAudio_m($R,$mod,$featured_audio_uid) {
     global $g,$r;
 
     $fileName=explode('.',$R['name']);
@@ -369,7 +369,7 @@ function getAttachAudio_m($R,$mod,$featured_audio_uid) {
 }
 
 // 비디오파일 리스트 추출 함수 (모바일,비디오)
-function getAttachVideo_m($R,$mod,$featured_video_uid) {
+function _getAttachVideo_m($R,$mod,$featured_video_uid) {
     global $g,$r;
 
     $fileName=explode('.',$R['name']);
@@ -389,7 +389,7 @@ function getAttachVideo_m($R,$mod,$featured_video_uid) {
 }
 
 // 본문삽입 이미지 uid 얻기 함수
-function getInsertImgUid($upload)
+function _getInsertImgUid($upload)
 {
     global $table;
 
