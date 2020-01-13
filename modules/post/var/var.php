@@ -13,7 +13,7 @@ $d['post']['badword_escape'] = "";
 $d['post']['singo_del'] = "";
 $d['post']['singo_del_num'] = "";
 $d['post']['singo_del_act'] = "1";
-$d['post']['recnum'] = "20";
+$d['post']['recnum'] = "15";
 $d['post']['rownum'] = "4";
 $d['post']['newtime'] = "12";
 ?>

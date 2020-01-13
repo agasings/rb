@@ -1,8 +1,3 @@
-<?php
-$g['postVarForSite'] = $g['path_var'].'site/'.$r.'/post.var.php';
-$_tmpvfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['path_module'].$module.'/var/var.php';
-include_once $_tmpvfile;
-?>
 <form class="row no-gutters" role="form" name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return saveCheck(this);">
 	<input type="hidden" name="r" value="<?php echo $r?>">
 	<input type="hidden" name="m" value="<?php echo $module?>">

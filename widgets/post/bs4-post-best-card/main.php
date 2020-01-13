@@ -1,11 +1,4 @@
 <?php
-$orderby = 'desc';
-$recnum = $wdgvar['line']; // 한 열에 출력할 카드 갯수
-$totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
-$total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
-$print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
-$lack_card_num = $total_card_num;
-
 $query = 'site='.$s;
 if ($my['uid']) $query .= ' and display>3';
 else $query .= ' and display=5';
@@ -16,7 +9,18 @@ if ($wdgvar['sort']=='hit') $_WHERE2= 'data,sum(hit) as hit';
 if ($wdgvar['sort']=='likes') $_WHERE2= 'data,sum(likes) as likes';
 if ($wdgvar['sort']=='comment') $_WHERE2= 'data,sum(comment) as comment';
 
+$orderby = 'desc';
+$recnum = $wdgvar['line']; // 한 열에 출력할 카드 갯수
+
 $_RCD	= getDbSelect($table['postday'],$_WHERE1.' group by data order by '.$wdgvar['sort'].' '.$orderby.' limit 0,'.$wdgvar['limit'],$_WHERE2);
+
+if (db_num_rows($_RCD) > $recnum) $totalCardRow=ceil($wdgvar['limit']/$recnum); // row 갯수
+else  $totalCardRow = 1;
+
+$total_card_num = $totalCardRow*$recnum;// 총 출력되야 할 card 갯수(빈카드 포함)
+$print_card_num = 0; // 실제 출력된 카드 숫자 (아래 card 출력될 때마다 1 씩 증가)
+$lack_card_num = $total_card_num;
+
 while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.$_R['data'],'*');
 ?>
 
@@ -83,9 +87,8 @@ while($_R = db_fetch_array($_RCD)) $RCD[] = getDbData($table['postdata'],'uid='.
     <?php endforeach?>
 
     <?php if($lack_card_num ):?>
-      <?php for($j=0;$j<$lack_card_num;$j++):$i++;?>
+      <?php for($j=0;$j<$lack_card_num;$j++):?>
        <div class="card border-0" style="background-color: transparent"></div>
-       <?php if(!($i%$recnum)):?></div><div class="card-deck mt-3" data-role="post-list"><?php endif?>
       <?php endfor?>
     <?php endif?>
 

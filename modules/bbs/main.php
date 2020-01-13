@@ -1,7 +1,6 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-include_once $g['dir_module'].'var/var.php';
 $d['bbs']['skin'] = $d['bbs']['skin_total'];
 $d['bbs']['isperm'] = true;
 

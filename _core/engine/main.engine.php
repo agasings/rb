@@ -195,8 +195,10 @@ $g['postVarForSite'] = $g['path_var'].'site/'.$r.'/post.var.php';
 $_post_varfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['path_module'].'post/var/var.php';
 include_once $_post_varfile;
 
-//게시판 설정 변수
-include_once $g['path_module'].'bbs/var/var.php';
+//게시판 공통설정 변수
+$g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
+$_bbs_varfile = file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['path_module'].'bbs/var/var.php';
+include_once $_bbs_varfile;
 
 // 회원가입을 위한 이메일/휴대폰 본인인증 후 관련세션 존재유무
 if (isset($_SESSION['JOIN']['email']) || isset($_SESSION['JOIN']['phone'])) {

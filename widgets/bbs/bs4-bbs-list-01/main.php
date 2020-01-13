@@ -2,7 +2,6 @@
 $B = getDbData($table['bbslist'],'id="'.$wdgvar['bbsid'].'"','uid');
 
 if ($wdgvar['view']=='modal') {
-  include_once $g['path_module'].'bbs/var/var.php';
   @include $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
   $d['bbs']['skin'] = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
   $g['url_module_skin'] = $g['s'].'/modules/bbs/themes/'.$d['bbs']['skin'];

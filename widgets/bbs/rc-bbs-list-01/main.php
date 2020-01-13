@@ -1,5 +1,4 @@
 <?php
-include_once $g['path_module'].'bbs/var/var.php';
 include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bid'].'.php';
 $B = getDbData($table['bbslist'],'id="'.$wdgvar['bid'].'"','uid');
 
