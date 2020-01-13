@@ -55,7 +55,9 @@ require $g['path_var'].'db.info.php';
 require $g['path_var'].'table.info.php';
 require $g['path_var'].'switch.var.php';
 require $g['path_var'].'plugin.var.php';
-require $g['path_module'].'admin/var/var.system.php';
+require $g['path_module'].'admin/var/var.version.php';
+$g['sysvar'] = $g['path_var'].'/system.var.php';
+require file_exists($g['sysvar']) ? $g['sysvar'] : $g['path_module'].'admin/var/var.system.php';
 
 $g['url_file'] = str_replace('/index.php','',$_SERVER['SCRIPT_NAME']);
 $g['url_host'] = 'http'.($_SERVER['HTTPS']=='on'?'s':'').'://'.$_SERVER['HTTP_HOST'];

@@ -3,7 +3,7 @@ if(!defined('__KIMS__')) exit;
 
 checkAdmin(0);
 $fdset = array();
-$fdset['config'] = array('version','themepc','pannellink','cache_flag','smtp_use','smtp_host','smtp_port','smtp_auth','smtp_ssl','smtp_user','smtp_pass',
+$fdset['config'] = array('themepc','pannellink','cache_flag','smtp_use','smtp_host','smtp_port','smtp_auth','smtp_ssl','smtp_user','smtp_pass',
 						 'ftp_use','ftp_type','ftp_host','ftp_port','ftp_pasv','ftp_user','ftp_pass','ftp_rb','email','smtp','ftp','uninstall','dblclick','codeeidt',
 						 'editor','syslang','sysmail','sysmodule','sms_tel','sms_id','sms_key','fcm_key','fcm_SenderId','fcm_VAPID','site_cutid');
 $fdset['ssl'] = array('http_port','ssl_type','ssl_port','ssl_module','ssl_menu','ssl_page');
@@ -36,7 +36,7 @@ foreach ($fdset[$act] as $val)
 	$d['admin'][$val] = str_replace("\n",'',trim(${$val}));
 }
 
-$_tmpdfile = $g['dir_module'].'var/var.system.php';
+$_tmpdfile = $g['path_var'].'/system.var.php';
 $fp = fopen($_tmpdfile,'w');
 fwrite($fp, "<?php\n");
 foreach ($d['admin'] as $key => $val)
