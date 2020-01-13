@@ -2,8 +2,8 @@
 if(!defined('__KIMS__')) exit;
 
 include $g['path_core'].'function/thumb.func.php';
-include $g['dir_module'].'var/var.php';
-
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['dir_module'].'var/var.php';
 
 $savePath1	= $saveDir.substr($date['today'],0,4);
 $savePath2	= $savePath1.'/'.substr($date['today'],4,2);
@@ -36,8 +36,8 @@ if ($link != 'Y')
 {
 	if ($fserver)
 	{
-		$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']); 
-		$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']); 
+		$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
+		$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);
 		if (!$FTP_CONNECT) getLink('','',_LANG('a5001','mediaset'),'');
 		if (!$FTP_CRESULT) getLink('','',_LANG('a5001','mediaset'),'');
 		if($d['mediaset']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
@@ -94,7 +94,7 @@ if ($link != 'Y')
 		getDbInsert($table['s_upload'],$QKEY,$QVAL);
 		getDbUpdate($table['s_numinfo'],'upload=upload+1',"date='".$date['today']."' and site=".$s);
 
-		if ($gid == 100000000) db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT); 
+		if ($gid == 100000000) db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT);
 
 		$_nowPer = (int)((($i+1)/$upfileNum)*100);
 	?>
@@ -121,7 +121,7 @@ else {
 	$QVAL = "'$gid','$gid','$category','0','$tmpcode','$s','$mbruid','$_fileonly','0','$fileExt','0','','','$name','','','0','0','0','','','','$src','0','0','0','$d_regis','','',''";
 	getDbInsert($table['s_upload'],$QKEY,$QVAL);
 
-	if ($gid == 100000000) db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT); 
+	if ($gid == 100000000) db_query("OPTIMIZE TABLE ".$table['s_upload'],$DB_CONNECT);
 
 }
 if ($fileonly != 'Y')

@@ -1,6 +1,7 @@
 <?php
 if(!defined('__KIMS__')) exit;
-include_once $g['path_module'].'mediaset/var/var.php';
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['dir_module'].'var/var.php';
 $R=getUidData($table['s_upload'],$uid);
 if (!$R['uid']) getLink('','','정상적인 요청이 아닙니다.','');
 $filename = getUTFtoKR($R['name']);

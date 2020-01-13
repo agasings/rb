@@ -13,7 +13,8 @@ if(!is_dir($saveDir)){
 
 include $g['path_module'].'mediaset/themes/'.$theme.'/main.func.php';
 include $g['path_module'].'mediaset/themes/'.$theme.'/_var.php';
-include $g['path_module'].'mediaset/var/var.php';
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['dir_module'].'var/var.php';
 include $g['path_core'].'function/thumb.func.php';
 
 $sessArr  = explode('_',$sess_Code);

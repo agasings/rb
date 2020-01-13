@@ -1,7 +1,8 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-include_once $g['dir_module'].'var/var.php';
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['dir_module'].'var/var.php';
 
 foreach($photomembers as $file_uid)
 {
@@ -76,8 +77,8 @@ foreach($photomembers as $file_uid)
 				{
 					if ($R['fserver'] && $R['url'] == $d['mediaset']['ftp_urlpath'])
 					{
-						$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']); 
-						$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']); 
+						$FTP_CONNECT = ftp_connect($d['mediaset']['ftp_host'],$d['mediaset']['ftp_port']);
+						$FTP_CRESULT = ftp_login($FTP_CONNECT,$d['mediaset']['ftp_user'],$d['mediaset']['ftp_pass']);
 						if (!$FTP_CONNECT) continue;
 						if (!$FTP_CRESULT) continue;
 						if($d['mediaset']['ftp_pasv']) ftp_pasv($FTP_CONNECT, true);
@@ -103,7 +104,7 @@ foreach($photomembers as $file_uid)
 			}
 			if ($R['category'] == 0)
 			{
-				getDbUpdate($table['s_upload'],'category=-1','uid='.$R['uid']);				
+				getDbUpdate($table['s_upload'],'category=-1','uid='.$R['uid']);
 				getDbUpdate($table['s_uploadcat'],'r_num=r_num-1','mbruid='.$my['uid']." and type=2 and name='none'");
 				if ($mediaset == 'Y' && $dtype != 'delete') getDbUpdate($table['s_uploadcat'],'r_num=r_num+1','mbruid='.$my['uid']." and type=2 and name='trash'");
 			}

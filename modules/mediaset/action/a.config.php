@@ -3,7 +3,8 @@ if(!defined('__KIMS__')) exit;
 
 checkAdmin(0);
 $ftp_port = $ftp_port ? trim($ftp_port) : '21';
-$_tmpdfile = $g['dir_module'].'var/var.php';
+$_tmpdfile = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+
 $fp = fopen($_tmpdfile,'w');
 fwrite($fp, "<?php\n");
 fwrite($fp, "\$d['mediaset']['maxnum_file'] = \"".$maxnum_file."\";\n");

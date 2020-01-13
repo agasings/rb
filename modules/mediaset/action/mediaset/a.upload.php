@@ -2,7 +2,9 @@
 if(!defined('__KIMS__')) exit;
 
 include $g['path_core'].'function/thumb.func.php';
-include $g['dir_module'].'var/var.php';
+
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['dir_module'].'var/var.php';
 
 $savePath1	= $saveDir.substr($date['today'],0,4);
 $savePath2	= $savePath1.'/'.substr($date['today'],4,2);

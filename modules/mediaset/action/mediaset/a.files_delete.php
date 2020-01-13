@@ -1,7 +1,8 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-include_once $g['dir_module'].'var/var.php';
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['dir_module'].'var/var.php';
 
 foreach($photomembers as $file_uid)
 {

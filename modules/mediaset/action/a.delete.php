@@ -3,7 +3,8 @@ if(!defined('__KIMS__')) exit;
 
 $uid = $_POST['uid']; // 첨부물 UID
 
-include $g['path_module'].'mediaset/var/var.php';
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['dir_module'].'var/var.php';
 include_once $g['path_core'].'opensrc/aws-sdk-php/v3/aws-autoloader.php';
 
 use Aws\S3\S3Client;
