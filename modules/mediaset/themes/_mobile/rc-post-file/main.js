@@ -110,6 +110,7 @@
                    $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=delete',{
                       uid : uid
                     },function(response){
+                        console.log('삭제완료')
                          var previewUl_default=$('[data-role="attach-preview-'+type+'"]'); // 파일 리스트 엘리먼트 class
                          //var previewUl_modal=$('[data-role="modal-attach-preview-'+type+'"]'); // 파일 리스트 엘리먼트 class
                          var delEl_default=$(previewUl_default).find('[data-id="'+uid+'"]'); // 삭제 이벤트 진행된 엘리먼트
@@ -117,9 +118,9 @@
                          delEl_default.remove();// 삭제 이벤트 진행시 해당 li 엘리먼트 remove
 
                          var sheet_item_num = $('#sheet-post-photoadd').find('[data-role="attach-item"]').length;
-                         var modal_item_num = $('[data-role="write"]').find('[data-role="attach-preview-photo"] [data-role="attach-item"]').length;
+                         var attach_item_num = $('[data-role="write"]').find('[data-role="attach-item"]').length;
                          setTimeout(function(){
-                           $('[data-role="write"]').find('[data-role="attachNum"]').text(modal_item_num==0?'':modal_item_num);
+                           $('[data-role="write"]').find('[data-role="attachNum"]').text(attach_item_num==0?'':attach_item_num);
                            if (!sheet_item_num) {
                              $('#sheet-post-photoadd').find('[data-role="none"]').removeClass('d-none');
                              $('#sheet-post-photoadd').find('[data-act="submit"]').removeClass('active').addClass('text-muted');

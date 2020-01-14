@@ -391,9 +391,11 @@ figure.photo-mask {
   color: #999;
 }
 [data-role="write"] .spinner-border {
+  border-width : .15em;
+}
+[data-role="write"] .content .spinner-border {
   width: 3rem;
   height: 3rem;
-  border-width : .15em;
 }
 
 [data-role="write"] [data-role="editor"] {

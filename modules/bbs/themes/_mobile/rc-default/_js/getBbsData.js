@@ -40,11 +40,10 @@ function getBbsData(settings){
     var item = ele.closest('.table-view-cell')
 		var move =  ele.attr('data-move');
 
-
     item.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
     var modal = $(this);
-    modal.find('[name="uid"]').val(uid);
-    modal.find('[name="bid"]').val(bid);
+    page.find('[name="uid"]').val(uid);
+    page.find('[name="bid"]').val(bid);
     page.find('[data-role="subject"]').text(subject);
     page.find('[data-role="cat"]').text(cat);
     page.find('[data-role="name"]').text(name);
@@ -72,12 +71,8 @@ function getBbsData(settings){
          var _uid=result.uid;
          var article=result.article;
          var adddata=result.adddata;
-         var photo=result.photo;
-         var video=result.video;
-         var audio=result.audio;
-         var file=result.file;
-         var zip=result.zip;
-         var doc=result.doc;
+         var attachNum = result.attachNum;
+         var attachFileTheme = result.theme_attachFile;
          var hidden=result.hidden;
          var hidden_attach=result.hidden_attach;
          var mypost=result.mypost;
@@ -102,64 +97,85 @@ function getBbsData(settings){
            }, 600);
          }
 
-         // modal.find('[data-role="article"]').html(article);
+         page.find('[data-role="article"]').html(article);
 
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
-         modal.find('[data-role="linkShare"]').attr('data-url',url);
-         modal.find('.bar-nav [data-toggle="popover"]').attr('data-url',url);
+         page.find('[data-role="linkShare"]').attr('data-url',url);
+         page.find('.bar-nav [data-toggle="popover"]').attr('data-url',url);
 
-         modal.find('[data-toggle="popover"]').attr('data-uid',uid);
+         page.find('[data-toggle="popover"]').attr('data-uid',uid);
 
          if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
          if (is_post_disliked) modal.find('[data-role="btn_post_dislike"]').addClass('active')
 
          if (bbs_c_hidden) {
-          modal.find('[data-role="btn_comment"]').remove()  // 좋아요 버튼 제거
+          page.find('[data-role="btn_comment"]').remove()  // 좋아요 버튼 제거
          }
 
          if (theme_show_like==0) {
-          modal.find('[data-role="btn_post_like"]').remove()  // 좋아요 버튼 제거
+          page.find('[data-role="btn_post_like"]').remove()  // 좋아요 버튼 제거
          }
          if (theme_show_dislike==0) {
-          modal.find('[data-role="btn_post_dislike"]').remove()  // 싫어요 버튼 제거
+          page.find('[data-role="btn_post_dislike"]').remove()  // 싫어요 버튼 제거
          }
          if (theme_show_share==0) {
-          modal.find('[data-role="linkShare"]').remove()  // sns공유 버튼 제거
+          page.find('[data-role="linkShare"]').remove()  // sns공유 버튼 제거
          }
 
          if (theme_show_tag==0 || !is_post_tag) {
-          modal.find('[data-role="post_tags"]').remove()  // 테그목록 제거
+          page.find('[data-role="post_tags"]').remove()  // 테그목록 제거
          }
 
-         if (photo) {  // 첨부 이미지가 있을 경우
-           modal.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
-           initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프 활성
-         }
+         // 첨부파일이 있을 경우
+         if (attachNum) {
 
-         if (video) {  // 첨부 비디오가 있을 경우
-           modal.find('[data-role="attach-video"]').removeClass('hidden').html(video)
-           modal.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
-         }
+           $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=getAttachFileList',{
+                p_module : 'bbs',
+                uid : uid,
+                theme_file : attachFileTheme,
+                mod : 'view'
+             },function(response){
+              var result = $.parseJSON(response);
 
-         if (audio) {  // 첨부 오디오가 있을 경우
-           modal.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
-         }
+              var photo=result.photo;
+              var video=result.video;
+              var audio=result.audio;
+              var file=result.file;
+              var zip=result.zip;
+              var doc=result.doc;
 
-         if (doc) {  // 첨부 문서 있을 경우
-           modal.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
-         }
+              if (photo) {  // 첨부 이미지가 있을 경우
+                page.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+                initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프 활성
+              }
 
-         if (zip) {  // 첨부 압축파일이 있을 경우
-           modal.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
-         }
+              if (video) {  // 첨부 비디오가 있을 경우
+                page.find('[data-role="attach-video"]').removeClass('hidden').html(video)
+              }
 
-         if (file) {  // 첨부 기타파일이 있을 경우
-           modal.find('[data-role="attach-file"]').removeClass('hidden').html(file)
-         }
+              if (audio) {  // 첨부 오디오가 있을 경우
+                page.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
+              }
 
-         if (theme_show_upfile==0) {
-          modal.find('[data-role="attach"]').remove()  // 첨부목록 제거
+              if (doc) {  // 첨부 문서 있을 경우
+                page.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
+              }
+
+              if (zip) {  // 첨부 압축파일이 있을 경우
+                page.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
+              }
+
+              if (file) {  // 첨부 기타파일이 있을 경우
+                page.find('[data-role="attach-file"]').removeClass('hidden').html(file)
+              }
+
+              if (theme_show_upfile==0) {
+               page.find('[data-role="attach"]').remove()  // 첨부목록 제거
+              }
+
+            });
+
          }
 
          // 댓글 출력 함수 정의

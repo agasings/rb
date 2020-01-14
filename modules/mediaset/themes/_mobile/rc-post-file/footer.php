@@ -21,8 +21,8 @@ $(document).ready(function() {
       },
       onSuccess:function(files,data,xhr,pd){
         setTimeout(function(){
-          var modal_item_num = $('[data-role="write"]').find('[data-role="attach-preview-photo"] [data-role="attach-item"]').length;
-          $('[data-role="write"]').find('[data-role="attachNum"]').text(modal_item_num);
+          var attach_item_num = $('[data-role="write"]').find('[data-role="attach-item"]').length;
+          $('[data-role="write"]').find('[data-role="attachNum"]').text(attach_item_num);
         }, 10);
         $('[data-act="attach"]').attr('disabled',false);
         sheet_post_photoadd.find('[data-role="none"]').addClass('d-none');

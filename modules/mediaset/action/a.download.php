@@ -12,7 +12,7 @@ if ($R['url']==$d['upload']['ftp_urlpath'])
 	$filesize = $R['size'];
 }
 else {
-	$filepath = '.'.$R['url'].$R['folder'].'/'.$filetmpname;
+	$filepath = $R['src'];
 	$filesize = filesize($filepath);
 }
 if (!strstr($_SERVER['HTTP_REFERER'],'module='.$m) && !$my['admin'])

@@ -34,13 +34,10 @@ function getAttachFileList($parent_data,$mod,$type,$theme) {
 	 $featured_video_uid=$parent_data['featured_video'];// 대표비디오 uid
 	 $featured_audio_uid=$parent_data['featured_audio'];// 대표오디오 uid
 
-   if($type=='file') $sql='type=1';
-	 else if($type=='photo') $sql='type=2';
+	 if($type=='photo') $sql='type=2';
    else if($type=='audio') $sql='type=4';
 	 else if($type=='video') $sql='type=5';
-	 else if($type=='doc') $sql='type=6';
-	 else if($type=='zip') $sql='type=7';
-	 else $sql='type=1';
+	 else $sql='(type=1 or type=6 or type=7)';
 
 	 if ($mod=='view') $sql.=' and hidden=0';
 
@@ -70,10 +67,7 @@ function getAttachFileList($parent_data,$mod,$type,$theme) {
 // 첨부파일 리스트 추출 함수 (낱개)
 function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 
-	global $g,$r,$m,$TMPL,$markup_file,$theme;
-
-	$theme = '_mobile/rc-post-file';
-	$m='mediaset';
+	global $g,$r,$TMPL	;
 
 	include_once $GLOBALS['g']['path_core'].'function/sys.class.php';
 
@@ -100,7 +94,7 @@ function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 	}else if($type=='file'){
 		$caption=$R['caption']?$R['caption']:$R['name'];
 		$src=$R['host'].$R['folder'].'/'.$R['name'];
-		$insert_text='['.$caption.']('.$g['url_root'].'/?r='.$r.'&m=attach&a=download&uid='.$R['uid'].')';
+		$down_url=$g['s'].'/?r='.$r.'&m=mediaset&a=download&uid='.$R['uid'];
 	}
 
   $html='';
@@ -126,6 +120,7 @@ function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 	$TMPL['_name']=getStrCut($R['name'],25,'..');
 	$TMPL['size']=getSizeFormat($R['size'],2);
 	$TMPL['uid']=$R['uid'];
+	$TMPL['down_url']=$down_url;
 
 	if ($mod=='upload') {
 		if ($R['type']==2) $markup_file = 'edit_photo_row';

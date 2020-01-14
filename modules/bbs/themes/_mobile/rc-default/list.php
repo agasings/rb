@@ -99,25 +99,6 @@
       <div class="p-4 text-xs-center">다시 시도해주세요.</div>
     </div>
 
-    <div data-role="attach">
-
-      <!-- 비디오 -->
-      <div class="mb-3 hidden" data-role="attach-video">
-      </div>
-
-      <!-- 오디오 -->
-      <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-audio">
-      </ul>
-
-      <!-- 이미지 -->
-      <div class="card-group mb-3 hidden" data-role="attach-photo" data-plugin="photoswipe">
-      </div>
-
-      <!-- 기타파일 -->
-      <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-file">
-      </ul>
-    </div>
-
     <!-- 댓글출력 -->
     <div data-role="bbs-comment"></div>
 

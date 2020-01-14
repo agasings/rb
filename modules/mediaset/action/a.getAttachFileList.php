@@ -2,24 +2,22 @@
 if(!defined('__KIMS__')) exit;
 
 $uid = $_POST['uid'];
-$mod = '';
-$theme = $_POST['theme'];
+$mod = $_POST['mod'];
+$theme_file = $_POST['theme_file'];
+$theme = $theme_file;
 
-$R = getUidData($table['chaneldata'],$uid);
-
-require_once $g['path_module'].'mediaset/themes/'.$theme.'/main.func.php';
+$R = getUidData($table[$p_module.'data'],$uid);
 
 $result=array();
 $result['error']=false;
 
+include_once $g['path_module'].'mediaset/themes/'.$theme_file.'/main.func.php';
+
 if($R['upload']) {
-  $result['attachNum'] = getAttachNum($R['upload'],'view');
-  $result['image'] = getAttachFileList($R,'upload','photo');
-  $result['doc'] = getAttachFileList($R,'upload','doc');
-  $result['file'] = getAttachFileList($R,'upload','file');
-  $result['zip'] = getAttachFileList($R,'upload','zip');
-  $result['video'] = getAttachFileList($R,'upload','video');
-  $result['audio'] = getAttachFileList($R,'upload','audio');
+  $result['file'] =  getAttachFileList($R,$mod,'file','');
+  $result['photo'] = getAttachFileList($R,$mod,'photo','');
+  $result['video'] = getAttachFileList($R,$mod,'video','');
+  $result['audio'] = getAttachFileList($R,$mod,'audio','');
 }
 
 echo json_encode($result);

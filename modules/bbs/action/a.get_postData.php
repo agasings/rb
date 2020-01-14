@@ -1,8 +1,6 @@
 <?php
 if(!defined('__KIMS__')) exit;
 
-require_once $g['path_core'].'function/sys.class.php';
-
 $result=array();
 $result['error']=false;
 
@@ -12,19 +10,17 @@ $mod = $_POST['mod'];
 $R = getUidData($table['bbsdata'],$uid);
 $B = getUidData($table['bbslist'],$R['bbs']);
 
-include_once $g['path_module'].'bbs/var/var.php';
+//게시판 공통설정 변수
+$g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
+include_once file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['path_module'].'bbs/var/var.php';
+
 if ($bid) include_once $g['dir_module'].'var/var.'.$bid.'.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
-  $theme_attach= $d['bbs']['a_mskin']?$d['bbs']['a_mskin']:$d['bbs']['attach_mobile'];
+  $theme_attachFile= $d['bbs']['a_mskin']?$d['bbs']['a_mskin']:$d['bbs']['attach_mobile'];
 } else {
-  $theme_attach= $d['bbs']['a_skin']?$d['bbs']['a_skin']:$d['bbs']['attach_main'];
+  $theme_attachFile= $d['bbs']['a_skin']?$d['bbs']['a_skin']:$d['bbs']['attach_main'];
 }
-
-//첨부링크 및 파일
-$theme_link= '_mobile/rc-post-link';
-include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
-include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
 
 include_once $g['dir_module'].'lib/action.func.php';
 
@@ -32,6 +28,8 @@ $mbruid = $my['uid'];
 $result['uid'] = $R['uid'];
 
 if ($mod=='view') {
+
+  require_once $g['path_core'].'function/sys.class.php';
 
   if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
     $theme = $d['bbs']['m_skin']?$d['bbs']['m_skin']:$d['bbs']['skin_mobile'];
@@ -95,13 +93,9 @@ if ($mod=='view') {
       $result['photo'] = getAttachObjectArray($R,'photo');
     } else {
       $result['attachNum'] = _getAttachNum($R['upload'],'view');
-      $result['linkNum'] = getLinkNum($R['upload'],'modify');
-      $result['file'] = getAttachFileList($R,'view','file',$theme_attach);
-      $result['photo'] = getAttachFileList($R,'view','photo',$theme_attach);
-      $result['video'] = getAttachFileList($R,'view','video',$theme_attach);
-      $result['audio'] = getAttachFileList($R,'view','audio',$theme_attach);
-      $result['link'] = getAttachPlatformList($R,'view','file');
+      //$result['linkNum'] = getLinkNum($R['upload'],'view');
     }
+    $result['theme_attachFile'] = $theme_attachFile;
   }
 
   if($my['admin'] || $my['uid']==$R['mbruid']) {  // 수정,삭제 버튼 출력여부를 위한 참조
@@ -167,6 +161,7 @@ if ($mod=='view') {
 } else {
 
   //글쓰기 수정모드 일때
+
   $result['subject'] = $R['subject'];
   $result['content'] = getContents($R['content'],$R['html']);
   $result['hidden'] = $R['hidden'];
@@ -177,18 +172,11 @@ if ($mod=='view') {
 
   if($R['upload']) {
     $result['attachNum'] = _getAttachNum($R['upload'],'modify');
-    $result['linkNum'] = getLinkNum($R['upload'],'modify');
-    $result['file'] = getAttachFileList($R,'upload','file',$theme_attach);
-    $result['photo'] = getAttachFileList($R,'upload','photo',$theme_attach);
-    $result['video'] = getAttachFileList($R,'upload','video',$theme_attach);
-    $result['audio'] = getAttachFileList($R,'upload','audio',$theme_attach);
-    $result['link'] = getAttachPlatformList($R,'upload','file');
+    $result['theme_attachFile'] = $theme_attachFile;
   }
 
 }
 
-
-$result['theme_attach'] = $theme_attach;
 echo json_encode($result);
 exit;
 ?>

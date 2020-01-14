@@ -89,9 +89,13 @@
   <section id="page-bbs-write-main" class="page center">
   	<header class="bar bar-nav bar-light bg-white p-x-0" data-role="write-nav">
       <a class="icon pull-left material-icons p-x-1" role="button" data-history="back">arrow_back</a>
-  		<button class="btn btn-link btn-nav pull-right p-x-1 d-none" type="button" data-act="submit">
+  		<button class="btn btn-link btn-nav pull-right p-x-2 d-none" type="button" data-act="submit">
         <span class="not-loading"></span>
-        <span class="is-loading"><i class="fa fa-spinner fa-lg fa-spin fa-fw"></i></span>
+        <span class="is-loading">
+          <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="sr-only">저장중...</span>
+          </div>
+        </span>
   	  </button>
   		<h1 class="title title-left" data-history="back">
   			글쓰기

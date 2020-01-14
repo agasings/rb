@@ -344,10 +344,7 @@ $(document).ready(function() {
                     var adddata=result.adddata;
                     var featured_img=result.featured_img;
                     var attachNum=result.attachNum;
-                    var photo=result.photo;
-                    var video=result.video;
-                    var audio=result.audio;
-                    var file=result.file;
+                    var attachFileTheme = result.theme_attachFile;
                     editor_bbs.setData(content);
 
                     modal.find('[name="category"]').val(category);
@@ -376,12 +373,34 @@ $(document).ready(function() {
                       page_bbs_write_main.find('[data-role="tag"]').text('');
                     }
 
-                    modal.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
-                    modal.find('[data-role="attach-preview-photo"]').html(photo);
-                    modal.find('[data-role="attach-preview-video"]').html(video)
-                    modal.find('[data-role="attach-preview-audio"]').html(audio)
-                    modal.find('[data-role="attach-preview-file"]').html(file)
-                    modal.find('[data-role="attachNum"]').text(attachNum)
+                    if (attachNum) {
+
+                      $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=getAttachFileList',{
+                           p_module : 'bbs',
+                           uid : uid,
+                           theme_file : attachFileTheme,
+                           mod : 'upload'
+                        },function(response){
+                         var result = $.parseJSON(response);
+
+                         var photo=result.photo;
+                         var video=result.video;
+                         var audio=result.audio;
+                         var file=result.file;
+                         var zip=result.zip;
+                         var doc=result.doc;
+
+                         modal.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
+                         modal.find('[data-role="attach-preview-photo"]').html(photo);
+                         modal.find('[data-role="attach-preview-video"]').html(video)
+                         modal.find('[data-role="attach-preview-audio"]').html(audio)
+                         modal.find('[data-role="attach-preview-file"]').html(file)
+                         modal.find('[data-role="attachNum"]').text(attachNum)
+
+                       });
+
+                    }
+
 
                  });
                } else {
@@ -637,11 +656,11 @@ $(document).ready(function() {
       modal_bbs_write.find('[data-role="tag"]').text('') // 태그 설정 초기화
       modal_bbs_write.find('[name="upfiles"]').val('') //첨부파일 입력내용 초기화
       modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
-      modal_bbs_write.find('[data-role="tap-attach"] .badge').text('')  //첨부수량 초기화
       modal_bbs_write.find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
       modal_bbs_write.find('[data-role="attach-preview-video"]').html('')
       modal_bbs_write.find('[data-role="attach-preview-audio"]').html('')
       modal_bbs_write.find('[data-role="attach-preview-file"]').html('')
+      modal_bbs_write.find('[data-role="attachNum"]').text('');
       modal_bbs_write.find('[data-toggle="switch"]').removeClass('active')
       page_bbs_write_category.find('[name="radio"]').prop('checked', false);
       console.log('입력사항 초기화');
