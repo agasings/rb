@@ -1,6 +1,4 @@
-<?php
-include_once $g['path_module'].$module.'/var/var.php';
-?>
+
 <form class="p-4" role="form" name="procForm" action="<?php echo $g['s']?>/" method="post" target="_action_frame_<?php echo $m?>" onsubmit="return saveCheck(this);">
 	<input type="hidden" name="r" value="<?php echo $r?>" />
 	<input type="hidden" name="m" value="<?php echo $module?>" />

@@ -187,18 +187,19 @@ $g['switch_4'] = getSwitchInc('end');
 
 //사이트별 회원설정 변수
 $g['memberVarForSite'] = $g['path_var'].'site/'.$r.'/member.var.php'; // 사이트 회원모듈 변수파일
-$_member_varfile = file_exists($g['memberVarForSite']) ? $g['memberVarForSite'] : $g['path_module'].'member/var/var.php';
-include_once $_member_varfile; // 변수파일 인클루드
+include_once file_exists($g['memberVarForSite']) ? $g['memberVarForSite'] : $g['path_module'].'member/var/var.php';
 
 //사이트별 포스트설정 변수
 $g['postVarForSite'] = $g['path_var'].'site/'.$r.'/post.var.php';
-$_post_varfile = file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['path_module'].'post/var/var.php';
-include_once $_post_varfile;
+include_once file_exists($g['postVarForSite']) ? $g['postVarForSite'] : $g['path_module'].'post/var/var.php';
 
-//게시판 공통설정 변수
+//사이트별 게시판 공통설정 변수
 $g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
-$_bbs_varfile = file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['path_module'].'bbs/var/var.php';
-include_once $_bbs_varfile;
+include_once file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['path_module'].'bbs/var/var.php';
+
+//사이트별 댓글설정 변수
+$g['commentVarForSite'] = $g['path_var'].'site/'.$r.'/comment.var.php';
+include_once file_exists($g['commentVarForSite']) ? $g['commentVarForSite'] : $g['path_module'].'comment/var/var.php';
 
 // 회원가입을 위한 이메일/휴대폰 본인인증 후 관련세션 존재유무
 if (isset($_SESSION['JOIN']['email']) || isset($_SESSION['JOIN']['phone'])) {

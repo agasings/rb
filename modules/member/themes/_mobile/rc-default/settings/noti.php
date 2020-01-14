@@ -1,5 +1,4 @@
 <?php
-include $g['path_module'].'notification/var/var.php';
 $emailque= 'mbruid='.$my['uid'].' and d_verified<>0';
 $RCD = getDbArray($table['s_mbremail'],$emailque,'*','uid','asc',0,1);
 

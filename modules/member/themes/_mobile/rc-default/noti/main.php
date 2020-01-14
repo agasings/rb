@@ -1,5 +1,4 @@
 <?php
-include $g['path_module'].'notification/var/var.php';
 $sort	= $sort ? $sort : 'uid';
 $orderby= $orderby ? $orderby : 'desc';
 $recnum	= $recnum && $recnum < 200 ? $recnum : 20;

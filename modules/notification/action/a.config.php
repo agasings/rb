@@ -9,7 +9,8 @@ foreach($module_members as $mds)
 	$cut_modules .= '['.$mds.']';
 }
 
-$_tmpdfile = $g['dir_module'].'var/var.php';
+$_tmpdfile = $g['path_var'].'site/'.$r.'/'.$m.'.var.php';
+
 $fp = fopen($_tmpdfile,'w');
 fwrite($fp, "<?php\n");
 fwrite($fp, "\$d['ntfc']['sec'] = \"".trim($sec)."\";\n");

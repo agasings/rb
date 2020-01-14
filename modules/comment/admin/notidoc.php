@@ -11,7 +11,7 @@ $typeset = array
 	'_regis_oneline'=>'한줄의견 등록'
 );
 $doc = $doc ? $doc : 'noti';
-$type = $type ? $type : 'regis_comment';
+$type = $type ? $type : '_regis_comment';
 ?>
 
 <div class="row no-gutters">

@@ -2,8 +2,6 @@
 $emailque= 'mbruid='.$my['uid'].' and d_verified<>0';
 $RCD = getDbArray($table['s_mbremail'],$emailque,'*','uid','asc',0,1);
 
-include $g['path_module'].'notification/var/var.php';
-
 $NT_DATA = explode('|',$my['noticeconf']);
 $nt_web = $NT_DATA[0];
 $nt_email = $NT_DATA[1];

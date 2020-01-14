@@ -36,7 +36,6 @@
 		<input type="hidden" name="m" value="<?php echo $module?>">
 		<input type="hidden" name="a" value="config">
 		<input type="hidden" name="act" value="config">
-		<input type="hidden" name="version" value="<?php echo $d['admin']['version']?>">
 		<input type="hidden" name="autosave" value="">
 		<input type="hidden" name="email" value="<?php echo $d['admin']['email']?>">
 		<input type="hidden" name="smtp" value="<?php echo $d['admin']['email']?>">

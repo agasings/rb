@@ -1,6 +1,9 @@
 <?php
 if(!defined('__KIMS__')) exit;
-include $g['path_module'].'notification/var/var.php';
+
+$g['notiVarForSite'] = $g['path_var'].'site/'.$r.'/notification.var.php';
+include_once file_exists($g['notiVarForSite']) ? $g['notiVarForSite'] : $g['path_module'].'notification/var/var.php';
+
 $NT_DATA = explode('|',$my['noticeconf']);
 ?>
 
