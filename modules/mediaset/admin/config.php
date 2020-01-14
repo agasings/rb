@@ -1,4 +1,7 @@
-<?php include $g['path_module'].$module.'/var/var.php' ?>
+<?php
+$g['mediasetVarForSite'] = $g['path_var'].'site/'.$r.'/'.$module.'.var.php';
+include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : $g['path_module'].$module.'/var/var.php';
+?>
 
 <div id="configbox" class="p-4">
 
