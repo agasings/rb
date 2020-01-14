@@ -1,4 +1,7 @@
-<?php include $g['path_module'].$module.'/var/var.php' ?>
+<?php
+$g['notiVarForSite'] = $g['path_var'].'site/'.$r.'/notification.var.php';
+include_once file_exists($g['notiVarForSite']) ? $g['notiVarForSite'] : $g['path_module'].$module.'/var/var.php';
+?>
 
 <div id="configbox" class="p-4">
 

@@ -16,7 +16,7 @@ $NUM = getDbRows($table['s_notice'],$sqlque);
 $TPG = getTotalPage($NUM,$recnum);
 
 $g['memberVarForSite'] = $g['path_var'].'site/'.$r.'/member.var.php'; // 사이트 회원모듈 변수파일
-$_varfile = file_exists($g['memberVarForSite']) ? $g['memberVarForSite'] : $g['dir_module'].'var/var.php';
+$_varfile = file_exists($g['memberVarForSite']) ? $g['memberVarForSite'] : $g['path_module']'member/var/var.php';
 include_once $_varfile; // 변수파일 인클루드
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {

@@ -1,8 +1,8 @@
-<?php
-if(!defined('__KIMS__')) exit;
-
+<?php
+if(!defined('__KIMS__')) exit;
+
 if (!$my['uid']) getLink('','','정상적인 접근이 아닙니다.','');
-
+
 if ($deltype == 'delete_all')
 {
 	getDbDelete($table['s_notice'],'mbruid='.$my['uid']);
@@ -14,12 +14,12 @@ else if ($deltype == 'delete_read')
 	getDbUpdate($table['s_mbrdata'],'num_notice='.getDbRows($table['s_notice'],'mbruid='.$my['uid']." and d_read=''"),'memberuid='.$my['uid']);
 }
 else if ($deltype == 'delete_select') {
-	foreach($noti_members as $val)
+	foreach($noti_members as $val)
 	{
-		$exp = explode('|',$val);
+		$exp = explode('|',$val);
 		getDbDelete($table['s_notice'],"uid='".$exp[0]."' and mbruid=".$my['uid']);
 	}
-	getDbUpdate($table['s_mbrdata'],'num_notice='.getDbRows($table['s_notice'],'mbruid='.$my['uid']." and d_read=''"),'memberuid='.$my['uid']);
+	getDbUpdate($table['s_mbrdata'],'num_notice='.getDbRows($table['s_notice'],'mbruid='.$my['uid']." and d_read=''"),'memberuid='.$my['uid']);
 }
 else if ($deltype == 'cut_member')
 {
@@ -76,7 +76,7 @@ else if ($deltype == 'off_module')
 
 }
 if ($deltype=='cut_member'||$deltype=='cut_module')
-{
+{
 	if ($isMe) {
 		setrawcookie('member_noti_result', rawurlencode('자기 자신은 차단할 수 없습니다.|danger'));
 	} else {
