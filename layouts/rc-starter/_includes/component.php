@@ -31,6 +31,12 @@
 <!-- 프로필 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/profile/component.php';  ?>
 
+<!-- 포스트 -->
+<?php include_once $g['path_module'].'post/themes/'.$d['post']['skin_mobile'].'/component.php';  ?>
+
+<!-- 댓글 -->
+<?php include_once $g['path_module'].'comment/themes/_mobile/rc-default/component.php';  ?>
+
 <!-- 사이트 페이지 -->
 <div class="page right" id="page-site-page">
   <header class="bar bar-nav bar-light bg-white px-0">
@@ -115,8 +121,7 @@
 	      <h3 data-role="subject" class="rb-article-title">게시물 제목</h3>
 			</div>
 
-      <div data-role="article">
-      </div>
+      <div data-role="article" data-plugin="photoswipe"></div>
 
       <div data-role="attach">
 

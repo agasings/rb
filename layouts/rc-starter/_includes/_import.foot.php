@@ -2,26 +2,33 @@
 <?php include $g['path_core'].'engine/foot.engine.php'?>
 
 <!-- 포토모달 : photoswipe http://photoswipe.com/documentation/getting-started.html -->
-<?php getImport('photoswipe','photoswipe','4.1.1','css') ?>
-<?php getImport('photoswipe','default-skin/default-skin','4.1.1','css') ?>
-<?php getImport('photoswipe','photoswipe-ui-default.min','4.1.1','js') ?>
+<?php getImport('photoswipe','photoswipe','4.1.2','css') ?>
+<?php getImport('photoswipe','default-skin/default-skin','4.1.2','css') ?>
+<?php getImport('photoswipe','photoswipe.min','4.1.2','js') ?>
+<?php getImport('photoswipe','photoswipe-ui-default.min','4.1.2','js') ?>
 <script src="<?php echo $g['url_layout']?>/_js/photoswipe.js"></script>
+
+
+<!-- youtube iframe_api -->
+<!-- <script src="https://www.youtube.com/player_api"></script> -->
 
 <!-- 입력 textarea 자동확장 -->
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
 
-<!-- pulltorefresh : https://github.com/BoxFactura/pulltorefresh.js-->
-<?php getImport('pulltorefresh','index.umd.min','0.1.19','js')?>
-
-<!-- timeago : 상대시간 표기 -->
-<?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
-<?php getImport('jquery-timeago','locales/jquery.timeago.ko','1.6.7','js')?>
-
 <!-- jQuery-Autocomplete : https://github.com/devbridge/jQuery-Autocomplete -->
 <?php getImport('jQuery-Autocomplete','jquery.autocomplete.min','1.3.0','js') ?>
 
+<!-- jquery.shorten : https://github.com/viralpatel/jquery.shorten -->
+<?php getImport('jquery.shorten','jquery.shorten.min','1.0','js')?>
+
 <!-- markjs js : https://github.com/julmot/mark.js -->
 <?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
+
+<!-- jQuery UI : https://jqueryui.com/-->
+<?php getImport('jquery-ui','jquery-ui.sortable,min','1.12.1','js')?>
+
+<!-- jquery-ui-touch-punch : https://github.com/furf/jquery-ui-touch-punch/ -->
+<?php getImport('jquery-ui-touch-punch','jquery.ui.touch-punch.min','0.2.3','js')?>
 
 <!-- 댓글출력시 필요 -->
 <?php if ($mod!='write'): ?>

@@ -51,13 +51,45 @@ function moreNOTI(container,totalPage){
 
 }
 
+function edgeEffect(container,pos,show) {
+  var topEdge = $('#topEdge');
+  var bottomEdge = $('#bottomEdge');
+  var bar_nav_height = container.find('.bar-nav:not(.d-none)').height();
+  var bar_standard_height = container.find('.bar-standard:not(.d-none)').height();
+  var bar_header_secondary = container.find('.bar-header-secondary:not(.d-none)').height();
+  var bar_tab_height = container.find('.bar-tab:not(.d-none)').height();
+  var bar_footer_secondary_height = container.find('.bar-footer-secondary:not(.d-none)').height();
+  var bar_footer_height  = container.find('.bar-footer:not(.d-none)').height();
+  var top_margin = bar_nav_height + bar_header_secondary + bar_standard_height;
+  var bottom_margin = bar_tab_height + bar_footer_secondary_height + bar_footer_height;
+  topEdge.css("opacity", "0");
+  bottomEdge.css("opacity", "0");
+  if (pos=='top' && show=='show') {
+   topEdge.clearQueue();
+   topEdge.css('top',top_margin?top_margin:0);
+   topEdge.animate({height:'42px', opacity:'.5'}, 100);
+   topEdge.animate({height:'0', opacity:'0'}, 600);
+   setTimeout(function(){ topEdge.clearQueue() }, 680);
+  }
+  if (pos=='bottom' && show=='show') {
+   bottomEdge.clearQueue();
+   bottomEdge.css('bottom',bottom_margin?bottom_margin:0);
+   bottomEdge.animate({height:'42px', opacity:'.5'}, 100);
+   bottomEdge.animate({height:'0', opacity:'0'}, 600);
+   setTimeout(function(){ bottomEdge.clearQueue() }, 680);
+  }
+  if (pos=='bottom' && show=='hide') {
+   bottomEdge.css("opacity", "0");
+  }
+}
+
 $(document).ready(function() {
 
   if(navigator.userAgent.indexOf("Mac") > 0) {
     $("body").addClass("mac-os");
   }
 
-  putCookieAlert('site_login_result') // 로그인/로그아웃 알림 메시지 출력
+  putCookieAlert('site_common_result') // 로그인/로그아웃 알림 메시지 출력
 
 	$('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화
 

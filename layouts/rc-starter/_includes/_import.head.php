@@ -41,6 +41,13 @@
 <?php getImport('swiper','css/swiper','4.5.0','css')?>
 <?php getImport('swiper','js/swiper.min','4.5.0','js')?>
 
+<!-- timeago : 상대시간 표기 -->
+<?php getImport('jquery-timeago','jquery.timeago','1.6.7','js')?>
+<?php getImport('jquery-timeago','locales/jquery.timeago.ko','1.6.7','js')?>
+
+<!-- markjs js : https://github.com/julmot/mark.js -->
+<?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
+
 <!-- 소셜공유시 URL 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
 <?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 
@@ -55,3 +62,4 @@
 
 <!-- global css -->
 <link href="<?php echo $g['url_layout']?>/_css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
+<link href="<?php echo $g['url_layout']?>/_css/article.css<?php echo $g['wcache']?>" rel="stylesheet">
