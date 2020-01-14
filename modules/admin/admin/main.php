@@ -1,3 +1,5 @@
+<?php include $g['path_module'].$module.'/var/var.version.php'; ?>
+
 <div id="configbox" class="p-4">
 
 
