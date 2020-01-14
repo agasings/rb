@@ -1,3 +1,3 @@
 <?php
-$d['admin']['version'] = "2.4.5-beta.1";
+$d['admin']['version'] = "2.4.5-beta.2";
 ?>
