@@ -276,7 +276,7 @@ function getPostView(settings) {
 
             // 댓글 출력 함수 정의
             var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
-              wrapper.find('[data-role="comment"]').Rb_comment({
+              wrapper.find('[data-role="comment_box"]').Rb_comment({
                moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
                parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
                parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
@@ -296,7 +296,7 @@ function getPostView(settings) {
             get_Rb_Comment(p_module,p_table,uid,ctheme);
 
             // 보기 에서 댓글이 등록된 이후에 ..
-            wrapper.find('[data-role="comment"]').on('saved.rb.comment',function(){
+            wrapper.find('[data-role="comment_box"]').on('saved.rb.comment',function(){
               window.history.back(); //댓글작성 sheet 내림
               var list_item = $(document).find('[data-role="item"] [data-uid="'+uid+'"]')
               //var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
@@ -316,7 +316,7 @@ function getPostView(settings) {
             });
 
             // 포스트 보기 모달에서 한줄의견이 등록된 이후에..
-            wrapper.find('[data-role="comment"]').on('saved.rb.oneline',function(){
+            wrapper.find('[data-role="comment_box"]').on('saved.rb.oneline',function(){
               window.history.back(); //댓글작성 sheet 내림
               var uid = wrapper.find('[name="uid"]').val()
               var list_item = $('[data-role="list"]').find('#item-'+uid)
@@ -338,7 +338,7 @@ function getPostView(settings) {
             });
 
             // 댓글이 수정된 후에..
-            wrapper.find('[data-role="comment"]').on('edited.rb.comment',function(){
+            wrapper.find('[data-role="comment_box"]').on('edited.rb.comment',function(){
               setTimeout(function(){
                 history.back()
                 $.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
@@ -346,7 +346,7 @@ function getPostView(settings) {
             })
 
             // 한줄의견이 수정 후에
-            wrapper.find('[data-role="comment"]').on('edited.rb.oneline',function(){
+            wrapper.find('[data-role="comment_box"]').on('edited.rb.oneline',function(){
               setTimeout(function(){
                 history.back()
                 $.notify({message: '답글이 수정 되었습니다.'},{type: 'default'});
@@ -355,7 +355,7 @@ function getPostView(settings) {
 
           } else {
             wrapper.find('[data-role="btn_comment"]').hide();  //댓글 바로가기 버튼 숨김
-            wrapper.find('[data-role="comment"]').html('<div class="text-muted pb-3 text-xs-center">댓글이 사용 중지되었습니다.</div>')
+            wrapper.find('[data-role="comment_box"]').html('<div class="text-muted pb-3 text-xs-center">댓글이 사용 중지되었습니다.</div>')
           }
 
         } else {

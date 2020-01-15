@@ -7,7 +7,7 @@
 <?php getImport('snap','rc-snap','1.9.3','js')?>
 
 </head>
-<body class="rb-layout-blank-drawer">  
+<body class="rb-layout-blank-drawer">
 
 	<div data-role="edge_android">
 		<img src="<?php echo $g['img_core']?>/androidscroll.png" id="topEdge">

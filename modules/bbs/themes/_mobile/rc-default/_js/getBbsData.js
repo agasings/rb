@@ -42,7 +42,6 @@ function getBbsData(settings){
     var modal = $(this);
     page.find('[name="uid"]').val(uid);
     page.find('[name="bid"]').val(bid);
-    page.find('[data-role="subject"]').text(subject);
     page.find('[data-role="cat"]').text(cat);
     page.find('[data-role="name"]').text(name);
     page.find('[data-target="#page-member-profile"]').attr('data-mbruid',mbruid).attr('data-url','/@'+mbrid);
@@ -53,7 +52,7 @@ function getBbsData(settings){
     page.find('[data-role="likes"]').text(likes);
     page.find('[data-role="d_regis"]').text(d_regis);
     page.find('.bar-nav [data-role="toolbar"]').attr('data-uid',uid);
-    modal.find('[data-role="article"]').loader({  //  로더 출력
+    page.find('[data-role="article"]').loader({  //  로더 출력
       position:   "inside"
     });
 
@@ -186,7 +185,7 @@ function getBbsData(settings){
 
          // 댓글 출력 함수 정의
          var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
-           modal.find('[data-role="comment"]').Rb_comment({
+           modal.find('[data-role="comment_box"]').Rb_comment({
             moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
             parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
             parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
@@ -207,11 +206,6 @@ function getBbsData(settings){
 
          if (!hidden && _uid) {
            get_Rb_Comment(p_module,p_table,p_uid,theme);
-
-           setTimeout(function(){
-             page.find('[data-role="subject"]').text(subject)
-             page.find('[data-role="cat"]').text(cat)
-           }, 300);
          }
 
          //댓글영역 바로가기 일 경우,
@@ -378,11 +372,11 @@ function getBbsData(settings){
       modal.find('[data-role="attach-video"]').addClass('hidden').empty() // 비디오 영역 초기화
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
-      modal.find('[data-role="comment"]').html(''); // 댓글영역 내용 비우기
+      modal.find('[data-role="comment_box"]').html(''); // 댓글영역 내용 비우기
    });
 
 	 // 게시물 보기 에서 댓글이 등록된 이후에 ..
-   $(mid).find('[data-role="comment"]').on('saved.rb.comment',function(){
+   $(mid).find('[data-role="comment_box"]').on('saved.rb.comment',function(){
      window.history.back(); //댓글작성 sheet 내림
      var modal = $(mid)
      var bid = modal.find('[name="bid"]').val()
@@ -406,7 +400,7 @@ function getBbsData(settings){
    });
 
    // 게시물 보기 모달에서 한줄의견이 등록된 이후에..
-   $(mid).find('[data-role="comment"]').on('saved.rb.oneline',function(){
+   $(mid).find('[data-role="comment_box"]').on('saved.rb.oneline',function(){
      window.history.back(); //댓글작성 sheet 내림
      var modal = $(mid)
      var bid = modal.find('[name="bid"]').val()
@@ -430,7 +424,7 @@ function getBbsData(settings){
    });
 
    // 댓글이 수정된 후에..
-   $(mid).find('[data-role="comment"]').on('edited.rb.comment',function(){
+   $(mid).find('[data-role="comment_box"]').on('edited.rb.comment',function(){
      setTimeout(function(){
        history.back()
        $.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
@@ -438,7 +432,7 @@ function getBbsData(settings){
    })
 
    // 한줄의견이 수정 후에
-   $(mid).find('[data-role="comment"]').on('edited.rb.oneline',function(){
+   $(mid).find('[data-role="comment_box"]').on('edited.rb.oneline',function(){
      setTimeout(function(){
        history.back()
        $.notify({message: '답글이 수정 되었습니다.'},{type: 'default'});
@@ -587,10 +581,8 @@ function getBbsData(settings){
 		var button = $(event.relatedTarget);
 		var page = $(this);
 		var bid = button.attr('data-bid');
-		var cat = button.attr('data-cat');
 		var uid = button.attr('data-uid');
 		var url = button.attr('data-url');
-		var subject = button.attr('data-subject');
 		var opinion =  button.attr('data-opinion');
 
 		page.find('[name="uid"]').val(uid);

@@ -44,7 +44,7 @@
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="theme" value="">
-  
+
   <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
     <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
     <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
@@ -93,7 +93,7 @@
     </div>
 
     <!-- 댓글출력 -->
-    <div data-role="comment"></div>
+    <div data-role="comment_box"></div>
 
   </main>
 </section>

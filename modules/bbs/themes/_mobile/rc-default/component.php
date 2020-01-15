@@ -71,7 +71,7 @@
     </div>
 
     <!-- 댓글출력 -->
-    <div data-role="comment"></div>
+    <div data-role="comment_box"></div>
 
   </main>
 </section>

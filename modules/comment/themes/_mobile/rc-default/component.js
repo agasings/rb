@@ -6,7 +6,7 @@ var sheet_comment_write = $('#sheet-comment-write');
 
 
 //댓글쓰기 컴포넌트가 호출
-$(document).on('tap','[data-role="comment"] [data-toggle="commentWrite"]',function(){
+$(document).on('tap','[data-role="comment_box"] [data-toggle="commentWrite"]',function(){
   if (memberid) {
     var type = $(this).attr('data-type');
     var parent = $(this).attr('data-parent');
@@ -20,7 +20,7 @@ $(document).on('tap','[data-role="comment"] [data-toggle="commentWrite"]',functi
   return false;
 });
 
-$(document).on('click','[data-role="comment"] [data-role="toggle-oneline-input"]',function(){
+$(document).on('click','[data-role="comment_box"] [data-role="toggle-oneline-input"]',function(){
   if (memberid) {
     var type = $(this).attr('data-type');
     var parent = $(this).attr('data-parent');
@@ -36,7 +36,7 @@ $(document).on('click','[data-role="comment"] [data-role="toggle-oneline-input"]
 
 $(document).on('click','.sheet [data-role="toggle-oneline-input"]',function(){
   if (memberid) {
-    $(document).find('[data-role="comment"] [data-role="toggle-oneline-input"]').click();
+    $(document).find('[data-role="comment_box"] [data-role="toggle-oneline-input"]').click();
   } else {
     $('#modal-login').modal();
   }
@@ -63,8 +63,8 @@ $(document).on('click','#popup-comment-mypost .table-view-cell a',function(event
     if (toggle) {
       if (act=='edit') {
         console.log('댓글 수정모드');
-        var content = $('[data-role="comment"]').find('[data-role="'+type+'-origin-content-'+uid+'"]').html();
-        $('[data-role="comment"]').find('[data-toggle="edit"][data-type="'+type+'"][data-uid="'+uid+'"]').click();
+        var content = $('[data-role="comment_box"]').find('[data-role="'+type+'-origin-content-'+uid+'"]').html();
+        $('[data-role="comment_box"]').find('[data-toggle="edit"][data-type="'+type+'"][data-uid="'+uid+'"]').click();
         sheet_comment_write.sheet();
         setTimeout(function(){
           sheet_comment_write.attr('data-uid',uid).attr('data-type',type);
@@ -76,11 +76,11 @@ $(document).on('click','#popup-comment-mypost .table-view-cell a',function(event
         }, 10);
 
       } else {
-        $(document).find('[data-role="comment"] [data-role="'+type+'-item"][data-uid="'+uid+'"] [data-toggle="'+toggle+'"]').click()
+        $(document).find('[data-role="comment_box"] [data-role="'+type+'-item"][data-uid="'+uid+'"] [data-toggle="'+toggle+'"]').click()
       }
 
     } else {
-      $(document).find('[data-role="comment"] [data-role="menu-container-'+type+'"] [data-uid="'+uid+'"][data-kcact="'+kcact+'"]').click()
+      $(document).find('[data-role="comment_box"] [data-role="menu-container-'+type+'"] [data-uid="'+uid+'"][data-kcact="'+kcact+'"]').click()
     }
   }, 100);
 });
@@ -108,10 +108,10 @@ sheet_comment_write.find('[data-kcact="regis"]').click(function(event) {
   setTimeout(function(){
 
     if (type=='comment' && act=='regis') {
-      const commentRegisEditor = document.querySelector( '[data-role="comment"] .ck-editor__editable' );
+      const commentRegisEditor = document.querySelector( '[data-role="comment_box"] .ck-editor__editable' );
       const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
       commentRegisEditorInstance.setData(content);
-      $('[data-role="comment"] [data-role="comment-input-wrapper"]').find('[data-kcact="regis"]').attr('data-hidden',hidden).click();
+      $('[data-role="comment_box"] [data-role="comment-input-wrapper"]').find('[data-kcact="regis"]').attr('data-hidden',hidden).click();
     }
 
     if (type=='oneline' && act=='regis') {
@@ -124,19 +124,19 @@ sheet_comment_write.find('[data-kcact="regis"]').click(function(event) {
     if (type=='comment' && act=='edit') {
 
       console.log('comment 수정 실행')
-      const commentRegisEditor = document.querySelector( '[data-role="comment"] [data-role="comment-item"] .ck-editor__editable' );
+      const commentRegisEditor = document.querySelector( '[data-role="comment_box"] [data-role="comment-item"] .ck-editor__editable' );
       const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
       commentRegisEditorInstance.setData(content);
-      $('[data-role="comment"]').find('[data-kcact="edit"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
+      $('[data-role="comment_box"]').find('[data-kcact="edit"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
     }
 
     if (type=='oneline' && act=='edit') {
 
       console.log('oneline 수정 실행')
-      const commentRegisEditor = document.querySelector( '[data-role="comment"] [data-role="oneline-item"][data-uid="'+uid+'"] .ck-editor__editable' );
+      const commentRegisEditor = document.querySelector( '[data-role="comment_box"] [data-role="oneline-item"][data-uid="'+uid+'"] .ck-editor__editable' );
       const commentRegisEditorInstance = commentRegisEditor.ckeditorInstance;
       commentRegisEditorInstance.setData(content);
-      $('[data-role="comment"]').find('[data-kcact="edit"][data-type="oneline"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
+      $('[data-role="comment_box"]').find('[data-kcact="edit"][data-type="oneline"][data-uid="'+uid+'"]').attr('data-hidden',hidden).click();
     }
   }, 600);
 
@@ -271,8 +271,8 @@ popup_comment_mypost.on('show.rc.popup', function (e) {
   var hidden = button.closest('[data-role="'+type+'-item"]').attr('data-hidden');
   var popup = $(this);
 
-  popup.find('[data-role="comment"]').removeClass('d-none');
-  if (type=='oneline') popup.find('[data-role="comment"]').addClass('d-none');
+  popup.find('[data-role="comment_box"]').removeClass('d-none');
+  if (type=='oneline') popup.find('[data-role="comment_box"]').addClass('d-none');
 
   if (notice=="true") popup.find('[data-kcact="notice"] span').text('해제')
   else popup.find('[data-kcact="notice"] span').text('')

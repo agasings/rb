@@ -348,8 +348,7 @@
 .rb-article table,
 .rb-article pre {
   margin-top: 0;
-  /*margin-bottom: 16px;*/
-  margin-bottom: 2em;
+  margin-bottom: .3rem;
 }
 
 .rb-article hr {
