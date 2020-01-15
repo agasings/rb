@@ -7,7 +7,7 @@
  * --------------------------------------------------------------------------
  */
 
-function setBbsData(settings){
+function _setBbsData(settings){
   var bid=settings.bid; //게시판 아이디
   var uid=settings.uid; // 게시물 고유번호
   var markup=settings.markup; // 게시물 보기 마크업

@@ -1,20 +1,4 @@
-<!--
-컴포넌트 모음
-
-1. 일반모달 : 회원가입
-2. 일반모달 : 로그인
-3. 시트 : 알림
-4. 팝업   : 로그아웃
-5. 일반모달 : 통합검색
-6. 일반모달 : 게시물 보기
-7. 일반모달 : 게시물 쓰기
-8. 포토모달 : 갤러리형
-9. 팝업 : 링크공유
-10. 시트 : 푸시알림 권한요청
-11. 시트 : 첨부파일 설정
-12. 팝업 : 첨부파일 업로드 성공
-
--->
+<!-- 컴포넌트 모음 -->
 
 <!-- 회원가입 -->
 <?php include_once $g['path_module'].'member/themes/'.$d['member']['theme_mobile'].'/join/component.php'; ?>
@@ -34,8 +18,11 @@
 <!-- 포스트 -->
 <?php include_once $g['path_module'].'post/themes/'.$d['post']['skin_mobile'].'/component.php';  ?>
 
+<!-- 게시판 -->
+<?php include_once $g['path_module'].'bbs/themes/'.$d['bbs']['skin_mobile'].'/component.php';  ?>
+
 <!-- 댓글 -->
-<?php include_once $g['path_module'].'comment/themes/_mobile/rc-default/component.php';  ?>
+<?php include_once $g['path_module'].'comment/themes/'.$d['comment']['skin_mobile'].'/component.php';  ?>
 
 <!-- 사이트 페이지 -->
 <div class="page right" id="page-site-page">
@@ -49,31 +36,7 @@
   </main>
 </div>
 
-<!-- 4. 팝업 : 로그아웃-->
-<div id="popup-logout" class="popup zoom">
-  <div class="popup-content">
-    <header class="bar bar-nav">
-      <h1 class="title">로그아웃 전에 확인해주세요.</h1>
-    </header>
-    <nav class="bar bar-standard bar-footer">
-      <div class="row">
-        <div class="col-xs-6">
-          <button type="button" class="btn btn-secondary btn-block" data-history="back">취소</button>
-        </div>
-        <div class="col-xs-6 p-l-0">
-          <button type="button" class="btn btn-primary btn-block" data-act="logout">로그이웃</button>
-        </div>
-      </div>
-    </nav>
-    <div class="content">
-      <div class="p-a-3 text-xs-center">
-				정말로 로그아웃 하시겠습니까?
-			</div>
-    </div>
-  </div>
-</div>
-
-<!-- 5. 일반모달 : 통합검색 -->
+<!-- 통합검색 -->
 <div id="modal-search" class="modal zoom">
 	<header class="bar bar-nav bg-white p-2">
 	  <form class="input-group input-group-lg border border-primary" action="<?php echo $g['s']?>/" id="modal-search-form">
@@ -105,92 +68,20 @@
 	</main>
 </div><!-- /.modal -->
 
-<!-- 6. 일반모달 : 게시물 보기 -->
-<div id="modal-bbs-view" class="modal zoom">
+<!-- 레이아웃 위젯탐색기 -->
+<div id="modal-widget-selector" class="modal">
+  <header class="bar bar-nav bar-light bg-white">
+    <a class="icon icon-close pull-right" data-history="back" role="button"></a>
+    <h1 class="title">위젯 탐색기</h1>
+  </header>
+  <div class="content">
+    <p class="content-padded">
+      <?php echo $d['layout']['dir'] ?>
+    </p>
+  </div>
+</div>
 
-	<section id="page-bbs-view" class="rb-bbs-list page center" data-role="bbs-view">
-		<input type="hidden" name="bid" value="">
-	  <input type="hidden" name="uid" value="">
-	  <header class="bar bar-nav bar-light bg-faded px-0">
-			<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-	    <h1 class="title text-truncate text-nowrap w-75" style="left:12.5%" data-role="title">게시물 보기</h1>
-	  </header>
-	  <div class="content">
-	    <div class="content-padded" data-role="post">
-	      <span data-role="cat" class="badge badge-primary badge-inverted">카테고리</span>
-	      <h3 data-role="subject" class="rb-article-title">게시물 제목</h3>
-			</div>
-
-      <div data-role="article" data-plugin="photoswipe"></div>
-
-      <div data-role="attach">
-
-        <!-- 유튜브 -->
-        <div class="card-group mb-3 hidden" data-role="attach-youtube">
-        </div>
-
-        <!-- 비디오 -->
-        <div class="mb-3 hidden" data-role="attach-video">
-        </div>
-
-        <!-- 오디오 -->
-        <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-audio">
-        </ul>
-
-        <!-- 이미지 -->
-        <div class="card-group mb-3 hidden" data-role="attach-photo" data-plugin="photoswipe">
-        </div>
-
-        <!-- 기타파일 -->
-        <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-file">
-        </ul>
-      </div>
-
-	  </div>
-	</section>
-
-	<!-- 전체댓글보기 -->
-	<section id="page-bbs-allcomments" class="page right" data-role="bbs-comment">
-	  <div class="commentting-all"></div>
-	</section>
-
-  <section id="page-bbs-photo" class="page right" data-role="bbs-photo">
-		<header class="bar bar-nav bar-dark bg-black px-0">
-			<button class="btn btn-link btn-nav pull-left p-x-1" data-history="back">
-				<i class="material-icons">arrow_back</i>
-			</button>
-		 <h1 class="title" data-role="title" data-history="back">제목</h1>
-		</header>
-		<div class="bar bar-standard bar-header-secondary bar-dark bg-black">
-		   <h1 class="title text-muted"><small><i class="fa fa-expand mr-2" aria-hidden="true"></i> 이미지를 터치해서 확대해서 볼 수 있습니다.</small></h1>
-		</div>
-		<div class="bar bar-footer bar-dark bg-black text-muted">
-			<div class="swiper-pagination"></div>
-		</div>
-		<div class="content bg-black">
-			<div class="d-flex" style="height:78vh">
-				<div class="swiper-container align-self-center" style="height:78vh">
-					<div class="swiper-wrapper">
-					</div>
-			</div>
-		    <!-- Add Navigation -->
-		    <div class="swiper-button-prev"></div>
-		    <div class="swiper-button-next"></div>
-		  </div>
-		</div>
-	</section>
-
-</div><!-- /.modal -->
-
-<!-- 7. 일반모달 : 게시물 쓰기 -->
-<?php
-if ($m=='bbs') {
-  $bbs_component = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/component.php';
-  if (file_exists($bbs_component)) include_once $bbs_component;
-}
-?>
-
-<!-- 8. 포토모달 : 갤러리형 -->
+<!-- 포토모달 : 갤러리형 -->
 <div class="pswp pswp-gallery" tabindex="-1" role="dialog" aria-hidden="true">
 	<input type="hidden" name="uid" value="">
   <input type="hidden" name="bid" value="">
@@ -269,7 +160,31 @@ if ($m=='bbs') {
 
 </div>
 
-<!-- 9. 팝업 : 링크공유 -->
+<!-- 로그아웃-->
+<div id="popup-logout" class="popup zoom">
+  <div class="popup-content">
+    <header class="bar bar-nav">
+      <h1 class="title">로그아웃 전에 확인해주세요.</h1>
+    </header>
+    <nav class="bar bar-standard bar-footer">
+      <div class="row">
+        <div class="col-xs-6">
+          <button type="button" class="btn btn-secondary btn-block" data-history="back">취소</button>
+        </div>
+        <div class="col-xs-6 p-l-0">
+          <button type="button" class="btn btn-primary btn-block" data-act="logout">로그이웃</button>
+        </div>
+      </div>
+    </nav>
+    <div class="content">
+      <div class="p-a-3 text-xs-center">
+				정말로 로그아웃 하시겠습니까?
+			</div>
+    </div>
+  </div>
+</div>
+
+<!-- 링크공유 -->
 <div id="popup-link-share" class="popup zoom">
   <div class="popup-content">
     <header class="bar bar-nav">
@@ -326,7 +241,7 @@ if ($m=='bbs') {
   </div><!-- /.popup-content -->
 </div><!-- /.popup -->
 
-<!-- 10. 시트 : 푸시알림 권한요청 -->
+<!-- 푸시알림 권한요청 -->
 <div id="permission_alert" class="sheet">
 
   <div class="card card-full">
@@ -354,7 +269,7 @@ if ($m=='bbs') {
 
 </div>
 
-<!-- 11. 시트 : 첨부파일 설정 -->
+<!-- 첨부파일 설정 -->
 <div id="sheet-attach-moreAct" class="sheet bg-faded">
   <ul class="table-view table-view-full bg-white mb-0">
     <li class="table-view-cell table-view-divider" data-dismiss="sheet"><span data-role="title"></span></li>
@@ -374,35 +289,4 @@ if ($m=='bbs') {
       </a>
     </li>
   </ul>
-</div>
-
-<!-- 12. 팝업 : 첨부파일 업로드 성공 -->
-<div id="popup-success" class="popup zoom">
-  <div class="popup-content">
-    <header class="bar bar-nav bar-dark bg-inverse">
-      <h1 class="title">업로드 완료</h1>
-    </header>
-    <nav class="bar bar-standard bar-footer">
-      <button type="button" class="btn btn-secondary btn-block" data-history="back">확인</button>
-    </nav>
-    <div class="content">
-      <div class="p-a-3 text-xs-center">
-        본문작성으로 돌아가려면 <br> 상단 <code>본문작성</code>을 누르세요.
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- 레이아웃 위젯탐색기 -->
-<div id="modal-widget-selector" class="modal">
-  <header class="bar bar-nav bar-light bg-white">
-    <a class="icon icon-close pull-right" data-history="back" role="button"></a>
-    <h1 class="title">위젯 탐색기</h1>
-  </header>
-  <div class="content">
-    <p class="content-padded">
-      <?php echo $d['layout']['dir'] ?>
-    </p>
-  </div>
 </div>

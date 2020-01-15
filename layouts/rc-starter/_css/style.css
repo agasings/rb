@@ -919,13 +919,8 @@ body.refreshing .refresher.shrink {
   color: #eee;
   line-height: 1.7
 }
-
 .popover {
-  top: 40px;
-  left: auto;
-  right: 15px;
-  width: 200px;
-  margin-left: 0;
+  top: 10px;
   border: none;
   border-radius: 0;
   -webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
@@ -941,6 +936,28 @@ body.refreshing .refresher.shrink {
   content: none;
 }
 
+.sheet.active main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 2.75rem;
+  padding-bottom: 3.2rem;
+  overflow: auto;
+}
+
+/* 링크공유 */
+.popup .share .list-inline-item {
+  width: 27%;
+  text-align: center;
+}
+.popup .share img {
+  width: 3.5rem
+}
+.popup .share a {
+  color: #444
+}
 
 /**
   * 8 - utility 유틸리티

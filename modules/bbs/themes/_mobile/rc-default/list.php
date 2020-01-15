@@ -100,7 +100,7 @@
     </div>
 
     <!-- 댓글출력 -->
-    <div data-role="bbs-comment"></div>
+    <div data-role="comment"></div>
 
   </div>
 </section>

@@ -10,6 +10,91 @@
 
 -->
 
+<!-- 6. 일반모달 : 게시물 보기 -->
+<div id="modal-bbs-view" class="modal zoom">
+
+	<section id="page-bbs-view" class="rb-bbs-list page center" data-role="bbs-view">
+		<input type="hidden" name="bid" value="">
+	  <input type="hidden" name="uid" value="">
+	  <header class="bar bar-nav bar-light bg-faded px-0">
+			<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
+	    <h1 class="title text-truncate text-nowrap w-75" style="left:12.5%" data-role="title">게시물 보기</h1>
+	  </header>
+	  <div class="content">
+	    <div class="content-padded" data-role="post">
+	      <span data-role="cat" class="badge badge-primary badge-inverted">카테고리</span>
+	      <h3 data-role="subject" class="rb-article-title">게시물 제목</h3>
+			</div>
+
+      <div data-role="article" data-plugin="photoswipe"></div>
+
+      <div data-role="attach">
+
+        <!-- 유튜브 -->
+        <div class="card-group mb-3 hidden" data-role="attach-youtube">
+        </div>
+
+        <!-- 비디오 -->
+        <div class="mb-3 hidden" data-role="attach-video">
+        </div>
+
+        <!-- 오디오 -->
+        <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-audio">
+        </ul>
+
+        <!-- 이미지 -->
+        <div class="card-group mb-3 hidden" data-role="attach-photo" data-plugin="photoswipe">
+        </div>
+
+        <!-- 기타파일 -->
+        <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-file">
+        </ul>
+      </div>
+
+	  </div>
+	</section>
+
+	<!-- 전체댓글보기 -->
+	<section id="page-bbs-allcomments" class="page right" data-role="bbs-comment">
+	  <div class="commentting-all"></div>
+	</section>
+
+  <section id="page-bbs-photo" class="page right" data-role="bbs-photo">
+		<header class="bar bar-nav bar-dark bg-black px-0">
+			<button class="btn btn-link btn-nav pull-left p-x-1" data-history="back">
+				<i class="material-icons">arrow_back</i>
+			</button>
+		 <h1 class="title" data-role="title" data-history="back">제목</h1>
+		</header>
+		<div class="bar bar-standard bar-header-secondary bar-dark bg-black">
+		   <h1 class="title text-muted"><small><i class="fa fa-expand mr-2" aria-hidden="true"></i> 이미지를 터치해서 확대해서 볼 수 있습니다.</small></h1>
+		</div>
+		<div class="bar bar-footer bar-dark bg-black text-muted">
+			<div class="swiper-pagination"></div>
+		</div>
+		<div class="content bg-black">
+			<div class="d-flex" style="height:78vh">
+				<div class="swiper-container align-self-center" style="height:78vh">
+					<div class="swiper-wrapper">
+					</div>
+			</div>
+		    <!-- Add Navigation -->
+		    <div class="swiper-button-prev"></div>
+		    <div class="swiper-button-next"></div>
+		  </div>
+		</div>
+	</section>
+
+</div><!-- /.modal -->
+
+<!-- 7. 일반모달 : 게시물 쓰기 -->
+<?php
+if ($m=='bbs') {
+  $bbs_component = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/component.php';
+  if (file_exists($bbs_component)) include_once $bbs_component;
+}
+?>
+
 <!-- Modal : 게시판 카테고리 -->
 <div id="modal-bbs-category" class="modal fast">
   <header class="bar bar-nav bar-light bg-white border-bottom-0 px-0">

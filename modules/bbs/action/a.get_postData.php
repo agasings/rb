@@ -70,14 +70,6 @@ if ($mod=='view') {
   $result['featured_img_sq_300'] = getPreviewResize(getUpImageSrc($R),'300x300');
   $result['featured_img_sq_600'] = getPreviewResize(getUpImageSrc($R),'600x600');
 
-  if ($R['oneline']) {
-    $TMPL['comment'] = $R['comment'].'+'.$R['oneline'];
-    $result['total_comment'] = $R['comment'].'+'.$R['oneline']; // 댓글,한줄의견 등록시 현재댓글수를 내려주기 위함
-  } else {
-    $TMPL['comment'] = $R['comment'];
-    $result['total_comment'] = $R['comment']; // 댓글,한줄의견 등록시 현재댓글수를 내려주기 위함
-  }
-
   $TMPL['hit'] = $R['hit'];
   $TMPL['likes'] = $R['likes'];
   $TMPL['dislikes'] = $R['dislikes'];
@@ -175,6 +167,14 @@ if ($mod=='view') {
     $result['theme_attachFile'] = $theme_attachFile;
   }
 
+}
+
+if ($R['oneline']) {
+  $TMPL['comment'] = $R['comment'].'+'.$R['oneline'];
+  $result['total_comment'] = $R['comment'].'+'.$R['oneline']; // 댓글,한줄의견 등록시 현재댓글수를 내려주기 위함
+} else {
+  $TMPL['comment'] = $R['comment'];
+  $result['total_comment'] = $R['comment']; // 댓글,한줄의견 등록시 현재댓글수를 내려주기 위함
 }
 
 echo json_encode($result);

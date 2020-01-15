@@ -13,7 +13,6 @@ function getBbsData(settings){
   var ctheme=settings.ctheme; // 댓글테마
   var page = $('[data-role="bbs-view"]')
   var sheet_comment_write = $('#sheet-comment-write') // 댓글 작성 sheet
-  var page_allcomment = $('#page-bbs-allcomments')  // 댓글 전체보기 페이지
   var page_bbs_photo = $('#page-bbs-photo');  // 샤진 크게보기 페이지
   var page_bbs_opinion = $('#page-bbs-opinion');
   var popup_linkshare = $('#popup-link-share')  //링크공유 팝업
@@ -39,7 +38,6 @@ function getBbsData(settings){
     var markup = $(ele).attr('data-markup')?$(ele).attr('data-markup'):''; // 마크업
     var item = ele.closest('.table-view-cell')
 		var move =  ele.attr('data-move');
-
     item.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
     var modal = $(this);
     page.find('[name="uid"]').val(uid);
@@ -180,7 +178,7 @@ function getBbsData(settings){
 
          // 댓글 출력 함수 정의
          var get_Rb_Comment = function(p_module,p_table,p_uid,theme){
-           modal.find('[data-role="bbs-comment"]').Rb_comment({
+           modal.find('[data-role="comment"]').Rb_comment({
             moduleName : 'comment', // 댓글 모듈명 지정 (수정금지)
             parent : p_module+'-'+p_uid, // rb_s_comment parent 필드에 저장되는 형태가 p_modulep_uid 형태임 참조.(- 는 저장시 제거됨)
             parent_table : p_table, // 부모 uid 가 저장된 테이블 (게시판인 경우 rb_bbs_data : 댓글, 한줄의견 추가/삭제시 전체 합계 업데이트용)
@@ -372,19 +370,18 @@ function getBbsData(settings){
       modal.find('[data-role="attach-video"]').addClass('hidden').empty() // 비디오 영역 초기화
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
-      modal.find('[data-role="bbs-comment"]').html(''); // 댓글영역 내용 비우기
+      modal.find('[data-role="comment"]').html(''); // 댓글영역 내용 비우기
    });
 
 	 // 게시물 보기 에서 댓글이 등록된 이후에 ..
-   $(mid).find('[data-role="bbs-comment"]').on('saved.rb.comment',function(){
+   $(mid).find('[data-role="comment"]').on('saved.rb.comment',function(){
      window.history.back(); //댓글작성 sheet 내림
      var modal = $(mid)
      var bid = modal.find('[name="bid"]').val()
      var uid = modal.find('[name="uid"]').val()
      var theme = modal.find('[name="theme"]').val()
 		 var list_item = $('[data-role="bbs-list"]').find('#item-'+uid)
-     var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-     var showComment_Ele_2 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+     var showComment_Ele_1 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 	   var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
@@ -396,21 +393,19 @@ function getBbsData(settings){
           var total_comment=result.total_comment;
 					// $.notify({message: '댓글이 등록 되었습니다.'},{type: 'default'});
           showComment_Ele_1.text(total_comment); // 모달 상단 최종 댓글수량 합계 업데이트
-          showComment_Ele_2.text(total_comment); // 모달 상단 최종 댓글수량 합계 업데이트
 					showComment_ListEle.text(total_comment); // 게시물 목록 해당 항목의 최종 댓글수량 합계 업데이트
      });
    });
 
    // 게시물 보기 모달에서 한줄의견이 등록된 이후에..
-   $(mid).find('[data-role="bbs-comment"]').on('saved.rb.oneline',function(){
+   $(mid).find('[data-role="comment"]').on('saved.rb.oneline',function(){
      window.history.back(); //댓글작성 sheet 내림
      var modal = $(mid)
      var bid = modal.find('[name="bid"]').val()
      var uid = modal.find('[name="uid"]').val()
      var theme = modal.find('[name="theme"]').val()
  		 var list_item = $('[data-role="bbs-list"]').find('#item-'+uid)
-     var showComment_Ele_1 = page_allcomment.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-     var showComment_Ele_2 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
+     var showComment_Ele_1 = modal.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
 
 	   var showComment_ListEle = list_item.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
@@ -422,93 +417,92 @@ function getBbsData(settings){
           var total_comment=result.total_comment;
           //$.notify({message: '한줄의견이 등록 되었습니다.'},{type: 'default'});
           showComment_Ele_1.text(total_comment); // 최종 댓글수량 합계 업데이트
-          showComment_Ele_2.text(total_comment); // 최종 댓글수량 합계 업데이트
 					showComment_ListEle.text(total_comment); // 게시물 목록 해당 항목의 최종 댓글수량 합계 업데이트
      });
    });
 
    // 댓글이 수정된 후에..
-   $(mid).find('[data-role="bbs-comment"]').on('edited.rb.comment',function(){
+   $(mid).find('[data-role="comment"]').on('edited.rb.comment',function(){
      setTimeout(function(){
        history.back()
        $.notify({message: '댓글이 수정 되었습니다.'},{type: 'default'});
      }, 300);
    })
 
- // 한줄의견이 수정 후에
- $(mid).find('[data-role="bbs-comment"]').on('edited.rb.oneline',function(){
-   setTimeout(function(){
-     history.back()
-     $.notify({message: '답글이 수정 되었습니다.'},{type: 'default'});
-   }, 300);
- })
+   // 한줄의견이 수정 후에
+   $(mid).find('[data-role="comment"]').on('edited.rb.oneline',function(){
+     setTimeout(function(){
+       history.back()
+       $.notify({message: '답글이 수정 되었습니다.'},{type: 'default'});
+     }, 300);
+   })
 
- //링크 공유 팝업이 열릴때
- popup_linkshare.on('shown.rc.popup', function (event) {
-   var ele = $(event.relatedTarget)
-   var path = ele.attr('data-url')?ele.attr('data-url'):''
-   var host = $(location).attr('origin');
-   var title= "게시물 공유"
-   var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
-   var email = ele.attr('data-email')?ele.attr('data-email'):'' // 버튼에서 이메일 추출
-   var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
-   var image = ele.attr('data-image')?ele.attr('data-image'):'' // 버튼에서 대표이미지 경로 추출
-   var popup = $(this)
+   //링크 공유 팝업이 열릴때
+   popup_linkshare.on('shown.rc.popup', function (event) {
+     var ele = $(event.relatedTarget)
+     var path = ele.attr('data-url')?ele.attr('data-url'):''
+     var host = $(location).attr('origin');
+     var title= "게시물 공유"
+     var sbj = ele.attr('data-subject')?ele.attr('data-subject'):'' // 버튼에서 제목 추출
+     var email = ele.attr('data-email')?ele.attr('data-email'):'' // 버튼에서 이메일 추출
+     var desc = ele.attr('data-desc')?ele.attr('data-desc'):'' // 버튼에서 요약설명 추출
+     var image = ele.attr('data-image')?ele.attr('data-image'):'' // 버튼에서 대표이미지 경로 추출
+     var popup = $(this)
 
-   var link = host+path // 게시물 보기 URL
-   var enc_link = encodeURIComponent(host+path) // URL 인코딩
-   var imageUrl = host+image // 대표이미지 URL
-   var enc_sbj = encodeURIComponent(sbj) // 제목 인코딩
-   var facebook = 'http://www.facebook.com/sharer.php?u=' + enc_link;
-   var twitter = 'https://twitter.com/intent/tweet?url=' + enc_link + '&text=' + sbj;
-   var naver = 'http://share.naver.com/web/shareView.nhn?url=' + enc_link + '&title=' + sbj;
-   var kakaostory = 'https://story.kakao.com/share?url=' + enc_link + '&title=' + enc_sbj;
-   var email = 'mailto:' + email + '?subject=링크공유-' + enc_sbj+'&body='+ enc_link;
+     var link = host+path // 게시물 보기 URL
+     var enc_link = encodeURIComponent(host+path) // URL 인코딩
+     var imageUrl = host+image // 대표이미지 URL
+     var enc_sbj = encodeURIComponent(sbj) // 제목 인코딩
+     var facebook = 'http://www.facebook.com/sharer.php?u=' + enc_link;
+     var twitter = 'https://twitter.com/intent/tweet?url=' + enc_link + '&text=' + sbj;
+     var naver = 'http://share.naver.com/web/shareView.nhn?url=' + enc_link + '&title=' + sbj;
+     var kakaostory = 'https://story.kakao.com/share?url=' + enc_link + '&title=' + enc_sbj;
+     var email = 'mailto:' + email + '?subject=링크공유-' + enc_sbj+'&body='+ enc_link;
 
-   popup.find('[data-role="title"]').text(title)
-   popup.find('[data-role="share"]').val(host+path)
-   popup.find('[data-role="share"]').focus(function(){
-     $(this).on("mouseup.a keyup.a", function(e){
-       $(this).off("mouseup.a keyup.a").select();
+     popup.find('[data-role="title"]').text(title)
+     popup.find('[data-role="share"]').val(host+path)
+     popup.find('[data-role="share"]').focus(function(){
+       $(this).on("mouseup.a keyup.a", function(e){
+         $(this).off("mouseup.a keyup.a").select();
+       });
      });
-   });
 
-   popup.find('[data-role="facebook"]').attr('href',facebook)
-   popup.find('[data-role="twitter"]').attr('href',twitter)
-   popup.find('[data-role="naver"]').attr('href',naver)
-   popup.find('[data-role="kakaostory"]').attr('href',kakaostory)
-   popup.find('[data-role="email"]').attr('href',email)
+     popup.find('[data-role="facebook"]').attr('href',facebook)
+     popup.find('[data-role="twitter"]').attr('href',twitter)
+     popup.find('[data-role="naver"]').attr('href',naver)
+     popup.find('[data-role="kakaostory"]').attr('href',kakaostory)
+     popup.find('[data-role="email"]').attr('href',email)
 
-   //카카오 링크
-   function sendLink() {
-     Kakao.Link.sendDefault({
-       objectType: 'feed',
-       content: {
-         title: sbj,
-         description: desc,
-         imageUrl: imageUrl,
-         link: {
-           mobileWebUrl: link,
-           webUrl: link
-         }
-       },
-       buttons: [
-         {
-           title: '바로가기',
+     //카카오 링크
+     function sendLink() {
+       Kakao.Link.sendDefault({
+         objectType: 'feed',
+         content: {
+           title: sbj,
+           description: desc,
+           imageUrl: imageUrl,
            link: {
              mobileWebUrl: link,
              webUrl: link
            }
          },
-       ]
-     });
-   }
+         buttons: [
+           {
+             title: '바로가기',
+             link: {
+               mobileWebUrl: link,
+               webUrl: link
+             }
+           },
+         ]
+       });
+     }
 
-   //카카오톡 링크공유
-    kakao_link_btn.click(function() {
-      sendLink()
-    });
-})
+     //카카오톡 링크공유
+      kakao_link_btn.click(function() {
+        sendLink()
+      });
+  })
 
   page_bbs_photo.on('hidden.rc.page', function () {
     // 줌상태 초기화
