@@ -55,6 +55,7 @@ if ($mod=='view') {
   $TMPL['bid']=$B['id'];
   $TMPL['uid']=$uid;
   $TMPL['subject'] = $R['subject'];
+  $TMPL['category'] = $R['category'];
   $TMPL['article'] = getContents($R['content'],$R['html']);
   $TMPL['date'] = getDateFormat($R['d_regis'],$d['theme']['date_viewf']);
   $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');

@@ -68,6 +68,7 @@ function getBbsData(settings){
          var result = $.parseJSON(response);
          var _uid=result.uid;
          var article=result.article;
+         var featured_img = result.featured_img;
          var adddata=result.adddata;
          var attachNum = result.attachNum;
          var attachFileTheme = result.theme_attachFile;
@@ -95,6 +96,7 @@ function getBbsData(settings){
            }, 600);
          }
 
+         page.find('[data-role="linkShare"]').attr('data-subject',subject).attr('data-image',featured_img).attr('data-url',url);
          page.find('[data-role="article"]').html(article);
 
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
@@ -104,8 +106,14 @@ function getBbsData(settings){
 
          page.find('[data-toggle="popover"]').attr('data-uid',uid);
 
-         if (is_post_liked) modal.find('[data-role="btn_post_like"]').addClass('active');
-         if (is_post_disliked) modal.find('[data-role="btn_post_dislike"]').addClass('active')
+         if (is_post_liked) {
+           modal.find('[data-role="btn_post_like"]').addClass('active');
+           page_bbs_opinion.find('[data-role="btn_post_like"]').addClass('active');
+         }
+         if (is_post_disliked) {
+           modal.find('[data-role="btn_post_dislike"]').addClass('active');
+           page_bbs_opinion.find('[data-role="btn_post_dislike"]').addClass('active')
+         }
 
          if (bbs_c_hidden) {
           page.find('[data-role="btn_comment"]').remove()  // 좋아요 버튼 제거
@@ -268,7 +276,7 @@ function getBbsData(settings){
    });
 
    //좋아요,싫어요
-   $(mid).on('tap','[data-toggle="opinion"]',function(){
+   $(document).on('tap','[data-toggle="opinion"]',function(){
      var send = $(this).data('send')
      var uid = $(this).data('uid')
      var opinion = $(this).data('opinion')

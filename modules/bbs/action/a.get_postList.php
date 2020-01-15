@@ -61,6 +61,8 @@ if ($NUM_NOTICE) {
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
     $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
     $TMPL['has_featured_img'] = getUpImageSrc($R)=='/files/noimage.png'?'d-none':'';
+    $TMPL['url'] = '/'.$r.'/b/'.$bid.'/'.$R['uid'];
+
     if ($collapse) $TMPL['article'] = getContents($R['content'],$R['html']);
     $skin_item=new skin('list-item-notice');
     $html.=$skin_item->make();
@@ -100,7 +102,7 @@ if ($NUM) {
     $TMPL['featured_img_1by1_300'] = getPreviewResize(getUpImageSrc($R),'300x300');
     $TMPL['featured_img_1by1_600'] = getPreviewResize(getUpImageSrc($R),'600x600');
     $TMPL['has_featured_img'] = getUpImageSrc($R)=='/files/noimage.png'?'d-none':'';
-
+    $TMPL['url'] = '/'.$r.'/b/'.$bid.'/'.$R['uid'];
     //업로드 파일갯수
     $d['upload'] = getArrayString($R['upload']);
     $TMPL['upload_count'] = $d['upload']['count'];

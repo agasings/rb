@@ -19,6 +19,7 @@
  var modal_bbs_search = $('#modal-bbs-search');
  var modal_bbs_category = $('#modal-bbs-category');
  var modal_bbs_write = $('#modal-bbs-write');
+ var modal_bbs_view = $('#modal-bbs-view');
  var sheet_comment_write = $('#sheet-comment-write');
 
  var popup_bbs_cancelCheck = $('#popup-bbs-cancelCheck');

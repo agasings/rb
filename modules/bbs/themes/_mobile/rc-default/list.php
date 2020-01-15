@@ -44,21 +44,14 @@
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="theme" value="">
+  
   <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
     <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
     <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
-
-    <a class="icon material-icons pull-right px-3 mirror" id="btn-linkShare"
-      data-role="linkShare"
-      data-subject="{$subject}"
-      data-url=""
-      data-likes="{$likes}"
-      data-image="{$featured_img}"
-      data-desc="">reply
-    </a>
-
+    <a class="icon material-icons pull-right px-3 mirror" id="btn-linkShare" data-role="linkShare">reply</a>
   </header>
-  <div class="content">
+
+  <main class="content">
 
     <div class="clearfix content-padded">
 
@@ -102,7 +95,7 @@
     <!-- 댓글출력 -->
     <div data-role="comment"></div>
 
-  </div>
+  </main>
 </section>
 
 <!-- Page : 게시물 사진 크게보기 -->
@@ -140,8 +133,8 @@
   </header>
   <div class="content">
     <div class="content-padded" data-role="post">
-      <h3 data-role="subject" class="rb-article-title line-clamp-3">게시물 제목</h3>
-      <span data-role="cat" class="badge badge-primary badge-inverted">카테고리</span>
+      <h3 data-role="subject" class="rb-article-title line-clamp-3"></h3>
+      <span data-role="cat" class="badge badge-primary badge-inverted"></span>
     </div>
 
     <div class="text-xs-center my-4">

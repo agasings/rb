@@ -10,92 +10,73 @@
 
 -->
 
-<!-- 6. 일반모달 : 게시물 보기 -->
-<div id="modal-bbs-view" class="modal zoom">
+<!-- 게시물 보기 -->
+<section id="modal-bbs-view" class="modal fast" data-role="bbs-view">
+  <input type="hidden" name="bid" value="">
+  <input type="hidden" name="uid" value="">
+  <input type="hidden" name="theme" value="">
+  <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
+    <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
 
-	<section id="page-bbs-view" class="rb-bbs-list page center" data-role="bbs-view">
-		<input type="hidden" name="bid" value="">
-	  <input type="hidden" name="uid" value="">
-	  <header class="bar bar-nav bar-light bg-faded px-0">
-			<a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-	    <h1 class="title text-truncate text-nowrap w-75" style="left:12.5%" data-role="title">게시물 보기</h1>
-	  </header>
-	  <div class="content">
-	    <div class="content-padded" data-role="post">
-	      <span data-role="cat" class="badge badge-primary badge-inverted">카테고리</span>
-	      <h3 data-role="subject" class="rb-article-title">게시물 제목</h3>
-			</div>
+    <a class="icon material-icons pull-right px-3 mirror" id="btn-linkShare"
+      data-role="linkShare"
+      data-subject="{$subject}"
+      data-url=""
+      data-likes="{$likes}"
+      data-image="{$featured_img}"
+      data-desc="">reply
+    </a>
 
-      <div data-role="article" data-plugin="photoswipe"></div>
+  </header>
+  <main class="content">
 
-      <div data-role="attach">
+    <div class="clearfix content-padded">
 
-        <!-- 유튜브 -->
-        <div class="card-group mb-3 hidden" data-role="attach-youtube">
+      <div class="pull-xs-left">
+
+        <div class="media" style="width:15rem"
+          data-mbruid=""
+          data-toggle="page"
+          data-target="#page-member-profile"
+          data-start="#page-bbs-view">
+          <img class="media-object pull-left rb-avatar img-circle bg-faded" src="" style="width:2.25rem;height:2.25rem" data-role="avatar">
+          <div class="media-body rb-meta m-l-1">
+            <span class="badge badge-default badge-inverted" data-role="name"></span> <br>
+            <span class="badge badge-default badge-inverted" data-role="d_regis"></span>
+            <span class="badge badge-default badge-inverted">조회 <span data-role="hit"></span></span>
+          </div>
         </div>
 
-        <!-- 비디오 -->
-        <div class="mb-3 hidden" data-role="attach-video">
-        </div>
-
-        <!-- 오디오 -->
-        <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-audio">
-        </ul>
-
-        <!-- 이미지 -->
-        <div class="card-group mb-3 hidden" data-role="attach-photo" data-plugin="photoswipe">
-        </div>
-
-        <!-- 기타파일 -->
-        <ul class="table-view table-view-full bg-white mb-3 hidden" data-role="attach-file">
-        </ul>
       </div>
 
-	  </div>
-	</section>
+      <div class="pull-xs-right pt-1">
+        <button type="button" class="btn btn-outline-secondary"
+          data-toggle="move"
+          data-target="[data-role='comment-box']"
+          data-page="#page-bbs-view" data-role="btn_comment">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+          <span data-role="total_comment" class="badge badge-default badge-inverted"></span>
+        </button>
+      </div>
 
-	<!-- 전체댓글보기 -->
-	<section id="page-bbs-allcomments" class="page right" data-role="bbs-comment">
-	  <div class="commentting-all"></div>
-	</section>
+    </div><!-- /.clearfix -->
+    <hr>
+    <div class="content-padded" data-role="post">
+      <span data-role="cat" class="badge badge-primary badge-inverted"></span>
+      <h3 data-role="subject" class="rb-article-title"></h3>
+    </div>
+    <div data-role="article" data-plugin="photoswipe">
+      <div class="p-4 text-xs-center">다시 시도해주세요.</div>
+    </div>
 
-  <section id="page-bbs-photo" class="page right" data-role="bbs-photo">
-		<header class="bar bar-nav bar-dark bg-black px-0">
-			<button class="btn btn-link btn-nav pull-left p-x-1" data-history="back">
-				<i class="material-icons">arrow_back</i>
-			</button>
-		 <h1 class="title" data-role="title" data-history="back">제목</h1>
-		</header>
-		<div class="bar bar-standard bar-header-secondary bar-dark bg-black">
-		   <h1 class="title text-muted"><small><i class="fa fa-expand mr-2" aria-hidden="true"></i> 이미지를 터치해서 확대해서 볼 수 있습니다.</small></h1>
-		</div>
-		<div class="bar bar-footer bar-dark bg-black text-muted">
-			<div class="swiper-pagination"></div>
-		</div>
-		<div class="content bg-black">
-			<div class="d-flex" style="height:78vh">
-				<div class="swiper-container align-self-center" style="height:78vh">
-					<div class="swiper-wrapper">
-					</div>
-			</div>
-		    <!-- Add Navigation -->
-		    <div class="swiper-button-prev"></div>
-		    <div class="swiper-button-next"></div>
-		  </div>
-		</div>
-	</section>
+    <!-- 댓글출력 -->
+    <div data-role="comment"></div>
 
-</div><!-- /.modal -->
+  </main>
+</section>
 
-<!-- 7. 일반모달 : 게시물 쓰기 -->
-<?php
-if ($m=='bbs') {
-  $bbs_component = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/component.php';
-  if (file_exists($bbs_component)) include_once $bbs_component;
-}
-?>
-
-<!-- Modal : 게시판 카테고리 -->
+<!-- 게시판 카테고리 -->
 <div id="modal-bbs-category" class="modal fast">
   <header class="bar bar-nav bar-light bg-white border-bottom-0 px-0">
     <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
@@ -124,8 +105,7 @@ if ($m=='bbs') {
   </div>
 </div>
 
-
-<!-- Modal : 게시판 검색 -->
+<!-- 게시판 검색 -->
 <div id="modal-bbs-search" class="modal fast">
   <header class="bar bar-nav bar-light bg-white border-bottom-0 px-0">
     <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
@@ -154,7 +134,7 @@ if ($m=='bbs') {
   </div>
 </div>
 
-<!-- Modal : 게시판 글쓰기 -->
+<!-- 게시판 글쓰기 -->
 <div id="modal-bbs-write" class="modal fast" data-role="write">
   <input type="hidden" name="c" value="<?php echo $c?>">
   <input type="hidden" name="cuid" value="<?php echo $_HM['uid']?>">
@@ -366,7 +346,7 @@ if ($m=='bbs') {
 
 </div>
 
-<!-- Popup : 글쓰기 취소확인 -->
+<!-- 글쓰기 취소확인 -->
 <div id="popup-bbs-cancelCheck" class="popup zoom">
   <div class="popup-content">
     <nav class="bar bar-tab">
@@ -383,34 +363,7 @@ if ($m=='bbs') {
   </div>
 </div>
 
-<!-- Popup : 댓글관리 -->
-<div id="popup-comment-mypost" class="popup zoom">
-  <div class="popup-content">
-    <div class="content" style="min-height: 80px;">
-      <ul class="table-view table-view-full mt-0 text-xs-center">
-        <li class="table-view-cell">
-          <a data-toggle="commentWrite" data-act="edit">수정하기</a>
-        </li>
-        <li class="table-view-cell">
-          <a data-kcact="delete">삭제하기</a>
-        </li>
-        <?php if ($my['admin'] || strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].',')): ?>
-        <li class="table-view-cell" data-role="comment">
-          <a data-kcact="notice">상단고정 <span></span></a>
-        </li>
-        <?php endif; ?>
-        <li class="table-view-cell d-none">
-          <a data-kcact="report">신고하기</a>
-        </li>
-        <li class="table-view-cell" data-role="comment">
-          <a data-toggle="commentWrite">댓글 답글쓰기</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- Popover : 게시물 관리 -->
+<!-- 게시물 관리 -->
 <div id="popover-bbs-view" class="popover">
   <ul class="table-view">
     <!-- 저장,수정,삭제 항목 동적 추가 -->
@@ -419,7 +372,7 @@ if ($m=='bbs') {
   </ul>
 </div>
 
-<!-- Popover : 게시물 관리 -->
+<!-- 게시물 관리 -->
 <div id="popover-bbs-listMarkup" class="popover">
   <ul class="table-view">
     <li class="table-view-divider"><small>목록타입 변경</small></li>
@@ -441,7 +394,6 @@ if ($m=='bbs') {
     </li>
   </ul>
 </div>
-
 
 <link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
 

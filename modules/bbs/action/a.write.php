@@ -279,6 +279,7 @@ if ($backtype == "ajax") {
     $TMPL['d_regis'] = getDateFormat($R['d_regis'],'Y.m.d');
     $TMPL['d_regis_c']=getDateFormat($R['d_regis'],'c');
     $TMPL['avatar'] = getAvatarSrc($R['mbruid'],'84');
+    $TMPL['url'] = '/'.$r.'/b/'.$R['bbsid'].'/'.$R['uid'];
     $TMPL['featured_img_sm'] = getPreviewResize(getUpImageSrc($R),'240x180');
     $TMPL['featured_img'] = getPreviewResize(getUpImageSrc($R),'480x270');
     $TMPL['featured_img_lg'] = getPreviewResize(getUpImageSrc($R),'686x386');
