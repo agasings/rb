@@ -77,4 +77,11 @@
   </div>
 </div>
 
-<script src="/modules/comment/themes/_mobile/rc-default/component.js<?php echo $g['wcache']?>" ></script>
+
+<?php if ($m=='bbs'): ?>
+<?php $bbs_ctheme_path = '/modules/comment/themes/'.($d['bbs']['c_skin']?$d['bbs']['c_skin']:$d['bbs']['comment_mobile']); ?>
+<link href="<?php echo $bbs_ctheme_path ?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
+
+<?php else: ?>
+<script src="/modules/comment/themes/<?php echo $d['comment']['skin_mobile'] ?>/component.js<?php echo $g['wcache']?>" ></script>
+<?php endif; ?>

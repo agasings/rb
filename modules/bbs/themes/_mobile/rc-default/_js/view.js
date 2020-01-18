@@ -1,16 +1,17 @@
 /**
  * --------------------------------------------------------------------------
- * kimsQ Rb v2.4 모바일 기본형 게시판 테마 스크립트 (rc-default): getBbstData.js
+ * kimsQ Rb v2.5 모바일 기본형 게시판 테마 스크립트 (rc-default): view.js
  * Homepage: http://www.kimsq.com
  * Licensed under RBL
  * Copyright 2019 redblock inc
  * --------------------------------------------------------------------------
  */
 
-function getBbsData(settings){
+function getBbsView(settings){
   var type=settings.type; //컴포넌트 타입
   var mid=settings.mid; // 컴포넌트 아이디
   var ctheme=settings.ctheme; // 댓글테마
+  var landing = settings.landing;
   var page = $('[data-role="bbs-view"]')
   var sheet_comment_write = $('#sheet-comment-write') // 댓글 작성 sheet
   var page_bbs_photo = $('#page-bbs-photo');  // 샤진 크게보기 페이지
@@ -55,6 +56,14 @@ function getBbsData(settings){
     page.find('[data-role="article"]').loader({  //  로더 출력
       position:   "inside"
     });
+
+    if (landing) {
+      page.find('[data-role="hback"]').addClass('d-none');
+      page.find('[data-role="gohome"]').removeClass('d-none');
+    } else {
+      page.find('[data-role="hback"]').removeClass('d-none');
+      page.find('[data-role="gohome"]').addClass('d-none');
+    }
 
     setTimeout(function(){
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
@@ -367,6 +376,9 @@ function getBbsData(settings){
       list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
       modal.find('[name="uid"]').val('')
       modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
+
+      modal.find('[data-role="hback"]').removeClass('d-none');
+      modal.find('[data-role="gohome"]').addClass('d-none');
 
       modal.find('[data-role="attach-photo"]').addClass('hidden').empty() // 사진 영역 초기화
       modal.find('[data-role="attach-video"]').addClass('hidden').empty() // 비디오 영역 초기화

@@ -89,6 +89,46 @@ $(document).ready(function() {
     $("body").addClass("mac-os");
   }
 
+  // over scroll effect (#page-main)
+  var page_main_startY = 0;
+  var page_main_endY = 0;
+
+  page_main.find('.snap-content .content').on('touchstart',function(event){
+    page_main_startY = event.originalEvent.changedTouches[0].pageY;
+  });
+  page_main.find('.snap-content .content').on('touchmove',function(event){
+    var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
+    var page_main_contentY = $(this).scrollTop();
+    var tab_id = $(this).attr('data-tab');
+    var page_main_body = page_main.find('.snap-content');
+    if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing')) {
+      if (page_main_moveY-page_main_startY>50) {
+        edgeEffect(page_main_body,'top','show'); // 스크롤 상단 끝
+      }
+    }
+    if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+      if (page_main_startY-page_main_moveY>50) {
+        edgeEffect(page_main_body,'bottom','show'); // 스크롤 하단 끝
+      }
+    }
+  });
+
+  //  pull to refresh (#page-main)
+  page_main.find('.snap-content .content').on('touchend',function(event){
+    var page_main_endY=event.originalEvent.changedTouches[0].pageY;
+    var page_main_contentY = $(this).scrollTop();
+    var tab = $(this).attr('data-tab');
+
+    if (page_main_contentY === 0 && page_main_endY > page_main_startY ) {
+
+      if (page_main_endY-page_main_startY>150) {
+        console.log('메인페이지 새로 불러오기')
+      }
+    }
+  });
+
+
+
   putCookieAlert('site_common_result') // 로그인/로그아웃 알림 메시지 출력
 
 	$('[data-plugin="timeago"]').timeago();  // 상대시간 플러그인 초기화

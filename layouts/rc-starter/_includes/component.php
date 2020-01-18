@@ -290,3 +290,5 @@
     </li>
   </ul>
 </div>
+
+<script src="<?php echo $g['url_layout']?>/_js/component.js"></script>

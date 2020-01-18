@@ -14,24 +14,22 @@
 		<img src="<?php echo $g['img_core']?>/androidscroll.png" id="bottomEdge">
 	</div>
 
-	<div class="snap-drawers">
-		<div class="snap-drawer snap-drawer-left" id="drawer-left">
-			<?php include $g['dir_layout'].'/_includes/drawer-left.php' ?>
+	<div class="page center" id="page-main">
+		<div class="snap-drawers">
+			<div class="snap-drawer snap-drawer-left" id="drawer-left">
+				<?php include $g['dir_layout'].'/_includes/drawer-left.php' ?>
+			</div>
+			<div class="snap-drawer snap-drawer-right bg-faded" id="drawer-right">
+				<?php include $g['dir_layout'].'/_includes/drawer-right.php' ?>
+			</div>
 		</div>
-		<div class="snap-drawer snap-drawer-right bg-faded" id="drawer-right">
-			<?php include $g['dir_layout'].'/_includes/drawer-right.php' ?>
-		</div>
-	</div>
-
-	<div class="snap-content" data-extension="drawer" data-snap-ignore="true">
-		<?php include __KIMS_CONTENT__ ?>
-	</div><!-- /.snap-content -->
+		<div class="snap-content" data-extension="drawer" data-snap-ignore="true">
+			<?php include __KIMS_CONTENT__ ?>
+		</div><!-- /.snap-content -->
+	</div><!-- /.page -->
 
 	<?php include $g['dir_layout'].'/_includes/component.php' ?>
 	<?php include $g['dir_layout'].'/_includes/_import.foot.php' ?>
-
-	<script src="<?php echo $g['url_layout']?>/_js/component.js"></script>
-
 	<script>
 		$(function() {
 			RC_initDrawer();  // 드로어 플러그인 초기화

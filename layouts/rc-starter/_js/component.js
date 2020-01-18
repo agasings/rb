@@ -1,3 +1,5 @@
+var page_main = $('#page-main');
+
 //사이트
 var page_site_page = $('#page-site-page');  // 사이트 모듈 페이지
 var modal_site_settings = $('#modal-site-settings'); //사이드

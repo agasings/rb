@@ -16,10 +16,10 @@
   </div>
 
   <div class="d-flex align-items-center text-muted" style="height:90vh">
-    <div class="content-padded">
-      <ul class="media-list">
-        <li class="media mb-2" data-role="item" data-landing="true"
-            data-target="#modal-bbs-view" id ="veiw-<?php echo $R['uid'] ?>"
+    <ul class="table-view">
+      <li class="table-view-cell media">
+          <a class="navigate-right" href="#modal-bbs-view" id ="veiw-<?php echo $R['uid'] ?>"
+            data-landing="true"
             data-toggle="modal"
             data-subject="<?php echo $R['subject'] ?>"
             data-cat="<?php echo $R['category'] ?>"
@@ -32,25 +32,23 @@
             data-bid="<?php echo $bid ?>" data-uid="<?php echo $R['uid'] ?>" role="button"
             data-url="<?php echo $g['bbs_view'].$R['uid'] ?>">
 
-          <?php if ($R['featured_img']): ?>
-          <div class="media-left">
-            <div class="embed-responsive embed-responsive-16by9 bg-faded">
-              <img class="media-object" src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180'); ?>" alt="" data-role="featured" style="width:160px">
+            <?php if ($R['featured_img']): ?>
+            <div class="pull-left">
+              <img class="media-object mr-2" src="<?php echo getPreviewResize(getUpImageSrc($R),'320x180'); ?>" alt="" data-role="featured" style="width:160px">
             </div>
-          </div>
-          <?php endif; ?>
+            <?php endif; ?>
 
-          <div class="media-body pt-1">
-            <h4 class="media-heading f15 line-clamp-3"><?php echo stripslashes($R['subject']) ?></h4>
-            <ul class="list-inline f13 text-muted mt-1 mb-0">
-              <li class="list-inline-item"><?php echo $M1[$_HS['nametype']] ?></li>
-              <li class="list-inline-item">조회수 <?php echo number_format($R['hit'])?>회 </li>
-              <li class="list-inline-item">댓글 <?php echo number_format($R['comment'])?> </li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
+            <div class="media-body pt-1">
+              <h4 class="media-heading f15 line-clamp-3"><?php echo stripslashes($R['subject']) ?></h4>
+              <ul class="list-inline f13 text-muted mt-1 mb-0">
+                <li class="list-inline-item"><?php echo $R[$_HS['nametype']]?></li>
+                <li class="list-inline-item">조회수 <?php echo number_format($R['hit'])?>회 </li>
+                <li class="list-inline-item">댓글 <?php echo number_format($R['comment'])?> </li>
+              </ul>
+            </div>
+          </a>
+      </li>
+    </ul>
   </div>
 
 </main>
@@ -63,10 +61,11 @@ $( document ).ready(function() {
   var settings_view={
     type      : 'modal',
     mid       : '#modal-bbs-view', // 컴포넌트 아이디
-    ctheme    : '<?php echo $d['bbs']['c_mskin']?>' //모달 댓글테마
+    ctheme    : '<?php echo $d['bbs']['c_mskin']?>', //모달 댓글테마
+    landing : true
   }
 
-  getBbsData(settings_view); // 게시물 보기
+  getBbsView(settings_view); // 게시물 보기
 
   $('#veiw-<?php echo $R['uid'] ?>').click();
   setTimeout(function(){ $('[data-role="loader"]').addClass('d-none'); }, 1000);

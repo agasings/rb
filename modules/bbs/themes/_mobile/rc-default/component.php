@@ -10,6 +10,130 @@
 
 -->
 
+<?php if ($m!='bbs'): ?>
+<section id="page-bbs-list" class="page right" data-role="bbs-list">
+  <header class="bar bar-nav bar-light bg-white p-x-0" data-role="bar-nav">
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
+    <a href="#popover-bbs-listMarkup" data-toggle="popover" data-bid="<?php echo $bid ?>" class="icon icon-more-vertical pull-right pl-2 pr-3"></a>
+    <h1 class="title title-left" data-role="title" data-history="back">게시판</h1>
+  </header>
+  <div class="content" data-role="bbs-list">
+  </div>
+</section>
+<?php endif; ?>
+
+<!-- Page : 게시물 보기 -->
+<section id="page-bbs-view" class="page right" data-role="bbs-view">
+  <input type="hidden" name="bid" value="">
+  <input type="hidden" name="uid" value="">
+  <input type="hidden" name="theme" value="">
+
+  <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
+    <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
+    <a class="icon material-icons pull-right px-3 mirror" id="btn-linkShare" data-role="linkShare">reply</a>
+    <h1 class="title title-left" data-role="title" data-history="back"></h1>
+  </header>
+
+  <main class="content">
+
+    <div class="clearfix content-padded">
+
+      <div class="pull-xs-left">
+
+        <div class="media" style="width:15rem"
+          data-mbruid=""
+          data-toggle="page"
+          data-target="#page-member-profile"
+          data-start="#page-bbs-view">
+          <img class="media-object pull-left rb-avatar img-circle bg-faded" src="" style="width:2.25rem;height:2.25rem" data-role="avatar">
+          <div class="media-body rb-meta m-l-1">
+            <span class="badge badge-default badge-inverted" data-role="name"></span> <br>
+            <span class="badge badge-default badge-inverted" data-role="d_regis"></span>
+            <span class="badge badge-default badge-inverted">조회 <span data-role="hit"></span></span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pull-xs-right pt-1">
+        <button type="button" class="btn btn-outline-secondary"
+          data-toggle="move"
+          data-target="[data-role='comment-box']"
+          data-page="#page-bbs-view" data-role="btn_comment">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+          <span data-role="total_comment" class="badge badge-default badge-inverted"></span>
+        </button>
+      </div>
+
+    </div><!-- /.clearfix -->
+    <hr>
+    <div class="content-padded" data-role="post">
+      <span data-role="cat" class="badge badge-primary badge-inverted"></span>
+      <h3 data-role="subject" class="rb-article-title"></h3>
+    </div>
+    <div data-role="article" data-plugin="photoswipe">
+      <div class="p-4 text-xs-center">다시 시도해주세요.</div>
+    </div>
+
+    <!-- 댓글출력 -->
+    <div data-role="comment_box"></div>
+
+  </main>
+</section>
+
+<!-- Page : 게시물 사진 크게보기 -->
+<section id="page-bbs-photo" class="page right" data-role="bbs-photo">
+  <header class="bar bar-nav bar-dark bg-black px-0" style="opacity: 0.3;">
+    <a class="icon icon-left-nav pull-left text-white p-x-1" role="button" data-history="back"></a>
+   <h1 class="title" data-role="title" data-history="back"></h1>
+  </header>
+  <div class="bar bar-footer bar-dark bg-black text-muted" style="opacity: 0.3;">
+    <span class="title"><small>이미지를 터치해서 확대해서 볼 수 있습니다.</small></span>
+  </div>
+  <div class="content bg-black py-0">
+    <div class="d-flex" style="height:100vh">
+      <div class="swiper-container align-self-center" style="height:100vh">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" style="height:100vh;overflow:hidden">
+            <div class="swiper-zoom-container">
+              <img src="">
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- Page : 게시물 좋아요한 사람 -->
+<section id="page-bbs-opinion"  class="page right" data-role="bbs-opinion">
+  <input type="hidden" name="bid" value="">
+  <input type="hidden" name="uid" value="">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
+    <a href="#popover-link-more" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
+    <h1 class="title title-left">좋아요한 사람</h1>
+  </header>
+  <div class="content">
+    <div class="content-padded" data-role="post">
+      <h3 data-role="subject" class="rb-article-title line-clamp-3"></h3>
+      <span data-role="cat" class="badge badge-primary badge-inverted"></span>
+    </div>
+
+    <div class="text-xs-center my-4">
+      <button type="button" class="btn btn-outline-secondary btn-lg" data-send="ajax" data-toggle="opinion" data-uid="" data-opinion="like" data-effect="heartbeat" data-role="btn_post_like">
+        <i class="fa fa fa-heart-o fa-fw fa-lg" aria-hidden="true"></i>
+        <span data-role="likes_17351" class="badge badge-inverted"></span>
+      </button>
+    </div>
+
+    <!-- 좋아요 목록 -->
+    <ul class="table-view" data-role="list"></ul>
+
+  </div>
+</section>
+
 <!-- 게시물 보기 -->
 <section id="modal-bbs-view" class="modal fast" data-role="bbs-view">
   <input type="hidden" name="bid" value="">
@@ -17,6 +141,8 @@
   <input type="hidden" name="theme" value="">
   <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
     <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
+    <a class="icon material-icons pull-left px-3" role="button" data-href="/" data-text="홈으로 이동" data-role="gohome">house</a>
+
     <a href="#popover-bbs-view" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
 
     <a class="icon material-icons pull-right px-3 mirror" id="btn-linkShare"
@@ -83,25 +209,6 @@
     <h1 class="title" data-history="back">분류</h1>
   </header>
   <div class="content">
-    <?php $_catexp = explode(',',$B['category']);$_catnum=count($_catexp) ?>
-    <ul class="table-view bg-white border-top-0 mt-0">
-      <li class="table-view-divider bg-white f12 text-muted"><?php echo $_catexp[0]?></li>
-      <li class="table-view-cell">
-        <a data-act="reset" data-history="back" data-text="전체글 보기..">
-          <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> 전체
-        </a>
-      </li>
-      <?php for($i = 1; $i < $_catnum; $i++):if(!$_catexp[$i])continue;?>
-      <li class="table-view-cell">
-        <a data-act="category" data-cat="<?php echo $_catexp[$i]?>" data-text="<?php echo $_catexp[$i]?> 분류">
-          <i class="fa fa-folder-o fa-fw" aria-hidden="true"></i> <?php echo $_catexp[$i]?>
-          <?php if($d['theme']['show_catnum']):?>
-          <span class="badge badge-pill"><?php echo getDbRows($table[$m.'data'],'site='.$s.' and notice=0 and bbs='.$B['uid']." and category='".$_catexp[$i]."'")?></span>
-          <?php endif?>
-        </a>
-      </li>
-      <?php endfor?>
-    </ul>
   </div>
 </div>
 
@@ -395,9 +502,7 @@
   </ul>
 </div>
 
-<link href="<?php echo $g['url_root']?>/modules/comment/themes/<?php echo $d['bbs']['c_mskin']?>/css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
-
-<script src="<?php echo $g['url_module_skin'] ?>/_js/getBbsList.js<?php echo $g['wcache']?>" ></script>
-<script src="<?php echo $g['url_module_skin'] ?>/_js/getBbsData.js<?php echo $g['wcache']?>" ></script>
-<script src="<?php echo $g['url_module_skin'] ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
-<script src="<?php echo $g['url_module_skin'] ?>/_js/component.js<?php echo $g['wcache']?>" ></script>
+<?php $bbs_theme_path = '/modules/bbs/themes/'.($bid?$d['bbs']['skin']:$d['bbs']['skin_mobile']);?>
+<script src="<?php echo $bbs_theme_path ?>/_js/list.js<?php echo $g['wcache']?>" ></script>
+<script src="<?php echo $bbs_theme_path ?>/_js/view.js<?php echo $g['wcache']?>" ></script>
+<script src="<?php echo $bbs_theme_path ?>/_js/component.js<?php echo $g['wcache']?>" ></script>
