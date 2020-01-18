@@ -133,8 +133,8 @@ $(document).ready(function() {
     var bid = button.attr('data-bid');
     var page = $(this)
     page.attr('data-bid',bid);
-    page.find('.content').loader({ position: 'inside' });
     setTimeout(function(){
+      page.find('.content').loader({ position: 'inside' });
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_categoryList',{
         bid : bid,
       },function(response){
@@ -142,7 +142,7 @@ $(document).ready(function() {
         var list=result.list;
         page.find('.content').html(list)
       })
-    }, 100);
+    }, 200);
   })
 
   page_bbs_category.on('click','[data-act="category"]',function(){
@@ -160,10 +160,11 @@ $(document).ready(function() {
   page_bbs_view.on('click','[data-act="tag"]',function(){
     var tag =  $(this).attr("data-tag");
     var bid = page_bbs_view.find('[name="bid"]').val();
-    $.loader({ text: tag+' 검색중..' });
-    resetBbsContent(page_bbs_list);
-    getBbsList(bid,'',tag+';tag','#page-bbs-list');
+    getBbsList(bid,'',tag+';tag','#page-bbs-result');
     history.back(); //이전 페이지 이동
+    setTimeout(function(){
+      $('#page-bbs-result').page({ start: '#page-bbs-list',title: tag+' 태그 검색결과'  });
+    }, 300);
   });
 
   modal_bbs_search.find('[data-role="search"]').submit(function(e){
