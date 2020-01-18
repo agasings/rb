@@ -7,11 +7,11 @@
  * --------------------------------------------------------------------------
  */
 
-function getBbsList(bid,cat,search){
+function getBbsList(bid,cat,search,page){
   var markup = localStorage.getItem('bbs-'+bid+'-listMarkup');
   var markup_list=markup+'-list'; // 목록 마크업
   var markup_item=markup+'-item'; // 아이템 마크업
-  var page = $('#page-bbs-list');
+  var page = $(page);
   var container = page.find('[data-role="bbs-list"]');
 
   if (search) {
@@ -45,10 +45,6 @@ function getBbsList(bid,cat,search){
       var moreNUM = totalNUM - prevNUM ;
 
       page.find('[data-role="bar-nav"]').after(bar_tab);
-
-      if (search) activeBbsTab('search');
-      else if (cat) activeBbsTab('category');
-      else activeBbsTab('list');
 
       if (!$('link[href="'+theme_css+'"]').length)
         $('<link/>', {
@@ -99,7 +95,8 @@ function getBbsList(bid,cat,search){
            if (cat || keyword) {
              container.find('[data-role="post"] [data-role="toolbar"]').removeClass('d-none');
              container.find('[data-role="notice"]').addClass('d-none');
-             $.loader('hide');
+             container.find('[data-start]').attr('data-start','#page-bbs-result');
+
              if (!num) {
                container.find('[data-role="empty"] [type="button"]').removeClass('d-none');
              }

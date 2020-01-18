@@ -14,10 +14,11 @@
  var page_bbs_write_tag = $('#page-bbs-write-tag');
 
  var page_bbs_list = $('#page-bbs-list');
+ var page_bbs_category = $('#page-bbs-category')
+ var page_bbs_result = $('#page-bbs-result');
  var page_bbs_view = $('#page-bbs-view');
 
  var modal_bbs_search = $('#modal-bbs-search');
- var modal_bbs_category = $('#modal-bbs-category');
  var modal_bbs_write = $('#modal-bbs-write');
  var modal_bbs_view = $('#modal-bbs-view');
  var sheet_comment_write = $('#sheet-comment-write');
@@ -67,7 +68,7 @@
      if (page_contentY === 0 && page_endY > page_startY ) {
        if (page_endY-page_startY>150) {
          resetBbsContent(page);
-         getBbsList(bid,'','');
+         getBbsList(bid,'','','#page-bbs-list');
        }
      }
    })
@@ -98,13 +99,18 @@ $(document).ready(function() {
     var bid = button.attr('data-bid');
     var page = $(this)
     page.find('[data-toggle="popover"]').attr('data-bid',bid);
-    getBbsList(bid,'','');
+    getBbsList(bid,'','','#page-bbs-list');
   })
 
   page_bbs_list.on('hidden.rc.page', function (e) {
     var page = $(this);
     page.find('[data-toggle="popover"]').removeAttr('data-bid');
     resetBbsContent(page_bbs_list);
+  })
+
+  page_bbs_result.on('hidden.rc.page', function (e) {
+    var page = $(this);
+    page.find('[data-role="bbs-list"]').html('');
   })
 
   $('#popover-bbs-listMarkup').find('[data-toggle="listMarkup"]').tap(function() {
@@ -114,7 +120,7 @@ $(document).ready(function() {
     history.back() // popover 닫기
     localStorage.setItem('bbs-'+bid+'-listMarkup', markup);
     resetBbsContent(page_bbs_list);
-    getBbsList(bid,'','');
+    getBbsList(bid,'','','#page-bbs-list');
   });
 
   $('[data-act="write"]').tap(function() {
@@ -122,38 +128,41 @@ $(document).ready(function() {
     location.href = $(this).attr("data-href");
   });
 
-  modal_bbs_category.on('show.rc.modal', function (e) {
+  page_bbs_category.on('show.rc.page', function (e) {
     var button = $(e.relatedTarget);
     var bid = button.attr('data-bid');
-    var modal = $(this)
-
-    modal.attr('data-bid',bid);
-    modal.find('.content').loader({ position: 'inside' });
+    var page = $(this)
+    page.attr('data-bid',bid);
+    page.find('.content').loader({ position: 'inside' });
     setTimeout(function(){
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_categoryList',{
         bid : bid,
       },function(response){
         var result = $.parseJSON(response);
         var list=result.list;
-        modal.find('.content').html(list)
+        page.find('.content').html(list)
       })
     }, 100);
   })
 
-  modal_bbs_category.on('click','[data-act="category"]',function(){
-    var bid = modal_bbs_category.attr('data-bid');
-    $.loader({ text: $(this).attr("data-text") });
+  page_bbs_category.on('click','[data-act="category"]',function(){
+    var bid = page_bbs_category.attr('data-bid');
     var category =  $(this).attr("data-cat");
-    resetBbsContent(page_bbs_list);
-    getBbsList(bid,category,'');
-    history.back(); //모달 닫기
+    setTimeout(function(){
+      $('#page-bbs-result').page({ start: '#page-bbs-category',title: category });
+      $('#page-bbs-result').find('[data-role="bbs-list"]').loader({ position: 'inside' });
+      setTimeout(function(){
+        getBbsList(bid,category,'','#page-bbs-result');
+      }, 200);
+    }, 10);
   });
 
   page_bbs_view.on('click','[data-act="tag"]',function(){
     var tag =  $(this).attr("data-tag");
+    var bid = page_bbs_view.find('[name="bid"]').val();
     $.loader({ text: tag+' 검색중..' });
     resetBbsContent(page_bbs_list);
-    getBbsList(settings_list,'',tag+';tag');
+    getBbsList(bid,'',tag+';tag','#page-bbs-list');
     history.back(); //이전 페이지 이동
   });
 
@@ -165,21 +174,22 @@ $(document).ready(function() {
     var where   = form.find('[name="where"]').val();
     var search = keyword+';'+where;
 
-    history.back();
+    history.back(); // 모달 닫기
     form.find('[name="keyword"]').blur().val(''); //가상 키보드 내리기
-    $.loader({ text: '검색중..' });
 
     setTimeout(function(){
-      resetBbsContent(page_bbs_list);
-      getBbsList(bid,'',search);
-    }, 300);
-
+      $('#page-bbs-result').page({ start: '#page-bbs-list',title: keyword+' 검색결과'  });
+      $('#page-bbs-result').find('[data-role="bbs-list"]').loader({ position: 'inside' });
+      setTimeout(function(){
+        getBbsList(bid,'',search,'#page-bbs-result');
+      }, 200);
+    }, 10);
   });
 
   $(document).on('tap','[data-act="reset"]',function() {
     var bid = page_bbs_list.attr('data-bid');
     resetBbsContent(page_bbs_list);
-    getBbsList(bid,'','');
+    getBbsList(bid,'','','#page-bbs-list');
   });
 
   page_bbs_list.find('.content').on( 'scroll', function(){

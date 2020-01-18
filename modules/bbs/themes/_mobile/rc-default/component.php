@@ -22,6 +22,25 @@
 </section>
 <?php endif; ?>
 
+<!-- 게시판 카테고리 -->
+<div id="page-bbs-category" class="page right" data-role="bbs-search">
+  <header class="bar bar-nav bar-light bg-white px-0 border-bottom-0">
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
+    <h1 class="title title-left" data-history="back">분류</h1>
+  </header>
+  <div class="content">
+  </div>
+</div>
+
+<div id="page-bbs-result" class="page right">
+  <header class="bar bar-nav bar-light bg-white px-0">
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
+    <h1 class="title title-left" data-history="back" data-role="title">게시판 검색결과</h1>
+  </header>
+  <div class="content" data-role="bbs-list">
+  </div>
+</div>
+
 <!-- Page : 게시물 보기 -->
 <section id="page-bbs-view" class="page right" data-role="bbs-view">
   <input type="hidden" name="bid" value="">
@@ -202,21 +221,11 @@
   </main>
 </section>
 
-<!-- 게시판 카테고리 -->
-<div id="modal-bbs-category" class="modal fast">
-  <header class="bar bar-nav bar-light bg-white border-bottom-0 px-0">
-    <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
-    <h1 class="title" data-history="back">분류</h1>
-  </header>
-  <div class="content">
-  </div>
-</div>
-
 <!-- 게시판 검색 -->
 <div id="modal-bbs-search" class="modal fast">
   <header class="bar bar-nav bar-light bg-white border-bottom-0 px-0">
-    <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
-    <h1 class="title"><span data-role="title">게시판</span> 검색</h1>
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
+    <h1 class="title title-left"><span data-role="title">게시판</span> 검색</h1>
   </header>
   <div class="content">
     <form class="content-padded" data-role="search">

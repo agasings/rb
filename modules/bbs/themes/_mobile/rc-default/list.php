@@ -39,7 +39,7 @@
 
   $( document ).ready(function() {
 
-    getBbsList(bid,'',''); // 목록 셋팅
+    getBbsList(bid,'','','#page-bbs-list'); // 목록 셋팅
     getBbsView(settings_view); // 게시물 보기
 
   });
