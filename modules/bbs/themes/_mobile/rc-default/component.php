@@ -252,9 +252,7 @@
 
 <!-- 게시판 글쓰기 -->
 <div id="modal-bbs-write" class="modal fast" data-role="write">
-  <input type="hidden" name="c" value="<?php echo $c?>">
-  <input type="hidden" name="cuid" value="<?php echo $_HM['uid']?>">
-  <input type="hidden" name="bid" value="<?php echo $R['bbsid']?$R['bbsid']:$bid?>">
+  <input type="hidden" name="bid" value="">
   <input type="hidden" name="name" value="<?php echo $my['name']?>">
   <input type="hidden" name="uid" value="">
   <input type="hidden" name="reply" value="">
@@ -279,7 +277,7 @@
         </span>
   	  </button>
   		<h1 class="title title-left" data-history="back">
-  			글쓰기
+  			글쓰기 <span class="badge badge-default badge-inverted ml-2" data-role="title"></span>
   		</h1>
   	</header>
 
@@ -348,45 +346,10 @@
                <?php if ($m!='post') getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'attach_object_type'=>'link'));?>
              </div>
    			  </li>
-
    			</ul>
 
-         <ul class="table-view editor-focused-hide bg-white border-top-0">
-           <li class="table-view-cell">
-             <a class="navigate-right" href="#page-bbs-write-tag" data-start="#page-bbs-write-main" data-toggle="page">
-               태그
-               <div class="small text-muted" data-role="tag"></div>
-             </a>
-           </li>
-           <?php if ($B['category']): ?>
-           <li class="table-view-cell">
-             <a class="navigate-right" href="#page-bbs-write-category" data-start="#page-bbs-write-main" data-toggle="page">
-               <span class="badge badge-default badge-inverted" data-role="category"></span>
-               카테고리
-             </a>
-           </li>
-           <?php endif; ?>
-           <?php if($my['admin']):?>
-           <li class="table-view-cell">
-             공지글 <p><small class="text-muted">공지글로 지정되면 목록 상단에 고정 됩니다.</small></p>
-             <div data-toggle="switch" class="switch" data-role="notice">
-               <div class="switch-handle"></div>
-             </div>
-           </li>
-
-       			<?php endif?>
-       			<?php if($d['theme']['use_hidden']==1):?>
-            <li class="table-view-cell">
-              비밀글 <p><small class="text-muted">등록자와 관리자만 본 게시물을 조회할 수 있습니다.</small></p>
-              <div data-toggle="switch" class="switch" data-role="hidden">
-                <div class="switch-handle"></div>
-              </div>
-            </li>
-
-       			<?php endif?>
-
+         <ul class="table-view editor-focused-hide bg-white border-top-0" data-role="bbs-meta">
          </ul>
-
 
   		</form>
 

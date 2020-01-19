@@ -288,8 +288,8 @@ $(document).ready(function() {
   //글쓰기 모달이 열릴때
   modal_bbs_write.on('shown.rc.modal', function (e) {
     var button = $(e.relatedTarget)
-    var modal = modal_bbs_write;
-    var bid = modal.find('[name="bid"]').val();
+    var bid = button.attr('data-bid');
+    var modal = $(this);
     var uid = modal.find('[name="uid"]').val();
     var subject =  page_bbs_view.find('[data-role="subject"]').text();
 
@@ -297,8 +297,10 @@ $(document).ready(function() {
     modal.find('[data-role="loader"]').removeClass('d-none') //로더 제거
     modal.find('form').addClass('d-none')
     modal.find('[data-act="submit"]').addClass('d-none');
+    modal.find('[name="bid"]').val(bid);
 
     setTimeout(function(){
+
       // 글쓰기 권한 체크
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=check_permWrite',{
            bid : bid
@@ -312,7 +314,7 @@ $(document).ready(function() {
            modal.find('.page .content').html(main);
            modal.find('.bar-tab').remove();
          } else {
-           modal.find('[name="pcode"]').val(pcode)
+           modal.find('[name="pcode"]').val(pcode);
            modal.find('[data-toggle="collapse"]').addClass('collapsed');
            modal.find('.collapse').removeClass('in');
 
@@ -480,6 +482,35 @@ $(document).ready(function() {
 
          }
       });
+
+      //부가항목 셋팅
+      $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_writeMeta',{
+           bid : bid
+        },function(response){
+         var result = $.parseJSON(response);
+         var list=result.list;
+         modal.find('[data-role="bbs-meta"]').html(list)
+
+         // 비밀글 처리
+         modal.find('[data-role="hidden"]').on('changed.rc.switch', function () {
+           if ($(this).hasClass('active')) {
+             modal.find('[name="hidden"]').val(1)
+           } else {
+             modal.find('[name="hidden"]').val(0)
+           }
+         })
+
+         // 공지글 처리
+         modal.find('[data-role="notice"]').on('changed.rc.switch', function () {
+           if ($(this).hasClass('active')) {
+             modal.find('[name="notice"]').val(1)
+           } else {
+             modal.find('[name="notice"]').val(0)
+           }
+         })
+
+       })
+
     }, 300);
 
   })
@@ -685,15 +716,19 @@ $(document).ready(function() {
 
               //글쓰기 모달 상태 초기화
               $(this).attr('disabled', false); //글쓰기 전성버튼 상태 초기화
-              modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
-              modal_bbs_write.find('[name="featured_img"]').val('') //대표이미지 입력내용 초기화
-              modal_bbs_write.find('[name="upfiles"]').val('') //첨부파일 입력내용 초기화
-              modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
-              modal_bbs_write.find('[data-role="tap-attach"] .badge').text('')  //첨부수량 초기화
+              modal_bbs_write.find('[name="bid"]').val('');
+              modal_bbs_write.find('[name="subject"]').val(''); //제목 입력내용 초기화
+              modal_bbs_write.find('[name="featured_img"]').val(''); //대표이미지 입력내용 초기화
+              modal_bbs_write.find('[name="upfiles"]').val(''); //첨부파일 입력내용 초기화
+              modal_bbs_write.find('[name="notice"]').val(''); // 공지글 설정
+              modal_bbs_write.find('[name="hidden"]').val(''); // 비밀글 설정
+              modal_bbs_write.find('[data-role="editor-body"]').empty(); //본문내용 초기화
+              modal_bbs_write.find('[data-role="tap-attach"] .badge').text('');  //첨부수량 초기화
               modal_bbs_write.find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
-              modal_bbs_write.find('[data-role="attach-preview-video"]').html('')
-              modal_bbs_write.find('[data-role="attach-preview-audio"]').html('')
-              modal_bbs_write.find('[data-role="attach-preview-file"]').html('')
+              modal_bbs_write.find('[data-role="attach-preview-video"]').html('');
+              modal_bbs_write.find('[data-role="attach-preview-audio"]').html('');
+              modal_bbs_write.find('[data-role="attach-preview-file"]').html('');
+              modal_bbs_write.find('[data-role="bbs-meta"]').html('')
             }, 600);
           }
 
@@ -712,6 +747,7 @@ $(document).ready(function() {
       setTimeout(function(){ modal_bbs_write.modal('show'); }, 10);
     } else {
       history.back();
+      modal_bbs_write.find('[name="bid"]').val('');
       modal_bbs_write.find('[name="subject"]').val('') //제목 입력내용 초기화
       modal_bbs_write.find('[name="featured_img"]').val('') //대표이미지 입력내용 초기화
       modal_bbs_write.find('[name="hidden"]').val('') // 비밀글 설정 초기화
@@ -727,6 +763,7 @@ $(document).ready(function() {
       modal_bbs_write.find('[data-role="attach-preview-audio"]').html('')
       modal_bbs_write.find('[data-role="attach-preview-file"]').html('')
       modal_bbs_write.find('[data-role="attachNum"]').text('');
+      modal_bbs_write.find('[data-role="bbs-meta"]').html('')
       modal_bbs_write.find('[data-toggle="switch"]').removeClass('active')
       page_bbs_write_category.find('[name="radio"]').prop('checked', false);
       console.log('입력사항 초기화');
@@ -774,47 +811,5 @@ $(document).ready(function() {
     modal_bbs_write.find('[name="tag"]').val(tag);
     page_bbs_write_main.find('[data-role="tag"]').text(tag);
   })
-
-  // 비밀글 처리
-  $('#page-bbs-write-main').find('[data-role="hidden"]').on('changed.rc.switch', function () {
-    if ($(this).hasClass('active')) {
-      $('#modal-bbs-write').find('[name="hidden"]').val(1)
-    } else {
-      $('#modal-bbs-write').find('[name="hidden"]').val(0)
-    }
-  })
-
-  // 공지글 처리
-  $('#page-bbs-write-main').find('[data-role="notice"]').on('changed.rc.switch', function () {
-    if ($(this).hasClass('active')) {
-      $('#modal-bbs-write').find('[name="notice"]').val(1)
-    } else {
-      $('#modal-bbs-write').find('[name="notice"]').val(0)
-    }
-  })
-
-  // 옵션 페이지의 항목 비밀글 항목에 클릭시에 글쓰기폼의 name="hidden" 에 값 적용하기
-  $("#page-bbs-write-option").find('[name="hidden"]').click(function() {
-  	if ($(this).is(":checked")) {
-  		var check_val = 1
-  	} else {
-  		var check_val = 0
-  	}
-  	 modal_bbs_write.find('[name="hidden"]').val(check_val)
-  	 modal_bbs_write.find('[data-role="tap-option"] .icon').removeClass('text-muted')
-  	 modal_bbs_write.find('[data-role="tap-option"]').removeClass('text-muted').addClass('active')
-  });
-
-  // 옵션 페이지의 항목 공지글 항목에 클릭시에 글쓰기폼의 name="notice" 에 값 적용하기
-  $("#page-bbs-write-option").find('[name="notice"]').click(function() {
-  	if ($(this).is(":checked")) {
-  		var check_val = 1
-  	} else {
-  		var check_val = 0
-  	}
-  	 page_bbs_write_main.find('[name="notice"]').val(check_val)
-  	 page_bbs_write_main.find('[data-role="tap-option"] .icon').removeClass('text-muted')
-  	 page_bbs_write_main.find('[data-role="tap-option"]').removeClass('text-muted').addClass('active')
-  });
 
 });
