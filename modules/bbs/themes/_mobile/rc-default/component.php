@@ -26,7 +26,7 @@
 <div id="page-bbs-category" class="page right" data-role="bbs-search">
   <header class="bar bar-nav bar-light bg-white px-0 border-bottom-0">
     <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-    <h1 class="title title-left" data-history="back">분류</h1>
+    <h1 class="title title-left" data-history="back">분류  <span class="badge badge-default badge-inverted ml-2" data-role="title"></span></h1>
   </header>
   <div class="content">
   </div>
@@ -225,7 +225,7 @@
 <div id="modal-bbs-search" class="modal fast">
   <header class="bar bar-nav bar-light bg-white border-bottom-0 px-0">
     <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-    <h1 class="title title-left"><span data-role="title">게시판 검색</span></h1>
+    <h1 class="title title-left">검색 <span class="badge badge-default badge-inverted ml-2" data-role="title"></span></h1>
   </header>
   <div class="content">
     <form class="content-padded" data-role="search">
