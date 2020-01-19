@@ -566,7 +566,7 @@
   			    </a>
   			    <!-- 2depth -->
             <div class="table-view collapse mb-0" id="post-collapse-attach-file" role="tabpanel" >
-              <?php if ($m!='bbs') getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+              <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'[data-role="attach-handler-photo"]','parent_data'=>$R,'attach_object_type'=>'photo'));?>
             </div>
   			  </li>
 
@@ -578,7 +578,7 @@
   			    </a>
   			    <!-- 2depth -->
   			    <div class="table-view collapse mb-0" id="post-collapse-attach-link">
-              <?php if ($m!='bbs') getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+              <?php getWidget('_default/attach-rc',array('parent_module'=>'post','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'attach_object_type'=>'photo'));?>
             </div>
   			  </li>
 

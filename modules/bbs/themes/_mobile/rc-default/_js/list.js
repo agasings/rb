@@ -57,8 +57,6 @@ function getBbsList(bid,cat,search,page){
       container.append('<div data-role="notice" class="d-none"></div><div data-role="post"></div>');
       container.find('[data-role="post"]').loader({ position: 'inside' });
 
-      console.log('keyword:'+keyword)
-
       $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postList',{
          bid : bid,
          sort: sort,

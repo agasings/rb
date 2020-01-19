@@ -24,7 +24,7 @@
     <div class="table-view table-view-full my-0 ml-4 mr-0 border-top-0" data-role="attach-preview-video" data-sortable="mediaset">
     </div>
 
-    <div id="attach-files" class="files"><!-- 파일폼 출력 --></div>
+    <div data-role="attach-files" class="files"><!-- 파일폼 출력 --></div>
 
     <div class="px-2">
       <button class="btn btn-link btn-block py-3" data-role="attach-handler-photo" data-type="file" role="button">

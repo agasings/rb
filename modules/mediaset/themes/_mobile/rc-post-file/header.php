@@ -10,8 +10,8 @@ $attach_handler_getModalList=$d['attach']['handler_getModalList']; // 첨부파�
 $attach_object_type=$d['attach']['object_type']; // 첨부 대상에 따른 분류 : photo, file, link, video....
 
 // 함수 인클루드
-require_once $g['dir_attach_theme'].'/main.func.php';
-require_once $g['dir_attach_theme'].'/_var.php'; // 테마변수 인클루드
+require_once $g['dir_attach_theme'].'main.func.php';
+include $g['dir_attach_theme'].'_var.php'; // 테마변수 인클루드
 ?>
 <!-- global css -->
 <link href="<?php echo $g['url_attach_theme']?>/_main.css" rel="stylesheet">

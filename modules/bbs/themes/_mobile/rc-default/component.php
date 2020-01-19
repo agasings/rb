@@ -225,7 +225,7 @@
 <div id="modal-bbs-search" class="modal fast">
   <header class="bar bar-nav bar-light bg-white border-bottom-0 px-0">
     <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-    <h1 class="title title-left"><span data-role="title">게시판</span> 검색</h1>
+    <h1 class="title title-left"><span data-role="title">게시판 검색</span></h1>
   </header>
   <div class="content">
     <form class="content-padded" data-role="search">
@@ -335,7 +335,7 @@
    			    </a>
    			    <!-- 2depth -->
              <div class="collapse mb-0" id="bbs-collapse-attach-file" role="tabpanel" >
-               <?php if ($m!='post') getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'#modal-bbs-write [data-role="attach-handler-photo"]','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+               <?php if ($m!='post') getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-file','attach_handler_photo'=>'#modal-bbs-write [data-role="attach-handler-photo"]','parent_data'=>$R,'attach_object_type'=>'photo'));?>
              </div>
    			  </li>
    				<li class="table-view-cell">
@@ -345,7 +345,7 @@
    			    </a>
    			    <!-- 2depth -->
    			    <div class="collapse mb-0" id="bbs-collapse-attach-link">
-               <?php if ($m!='post') getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'wysiwyg'=>'Y','attach_object_type'=>'photo'));?>
+               <?php if ($m!='post') getWidget('_default/attach-rc',array('parent_module'=>'bbs','theme'=>'_mobile/rc-post-link','parent_data'=>$R,'attach_object_type'=>'link'));?>
              </div>
    			  </li>
 

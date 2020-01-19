@@ -316,6 +316,28 @@ $(document).ready(function() {
            modal.find('[data-toggle="collapse"]').addClass('collapsed');
            modal.find('.collapse').removeClass('in');
 
+           // 미디어셋 초기화
+           modal.find('[data-role="attach-files"]').RbUploadFile(bbs_upload_settings); // 아작스 폼+input=file 엘리먼트 세팅
+           modal.find('[data-role="attach-files"]').RbAttachTheme(bbs_attach_settings);
+           modal.find('[data-sortable="mediaset"]').sortable({
+             axis: 'y',
+             cancel: 'button',
+             delay: 250,
+             update: function( event, ui ) {
+               var attachfiles=modal.find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
+               var new_upfiles='';
+               if(attachfiles){
+                 for(var i=0;i<attachfiles.length;i++) {
+                   new_upfiles+=attachfiles[i];
+                 }
+               }
+               $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=modifygid',{
+                  attachfiles : new_upfiles
+                })
+             }
+           });
+
+           // 에디터 초기화
            DecoupledEditor
              .create( document.querySelector( '#modal-bbs-write [data-role="editor-body"]' ),{
                placeholder: '본문 입력...',
