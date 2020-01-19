@@ -99,6 +99,7 @@ if ($mod=='view') {
   $result['bbs_c_hidden'] = $d['bbs']['c_hidden'];
 
   // 테마설정
+  $result['theme'] = $theme;
   $result['theme_use_reply'] = $d['theme']['use_reply'];
   $result['theme_show_tag'] = $d['theme']['show_tag'];
   $result['theme_show_upfile'] = $d['theme']['show_upfile'] ;
@@ -162,6 +163,7 @@ if ($mod=='view') {
   $result['category'] = $R['category'];
   $result['tag'] = $R['tag'];
   $result['adddata'] = $R['adddata'];
+  $result['theme'] = $theme;
 
   if($R['upload']) {
     $result['attachNum'] = _getAttachNum($R['upload'],'modify');

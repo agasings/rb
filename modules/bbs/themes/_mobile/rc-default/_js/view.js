@@ -89,6 +89,8 @@ function getBbsView(settings){
          var is_post_tag=result.is_post_tag;
 
          var bbs_c_hidden=result.bbs_c_hidden;  // 댓글 사용여부
+         var theme=result.theme;
+         var theme_css = '/modules/bbs/themes/'+theme+'/_main.css';
          var theme_use_reply=result.theme_use_reply;
          var theme_show_tag=result.theme_show_tag;
          var theme_show_upfile=result.theme_show_upfile;
@@ -104,15 +106,20 @@ function getBbsView(settings){
            }, 600);
          }
 
+         if (!$('link[href="'+theme_css+'"]').length)
+           $('<link/>', {
+              rel: 'stylesheet',
+              type: 'text/css',
+              href: theme_css
+           }).appendTo('head');
+
          page.find('[data-role="linkShare"]').attr('data-subject',subject).attr('data-image',featured_img).attr('data-url',url);
          page.find('[data-role="article"]').html(article);
 
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
          page.find('[data-role="linkShare"]').attr('data-url',url);
-         page.find('.bar-nav [data-toggle="popover"]').attr('data-url',url);
-
-         page.find('[data-toggle="popover"]').attr('data-uid',uid);
+         page.find('.bar-nav [data-toggle="popover"]').attr('data-url',url).attr('data-uid',uid);
 
          if (is_post_liked) {
            modal.find('[data-role="btn_post_like"]').addClass('active');

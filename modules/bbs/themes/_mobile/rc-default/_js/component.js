@@ -113,7 +113,7 @@ $(document).ready(function() {
     page.find('[data-role="bbs-list"]').html('');
   })
 
-  $('#popover-bbs-listMarkup').find('[data-toggle="listMarkup"]').tap(function() {
+  popover_bbs_listMarkup.find('[data-toggle="listMarkup"]').tap(function() {
     var button = $(this)
     var markup = button.attr('data-markup');
     var bid = button.attr('data-bid');
@@ -121,11 +121,6 @@ $(document).ready(function() {
     localStorage.setItem('bbs-'+bid+'-listMarkup', markup);
     resetBbsContent(page_bbs_list);
     getBbsList(bid,'','','#page-bbs-list');
-  });
-
-  $('[data-act="write"]').tap(function() {
-    $.loader({ text: $(this).attr("data-text") });
-    location.href = $(this).attr("data-href");
   });
 
   page_bbs_category.on('show.rc.page', function (e) {
@@ -196,7 +191,6 @@ $(document).ready(function() {
   page_bbs_list.find('.content').on( 'scroll', function(){
     var page =  $(this);
     var pos =$(this).scrollTop();
-
   });
 
   $('[data-act="opinion"]').click(function() {
@@ -205,7 +199,7 @@ $(document).ready(function() {
   });
 
   // 게시물 보기 페이지에서 댓글이 등록된 이후에 댓글 수량 업데이트
-  $('#page-bbs-view').find('#commentting-container').on('saved.rb.comment',function(){
+  page_bbs_view.find('#commentting-container').on('saved.rb.comment',function(){
     var page = $('#page-bbs-view')
     var bid = page.data('bid')
     var uid = page.data('uid')
@@ -225,7 +219,7 @@ $(document).ready(function() {
   });
 
   // 게시물 보기 페이지에서 한줄의견이 등록된 이후에 댓글 수량 업데이트
-  $('#page-bbs-view').find('#commentting-container').on('saved.rb.oneline',function(){
+  page_bbs_view.find('#commentting-container').on('saved.rb.oneline',function(){
     var page = $('#page-bbs-view')
     var uid = page.data('uid')
     var showComment_Ele = page.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
@@ -239,12 +233,12 @@ $(document).ready(function() {
     });
   });
 
-   //파일 첨부 페이지가 숨겨질때
-   page_bbs_write_attach.on('hide.rc.page', function () {
-     page =  page_bbs_write_attach;
-     length = page.find('[data-role="attach-item"]').length;
-     modal_bbs_write.find('[data-role="tap-attach"] .badge').text(length==0?'':length)  // 첨부파일 수량 업데이트
-   })
+  //파일 첨부 페이지가 숨겨질때
+  page_bbs_write_attach.on('hide.rc.page', function () {
+    page =  page_bbs_write_attach;
+    length = page.find('[data-role="attach-item"]').length;
+    modal_bbs_write.find('[data-role="tap-attach"] .badge').text(length==0?'':length)  // 첨부파일 수량 업데이트
+  })
 
   // Popover : 리스트 마크업 목록
   popover_bbs_listMarkup.on('show.rc.popover', function (e) {
@@ -279,6 +273,7 @@ $(document).ready(function() {
     modal.find('form').attr('data-bid',bid);
     setTimeout(function(){ modal.find('[name="keyword"]').focus(); }, 100);
   });
+
   modal_bbs_search.on('hidden.rc.modal', function (e) {
     var modal = $(this);
     modal.find('form').attr('data-bid','');
@@ -310,9 +305,12 @@ $(document).ready(function() {
          var pcode=result.pcode;
          var isperm =result.isperm;
          if (!isperm) {
-           console.log('권한없음');
-           modal.find('.page .content').html(main);
-           modal.find('.bar-tab').remove();
+           history.back();
+           setTimeout(function(){
+             $.notify({message: '작성권한이 없습니다.'},{type: 'default'});
+           }, 300);
+           //modal.find('.page .content').html(main);
+           return false
          } else {
            modal.find('[name="pcode"]').val(pcode);
            modal.find('[data-toggle="collapse"]').addClass('collapsed');
@@ -464,12 +462,8 @@ $(document).ready(function() {
                          modal.find('[data-role="attach-preview-audio"]').html(audio)
                          modal.find('[data-role="attach-preview-file"]').html(file)
                          modal.find('[data-role="attachNum"]').text(attachNum)
-
                        });
-
                     }
-
-
                  });
                } else {
                  modal.find('[data-act="submit"] .not-loading').text('등록');
@@ -508,11 +502,8 @@ $(document).ready(function() {
              modal.find('[name="notice"]').val(0)
            }
          })
-
        })
-
     }, 300);
-
   })
 
   //글쓰기 모달이 닫힐때
@@ -524,7 +515,7 @@ $(document).ready(function() {
     modal.find('[name="uid"]').val(''); // uid 초기화
     modal.find('[name="pcode"]').val(''); // pcode 초기화
 
-    if (editor_bbs) {
+    if (modal.find('.ck-editor__editable').length) {
       var subject = modal.find('[name="subject"]').val();
       var content = editor_bbs.getData();
       editor_bbs.destroy();  //에디터 제거
@@ -804,6 +795,7 @@ $(document).ready(function() {
     var tag = $('#page-bbs-write-tag').find('[name="tag"]')
     setTimeout(function(){ tag.focus() }, 300);
   })
+
   page_bbs_write_tag.on('hidden.rc.page', function () {
     var tag_input = $('#page-bbs-write-tag').find('[name="tag"]');
   	var tag = tag_input.val()

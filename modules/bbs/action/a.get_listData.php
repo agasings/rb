@@ -31,9 +31,17 @@ $recnum = $d['bbs']['recnum'];
 $NUM = getDbRows($table[$m.'data'],$bbsque);
 $TPG = getTotalPage($NUM,$recnum);
 
+//게시물 쓰기 권한체크
+$check_permWrite = true;
+if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].',')) {
+	if ($d['bbs']['perm_l_write'] > $my['level'] || strpos('_'.$d['bbs']['perm_g_write'],'['.$my['mygroup'].']')) {
+    $check_permWrite = false;
+	}
+}
+
 $TMPL['show_bbs_category'] = $B['category']?'':'d-none';
 $TMPL['show_bbs_search'] = $d['theme']['search']==1?'':'d-none';
-$TMPL['show_bbs_write'] = $my['uid']?'':'d-none';
+$TMPL['show_bbs_write'] = $check_permWrite?'':'d-none';
 $TMPL['bbs_name'] = $B['name'];
 $TMPL['bbs_id'] = $bid;
 $TMPL['bbs_write'] = '/b/'.$bid.'/write';
