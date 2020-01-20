@@ -189,6 +189,7 @@ modal_bbs_search.find('[data-role="search"]').submit(function(e){
   e.preventDefault();
   var form =  $(this);
   var bid = form.attr('data-bid');
+  var bname = form.attr('data-bname');
   var keyword = form.find('[name="keyword"]').val();
   var where   = form.find('[name="where"]').val();
   var search = keyword+';'+where;
@@ -197,6 +198,7 @@ modal_bbs_search.find('[data-role="search"]').submit(function(e){
   form.find('[name="keyword"]').blur().val(''); //가상 키보드 내리기
 
   setTimeout(function(){
+    page_bbs_result.find('[data-role="bname"]').text(bname);
     page_bbs_result.page({ start: '#page-bbs-list',title: keyword+' 검색결과'  });
     page_bbs_result.find('[data-role="bbs-list"]').loader({ position: 'inside' });
     setTimeout(function(){
@@ -286,14 +288,15 @@ popover_bbs_view.on('show.rc.popover', function (e) {
 modal_bbs_search.on('shown.rc.modal', function (e) {
   var button = $(e.relatedTarget)
   var bid = button.attr('data-bid');
+  var bname = button.attr('data-title');
   var modal = $(this);
-  modal.find('form').attr('data-bid',bid);
+  modal.find('form').attr('data-bid',bid).attr('data-bname',bname);;
   setTimeout(function(){ modal.find('[name="keyword"]').focus(); }, 100);
 });
 
 modal_bbs_search.on('hidden.rc.modal', function (e) {
   var modal = $(this);
-  modal.find('form').attr('data-bid','');
+  modal.find('form').attr('data-bid','').attr('data-name','');
   modal.find('[name="keyword"]').blur().val('');
 });
 
