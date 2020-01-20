@@ -180,6 +180,8 @@ if ($R['oneline']) {
   $result['total_comment'] = $R['comment']; // 댓글,한줄의견 등록시 현재댓글수를 내려주기 위함
 }
 
+$result['bname']=$B['name'];
+
 echo json_encode($result);
 exit;
 ?>

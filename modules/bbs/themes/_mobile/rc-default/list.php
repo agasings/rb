@@ -18,9 +18,7 @@
 <script>
 
   var bid = '<?php echo $bid?>';
-
-  // 목록 마크업 (listMarkup)
-  var local_listMarkup = localStorage.getItem('bbs-'+bid+'-listMarkup');
+  var local_listMarkup = localStorage.getItem('bbs-'+bid+'-listMarkup'); // 목록 마크업 (listMarkup)
 
   if (local_listMarkup) {
     var listMarkup = local_listMarkup;
@@ -29,19 +27,13 @@
     localStorage.setItem('bbs-'+bid+'-listMarkup', listMarkup);
   }
 
-  var settings_view={
-    type      : 'page', // 타입(modal,page)
-    mid       : '#page-bbs-view', // 컴포넌트 아이디
-    ctheme    : '<?php echo $d['bbs']['c_mskin']?$d['bbs']['c_mskin']:$d['comment']['skin_mobile']; ?>' //모달 댓글테마
-  }
-
-  var num_notice   = <?php echo $NUM_NOTICE ?>;
-
   $( document ).ready(function() {
-
     getBbsList(bid,'','','#page-bbs-list'); // 목록 셋팅
-    getBbsView(settings_view); // 게시물 보기
-
+    getBbsView({
+      type      : 'page', // 타입(modal,page)
+      mid       : '#page-bbs-view', // 컴포넌트 아이디
+      ctheme    : '<?php echo $d['bbs']['c_mskin']?$d['bbs']['c_mskin']:$d['comment']['skin_mobile']; ?>' //모달 댓글테마
+    });
   });
 
 </script>

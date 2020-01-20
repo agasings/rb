@@ -35,7 +35,10 @@
 <div id="page-bbs-result" class="page right">
   <header class="bar bar-nav bar-light bg-white px-0">
     <a class="icon pull-left material-icons px-3" role="button" data-history="back">arrow_back</a>
-    <h1 class="title title-left" data-history="back" data-role="title">게시판 검색결과</h1>
+    <h1 class="title title-left" data-history="back">
+      <span data-role="title">게시판 검색결과</span>
+      <span data-role="bname" class="badge badge-default badge-inverted ml-2"></span>
+    </h1>
   </header>
   <div class="content" data-role="bbs-list">
   </div>
@@ -45,7 +48,6 @@
 <section id="page-bbs-view" class="page right" data-role="bbs-view">
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
-  <input type="hidden" name="theme" value="">
 
   <header class="bar bar-nav bar-light bg-white p-x-0" data-scroll-header>
     <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>

@@ -28,6 +28,7 @@ $_catnum=count($_catexp);
 $markup_file = ($mod=='write')?'category-list-radio':'category-list-item';
 
 $TMPL['label']=$_catexp[0];
+$TMPL['bname']=$B['name'];
 
 $html = '';
 for ($i = 1; $i < $_catnum; $i++) {

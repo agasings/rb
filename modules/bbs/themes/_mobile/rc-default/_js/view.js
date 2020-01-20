@@ -85,6 +85,7 @@ function getBbsView(settings){
          var hidden=result.hidden;
          var hidden_attach=result.hidden_attach;
          var mypost=result.mypost;
+         var bname=result.bname;
 
          var is_post_liked=result.is_post_liked;
          var is_post_disliked=result.is_post_disliked;
@@ -117,6 +118,8 @@ function getBbsView(settings){
 
          page.find('[data-role="linkShare"]').attr('data-subject',subject).attr('data-image',featured_img).attr('data-url',url);
          page.find('[data-role="article"]').html(article);
+         page.find('[data-act="category"]').attr('data-bname',bname);
+         page.find('[data-act="tag"]').attr('data-bname',bname);
 
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
@@ -221,8 +224,17 @@ function getBbsView(settings){
          var p_table = 'rb_bbs_data';
          var p_uid = uid; // 게시물 고유번호 적용
          var theme = ctheme;
+         var comment_theme_css = '/modules/comment/themes/'+ctheme+'/css/style.css';
 
          if (!hidden && _uid) {
+
+           if (!$('link[href="'+comment_theme_css+'"]').length)
+             $('<link/>', {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: comment_theme_css
+             }).appendTo('head');
+
            get_Rb_Comment(p_module,p_table,p_uid,theme);
          }
 
