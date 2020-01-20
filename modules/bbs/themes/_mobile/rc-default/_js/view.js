@@ -23,6 +23,7 @@ function getBbsView(settings){
   //  게시물보기 모달이 보여질때 : 게시물 본문영역 셋팅
   $(mid).on('show.rc.'+type, function(event) {
     var ele = $(event.relatedTarget) // 모달을 호출한 아이템 정의
+    var start = $(ele).attr('data-start')?$(ele).attr('data-start'):''; // 시작페이지
     var bid = $(ele).attr('data-bid')?$(ele).attr('data-bid'):''; // 게시판 아이디
     var uid = $(ele).attr('data-uid')?$(ele).attr('data-uid'):''; // 대상 PK
     var subject = $(ele).attr('data-subject')?$(ele).attr('data-subject'):''; // 제목
@@ -41,9 +42,10 @@ function getBbsView(settings){
 		var move =  ele.attr('data-move');
     item.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
     var modal = $(this);
+    if (start) page.attr('data-start',start);
     page.find('[name="uid"]').val(uid);
     page.find('[name="bid"]').val(bid);
-    page.find('[data-role="cat"]').text(cat);
+    page.find('[data-role="cat"]').text(cat).attr('data-cat',cat);
     page.find('[data-role="name"]').text(name);
     page.find('[data-target="#page-member-profile"]').attr('data-mbruid',mbruid).attr('data-url','/@'+mbrid);
     page.find('[data-role="total_comment"]').text(comment);
@@ -119,7 +121,7 @@ function getBbsView(settings){
          Iframely('[data-role="article"] oembed[url]') // oembed 미디어 변환
 
          page.find('[data-role="linkShare"]').attr('data-url',url);
-         page.find('.bar-nav [data-toggle="popover"]').attr('data-url',url).attr('data-uid',uid);
+         page.find('.bar-nav [data-toggle="popover"]').attr('data-url',url).attr('data-bid',bid).attr('data-uid',uid);
 
          if (is_post_liked) {
            modal.find('[data-role="btn_post_like"]').addClass('active');
@@ -536,8 +538,10 @@ function getBbsView(settings){
 
   //게시물 수정
   $(document).on('tap','[data-toggle="postEdit"]',function() {
+    var bid = $(this).attr('data-bid');
     var uid = $(this).attr('data-uid');
-    modal_bbs_write.find('[name="uid"]').val(uid)
+    modal_bbs_write.find('[name="bid"]').val(bid);
+    modal_bbs_write.find('[name="uid"]').val(uid);
     setTimeout(function(){modal_bbs_write.modal()}, 50);
   });
 

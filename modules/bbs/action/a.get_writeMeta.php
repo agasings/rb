@@ -29,12 +29,15 @@ include_once $g['dir_module'].'themes/'.$theme.'/_var.php';
 $bbs = new Bbs();
 $bbs->theme_name = $theme;
 
+$TMPL['bid']=$bid;
+
 $html = '';
 $html .= $bbs->getHtml('write-meta-tag');
 if ($B['category']) $html .= $bbs->getHtml('write-meta-category');
 if ($d['theme']['use_hidden']==1) $html .= $bbs->getHtml('write-meta-hidden');
 if ($my['admin']) $html .= $bbs->getHtml('write-meta-notice');
 
+$result['has_category']=$B['category']?true:false;
 $result['list']=$html;
 
 echo json_encode($result);

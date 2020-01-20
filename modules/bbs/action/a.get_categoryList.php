@@ -25,6 +25,8 @@ $B = getDbData($table['bbslist'],'id="'.$bid.'"','*');
 $_catexp = explode(',',$B['category']);
 $_catnum=count($_catexp);
 
+$markup_file = ($mod=='write')?'category-list-radio':'category-list-item';
+
 $TMPL['label']=$_catexp[0];
 
 $html = '';
@@ -34,7 +36,7 @@ for ($i = 1; $i < $_catnum; $i++) {
   $TMPL['category']=$_catexp[$i];
   $TMPL['num']=getDbRows($table[$m.'data'],'site='.$s.' and notice=0 and bbs='.$B['uid']." and category='".$_catexp[$i]."'");
 
-  $skin_item=new skin('category-list-item');
+  $skin_item=new skin($markup_file);
   $html.=$skin_item->make();
 }
 

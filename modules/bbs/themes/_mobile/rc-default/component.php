@@ -88,7 +88,7 @@
     </div><!-- /.clearfix -->
     <hr>
     <div class="content-padded" data-role="post">
-      <span data-role="cat" class="badge badge-primary badge-inverted"></span>
+      <span data-role="cat" data-act="category" class="badge badge-primary badge-inverted"></span>
       <h3 data-role="subject" class="rb-article-title"></h3>
     </div>
     <div data-role="article" data-plugin="photoswipe">
