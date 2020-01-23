@@ -1,1 +1,1 @@
-v2.4.5,20200123,https://github.com/kimsQ/rb/archive/v2.4.5.zip,
+2.4.5,
