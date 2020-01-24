@@ -31,8 +31,8 @@ workbox.precaching.precacheAndRoute([
   '/plugins/jquery/3.3.1/jquery.min.js',
 
   '/plugins/popper.js/1.14.0/umd/popper.min.js',
-  '/plugins/bootstrap/4.3.1/css/bootstrap.min.css',
-  '/plugins/bootstrap/4.3.1/js/bootstrap.min.js',
+  '/plugins/bootstrap/4.4.1/css/bootstrap.min.css',
+  '/plugins/bootstrap/4.4.1/js/bootstrap.min.js',
 
   '/plugins/rc/1.0.0/css/rc.css',
   '/plugins/rc/1.0.0/css/rc-add.css',
