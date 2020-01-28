@@ -83,7 +83,7 @@ $_rb2list = explode("\n",$_rb2list);
 $_rb2listlength = count($_rb2list)-1;
 
 $url = $_POST['url'];
-$folder = $_POST['folder'];
+$tmp_folder = $_POST['folder'];
 
 if ($url) {
 
@@ -117,10 +117,9 @@ if ($url) {
   curl_close($ch);
   @unlink($zipFile);
 
-  DirCopy('./rb-2.4-dev','./test');
-  DirDelete('./rb-2.4-dev');
+  DirCopy($extractPath.$tmp_folder,$extractPath);
+  DirDelete($extractPath.$tmp_folder);
 
-  // rb-2.4-dev
 }
 
 ?>
@@ -138,7 +137,7 @@ if ($url) {
   <body>
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto"><?php echo $url ?></header>
+      <header class="masthead mb-auto"><?php echo $tmp_folder ?></header>
       <main role="main" class="inner cover">
         <h1 class="cover-heading">무한한 가능성!<br>킴스큐Rb2 설치를 시작합니다.</h1>
         <p class="lead">별도의 서버작업(패키지 다운로드,압축해제,퍼미션 조정 등) 절차없이 쉽고 빠르게 설치를 진행할 것입니다.
