@@ -83,6 +83,7 @@ $_rb2list = explode("\n",$_rb2list);
 $_rb2listlength = count($_rb2list)-1;
 
 $url = $_POST['url'];
+$folder = $_POST['folder'];
 
 if ($url) {
 
@@ -114,6 +115,10 @@ if ($url) {
   $zip->extractTo($extractPath);
   $zip->close();
   curl_close($ch);
+  @unlink($zipFile);
+
+  DirCopy('./rb-2.4-dev','./test');
+  DirDelete('./rb-2.4-dev');
 
   // rb-2.4-dev
 }
@@ -139,6 +144,7 @@ if ($url) {
         <p class="lead">별도의 서버작업(패키지 다운로드,압축해제,퍼미션 조정 등) 절차없이 쉽고 빠르게 설치를 진행할 것입니다.
       		준비가 되셨으면 설치하기 버튼을 클릭해 주십시오.</p>
         <form action="./index.php" method="post">
+          <input type="hidden" name="folder" value="">
           <div class="form-group">
             <label class="sr-only">패키지 버전</label>
             <div class="input-group">
@@ -147,7 +153,7 @@ if ($url) {
                 <?php for($i = 0; $i < $_rb2listlength; $i++):?>
                 <?php $_list=trim($_rb2list[$i]);if(!$_list)continue?>
                 <?php $var1=explode(',',$_list)?>
-                <option value="<?php echo $var1[1]?>" <?php echo ($url==$var1[1])?'selected':'' ?> >
+                <option value="<?php echo $var1[1]?>" <?php echo ($url==$var1[1])?'selected':'' ?> data-folder="rb-<?php echo $var1[2]?>">
                   <?php echo $var1[0]?>
                 </option>
                 <?php endfor?>
@@ -178,11 +184,13 @@ if ($url) {
       $('[name="url"]').change(function() {
         var url = $(this).val();
         var form = $('form');
+        var folder = form.find('option:selected').attr('data-folder');
         $(this).blur();
         if (!url) {
           $(this).focus();
           return false
         }
+        form.find('[name="folder"]').val(folder);
         form.find('.input-group-append').removeClass('d-none');
         form.submit()
       });
