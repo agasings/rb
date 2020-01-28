@@ -37,6 +37,47 @@ function getUrlData($url,$sec) {
 	}
 }
 
+function DirCopy($dir1 , $dir2) {
+	$dirh = opendir($dir1);
+	while(false !== ($filename = readdir($dirh)))
+	{
+		if($filename != '.' && $filename != '..')
+		{
+			if(!is_file($dir1.'/'.$filename))
+			{
+				@mkdir($dir2.'/'.$filename , 0707);
+				@chmod($dir2.'/'.$filename , 0707);
+				DirCopy($dir1.'/'.$filename , $dir2.'/'.$filename);
+			}
+			else
+			{
+				@copy($dir1.'/'.$filename , $dir2.'/'.$filename);
+				@chmod($dir2.'/'.$filename , 0707);
+			}
+		}
+	}
+	closedir($dirh);
+}
+
+function DirDelete($t_dir) {
+	$dirh = opendir($t_dir);
+	while(false !== ($filename = readdir($dirh)))
+	{
+		if($filename != '.' && $filename != '..')
+		{
+			if(!is_file($t_dir.'/'.$filename))
+			{
+				DirDelete($t_dir.'/'.$filename);
+			}
+			else {
+				@unlink($t_dir.'/'.$filename);
+			}
+		}
+	}
+	closedir($dirh);
+	@rmdir($t_dir);
+}
+
 $_rb2list = getUrlData('https://kimsq.github.io/rb/releases.v2.txt',10);
 $_rb2list = explode("\n",$_rb2list);
 $_rb2listlength = count($_rb2list)-1;
@@ -44,13 +85,51 @@ $_rb2listlength = count($_rb2list)-1;
 $url = $_POST['url'];
 
 if ($url) {
-  // code...
 
+  $zipFile = "./rb2.zip"; // Local Zip File Path
+  $zipResource = fopen($zipFile, "w");
+  // Get The Zip File From Server
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_FAILONERROR, true);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+  curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+  curl_setopt($ch, CURLOPT_BINARYTRANSFER,true);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+  curl_setopt($ch, CURLOPT_FILE, $zipResource);
+  $file = curl_exec($ch);
+  if(!$file) {
+   echo "Error :- ".curl_error($ch);
+  }
 
+  $zip = new ZipArchive;
+  $extractPath = "./";
+  if($zip->open($zipFile) != "true"){
+   echo "Error :- Unable to open the Zip File";
+  }
+  /* Extract Zip File */
+  $zip->extractTo($extractPath);
+  $zip->close();
+  curl_close($ch);
 
-
-
-  
+  // $data = getCURLData($url,'');
+  //
+  // if ($data) {
+  //   $fp = fopen('./rb2.zip','w');
+  //   fwrite($fp,$data);
+  //   fclose($fp);
+  //
+  //   $zip = new ZipArchive;
+  //   $res = $zip->open('./rb2.zip');
+  //   if ($res === true) {
+  //     $zip->extractTo('./rb2/');
+  //     $zip->close();
+  //   }
+  //
+  // }
 }
 
 ?>
