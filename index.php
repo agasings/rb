@@ -184,7 +184,7 @@ if ($url) {
           return false
         }
         form.find('.input-group-append').removeClass('d-none');
-        // form.submit()
+        form.submit()
       });
 
     </script>
