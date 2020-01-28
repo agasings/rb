@@ -130,14 +130,15 @@ if ($url) {
     <link rel="shortcut icon" href="//kimsq.github.io/rb/images/favicon.ico">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="//kimsq.github.io/rb/stylesheets/install.css">
+		<link rel="stylesheet" href="//kimsq.github.io/rb/plugins/font-kimsq/1.0.0/css/font-kimsq.css">
     <title>킴스큐 설치 - Rb2</title>
   </head>
   <body>
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto"></header>
+			<header class="masthead mb-auto"></header>
       <main role="main" class="inner cover">
-        <h1 class="cover-heading">무한한 가능성!<br>킴스큐Rb2 설치를 시작합니다.</h1>
+        <h1 class="cover-heading font-weight-light"><i class="kf kf-bi-01 mb-2"></i><br>무한한 가능성! <br>킴스큐 Rb2 설치를 시작합니다.</h1>
         <p class="lead">별도의 서버작업(패키지 다운로드,압축해제,퍼미션 조정 등) 절차없이 쉽고 빠르게 설치를 진행할 것입니다.
       		 설치할 패키지를 선택해주세요.</p>
         <form action="./index.php" method="post">
