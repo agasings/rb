@@ -105,21 +105,19 @@ if ($url) {
   if(!$file) {
    echo "Error :- ".curl_error($ch);
   }
-
   $zip = new ZipArchive;
   $extractPath = "./";
   if($zip->open($zipFile) != "true"){
    echo "Error :- Unable to open the Zip File";
   }
-  /* Extract Zip File */
   $zip->extractTo($extractPath);
   $zip->close();
   curl_close($ch);
+	@unlink('./index.php');
   @unlink($zipFile);
-
+	header("Refresh:0");
   DirCopy($extractPath.$tmp_folder,$extractPath);
   DirDelete($extractPath.$tmp_folder);
-
 }
 
 ?>
@@ -137,7 +135,7 @@ if ($url) {
   <body>
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto"><?php echo $tmp_folder ?></header>
+      <header class="masthead mb-auto"></header>
       <main role="main" class="inner cover">
         <h1 class="cover-heading">무한한 가능성!<br>킴스큐Rb2 설치를 시작합니다.</h1>
         <p class="lead">별도의 서버작업(패키지 다운로드,압축해제,퍼미션 조정 등) 절차없이 쉽고 빠르게 설치를 진행할 것입니다.
