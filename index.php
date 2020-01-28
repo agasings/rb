@@ -87,9 +87,8 @@ $tmp_folder = $_POST['folder'];
 
 if ($url) {
 
-  $zipFile = "./rb2.zip"; // Local Zip File Path
+  $zipFile = "./rb2.zip";
   $zipResource = fopen($zipFile, "w");
-  // Get The Zip File From Server
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_FAILONERROR, true);
@@ -103,12 +102,12 @@ if ($url) {
   curl_setopt($ch, CURLOPT_FILE, $zipResource);
   $file = curl_exec($ch);
   if(!$file) {
-   echo "Error :- ".curl_error($ch);
+   echo "에러 :- ".curl_error($ch);
   }
   $zip = new ZipArchive;
   $extractPath = "./";
   if($zip->open($zipFile) != "true"){
-   echo "Error :- Unable to open the Zip File";
+   echo "에러 :- zip 파일을 열수 없습니다.";
   }
   $zip->extractTo($extractPath);
   $zip->close();
@@ -176,7 +175,6 @@ if ($url) {
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-
     <script>
 
       $('[name="url"]').change(function() {
