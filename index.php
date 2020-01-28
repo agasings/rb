@@ -115,21 +115,7 @@ if ($url) {
   $zip->close();
   curl_close($ch);
 
-  // $data = getCURLData($url,'');
-  //
-  // if ($data) {
-  //   $fp = fopen('./rb2.zip','w');
-  //   fwrite($fp,$data);
-  //   fclose($fp);
-  //
-  //   $zip = new ZipArchive;
-  //   $res = $zip->open('./rb2.zip');
-  //   if ($res === true) {
-  //     $zip->extractTo('./rb2/');
-  //     $zip->close();
-  //   }
-  //
-  // }
+  // rb-2.4-dev
 }
 
 ?>
@@ -155,16 +141,25 @@ if ($url) {
         <form action="./index.php" method="post">
           <div class="form-group">
             <label class="sr-only">패키지 버전</label>
-            <select name="url" class="form-control custom-select custom-select-lg rounded-0" <?php echo $url?'disabled':'' ?>>
-              <option value="">설치버전을 선택하세요.</option>
-              <?php for($i = 0; $i < $_rb2listlength; $i++):?>
-              <?php $_list=trim($_rb2list[$i]);if(!$_list)continue?>
-              <?php $var1=explode(',',$_list)?>
-              <option value="<?php echo $var1[1]?>" <?php echo ($url==$var1[1])?'selected':'' ?> >
-                <?php echo $var1[0]?>
-              </option>
-              <?php endfor?>
-            </select>
+            <div class="input-group">
+              <select name="url" class="form-control custom-select custom-select-lg rounded-0" <?php echo $url?'disabled':'' ?>>
+                <option value="">설치버전을 선택하세요.</option>
+                <?php for($i = 0; $i < $_rb2listlength; $i++):?>
+                <?php $_list=trim($_rb2list[$i]);if(!$_list)continue?>
+                <?php $var1=explode(',',$_list)?>
+                <option value="<?php echo $var1[1]?>" <?php echo ($url==$var1[1])?'selected':'' ?> >
+                  <?php echo $var1[0]?>
+                </option>
+                <?php endfor?>
+              </select>
+              <div class="input-group-append d-none">
+                <label class="input-group-text rounded-0 bg-white">
+                  <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                  <span class="sr-only">Loading...</span>
+                </label>
+              </div>
+            </div>
+
           </div>
         </form>
       </main>
@@ -183,11 +178,13 @@ if ($url) {
       $('[name="url"]').change(function() {
         var url = $(this).val();
         var form = $('form');
+        $(this).blur();
         if (!url) {
           $(this).focus();
           return false
         }
-        form.submit()
+        form.find('.input-group-append').removeClass('d-none');
+        // form.submit()
       });
 
     </script>
