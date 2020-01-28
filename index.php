@@ -139,7 +139,7 @@ if ($url) {
       <main role="main" class="inner cover">
         <h1 class="cover-heading">무한한 가능성!<br>킴스큐Rb2 설치를 시작합니다.</h1>
         <p class="lead">별도의 서버작업(패키지 다운로드,압축해제,퍼미션 조정 등) 절차없이 쉽고 빠르게 설치를 진행할 것입니다.
-      		준비가 되셨으면 설치하기 버튼을 클릭해 주십시오.</p>
+      		 설치할 패키지를 선택해주세요.</p>
         <form action="./index.php" method="post">
           <input type="hidden" name="folder" value="">
           <div class="form-group">
@@ -189,7 +189,8 @@ if ($url) {
         }
         form.find('[name="folder"]').val(folder);
         form.find('.input-group-append').removeClass('d-none');
-        form.submit()
+        form.submit();
+				$(this).attr('disabled', 'true')
       });
 
     </script>
