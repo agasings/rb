@@ -1,13 +1,5 @@
 <?php
 $B = getDbData($table['bbslist'],'id="'.$wdgvar['bbsid'].'"','uid');
-
-if ($wdgvar['view']=='modal') {
-  @include $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
-  $d['bbs']['skin'] = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
-  $g['url_module_skin'] = $g['s'].'/modules/bbs/themes/'.$d['bbs']['skin'];
-  $g['dir_module_skin'] = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/';
-  @include_once $g['dir_module_skin'].'_widget.php';
-}
 ?>
 
 <section class="widget mb-4">
