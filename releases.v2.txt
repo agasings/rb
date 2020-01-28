@@ -1,2 +1,1 @@
-v2.4.0 2020년 1월 15일,2.4.0,
-v2.4.5 beta2 2020년 1월 23일,2.4.5,
+v2.4.5 beta2 2020년 1월 28일,https://github.com/kimsQ/rb/archive/v2.4-dev.zip,
