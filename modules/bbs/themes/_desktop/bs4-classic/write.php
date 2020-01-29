@@ -1,9 +1,9 @@
 <?php
-if (!$_SESSION['upsescode'])
-{
+if (!$_SESSION['upsescode']) {
   $_SESSION['upsescode'] = str_replace('.','',$g['time_start']);
 }
 $sescode = $_SESSION['upsescode'];
+
 if($R['uid']){
     $u_arr = getArrayString($R['upload']);
     $_tmp=array();
@@ -92,7 +92,8 @@ else {
         <div class="mb-3">
           <script>
           var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드 폴더
-          var attach_module_theme = '_desktop/bs4-default-attach';// attach 모듈 테마
+          var attach_module_theme = '<?php echo $d['bbs']['a_skin']?$d['bbs']['a_skin']: ($d['theme']['upload_theme']?$d['theme']['upload_theme']:$d['bbs']['attach_main']); ?>';// attach 모듈 테마
+
           </script>
           <?php
             $__SRC__ = htmlspecialchars($R['content']);
@@ -130,7 +131,6 @@ else {
         <?php include $g['dir_module_skin'].'_uploader.php'?>
         <?php endif; ?>
         <?php endif?>
-
 
   		   <?php if($d['theme']['show_wtag']):?>
   			 <div class="form-group mt-4">
@@ -171,7 +171,6 @@ else {
 <?php include $g['dir_module_skin'].'_footer.php'?>
 
 <script type="text/javascript">
-
 
 // 글 등록 함수
 var submitFlag = false;

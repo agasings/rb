@@ -111,7 +111,7 @@ else {
         <div class="mb-3">
           <script>
           var attach_file_saveDir = '<?php echo $g['path_file']?>bbs/';// 파일 업로드 폴더
-          var attach_module_theme = '_desktop/bs4-default-attach';// attach 모듈 테마
+          var attach_module_theme = '<?php echo $d['bbs']['a_skin']?$d['bbs']['a_skin']: ($d['theme']['upload_theme']?$d['theme']['upload_theme']:$d['bbs']['attach_main']); ?>';// attach 모듈 테마  
           </script>
           <?php
             $__SRC__ = htmlspecialchars($R['content']);

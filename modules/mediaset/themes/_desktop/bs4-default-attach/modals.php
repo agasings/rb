@@ -83,7 +83,7 @@
 
 <!-- 첨부 사진 상품태그 -->
 <div class="modal rb-modal-attach-meta" id="modal-attach-photo-tag" tabindex="-1" role="dialog" aria-labelledby="">
-  <input type="hidden" name="uid" value="">
+  <!-- <input type="hidden" name="uid"> -->
   <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -105,7 +105,7 @@
             <div class="col-4 pl-0 pt-3">
 
               <div data-role="comment" class="mb-3">
-                
+
                 <div class="dropdown">
                   <button class="btn btn-white btn-sm btn-block p-2 d-flex justify-content-between align-items-center text-left" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 8.3rem">
                     <div class="media d-none">

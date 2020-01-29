@@ -8,7 +8,10 @@ if (!$bid) getLink('','','게시판 아이디가 지정되지 않았습니다.',
 $B = getDbData($table[$m.'list'],"id='".$bid."'",'*');
 if (!$B['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 if (!$subject) getLink('reload','parent.','제목이 입력되지 않았습니다.','');
-include_once $g['dir_module'].'var/var.php';
+
+$g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
+include_once file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['dir_module'].'var/var.php';
+
 include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
@@ -45,8 +48,7 @@ $point2		= trim($d['bbs']['point2']);
 $point3		= $point3 ? filterstr(trim($point3)) : 0;
 $point4		= $point4 ? filterstr(trim($point4)) : 0;
 
-if ($d['bbs']['badword_action'])
-{
+if ($d['bbs']['badword_action']) {
 	$badwordarr = explode(',' , $d['bbs']['badword']);
 	$badwordlen = count($badwordarr);
 	for($i = 0; $i < $badwordlen; $i++)
@@ -68,25 +70,20 @@ if ($d['bbs']['badword_action'])
 	}
 }
 
-if (!$uid || $reply == 'Y')
-{
+if (!$uid || $reply == 'Y') {
 	if(!getDbRows($table[$m.'day'],"date='".$date['today']."' and site=".$s.' and bbs='.$bbsuid))
 	getDbInsert($table[$m.'day'],'date,site,bbs,num',"'".$date['today']."','".$s."','".$bbsuid."','0'");
 	if(!getDbRows($table[$m.'month'],"date='".$date['month']."' and site=".$s.' and bbs='.$bbsuid))
 	getDbInsert($table[$m.'month'],'date,site,bbs,num',"'".$date['month']."','".$s."','".$bbsuid."','0'");
 }
 
-if ($uid)
-{
+if ($uid) {
 	$R = getUidData($table[$m.'data'],$uid);
 	if (!$R['uid']) getLink('','','존재하지 않는 게시물입니다.','');
 
-	if ($reply == 'Y')
-	{
-		if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].','))
-		{
-			if ($d['bbs']['perm_l_write'] > $my['level'] || strstr($d['bbs']['perm_g_write'],'['.$my['mygroup'].']'))
-			{
+	if ($reply == 'Y') {
+		if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].',')) {
+			if ($d['bbs']['perm_l_write'] > $my['level'] || strstr($d['bbs']['perm_g_write'],'['.$my['mygroup'].']')) {
 				getLink('','','정상적인 접근이 아닙니다.','');
 			}
 		}
@@ -97,17 +94,13 @@ if ($uid)
 		getDbUpdate($table[$m.'idx'],'gid=gid+0.01','gid > '.$R['gid'].' and gid < '.(intval($R['gid'])+1));
 		getDbUpdate($table[$m.'data'],'gid=gid+0.01','gid > '.$R['gid'].' and gid < '.(intval($R['gid'])+1));
 
-		if ($R['hidden'] && $hidden)
-		{
-			if ($R['mbruid'])
-			{
+		if ($R['hidden'] && $hidden) {
+			if ($R['mbruid']) {
 				$pw = $R['mbruid'];
-			}
-			else {
+			} else {
 				$pw = $my['uid'] ? $R['pw'] : ($pw == $R['pw'] ? $R['pw'] : md5($pw));
 			}
-		}
-		else {
+		} else {
 			$pw = $pw ? md5($pw) : '';
 		}
 
@@ -127,36 +120,29 @@ if ($uid)
 		$LASTUID = getDbCnt($table[$m.'data'],'max(uid)','');
 		if ($cuid) getDbUpdate($table['s_menu'],"num='".getDbCnt($table[$m.'month'],'sum(num)','site='.$s.' and bbs='.$bbsuid)."',d_last='".$d_regis."'",'uid='.$cuid);
 
-		if ($point1&&$my['uid'])
-		{
+		if ($point1&&$my['uid']) {
 			getDbInsert($table['s_point'],'my_mbruid,by_mbruid,price,content,d_regis',"'".$my['uid']."','0','".$point1."','게시물(".getStrCut($subject,15,'').")포인트','".$date['totime']."'");
 			getDbUpdate($table['s_mbrdata'],'point=point+'.$point1,'memberuid='.$my['uid']);
 		}
-	}
-	else
-	{
 
-		if ($my['uid'] != $R['mbruid'] && !$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].','))
-		{
-			 if (!strstr($_SESSION['module_'.$m.'_pwcheck'],$R['uid'])) getLink('','','정상적인 접근이 아닙니다.','');
+	} else {
+
+		if ($my['uid'] != $R['mbruid'] && !$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].',')) {
+		    if (!strstr($_SESSION['module_'.$m.'_pwcheck'],$R['uid'])) getLink('','','정상적인 접근이 아닙니다.','');
 		}
 
 		$pw = !$R['pw'] && !$R['hidden'] && $hidden && $R['mbruid'] ? $R['mbruid'] : $R['pw'];
-
-				// getLink('','parent.',trim($content).' 여기까지','');
 
 		$QVAL = "display='$display',hidden='$hidden',notice='$notice',pw='$pw',category='$category',subject='$subject',content='$content',html='$html',tag='$tag',point3='$point3',point4='$point4',d_modify='$d_regis',upload='$upload',featured_img='$featured_img',location='$location',pin='$pin',adddata='$adddata'";
 		getDbUpdate($table[$m.'data'],$QVAL,'uid='.$R['uid']);
 		getDbUpdate($table[$m.'idx'],'notice='.$notice,'gid='.$R['gid']);
 		if ($cuid) getDbUpdate($table['s_menu'],"num='".getDbCnt($table[$m.'month'],'sum(num)','site='.$R['site'].' and bbs='.$R['bbs'])."'",'uid='.$cuid);
 	}
-}
-else
-{
-	if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].','))
-	{
-		if ($d['bbs']['perm_l_write'] > $my['level'] || strstr($d['bbs']['perm_g_write'],'['.$my['mygroup'].']'))
-		{
+
+} else {
+
+	if (!$my['admin'] && !strstr(','.($d['bbs']['admin']?$d['bbs']['admin']:'.').',',','.$my['id'].',')) {
+		if ($d['bbs']['perm_l_write'] > $my['level'] || strstr($d['bbs']['perm_g_write'],'['.$my['mygroup'].']')) {
 			getLink('','','정상적인 접근이 아닙니다.','');
 		}
 	}
@@ -176,48 +162,42 @@ else
 	getDbUpdate($table[$m.'day'],'num=num+1',"date='".$date['today']."' and site=".$s.' and bbs='.$bbsuid);
 	$LASTUID = getDbCnt($table[$m.'data'],'max(uid)','');
 	if ($cuid) getDbUpdate($table['s_menu'],"num='".getDbCnt($table[$m.'month'],'sum(num)','site='.$s.' and bbs='.$bbsuid)."',d_last='".$d_regis."'",'uid='.$cuid);
-	if ($point1&&$my['uid'])
-	{
+
+  if ($point1&&$my['uid']) {
 		getDbInsert($table['s_point'],'my_mbruid,by_mbruid,price,content,d_regis',"'".$my['uid']."','0','".$point1."','게시물(".getStrCut($subject,15,'').")포인트','".$date['totime']."'");
 		getDbUpdate($table['s_mbrdata'],'point=point+'.$point1,'memberuid='.$my['uid']);
 	}
 
-	if ($gid == 100000000.00)
-	{
+	if ($gid == 100000000.00) {
 		db_query("OPTIMIZE TABLE ".$table[$m.'idx'],$DB_CONNECT);
 		db_query("OPTIMIZE TABLE ".$table[$m.'data'],$DB_CONNECT);
 		db_query("OPTIMIZE TABLE ".$table[$m.'month'],$DB_CONNECT);
 		db_query("OPTIMIZE TABLE ".$table[$m.'day'],$DB_CONNECT);
 	}
+
 }
 
 $NOWUID = $LASTUID ? $LASTUID : $R['uid'];
 
-
-if ($tag || $R['tag'])
-{
+if ($tag || $R['tag']) {
 	$_tagarr1 = array();
 	$_tagarr2 = explode(',',$tag);
   $_tagdate = $date['today'];
 
-	if ($R['uid'] && $reply != 'Y')
-	{
+	if ($R['uid'] && $reply != 'Y') {
     $_tagdate = substr($R['d_regis'],0,8);
 		$_tagarr1 = explode(',',$R['tag']);
-		foreach($_tagarr1 as $_t)
-		{
+		foreach($_tagarr1 as $_t) {
 			if(!$_t || in_array($_t,$_tagarr2)) continue;
       $_TAG = getDbData($table['s_tag'],"site=".$R['site']." and date='".$_tagdate."' and keyword='".$_t."'",'*');
-			if($_TAG['uid'])
-			{
+			if($_TAG['uid']) {
 				if($_TAG['hit']>1) getDbUpdate($table['s_tag'],'hit=hit-1','uid='.$_TAG['uid']);
 				else getDbDelete($table['s_tag'],'uid='.$_TAG['uid']);
 			}
 		}
 	}
 
-	foreach($_tagarr2 as $_t)
-	{
+	foreach($_tagarr2 as $_t) {
 		if(!$_t || in_array($_t,$_tagarr1)) continue;
 		$_TAG = getDbData($table['s_tag'],'site='.$s." and date='".$_tagdate."' and keyword='".$_t."'",'*');
 		if($_TAG['uid']) getDbUpdate($table['s_tag'],'hit=hit+1','uid='.$_TAG['uid']);
@@ -231,14 +211,12 @@ if ($reply == 'Y') $msg = '답변';
 else if ($uid) $msg = '수정';
 else $msg = '등록';
 
-
 //알림 전송 (게시물 등록: 신규 게시물 등록시, 게시판 관리자에게 알림발송)
 if ($d['bbs']['noti_newpost'] && !$my['admin']){
 	include $g['dir_module'].'var/noti/_new.post.php';  // 알림메시지 양식
 	$sendAdmins_array = explode(',',trim($d['bbs']['admin']));
 	if (is_array($sendAdmins_array)) {
-		foreach($sendAdmins_array as $val)
-		{
+		foreach($sendAdmins_array as $val) {
 			$_M = getDbData($table['s_mbrid'],'id="'.$val.'"','uid');
 			$__M = getDbData($table['s_mbrdata'],'memberuid='.$_M['uid'],'memberuid,email,name,nic');
 			if (!$_M['uid']) continue;
@@ -295,8 +273,6 @@ if ($backtype == "ajax") {
 
     $TMPL['timeago']=$d['theme']['timeago']?'data-plugin="timeago"':'';
 
-    // 최종 결과값 추출 (sys.class.php)
-
     if (!$list_wrapper) {
       $skin_item=new skin($markup.'-item');
       $TMPL['items']=$skin_item->make();
@@ -327,21 +303,15 @@ if ($backtype == "ajax") {
 
 	setrawcookie('bbs_action_result', rawurlencode('게시물이 '.$msg.' 되었습니다.'));  // 처리여부 cookie 저장
 
-	if (!$backtype || $backtype == 'list')
-	{
+	if (!$backtype || $backtype == 'list') {
 		getLink($nlist,'parent.','','');
-	}
-	else if ($backtype == 'view')
-	{
-		if ($_HS['rewrite']&&!strstr($nlist,'&'))
-		{
+	} else if ($backtype == 'view') {
+		if ($_HS['rewrite']&&!strstr($nlist,'&')) {
 			getLink($nlist.'/'.$NOWUID,'parent.','','');
-		}
-		else {
+		} else {
 			getLink($nlist.'&mod=view&uid='.$NOWUID,'parent.','','');
 		}
-	}
-	else {
+	} else {
 		getLink('reload','parent.','','');
 	}
 }
