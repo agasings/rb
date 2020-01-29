@@ -304,6 +304,7 @@ setcookie('svshop', $id.'|'.$pw1, time()+60*60*24*30, '/');
 $_SESSION['mbr_uid'] = 1;
 $_SESSION['mbr_pw']  = getCrypt($pw1,$date['totime']);
 
+DirDelete('./_install');
 // putNotice(1,'admin',0,sprintf(_LANG('a012','install'),$name,$name),'','');
 getLink('./index.php?r='.$siteid.'&iframe=Y&system=guide.install','parent.','','');
 ?>

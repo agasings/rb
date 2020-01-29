@@ -108,19 +108,19 @@ require $g['path_core'].'function/sys.func.php';
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i019','install')?></label>
 											<div class="col-sm-8">
-												<input class="form-control" type="text" name="dbname" value="<?php echo $_SESSION['_live_dbname']?>" placeholder="">
+												<input class="form-control" type="text" name="dbname" value="" placeholder="">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i020','install')?></label>
 											<div class="col-sm-8">
-												<input class="form-control" type="text" name="dbuser" value="<?php echo $_SESSION['_live_dbuser']?>" placeholder="">
+												<input class="form-control" type="text" name="dbuser" value="" placeholder="">
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label" for="password"><?php echo _LANG('i021','install')?></label>
 											<div class="col-sm-8">
-												<input class="form-control" type="password" name="dbpass" value="<?php echo $_SESSION['_live_dbpass']?>" id="password">
+												<input class="form-control" type="password" name="dbpass" value="" id="password">
 											</div>
 										</div>
 									</div>
@@ -135,21 +135,21 @@ require $g['path_core'].'function/sys.func.php';
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i023','install')?></label>
 											<div class="col-sm-8">
-												<input class="form-control" type="text" name="dbhost" value="<?php echo $_SESSION['_live_dbhost']?$_SESSION['_live_dbhost']:'localhost'?>">
+												<input class="form-control" type="text" name="dbhost" value="localhost">
 												<span class="help-block"><?php echo _LANG('i024','install')?></span>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i025','install')?></label>
 											<div class="col-sm-8">
-												<input class="form-control" type="text" name="dbport" value="<?php echo $_SESSION['_live_dbport']?$_SESSION['_live_dbport']:'3306'?>">
+												<input class="form-control" type="text" name="dbport" value="3306">
 												<span class="help-block"><?php echo _LANG('i026','install')?></span>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i027','install')?></label>
 											<div class="col-sm-8">
-												<input class="form-control" type="text" name="dbhead" value="<?php echo $_SESSION['_live_dbhead']?$_SESSION['_live_dbhead']:'rb'?>">
+												<input class="form-control" type="text" name="dbhead" value="rb">
 												<span class="help-block"><?php echo _LANG('i028','install')?></span>
 											</div>
 										</div>
