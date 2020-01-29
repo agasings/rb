@@ -13,10 +13,7 @@ require $g['path_core'].'function/sys.func.php';
 <html lang="<?php echo $lang['install']['flag']?>">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi">
-		<meta name="apple-mobile-web-app-capable" content="no">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title><?php echo _LANG('i007','install')?></title>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 		<?php getImport('font-awesome','css/font-awesome',false,'css')?>
@@ -287,11 +284,6 @@ require $g['path_core'].'function/sys.func.php';
 													<div class="col-xs-4">
 														<select name="tel_1" class="form-control">
 														<option value="010">010</option>
-														<option value="011">011</option>
-														<option value="016">016</option>
-														<option value="017">017</option>
-														<option value="018">018</option>
-														<option value="019">019</option>
 														</select>
 													</div>
 													<div class="col-xs-4">
@@ -349,13 +341,7 @@ require $g['path_core'].'function/sys.func.php';
 												</div>
 											</div>
 										</div>
-										<div class="form-group">
-											<label class="col-sm-3 control-label"><?php echo _LANG('i027','install')?></label>
-											<div class="col-sm-8">
-												<input class="form-control" type="text" name="dbhead" value="<?php echo $_SESSION['_live_dbhead']?$_SESSION['_live_dbhead']:'rb'?>">
-												<span class="help-block"><?php echo _LANG('i028','install')?></span>
-											</div>
-										</div>
+
 									</div>
 									<div class="well">
 										<i class="fa fa-info-circle fa-2x pull-left fa-border"></i>
