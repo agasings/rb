@@ -95,10 +95,7 @@ require $g['path_core'].'function/sys.func.php';
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 		<?php getImport('font-awesome','css/font-awesome',false,'css')?>
 		<?php getImport('font-kimsq','css/font-kimsq',false,'css')?>
-		<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
+
 		<script>
 		var mbrclick= false;
 		var rooturl = '<?php echo $g['url_root']?>';
@@ -146,13 +143,9 @@ require $g['path_core'].'function/sys.func.php';
 							<!-- 스텝 -->
 							<div class="col-sm-3 side-steps hidden-xs">
 								<div id="step-1" class="rb-active"><i class="fa fa-check-square-o fa-2x"></i><?php echo _LANG('i008','install')?></div>
-								<!--
 								<div id="step-2"><i class="fa kf-dbmanager fa-2x"></i><?php echo _LANG('i009','install')?></div>
 								<div id="step-3"><i class="fa fa-user fa-2x"></i><?php echo _LANG('i010','install')?></div>
 								<div id="step-4"><i class="fa fa-home fa-2x"></i><?php echo _LANG('i011','install')?></div>
-								-->
-								<div id="step-2"><i class="fa fa-user fa-2x"></i><?php echo _LANG('i010','install')?></div>
-								<div id="step-3"><i class="fa fa-home fa-2x"></i><?php echo _LANG('i011','install')?></div>
 							</div>
 							<div class="col-sm-9 rb-step-body">
 
@@ -175,7 +168,6 @@ require $g['path_core'].'function/sys.func.php';
 								</div>
 
 								<!-- 데이터베이스 -->
-								<!--
 								<div id="step-2-body" class="hidden">
 
 									<div class="page-header visible-xs">
@@ -262,12 +254,10 @@ require $g['path_core'].'function/sys.func.php';
 										</small>
 									</div>
 								</div>
-								-->
 
 
 								<!-- 사용자 등록 -->
-								<!--<div id="step-3-body" class="hidden">-->
-								<div id="step-2-body" class="hidden">
+								<div id="step-3-body" class="hidden">
 
 									<div class="page-header visible-xs">
 										<h3><i class="fa fa-user fa-lg fa-fw"></i> <?php echo _LANG('i032','install')?></h3>
@@ -402,10 +392,8 @@ require $g['path_core'].'function/sys.func.php';
 									</div>
 								</div>
 
-
 								<!-- 사이트 생성 -->
-								<!--<div id="step-4-body" class="hidden">-->
-								<div id="step-3-body" class="hidden">
+								<div id="step-4-body" class="hidden">
 
 									<div class="page-header visible-xs">
 										<h3><i class="fa fa-home fa-lg fa-fw"></i>  <?php echo _LANG('i049','install')?></h3>
