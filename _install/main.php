@@ -3,7 +3,6 @@ if(!defined('__KIMS__')) exit;
 $sitelang = $sitelang ? $sitelang : 'DEFAULT';
 $_langfile = $g['path_root'].'_install/language/'.$sitelang.'/lang.install.php';
 if (is_file($_langfile)) include $_langfile;
-include $g['path_root'].'_install/rss.func.php';
 
 $g['s'] = str_replace('/index.php','',$_SERVER['SCRIPT_NAME']);
 $g['url_root'] = 'http'.($_SERVER['HTTPS']=='on'?'s':'').'://'.$_SERVER['HTTP_HOST'].$g['s'];
