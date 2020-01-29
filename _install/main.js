@@ -48,10 +48,10 @@ function stepCheck(type)
 
 	if (type == 'next')
 	{
-		/*
+
 		if (nowStep == 2)
 		{
-			
+
 			if (f.dbhost.value == '')
 			{
 				alert('<?php echo _LANG('i068','install')?>   ');
@@ -89,10 +89,8 @@ function stepCheck(type)
 				return false;
 			}
 		}
-		*/
-		
-		//if (nowStep == 3)
-		if (nowStep == 2)
+
+		if (nowStep == 3)
 		{
 			if (f.name.value == '')
 			{
@@ -134,8 +132,7 @@ function stepCheck(type)
 			}
 		}
 
-		//if (nowStep == 4)
-		if (nowStep == 3)
+		if (nowStep == 4)
 		{
 			if (isSubmit == true)
 			{
@@ -166,8 +163,7 @@ function stepCheck(type)
 
 	if (type == 'next')
 	{
-//		if(nowStep < 4) nowStep++;
-		if(nowStep < 3) nowStep++;
+		if(nowStep < 4) nowStep++;
 	}
 	else {
 		if(nowStep > 1) nowStep--;
@@ -179,13 +175,13 @@ function stepCheck(type)
 	getId('step-1').className = '';
 	getId('step-2').className = '';
 	getId('step-3').className = '';
-//	getId('step-4').className = '';
+	getId('step-4').className = '';
 	getId('step-'+nowStep).className = 'rb-active';
 
 	getId('step-1-body').className = 'step-body hidden';
 	getId('step-2-body').className = 'step-body hidden';
 	getId('step-3-body').className = 'step-body hidden';
-//	getId('step-4-body').className = 'step-body hidden';
+	getId('step-4-body').className = 'step-body hidden';
 	getId('step-'+nowStep+'-body').className = 'step-body';
 
 
@@ -205,10 +201,10 @@ function stepCheck(type)
 	{
 		f.name.focus();
 	}
-	/*if (nowStep == 4)
+	if (nowStep == 4)
 	{
 		f.sitename.focus();
-	}*/
+	}
 }
 function tabSelect(obj,id)
 {

@@ -99,7 +99,7 @@ require $g['path_core'].'function/sys.func.php';
 										<li onclick="tabSelect(this,'db-option');"><a href="#."><?php echo _LANG('i017','install')?></a></li>
 									</ul>
 
-									<div class="tab-panel hidden" id="db-info">
+									<div class="tab-panel" id="db-info">
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php echo _LANG('i018','install')?> </label>
 											<div class="col-sm-8">
