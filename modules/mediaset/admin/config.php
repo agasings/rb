@@ -66,96 +66,12 @@ include_once file_exists($g['mediasetVarForSite']) ? $g['mediasetVarForSite'] : 
 						<select name="use_fileserver" class="form-control custom-select" onchange="serverChange(this);">
 							<option value=""<?php if(!$d['mediaset']['use_fileserver']):?> selected<?php endif?>>현재서버</option>
 							<option value="2"<?php if($d['mediaset']['use_fileserver']==2):?> selected<?php endif?>>AWS S3</option>
-							<option value="1"<?php if($d['mediaset']['use_fileserver']==1):?> selected<?php endif?>>FTP 서버</option>
 						</select>
 					</div>
 				</div>
 				<small class="form-text text-muted">
 					첨부물(사진 또는 파일)이 많은 경우, <a href="https://aws.amazon.com/ko/s3/?nc2=h_m1" target="_blank">AWS S3</a> 사용을 권장합니다.
 				</small>
-			</div>
-		</div>
-
-		<div id="use_ftpserver"<?php if($d['mediaset']['use_fileserver']!=1):?> class="d-none"<?php endif?>>
-			<div class="page-header">
-				<h4>FTP 서버 설정</h4>
-			</div>
-
-
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label">FTP Type</label>
-				<div class="col-sm-9">
-					<select name="ftp_type" class="form-control" onchange="ftp_select(this);">
-					<option value=""<?php if(!$d['mediaset']['ftp_type']):?> selected<?php endif?>>FTP</option>
-					<option value="sftp"<?php if($d['mediaset']['ftp_type']=='sftp'):?> selected<?php endif?>>SFTP</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label">FTP Server</label>
-				<div class="col-sm-9">
-					<input type="text" class="form-control" name="ftp_host" value="<?php echo $d['mediaset']['ftp_host']?>" placeholder="예) example.kimsq.com  또는 IP adress 입력">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label">FTP Port</label>
-				<div class="col-sm-9">
-					<input type="text" class="form-control" name="ftp_port" value="<?php echo $d['mediaset']['ftp_port']?$d['mediaset']['ftp_port']:'21'?>" placeholder="" style="width:100px;">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-9">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="ftp_pasv" value="1"<?php if($d['mediaset']['ftp_pasv']):?> checked<?php endif?>> <i></i>Passive Mode
-						</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label">FTP ID</label>
-				<div class="col-sm-9">
-					<input type="text" class="form-control" name="ftp_user" value="<?php echo $d['mediaset']['ftp_user']?>" placeholder="FTP ID">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label">Password</label>
-				<div class="col-sm-9">
-					<input type="password" class="form-control" name="ftp_pass" value="<?php echo $d['mediaset']['ftp_pass']?>" placeholder="Password">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label">첨부할 폴더</label>
-				<div class="col-sm-9">
-					<input type="text" class="form-control" name="ftp_folder" value="<?php echo $d['mediaset']['ftp_folder']?>" placeholder="">
-					<small class="form-text text-muted">
-						FTP접속시 최상위폴더로 부터 실제 첨부할 폴더의 서버경로를 지정해 주세요.<br>
-						경로의 처음과 마지막은 반드시 슬래쉬(/)로 끝나야 합니다.<br>
-						보기)<code>/www/myfolder/</code> 또는 <code>/public_html/myfolder/</code>
-					</small>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label">URL 경로</label>
-				<div class="col-sm-9">
-					<input type="text" class="form-control" name="ftp_urlpath" value="<?php echo $d['mediaset']['ftp_urlpath']?>" placeholder="">
-					<small class="form-text text-muted">
-						첨부폴더를 웹상에서 접근할 수 있는 URL주소를 http://포함하여 입력해 주세요.<br>
-						경로의 마지막은 반드시 슬래쉬(/)로 끝나야 합니다.<br>
-						보기)<code>http://www.kimsq.com/myfolder/</code>
-					</small>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<button type="button" class="btn btn-light" id="ftpbtn" onclick="sendCheck(this.id);"><?php if($d['mediaset']['ftp']):?><i class="fa fa-info-circle fa-lg fa-fw"></i>정상<?php else:?>FTP 연결확인<?php endif?></button>
 			</div>
 		</div>
 
