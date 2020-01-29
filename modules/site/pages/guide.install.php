@@ -8,7 +8,7 @@
 		<?php echo sprintf('%s님, 이 페이지를 보고 계시면 킴스큐가 정상적으로 설치된 것입니다.',$my['name'])?><br>
 		이제 킴스큐를 시작할 준비가 되셨습니다.
 	</p>
-	<a href="./?r=<?php echo $r?>&amp;panel=Y&amp;_admpnl_=<?php echo urlencode('./?r='.$r.'&m=admin&module=project&front=start')?>" class="btn btn-primary btn-lg animated bounce delay-3">
+	<a href="<?php  echo RW(0) ?>" class="btn btn-primary btn-lg animated bounce delay-3">
 		시작하기
 	</a>
 </div>
