@@ -1,5 +1,4 @@
 <?php
-
 function getUrlData($url,$sec) {
 	$URL_parsed = parse_url($url);
 	$host = $URL_parsed['host'];
@@ -84,6 +83,7 @@ $_rb2listlength = count($_rb2list)-1;
 
 $url = $_POST['url'];
 $tmp_folder = $_POST['folder'];
+$php_version=explode('.',phpversion());
 
 if ($url) {
 
@@ -137,34 +137,47 @@ if ($url) {
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 			<header class="masthead mb-auto"></header>
       <main role="main" class="inner cover">
-        <h1 class="cover-heading font-weight-light"><i class="kf kf-bi-01 mb-2"></i><br>무한한 가능성! <br>킴스큐 Rb2 설치를 시작합니다.</h1>
-        <p class="lead">별도의 서버작업(패키지 다운로드,압축해제,퍼미션 조정 등) 절차없이 쉽고 빠르게 설치를 진행할 것입니다.
-      		 설치할 패키지를 선택해주세요.</p>
-        <form action="./index.php" method="post">
-          <input type="hidden" name="folder" value="">
-          <div class="form-group">
-            <label class="sr-only">패키지 버전</label>
-            <div class="input-group">
-              <select name="url" class="form-control custom-select custom-select-lg rounded-0" <?php echo $url?'disabled':'' ?>>
-                <option value="">설치버전을 선택하세요.</option>
-                <?php for($i = 0; $i < $_rb2listlength; $i++):?>
-                <?php $_list=trim($_rb2list[$i]);if(!$_list)continue?>
-                <?php $var1=explode(',',$_list)?>
-                <option value="<?php echo $var1[1]?>" <?php echo ($url==$var1[1])?'selected':'' ?> data-folder="rb-<?php echo $var1[2]?>">
-                  <?php echo $var1[0]?>
-                </option>
-                <?php endfor?>
-              </select>
-              <div class="input-group-append d-none">
-                <label class="input-group-text rounded-0 bg-white">
-                  <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-                  <span class="sr-only">Loading...</span>
-                </label>
-              </div>
-            </div>
+				<p class="lead">
+					<a href="https://github.com/kimsQ/rb/" target="_blank">
+						<i class="kf kf-bi-01"></i>
+					</a>
+				</p>
+        <h1 class="cover-heading font-weight-light mb-2">킴스큐 Rb2 설치를 시작합니다.</h1>
 
-          </div>
-        </form>
+				<?php if ($php_version[0]>=7): ?>
+				<p class="lead">별도의 서버작업(패키지 다운로드,압축해제,퍼미션 조정 등) 절차없이 쉽고 빠르게 설치를 진행할 것입니다.
+					 설치할 패키지를 선택해주세요.</p>
+				<form action="./index.php" method="post">
+					<input type="hidden" name="folder" value="">
+					<div class="form-group">
+						<label class="sr-only">패키지 버전</label>
+						<div class="input-group">
+							<select name="url" class="form-control custom-select custom-select-lg rounded-0" <?php echo $url?'disabled':'' ?>>
+								<option value="">설치버전을 선택하세요.</option>
+								<?php for($i = 0; $i < $_rb2listlength; $i++):?>
+								<?php $_list=trim($_rb2list[$i]);if(!$_list)continue?>
+								<?php $var1=explode(',',$_list)?>
+								<option value="<?php echo $var1[1]?>" <?php echo ($url==$var1[1])?'selected':'' ?> data-folder="rb-<?php echo $var1[2]?>">
+									<?php echo $var1[0]?>
+								</option>
+								<?php endfor?>
+							</select>
+							<div class="input-group-append d-none">
+								<label class="input-group-text rounded-0 bg-white">
+									<span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+									<span class="sr-only">Loading...</span>
+								</label>
+							</div>
+						</div>
+
+					</div>
+				</form>
+				<?php else: ?>
+				<div class="alert alert-danger mt-4" role="alert">
+				  PHP7 이상에서 설치할 수 있습니다.
+				</div>
+				<?php endif; ?>
+
       </main>
 
       <footer class="mastfoot mt-auto">
