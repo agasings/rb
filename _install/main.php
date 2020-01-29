@@ -3,81 +3,8 @@ if(!defined('__KIMS__')) exit;
 $sitelang = $sitelang ? $sitelang : 'DEFAULT';
 $_langfile = $g['path_root'].'_install/language/'.$sitelang.'/lang.install.php';
 if (is_file($_langfile)) include $_langfile;
-if(!is_file($g['path_root'].'LICENSE')):
 include $g['path_root'].'_install/rss.func.php';
-?>
-<!DOCTYPE html>
-<html lang="<?php echo $lang['install']['flag']?>">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi">
-		<meta name="apple-mobile-web-app-capable" content="no">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<title><?php echo _LANG('i001','install')?></title>
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-		<link href="./_install/font-kimsq/css/font-kimsq.css" rel="stylesheet">
-		<link href="./_install/main.css" rel="stylesheet">
-		<script><?php include './_install/main.js'?></script>
 
-	</head>
-	<body id="rb-body-install">
-		<div class="container rb-ready">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h1 class="panel-title">
-						<span id="_lang_" class="pull-right" style="margin-top: -4px">
-							<select class="form-control input-sm" onchange="location.href='./index.php?sitelang='+this.value;">
-							<?php $dirs = opendir($g['path_root'].'_install/language/')?>
-							<?php while(false !== ($tpl = readdir($dirs))):?>
-							<?php if($tpl=='.'||$tpl=='..')continue?>
-							<option value="<?php echo $tpl?>"<?php if($sitelang==$tpl):?> selected<?php endif?> title="<?php echo $tpl?>"><?php echo implode('',file($g['path_root'].'_install/language/'.$tpl.'/name.txt'))?> &nbsp; </option>
-							<?php endwhile?>
-							<?php closedir($dirs)?>
-							</select>
-						</span>
-						<i class="kf kf-bi-01 fa-lg"></i> Rb2  <small>Installer</small>
-					</h1>
-				</div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-sm-3 text-center rb-symbol">
-							<i class="kf kf-bi-05 hidden-xs"></i>
-						</div>
-						<div class="col-sm-9">
-							<fieldset id="btn-group">
-								<div class="form-group">
-									<label><?php echo _LANG('i002','install')?></label>
-									<select id="version" class="form-control input-lg">
-									<?php echo getUrlData('http://www.kimsq.co.kr/__update/core/rb2-install-'.$sitelang.'.txt',10)?>
-									</select>
-									<p class="help-block">
-										<?php echo _LANG('i003','install')?>
-									</p>
-								</div>
-							  	<button type="submit" class="btn btn-primary btn-lg btn-block" onclick="getDownload(document.getElementById('btn-group'),document.getElementById('version'),'<?php echo $sitelang?>');"><?php echo _LANG('i004','install')?></button>
-						  </fieldset>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer">
-					<form action="./index.php" method="post" enctype="multipart/form-data" target="download_frame">
-						<input type="hidden" name="install" value="download">
-						<input type="hidden" name="version" value="1">
-						<input type="hidden" name="sitelang" value="<?php echo $sitelang?>">
-						<input type="file" name="upfile" id="upfile" class="hidden" onchange="getUploadPackage(this);">
-					</form>
-					<?php echo _LANG('i005','install')?>
-					<button type="button" class="btn btn-link" onclick="document.getElementById('upfile').click();"><i class="fa fa-upload fa-fw"></i> <?php echo _LANG('i006','install')?></button>
-				</div>
-			</div>
-		</div>
-		<iframe name="download_frame" width="0" height="0" frameborder="0" scrolling="no"></iframe>
-	</body>
-</html>
-<?php
-exit;
-endif;
 $g['s'] = str_replace('/index.php','',$_SERVER['SCRIPT_NAME']);
 $g['url_root'] = 'http'.($_SERVER['HTTPS']=='on'?'s':'').'://'.$_SERVER['HTTP_HOST'].$g['s'];
 require $g['path_var'].'plugin.var.php';
@@ -129,12 +56,6 @@ require $g['path_core'].'function/sys.func.php';
 					<input type="hidden" name="install" value="a.install">
 					<input type="hidden" name="sitelang" value="<?php echo $sitelang?>">
 					<input type="hidden" name="dbkind" value="MySQL">
-					<input type="hidden" name="dbname" value="<?php echo $_POST['_live_dbname']?>">
-					<input type="hidden" name="dbuser" value="<?php echo $_POST['_live_dbuser']?>">
-					<input type="hidden" name="dbpass" value="<?php echo $_POST['_live_dbpass']?>">
-					<input type="hidden" name="dbhost" value="<?php echo $_POST['_live_dbhost']?>">
-					<input type="hidden" name="dbport" value="<?php echo $_POST['_live_dbport']?>">
-					<input type="hidden" name="key" value="<?php echo $_POST['_live_key']?>">
 					<input type="hidden" name="dbtype" value="MyISAM">
 
 					<div class="panel-body">
