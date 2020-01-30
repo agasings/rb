@@ -42,12 +42,12 @@
 
 ## 최신패치
 
-최신패치를 위해서는 터미널(SSH) 접속이 필요하며 형상관리 git의 적용 여부에 따라 패치방법이 다릅니다. SSH를 통해 설치한 경우에는 git을 통한 형상관리가 적용된 경우이며, 인스톨러를 통해 설치한 경우에는 git이 적용되어 있지 않습니다.
+최신패치는 git을 이뤄지며 명령어 실행을 위해서는 터미널(SSH) 접속이 합니다.
 
 1. <code>git reset --hard</code>
 1. <code>git pull origin master</code>
 
-인스톨러를 통해 설치한 경우, 형상관리 git이 적용되지 않아서 처음에 git 설치과정이 필요합니다.
+인스톨러를 통해 설치한 경우, 형상관리 git이 적용되지 않아서 최초 1회 아래의 명령어 실행이 필요합니다.
 1. <code>git init</code>
 1. <code>git remote add origin https://github.com/kimsQ/rb.git</code>
 1. <code>git add -A</code>
