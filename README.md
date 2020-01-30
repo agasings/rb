@@ -10,7 +10,7 @@
 ### 웹서버 설정
 - CGI 사용안함
 - htaccess 사용
-- git 클라이언트
+- [git 설치](https://git-scm.com/book/ko/v2/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-Git-%EC%84%A4%EC%B9%98)
 
 
 ### PHP 확장모듈
