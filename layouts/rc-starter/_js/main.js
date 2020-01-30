@@ -15,6 +15,21 @@ var noti_sort = 'uid';
 var noti_orderby = 'desc';
 var noti_recnum = '10';
 
+function toggleFullScreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  }
+  else {
+    cancelFullScreen.call(doc);
+  }
+}
+
 function moreNOTI(container,totalPage){
   var noti_currentPage =1; // 처음엔 무조건 1, 아래 더보기 진행되면서 +1 증가
   container.infinitescroll({
@@ -84,6 +99,10 @@ function edgeEffect(container,pos,show) {
 }
 
 $(document).ready(function() {
+
+  $('[data-toggle="fullscreen"]').click(function() {
+    toggleFullScreen()
+  });
 
   if(navigator.userAgent.indexOf("Mac") > 0) {
     $("body").addClass("mac-os");
