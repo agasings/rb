@@ -34,7 +34,7 @@
 1. <code>chmod 707  _var</code>
 
 ### 인스톨러를 통한 설치
-1. rb-installer.zip 을 [다운](/kimsQ/rb/archive/installer.zip) 받습니다.
+1. rb-installer.zip 을 [다운](https://github.com/kimsQ/rb/archive/installer.zip) 받습니다.
 1. 압축해제 후, rb-installer 폴더 내부의 index.php 를 FTP를 이용하여 서버계정 폴더에 업로드 합니다.
 1. 브라우저를 통해 index.php 를 호출합니다.
 
