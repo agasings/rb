@@ -28,7 +28,7 @@
 
 ## 설치하기
 
-### SSH를 통한 설치
+### 터미널(SSH)을 통한 설치
 1. <code>git init</code>
 1. <code>git remote add origin https://github.com/kimsQ/rb.git</code>
 1. <code>git pull origin master</code>
@@ -42,7 +42,7 @@
 
 ## 최신패치
 
-최신패치를 위해서는 SSH 접속히 필요하며 형상관리 git의 적용 여부에 따라 패치방법이 다릅니다. SSH를 통해 설치한 경우에는 git을 통한 형상관리가 적용된 경우이며, 인스톨러를 통해 설치한 경우에는 git이 적용되어 있지 않습니다.
+최신패치를 위해서는 터미널(SSH) 접속이 필요하며 형상관리 git의 적용 여부에 따라 패치방법이 다릅니다. SSH를 통해 설치한 경우에는 git을 통한 형상관리가 적용된 경우이며, 인스톨러를 통해 설치한 경우에는 git이 적용되어 있지 않습니다.
 
 1. <code>git reset --hard</code>
 1. <code>git pull origin master</code>
