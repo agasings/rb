@@ -32,6 +32,7 @@
 1. <code>git remote add origin https://github.com/kimsQ/rb.git</code>
 1. <code>git pull origin master</code>
 1. <code>chmod 707  _var</code>
+1. 브라우저를 통해 index.php 를 호출합니다.
 
 ### 인스톨러를 통한 설치
 1. rb-installer.zip 을 [다운](https://github.com/kimsQ/rb/archive/installer.zip) 받습니다.
