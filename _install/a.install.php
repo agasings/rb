@@ -53,9 +53,6 @@ DirMake($g['path_var'].'sitephp');
 DirMake($g['path_layout'].'default/_images');
 DirMake($g['path_switch'].'top');
 
-@chmod($g['path_var'],0707);
-@chmod($g['path_file'],0707);
-
 $kfile = $g['path_var'].'project.key.txt';
 $fp = fopen($kfile,'w');
 fwrite($fp,$key);
