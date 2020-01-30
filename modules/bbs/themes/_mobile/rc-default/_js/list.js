@@ -8,9 +8,10 @@
  */
 
 function getBbsList(bid,cat,search,page){
-  var markup = localStorage.getItem('bbs-'+bid+'-listMarkup');
-  var markup_list=markup?markup:'media'+'-list'; // 목록 마크업
-  var markup_item=markup?markup:'media'+'-item'; // 아이템 마크업
+  var _markup = localStorage.getItem('bbs-'+bid+'-listMarkup');
+  var markup = _markup?_markup:'media';
+  var markup_list=markup+'-list'; // 목록 마크업
+  var markup_item=markup+'-item'; // 아이템 마크업
   var page = $(page);
   var container = page.find('[data-role="bbs-list"]');
 
