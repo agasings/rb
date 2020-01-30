@@ -13,7 +13,7 @@ $B = getDbData($table['bbslist'],'id="'.$bid.'"','*');
 $g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
 include_once file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['path_module'].'bbs/var/var.php';
 
-include_once $g['dir_module'].'var/var.'.$bid.'.php';
+include_once $g['path_var'].'bbs/var.'.$bid.'.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['bbs']['m_skin']?$d['bbs']['m_skin']:$d['bbs']['skin_mobile'];

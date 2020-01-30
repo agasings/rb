@@ -14,7 +14,7 @@ $B = getUidData($table['bbslist'],$R['bbs']);
 $g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
 include_once file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['path_module'].'bbs/var/var.php';
 
-if ($bid) include_once $g['dir_module'].'var/var.'.$bid.'.php';
+if ($bid) include_once $g['path_var'].'bbs/var.'.$bid.'.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme_attachFile= $d['bbs']['a_mskin']?$d['bbs']['a_mskin']:$d['bbs']['attach_mobile'];

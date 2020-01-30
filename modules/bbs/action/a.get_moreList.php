@@ -13,7 +13,7 @@ $where = 'site='.$s.' and bbs='.$bbs.' and notice=0'; // 출력 조건
 
 $B = getUidData($table[$m.'list'],$bbs);
 include_once $g['path_module'].'bbs/var/var.php';
-include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
+include_once $g['path_var'].'bbs/var.'.$B['id'].'.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['bbs']['m_skin']?$d['bbs']['m_skin']:$d['bbs']['skin_mobile'];

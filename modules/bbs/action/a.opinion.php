@@ -7,7 +7,7 @@ if (!$bid) getLink('','','게시판 아이디가 지정되지 않았습니다.',
 $B = getDbData($table[$m.'list'],"id='".$bid."'",'*');
 if (!$B['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 include_once $g['dir_module'].'var/var.php';
-include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
+include_once $g['path_var'].'bbs/var.'.$B['id'].'.php';
 
 if ($send=='ajax') {
 

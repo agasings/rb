@@ -9,7 +9,7 @@ if($uid)
 	$R = $R['uid'] ? $R : getUidData($table[$m.'data'],$uid);
 	if (!$R['uid']) getLink($g['s'].'/','','존재하지 않는 게시물입니다.','');
 	$B = getUidData($table[$m.'list'],$R['bbs']);
-	include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
+	include_once $g['path_var'].'bbs/var.'.$B['id'].'.php';
 	include_once $g['dir_module'].'mod/_view.php';
 	if ($d['bbs']['isperm'])
 	{
@@ -54,7 +54,7 @@ else {
 			if($_stop=='Y') exit;
 			getLink($g['s'].'/?r='.$r.'&_stop=Y','','존재하지 않는 게시판입니다.','');
 		}
-		include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
+		include_once $g['path_var'].'bbs/var.'.$B['id'].'.php';
 
 		$_SEO = getDbData($table['s_seo'],'rel=3 and parent='.$B['uid'],'*');
 		if ($_SEO['uid'])

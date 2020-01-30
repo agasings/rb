@@ -3,7 +3,7 @@ $B = getDbData($table['bbslist'],'id="'.$wdgvar['bbsid'].'"','uid');
 $size = '400x250'; // 사진 사이즈
 
 if ($wdgvar['view']=='modal') {
-  @include $g['path_module'].'bbs/var/var.'.$wdgvar['bbsid'].'.php';
+  @include $g['path_var'].'bbs/var.'.$wdgvar['bbsid'].'.php';
   $d['bbs']['skin'] = $d['bbs']['skin']?$d['bbs']['skin']:$d['bbs']['skin_main'];
   $g['url_module_skin'] = $g['s'].'/modules/bbs/themes/'.$d['bbs']['skin'];
   $g['dir_module_skin'] = $g['path_module'].'bbs/themes/'.$d['bbs']['skin'].'/';

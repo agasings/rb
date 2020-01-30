@@ -50,6 +50,7 @@ DirMake($g['path_var'].'update');
 DirMake($g['path_var'].'xml');
 DirMake($g['path_var'].'site');
 DirMake($g['path_var'].'sitephp');
+DirMake($g['path_var'].'bbs');
 DirMake($g['path_layout'].'default/_images');
 DirMake($g['path_switch'].'top');
 

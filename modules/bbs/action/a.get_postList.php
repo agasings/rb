@@ -16,7 +16,7 @@ if (!$B['uid']) {
   exit;
 }
 
-include_once $g['dir_module'].'var/var.'.$bid.'.php';
+include_once $g['path_var'].'bbs/var.'.$bid.'.php';
 include_once $g['dir_module'].'mod/_list.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {

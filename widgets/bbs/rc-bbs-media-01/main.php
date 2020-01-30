@@ -3,7 +3,7 @@ $B = getDbData($table['bbslist'],'id="'.$wdgvar['bid'].'"','uid');
 $size = $wdgvar['width'].'x'.$wdgvar['height']; // 사진 사이즈
 $print_width = $wdgvar['width'] / 2;  // 실제 출력할 사진의 가로사이즈 (모바일 디스플레이의 특성상 2배수 해상도 필요)
 
-include_once $g['path_module'].'bbs/var/var.'.$wdgvar['bid'].'.php';
+include_once $g['path_var'].'bbs/var.'.$wdgvar['bid'].'.php';
 $d['bbs']['skin'] = $d['bbs']['m_skin']?$d['bbs']['m_skin']:$d['bbs']['skin_mobile'];
 $d['bbs']['c_mskin_modal'] = $d['bbs']['c_mskin_modal']?$d['bbs']['c_mskin_modal']:$d['bbs']['comment_mobile_modal'];
 

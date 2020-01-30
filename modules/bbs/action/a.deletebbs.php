@@ -7,7 +7,7 @@ $R = getUidData($table[$m.'list'],$uid);
 if (!$R['uid']) getLink('','','존재하지 않는 게시판입니다.','');
 
 include_once $g['path_module'].'mediaset/var/var.php';
-include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
+include_once $g['path_var'].'bbs/var.'.$B['id'].'.php';
 include_once $g['path_module'].'mediaset/var/var.php';
 include_once $g['path_core'].'opensrc/aws-sdk-php/v3/aws-autoloader.php';
 
@@ -170,7 +170,7 @@ getDbDelete($table[$m.'list'],'uid='.$R['uid']);
 getDbDelete($table[$m.'xtra'],'bbs='.$R['uid']);
 getDbDelete($table['s_seo'],'rel=3 and parent='.$R['uid']);
 
-unlink($g['dir_module'].'var/var.'.$R['id'].'.php');
+unlink($g['path_var'].'bbs/var.'.$R['id'].'.php');
 
 if ($R['imghead'] && is_file($g['dir_module'].'var/files/'.$R['imghead']))
 {

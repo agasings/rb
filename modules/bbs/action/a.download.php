@@ -24,7 +24,7 @@ if (!strstr($_SERVER['HTTP_REFERER'],'module=upload'))
 		if ($cyncArr['data'][0] == 'bbs' && $cyncArr['data'][1])
 		{
 			$AT = getUidData($table[$cyncArr['data'][0].'data'],$cyncArr['data'][1]);
-			include_once $g['path_module'].$cyncArr['data'][0].'/var/var.'.$AT['bbsid'].'.php';
+			include_once $g['path_var'].$cyncArr['data'][0].'/var.'.$AT['bbsid'].'.php';
 			$B['var'] = $d['bbs'];
 			if (!$my['admin'] && $my['uid'] != $AT['mbruid'])
 			{

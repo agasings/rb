@@ -588,7 +588,8 @@ modal_bbs_write.find('[data-act="submit"]').click(function(event){
   var nlist = modal.find('[name="nlist"]').val();
   var pcode = modal.find('[name="pcode"]').val();
   var upfiles = modal.find('[name="upfiles"]').val('');
-  var markup = localStorage.getItem('bbs-'+bid+'-listMarkup');
+  var _markup = localStorage.getItem('bbs-'+bid+'-listMarkup');
+  var markup = _markup?_markup:'media'
 
   if (!memberid) {
     var name_el = modal.find('[name="name"]');

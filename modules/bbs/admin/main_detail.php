@@ -21,7 +21,7 @@ if ($uid)
 	if ($R['uid'])
 	{
 		include_once $g['path_module'].$module.'/var/var.php';
-		include_once $g['path_module'].$module.'/var/var.'.$R['id'].'.php';
+		include_once $g['path_var'].$module.'/var.'.$R['id'].'.php';
 	}
 }
 ?>

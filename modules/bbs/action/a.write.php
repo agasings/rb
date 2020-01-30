@@ -12,7 +12,7 @@ if (!$subject) getLink('reload','parent.','제목이 입력되지 않았습니�
 $g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
 include_once file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['dir_module'].'var/var.php';
 
-include_once $g['dir_module'].'var/var.'.$B['id'].'.php';
+include_once $g['path_var'].'bbs/var.'.$B['id'].'.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['bbs']['m_skin']?$d['bbs']['m_skin']:$d['bbs']['skin_mobile'];

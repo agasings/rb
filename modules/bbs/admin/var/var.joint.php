@@ -204,7 +204,7 @@ $tdir = $g['path_module'].$smodule.'/theme/';
 				</td>
 		</tr>
 		<?php while($R = db_fetch_array($PAGES)):?>
-		<?php include $g['path_module'].$smodule.'/var/var.'.$R['id'].'.php'?>
+		<?php include $g['path_var'].$smodule.'/var.'.$R['id'].'.php'?>
 		<tr<?php if($R['id']==$id):?> class="madetr"<?php endif?>>
 		<td class="align-middle">
 			<?php if($R['category']):?>

@@ -244,7 +244,7 @@ $SITEN   = db_num_rows($SITES);
 
 					<?php while($R=db_fetch_array($RCD)):?>
 					<?php $L=getOverTime($date['totime'],$R['d_last'])?>
-					<?php $d=array();include $g['path_module'].$module.'/var/var.'.$R['id'].'.php';?>
+					<?php $d=array();include $g['path_var'].$module.'/var.'.$R['id'].'.php';?>
 					<?php
 						 $sbj_tooltip.='최신글제외 : '.($d['bbs']['display']?'Yes':'No').'<br />';
 						 $sbj_tooltip.='쿼리생략 : '.($d['bbs']['hidelist']?'Yes':'No').'<br />';

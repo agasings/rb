@@ -11,7 +11,7 @@ $result['error']=false;
 $R = getUidData($table['bbsdata'],$uid);
 
 include_once $g['path_module'].'bbs/var/var.php';
-include_once $g['dir_module'].'var/var.'.$R['bbsid'].'.php';
+include_once $g['path_var'].'bbs/var.'.$R['bbsid'].'.php';
 
 $result['uid'] = $R['uid'];
 

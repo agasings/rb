@@ -5,7 +5,7 @@ require_once $g['path_core'].'function/sys.class.php';
 include_once $g['dir_module'].'lib/action.func.php';
 
 include_once $g['path_module'].'bbs/var/var.php';
-include_once $g['dir_module'].'var/var.'.$bid.'.php';
+include_once $g['path_var'].'bbs/var.'.$bid.'.php';
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
   $theme = $d['bbs']['m_skin']?$d['bbs']['m_skin']:$d['bbs']['skin_mobile'];
