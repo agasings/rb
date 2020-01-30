@@ -41,11 +41,13 @@
 
 ## 최신패치
 
-### 이미 형상관리 git이 적용된 경우 (SSH를 통해 설치한 경우)
+최신패치를 위해서는 SSH 접속히 필요하며 형상관리 git의 적용 여부에 따라 패치방법이 다릅니다.
+
+#### 이미 형상관리 git이 적용된 경우 (SSH를 통해 설치한 경우)
 1. <code>git reset --hard</code>
 1. <code>git pull origin master</code>
 
-### 형상관리 git이 적용되지 않는 경우 (인스톨러를 통해 설치한 경우)
+#### 형상관리 git이 적용되지 않는 경우 (인스톨러를 통해 설치한 경우)
 1. <code>git init</code>
 1. <code>git remote add origin https://github.com/kimsQ/rb.git</code>
 1. <code>git add -A</code>
