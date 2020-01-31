@@ -38,7 +38,7 @@ $NUM = getDbRows($table['s_mbrshipping'],$sqlque0);
           <th scope="col">배송지</th>
           <th scope="col">주소</th>
           <th scope="col">연락처</th>
-          <th scope="col">수정 · 삭제</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody class="f13">
