@@ -647,6 +647,7 @@ figure.media {
   display: block;
 }
 .ck.ck-editor__editable > .ck-placeholder::before {
+  position: absolute;
   color: #999;
 }
 
