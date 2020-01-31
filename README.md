@@ -42,7 +42,7 @@
 
 ## 최신패치
 
-최신패치는 git을 통해 동작하며 명령어 실행을 위해서는 터미널(SSH) 접속이 합니다.
+최신패치는 git을 통해 동작하며 명령어 실행을 위해서는 터미널(SSH) 접속이 필요합니다.
 
 1. <code>git reset --hard</code>
 1. <code>git pull origin master</code>
