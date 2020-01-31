@@ -223,41 +223,6 @@ $('[data-act="opinion"]').click(function() {
   frames.__iframe_for_action__.location.href = $(this).attr("data-url");
 });
 
-// 게시물 보기 페이지에서 댓글이 등록된 이후에 댓글 수량 업데이트
-page_bbs_view.find('#commentting-container').on('saved.rb.comment',function(){
-  var page = $('#page-bbs-view')
-  var bid = page.data('bid')
-  var uid = page.data('uid')
-
-
-  var showComment_Ele = page.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-
-  $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-       bid : bid,
-       uid : uid
-    },function(response){
-       var result = $.parseJSON(response);
-       var total_comment=result.total_comment;
-       $.notify({message: '댓글이 등록 되었습니다.'},{type: 'default'});
-       showComment_Ele.text(total_comment); // 모달 상단 최종 댓글수량 합계 업데이트
-  });
-});
-
-// 게시물 보기 페이지에서 한줄의견이 등록된 이후에 댓글 수량 업데이트
-page_bbs_view.find('#commentting-container').on('saved.rb.oneline',function(){
-  var page = $('#page-bbs-view')
-  var uid = page.data('uid')
-  var showComment_Ele = page.find('[data-role="total_comment"]'); // 댓글 숫자 출력 element
-  $.post(rooturl+'/?r='+raccount+'&m=bbs&a=get_postData',{
-       uid : uid
-    },function(response){
-       var result = $.parseJSON(response);
-       var total_comment=result.total_comment;
-       $.notify({message: '한줄의견이 등록 되었습니다.'},{type: 'default'});
-       showComment_Ele.text(total_comment); // 최종 댓글수량 합계 업데이트
-  });
-});
-
 // Popover : 리스트 마크업 목록
 popover_bbs_listMarkup.on('show.rc.popover', function (e) {
   var button = $(e.relatedTarget)
