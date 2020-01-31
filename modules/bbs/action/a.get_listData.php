@@ -9,6 +9,12 @@ $mod = $_POST['mod'];
 
 $B = getDbData($table['bbslist'],'id="'.$bid.'"','*');
 
+if (!$B['uid']) {
+  $result['error']='존재하기 않는 게시판 입니다.';
+  echo json_encode($result);
+  exit;
+}
+
 //게시판 공통설정 변수
 $g['bbsVarForSite'] = $g['path_var'].'site/'.$r.'/bbs.var.php';
 include_once file_exists($g['bbsVarForSite']) ? $g['bbsVarForSite'] : $g['path_module'].'bbs/var/var.php';
