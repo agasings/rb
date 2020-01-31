@@ -132,9 +132,8 @@
   <input type="hidden" name="bid" value="">
   <input type="hidden" name="uid" value="">
   <header class="bar bar-nav bar-light bg-white px-0">
-    <a class="icon icon-left-nav pull-left p-x-1" role="button" data-history="back"></a>
-    <a href="#popover-link-more" data-toggle="popover" class="icon icon-more-vertical pull-right pl-2 pr-3" data-role="owner" data-url=""></a>
-    <h1 class="title title-left">좋아요한 사람</h1>
+    <a class="icon pull-left material-icons px-3" role="button" data-history="back" data-role="hback">arrow_back</a>
+    <h1 class="title title-left" data-history="back">좋아요한 사람</h1>
   </header>
   <div class="content">
     <div class="content-padded" data-role="post">
