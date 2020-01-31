@@ -74,7 +74,8 @@ function getBbsList(bid,cat,search,page){
          var error=result.error;
          var list=result.list;
          if (error) {
-           alert('다시 시도해 주세요.')
+           history.back();
+           setTimeout(function(){ $.notify({message: '다시 시도해 주세요.'},{type: 'default'}) }, 500);
          } else {
            var num=result.num;
            var num_notice=result.num_notice;
