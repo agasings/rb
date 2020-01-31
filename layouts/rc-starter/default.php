@@ -3,6 +3,7 @@
 <head>
 
 <?php include $g['dir_layout'].'/_includes/_import.head.php' ?>
+<?php include $g['dir_layout'].'/_includes/component.php' ?>
 
 <!-- snap 서랍형 사이드메뉴 -->
 <?php getImport('snap','rc-snap','1.9.3','css')?>
@@ -48,7 +49,6 @@
 		</div><!-- /.snap-content -->
 	</div><!-- /.page -->
 
-	<?php include $g['dir_layout'].'/_includes/component.php' ?>
 	<?php include $g['dir_layout'].'/_includes/_import.foot.php' ?>
 
 	<script src="<?php echo $g['url_layout']?>/_js/component.js"></script>
