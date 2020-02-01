@@ -410,7 +410,3 @@ figure.photo-mask {
   overflow-y: auto;
   -webkit-line-clamp : unset
 }
-
-[data-role="bbs-photo"] .swiper-slide {
-  overflow: visible !important;
-}

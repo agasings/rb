@@ -104,6 +104,7 @@ function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 	$TMPL['hidden_code']=$R['hidden']?'show':'hide';
 	$TMPL['hidden_str']=$R['hidden']?'보이기':'숨기기';
 	$TMPL['img_origin']=$img_origin;
+	$TMPL['uid']=$R['uid'];
 	$TMPL['img_origin_width']=$R['width'];
 	$TMPL['img_origin_height']=$R['height'];
 	$TMPL['type']=$type;
@@ -254,7 +255,7 @@ function getAttachPhotoSwipeFull($parent_data){
 
         $img_origin=$R['src'];
 
-         $html.='<div class="swiper-slide" style="height:78vh;overflow: hidden">
+         $html.='<div class="swiper-slide" style="height:78vh;" data-uid="'.$R['uid'].'">
            <div class="swiper-zoom-container">
              <img src="'.$img_origin.'">
            </div>

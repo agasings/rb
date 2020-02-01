@@ -427,7 +427,6 @@ modal_bbs_write.on('shown.rc.modal', function (e) {
                   }
 
                   if (attachNum) {
-
                     $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=getAttachFileList',{
                          p_module : 'bbs',
                          uid : uid,
@@ -450,6 +449,8 @@ modal_bbs_write.on('shown.rc.modal', function (e) {
                        modal.find('[data-role="attach-preview-file"]').html(file)
                        modal.find('[data-role="attachNum"]').text(attachNum)
                      });
+                  } else {
+                    modal.find('[data-role="attachNum"]').text('');
                   }
                });
              } else {
