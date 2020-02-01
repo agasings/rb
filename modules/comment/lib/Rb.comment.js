@@ -1187,7 +1187,7 @@
 
         // loader 생성
         getLoader : function(){
-            var spinner = '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>';
+            var spinner = '<div class="spinner-border text-primary" style="width: 3rem; height: 3rem; border-width: .15em" role="status"><span class="sr-only">Loading...</span></div>';
             var loader =$('<div/>',{id: 'comment-spinner-wrap',html: spinner});
             return loader;
         },
