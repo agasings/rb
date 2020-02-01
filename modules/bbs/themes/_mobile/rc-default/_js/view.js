@@ -165,6 +165,7 @@ function getBbsView(settings){
               var result = $.parseJSON(response);
 
               var photo=result.photo;
+              var photo_full=result.photo_full;
               var video=result.video;
               var audio=result.audio;
               var file=result.file;
@@ -173,7 +174,11 @@ function getBbsView(settings){
 
               if (photo) {  // 첨부 이미지가 있을 경우
                 page.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
-                initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프 활성
+                i=0;
+                page.find('[data-role="attach-photo"] [data-toggle="page"]').each(function(i) {
+                  $(this).attr('data-index',i);i=++i;
+                });
+                page_bbs_photo.find('.swiper-wrapper').html(photo_full)
               }
 
               if (video) {  // 첨부 비디오가 있을 경우
@@ -397,15 +402,14 @@ function getBbsView(settings){
       list_parent.attr('tabindex','-1').focus();  // 모달을 호출한 아이템을 포커싱 처리함 (css로 배경색 적용)
       modal.find('[name="uid"]').val('')
       modal.find('[data-role="article"]').html(''); // 본문영역 내용 비우기
-
       modal.find('[data-role="hback"]').removeClass('d-none');
       modal.find('[data-role="gohome"]').addClass('d-none');
-
       modal.find('[data-role="attach-photo"]').addClass('hidden').empty() // 사진 영역 초기화
       modal.find('[data-role="attach-video"]').addClass('hidden').empty() // 비디오 영역 초기화
       modal.find('[data-role="attach-audio"]').addClass('hidden').empty() // 오디오 영역 초기화
       modal.find('[data-role="attach-file"]').addClass('hidden').empty() // 기타파일 영역 초기화
       modal.find('[data-role="comment_box"]').html(''); // 댓글영역 내용 비우기
+      page_bbs_photo.find('.swiper-wrapper').html('')  // 사진크게보기 영역 초기화
    });
 
 	 // 게시물 보기 에서 댓글이 등록된 이후에 ..
@@ -451,6 +455,7 @@ function getBbsView(settings){
           var result = $.parseJSON(response);
           var total_comment=result.total_comment;
           //$.notify({message: '한줄의견이 등록 되었습니다.'},{type: 'default'});
+          modal.find('[data-kcact="reload"]').click(); // 댓글 새로 불러오기
           showComment_Ele_1.text(total_comment); // 최종 댓글수량 합계 업데이트
 					showComment_ListEle.text(total_comment); // 게시물 목록 해당 항목의 최종 댓글수량 합계 업데이트
      });
@@ -538,6 +543,45 @@ function getBbsView(settings){
         sendLink()
       });
   })
+
+  page_bbs_photo.on('show.rc.page', function (e) {
+    var ele = $(e.relatedTarget)
+    var index = ele.attr('data-index');
+    var uid = ele.attr('data-uid');
+    var page = $(this);
+
+    var title = page_bbs_view.find('[data-role="title"]').text();
+    var subject = page_bbs_view.find('[data-role="subject"]').text();
+
+    page.find('[data-role="title"]').text(title);
+    page.find('[data-role="subject"]').text(subject);
+    page.find('[data-act="down"]').attr('data-uid',uid);
+
+    var bbs_photo_swiper = new Swiper('#page-bbs-photo .swiper-container', {
+      zoom: true,
+      initialSlide: index,
+      pagination: {
+        el: '#page-bbs-photo .swiper-pagination',
+        type: 'fraction',
+      },
+      navigation: {
+        nextEl: '#page-bbs-photo .swiper-button-next',
+        prevEl: '#page-bbs-photo .swiper-button-prev',
+      },
+    });
+
+    bbs_photo_swiper.on('slideChangeTransitionEnd', function () {
+      var uid = page_bbs_photo.find('.swiper-slide-active').attr('data-uid');
+      page_bbs_photo.find('[data-act="down"]').attr('data-uid',uid)
+    });
+
+  })
+
+  page_bbs_photo.on('click','[data-act="down"]',function(){
+    var uid = $(this).attr('data-uid');
+    var url = '/?r=home&m=mediaset&a=download&uid='+uid
+    $(location).attr('href',url);
+  });
 
   page_bbs_photo.on('hidden.rc.page', function () {
     // 줌상태 초기화

@@ -105,10 +105,10 @@
 
 <!-- Page : 게시물 사진 크게보기 -->
 <section id="page-bbs-photo" class="page right" data-role="bbs-photo">
-  <header class="bar bar-nav bar-dark bg-black px-0 border-bottom-0" style="opacity: 0.7;">
+  <header class="bar bar-nav bar-dark bg-black px-0 border-bottom-0" style="opacity: 0.7;;height: 3.7rem;">
     <a class="icon pull-left material-icons px-3 text-white" role="button" data-history="back">arrow_back</a>
     <a class="icon pull-right material-icons px-3 text-white" data-act="down" data-uid="" role="button">save_alt</a>
-    <h1 class="title title-left" data-history="back" style="line-height: 1.2;padding-top: .75rem;">
+    <h1 class="title title-left" data-history="back" style="line-height: 1.2;padding-top: .75rem">
       <div data-role="subject" class="pr-2 text-nowrap text-truncate"></div><small class="text-muted" data-role="title"></small>
     </h1>
   </header>
