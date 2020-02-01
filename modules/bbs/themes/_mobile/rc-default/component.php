@@ -106,8 +106,9 @@
 <!-- Page : 게시물 사진 크게보기 -->
 <section id="page-bbs-photo" class="page right" data-role="bbs-photo">
   <header class="bar bar-nav bar-dark bg-black px-0" style="opacity: 0.3;">
-    <a class="icon icon-left-nav pull-left text-white p-x-1" role="button" data-history="back"></a>
-   <h1 class="title" data-role="title" data-history="back"></h1>
+    <a class="icon pull-left material-icons px-3 text-white" role="button" data-history="back">arrow_back</a>
+    <a class="icon pull-right material-icons px-3 text-white" data-act="down" data-uid="" role="button">save_alt</a>
+    <h1 class="title" data-role="title" data-history="back"></h1>
   </header>
   <div class="bar bar-footer bar-dark bg-black text-muted" style="opacity: 0.3;">
     <span class="title"><small>이미지를 터치해서 확대해서 볼 수 있습니다.</small></span>
@@ -115,8 +116,8 @@
   <div class="content bg-black py-0">
     <div class="d-flex" style="height:100vh">
       <div class="swiper-container align-self-center" style="height:100vh">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" style="height:100vh;overflow:hidden">
+        <div class="swiper-wrapper align-items-center">
+          <div class="swiper-slide">
             <div class="swiper-zoom-container">
               <img src="">
             </div>

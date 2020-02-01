@@ -234,5 +234,33 @@ function getInsertImgUid($upload)
     return $upfiles;
 }
 
+function getAttachPhotoSwipeFull($parent_data){
+  global $table;
+
+     $upload=$parent_data['upload'];
+     $sql='type=2 and hidden=0';
+
+     $attach = getArrayString($upload);
+     $uid_q='(';
+     foreach($attach['data'] as $uid)
+      {
+        $uid_q.='uid='.$uid.' or ';
+      }
+      $uid_q=substr($uid_q,0,-4).')';
+      $sql=$sql.' and '.$uid_q;
+      $RCD=getDbArray($table['s_upload'],$sql,'*','gid','asc','',1);
+      $html='';
+      while($R=db_fetch_array($RCD)){
+
+        $img_origin=$R['src'];
+
+         $html.='<div class="swiper-slide" style="height:78vh;overflow: hidden">
+           <div class="swiper-zoom-container">
+             <img src="'.$img_origin.'">
+           </div>
+         </div>';
+       }
+  return $html;
+}
 
 ?>

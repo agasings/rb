@@ -16,6 +16,7 @@ include_once $g['path_module'].'mediaset/themes/'.$theme_file.'/main.func.php';
 if($R['upload']) {
   $result['file'] =  getAttachFileList($R,$mod,'file','');
   $result['photo'] = getAttachFileList($R,$mod,'photo','');
+  $result['photo_full'] = getAttachPhotoSwipeFull($R);
   $result['video'] = getAttachFileList($R,$mod,'video','');
   $result['audio'] = getAttachFileList($R,$mod,'audio','');
 }
