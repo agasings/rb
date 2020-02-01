@@ -560,6 +560,7 @@ function getBbsView(settings){
     var bbs_photo_swiper = new Swiper('#page-bbs-photo .swiper-container', {
       zoom: true,
       initialSlide: index,
+      spaceBetween: 30,
       pagination: {
         el: '#page-bbs-photo .swiper-pagination',
         type: 'fraction',
