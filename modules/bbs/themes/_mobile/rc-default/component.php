@@ -111,7 +111,7 @@
     <h1 class="title" data-role="title" data-history="back"></h1>
   </header>
   <div class="bar bar-footer bar-dark bg-black text-muted" style="opacity: 0.3;">
-    <span class="title"><small>이미지를 터치해서 확대해서 볼 수 있습니다.</small></span>
+    <div class="swiper-pagination"></div>
   </div>
   <div class="content bg-black py-0">
     <div class="d-flex" style="height:100vh">
