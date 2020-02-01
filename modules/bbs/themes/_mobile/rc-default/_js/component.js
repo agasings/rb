@@ -229,7 +229,8 @@ popover_bbs_listMarkup.on('show.rc.popover', function (e) {
   var bid =  button.attr('data-bid')
   $(this).find('.table-view-cell').attr('data-bid',bid)
   var popover = $(this)
-  var local_listMarkup = localStorage.getItem('bbs-'+bid+'-listMarkup');
+  var _local_listMarkup = localStorage.getItem('bbs-'+bid+'-listMarkup');
+  var local_listMarkup = _local_listMarkup?_local_listMarkup:'media';
   popover.find('[data-toggle="listMarkup"]').removeClass('table-view-info');
   popover.find('[data-toggle="listMarkup"][data-markup="'+local_listMarkup+'"]').addClass('table-view-info');
 })
