@@ -779,7 +779,7 @@
             var html = $(target).data('html');
             var effect = $(target).data('effect');
 
-            if(!memberid && (act!='reload'&&act!='more')){
+            if(!memberid && (act!='reload' && act!='more' && act!='changeSort')){
                 // alert('로그인을 해주세요.');
                 $('#modal-login').modal()
                 return false;
