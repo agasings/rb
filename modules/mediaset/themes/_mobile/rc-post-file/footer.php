@@ -17,17 +17,14 @@ var <?php echo $d['attach']['parent_module'] ?>_upload_settings = {
     $('[data-role="attach-handler-photo"]').addClass('d-none');
   },
   onSuccess:function(files,data,xhr,pd){
-    setTimeout(function(){
-      var attach_item_num = $('[data-role="write"]').find('[data-role="attach-item"]').length;
-      $('[data-role="write"]').find('[data-role="attachNum"]').text(attach_item_num);
-    }, 10);
     $('[data-act="attach"]').attr('disabled',false);
     sheet_post_photoadd.find('[data-role="none"]').addClass('d-none');
     sheet_post_photoadd.find('[data-act="submit"]').addClass('active').removeClass('text-muted');
     $('[data-role="write"]').find('[data-role="attach-handler-photo"]').attr('disabled',false);
   },
   afterUploadAll:function(obj) {
-    console.log('전체 업로드 완료')
+    var attach_item_num = $('[data-role="write"].active').find('[data-role="list"] [data-role="attach-item"]').length;
+    $('[data-role="write"]').find('[data-role="attachNum"]').text(attach_item_num);
     $('[data-role="attach-handler-photo"]').removeClass('d-none');
   }
 }

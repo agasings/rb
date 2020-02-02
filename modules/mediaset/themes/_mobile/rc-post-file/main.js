@@ -21,14 +21,14 @@
         var loaderbox='<div style="height:50%;margin-top:40%;" id="modal-loader-default"><div class="spinner-wrap"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></div>';
 
         // 부모 모듈에서 파일첨부 액션 실행하는 버튼 or 기타 엘리먼트  클릭시 첨부파일 input click 이벤트 바인딩
-        $(handler_file).click(function(e){
+        $(handler_file).off().click(function(e){
           e.preventDefault();
           $('#'+inputId).click();
           $('.rb-attach').addClass('active')
          });
 
          // 부모 모듈에서 사진첨부 액션 실행하는 버튼 or 기타 엘리먼트  클릭시 첨부파일 input click 이벤트 바인딩
-        $(handler_photo).click(function(e){
+        $(handler_photo).off().click(function(e){
           e.preventDefault();
           $('#'+inputId).click();
           $('.rb-attach').addClass('active')

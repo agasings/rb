@@ -526,6 +526,9 @@ modal_bbs_write.on('hidden.rc.modal', function (e) {
   modal.find('[name="uid"]').val(''); // uid 초기화
   modal.find('[name="pcode"]').val(''); // pcode 초기화
 
+  modal.find('[data-role="attach-files"]').html(''); // 첨부요소 destroy
+  modal.find('.ajax-file-upload-container').remove(); // 첨부요소 destroy
+
   if (modal.find('.ck-editor__editable').length) {
     var subject = modal.find('[name="subject"]').val();
     var content = editor_bbs.getData();
@@ -731,7 +734,8 @@ modal_bbs_write.find('[data-act="submit"]').click(function(event){
             modal_bbs_write.find('[data-role="attach-preview-video"]').html('');
             modal_bbs_write.find('[data-role="attach-preview-audio"]').html('');
             modal_bbs_write.find('[data-role="attach-preview-file"]').html('');
-            modal_bbs_write.find('[data-role="bbs-meta"]').html('')
+            modal_bbs_write.find('[data-role="attach-files"]').html('');
+            modal_bbs_write.find('[data-role="bbs-meta"]').html('');
           }, 600);
         }
 
@@ -762,12 +766,13 @@ popup_bbs_cancelCheck.find('[data-toggle="cancelCheck"]').tap(function(event) {
     modal_bbs_write.find('[name="upfiles"]').val('') //첨부파일 입력내용 초기화
     modal_bbs_write.find('[data-role="editor-body"]').empty() //본문내용 초기화
     modal_bbs_write.find('[data-role="attach-preview-photo"]').html('');  //첨부사진 영역 초기화
-    modal_bbs_write.find('[data-role="attach-preview-video"]').html('')
-    modal_bbs_write.find('[data-role="attach-preview-audio"]').html('')
-    modal_bbs_write.find('[data-role="attach-preview-file"]').html('')
+    modal_bbs_write.find('[data-role="attach-preview-video"]').html('');
+    modal_bbs_write.find('[data-role="attach-preview-audio"]').html('');
+    modal_bbs_write.find('[data-role="attach-preview-file"]').html('');
+    modal_bbs_write.find('[data-role="attach-files"]').html('');
     modal_bbs_write.find('[data-role="attachNum"]').text('');
-    modal_bbs_write.find('[data-role="bbs-meta"]').html('')
-    modal_bbs_write.find('[data-toggle="switch"]').removeClass('active')
+    modal_bbs_write.find('[data-role="bbs-meta"]').html('');
+    modal_bbs_write.find('[data-toggle="switch"]').removeClass('active');
     page_bbs_write_category.find('[name="category_radio"]').prop('checked', false);
     console.log('입력사항 초기화');
   }
