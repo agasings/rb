@@ -43,7 +43,7 @@ include_once $g['path_module'].'bbs/themes/'.$d['bbs']['skin_mobile'].'/_widget.
         <?php endif?>
         <?php echo $_R['subject'] ?>
       </a>
-      <span class="badge badge-default badge-outline rounded" data-role="total_comment">
+      <span class="badge badge-inverted" data-role="total_comment">
         <?php echo $_R['comment']?><?php echo $_R['oneline']?'+'.$_R['oneline']:'' ?>
       </span>
 
