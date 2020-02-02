@@ -1031,14 +1031,6 @@
               <div><small class="text-muted">장소 추가</small></div>
             </button>
           </div>
-          <div class="col-xs-4">
-            <button type="button" class="btn btn-block btn-link text-muted" data-toggle="newpost" data-type="map">
-              <div class="material-icons" style="font-size: 60px;">
-                redeem
-              </div>
-              <div><small class="text-muted">상품 등록</small></div>
-            </button>
-          </div>
         </div><!-- /.row -->
       </div>
     </div>

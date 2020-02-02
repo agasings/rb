@@ -2,7 +2,7 @@
 <?php include $g['path_core'].'engine/foot.engine.php'?>
 
 <!-- youtube iframe_api -->
-<!-- <script src="https://www.youtube.com/player_api"></script> -->
+<script src="https://www.youtube.com/player_api"></script>
 
 <!-- 입력 textarea 자동확장 -->
 <?php getImport('autosize','autosize.min','3.0.14','js')?>
@@ -12,6 +12,14 @@
 
 <!-- jquery.shorten : https://github.com/viralpatel/jquery.shorten -->
 <?php getImport('jquery.shorten','jquery.shorten.min','1.0','js')?>
+
+<!-- moment -->
+<?php getImport('moment','moment','2.22.2','js');?>
+<?php getImport('moment-duration-format','moment-duration-format','2.2.2','js');?>
+
+<!-- Chart.js : https://github.com/chartjs/Chart.js/  -->
+<?php getImport('Chart.js','Chart','2.8.0','css') ?>
+<?php getImport('Chart.js','Chart.bundle.min','2.8.0','js') ?>
 
 <!-- markjs js : https://github.com/julmot/mark.js -->
 <?php getImport('markjs','jquery.mark.min','8.11.1','js')?>

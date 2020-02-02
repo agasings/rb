@@ -150,7 +150,8 @@ $(document).ready(function() {
     if (page_main_contentY === 0 && page_main_endY > page_main_startY ) {
 
       if (page_main_endY-page_main_startY>150) {
-        console.log('메인페이지 새로 불러오기')
+        $.loader({ text: '새로고침' });
+        location.reload();
       }
     }
   });

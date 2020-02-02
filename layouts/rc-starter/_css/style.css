@@ -328,6 +328,91 @@ figure.media {
   align-content: stretch;
 }
 
+/* 포스트 리스트 마스크 */
+.list_mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70px;
+  height: 100%;
+  background: rgba(0,0,0,.8);
+}
+.list_mask .txt {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  margin-top: -25px;
+  font-size: 20px;
+  line-height: 32px;
+  color: #fff;
+  text-align: center;
+}
+.list_avatar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-bottom: -25px;
+  margin-left: -25px;
+  border-radius: 50%
+}
+
+button[data-toggle="popover"],
+button[data-toggle="collapse"] {
+  background-image: none;
+  background-color: #fff;
+  outline: none;
+  border: none
+}
+
+button[data-toggle="collapse"]:active {
+  background-color: #eee
+}
+
+.collapsed .fa-caret-up:before {
+  content: "\f0d7";
+}
+
+.table-view-inverse .table-view-cell {
+  background-color: #111;
+  border-bottom: none
+}
+.table-view-inverse .table-view-active {
+  background-color: #373a3c;
+}
+
+.serial {
+  counter-increment: Serial;
+}
+.serial .counter:before {
+  content: counter(Serial);
+}
+.serial.table-view-active .counter:before {
+    content: '▶';
+}
+
+.embed-responsive.mask {
+  background-size:cover;
+}
+.embed-responsive.mask::before {
+  position: absolute;
+  top:0;
+  bottom:0;
+  left: 0;
+  right:0;
+  content: '';
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.table-view-cell > a.navigate-updown:not(.collapsed) {
+  background-color: #f4f4f4;
+  color: #0275d8
+}
+
+.table-view-cell > a:not(.btn):focus,
+.table-view-cell > a:not(.btn):active {
+  background-color: #f4f4f4
+}
+
 .widget {
   line-height: 1.2
 }
@@ -491,7 +576,8 @@ figure.media {
 /* miniplayer */
 .modal.miniplayer {
   display: block;
-  bottom: 110px;
+  /* bottom: 110px; */
+  bottom: 60px;
   top: auto;
   min-height: 56px;
   height: 56px;
@@ -503,7 +589,7 @@ figure.media {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 3px 6px 0 rgba(0,0,0,0.20);
 }
 
-.modal.miniplayer .progress {
+.modal .progress {
   background-color: transparent
 }
 
@@ -513,14 +599,6 @@ figure.media {
 
 .modal.miniplayer.no-bartab {
   bottom: 60px;
-}
-
-.modal.miniplayer.has_barSecondary {
-  bottom: 150px;
-}
-
-.modal.miniplayer.buying {
-  bottom: 0;
 }
 
 .modal.miniplayer .embed-responsive,
