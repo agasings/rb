@@ -37,7 +37,7 @@
 </div>
 
 <!-- 통합검색 -->
-<div id="modal-search" class="modal zoom">
+<div id="modal-search" class="modal fast">
 	<header class="bar bar-nav bg-white p-2">
 	  <form class="input-group input-group-lg border border-primary" action="<?php echo $g['s']?>/" id="modal-search-form">
 			<input type="hidden" name="r" value="<?php echo $r?>">

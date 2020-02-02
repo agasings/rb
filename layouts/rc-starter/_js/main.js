@@ -89,6 +89,30 @@ $(document).ready(function() {
     toggleFullScreen()
   });
 
+  $('[data-toggle="newPost"]').click(function() {
+    drawer_left.drawer('hide')
+    setTimeout(function(){
+      $('#popup-post-newPost').popup({
+        title :'작업선택'
+      });
+    }, 300);
+  });
+
+  $('[data-toggle="goMypage"]').click(function() {
+    var url = $(this).attr('data-url');
+    var target = $(this).attr('data-target');
+    var start = $(this).attr('data-start');
+    var title = $(this).attr('data-title');
+    drawer_left.drawer('hide')
+    setTimeout(function(){
+      $(target).page({
+        title :title,
+        start : start,
+        url : url
+      });
+    }, 300);
+  });
+
   if(navigator.userAgent.indexOf("Mac") > 0) {
     $("body").addClass("mac-os");
   }
@@ -130,8 +154,6 @@ $(document).ready(function() {
       }
     }
   });
-
-
 
   putCookieAlert('site_common_result') // 로그인/로그아웃 알림 메시지 출력
 
@@ -219,7 +241,7 @@ $(document).ready(function() {
 	$('#modal-search').on('shown.rc.modal', function () {
 		setTimeout(function() {
 			$('#search-input').val('').focus();
-		}, 300);
+		}, 50);
 
 		$('#search-input').autocomplete({
       lookup: function (query, done) {

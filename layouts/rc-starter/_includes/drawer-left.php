@@ -14,6 +14,12 @@
   <?php endif; ?>
 </header>
 
+<?php if ($my['uid']): ?>
+<div data-toggle="newPost" class="bar bar-standard bar-footer-secondary bar-light bg-white shadow-sm" style="bottom: 3.125rem" >
+  <button class="btn btn-secondary btn-block text-primary">새 포스트</button>
+</div>
+<?php endif; ?>
+
 <nav class="bar bar-tab bg-white">
   <?php if ($my['uid']): ?>
   <a class="tab-item" role="button" data-toggle="modal" href="#modal-settings-profile">
@@ -42,7 +48,47 @@
   <?php endif; ?>
 </nav>
 
-<div class="content">
+<div class="content bg-faded">
   <!-- 관리자모드 > 위젯코드 추출기를 활용하세요. -->
   <?php getWidget('menu/rc-drawer-menu',array('smenu'=>'0','limit'=>'2','link'=>'link','collid'=>'drawer-menu','accordion'=>'1','collapse'=>'1',))?>
+
+
+  <?php if ($my['uid']): ?>
+  <ul class="table-view bg-white mb-2">
+    <li class="table-view-cell">
+      <a data-toggle="goMypage" data-target="#page-post-mypost" data-start="#page-main" data-title="내 포스트"  data-url="<?php echo RW('mod=dashboard&page=post')?>">
+        <span class="badge badge-default badge-inverted"><?php echo $my['num_post']?number_format($my['num_post']):'' ?></span>
+        <div class="media-body">
+          내 포스트
+        </div>
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a data-toggle="goMypage" data-target="#page-post-mylist" data-start="#page-main" data-title="내 리스트" data-url="<?php echo RW('mod=dashboard&page=list')?>">
+        <span class="badge badge-default badge-inverted"><?php echo $my['num_list']?number_format($my['num_list']):'' ?></span>
+        <div class="media-body">
+          내 리스트
+        </div>
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a data-toggle="goMypage" data-target="#page-post-saved" data-start="#page-main" data-title="나중에 볼 포스트" data-url="<?php echo RW('mod=dashboard&page=saved')?>">
+        <span class="badge badge-default badge-inverted"></span>
+        <div class="media-body">
+          나중에 볼 포스트
+        </div>
+      </a>
+    </li>
+    <li class="table-view-cell">
+      <a data-toggle="goMypage" data-target="#page-post-liked" data-start="#page-main" data-title="좋아요 한 포스트">
+        <span class="badge badge-default badge-inverted"></span>
+        <div class="media-body">
+          좋아요 한 포스트
+        </div>
+      </a>
+    </li>
+  </ul>
+  <?php endif; ?>
+
+
 </div>
