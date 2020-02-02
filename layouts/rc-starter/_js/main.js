@@ -83,7 +83,49 @@ function edgeEffect(container,pos,show) {
   }
 }
 
+//카카오톡 링크보내기
+function kakaoTalkSend(settings) {
+  var title = settings.subject;
+  var description = settings.review?settings.review:'';
+  var imageUrl = settings.featured?settings.featured:'';
+  var link = settings.link+'?ref=kt'  // 카카오톡 파라미터 추가;
+
+  Kakao.Link.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+      link: {
+        mobileWebUrl: link,
+        webUrl: link
+      }
+    },
+    buttons: [
+      {
+        title: '바로가기',
+        link: {
+          mobileWebUrl: link,
+          webUrl: link
+        }
+      },
+    ]
+  });
+}
+
+// Yutube IFrame Player API 비동기로 가져옴
+function loadYTScript() {
+  if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+}
+
 $(document).ready(function() {
+
+  //loadYTScript();
 
   $('[data-toggle="fullscreen"]').click(function() {
     toggleFullScreen()
@@ -150,8 +192,19 @@ $(document).ready(function() {
     if (page_main_contentY === 0 && page_main_endY > page_main_startY ) {
 
       if (page_main_endY-page_main_startY>150) {
-        $.loader({ text: '새로고침' });
-        location.reload();
+
+        getPostAll({
+          wrapper : $('[data-role="postAll"] [data-role="list"]'),
+          start : '#page-main',
+          markup    : 'post-row',  // 테마 > _html > post-row-***.html
+          recnum    : 5,
+          sort      : 'gid',
+          none : $('[data-role="postAll"]').find('[data-role="none"]').html(),
+          paging : 'infinit'
+        })
+
+        // $.loader({ text: '새로고침' });
+        // location.reload();
       }
     }
   });
@@ -364,6 +417,45 @@ $(document).ready(function() {
     setTimeout(function(){
       $.notify({message: '링크가 복사 되었습니다.'},{type: 'default'});
     }, 300);
+  });
+
+  $(document).on('click','[data-toggle="linkShare"]',function(){
+    var ele = $(this)
+    var sbj = ele.attr('data-subject'); // 버튼에서 제목 추출
+    var desc = ele.attr('data-desc'); // 버튼에서 요약설명 추출
+    var featured = ele.attr('data-featured');
+    var link = ele.attr('data-link');
+    var title = ele.attr('data-title')?ele.attr('data-title'):'링크 공유';
+    var hback = ele.attr('data-hback');
+    var entry = ele.attr('data-entry');
+    var delay = 10;
+
+    if (hback) {
+      history.back();
+      delay = 100;
+    }
+    setTimeout(function(){
+      if (ios_Token) {  // iOS 네이티브앱 일 경우
+        shareNative(sbj,link)
+     } else if (navigator.share === undefined) {  //webshare.api가 지원되지 않는 환경
+
+       popup_link_share.attr('data-link',link).attr('data-subject',sbj).attr('data-review',desc).attr('data-featured',featured).attr('data-entry',entry);
+       setTimeout(function(){
+         popup_link_share.popup({
+            title : title
+         })
+       }, 300);
+
+      } else {
+        navigator.share({
+            title: sbj,
+            text: desc,
+            url: link,
+        })
+        .then(() => console.log('성공적으로 공유되었습니다.'))
+        .catch((error) => console.log('공유에러', error));
+      }
+    }, delay);
   });
 
 });

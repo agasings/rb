@@ -38,6 +38,28 @@ function setPostWrite(settings) {
 
   setTimeout(function(){
 
+    // 미디어셋 초기화
+    wrapper.find('[data-role="attach-files"]').RbUploadFile(post_upload_settings); // 아작스 폼+input=file 엘리먼트 세팅
+    wrapper.find('[data-role="attach-files"]').RbAttachTheme(post_attach_settings);
+    wrapper.find('[data-sortable="mediaset"]').sortable({
+      axis: 'y',
+      cancel: 'button',
+      delay: 250,
+      update: function( event, ui ) {
+        var attachfiles=wrapper.find('input[name="attachfiles[]"]').map(function(){return $(this).val()}).get();
+        var new_upfiles='';
+        if(attachfiles){
+          for(var i=0;i<attachfiles.length;i++) {
+            new_upfiles+=attachfiles[i];
+          }
+        }
+        $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=modifygid',{
+           attachfiles : new_upfiles
+         })
+      }
+    });
+
+    // 에디터 초기화
     DecoupledEditor
       .create( document.querySelector( '[data-role="write"] [data-role="editor-body"]' ),{
         placeholder: '본문 입력...',

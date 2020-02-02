@@ -1110,7 +1110,7 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
     } else if (type=='photo') {
       sheet_post_photoadd.sheet({backdrop: 'static'});
     } else if (type=='twit') {
-      modal_post_twit.modal();
+      modal_post_twit.modal({title: '새 포스트', url : '/post/write'});
     } else if (type=='youtube') {
       $.notify({message: '구글계정 연결이 필요합니다.'},{type: 'default'});
     } else if (type=='map') {
@@ -1147,6 +1147,8 @@ sheet_post_photoadd.on('hidden.rc.sheet', function(event) {
 sheet_post_photoadd.find('[data-act="attach"]').click(function(){
   var button = $(this)
   var sheet = sheet_post_photoadd;
+  modal_post_write.find('[data-role="attach-files"]').RbUploadFile(post_upload_settings); // 아작스 폼+input=file 엘리먼트 세팅
+  modal_post_write.find('[data-role="attach-files"]').RbAttachTheme(post_attach_settings);
   modal_post_write.find('[data-role="attach-handler-photo"]').click();
 });
 
@@ -1180,7 +1182,7 @@ sheet_post_photoadd.find('[data-act="submit"]').click(function(){
   modal_post_write.find('[data-role="attachNum"]').text(num==0?'':num);
   modal_post_write.find('[data-role="attach-preview-photo"]').html(list);
   setTimeout(function(){
-    modal_post_write.modal();
+    modal_post_write.modal({title: '새 포스트', url : '/post/write'});
   }, 200);
 });
 

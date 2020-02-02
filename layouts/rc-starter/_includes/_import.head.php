@@ -59,8 +59,8 @@
 <!-- 소셜공유시 URL 클립보드저장 : clipboard.js  : https://github.com/zenorocha/clipboard.js-->
 <?php getImport('clipboard','clipboard.min','2.0.4','js') ?>
 
-<!-- smooth-scroll: https://github.com/cferdinandi/smooth-scroll -->
-<?php getImport('smooth-scroll','smooth-scroll.polyfills.min','16.1.0','js') ?>
+<!-- color-thief : https://github.com/lokesh/color-thief  -->
+<?php getImport('color-thief','color-thief.min','2.3.0','js') ?>
 
 <!-- 사이트 헤드 코드 -->
 <?php echo $_HS['headercode']?>
@@ -71,3 +71,9 @@
 <!-- global css -->
 <link href="<?php echo $g['url_layout']?>/_css/style.css<?php echo $g['wcache']?>" rel="stylesheet">
 <link href="<?php echo $g['url_layout']?>/_css/article.css<?php echo $g['wcache']?>" rel="stylesheet">
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script>
+var kakao_jskey = '<?php echo $d['connect']['jskey_k'] ?>';
+Kakao.init(kakao_jskey);
+</script>

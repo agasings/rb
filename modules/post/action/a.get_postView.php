@@ -168,6 +168,7 @@ $markup_file = $markup_file?$markup_file:'view_doc_content';
 $skin=new skin($markup_file);
 $result['error'] = false;
 $result['article']=$skin->make();
+$result['theme'] = $theme;
 
 //첨부링크 및 파일
 $theme_attach= '_mobile/rc-post-file';

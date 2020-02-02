@@ -14,27 +14,10 @@
   <?php endif; ?>
 </header>
 
-<?php if ($my['uid']): ?>
-<div data-toggle="newPost" class="bar bar-standard bar-footer-secondary bar-light bg-white shadow-sm" style="bottom: 3.125rem" >
-  <button class="btn btn-secondary btn-block text-primary">새 포스트</button>
-</div>
-<?php endif; ?>
-
 <nav class="bar bar-tab bg-white">
   <?php if ($my['uid']): ?>
-  <a class="tab-item" role="button" data-toggle="modal" href="#modal-settings-profile">
-    <span class="icon material-icons">face</span>
-    <span class="tab-label">개인정보</span>
-  </a>
-  <?php if ($my['admin']): ?>
-  <a class="tab-item" role="button" data-href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=main_edit&prelayout=rc-starter/blank' ?>" data-toggle="drawer-close">
-    <span class="icon material-icons">dashboard</span>
-    <span class="tab-label">메인설정</span>
-  </a>
-  <?php endif; ?>
-  <a class="tab-item" role="button" href="#popup-logout" data-toggle="popup">
-    <span class="icon material-icons">exit_to_app</span>
-    <span class="tab-label">로그아웃</span>
+  <a class="tab-item active bg-primary" role="button" data-toggle="newPost">
+    새 포스트
   </a>
   <?php else: ?>
   <a class="tab-item" role="button" href="#modal-join" data-toggle="modal" data-url="">

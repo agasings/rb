@@ -81,85 +81,6 @@
   </div>
 </div>
 
-<!-- 포토모달 : 갤러리형 -->
-<div class="pswp pswp-gallery" tabindex="-1" role="dialog" aria-hidden="true">
-	<input type="hidden" name="uid" value="">
-  <input type="hidden" name="bid" value="">
-
-  <!-- Background of PhotoSwipe.
-       It's a separate element, as animating opacity is faster than rgba(). -->
-  <div class="pswp__bg"></div>
-
-  <!-- Slides wrapper with overflow:hidden. -->
-  <div class="pswp__scroll-wrap page center" id="page1">
-
-		<!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
-		<div class="pswp__container">
-				<!-- don't modify these 3 pswp__item elements, data is added later on -->
-				<div class="pswp__item"></div>
-				<div class="pswp__item"></div>
-				<div class="pswp__item"></div>
-		</div>
-
-		<!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-		<div class="pswp__ui pswp__ui--hidden">
-
-				<div class="pswp__top-bar">
-
-						<!--  Controls are self-explanatory. Order can be changed. -->
-						<div class="pswp__subject">
-							<span data-role="category" class="text-primary"></span>
-							<span data-role="subject"></span>
-						</div>
-						<div class="pswp__counter"></div>
-
-						<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-						<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-						<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-						<!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
-						<!-- element will get class pswp__preloader--active when preloader is running -->
-						<div class="pswp__preloader">
-								<div class="pswp__preloader__icn">
-									<div class="pswp__preloader__cut">
-										<div class="pswp__preloader__donut"></div>
-									</div>
-								</div>
-						</div>
-				</div>
-
-				<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-						<div class="pswp__share-tooltip"></div>
-				</div>
-
-				<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-				</button>
-
-				<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-				</button>
-
-				<div class="pswp__caption">
-						<div class="pswp__caption__center"></div>
-				</div>
-			</div>
-
-  </div>
-
-	<div class="pswp__reaction" hidden>
-		<button type="button" class="pswp__button" data-toggle="page" data-start="#page1" data-target="#page2">
-			<i class="fa fa-comment-o fa-lg" aria-hidden="true"></i>
-			<br> <span data-role="comment"></span>
-		</button>
-		<button type="button" class="pswp__button">
-			<i class="fa fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
-			<br><span data-role="likes"></span>
-		</button>
-	</div>
-
-</div>
-
 <!-- 로그아웃-->
 <div id="popup-logout" class="popup zoom">
   <div class="popup-content">
@@ -184,59 +105,87 @@
   </div>
 </div>
 
-<!-- 링크공유 -->
+<!-- 팝업 : 링크공유 -->
 <div id="popup-link-share" class="popup zoom">
-  <div class="popup-content">
-    <header class="bar bar-nav">
+  <div class="popup-content rounded-0">
+    <header class="bar bar-nav rounded-0">
       <a class="icon icon-close pull-right" data-history="back" role="button"></a>
       <h1 class="title">
-				<i class="fa fa-share-alt fa-fw" aria-hidden="true"></i>
-				<span data-role="title">링크 공유</span>
+				링크 복사
 			</h1>
     </header>
-    <div class="content text-xs-center">
-      <ul class="share list-inline m-b-0 m-t-2">
-        <li class="list-inline-item">
-          <a role="button" id="kakao-link-btn">
-            <img src="<?php echo $g['img_core']?>/sns/kakaotalk.png" alt="카카오톡" class="img-circle">
-            <p><small>카카오톡</small></p>
-          </a>
+    <div class="content text-xs-center rounded-0">
+
+      <ul class="table-view mt-0" style="max-height: 400px;">
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/kakaotalk.png" alt="카카오톡" class="media-object pull-left img-circle" style="width:38px">
+          카카오톡
+          <button class="btn btn-secondary" id="kakao-link-btn">링크공유</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="facebook" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/facebook.png" alt="페이스북공유" class="img-circle">
-            <p><small>페이스북</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/youtube.png" alt="유튜브" class="media-object pull-left img-circle" style="width:38px">
+          유튜브
+          <button class="btn btn-secondary" data-role="youtube" data-toggle="linkCopy" data-clipboard-text="">
+            링크복사
+          </button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="kakaostory" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/kakaostory.png" alt="카카오스토리" class="img-circle">
-            <p><small>카카오스토리</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/instagram.png" alt="인스타그램" class="media-object pull-left img-circle" style="width:38px">
+          인스타그램
+          <button class="btn btn-secondary" data-role="instagram" data-toggle="linkCopy">링크복사</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="naver" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/naver.png" alt="네이버" class="img-circle">
-            <p><small>네이버</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/facebook.png" alt="페이스북공유" class="media-object pull-left img-circle" style="width:38px">
+          페이스북
+          <button class="btn btn-secondary" data-role="facebook" data-toggle="linkCopy">링크복사</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" role="button" data-role="twitter" target="_blank">
-            <img src="<?php echo $g['img_core']?>/sns/twitter.png" alt="트위터" class="img-circle">
-            <p><small>트위터</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/band.png" alt="밴드" class="media-object pull-left img-circle" style="width:38px">
+          밴드
+          <button class="btn btn-secondary" data-role="band" data-toggle="linkCopy">링크복사</button>
         </li>
-        <li class="list-inline-item">
-          <a href="" data-role="email">
-            <img src="<?php echo $g['img_core']?>/sns/mail.png" alt="메일" class="img-circle">
-            <p><small>메일보내기</small></p>
-          </a>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/naver.png" alt="네이버 카페" class="media-object pull-left img-circle" style="width:38px">
+          네이버 카페
+          <button class="btn btn-secondary" data-role="naver" data-toggle="linkCopy">링크복사</button>
         </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/kakaostory.png" alt="카카오스토리" class="media-object pull-left img-circle" style="width:38px">
+          카카오스토리
+          <button class="btn btn-secondary" data-role="kakaostory" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/twitter.png" alt="트위터" class="media-object pull-left img-circle" style="width:38px">
+          트위터
+          <button class="btn btn-secondary" data-role="twitter" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/mail.png" alt="이메일" class="media-object pull-left img-circle" style="width:38px">
+          이메일
+          <button class="btn btn-secondary" data-role="email" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <img src="<?php echo $g['img_core']?>/sns/sms.png" alt="SMS" class="media-object pull-left img-circle" style="width:38px">
+          SMS
+          <button class="btn btn-secondary" data-role="sms" data-toggle="linkCopy">링크복사</button>
+        </li>
+        <li class="table-view-cell media align-items-center">
+          <span class="ml-2">기타</span>
+          <button class="btn btn-secondary" data-role="etc" data-toggle="linkCopy">링크복사</button>
+        </li>
+
+        <?php if ($my['admin']): ?>
+        <li class="table-view-cell media align-items-center">
+          <span class="ml-2">고유번호</span>
+          <button class="btn btn-secondary" data-role="uid" data-toggle="linkCopy">복사</button>
+        </li>
+        <?php endif; ?>
       </ul>
-      <p class="content-padded">
-        <input class="form-control form-control-sm" type="text" data-role="share" readonly>
-        <small>외부 공유시에 사용할 게시물의 URL 입니다.</small>
-      </p>
+
+
+
+
+
     </div><!-- /.content -->
   </div><!-- /.popup-content -->
 </div><!-- /.popup -->

@@ -10,7 +10,7 @@ function getPostView(settings) {
   var videoId = settings.videoId;
   var url = settings.url;
   var landing = settings.landing;
-  var ctheme = '_mobile/rc-default';
+  var ctheme=settings.ctheme?settings.ctheme:'_mobile/rc-default'; // 댓글테마
   var template = '/modules/post/themes/'+post_skin_mobile+'/_html/view_'+format+'.html';
   var list_collapse = settings.list_collapse;
 
@@ -170,6 +170,15 @@ function getPostView(settings) {
           var zip=result.zip;
           var doc=result.doc;
           var link=result.link;
+          var theme=result.theme;
+          var theme_css = '/modules/post/themes/'+theme+'/_main.css';
+
+          if (!$('link[href="'+theme_css+'"]').length)
+            $('<link/>', {
+               rel: 'stylesheet',
+               type: 'text/css',
+               href: theme_css
+            }).appendTo('head');
 
           wrapper.find('[data-toggle="linkShare"]').attr('data-subject',subject).attr('data-link',url).attr('data-featured',featured);
 
@@ -292,6 +301,14 @@ function getPostView(settings) {
             // 댓글 출력 함수 실행
             var p_module = 'post';
             var p_table = 'rb_post_data';
+           var comment_theme_css = '/modules/comment/themes/'+ctheme+'/css/style.css';
+
+            if (!$('link[href="'+comment_theme_css+'"]').length)
+              $('<link/>', {
+                 rel: 'stylesheet',
+                 type: 'text/css',
+                 href: comment_theme_css
+              }).appendTo('head');
 
             get_Rb_Comment(p_module,p_table,uid,ctheme);
 
