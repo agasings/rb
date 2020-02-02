@@ -585,6 +585,10 @@ function getBbsView(settings){
   });
 
   page_bbs_photo.on('hidden.rc.page', function () {
+    // swiper destroy
+    var bbs_photo_swiper = document.querySelector('#page-bbs-photo .swiper-container').swiper
+    bbs_photo_swiper.destroy(false, true);
+
     // 줌상태 초기화
     setTimeout(function(){
       page_bbs_photo.find('.swiper-zoom-container').removeAttr('style');
