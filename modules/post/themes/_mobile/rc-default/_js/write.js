@@ -466,7 +466,7 @@ function savePost(f) {
               if (display==5 || display==4) {
                 history.back();
               } else {
-                $('#page-post-mypost').page({ start: '#page-main' });
+                $('#page-post-mypost').page({ start: '#page-main', title : '내 포스트', url : 'dashboard?page=post' });
               }
             }
             // 메인화면 목록 새로불러오기
