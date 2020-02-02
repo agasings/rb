@@ -21,6 +21,10 @@
 <meta property="og:description" content="<?php echo strip_tags($g['meta_des'])?>">
 <meta property="og:image" content="<?php echo strip_tags($g['meta_img'])?>">
 
+<!-- 파비콘 -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo $g['img_layout']?>/icon/homescreen.png">
+<link rel="shortcut icon" href="<?php echo $g['img_layout']?>/icon/favicon.ico">
+
 <title><?php echo $g['browtitle']?></title>
 
 <!-- 웹앱 매니페스트 -->
