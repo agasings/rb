@@ -569,6 +569,11 @@ function getBbsView(settings){
         nextEl: '#page-bbs-photo .swiper-button-next',
         prevEl: '#page-bbs-photo .swiper-button-prev',
       },
+      on: {
+        init: function () {
+          page_bbs_photo.find('.swiper-container').css('height','100vh');
+        },
+      },
     });
 
     bbs_photo_swiper.on('slideChangeTransitionEnd', function () {
