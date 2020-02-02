@@ -76,10 +76,6 @@ $(document).ready(function() {
     });
   });
 
-  $('#sheet-attach-moreAct').find('.table-view-cell a').click(function() { // 시트에 항목을 터치하면
-    history.back()
-  });
-
   $('.rb-preview').on('click', function() {
     $(this).removeClass('btn-primary').addClass('btn-default')
   });
