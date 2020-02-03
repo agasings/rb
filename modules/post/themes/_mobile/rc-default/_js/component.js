@@ -529,17 +529,19 @@ page_post_view.on('show.rc.page', function(event) {
       break;
   }
 
-  getPostView({
-    mod : 'page',
-    format : format,
-    uid : uid,
-    list : list,
-    featured : featured,
-    provider : provider,
-    videoId : videoId,
-    wrapper : page,
-    url : url
-  });
+  setTimeout(function(){
+    getPostView({
+      mod : 'page',
+      format : format,
+      uid : uid,
+      list : list,
+      featured : featured,
+      provider : provider,
+      videoId : videoId,
+      wrapper : page,
+      url : url
+    });
+  }, 100);
 })
 
 page_post_view.on('hidden.rc.page', function(event) {
