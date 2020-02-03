@@ -153,11 +153,7 @@ function setPostWrite(settings) {
                 var linkNum = result.linkNum;
                 var attachNum = result.attachNum;
                 var goodsNum = result.goodsNum;
-                var photo=result.photo;
-                var video=result.video;
-                var audio=result.audio;
-                var file=result.file;
-                var link=result.link;
+                var attachFileTheme = result.theme_attachFile;
 
                 wrapper.find('[data-role="display_label"]').text(display_label);
                 popover_post_display.find('[data-toggle="display"] .badge').empty();
@@ -186,15 +182,28 @@ function setPostWrite(settings) {
                 }
 
                 if (attachNum) {
-                  wrapper.find('[data-role="attach_guide"]').addClass('d-none');
-                  wrapper.find('[data-role="attachNum"]').text(attachNum);
-                  if (photo) {  // 첨부 이미지가 있을 경우
-                    wrapper.find('[data-role="attach-preview-photo"]').removeClass('hidden').html(photo)
-                  }
+                  $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=getAttachFileList',{
+                       p_module : 'post',
+                       uid : uid,
+                       theme_file : attachFileTheme,
+                       mod : 'upload'
+                    },function(response){
+                     var result = $.parseJSON(response);
 
-                  if (file) {  // 첨부 기타파일이 있을 경우
-                    wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(file)
-                  }
+                     var photo=result.photo;
+                     var video=result.video;
+                     var audio=result.audio;
+                     var file=result.file;
+                     var zip=result.zip;
+                     var doc=result.doc;
+
+                     wrapper.find('[name="featured_img"]').val(featured_img); // 대표이미지 셋팅
+                     wrapper.find('[data-role="attach-preview-photo"]').html(photo);
+                     wrapper.find('[data-role="attach-preview-video"]').html(video)
+                     wrapper.find('[data-role="attach-preview-audio"]').html(audio)
+                     wrapper.find('[data-role="attach-preview-file"]').html(file)
+                     wrapper.find('[data-role="attachNum"]').text(attachNum)
+                   });
                 } else {
                   $('[data-role="attach_guide"]').removeClass('d-none');
                   wrapper.find('[data-role="attachNum"]').text('');

@@ -23,6 +23,8 @@ function getPostView(settings) {
     }, 300);
   }
 
+  page_post_photo.find('.swiper-wrapper').html('')  // 사진크게보기 영역 초기화
+
   wrapper.load(template, function() {
 
     var header_height = wrapper.find('.bar-nav').outerHeight();
@@ -163,12 +165,8 @@ function getPostView(settings) {
           var dis_listadd = result.dis_listadd;
           var goods = result.goods;
           var featured = result.featured_640;
-          var photo=result.photo;
-          var video=result.video;
-          var audio=result.audio;
-          var file=result.file;
-          var zip=result.zip;
-          var doc=result.doc;
+          var attachNum=result.attachNum;
+          var attachFileTheme = result.theme_attachFile;
           var link=result.link;
           var theme=result.theme;
           var theme_css = '/modules/post/themes/'+theme+'/_main.css';
@@ -207,38 +205,55 @@ function getPostView(settings) {
 
           if (format!='video') Iframely('oembed[url]') // oembed 미디어 변환
 
-          if (photo) {  // 첨부 이미지가 있을 경우
-            wrapper.find('[data-role="attach-photo"]').removeClass('hidden').html(photo);
+          // 첨부파일이 있을 경우
+          if (attachNum) {
+            $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=getAttachFileList',{
+                 p_module : 'post',
+                 uid : uid,
+                 theme_file : attachFileTheme,
+                 mod : 'view'
+              },function(response){
+               var result = $.parseJSON(response);
 
-            if (wrapper.attr('id')=='modal-post-view' || wrapper.attr('id')=='page-post-view') {
+               var photo=result.photo;
+               var photo_full=result.photo_full;
+               var video=result.video;
+               var audio=result.audio;
+               var file=result.file;
+               var zip=result.zip;
+               var doc=result.doc;
 
-              initPhotoSwipeFromDOM('[data-plugin="photoswipe"]');  //포토 스와이프 활성
+               if (photo) {  // 첨부 이미지가 있을 경우
+                 wrapper.find('[data-role="attach-photo"]').removeClass('hidden').html(photo)
+                 i=0;
+                 wrapper.find('[data-role="attach-photo"] [data-toggle="page"]').each(function(i) {
+                   $(this).attr('data-index',i);i=++i;
+                 });
+                 page_post_photo.find('.swiper-wrapper').html(photo_full)
+               }
 
-            } else {
-              wrapper.on('click','[data-plugin="photoswipe"] a',function(){return false;}) //포토 스와이프 비활성 (page 히스토리와 충돌)
-            }
+               if (video) {  // 첨부 비디오가 있을 경우
+                 wrapper.find('[data-role="attach-video"]').removeClass('hidden').html(video)
+               }
 
-          }
+               if (audio) {  // 첨부 오디오가 있을 경우
+                 wrapper.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
+               }
 
-          if (video) {  // 첨부 비디오가 있을 경우
-            wrapper.find('[data-role="attach-video"]').removeClass('hidden').html(video)
-            wrapper.find('.mejs__overlay-button').css('margin','0') //mejs-player 플레이버튼 위치재조정
-          }
+               if (doc) {  // 첨부 문서 있을 경우
+                 wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
+               }
 
-          if (audio) {  // 첨부 오디오가 있을 경우
-            wrapper.find('[data-role="attach-audio"]').removeClass('hidden').html(audio)
-          }
+               if (zip) {  // 첨부 압축파일이 있을 경우
+                 page.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
+               }
 
-          if (doc) {  // 첨부 문서 있을 경우
-            wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(doc)
-          }
+               if (file) {  // 첨부 기타파일이 있을 경우
+                 wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(file)
+               }
 
-          if (zip) {  // 첨부 압축파일이 있을 경우
-            wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(zip)
-          }
 
-          if (file) {  // 첨부 기타파일이 있을 경우
-            wrapper.find('[data-role="attach-file"]').removeClass('hidden').html(file)
+             });
           }
 
           if (link) {  // 첨부 링크가 있을 경우
@@ -301,7 +316,7 @@ function getPostView(settings) {
             // 댓글 출력 함수 실행
             var p_module = 'post';
             var p_table = 'rb_post_data';
-           var comment_theme_css = '/modules/comment/themes/'+ctheme+'/css/style.css';
+            var comment_theme_css = '/modules/comment/themes/'+ctheme+'/css/style.css';
 
             if (!$('link[href="'+comment_theme_css+'"]').length)
               $('<link/>', {
@@ -427,10 +442,6 @@ function getPostView(settings) {
 
     wrapper.attr('data-format',_format).attr('data-uid',_uid);
 
-      setTimeout(function(){
-        wrapper.find('[data-role="box"]').loader({ position: 'inside' });
-      }, 150);
-
       getPostView({
         uid : _uid,
         format : _format,
@@ -444,6 +455,59 @@ function getPostView(settings) {
     });
 
   });
+
+  page_post_photo.on('show.rc.page', function (e) {
+    var ele = $(e.relatedTarget)
+    var index = ele.attr('data-index');
+    var uid = ele.attr('data-uid');
+    var page = $(this);
+
+    var title = page_post_view.find('[data-role="title"]').text();
+    var subject = page_post_view.find('[data-role="subject"]').text();
+
+    page.find('[data-role="title"]').text(title);
+    page.find('[data-role="subject"]').text(subject);
+    page.find('[data-act="down"]').attr('data-uid',uid);
+
+    var bbs_photo_swiper = new Swiper('#page-post-photo .swiper-container', {
+      zoom: true,
+      initialSlide: index,
+      spaceBetween: 30,
+      pagination: {
+        el: '#page-post-photo .swiper-pagination',
+        type: 'fraction',
+      },
+      navigation: {
+        nextEl: '#page-post-photo .swiper-button-next',
+        prevEl: '#page-post-photo .swiper-button-prev',
+      },
+      on: {
+        init: function () {
+          page_post_photo.find('.swiper-container').css('height','100vh');
+        },
+      },
+    });
+
+    bbs_photo_swiper.on('slideChangeTransitionEnd', function () {
+      var uid = page_post_photo.find('.swiper-slide-active').attr('data-uid');
+      page_post_photo.find('[data-act="down"]').attr('data-uid',uid)
+    });
+
+  })
+
+  page_post_photo.on('hidden.rc.page', function () {
+    // swiper destroy
+    var bbs_photo_swiper = document.querySelector('#page-post-photo .swiper-container').swiper
+    bbs_photo_swiper.destroy(false, true);
+
+    // 줌상태 초기화
+    setTimeout(function(){
+      page_post_photo.find('.swiper-zoom-container').removeAttr('style');
+      page_post_photo.find('.swiper-zoom-container img').removeAttr('style');
+    }, 500);
+  })
+
+
 
 } // getPostView
 

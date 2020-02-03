@@ -13,20 +13,21 @@
 10. 페이지 : 나중에 볼 포스트
 11. 페이지 : 좋아요 한 포스트
 12. 페이지 : 포스트 보기
-13. 페이지 : 새 포스트
-14. 모달 : 포스트 보기
-15. 모달 : 포스트 사진 보기
-16. 모달 : 포스트 좋아요 보기
-17. 모달 : 전체 포스트
-18. 모달 : 전체 리스트
-19. 모달 : 리스트 보기
-20. 모달 : 포스트 검색 (임시)
-21. 팝업 : 포스트 옵션 더보기
-22. 팝업 : 포스트 신고
-23. 팝업 : 정렬방식 변경
-24. 팝업 :  새 재생목록
-25. 시트 : 포스트 필터
-26. 시트 : 리스트 저장
+13. 페이지 : 포스트 사진 보기
+14. 페이지 : 새 포스트
+15. 모달 : 포스트 보기
+16. 모달 : 포스트 사진 보기
+17. 모달 : 포스트 좋아요 보기
+18. 모달 : 전체 포스트
+19. 모달 : 전체 리스트
+20. 모달 : 리스트 보기
+21. 모달 : 포스트 검색 (임시)
+22. 팝업 : 포스트 옵션 더보기
+23. 팝업 : 포스트 신고
+24. 팝업 : 정렬방식 변경
+25. 팝업 :  새 재생목록
+26. 시트 : 포스트 필터
+27. 시트 : 리스트 저장
 -->
 
 <!-- 페이지 : 전체포스트 -->
@@ -188,6 +189,32 @@
 <!-- 페이지 : 포스트 보기 -->
 <div class="page right" id="page-post-view" data-role="view">
 </div><!-- /.page -->
+
+<!-- 페이지 : 포스트 사진 크게보기 -->
+<div class="page right" id="page-post-photo" data-role="post-photo">
+  <header class="bar bar-nav bar-dark bg-black pl-0 border-bottom-0" style="opacity: 0.7;;height: 3.7rem;">
+    <a class="icon pull-left material-icons px-3 text-white" role="button" data-history="back">arrow_back</a>
+    <h1 class="title title-left" data-history="back" style="line-height: 1.2;padding-top: .75rem">
+      <div data-role="title" class="pr-2 text-nowrap text-truncate"></div><small class="text-muted">포스트 보기</small>
+    </h1>
+  </header>
+  <div class="bar bar-footer bar-dark bg-black text-muted border-top-0" style="opacity: 0.7;">
+    <div class="swiper-pagination"></div>
+  </div>
+  <div class="content bg-black py-0">
+    <div class="d-flex" style="height:100vh">
+      <div class="swiper-container align-self-center" style="height:100vh">
+        <div class="swiper-wrapper align-items-center">
+          <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+              <img src="">
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
 
 <!-- 모달 : 포스트 보기 -->
 <div class="modal" id="modal-post-view" data-role="view">

@@ -186,6 +186,7 @@ if($R['upload']) {
     $result['video'] = getAttachFileList($R,'view','video',$theme_attach);
     $result['link'] = getAttachPlatformList($R,'view','link');
   }
+  $result['theme_attachFile'] = $theme_attach;
 }
 
 echo json_encode($result);

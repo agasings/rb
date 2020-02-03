@@ -75,21 +75,15 @@ $result['dis_rating'] = $R['dis_rating']?$R['dis_rating']:'';
 $result['dis_comment'] = $R['dis_comment']?$R['dis_comment']:'';
 $result['dis_listadd'] = $R['dis_listadd']?$R['dis_listadd']:'';
 
-
-//첨부링크 및 파일
-$theme_attach= '_mobile/rc-post-file';
-$theme_link= '_mobile/rc-post-link';
-include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
-include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
-
 if($R['upload']) {
+  //첨부링크 및 파일
+  $theme_attach= '_mobile/rc-post-file';
+  $theme_link= '_mobile/rc-post-link';
+  include_once $g['path_module'].'mediaset/themes/'.$theme_attach.'/main.func.php';
+  include_once $g['path_module'].'mediaset/themes/'.$theme_link.'/main.func.php';
+
   $result['attachNum'] = getAttachNum($R['upload'],'modify');
-  $result['linkNum'] = getLinkNum($R['upload'],'modify');
-  $result['file'] = getAttachFileList($R,'upload','file',$theme_attach);
-  $result['photo'] = getAttachFileList($R,'upload','photo',$theme_attach);
-  $result['video'] = getAttachFileList($R,'upload','video',$theme_attach);
-  $result['audio'] = getAttachFileList($R,'upload','audio',$theme_attach);
-  $result['link'] = getAttachPlatformList($R,'upload','file');
+  $result['theme_attachFile'] = $theme_attach;
 }
 
 if ($R['goods']) {

@@ -26,7 +26,7 @@ function getAttachNum($upload,$mod)
    $parent_data : 해당 포스트의 row 배열
    $mod : upload or modal  ==> 실제 업로드 모드 와 모달을 띄워서 본문에 삽입용도로 쓰거나
 */
-function getAttachFileList($parent_data,$mod,$type,$theme) {
+function getAttachFileList($parent_data,$mod,$type,$p_module) {
 	global $table;
 
    $upload=$parent_data['upload'];
@@ -54,18 +54,18 @@ function getAttachFileList($parent_data,$mod,$type,$theme) {
   while($R=db_fetch_array($RCD)){
 	 	$U=getUidData($table['s_upload'],$R['uid']);
 
-		if($type=='file') $html.=getAttachFile($U,$mod,$featured_img_uid,$theme);
-		else if($type=='photo') $html.=getAttachFile($U,$mod,$featured_img_uid,$theme);
-		else if($type=='audio') $html.=getAttachAudio($U,$mod,$featured_audio_uid,$theme);
-		else if($type=='video') $html.=getAttachVideo($U,$mod,$featured_video_uid,$theme);
-		else $html.=getAttachFile($U,$mod,$featured_img_uid,$theme);
+		if($type=='file') $html.=getAttachFile($U,$mod,$featured_img_uid,$p_module);
+		else if($type=='photo') $html.=getAttachFile($U,$mod,$featured_img_uid,$p_module);
+		else if($type=='audio') $html.=getAttachAudio($U,$mod,$featured_audio_uid,$p_module);
+		else if($type=='video') $html.=getAttachVideo($U,$mod,$featured_video_uid,$p_module);
+		else $html.=getAttachFile($U,$mod,$featured_img_uid,$p_module);
   }
 
 	return $html;
 }
 
 // 첨부파일 리스트 추출 함수 (낱개)
-function getAttachFile($R,$mod,$featured_img_uid,$theme) {
+function getAttachFile($R,$mod,$featured_img_uid,$p_module) {
 
 	global $g,$r,$TMPL	;
 
@@ -73,6 +73,9 @@ function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 
   $fileName=explode('.',$R['name']);
   $file_name=$fileName[0]; // 파일명만 분리
+
+	$sync_array = getArrayString($R['sync']);
+	$m = $sync_array['data'][0];
 
 	if ($R['type']==2) {
 		$type='photo';
@@ -99,6 +102,7 @@ function getAttachFile($R,$mod,$featured_img_uid,$theme) {
 
   $html='';
 
+	$TMPL['m']=$p_module;
 	$TMPL['is_featured']=$R['uid']==$featured_img_uid?'':' hidden';
 	$TMPL['is_hidden']=!$R['hidden']?' hidden':'';
 	$TMPL['hidden_code']=$R['hidden']?'show':'hide';

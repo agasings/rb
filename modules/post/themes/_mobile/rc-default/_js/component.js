@@ -9,6 +9,7 @@ var page_post_mylist =  $('#page-post-mylist'); //내 리스트 관리
 var page_post_saved=  $('#page-post-saved'); // 내 포스트 저장내역(나중에 볼 동영상)
 var page_post_liked=  $('#page-post-liked'); // 좋아요한 포스트
 var page_post_view =  $('#page-post-view'); //포스트 보기
+var page_post_photo= $('#page-post-photo'); //포스트 사진보기
 var page_post_edit_main = $('#page-post-edit-main'); // 포스트 작성 메인
 var page_post_edit_attach =  $('#page-post-edit-attach'); //포스트 작성 첨부파일 추가
 var page_post_edit_link = $('#page-post-edit-link'); // 포스트 작성 링크추가

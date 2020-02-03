@@ -555,7 +555,6 @@ function getBbsView(settings){
 
     page.find('[data-role="title"]').text(title);
     page.find('[data-role="subject"]').text(subject);
-    page.find('[data-act="down"]').attr('data-uid',uid);
 
     var bbs_photo_swiper = new Swiper('#page-bbs-photo .swiper-container', {
       zoom: true,
@@ -576,18 +575,7 @@ function getBbsView(settings){
       },
     });
 
-    bbs_photo_swiper.on('slideChangeTransitionEnd', function () {
-      var uid = page_bbs_photo.find('.swiper-slide-active').attr('data-uid');
-      page_bbs_photo.find('[data-act="down"]').attr('data-uid',uid)
-    });
-
   })
-
-  page_bbs_photo.on('click','[data-act="down"]',function(){
-    var uid = $(this).attr('data-uid');
-    var url = '/?r=home&m=mediaset&a=download&uid='+uid
-    $(location).attr('href',url);
-  });
 
   page_bbs_photo.on('hidden.rc.page', function () {
     // swiper destroy
