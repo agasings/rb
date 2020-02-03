@@ -980,6 +980,7 @@ $(document).ready(function() {
           $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
             type : 8,
             title : title,
+            saveDir : '<?php echo $g['path_file']?>post/',
             theme : '_desktop/bs4-default-link',
             description : description,
             thumbnail_url : thumbnail_url,

@@ -23,16 +23,46 @@ $folder = substr($folder ,0,-1);
 $folder = substr($folder,1);
 
 $tmpname = $_tmpname.($thumbnail_query?'?'.$thumbnail_query:'');
+$src = $thumbnail_url;
+
 if ($provider=='YouTube') {
   $url_arr = explode('=',$url);
   $name = $url_arr[1];
+} elseif ($provider=='Instagram' || $provider=='Google Maps') {
+  $tmpname  = md5($name).substr($date['totime'],8,14).'.jpg';
+  $name = $tmpname;
+  $savePath1  = $saveDir.substr($date['today'],0,4);
+  $savePath2  = $savePath1.'/'.substr($date['today'],4,2);
+  $savePath3  = $savePath2.'/'.substr($date['today'],6,2);
+  $folder   = substr($date['today'],0,4).'/'.substr($date['today'],4,2).'/'.substr($date['today'],6,2);
+  $_photodata = getCURLData($thumbnail_url,'');
+
+  if ($_photodata) {
+    $saveFile = $saveDir.$folder.'/'.$tmpname;
+    $thumbnail_host = '';
+    $size = filesize($saveFile);
+    $src = str_replace('.','',$saveDir).$folder.'/'.$tmpname;
+    $folder =  str_replace('./','',$saveDir).$folder;
+    $fserver = 0;
+    for ($i = 1; $i < 4; $i++) {
+      if (!is_dir(${'savePath'.$i})) {
+        mkdir(${'savePath'.$i},0707);
+        @chmod(${'savePath'.$i},0707);
+      }
+    }
+    $fp = fopen($saveFile, "w");
+		fwrite($fp,$_photodata);
+    @chmod($saveFile,0707);
+		fclose($fp);
+	}
 } else {
   $name = $tmpname;
 }
+
 $linkurl= $url;
 $fileExt  = getExt($_tmpname);
 $fileExt  = $fileExt == 'jpeg' ? 'jpg' : $fileExt;
-$src = $thumbnail_url;
+
 if($uid){
 
       $QVAL1 = "caption='$title',description='$description',time='$time',tag='$tag' ";

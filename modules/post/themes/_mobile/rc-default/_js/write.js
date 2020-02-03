@@ -473,7 +473,7 @@ function savePost(f) {
               $.notify({message: '저장 되었습니다.'},{type: 'default'});
             } else {
               if (display==5 || display==4) {
-                
+
               } else {
                 $('#page-post-mypost').page({ start: '#page-main', title : '내 포스트', url : 'dashboard?page=post' });
               }
@@ -629,6 +629,7 @@ function savePostByLink(url) {
         $.post(rooturl+'/?r='+raccount+'&m=mediaset&a=saveLink',{
           type : 8,
           title : title,
+          saveDir : './files/post/',
           theme : '_desktop/bs4-default-link',
           description : description,
           thumbnail_url : thumbnail_url,
