@@ -1176,7 +1176,7 @@ sheet_post_photoadd.find('[data-act="submit"]').click(function(){
     if (featured_attach_img_src) modal_featured.attr('src',featured_attach_img_src);
   }
 
-  var list = $('#sheet-post-photoadd').find('[data-role="attach-preview-photo"]').html();
+  var list = $(document).find('#sheet-post-photoadd [data-role="attach-preview-photo"]').html();
 
   modal_featured.closest('.media-left').removeClass('d-none');
   history.back();

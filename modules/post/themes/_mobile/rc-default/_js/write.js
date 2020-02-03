@@ -466,10 +466,10 @@ function savePost(f) {
           var result = $.parseJSON(response);
           var d_modify=result.d_modify;
 
-          history.back();
           form.find('[data-role="postsubmit"]').attr( 'disabled', false );
           setTimeout(function(){
             if (uid) {
+              history.back();
               $.notify({message: '저장 되었습니다.'},{type: 'default'});
             } else {
               if (display==5 || display==4) {
