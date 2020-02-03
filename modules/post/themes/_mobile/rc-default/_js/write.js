@@ -467,13 +467,13 @@ function savePost(f) {
           var d_modify=result.d_modify;
 
           form.find('[data-role="postsubmit"]').attr( 'disabled', false );
+          history.back();
           setTimeout(function(){
             if (uid) {
-              history.back();
               $.notify({message: '저장 되었습니다.'},{type: 'default'});
             } else {
               if (display==5 || display==4) {
-                history.back();
+                
               } else {
                 $('#page-post-mypost').page({ start: '#page-main', title : '내 포스트', url : 'dashboard?page=post' });
               }

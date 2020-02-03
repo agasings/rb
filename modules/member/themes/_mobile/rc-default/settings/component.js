@@ -76,7 +76,26 @@ page_settings_email.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
 
-  console.log('이메일 관리')
+  page.find('.content').loader({ position: 'inside' });
+
+  setTimeout(function(){
+
+    $.post(rooturl+'/?r='+raccount+'&m=member&a=get_emailList',{
+    },function(response){
+      var result = $.parseJSON(response);
+      var error=result.error;
+      var list=result.list;
+
+      if (error) {
+        history.back();
+        setTimeout(function(){ $.notify({message: error},{type: 'default'}) }, 500);
+      } else {
+        page.find('.content').html(list)
+      }
+
+    })
+
+  }, 300);
 
 })
 
@@ -86,7 +105,26 @@ page_settings_phone.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
 
-  console.log('휴대폰 관리')
+  page.find('.content').loader({ position: 'inside' });
+
+  setTimeout(function(){
+
+    $.post(rooturl+'/?r='+raccount+'&m=member&a=get_phoneList',{
+    },function(response){
+      var result = $.parseJSON(response);
+      var error=result.error;
+      var list=result.list;
+
+      if (error) {
+        history.back();
+        setTimeout(function(){ $.notify({message: error},{type: 'default'}) }, 500);
+      } else {
+        page.find('.content').html(list)
+      }
+
+    })
+
+  }, 300);
 
 })
 
@@ -113,7 +151,26 @@ page_settings_shipping.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
   var page = $(this);
 
-  console.log('배송지관리')
+  page.find('.content').loader({ position: 'inside' });
+
+  setTimeout(function(){
+
+    $.post(rooturl+'/?r='+raccount+'&m=member&a=get_shippingList',{
+    },function(response){
+      var result = $.parseJSON(response);
+      var error=result.error;
+      var list=result.list;
+
+      if (error) {
+        history.back();
+        setTimeout(function(){ $.notify({message: error},{type: 'default'}) }, 500);
+      } else {
+        page.find('.content').html(list)
+      }
+
+    })
+
+  }, 300);
 
 })
 
