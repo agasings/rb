@@ -926,6 +926,8 @@ $(document).ready(function() {
         var type = response.type;
   			var title = response.title;
         var description = response.description?response.description:'.';
+        var description = linkifyStr(description,{ target: '_blank' });
+        var description = description.replace(/(?:\r\n|\r|\n)/g, '<br>');
         var thumbnail_url = response.thumbnail_url;
         var author = response.author;
         var provider = response.provider_name;
@@ -935,9 +937,10 @@ $(document).ready(function() {
         var embed = response.html;
   			$('[name="subject"]').val(title);
 
-        editor.model.change( writer => {
-          writer.insertText( description, editor.model.document.selection.getFirstPosition() );
-        } );
+        const viewFragment = editor.data.processor.toView( description );
+        const modelFragment = editor.data.toModel( viewFragment );
+
+        editor.model.insertContent( modelFragment );
 
         if (type=='video') {
 

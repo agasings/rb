@@ -313,8 +313,17 @@
 <?php getImport('jquery.shorten','jquery.shorten.min','1.0','js')?>
 
 <script>
-$('[data-plugin="shorten"]').shorten({
-	moreText: '더보기',
-	lessText: ''
+
+$( document ).ready(function() {
+	
+	$('[data-plugin="shorten"]').shorten({
+		moreText: '더보기',
+		lessText: ''
+	});
+
+	$('.rb-article').linkify({
+		target: "_blank"
+	});
+
 });
 </script>

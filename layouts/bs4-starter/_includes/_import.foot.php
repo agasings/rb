@@ -17,6 +17,10 @@
 <!-- markjs js : https://github.com/julmot/mark.js -->
 <?php getImport('markjs','jquery.mark.min','8.11.1','js')?>
 
+<!-- linkifyjs : https://github.com/Soapbox/linkifyjs -->
+<?php getImport('linkifyjs','linkify.min','2.1.8','js')?>
+<?php getImport('linkifyjs','linkify-string.min','2.1.8','js')?>
+
 <!-- 댓글출력시 필요 -->
 <?php if ($g['broswer']!='MSIE 11' && $g['broswer']!='MSIE 10' && $g['broswer']!='MSIE 9'): ?>
   <?php if ($mod!='write'): ?>

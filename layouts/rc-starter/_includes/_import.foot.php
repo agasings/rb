@@ -13,6 +13,10 @@
 <!-- jquery.shorten : https://github.com/viralpatel/jquery.shorten -->
 <?php getImport('jquery.shorten','jquery.shorten.min','1.0','js')?>
 
+<!-- linkifyjs : https://github.com/Soapbox/linkifyjs -->
+<?php getImport('linkifyjs','linkify.min','2.1.8','js')?>
+<?php getImport('linkifyjs','linkify-string.min','2.1.8','js')?>
+
 <!-- moment -->
 <?php getImport('moment','moment','2.22.2','js');?>
 <?php getImport('moment-duration-format','moment-duration-format','2.2.2','js');?>
