@@ -12,7 +12,7 @@
 
         <div class="mt-4 text-xs-center">
           <?php if ($my['uid']): ?>
-          <a class="btn btn-primary" role="button"
+          <a class="btn btn-primary btn-lg" role="button"
             href="#popup-post-newPost"
             data-toggle="popup"
             data-url="/post/write"
@@ -20,7 +20,7 @@
             포스트 작성
           </a>
           <?php else: ?>
-          <a class="btn btn-primary" role="button"
+          <a class="btn btn-primary btn-lg" role="button"
             href="#modal-login"
             data-toggle="modal"
             data-title="로그인">
