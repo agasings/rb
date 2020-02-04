@@ -27,7 +27,7 @@ function getPostAll(settings) {
         var totalPage=result.tpg;
 
         wrapper.loader('hide');
-        if (num) wrapper.html(list).addClass('animated fadeIn');
+        if (list) wrapper.html(list).addClass('animated fadeIn');
         else wrapper.html(none)
 
         wrapper.find('[data-plugin="timeago"]').timeago();

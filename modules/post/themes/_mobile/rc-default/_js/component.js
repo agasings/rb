@@ -82,7 +82,7 @@ function pullToRefresh_post(page){
           markup    : 'post-row',  // 테마 > _html > post-row-***.html
           recnum    : 5,
           sort      : 'gid',
-          none : list_ele.find('[data-role="none"]').html(),
+          none : wrapper.find('[data-role="none"]').html(),
           paging : 'infinit'
         })
       }
