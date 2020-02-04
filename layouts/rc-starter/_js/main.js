@@ -160,11 +160,14 @@ $(document).ready(function() {
     toggleFullScreen()
   });
 
-  $('[data-toggle="newPost"]').click(function() {
+  $('[data-open="newPost"]').click(function() {
+    var url = $(this).attr('data-url');
+    console.log(url+'dd')
     drawer_left.drawer('hide')
     setTimeout(function(){
       $('#popup-post-newPost').popup({
-        title :'작업선택'
+        title :'작업선택',
+        url : url
       });
     }, 300);
   });

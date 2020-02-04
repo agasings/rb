@@ -16,7 +16,7 @@
 
 <nav class="bar bar-tab bg-white">
   <?php if ($my['uid']): ?>
-  <a class="tab-item active bg-primary" role="button" data-toggle="newPost">
+  <a class="tab-item active bg-primary" role="button" data-open="newPost" data-url="/post/write">
     새 포스트
   </a>
   <?php else: ?>
