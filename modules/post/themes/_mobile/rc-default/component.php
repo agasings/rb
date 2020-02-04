@@ -1006,7 +1006,7 @@
   <div class="popup-content rounded-0">
     <header class="bar bar-nav">
       <a class="icon icon-close pull-right" data-history="back" role="button"></a>
-      <h1 class="title">작업선택</h1>
+      <h1 class="title" data-role="title">새 포스트</h1>
     </header>
     <div class="content rounded-0" style="min-height: 185px;">
       <div class="px-3 pb-3">

@@ -8,7 +8,7 @@
           subscriptions
         </div>
         <h5>나만의 채널을 시작합니다.</h5>
-        <small class="text-muted">당신만울 위한 브랜드 베이스캠프</small>
+        <small class="text-muted">당신만울 위한 모바일 베이스캠프</small>
 
         <div class="mt-4 text-xs-center">
           <?php if ($my['uid']): ?>
@@ -16,7 +16,7 @@
             href="#popup-post-newPost"
             data-toggle="popup"
             data-url="/post/write"
-            data-title="작업선택">
+            data-title="새 포스트">
             포스트 작성
           </a>
           <?php else: ?>
