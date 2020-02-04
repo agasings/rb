@@ -34,7 +34,7 @@
  var attach_file_saveDir = './files/bbs/';// 파일 업로드 폴더
  var attach_module_theme = '_mobile/rc-post-file';// attach 모듈 테마
 
- function overScrollEffect(page){
+ function overScrollEffect_bbs(page){
    var page_startY = 0;
    var page_endY = 0;
 
@@ -57,7 +57,7 @@
    });
  }
 
- function pullToRefresh(page){
+ function pullToRefresh_bbs(page){
    var bid = page.attr('data-bid');
    page.find('.content').on('touchstart',function(event){
      page_startY = event.originalEvent.changedTouches[0].pageY;
@@ -80,8 +80,6 @@
    page.find('.content').infinitescroll('destroy');
    page.append(content_html);
    page.find('[data-role="post"]').loader({ position: 'inside' });
-   overScrollEffect(page_bbs_list);
-   pullToRefresh(page_bbs_list);
    activeBbsTab('list');
  }
 

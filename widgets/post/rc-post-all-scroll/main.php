@@ -6,7 +6,7 @@
       <div class="material-icons mb-4" style="font-size: 100px;color:#ccc">
         subscriptions
       </div>
-      <h5>나만의 유튜브를 시작합니다.</h5>
+      <h5>나만의 채널을 시작합니다.</h5>
       <small class="text-muted">당신만울 위한 브랜드 베이스캠프</small>
     </a>
   </div>

@@ -107,8 +107,8 @@ function getBbsList(bid,cat,search,page){
                }
              }
 
-             overScrollEffect(page_bbs_list)
-             pullToRefresh(page_bbs_list)
+             overScrollEffect_bbs(page_bbs_list)
+             pullToRefresh_bbs(page_bbs_list)
 
              //무한 스크롤
              container.infinitescroll({

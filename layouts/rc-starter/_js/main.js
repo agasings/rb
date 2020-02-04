@@ -83,7 +83,6 @@ function edgeEffect(container,pos,show) {
   }
 }
 
-//카카오톡 링크보내기
 function kakaoTalkSend(settings) {
   var title = settings.subject;
   var description = settings.review?settings.review:'';
@@ -113,19 +112,49 @@ function kakaoTalkSend(settings) {
   });
 }
 
-// Yutube IFrame Player API 비동기로 가져옴
-function loadYTScript() {
-  if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  }
+function overScrollEffect(page){
+  page_main.find('.snap-content .content').on('touchstart',function(event){
+    page_main_startY = event.originalEvent.changedTouches[0].pageY;
+  });
+  page_main.find('.snap-content .content').on('touchmove',function(event){
+    var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
+    var page_main_contentY = $(this).scrollTop();
+    var tab_id = $(this).attr('data-tab');
+    var page_main_body = page_main.find('.snap-content');
+    if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing')) {
+      if (page_main_moveY-page_main_startY>50) {
+        edgeEffect(page_main_body,'top','show'); // 스크롤 상단 끝
+      }
+    }
+    if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+      if (page_main_startY-page_main_moveY>50) {
+        edgeEffect(page_main_body,'bottom','show'); // 스크롤 하단 끝
+      }
+    }
+  });
+}
+
+function pullToRefresh(page){
+  page.find('.snap-content .content').on('touchstart',function(event){
+    page_startY = event.originalEvent.changedTouches[0].pageY;
+  });
+  page.find('.snap-content .content').on('touchend',function(event){
+    var page_endY=event.originalEvent.changedTouches[0].pageY;
+    var page_contentY = $(this).scrollTop();
+    if (page_contentY === 0 && page_endY > page_startY ) {
+      if (page_endY-page_startY>150) {
+        $.loader({ text: '새로고침' });
+        location.reload();
+      }
+    }
+  })
+
 }
 
 $(document).ready(function() {
 
-  //loadYTScript();
+  overScrollEffect(page_main);
+  // pullToRefresh(page_main);
 
   $('[data-toggle="fullscreen"]').click(function() {
     toggleFullScreen()
@@ -158,56 +187,6 @@ $(document).ready(function() {
   if(navigator.userAgent.indexOf("Mac") > 0) {
     $("body").addClass("mac-os");
   }
-
-  // over scroll effect (#page-main)
-  var page_main_startY = 0;
-  var page_main_endY = 0;
-
-  page_main.find('.snap-content .content').on('touchstart',function(event){
-    page_main_startY = event.originalEvent.changedTouches[0].pageY;
-  });
-  page_main.find('.snap-content .content').on('touchmove',function(event){
-    var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
-    var page_main_contentY = $(this).scrollTop();
-    var tab_id = $(this).attr('data-tab');
-    var page_main_body = page_main.find('.snap-content');
-    if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing')) {
-      if (page_main_moveY-page_main_startY>50) {
-        edgeEffect(page_main_body,'top','show'); // 스크롤 상단 끝
-      }
-    }
-    if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
-      if (page_main_startY-page_main_moveY>50) {
-        edgeEffect(page_main_body,'bottom','show'); // 스크롤 하단 끝
-      }
-    }
-  });
-
-  //  pull to refresh (#page-main)
-  page_main.find('.snap-content .content').on('touchend',function(event){
-    var page_main_endY=event.originalEvent.changedTouches[0].pageY;
-    var page_main_contentY = $(this).scrollTop();
-    var tab = $(this).attr('data-tab');
-
-    if (page_main_contentY === 0 && page_main_endY > page_main_startY ) {
-
-      if (page_main_endY-page_main_startY>150) {
-
-        getPostAll({
-          wrapper : $('[data-role="postAll"] [data-role="list"]'),
-          start : '#page-main',
-          markup    : 'post-row',  // 테마 > _html > post-row-***.html
-          recnum    : 5,
-          sort      : 'gid',
-          none : $('[data-role="postAll"]').find('[data-role="none"]').html(),
-          paging : 'infinit'
-        })
-
-        // $.loader({ text: '새로고침' });
-        // location.reload();
-      }
-    }
-  });
 
   putCookieAlert('site_common_result') // 로그인/로그아웃 알림 메시지 출력
 

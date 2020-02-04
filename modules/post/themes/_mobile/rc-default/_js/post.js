@@ -1,6 +1,7 @@
 function getPostAll(settings) {
   var start = settings.start;
   var wrapper = settings.wrapper;
+  var page = wrapper.closest('.page');
   var sort=settings.sort; // sort
   var orderby=settings.orderby; // orderby
   var recnum=settings.recnum; // recnum
@@ -31,7 +32,11 @@ function getPostAll(settings) {
 
         wrapper.find('[data-plugin="timeago"]').timeago();
 
+        overScrollEffect(page);
+
         if (paging=='infinit') {
+
+          pullToRefresh_post(page);
 
           //무한 스크롤
           wrapper.closest('.content').infinitescroll({

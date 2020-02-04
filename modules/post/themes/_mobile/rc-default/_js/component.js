@@ -54,6 +54,42 @@ var sheet_post_filter = $('#sheet-post-filter')  // 리스트 필터링,정별�
 
 var popover_post_display = $('#popover-post-display') // 새 포스트 작성을 위한 공개설정
 
+function pullToRefresh_post(page){
+
+  if (page.find('.snap-content').length) var wrapper = page.find('.snap-content');
+  else  var wrapper = page;
+
+  wrapper.find('.content').on('touchstart',function(event){
+    page_startY = event.originalEvent.changedTouches[0].pageY;
+  });
+  wrapper.find('.content').on('touchend',function(event){
+    var page_endY=event.originalEvent.changedTouches[0].pageY;
+    var page_contentY = wrapper.scrollTop();
+    if (page_contentY === 0 && page_endY > page_startY ) {
+      if (page_endY-page_startY>150) {
+
+        var list_ele = wrapper.find('[data-role="list"]');
+        list_ele.html('');
+        var content_html = wrapper.find('.content').clone();
+        wrapper.find('.content').infinitescroll('destroy');
+        wrapper.append(content_html);
+        var list_ele = wrapper.find('[data-role="list"]');
+        list_ele.loader({ position: 'inside' });
+
+        getPostAll({
+          wrapper : list_ele,
+          start : '#'+page.attr('id'),
+          markup    : 'post-row',  // 테마 > _html > post-row-***.html
+          recnum    : 5,
+          sort      : 'gid',
+          none : list_ele.find('[data-role="none"]').html(),
+          paging : 'infinit'
+        })
+      }
+    }
+  })
+}
+
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
