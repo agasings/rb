@@ -1011,6 +1011,8 @@ sheet_post_linkadd.on('click','[data-act="submit"]',function(){
   var input = sheet_post_linkadd.find('input');
   var url = input.val();
   var link_url_parse = $('<a>', {href: url});
+  var start = sheet_post_linkadd.attr('data-start');
+
   if (!url) {
     input.focus();
     // $.notify({message: '복사한 링크를 붙여넣기 하세요.'},{type: 'default'});
@@ -1030,7 +1032,7 @@ sheet_post_linkadd.on('click','[data-act="submit"]',function(){
     }
   }
 
-  savePostByLink(url);
+  savePostByLink(url,start);
 });
 
 sheet_post_listadd.find('[data-act="submit"]').click(function(){
@@ -1151,24 +1153,24 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
   var popup = popup_post_newPost;
   var button = $(this);
   var type =  button.attr('data-type');
+  var start = popup_post_newPost.attr('data-start');
 
   history.back();
-
   setTimeout(function(){
 
     if (type=='link') {
-      sheet_post_linkadd.sheet('show');
+      sheet_post_linkadd.sheet('show').attr('data-start',start);
       sheet_post_linkadd.find('button').attr('data-act','submit');
     } else if (type=='photo') {
-      sheet_post_photoadd.sheet({backdrop: 'static'});
+      sheet_post_photoadd.sheet({backdrop: 'static'}).attr('data-start',start);
     } else if (type=='twit') {
-      modal_post_twit.modal({title: '새 포스트', url : '/post/write'});
+      modal_post_twit.modal({title: '새 포스트', url : '/post/write'}).attr('data-start',start);
     } else if (type=='youtube') {
       $.notify({message: '구글계정 연결이 필요합니다.'},{type: 'default'});
     } else if (type=='map') {
       $.notify({message: '준비중 입니다.'},{type: 'default'});
     } else {
-      modal_post_write.modal({title: '새 포스트',url: '/post/write'})
+      modal_post_write.modal({title: '새 포스트',url: '/post/write'}).attr('data-start',start)
     }
 
   }, 200);
@@ -1207,6 +1209,7 @@ sheet_post_photoadd.find('[data-act="attach"]').click(function(){
 sheet_post_photoadd.find('[data-act="submit"]').click(function(){
   var sheet = $(this)
   var num = $('#sheet-post-photoadd').find('[data-role="attach-item"]').length;
+  var start = $('#sheet-post-photoadd').attr('data-start');
 
   if (num==0) {
     $.notify({message: '사진을 첨부 해주세요.'},{type: 'default'});
@@ -1234,7 +1237,7 @@ sheet_post_photoadd.find('[data-act="submit"]').click(function(){
   modal_post_write.find('[data-role="attachNum"]').text(num==0?'':num);
   modal_post_write.find('[data-role="attach-preview-photo"]').html(list);
   setTimeout(function(){
-    modal_post_write.modal({title: '새 포스트', url : '/post/write'});
+    modal_post_write.modal({title: '새 포스트', url : '/post/write'}).attr('data-start',start);
   }, 200);
 });
 

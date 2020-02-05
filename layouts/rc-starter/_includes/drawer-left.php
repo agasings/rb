@@ -16,7 +16,10 @@
 
 <nav class="bar bar-tab bg-white">
   <?php if ($my['uid']): ?>
-  <a class="tab-item active bg-primary<?php echo $m=='bbs'?' d-none':'' ?>" role="button" data-open="newPost" data-start="#page-post-allpost" data-url="/post/write">
+  <a class="tab-item active bg-primary<?php echo $m=='bbs'?' d-none':'' ?>" role="button"
+    data-open="newPost"
+    data-start="<?php echo $d['layout']['main_type']=='allpost'?'#page-main':'#page-post-allpost' ?>"
+    data-url="/post/write">
     새 포스트
   </a>
   <?php else: ?>

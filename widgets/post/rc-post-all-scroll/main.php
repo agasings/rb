@@ -15,6 +15,7 @@
           <a class="btn btn-primary btn-lg" role="button"
             href="#popup-post-newPost"
             data-toggle="popup"
+            data-start="<?php echo $wdgvar['start'] ?>"
             data-url="/post/write"
             data-title="새 포스트">
             포스트 작성

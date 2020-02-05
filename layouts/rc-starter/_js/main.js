@@ -163,20 +163,28 @@ $(document).ready(function() {
     var url = $(this).attr('data-url');
     var start = $(this).attr('data-start');
     drawer_left.drawer('hide')
-    setTimeout(function(){
-      $('#page-post-allpost').page({
-        start : '#page-main',
-        title : '전체 포스트'
-      });
+
+    if (start=='#page-main') {
       setTimeout(function(){
         $('#popup-post-newPost').popup({
           title :'작업선택',
           url : 'post/write'
         }).attr('data-start',start);
       }, 350);
-    }, 300);
-
-
+    } else {
+      setTimeout(function(){
+        $('#page-post-allpost').page({
+          start : '#page-main',
+          title : '전체 포스트'
+        });
+        setTimeout(function(){
+          $('#popup-post-newPost').popup({
+            title :'작업선택',
+            url : 'post/write'
+          }).attr('data-start',start);
+        }, 350);
+      }, 300);
+    }
   });
 
   $('[data-toggle="goMypage"]').click(function() {

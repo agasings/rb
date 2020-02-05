@@ -476,6 +476,7 @@ function savePost(f) {
               if (display==5 || display==4) {
 
               } else {
+                console.log('여기')
                 $('#page-post-mypost').page({ start: start, title : '내 포스트', url : 'dashboard?page=post' });
               }
             }
@@ -486,7 +487,7 @@ function savePost(f) {
               markup    : 'post-row',  // 테마 > _html > post-row-***.html
               recnum    : 5,
               sort      : 'gid',
-              none : '',
+              none : $(start).find('[data-role="postAll"] [data-role="none"]').html(),
               paging : 'infinit'
             })
            }, 300);
@@ -500,7 +501,7 @@ function savePost(f) {
 
 function saveTwit(display,content) {
 
-  var start = modal_post_write.attr('data-start')?modal_post_write.attr('data-start'):'#page-post-allpost';
+  var start = modal_post_twit.attr('data-start')?modal_post_twit.attr('data-start'):'#page-post-allpost';
   setTimeout(function(){
 
     $.post(rooturl+'/?r='+raccount+'&m=post&a=write',{
@@ -539,7 +540,7 @@ function saveTwit(display,content) {
   }, 200);
 }
 
-function savePostByLink(url) {
+function savePostByLink(url,start) {
 
   $.get('//embed.kimsq.com/oembed',{
       url: url
@@ -610,7 +611,7 @@ function savePostByLink(url) {
                         var cid=result.last_cid;
 
                         history.back();
-                        modal_post_write.attr('data-uid',uid).attr('data-after','mypost');
+                        modal_post_write.attr('data-uid',uid).attr('data-after','mypost').attr('data-start',start);
 
                         setTimeout(function(){
                           modal_post_write.modal({
