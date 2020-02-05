@@ -18,7 +18,7 @@ while($_R = db_fetch_array($_SITES_ALL))
 }
 $d['layout']['dom'] = array();
 $_nowlayuotdir = dirname($_SESSION['setLayoutKind']?$_HS['m_layout']:$_HS['layout']);
-$g['layoutVarForSite'] = $g['path_layout'].$_nowlayuotdir.'/_var/_var.'.$r.'.php';
+$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.($_SESSION['setLayoutKind']?'mobile':'desktop').'.php';
 $g['themelang1'] = $g['path_layout'].$_nowlayuotdir.'/_var/_var.config.php';
 $g['themelang2'] = $g['path_layout'].$_nowlayuotdir.'/_languages/_var.config.'.$d['admin']['syslang'].'.php';
 $g['layvarfile'] = is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['path_layout'].$_nowlayuotdir.'/_var/_var.php';
@@ -562,6 +562,7 @@ $mf_json = json_decode($mf_str , true);
 						<input type="hidden" name="a" value="regislayoutpanel">
 						<input type="hidden" name="site_uid" value="<?php echo $_HS['uid']?>">
 						<input type="hidden" name="layout" value="<?php echo $_nowlayuotdir?>">
+						<input type="hidden" name="device" value="<?php echo $_SESSION['setLayoutKind']?>">
 						<input type="hidden" name="themelang1" value="<?php echo $g['themelang1']?>">
 						<input type="hidden" name="themelang2" value="<?php echo $d['admin']['syslang']=='DEFAULT'||!is_file($g['themelang2'])?'':$g['themelang2']?>">
 

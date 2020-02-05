@@ -1,6 +1,6 @@
 <?php
 //사이트별 레이아웃 설정 변수
-$g['layoutVarForSite'] = $g['dir_layout'].'_var/_var.'.$r.'.php';
+$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.mobile.php';
 include is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['dir_layout'].'_var/_var.php';
 
 //사이트별 웹앱 매니페스트

@@ -2,8 +2,8 @@
 if(!defined('__KIMS__')) exit;
 
 checkAdmin(0);
-
-$g['layoutVarForSite'] = $g['path_layout'].$layout.'/_var/_var.'.$r.'.php';
+$device = $_POST['device'];
+$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.($device?'mobile':'desktop').'.php';
 $_tmpdfile = is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['path_layout'].$layout.'/_var/_var.php';
 include $themelang2 ? $themelang2 : $themelang1;
 include $_tmpdfile;
@@ -67,7 +67,7 @@ foreach($d['layout']['dom'] as $_key => $_val)
 
 fwrite($fp, "?>");
 fclose($fp);
-@chmod($_tmpdfile,0707);
+@chmod($g['layoutVarForSite'],0707);
 
 getLink('reload','parent.frames._ADMPNL_.','변경되었습니다.','');
 ?>
