@@ -205,8 +205,8 @@ $mnObj->short_name = $sitename;
 $mnObj->icons = $icons;
 $mnObj->start_url = '/';
 $mnObj->display = 'standalone';
-$mnObj->background_color = '#333';
-$mnObj->theme_color = '#333';
+$mnObj->background_color = '#221E1F';
+$mnObj->theme_color = '#221E1F';
 $mnObj->gcm_sender_id = '103953800507';  //FCM 자바스크립트 클라이언트에 공통되는 고정된 값입니다.
 
 $manifestJSON = json_encode($mnObj,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
@@ -218,16 +218,16 @@ fclose($fp);
 $pagesarray = array
 (
 	'main'=>array('메인','2','1','1','','',''),
-	'privacy'=>array('개인정보취급방침','3','0','0','','rc-starter/blank.php',''),
-	'policy'=>array('이용약관','3','0','0','','rc-starter/blank.php',''),
-	'login'=>array('로그인','1','0','1','','rc-starter/blank.php','/?m=member&front=login'),
-	'join'=>array('회원가입','1','0','1','','rc-starter/blank.php','/?m=member&front=join'),
-	'settings'=>array('개인정보수정','1','0','1','','rc-starter/blank.php','/?m=member&front=settings'),
-	'password_reset'=>array('비밀번호찾기','1','0','1','','rc-starter/blank.php','/?m=member&front=login&page=password_reset'),
-	'saved'=>array('저장함','1','0','1','','rc-starter/blank.php','/?m=member&front=saved'),
-	'noti'=>array('알림함','1','0','1','','rc-starter/blank.php','/?m=member&front=noti'),
-	'profile'=>array('프로필','1','0','1','','rc-starter/blank.php','/?m=member&front=profile'),
-	'dashboard'=>array('대시보드','1','0','1','bs4-starter/dashboard.php','rc-starter/dashboard.php','/?m=member&front=dashboard')
+	'privacy'=>array('개인정보취급방침','3','0','0','','rc-starter/blank-drawer.php',''),
+	'policy'=>array('이용약관','3','0','0','','rc-starter/blank-drawer.php',''),
+	'login'=>array('로그인','1','0','1','','rc-starter/blank-drawer.php','/?m=member&front=login'),
+	'join'=>array('회원가입','1','0','1','','rc-starter/blank-drawer.php','/?m=member&front=join'),
+	'settings'=>array('개인정보수정','1','0','1','','rc-starter/blank-drawer.php','/?m=member&front=settings'),
+	'password_reset'=>array('비밀번호찾기','1','0','1','','rc-starter/blank-drawer.php','/?m=member&front=login&page=password_reset'),
+	'saved'=>array('저장함','1','0','1','','rc-starter/blank-drawer.php','/?m=member&front=saved'),
+	'noti'=>array('알림함','1','0','1','','rc-starter/blank-drawer.php','/?m=member&front=noti'),
+	'profile'=>array('프로필','1','0','1','','rc-starter/blank-drawer.php','/?m=member&front=profile'),
+	'dashboard'=>array('대시보드','1','0','1','bs4-starter/dashboard.php','rc-starter/blank-drawer.php','/?m=member&front=dashboard')
 );
 foreach($pagesarray as $_key => $_val)
 {
