@@ -16,6 +16,7 @@ modules/shop/*
 _tmp/widget/*
 layouts/bs4-starter/_var/*
 layouts/rc-starter/_var/*
+layouts/rc-youtube/*
 modules/comment/action/a.oneline_regis.php
 modules/comment/action/a.comment_regis.php
 modules/member/admin/point_ori.php
