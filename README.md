@@ -47,11 +47,6 @@
 1. <code>git reset --hard</code>
 1. <code>git pull origin master</code>
 
-인스톨러를 통해 설치한 경우, 형상관리 git의 적용을 위해 아래 명령어 실행이 필요합니다. (최초 1회)
-1. <code>git init</code>
-1. <code>git remote add origin https://github.com/kimsQ/rb.git</code>
-1. <code>git add -A</code>
-1. <code>git pull origin master</code>
 
 ## 메뉴얼
 
