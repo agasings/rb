@@ -1252,6 +1252,7 @@
     <div class="content-padded">
       <input type="hidden" name="featured_img" value="">
       <ul class="table-view mb-0 border-0" data-role="attach-preview-photo" data-plugin="sortable"></ul>
+      <div class="file-upload-container"></div>
     </div>
   </main>
 </div>

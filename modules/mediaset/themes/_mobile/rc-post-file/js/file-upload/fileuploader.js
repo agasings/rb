@@ -678,10 +678,17 @@
 			if(s.extraHTML)
 				bar.extraHTML = $("<div class='extrahtml'>"+s.extraHTML()+"</div>").insertAfter(bar.filename);
 
-			if(s.uploadQueueOrder == 'bottom')
+			if(s.uploadQueueOrder == 'bottom') {
 				$(obj.container).append(bar.statusbar);
-			else
-				$(obj.container).prepend(bar.statusbar);
+			} else {
+				var sheet = $('#sheet-post-photoadd')
+				if (sheet.hasClass('active')) {
+					sheet.find('.file-upload-container').prepend(bar.statusbar);
+					sheet.find('[data-role="none"]').addClass('d-none');
+				} else {
+					$(obj.container).prepend(bar.statusbar);
+				}
+			}
 			return bar;
 		}
 

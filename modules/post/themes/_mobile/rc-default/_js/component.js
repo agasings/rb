@@ -1179,6 +1179,7 @@ popup_post_newPost.find('[data-toggle="newpost"]').click(function(){
 
 sheet_post_photoadd.on('show.rc.sheet', function(event) {
   var sheet = $(this);
+  sheet.find('[data-role="attach-preview-photo"]').empty();
   if (!memberid) {
     sheet.sheet('hide');
     setTimeout(function(){ modal_login.modal();}, 100);
