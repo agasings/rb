@@ -1,2 +1,2 @@
-v2.4.5,20200123,https://github.com/kimsQ/rb/archive/v2.4.5.zip,
-v2.3.0,20180630,https://kimsq.com/blog/post/27,
+v2.4.5 beta4,20200123,https://github.com/kimsQ/rb/archive/v2.4.5.zip,
+v2.4.5 beta5,20200205,https://github.com/kimsQ/rb/archive/v2.4.5.zip,
