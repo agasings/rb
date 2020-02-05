@@ -306,8 +306,11 @@ $_SESSION['mbr_uid'] = 1;
 $_SESSION['mbr_pw']  = getCrypt($pw1,$date['totime']);
 
 DirDelete('./_install');
-shell_exec('git init');
-shell_exec('git remote add origin https://github.com/kimsQ/rb.git');
+
+if (!is_dir('./.git')) {
+	shell_exec('git init');
+	shell_exec('git remote add origin https://github.com/kimsQ/rb.git');
+}
 
 // putNotice(1,'admin',0,sprintf(_LANG('a012','install'),$name,$name),'','');
 getLink('./index.php?r='.$siteid.'&iframe=Y&system=guide.install','parent.','','');
