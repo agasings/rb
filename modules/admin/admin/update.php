@@ -1,7 +1,6 @@
 <?php
 include $g['path_core'].'function/rss.func.php';
-include $g['path_module'].'market/var/var.php';
-$_updatelist = getUrlData('https://kimsq.github.io/rb/__update/update.v2.txt',10);
+$_updatelist = getUrlData('https://kimsq.github.io/rb/update.v2.txt',10);
 $_updatelist = explode("\n",$_updatelist);
 $_updatelength = count($_updatelist)-1;
 $_version = explode('.',$d['admin']['version']);
@@ -10,7 +9,6 @@ $TPG = getTotalPage($_updatelength,$recnum);
 ?>
 
 <div id="update-body" class="p-4">
-
 	<div class="media my-3">
 		<div class="mr-3 align-self-center version">
 			<span class=" kf-bi-01" style="font-size: 38px"> </span> <span class="h3 ml-2">Rb <code><?php echo $d['admin']['version']?></code></span>
@@ -55,7 +53,7 @@ $TPG = getTotalPage($_updatelength,$recnum);
 						<a href="#." data-tooltip="tooltip" title="정보가 없는 없데이트입니다"><?php echo $var1[0]?>_<?php echo $var1[1]?></a>
 						<?php endif?>
 						&nbsp;
-						<a href="http://<?php echo $_serverinfo[2]?>/__update/files/v2/<?php echo $var1[1]?>.zip" class="rb-update-download" data-tooltip="tooltip" title="파일 다운로드"><i class="glyphicon glyphicon-download-alt"></i></a>
+						<a href="<?php echo $var1[1]?>.zip" class="rb-update-download" data-tooltip="tooltip" title="파일 다운로드"><i class="glyphicon glyphicon-download-alt"></i></a>
 					</span>
 				</td>
 				<td>
@@ -85,7 +83,7 @@ $TPG = getTotalPage($_updatelength,$recnum);
 						<a href="#." data-tooltip="tooltip" title="정보가 없는 없데이트입니다"><?php echo $var1[0]?>_<?php echo $var1[1]?></a>
 						<?php endif?>
 						&nbsp;
-						<a href="http://<?php echo $_serverinfo[2]?>/__update/files/v2/<?php echo $var1[1]?>.zip" class="rb-update-download" data-tooltip="tooltip" title="파일 다운로드"><i class="glyphicon glyphicon-download-alt"></i></a>
+						<a href="" class="rb-update-download" data-tooltip="tooltip" title="파일 다운로드"><i class="glyphicon glyphicon-download-alt"></i></a>
 					</span>
 				</td>
 				<td></td>
@@ -95,8 +93,7 @@ $TPG = getTotalPage($_updatelength,$recnum);
 					</button>
 				</td>
 				<td>
-					<a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=admin&amp;a=update&amp;type=auto&amp;ufile=<?php echo $var1[1]?>" onclick="return hrefCheck(this,true,'정말로 업데이트 하시겠습니까?');" class="btn btn-light"><i class="glyphicon glyphicon-download-alt"></i> 원격 업데이트</a>
-					<a href="<?php echo $g['s']?>/?r=<?php echo $r?>&amp;m=admin&amp;a=update&amp;type=manual&amp;ufile=<?php echo $var1[1]?>" onclick="return hrefCheck(this,true,'정말로 수동으로 업데이트 처리하시겠습니까?\n수동 업데이트 처리시 원격업데이트는 건너뜁니다.');" class="btn btn-light"><i class="glyphicon glyphicon-import"></i> 수동 업데이트</a>
+
 				</td>
 			</tr>
 
