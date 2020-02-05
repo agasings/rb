@@ -16,7 +16,7 @@
 
 <nav class="bar bar-tab bg-white">
   <?php if ($my['uid']): ?>
-  <a class="tab-item active bg-primary" role="button" data-open="newPost" data-url="/post/write">
+  <a class="tab-item active bg-primary<?php echo $m=='bbs'?' d-none':'' ?>" role="button" data-open="newPost" data-start="#page-post-allpost" data-url="/post/write">
     새 포스트
   </a>
   <?php else: ?>
@@ -36,8 +36,20 @@
   <?php getWidget('menu/rc-drawer-menu',array('smenu'=>'0','limit'=>'2','link'=>'link','collid'=>'drawer-menu','accordion'=>'1','collapse'=>'1',))?>
 
 
-  <?php if ($my['uid']): ?>
   <ul class="table-view bg-white mb-2">
+
+    <?php if ($d['layout']['main_type']!='allpost'): ?>
+    <li class="table-view-cell">
+      <a data-toggle="goMypage" data-target="#page-post-allpost" data-start="#page-main" data-title="전체 포스트"  data-url="/post">
+        <span class="badge badge-default badge-inverted"><?php echo $my['num_post']?number_format($my['num_post']):'' ?></span>
+        <div class="media-body">
+          전체 포스트
+        </div>
+      </a>
+    </li>
+    <?php endif; ?>
+
+    <?php if ($my['uid']): ?>
     <li class="table-view-cell">
       <a data-toggle="goMypage" data-target="#page-post-mypost" data-start="#page-main" data-title="내 포스트"  data-url="<?php echo RW('mod=dashboard&page=post')?>">
         <span class="badge badge-default badge-inverted"><?php echo $my['num_post']?number_format($my['num_post']):'' ?></span>
@@ -70,8 +82,9 @@
         </div>
       </a>
     </li>
+    <?php endif; ?>
   </ul>
-  <?php endif; ?>
+
 
 
 </div>

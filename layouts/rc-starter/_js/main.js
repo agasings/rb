@@ -113,22 +113,21 @@ function kakaoTalkSend(settings) {
 }
 
 function overScrollEffect(page){
-  page_main.find('.snap-content .content').on('touchstart',function(event){
-    page_main_startY = event.originalEvent.changedTouches[0].pageY;
+  page.find('main.content').on('touchstart',function(event){
+    page_startY = event.originalEvent.changedTouches[0].pageY;
   });
-  page_main.find('.snap-content .content').on('touchmove',function(event){
-    var page_main_moveY = event.originalEvent.changedTouches[0].pageY;
-    var page_main_contentY = $(this).scrollTop();
+  page.find('main.content').on('touchmove',function(event){
+    var page_moveY = event.originalEvent.changedTouches[0].pageY;
+    var page_contentY = $(this).scrollTop();
     var tab_id = $(this).attr('data-tab');
-    var page_main_body = page_main.find('.snap-content');
-    if (page_main_contentY === 0 && page_main_moveY > page_main_startY && !document.body.classList.contains('refreshing')) {
-      if (page_main_moveY-page_main_startY>50) {
-        edgeEffect(page_main_body,'top','show'); // 스크롤 상단 끝
+    if (page_contentY === 0 && page_moveY > page_startY && !document.body.classList.contains('refreshing')) {
+      if (page_moveY-page_startY>50) {
+        edgeEffect(page,'top','show'); // 스크롤 상단 끝
       }
     }
-    if( (page_main_moveY < page_main_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
-      if (page_main_startY-page_main_moveY>50) {
-        edgeEffect(page_main_body,'bottom','show'); // 스크롤 하단 끝
+    if( (page_moveY < page_startY) && ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)) {
+      if (page_startY-page_moveY>50) {
+        edgeEffect(page.find('main.content'),'bottom','show'); // 스크롤 하단 끝
       }
     }
   });
@@ -162,14 +161,22 @@ $(document).ready(function() {
 
   $('[data-open="newPost"]').click(function() {
     var url = $(this).attr('data-url');
-    console.log(url+'dd')
+    var start = $(this).attr('data-start');
     drawer_left.drawer('hide')
     setTimeout(function(){
-      $('#popup-post-newPost').popup({
-        title :'작업선택',
-        url : url
+      $('#page-post-allpost').page({
+        start : '#page-main',
+        title : '전체 포스트'
       });
+      setTimeout(function(){
+        $('#popup-post-newPost').popup({
+          title :'작업선택',
+          url : 'post/write'
+        }).attr('data-start',start);
+      }, 350);
     }, 300);
+
+
   });
 
   $('[data-toggle="goMypage"]').click(function() {

@@ -31,7 +31,7 @@ $d['layout']['dom'] = array(
 		'메인 페이지',
 		'모바일 메인페이지 설정을 관리합니다.',
 		array(
-			array('dashboard','select','로그인 후, 대시보드 이동','아니오=false,예=true'),
+			array('type','select','타입','전체 포스트=allpost,직접꾸미기=custom'),
 		),
 	),
 
