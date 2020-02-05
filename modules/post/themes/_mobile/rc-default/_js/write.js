@@ -335,6 +335,7 @@ function savePost(f) {
 
   var editorData = editor_post.getData();
   var after = modal_post_write.attr('data-after');
+  var start = modal_post_write.attr('data-start')?modal_post_write.attr('data-start'):'#page-post-allpost';
 
   // 카테고리 체크
 	var cat_sel=page_post_edit_category.find('input[name="tree_members[]"]');
@@ -475,13 +476,13 @@ function savePost(f) {
               if (display==5 || display==4) {
 
               } else {
-                $('#page-post-mypost').page({ start: '#page-main', title : '내 포스트', url : 'dashboard?page=post' });
+                $('#page-post-mypost').page({ start: start, title : '내 포스트', url : 'dashboard?page=post' });
               }
             }
             // 메인화면 목록 새로불러오기
             getPostAll({
               wrapper : $('[data-role="postAll"] [data-role="list"]'),
-              start : '#page-main',
+              start : start,
               markup    : 'post-row',  // 테마 > _html > post-row-***.html
               recnum    : 5,
               sort      : 'gid',
@@ -499,6 +500,7 @@ function savePost(f) {
 
 function saveTwit(display,content) {
 
+  var start = modal_post_write.attr('data-start')?modal_post_write.attr('data-start'):'#page-post-allpost';
   setTimeout(function(){
 
     $.post(rooturl+'/?r='+raccount+'&m=post&a=write',{
@@ -517,7 +519,7 @@ function saveTwit(display,content) {
               // 메인화면 목록 새로불러오기
               getPostAll({
                 wrapper : $('[data-role="postAll"] [data-role="list"]'),
-                start : '#page-main',
+                start : start,
                 markup    : 'post-row',  // 테마 > _html > post-row-***.html
                 recnum    : 5,
                 sort      : 'gid',
@@ -526,7 +528,7 @@ function saveTwit(display,content) {
               })
 
             } else {
-              $('#page-post-mypost').page({ start: '#page-main' });
+              $('#page-post-mypost').page({ start: start });
             }
            }, 300);
 
@@ -649,7 +651,6 @@ function savePostByLink(url) {
 
             // 새 포스트 저장
             var subject = title;
-            // var content = '<p>'+description+'</p><figure class="media"><oembed url="'+url+'"></oembed></figure>';
             var content = '<p>'+description+'</p>';
             var upload = '['+uid+']';
             var featured_img = uid;

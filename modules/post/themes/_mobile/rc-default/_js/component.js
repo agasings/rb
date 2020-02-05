@@ -93,18 +93,19 @@ function pullToRefresh_post(page){
 // 전체 포스트 보기
 page_post_allpost.on('show.rc.page', function(event) {
   var button = $(event.relatedTarget);
+  var start = button.attr('data-start')
   var page = $(this);
   var wrapper = page.find('[data-role="list"]');
   wrapper.html('');
 
   getPostAll({
     wrapper : wrapper,
-    markup    : 'post-row',  // 테마 > _html > post-row.html
-    totalNUM  : '',
-    recnum    : '',
-    totalPage : '',
+    start : '#page-post-allpost',
+    markup    : 'post-row',  // 테마 > _html > post-row-***.html
+    recnum    : 5,
     sort      : 'gid',
-    none : '<div class="d-flex justify-content-center align-items-center" style="height: 80vh"><div class="text-xs-center text-muted">등록된 포스트가 없습니다.</div<</div>'
+    none : page.find('[data-role="none"]').html(),
+    paging : 'infinit'
   });
 })
 
@@ -951,10 +952,18 @@ popup_post_delConfirm.find('[data-act="submit"]').click(function(){
       send_mod : 'ajax'
       },function(response,status){
         if(status=='success'){
-          $(document).find('[data-role="item"][data-uid="'+uid+'"]').slideUp();
-          setTimeout(function(){
-            $.notify({message: '삭제 되었습니다.'},{type: 'default'});
-          }, 700);
+          $(document).find('[data-role="item"][data-uid="'+uid+'"]').slideUp().addClass('none');
+          var num = $('[data-role="postAll"] [data-role="list"]').find('[data-role="item"]:not(.none)').length
+          console.log(num)
+          if (!num) {
+            var html = $('[data-role="postAll"] [data-role="none"]').html();
+            $('[data-role="postAll"] [data-role="list"]').html(html)
+            $('[data-role="postAll"] [data-role="list"] > div').addClass('animated fadeIn delay-1');
+          } else {
+            setTimeout(function(){
+              $.notify({message: '삭제 되었습니다.'},{type: 'default'});
+            }, 700);
+          }
         } else {
           alert(status);
         }
@@ -1131,6 +1140,10 @@ popup_post_newPost.on('show.rc.popup', function(event) {
     setTimeout(function(){ modal_login.modal();}, 100);
     return false;
   }
+  var popup = $(this);
+  var button = $(event.relatedTarget);
+  var start = button.attr('data-start');
+  popup.attr('data-start',start);
   modal_post_view.find('[data-act="pauseVideo"]').click();  //유튜브 비디오 일시정지
 })
 

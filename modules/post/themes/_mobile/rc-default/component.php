@@ -31,15 +31,51 @@
 -->
 
 <!-- 페이지 : 전체포스트 -->
-<div class="page right" id="page-post-allpost">
+<div class="page right" id="page-post-allpost" data-role="postAll">
   <header class="bar bar-nav bar-light bg-white px-0">
-    <a class="icon material-icons pull-left  px-3" role="button" data-history="back">arrow_back</a>
-    <a class="icon material-icons pull-right pl-2 pr-3" role="button" data-toggle="modal" data-target="#modal-post-search">search</a>
+    <a class="icon material-icons pull-left px-3" role="button" data-history="back">arrow_back</a>
+    <?php if ($my['uid']): ?>
+    <a role="button" data-toggle="popup" href="#popup-post-newPost" data-start="#page-post-allpost" data-title="새 포스트" class="icon material-icons px-3 pull-right">
+      add_box
+    </a>
+    <?php endif; ?>
     <a class="icon pull-right material-icons px-2" role="button" data-toggle="sheet" data-target="#sheet-post-filter" data-backdrop="static">tune</a>
-    <span class="title title-left" data-history="back">전체 포스트</span>
+    <span class="title title-left" data-history="back" data-role="title">전체 포스트</span>
   </header>
   <main role="main" class="content bg-faded">
     <div data-role="list"></div>
+    <div data-role="none" hidden>
+      <div class="d-flex justify-content-center align-items-center" style="height: 70vh">
+        <div class="text-xs-center text-reset">
+          <div class="material-icons mb-4" style="font-size: 100px;color:#ccc">
+            subscriptions
+          </div>
+          <h5>나만의 채널을 시작합니다.</h5>
+          <small class="text-muted">당신만울 위한 모바일 베이스캠프</small>
+
+          <div class="mt-4 text-xs-center">
+            <?php if ($my['uid']): ?>
+            <a class="btn btn-primary btn-lg" role="button"
+              href="#popup-post-newPost"
+              data-toggle="popup"
+              data-start="#page-post-allpost"
+              data-url="/post/write"
+              data-title="새 포스트">
+              포스트 작성
+            </a>
+            <?php else: ?>
+            <a class="btn btn-primary btn-lg" role="button"
+              href="#modal-login"
+              data-toggle="modal"
+              data-title="로그인">
+              로그인
+            </a>
+            <?php endif; ?>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </main>
 </div><!-- /.page -->
 
