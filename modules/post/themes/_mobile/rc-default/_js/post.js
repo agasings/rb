@@ -36,7 +36,7 @@ function getPostAll(settings) {
 
         if (paging=='infinit') {
 
-          pullToRefresh_post(page);
+          pullToRefresh_post($(start));
 
           //무한 스크롤
           wrapper.closest('.content').infinitescroll({
