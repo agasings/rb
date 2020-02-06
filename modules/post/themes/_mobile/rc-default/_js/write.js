@@ -214,7 +214,8 @@ function setPostWrite(settings) {
                 }
 
                 editor_post.setData(content);
-                wrapper.find('[name="format"] [value="'+format+'"]').attr('selected',true);
+
+                wrapper.find('[name="format"]').val(format).prop("selected", true);
 
                 wrapper.find('[data-role="loader"]').addClass('d-none') //로더 제거
                 wrapper.find('form').removeClass('d-none')
@@ -653,7 +654,13 @@ function savePostByLink(url,start) {
             var content = '<p>'+description+'</p>';
             var upload = '['+uid+']';
             var featured_img = uid;
-            var format = 1; //문서 타입
+
+            if (provider=='Vimeo' || provider=='kakaoTV' || provider=='NAVERTV') {
+              var format = 2; //비디오 타입
+            } else {
+              var format = 1; //문서 타입
+            }
+
             var html = 'HTML';
 
             $.post(rooturl+'/?r='+raccount+'&m=post&a=write',{
@@ -671,7 +678,7 @@ function savePostByLink(url,start) {
                   var cid=result.last_cid;
 
                   history.back();
-                  modal_post_write.attr('data-uid',uid).attr('data-after','mypost');
+                  modal_post_write.attr('data-uid',uid).attr('data-after','mypost').attr('data-start',start);
 
                   setTimeout(function(){
                     modal_post_write.modal({
