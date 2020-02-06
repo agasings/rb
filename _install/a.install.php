@@ -301,6 +301,84 @@ if ($d['admin']['syslang'] != $sitelang)
 	@chmod($_tmpdfile,0707);
 }
 
+//레이아웃 설정파일 생성
+$layoutset = array('desktop','mobile');
+foreach ($layoutset as $_val) {
+
+	if ($_val=='mobile') {
+		$_layout = explode('/', $m_layout);
+		$layout_main_type = 'postAll';  //전체 포스트 보기
+	} else {
+		$_layout = explode('/', $layout);
+	}
+
+	$layout_header_title = $sitename;
+
+	$g['layoutVarForSite'] = $g['path_var'].'site/'.$siteid.'/layout.'.$_val.'.var.php';
+	include $g['path_layout'].$_layout[0].'/_var/_var.config.php';
+
+	$fp = fopen($g['layoutVarForSite'],'w');
+	fwrite($fp, "<?php\n");
+
+	foreach($d['layout']['dom'] as $_key => $_val)
+	{
+		if(!count($_val[2])) continue;
+		foreach($_val[2] as $_v)
+		{
+			if($_v[1] == 'checkbox')
+			{
+				foreach(${'layout_'.$_key.'_'.$_v[0].'_chk'} as $_chk)
+				{
+					${'layout_'.$_key.'_'.$_v[0]} .= $_chk.',';
+				}
+
+				fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".trim(${'layout_'.$_key.'_'.$_v[0]})."\";\n");
+				${'layout_'.$_key.'_'.$_v[0]} = '';
+			}
+			else if ($_v[1] == 'textarea')
+			{
+				fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".htmlspecialchars(str_replace('$','',trim(${'layout_'.$_key.'_'.$_v[0]})))."\";\n");
+			}
+			else if ($_v[1] == 'file')
+			{
+
+				$tmpname	= $_FILES['layout_'.$_key.'_'.$_v[0]]['tmp_name'];
+				if (is_uploaded_file($tmpname))
+				{
+					$realname	= $_FILES['layout_'.$_key.'_'.$_v[0]]['name'];
+					$fileExt	= strtolower(getExt($realname));
+					$fileExt	= $fileExt == 'jpeg' ? 'jpg' : $fileExt;
+					$fileName	= $r.'_'.$_key.'_'.$_v[0].'.'.$fileExt;
+					$saveFile	= $g['path_layout'].$layout.'/_var/'.$fileName;
+					if (!strstr('[gif][jpg][png][swf]',$fileExt))
+					{
+						continue;
+					}
+
+					move_uploaded_file($tmpname,$saveFile);
+					@chmod($saveFile,0707);
+				}
+				else {
+					$fileName	= $d['layout'][$_key.'_'.$_v[0]];
+					if ($fileName && ${'layout_'.$_key.'_'.$_v[0].'_del'})
+					{
+						unlink( $g['path_layout'].$layout.'/_var/'.$fileName);
+						$fileName = '';
+					}
+				}
+				fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".$fileName."\";\n");
+			}
+			else {
+				fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".htmlspecialchars(str_replace('$','',trim(${'layout_'.$_key.'_'.$_v[0]})))."\";\n");
+			}
+		}
+	}
+
+	fwrite($fp, "?>");
+	fclose($fp);
+	@chmod($g['layoutVarForSite'],0707);
+}
+
 setcookie('svshop', $id.'|'.$pw1, time()+60*60*24*30, '/');
 $_SESSION['mbr_uid'] = 1;
 $_SESSION['mbr_pw']  = getCrypt($pw1,$date['totime']);

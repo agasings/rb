@@ -3,7 +3,7 @@ if(!defined('__KIMS__')) exit;
 
 checkAdmin(0);
 $device = $_POST['device'];
-$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.($device?'mobile':'desktop').'.php';
+$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.($device?'mobile':'desktop').'.var.php';
 $_tmpdfile = is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['path_layout'].$layout.'/_var/_var.php';
 include $themelang2 ? $themelang2 : $themelang1;
 include $_tmpdfile;

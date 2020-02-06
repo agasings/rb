@@ -315,7 +315,7 @@
 <script>
 
 $( document ).ready(function() {
-	
+
 	$('[data-plugin="shorten"]').shorten({
 		moreText: '더보기',
 		lessText: ''

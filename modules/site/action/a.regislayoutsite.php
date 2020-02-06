@@ -14,8 +14,7 @@ if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 }
 
 //사이트별 레이아웃 설정 변수
-$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.$device.'.php';
-include is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] :$g['path_layout'].$layout.'/_var/_var.php';
+$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.$device.'.var.php';
 include $g['path_layout'].$layout.'/_var/_var.config.php';
 
 $fp = fopen($g['layoutVarForSite'],'w');
@@ -78,7 +77,7 @@ foreach($d['layout']['dom'] as $_key => $_val)
 
 fwrite($fp, "?>");
 fclose($fp);
-@chmod($layoutVarForSite,0707);
+@chmod($g['layoutVarForSite'],0707);
 
 echo '<script type="text/javascript">';
 echo 'parent.$.notify({message: "저장 되었습니다"},{type: "default"});';

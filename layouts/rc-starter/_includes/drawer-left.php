@@ -98,7 +98,7 @@
     <?php if ($d['layout']['main_type']=='widget'): ?>
     <li class="table-view-cell">
       <a data-href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=main_edit&prelayout=rc-starter/blank' ?>" data-toggle="drawer-close">
-        메인 페이지 위젯 꾸미기
+        메인 꾸미기
       </a>
     </li>
     <?php endif; ?>

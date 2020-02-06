@@ -10,7 +10,7 @@ include $g['dir_layout'].'_var/_var.main.php';  // 레이아웃 메인페이지 
   </a>
   <h1 class="title">
     <a data-location="reload" data-text="새로고침..">
-      메인 페이지 설정
+      메인 꾸미기
     </a>
   </h1>
 </header>

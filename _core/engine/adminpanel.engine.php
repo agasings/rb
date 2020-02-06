@@ -18,7 +18,7 @@ while($_R = db_fetch_array($_SITES_ALL))
 }
 $d['layout']['dom'] = array();
 $_nowlayuotdir = dirname($_SESSION['setLayoutKind']?$_HS['m_layout']:$_HS['layout']);
-$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.($_SESSION['setLayoutKind']?'mobile':'desktop').'.php';
+$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.($_SESSION['setLayoutKind']?'mobile':'desktop').'.var.php';
 $g['themelang1'] = $g['path_layout'].$_nowlayuotdir.'/_var/_var.config.php';
 $g['themelang2'] = $g['path_layout'].$_nowlayuotdir.'/_languages/_var.config.'.$d['admin']['syslang'].'.php';
 $g['layvarfile'] = is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] : $g['path_layout'].$_nowlayuotdir.'/_var/_var.php';
