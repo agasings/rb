@@ -2,8 +2,12 @@
 
 <?php if ($my['uid'] && $d['layout']['main_dashboard']=='true') getLink('/dashboard','','','');?>
 
-<?php if ($d['layout']['main_type']=='allpost'): ?>
+<?php if ($d['layout']['main_type']=='postAll'): ?>
 <?php getWidget('post/rc-post-all-scroll',array('wrapper'=>'[data-role="postAll"].widget','start'=>'#page-main','recnum'=>5))?>
+<?php elseif ($d['layout']['main_type']=='widget'): ?>
+
+위젯 꾸미기
+
 <?php else: ?>
 <button type="button" class="btn btn-secondary" data-toggle="page" data-start="#page-main" data-target="#page-post-allpost" data-title="전체 포스트" data-url="/post">
   전체 포스트 보기

@@ -18,7 +18,7 @@
   <?php if ($my['uid']): ?>
   <a class="tab-item active bg-primary<?php echo $m=='bbs'?' d-none':'' ?>" role="button"
     data-open="newPost"
-    data-start="<?php echo $d['layout']['main_type']=='allpost'?'#page-main':'#page-post-allpost' ?>"
+    data-start="<?php echo $d['layout']['main_type']=='postAll'?'#page-main':'#page-post-allpost' ?>"
     data-url="/post/write">
     새 포스트
   </a>
@@ -41,7 +41,7 @@
 
   <ul class="table-view bg-white mb-2">
 
-    <?php if ($d['layout']['main_type']!='allpost'): ?>
+    <?php if ($d['layout']['main_type']!='postAll'): ?>
     <li class="table-view-cell">
       <a data-toggle="goMypage" data-target="#page-post-allpost" data-start="#page-main" data-title="전체 포스트"  data-url="/post">
         <span class="badge badge-default badge-inverted"><?php echo $my['num_post']?number_format($my['num_post']):'' ?></span>
@@ -88,6 +88,22 @@
     <?php endif; ?>
   </ul>
 
+  <?php if ($my['admin']): ?>
+  <ul class="table-view bg-white mb-2">
+    <li class="table-view-cell">
+      <a data-href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=site_edit&prelayout=rc-starter/blank' ?>" data-toggle="drawer-close">
+        사이트 설정
+      </a>
+    </li>
+    <?php if ($d['layout']['main_type']=='widget'): ?>
+    <li class="table-view-cell">
+      <a data-href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=main_edit&prelayout=rc-starter/blank' ?>" data-toggle="drawer-close">
+        메인 페이지 위젯 꾸미기
+      </a>
+    </li>
+    <?php endif; ?>
+  </ul>
+  <?php endif; ?>
 
 
 </div>

@@ -808,22 +808,7 @@
   				</a>
   			</li>
   		</ul>
-
-      <?php if ($my['admin']): ?>
-      <ul class="table-view bg-white mb-2">
-        <li class="table-view-cell">
-          <a data-href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=site_edit&prelayout=rc-starter/blank' ?>">
-            사이트 설정
-          </a>
-        </li>
-        <li class="table-view-cell">
-          <a data-href="<?php echo $g['s'].'/?r='.$r.'&amp;layoutPage=main_edit&prelayout=rc-starter/blank' ?>">
-            메인 설정
-          </a>
-        </li>
-      </ul>
-      <?php endif; ?>
-
+      
       <ul class="table-view bg-white mb-2">
         <li class="table-view-cell">
           <a class="" href="#popup-logout" data-toggle="popup">
