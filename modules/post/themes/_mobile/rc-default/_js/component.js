@@ -682,18 +682,22 @@ modal_post_view.on('show.rc.modal', function(event) {
   if(modal.hasClass("miniplayer") === true ) {
     modal.removeClass('miniplayer');
   } else {
-    getPostView({
-      mod : 'modal',
-      format : format,
-      uid : uid,
-      list : list,
-      featured : featured,
-      provider : provider,
-      videoId : videoId,
-      wrapper : modal,
-      url : url,
-      landing : landing
-    });
+
+    setTimeout(function(){
+      getPostView({
+        mod : 'modal',
+        format : format,
+        uid : uid,
+        list : list,
+        featured : featured,
+        provider : provider,
+        videoId : videoId,
+        wrapper : modal,
+        url : url,
+        landing : landing
+      });
+    }, 100);
+
   }
 
 })
