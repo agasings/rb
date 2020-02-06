@@ -56,8 +56,15 @@ $result['uid'] = $R['uid'];
 $result['avatar'] = getAvatarSrc($R['mbruid'],'48');
 $result['featured'] = getPreviewResize(getUpImageSrc($R),'240x134');
 $result['featured_img'] = $R['featured_img']?$R['featured_img']:'';
-$result['display'] = $R['display'];
-$result['display_label']=$g['displaySet']['label'][$R['display']];
+
+if ( ($date['totime']-$R['d_regis']) < 5 ) {
+  $result['display'] = 5;
+  $result['display_label']=$g['displaySet']['label'][5];
+} else {
+  $result['display'] = $R['display'];
+  $result['display_label']=$g['displaySet']['label'][$R['display']];
+}
+
 $result['format'] = $R['format'];
 $result['upload'] = $R['upload'];
 $result['time'] = getUpImageTime($R)?getUpImageTime($R):'';
