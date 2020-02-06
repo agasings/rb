@@ -307,9 +307,13 @@ foreach ($layoutset as $_val) {
 
 	if ($_val=='mobile') {
 		$_layout = explode('/', $m_layout);
-		$layout_main_type = 'postAll';  //전체 포스트 보기
+		$layout_header_search = "true";
+		$layout_main_type = 'postAll';
 	} else {
 		$_layout = explode('/', $layout);
+		$layout_header_search = "true";
+		$layout_header_login  = "true";
+		$layout_main_dashboard = "false";
 	}
 
 	$layout_header_title = $sitename;
