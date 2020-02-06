@@ -89,6 +89,11 @@ function kakaoTalkSend(settings) {
   var imageUrl = settings.featured?settings.featured:'';
   var link = settings.link+'?ref=kt'  // 카카오톡 파라미터 추가;
 
+  if (!kakao_jskey) {
+    $.notify({message: '카카오 연동설정을 확인해주세요.'},{type: 'default'});
+    return false
+  }
+
   Kakao.Link.sendDefault({
     objectType: 'feed',
     content: {
