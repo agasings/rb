@@ -3,6 +3,16 @@ if(!defined('__KIMS__')) exit;
 
 checkAdmin(0);
 
+$output = shell_exec('git pull origin master');
+
+$text = preg_replace('/\r\n|\r|\n/','',$output);
+
+if ($text =='Already up-to-date.') {
+	$text = '이미 최신패치가 적용되어있습니다.';
+}
+getLink('','parent.',$text,'');
+
+
 $_ufile = $g['path_var'].'update/'.$ufile.'.txt';
 
 if ($type == 'delete')
@@ -19,52 +29,15 @@ else if ($type == 'manual')
 	getLink('reload','parent.','수동 업데이트 처리되었습니다.','');
 }
 else {
-	require $g['path_core'].'opensrc/unzip/ArchiveExtractor.class.php';
 	require $g['path_core'].'function/dir.func.php';
 	include $g['path_core'].'function/rss.func.php';
 	include $g['path_module'].'market/var/var.php';
 	$_serverinfo = explode('/',$d['update']['url']);
-	$_updatedate = getUrlData('http://'.$_serverinfo[2].'/__update/update.v2.txt',10);
+	$_updatedate = getUrlData('https://kimsq.github.io/rb/update.v2.txt',10);
 	$_updatelist = explode("\n",$_updatedate);
 	$_updateleng = count($_updatelist)-1;
-	$_includeup = false;
-	for($i=$_updateleng;$i>=0;$i--)
-	{
-		$_upx = explode(',',trim($_updatelist[$i]));
-		if ($_upx[1]==$ufile)
-		{
-			$_updateversion = $_upx[0];
-			$_includeup = true;
-			break;
-		}
-	}
-	if(!$_includeup) getLink('','','업데이트 파일이 존재하지 않습니다.','');
-	$_updatefile = getUrlData('http://'.$_serverinfo[2].'/__update/files/v2/'.$ufile.'.zip',10);
-	$folder		= './';
-	$extPath  = $g['path_tmp'].'app';
-	$extPath1 = $extPath.'/';
-	$saveFile = $extPath1.'rb_update_app.zip';
 
-	$fp = fopen($saveFile,'w');
-	fwrite($fp,$_updatefile);
-	fclose($fp);
-	@chmod($saveFile,0707);
 
-	$extractor = new ArchiveExtractor();
-	$extractor -> extractArchive($saveFile,$extPath1);
-	unlink($saveFile);
-
-	$_updateFile = $extPath1.'/_update.php';
-	if (is_file($_updateFile))
-	{
-		include $_updateFile;
-		unlink($_updateFile);
-	}
-
-	DirCopy($extPath1,$folder);
-	DirDelete($extPath);
-	mkdir($extPath,0707);
-	@chmod($extPath,0707);
 
 	$fp = fopen($_ufile,'w');
 	fwrite($fp,$date['today'].',0');
@@ -74,7 +47,7 @@ else {
 	if ($_updateversion != $d['admin']['version'])
 	{
 		$d['admin']['version'] = $_updateversion;
-		$_tmpdfile = $g['dir_module'].'var/var.system.php';
+		$_tmpdfile = $g['dir_module'].'var/var.version.php';
 		$fp = fopen($_tmpdfile,'w');
 		fwrite($fp, "<?php\n");
 		foreach ($d['admin'] as $key => $val)
