@@ -7,30 +7,81 @@ $_HS = getDbData($table['s_site'],"id='".$r."'",'*');
 
 if ($g['mobile']&&$_SESSION['pcmode']!='Y') {
 	$layout = dirname($_HS['m_layout']);
+	$device = 'mobile';
 } else {
   $layout = dirname($_HS['layout']);
+	$device = 'desktop';
 }
 
-$g['layoutPageVarForSite'] = $g['path_layout'].$layout.'/_var/_page.'.$page.'.'.$r.'.php';
-$_tmpdfile = is_file($g['layoutPageVarForSite']) ? $g['layoutPageVarForSite'] : $g['path_layout'].$layout.'/_var/_page.'.$page.'.php';
+//사이트별 레이아웃 설정 변수
+$g['layoutVarForSite'] = $g['path_var'].'site/'.$r.'/layout.'.$device.'.php';
+include is_file($g['layoutVarForSite']) ? $g['layoutVarForSite'] :$g['path_layout'].$layout.'/_var/_var.php';
+include $g['path_layout'].$layout.'/_var/_var.config.php';
 
-include $_tmpdfile;
-
-$area_arr = explode(',',$area);
-
-$fp = fopen($g['layoutPageVarForSite'],'w');
+$fp = fopen($g['layoutVarForSite'],'w');
 fwrite($fp, "<?php\n");
 
-foreach ($area_arr as $key ) {
-	fwrite($fp, "\$d['layout']['".$key."'] = \"".trim(${$key})."\";\n");
+foreach($d['layout']['dom'] as $_key => $_val)
+{
+	if(!count($_val[2])) continue;
+	foreach($_val[2] as $_v)
+	{
+		if($_v[1] == 'checkbox')
+		{
+			foreach(${'layout_'.$_key.'_'.$_v[0].'_chk'} as $_chk)
+			{
+				${'layout_'.$_key.'_'.$_v[0]} .= $_chk.',';
+			}
+
+			fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".trim(${'layout_'.$_key.'_'.$_v[0]})."\";\n");
+			${'layout_'.$_key.'_'.$_v[0]} = '';
+		}
+		else if ($_v[1] == 'textarea')
+		{
+			fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".htmlspecialchars(str_replace('$','',trim(${'layout_'.$_key.'_'.$_v[0]})))."\";\n");
+		}
+		else if ($_v[1] == 'file')
+		{
+
+			$tmpname	= $_FILES['layout_'.$_key.'_'.$_v[0]]['tmp_name'];
+			if (is_uploaded_file($tmpname))
+			{
+				$realname	= $_FILES['layout_'.$_key.'_'.$_v[0]]['name'];
+				$fileExt	= strtolower(getExt($realname));
+				$fileExt	= $fileExt == 'jpeg' ? 'jpg' : $fileExt;
+				$fileName	= $r.'_'.$_key.'_'.$_v[0].'.'.$fileExt;
+				$saveFile	= $g['path_layout'].$layout.'/_var/'.$fileName;
+				if (!strstr('[gif][jpg][png][swf]',$fileExt))
+				{
+					continue;
+				}
+
+				move_uploaded_file($tmpname,$saveFile);
+				@chmod($saveFile,0707);
+			}
+			else {
+				$fileName	= $d['layout'][$_key.'_'.$_v[0]];
+				if ($fileName && ${'layout_'.$_key.'_'.$_v[0].'_del'})
+				{
+					unlink( $g['path_layout'].$layout.'/_var/'.$fileName);
+					$fileName = '';
+				}
+			}
+			fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".$fileName."\";\n");
+		}
+		else {
+			fwrite($fp, "\$d['layout']['".$_key.'_'.$_v[0]."'] = \"".htmlspecialchars(str_replace('$','',trim(${'layout_'.$_key.'_'.$_v[0]})))."\";\n");
+		}
+	}
 }
+
 
 fwrite($fp, "?>");
 fclose($fp);
-@chmod($_tmpdfile,0707);
+@chmod($layoutVarForSite,0707);
 
 echo '<script type="text/javascript">';
-echo 'parent.$.notify({message: "저장 되었습니다"},{type: "success"});';
+echo 'parent.$.notify({message: "저장 되었습니다"},{type: "default"});';
 echo 'parent.$("[data-act=submit]").attr("disabled", false);';
 echo '</script>';
 exit();

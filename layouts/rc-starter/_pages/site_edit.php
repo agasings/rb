@@ -185,7 +185,7 @@ $('[data-act="submit"]').click(function(){
 
   $(this).attr( 'disabled', true );
   setTimeout(function(){
-    alert("Hello");
+    form.submit()
   }, 500);
 
 });
