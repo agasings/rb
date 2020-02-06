@@ -5,10 +5,10 @@ function setPostWrite(settings) {
 
   // 상태 초기화
   wrapper.find('[name="uid"]').val('');
-  wrapper.find('[data-role="display_label"]').text(uid?'':'비공개');
+  wrapper.find('[data-role="display_label"]').text(uid?'':'전체공개');
   popover_post_display.find('[data-toggle="display"] .badge').empty();
-  popover_post_display.find('[data-toggle="display"][data-display="1"] .badge').html('<span class="icon icon-check"></span>');
-  wrapper.find('[name="display"]').val(1);
+  popover_post_display.find('[data-toggle="display"][data-display="5"] .badge').html('<span class="icon icon-check"></span>');
+  wrapper.find('[name="display"]').val(5);
   wrapper.find('[name="category_members"]').val('');
   wrapper.find('[name="list_members"]').val('');
   wrapper.find('[name="upload"]').val('');
@@ -473,10 +473,8 @@ function savePost(f) {
             if (uid) {
               $.notify({message: '저장 되었습니다.'},{type: 'default'});
             } else {
-              if (display==5 || display==4) {
-
-              } else {
-                console.log('여기')
+              if (display<4) {
+                console.log('여기'+start)
                 $('#page-post-mypost').page({ start: start, title : '내 포스트', url : 'dashboard?page=post' });
               }
             }

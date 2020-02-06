@@ -562,7 +562,7 @@
         </span>
       </button>
       <a href="#popover-post-display" data-toggle="popover" class="title title-left ml-3">
-        <span data-role="display_label" style="min-width: 38px;display: inline-block">비공개</span>
+        <span data-role="display_label" style="min-width: 38px;display: inline-block"></span>
         <span class="icon icon-caret ml-1" style="top: 2px;"></span>
       </a>
     </header>
