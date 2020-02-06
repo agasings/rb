@@ -556,7 +556,7 @@
           저장
         </span>
         <span class="is-loading">
-          <div class="spinner-border spinner-border-sm" role="status">
+          <div class="spinner-border spinner-border-sm text-primary" role="status">
             <span class="sr-only">저장중...</span>
           </div>
         </span>
@@ -842,7 +842,7 @@
         올리기
       </span>
       <span class="is-loading">
-        <div class="spinner-border spinner-border-sm" role="status">
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
           <span class="sr-only">저장중...</span>
         </div>
       </span>
