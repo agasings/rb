@@ -97,6 +97,8 @@
                 noMoreCommentMsg: '더 이상 댓글이 존재하지 않습니다.',
                 commentMainEle: '[data-role="comment-main"]',
                 commentNoneEle: '[data-role="comment-none"]',
+                commentFilterEle: '[data-role="comment-filter"]',
+                commentNumEle: '[data-role="total_comment"]',
                 orderby: 'asc',
                 sort: 'uid',
                 recnum: 5,
@@ -205,13 +207,12 @@
         initDataNone : function(){
           var comment_main_ele = this.options.commentMainEle;
           var comment_none_ele = this.options.commentNoneEle;
+          var commentFilterEle = this.options.commentFilterEle;
           var totalRow = this.totalRow;
           if (totalRow==0) {
-            $(comment_main_ele).addClass('d-none');
-            $(comment_none_ele).removeClass('d-none')
+            $(commentFilterEle).addClass('d-none');
           } else {
-            $(comment_main_ele).removeClass('d-none');
-            $(comment_none_ele).addClass('d-none')
+            $(commentFilterEle).removeClass('d-none');
           }
         },
 
@@ -619,6 +620,8 @@
             var total_row_wrap = this.options.showTotalRowEle;
             var comment_main_ele = this.options.commentMainEle;
             var comment_none_ele = this.options.commentNoneEle;
+            var commentFilterEle = this.options.commentFilterEle;
+            var commentNumEle = this.options.commentNumEle;
             var total_row_text=$(total_row_wrap).text();
             total_row_text=this.delComma(total_row_text);
             var total_row;
@@ -632,14 +635,6 @@
                this.totalRow = totalRow-num;
             }
 
-            if (total_row==0) {
-              $(comment_main_ele).addClass('d-none');
-              $(comment_none_ele).removeClass('d-none')
-            } else {
-              $(comment_main_ele).removeClass('d-none');
-              $(comment_none_ele).addClass('d-none')
-            }
-
             // 최종 합계에 콤마 추가
             total_row_comma=this.addComma(total_row);
 
@@ -649,6 +644,14 @@
                $(total_row_wrap).text(0);
             }
             else $(total_row_wrap).text(total_row_comma);
+
+            if (total_row==0) {
+              $(commentFilterEle).addClass('d-none');
+              $(commentNumEle).text('');
+            } else {
+              $(commentFilterEle).removeClass('d-none');
+              $(commentNumEle).text(total_row_comma);
+            }
         },
 
         // 글쓰기 권한 적용
