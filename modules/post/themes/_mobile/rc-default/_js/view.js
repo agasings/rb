@@ -56,7 +56,6 @@ function getPostView(settings) {
     if (format=='video') {
       wrapper.find('.bar-standard').css('height',embed_height+'px')
       wrapper.find('.bar-standard .embed-responsive').css('height',embed_height+'px')
-      wrapper.find('.modia-loader').loader();
 
       if (provider=='YouTube') {
 
@@ -117,10 +116,6 @@ function getPostView(settings) {
             miniplayer.find('[data-toggle="play"] .material-icons').text('replay');
           }
         }
-
-        setTimeout(function(){
-          wrapper.find('.modia-loader').loader('hide');
-        }, 1000);
 
         wrapper.on('click','[data-toggle="play"]',function(){
           if ($(this).hasClass('active')) {
