@@ -40,6 +40,16 @@
   }
 }
 
+html,
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 body, th, td, input, select, textarea, button {
   line-height: 1.5;
   font-family: AppleSDGothicNeo-Light,'HelveticaNeue','Malgun Gothic','맑은 고딕',sans-serif;
