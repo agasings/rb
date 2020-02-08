@@ -308,6 +308,7 @@ foreach ($layoutset as $_val) {
 	if ($_val=='mobile') {
 		$_layout = explode('/', $m_layout);
 		$layout_header_search = "true";
+		$layout_header_noti = "true";
 		$layout_main_type = 'postAll';
 	} else {
 		$_layout = explode('/', $layout);
