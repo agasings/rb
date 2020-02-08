@@ -16,7 +16,7 @@ $comment->orderby = $_POST['orderby'];
 $totalPage = $comment->getTotalData($comment->parent,$comment->recnum,'comment','page',0);
 $totalRow = $comment->getTotalData($comment->parent,$comment->recnum,'comment','row',0);
 
-$TMPL['comment_total'] = $totalRow;
+$TMPL['comment_total'] = $totalRow==0?'':$totalRow;
 $TMPL['login_user_pic'] = $comment->getUserAvatar($my['uid'],'src');
 $TMPL['login_user_nic'] = $my['nic'];
 $TMPL['comment_parent'] = $comment->parent;

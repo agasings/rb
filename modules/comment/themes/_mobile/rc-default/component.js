@@ -144,89 +144,89 @@ sheet_comment_write.find('[data-kcact="regis"]').click(function(event) {
 
 //댓글쓰기 컴포넌트가 호출될때
 sheet_comment_write.on('shown.rc.sheet', function (e) {
+  setTimeout(function(){
+    DecoupledEditor
+    .create( document.querySelector('#sheet-comment-write [data-role="comment-input"]'),{
+      placeholder: '공개 댓글 추가...',
+      toolbar: [ 'bold','italic','bulletedList','numberedList','blockQuote','imageUpload','|','undo','redo'],
+      language: 'ko',
+      extraPlugins: [rbUploadAdapterPlugin],
+      mediaEmbed: {
+          extraProviders: [
+              {
+                  name: 'other',
+                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+              },
+              {
+                  name: 'another',
+                  url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
+              }
+          ]
+      },
+      typing: {
+          transformations: {
+              include: [
+                  // Use only the 'quotes' and 'typography' groups.
+                  'quotes',
+                  'typography',
 
-  DecoupledEditor
-  .create( document.querySelector('#sheet-comment-write [data-role="comment-input"]'),{
-    placeholder: '공개 댓글 추가...',
-    toolbar: [ 'bold','italic','bulletedList','numberedList','blockQuote','imageUpload','|','undo','redo'],
-    language: 'ko',
-    extraPlugins: [rbUploadAdapterPlugin],
-    mediaEmbed: {
-        extraProviders: [
-            {
-                name: 'other',
-                url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-            },
-            {
-                name: 'another',
-                url: /^([a-zA-Z0-9_\-]+)\.([a-zA-Z0-9_\-]+)/
-            }
-        ]
-    },
-    typing: {
-        transformations: {
-            include: [
-                // Use only the 'quotes' and 'typography' groups.
-                'quotes',
-                'typography',
+                  // Plus, some custom transformation.
+                  { from: '->', to: '→' },
+                  { from: ':)', to: '🙂' },
+                  { from: ':+1:', to: '👍' },
+                  { from: ':tada:', to: '🎉' },
+              ],
+          }
+      },
+      removePlugins: [ 'WordCount' ],
+      image: {}
+    } )
+    .then( newEditor => {
+      editor_sheet = newEditor;
+      console.log('editor_sheet init');
+      editor_sheet.editing.view.focus();
+      sheet_comment_write.find('.toolbar-container').html(editor_sheet.ui.view.toolbar.element)
+      $('[data-role="commentWrite-container"]').removeClass('active');
+      sheet_comment_write.find('[data-placeholder]').addClass('ck-placeholder');
 
-                // Plus, some custom transformation.
-                { from: '->', to: '→' },
-                { from: ':)', to: '🙂' },
-                { from: ':+1:', to: '👍' },
-                { from: ':tada:', to: '🎉' },
-            ],
+      editor_sheet.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
+        if (value) {
+          console.log('editor_comment focus');
+          $('[data-role="commentWrite-container"]').addClass('active');
+        } else {
+          console.log('editor_comment blur');
         }
-    },
-    removePlugins: [ 'WordCount' ],
-    image: {}
-  } )
-  .then( newEditor => {
-    editor_sheet = newEditor;
-    console.log('editor_sheet init');
-    editor_sheet.editing.view.focus();
-    console.log('editor_sheet focus');
-    sheet_comment_write.find('.toolbar-container').html(editor_sheet.ui.view.toolbar.element)
-    $('[data-role="commentWrite-container"]').removeClass('active');
-    sheet_comment_write.find('[data-placeholder]').addClass('ck-placeholder');
+      } );
 
-    editor_sheet.editing.view.document.on( 'change:isFocused', ( evt, name, value ) => {
-      if (value) {
-        console.log('editor_comment focus');
-        $('[data-role="commentWrite-container"]').addClass('active');
-      } else {
-        console.log('editor_comment blur');
-      }
+      editor_sheet.model.document.on( 'change:data', () => {
+        var content = editor_sheet.getData();
+        if (content) {
+          sheet_comment_write.find('[data-kcact="regis"]').addClass('active');
+          $('[data-role="commentWrite-container"]').addClass('active');
+          sheet_comment_write.find('[data-placeholder]').removeClass('ck-placeholder');
+        } else {
+          sheet_comment_write.find('[data-kcact="regis"]').removeClass('active');
+          sheet_comment_write.find('[data-placeholder]').addClass('ck-placeholder');
+        }
+      } );
+
+    })
+    .catch( error => {
+        console.error( error );
     } );
 
-    editor_sheet.model.document.on( 'change:data', () => {
-      var content = editor_sheet.getData();
-      if (content) {
-        sheet_comment_write.find('[data-kcact="regis"]').addClass('active');
-        $('[data-role="commentWrite-container"]').addClass('active');
-        sheet_comment_write.find('[data-placeholder]').removeClass('ck-placeholder');
+    $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','.2');
+
+    sheet_comment_write.find('[data-role="comment-hidden"]').off('changed.rc.switch').on('changed.rc.switch', function () {
+      if ($(this).hasClass("active")) {
+        console.log('비밀글 ON')
+        sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','true');
       } else {
-        sheet_comment_write.find('[data-kcact="regis"]').removeClass('active');
-        sheet_comment_write.find('[data-placeholder]').addClass('ck-placeholder');
+        console.log('비밀글 OFF')
+        sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','false');
       }
-    } );
-
-  })
-  .catch( error => {
-      console.error( error );
-  } );
-
-  $('[data-role="comment-box"] [data-role="commentWrite-container"]').css('opacity','.2');
-
-  sheet_comment_write.find('[data-role="comment-hidden"]').off('changed.rc.switch').on('changed.rc.switch', function () {
-    if ($(this).hasClass("active")) {
-      console.log('비밀글 ON')
-      sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','true');
-    } else {
-      console.log('비밀글 OFF')
-      sheet_comment_write.find('[data-kcact="regis"]').attr('data-hidden','false');
-    }
-  })
+    })
+  }, 200);
 })
 
 sheet_comment_write.on('hidden.rc.sheet', function (e) {

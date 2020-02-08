@@ -29,7 +29,7 @@
         <img class="img-circle bg-faded ml-3" data-role="avatar" src="<?php echo getAvatarSrc($my['uid'],'100') ?>" style="width:2.25rem;height:2.25rem">
         <section class="w-100">
           <div data-role="editor">
-        		<div data-role="comment-input" id="meta-description-content"  class="border-0"></div>
+        		<div data-role="comment-input" id="meta-description-content" class="border-0"></div>
         	</div>
         </section>
         <button class="btn btn-link align-self-end" type="submit" data-kcact="regis">

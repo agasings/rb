@@ -6,15 +6,15 @@
   <span id="CMT-{$comment_uid}" data-role="anchor-link"></span>
   <div class="media content-padded my-0">
 
-    <span class="mr-3"
-      data-toggle="profile"
-      data-target="#modal-member-profile"
+    <a class="mr-3"
+      data-toggle="sheet"
+      href="#sheet-member-profile"
       data-nic="{$comment_user_nic}"
       data-url="{$comment_user_url}"
-      data-change="true"
+      data-avatar="{$comment_user_pic}"
       data-mbruid="{$comment_user_uid}">
       <img class="border rounded-circle" src="{$comment_user_pic}" alt="아바타" style="width:40px;height:40px">
-    </span>
+    </a>
 
     <div class="media-body">
 
