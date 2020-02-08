@@ -46,6 +46,7 @@ if ($NUM_NOTICE) {
   foreach ($NCD as $R) {
     $TMPL['subject']=htmlspecialchars($R['subject']);
     $TMPL['uid']=$R['uid'];
+    $TMPL['mbruid']=$R['mbruid'];
     $TMPL['name']=$R[$_HS['nametype']];
     $TMPL['hit']=$R['hit'];
     $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
@@ -82,6 +83,7 @@ if ($NUM) {
 
     $TMPL['subject']=htmlspecialchars($R['subject']);
     $TMPL['uid']=$R['uid'];
+    $TMPL['mbruid']=$R['mbruid'];
     $TMPL['name']= getStrCut($R[$_HS['nametype']],10,'..');
     $TMPL['hit']=$R['hit'];
     $TMPL['comment']=$R['comment'].($R['oneline']?'+'.$R['oneline']:'');
