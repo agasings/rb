@@ -62,18 +62,18 @@
 
       <div class="pull-xs-left">
 
-        <div class="media" style="width:15rem"
+        <a class="media" style="width:15rem"
+          data-toggle="sheet"
+          data-avatar=""
           data-mbruid=""
-          data-toggle="page"
-          data-target="#page-member-profile"
-          data-start="#page-bbs-view">
-          <img class="media-object pull-left rb-avatar img-circle bg-faded" src="" style="width:2.25rem;height:2.25rem" data-role="avatar">
-          <div class="media-body rb-meta m-l-1">
+          href="#sheet-member-profile">
+          <img class="media-object pull-left rb-avatar img-circle bg-faded" src="" style="width:2.55rem;height:2.55rem" data-role="avatar">
+          <div class="media-body rb-meta m-l-1" style="line-height: 1.2;">
             <span class="badge badge-default badge-inverted" data-role="name"></span> <br>
             <span class="badge badge-default badge-inverted" data-role="d_regis"></span>
             <span class="badge badge-default badge-inverted">조회 <span data-role="hit"></span></span>
           </div>
-        </div>
+        </a>
 
       </div>
 
@@ -88,7 +88,7 @@
       </div>
 
     </div><!-- /.clearfix -->
-    <hr>
+    <hr class="mt-0">
     <div class="content-padded" data-role="post">
       <span data-role="cat" data-act="category" class="badge badge-primary badge-inverted"></span>
       <h3 data-role="subject" class="rb-article-title"></h3>
@@ -185,9 +185,8 @@
 
         <div class="media" style="width:15rem"
           data-mbruid=""
-          data-toggle="page"
-          data-target="#page-member-profile"
-          data-start="#page-bbs-view">
+          data-toggle="sheet"
+          data-target="#sheet-member-profile">
           <img class="media-object pull-left rb-avatar img-circle bg-faded" src="" style="width:2.25rem;height:2.25rem" data-role="avatar">
           <div class="media-body rb-meta m-l-1">
             <span class="badge badge-default badge-inverted" data-role="name"></span> <br>

@@ -47,8 +47,9 @@ function getBbsView(settings){
     page.find('[name="bid"]').val(bid);
     page.find('[data-role="cat"]').text(cat).attr('data-cat',cat);
     page.find('[data-role="name"]').text(name);
-    page.find('[data-target="#page-member-profile"]').attr('data-mbruid',mbruid).attr('data-url','/@'+mbrid);
     page.find('[data-role="total_comment"]').text(comment);
+    page.find('[data-target="#page-member-profile"]').attr('data-mbruid',mbruid).attr('data-url','/@'+mbrid);
+    page.find('[data-toggle="sheet"][data-avatar]').attr('data-nic',name).attr('data-avatar',avatar).attr('data-mbruid',mbruid);
     page.find('[data-role="avatar"]').attr('src',avatar);
     page.find('[data-role="hit"]').text(hit);
     page.find('[data-role="likes"]').text(likes);

@@ -11,7 +11,7 @@ $result['error']=false;
 $B = getDbData($table[$m.'list'],"id='".$bid."' and site=".$s,'*');
 
 if (!$B['uid']) {
-  $result['error']='존재하기 않는 게시판 입니다.';
+  $result['error']='존재하지 않는 게시판 입니다.';
   echo json_encode($result);
   exit;
 }

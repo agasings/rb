@@ -10,7 +10,7 @@ $mod = $_POST['mod'];
 $B = getDbData($table['bbslist'],'id="'.$bid.'"','*');
 
 if (!$B['uid']) {
-  $result['error']='존재하기 않는 게시판 입니다.';
+  $result['error']='존재하지 않는 게시판 입니다.';
   echo json_encode($result);
   exit;
 }
