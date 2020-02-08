@@ -24,5 +24,50 @@
 
 </div>
 
+<div id="sheet-member-profile" class="sheet">
+  <div class="content-padded pt-1">
+    <div class="media">
+      <span class="media-left">
+        <img data-role="avatar" class="border rounded-circle" style="width:75px">
+      </span>
+      <div class="media-body">
+        <h5 class="media-heading mb-1">
+          <span data-role="nic"></span>
+          <small class="ml-1 text-muted" data-role="ismy"></small>
+        </h5>
+        <p class="text-muted f13 mb-0 pr-2" data-role="bio"></p>
+        <div class="d-flex justify-content-between align-items-end">
+          <div class="">
+            <span class="badge badge-inverted">구독자 <span data-role="num_follower"></span></span>
+            <span class="badge badge-inverted">포스트 <span data-role="num_post"></span></span>
+            <span class="badge badge-inverted">리스트 <span data-role="num_list"></span></span>
+          </div>
+          <div class="">
+
+          </div>
+        </div><!-- /.d-flex -->
+      </div>
+    </div>
+  </div>
+  <ul class="table-view mb-0">
+    <li class="table-view-cell" data-role="follower">
+      구독
+      <span class="badge badge-pill d-none" data-role="isfollowing">구독중</span>
+      <button type="button" class="btn btn-outline-primary d-none"
+        data-title="채널을 구독하시겠습니까?"
+        data-subtext="채널을 구독하려면 로그인하세요."
+        data-toggle="follow"
+        data-mbruid="">
+        구독하기
+      </button>
+    </li>
+    <li class="table-view-cell">
+      <a class="navigate-right" data-toggle="profile" data-target="#modal-member-profile" data-change="true">
+        채널 바로가기
+      </a>
+    </li>
+  </ul>
+</div>
+
 <script src="/modules/member/themes/<?php echo $d['member']['theme_mobile']?>/profile/profile.js<?php echo $g['wcache']?>" ></script>
 <script src="/modules/member/themes/<?php echo $d['member']['theme_mobile']?>/profile/component.js<?php echo $g['wcache']?>" ></script>

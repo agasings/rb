@@ -1,3 +1,62 @@
+var sheet_member_profile = $('#sheet-member-profile');
+
+sheet_member_profile.on('show.rc.sheet', function (event) {
+  var button = $(event.relatedTarget);
+  var sheet =  $(this);
+  var nic = button.attr('data-nic');
+  var mbruid = button.attr('data-mbruid');
+  var avatar = button.attr('data-avatar');
+  sheet.find('[data-role="avatar"]').attr('src',avatar);
+  sheet.find('[data-toggle="follow"]').attr('data-mbruid',mbruid);
+  setTimeout(function(){
+    $.post(rooturl+'/?r='+raccount+'&m=member&a=get_profileDataSimple',{
+         mbruid : mbruid
+    },function(response){
+      var result = $.parseJSON(response);
+      var id=result.id;
+      var nic=result.nic;
+      var bio=result.bio;
+      var num_follower=result.num_follower;
+      var num_post=result.num_post;
+      var num_list=result.num_list;
+      var _avatar=result.avatar;
+      var isFollowing=result.isFollowing;
+      sheet.find('[data-role="bio"]').text(bio);
+      sheet.find('[data-role="num_follower"]').text(num_follower);
+      sheet.find('[data-role="num_post"]').text(num_post);
+      sheet.find('[data-role="num_list"]').text(num_list);
+      if (!avatar) sheet.find('[data-role="avatar"]').attr('src',_avatar);
+      sheet.find('[data-toggle="profile"]').attr('data-url','/@'+id).attr('data-mbruid',mbruid).attr('data-nic',nic);
+
+      if (memberid==id) {
+        sheet.find('[data-role="follower"]').addClass('d-none');
+        sheet.find('[data-role="ismy"]').text('(나)');
+      } else {
+        sheet.find('[data-role="follower"]').removeClass('d-none');
+        sheet.find('[data-role="ismy"]').text('');
+      }
+
+      if (isFollowing) {
+        sheet.find('[data-role="isfollowing"]').removeClass('d-none');
+        sheet.find('[data-toggle="follow"]').addClass('d-none');
+      } else {
+        sheet.find('[data-role="isfollowing"]').addClass('d-none');
+        sheet.find('[data-toggle="follow"]').removeClass('d-none');
+      }
+
+    });
+  }, 100);
+
+})
+
+sheet_member_profile.on('hidden.rc.sheet', function (event) {
+  var sheet =  $(this);
+  sheet.find('[data-role="nic"]').text('');
+  sheet.find('[data-role="avatar"]').removeAttr('src');
+  sheet.find('[data-role="bio"]').text('');
+  sheet.find('[data-toggle="profile"]').removeAttr('data-url').removeAttr('data-mbruid').removeAttr('data-nic');
+})
+
 
 $(document).on('click','[data-toggle="profile"]',function(){
   var button = $(this);
